@@ -1,0 +1,21 @@
+package org.JMANGOS.wowdata.dbc.struct;
+
+import javax.xml.bind.annotation.XmlAttribute;
+
+import org.JMANGOS.wowdata.dbc.dataholder.DBCStruct;
+
+public class SpellItemEnchantmentConditionEntry extends DBCStruct<SpellItemEnchantmentConditionEntry> {
+	final static int CONDITION_COUNT = 5;
+	@XmlAttribute(name = "id", required=true)
+	public final Unsigned32 Id = new Unsigned32();         	    
+	@XmlAttribute(name = "Color", required=true)
+	public final Unsigned8[] Color = array(new Unsigned8[CONDITION_COUNT]);         	    
+	@XmlAttribute(name = "LT_Operand")
+	public final Unsigned32[] LT_Operand = array(new Unsigned32[CONDITION_COUNT]);
+	@XmlAttribute(name = "Comparator", required=true)
+	public final Unsigned8[] Comparator = array(new Unsigned8[CONDITION_COUNT]);         	    
+	@XmlAttribute(name = "CompareColor", required=true)
+	public final Unsigned8[] CompareColor = array(new Unsigned8[CONDITION_COUNT]);         	    
+	@XmlAttribute(name = "Value", required=true)
+	public final Unsigned32[] Value = array(new Unsigned32[CONDITION_COUNT]);         	    
+}
