@@ -47,7 +47,7 @@ public class loginserver {
 	 * @throws Exception the exception
 	 */
 	public static void main(String[] args) throws Exception {
-		Injector injector = Guice.createInjector(new HandlerDM());
+		Injectorr injector = Guice.createInjector(new HandlerDM());
 		ServiceContent.setInjector(injector);
 		injector.getInstance(LoggingService.class).start();
 		injector.getInstance(DatabaseFactory.class).start();
