@@ -20,12 +20,12 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.jmangos.jmangos</groupId>
-			<artifactId>data</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jmangos.jmangos</groupId>
+			<artifactId>commons</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.lwjgl.lwjgl</groupId>

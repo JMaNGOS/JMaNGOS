@@ -16,10 +16,9 @@
 	</scm>
 
 	<modules>
-		<module>Login</module>
+		<module>Auth</module>
 		<module>Commons</module>
 		<module>Realm</module>
-		<module>Data</module>
 		<module>Tools</module>
 	</modules>
 
@@ -32,11 +31,6 @@
 			<dependency>
 				<groupId>org.jmangos.jmangos</groupId>
 				<artifactId>commons</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jmangos.jmangos</groupId>
-				<artifactId>data</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
