@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jmangos.jmangos</groupId>
+	<artifactId>tools</artifactId>
+	<packaging>jar</packaging>
+	<name>JMaNGOS-Tools</name>
+
+	<parent>
+		<groupId>org.jmangos</groupId>
+		<artifactId>jmangos</artifactId>
+		<version>0.0.001-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<natives>${basedir}/target/natives/</natives>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.jmangos.jmangos</groupId>
+			<artifactId>data</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjgl.lwjgl</groupId>
+			<artifactId>lwjgl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjgl.lwjgl</groupId>
+			<artifactId>lwjgl_util</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjgl.lwjgl</groupId>
+			<artifactId>lwjgl-platform</artifactId>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>org.critterai</groupId>
+			<artifactId>cai-nmgen</artifactId>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.googlecode.mavennatives</groupId>
+				<artifactId>maven-nativedependencies-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpacknatives</id>
+						<phase>generate-resources</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
