@@ -23,10 +23,14 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import javolution.util.FastTable;
+
 import org.jmangos.tools.chunk.BaseChunk;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
 public class WmoRoot {
+	FastTable<BaseChunk> chunks = new FastTable<BaseChunk>();
+
 	public static WmoRoot read(File f) throws IOException {
 		FileInputStream fis = null;
 		ByteBuffer bb = ByteBuffer.allocate((int) f.length());
@@ -36,12 +40,12 @@ public class WmoRoot {
 			fis.getChannel().read(bb);
 			bb.rewind();
 			bb.order(ByteOrder.LITTLE_ENDIAN);
-			
+
 			int glOffset = 0;
-			while (glOffset < (int)f.length()) {
-				BaseChunk ch = new WMOChunk().readChunkByHeader(bb,glOffset);
-				System.out.println(ch); 
+			while (glOffset < (int) f.length()) {
+				BaseChunk ch = new WMOChunk().readChunkByHeader(bb, glOffset);
 				glOffset = ch.getGlobalOffcet();
+				result.chunks.add(ch);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -49,5 +53,9 @@ public class WmoRoot {
 			fis.close();
 		}
 		return result;
+	}
+
+	public FastTable<BaseChunk> getChunks() {
+		return chunks;
 	}
 }
