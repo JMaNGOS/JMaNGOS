@@ -114,7 +114,7 @@
 			<url>http://nexus.jmangos.org/content/repositories/releases/</url>
 		</repository>
 		<snapshotRepository>
-			<id>jmangos.release</id>
+			<id>jmangos.snapshots</id>
 			<url>http://nexus.jmangos.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
