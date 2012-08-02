@@ -5,7 +5,7 @@
 	<groupId>org.jmangos.jmangos</groupId>
 	<artifactId>dist</artifactId>
 	<packaging>jar</packaging>
-	<name>JMaNGOS</name>
+	<name>JMaNGOS-Dist</name>
 
 	<parent>
 		<groupId>org.jmangos</groupId>
@@ -52,5 +52,9 @@
 			</build>
 		</profile>
 	</profiles>
+	
+	<build>
+		<finalName>JMaNGOS</finalName>
+	</build>
 
 </project>
