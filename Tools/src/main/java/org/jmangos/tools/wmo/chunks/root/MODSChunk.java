@@ -42,21 +42,14 @@ public class MODSChunk extends WMOChunk{
 		return this;	
 	}
 	
-	@SuppressWarnings("unused")
-	private String getAllName(){
-		String tmp = "";
-		for (int i = 0; i < MODSEntries.length; i++) {
-			tmp +="\n\tsetName:" + MODSEntries[i].setName.get()+
-			"\n\tFirstIndex:" + MODSEntries[i].Index.get()+
-			"\n\tcountInSet:" + MODSEntries[i].countInSet.get()+
-			"\n\tunknown:" + MODSEntries[i].unknown.get() + "\n";
-
-		}
-		return tmp;
-	}
-	
 	public String toString(){
-		return "[MODSChunk]" + 
-		"\n\tMODSEntries count: " + MODSEntries.length;// + getAllName(); 
+		StringBuilder sb = new StringBuilder();
+		sb.append("[MODSChunk] MODSEntries size:") .append(MODSEntries.length);
+		for (int i = 0; i < MODSEntries.length; i++) {
+			sb.append("\n\tsetName:").append(MODSEntries[i].setName.get());
+			sb.append("\n\tFirstIndex:").append(MODSEntries[i].Index.get());
+			sb.append("\n\tcountInSet:").append(MODSEntries[i].countInSet.get());
+		}
+		return sb.toString();
 	}
 }

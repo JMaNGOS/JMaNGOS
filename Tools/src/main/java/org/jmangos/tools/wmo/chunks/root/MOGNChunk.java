@@ -26,13 +26,12 @@ import org.jmangos.tools.chunk.BaseChunk;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
 public class MOGNChunk extends WMOChunk{
-	Object[] groupNames;
+	ArrayList<String> groupNames = new ArrayList<String>();
 
 
 	@Override
 	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
 		byte[] tsring = new byte[2024];
-		ArrayList<String> tstr = new ArrayList<String>();
 		CharsetDecoder decoder = Charset.forName("UTF-8").newDecoder();
 		setGlobalOffcet(offset + size + HEADERSIZE);
 		this.setByteBuffer(bb, offset);
@@ -46,26 +45,22 @@ public class MOGNChunk extends WMOChunk{
 			}
 			if( i > 0)
 			try {
-				tstr.add( decoder.decode(ByteBuffer.wrap(tsring, 0, i)).toString());
+				groupNames.add( decoder.decode(ByteBuffer.wrap(tsring, 0, i)).toString());
 			} catch (CharacterCodingException e) {
 				e.printStackTrace();
 			}
 			si = ++reading;
 		}
-		groupNames =  tstr.toArray();
 		return this;	
 	}
 	
-	@SuppressWarnings("unused")
-	private String getAllName(){
-		String tmp = "";
-		for (int i = 0; i < groupNames.length; i++) {
-			tmp+="\n\t" + groupNames[i] ;
-		}
-		return tmp;
-	}
 	public String toString(){
-		return "[MOGNChunk] groupNames: " +  groupNames.length;// + getAllName();
+		StringBuilder sb = new StringBuilder();
+		sb.append("[MOGNChunk] groupNames size is:").append(groupNames.size());
+		for (int i = 0; i < groupNames.size(); i++) {
+			sb.append("\n\t").append(groupNames.get(i)) ;
+		}
+		return sb.toString();
 		 
 	}
 

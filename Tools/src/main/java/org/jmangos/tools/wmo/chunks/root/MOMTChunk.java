@@ -23,7 +23,7 @@ import org.jmangos.tools.wmo.chunks.WMOChunk;
 
 public class MOMTChunk extends WMOChunk{
 	class MOMTEntry extends WMOChunk{ 
-		/*000h*/  Unsigned32 flags1 = new Unsigned32();   		
+		/*000h*/  Unsigned32 flags_0 = new Unsigned32();   		
 		/*004h*/  Unsigned32 SpecularMode = new Unsigned32();
 		/*008h*/  Unsigned32 blendMode = new Unsigned32();
 		/*00Ch*/  Unsigned32 texture_1 = new Unsigned32();	
@@ -40,6 +40,20 @@ public class MOMTChunk extends WMOChunk{
 		/*038h*/  Unsigned32 unk2 = new Unsigned32();
 		/*03Ch*/  Unsigned32 unk3 = new Unsigned32();
 		/*040h*/  Unsigned32 unk4 = new Unsigned32();
+		@Override
+		public String toString() {
+			return  "\n\t\t[MOMTEntry]" + 
+					"\n\t\t\tflags_0: " + flags_0+
+					"\n\t\t\tSpecularMode: " + SpecularMode+
+					"\n\t\t\tblendMode: " + blendMode+
+					"\n\t\t\ttexture_1: " + texture_1+
+					"\n\t\t\tcolor_1: " + color_1+
+					"\n\t\t\tflags_1: " + flags_1+
+					"\n\t\t\ttexture_2: " + texture_2+
+					"\n\t\t\tcolor_2: " + color_2+
+					"\n\t\t\tflags_2: " + flags_2+
+					"\n\t\t\tcolor_3: " + color_3;
+		}
 	}
 
 	private MOMTEntry[] MOMTEntries;
@@ -56,7 +70,11 @@ public class MOMTChunk extends WMOChunk{
 	}
 	
 	public String toString(){
-		return "[MOMTChunk]" + 
-		"\n\tMOMTEntries count: " + MOMTEntries.length; 
+		StringBuilder sb = new StringBuilder();
+		sb.append("[MOMTChunk]\n\tMOMTEntries count:").append(MOMTEntries.length);
+		for (MOMTEntry momt : MOMTEntries) {
+			sb.append(momt.toString());
+		}
+		return sb.toString();
 	}
 }
