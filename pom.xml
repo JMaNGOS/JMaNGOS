@@ -211,8 +211,7 @@
 						<artifactId>maven-release-plugin</artifactId>
 						<configuration>
 							<autoVersionSubmodules>true</autoVersionSubmodules>
-							<arguments>-Ddist=${dist}
-								-Djenkins.buildNumber=${jenkins.buildNumber}</arguments>
+							<arguments>-Ddist=${dist} -Djenkins.buildNumber=${jenkins.buildNumber}</arguments>
 						</configuration>
 					</plugin>
 				</plugins>
