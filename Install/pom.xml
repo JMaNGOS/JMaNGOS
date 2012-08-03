@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jmangos.jmangos</groupId>
+	<artifactId>install</artifactId>
+	<packaging>pom</packaging>
+	<name>JMaNGOS-Install</name>
+
+	<parent>
+		<groupId>org.jmangos</groupId>
+		<artifactId>jmangos</artifactId>
+		<version>0.0.004-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<izpack.staging>${project.build.directory}</izpack.staging>
+		<izpack.packages>${izpack.staging}/packages</izpack.packages>
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>dist</id>
+			<activation>
+				<property>
+					<name>dist</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.jmangos.jmangos</groupId>
+					<artifactId>commons</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.jmangos.jmangos</groupId>
+					<artifactId>auth</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.jmangos.jmangos</groupId>
+					<artifactId>realm</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.jmangos.jmangos</groupId>
+					<artifactId>tools</artifactId>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>copy-izpack-dependencies</id>
+								<phase>prepare-package</phase>
+								<goals>
+									<goal>copy-dependencies</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${izpack.packages}</outputDirectory>
+									<excludeTransitive>false</excludeTransitive>
+									<stripVersion>true</stripVersion>
+									<overWriteReleases>true</overWriteReleases>
+									<overWriteSnapshots>true</overWriteSnapshots>
+									<overWriteIfNewer>true</overWriteIfNewer>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>make-installer</id>
+								<phase>package</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<target>
+										<copy todir="${izpack.staging}">
+											<fileset dir="${basedir}/src/izpack" />
+										</copy>
+										<taskdef name="IzPack" classpathref="maven.plugin.classpath"
+											classname="com.izforge.izpack.ant.IzPackTask" />
+										<IzPack input="${izpack.staging}/install.xml"
+											output="${izpack.staging}/${project.build.finalName}.jar"
+											installerType="standard" basedir="${izpack.staging}"
+											IzPackDir="${izpack.staging}/" />
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+						<dependencies>
+							<dependency>
+								<groupId>org.apache.ant</groupId>
+								<artifactId>ant</artifactId>
+								<version>1.8.4</version>
+							</dependency>
+							<dependency>
+								<groupId>org.codehaus.izpack</groupId>
+								<artifactId>izpack-standalone-compiler</artifactId>
+								<version>${izpack.version}</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>
