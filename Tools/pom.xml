@@ -54,7 +54,7 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	
 	<profiles>
 		<profile>
 			<id>dist</id>
@@ -65,7 +65,6 @@
 				</property>
 			</activation>
 			<build>
-				<finalName>${project.name}-${project.version}.${jenkins.buildNumber}</finalName>
 				<plugins>
 					<plugin>
 						<artifactId>maven-shade-plugin</artifactId>
