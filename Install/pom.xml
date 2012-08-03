@@ -105,7 +105,7 @@
 						<executions>
 							<execution>
 								<id>attach-installer-artifact</id>
-								<phase>deploy</phase>
+								<phase>install</phase>
 								<goals>
 									<goal>attach-artifact</goal>
 								</goals>
