@@ -6,7 +6,7 @@
 	<groupId>org.jmangos.jmangos</groupId>
 	<artifactId>auth</artifactId>
 	<packaging>jar</packaging>
-	<name>JMaNGOS-Login</name>
+	<name>JMaNGOS-Auth</name>
 
 	<parent>
 		<groupId>org.jmangos</groupId>
@@ -23,15 +23,9 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.google.inject</groupId>
-			<artifactId>guice</artifactId>
-		</dependency>
 	</dependencies>
-	
-	<build>
-		<finalName>${project.name}</finalName>
 
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -43,4 +37,45 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>dist</id>
+			<activation>
+				<property>
+					<name>dist</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<finalName>${project.name}-${project.version}.${jenkins.buildNumber}</finalName>
+				<plugins>
+					<plugin>
+						<artifactId>maven-shade-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>shade</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-jar-plugin</artifactId>
+						<configuration>
+							<archive>
+								<manifest>
+									<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+								</manifest>
+								<manifestEntries>
+									<Implementation-Version>${project.version}.${jenkins.buildNumber}</Implementation-Version>
+								</manifestEntries>
+							</archive>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

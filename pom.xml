@@ -11,8 +11,11 @@
 	<url>http://jmangos.org/</url>
 	<description>JMaNGOS is a full featured World of Warcraft server, including authentication, client updates, and world content serving. JMaNGOS in not MaNGOS on Java. It's a new way.</description>
 	<inceptionYear>2012</inceptionYear>
+
 	<scm>
-		<url>git://github.com/MinimaJack/JMaNGOS.git</url>
+		<connection>scm:git:http://github.com/JMaNGOS/JMaNGOS.git</connection>
+		<developerConnection>scm:git:http://github.com/JMaNGOS/JMaNGOS.git</developerConnection>
+		<url>http://github.com/JMaNGOS/JMaNGOS.git</url>
 	</scm>
 
 	<modules>
@@ -20,7 +23,6 @@
 		<module>Commons</module>
 		<module>Realm</module>
 		<module>Tools</module>
-		<module>Dist</module>
 	</modules>
 
 	<properties>
@@ -165,6 +167,11 @@
 				<plugin>
 					<artifactId>maven-shade-plugin</artifactId>
 					<version>1.7</version>
+				</plugin>
+
+				<plugin>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.4</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
