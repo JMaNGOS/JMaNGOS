@@ -128,7 +128,7 @@
 
 	<distributionManagement>
 		<repository>
-			<id>jmangos.release</id>
+			<id>jmangos.releases</id>
 			<url>http://nexus.jmangos.org/content/repositories/releases/</url>
 		</repository>
 		<snapshotRepository>
