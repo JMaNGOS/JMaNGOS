@@ -13,9 +13,9 @@
 	<inceptionYear>2012</inceptionYear>
 
 	<scm>
-		<connection>scm:git:http://github.com/JMaNGOS/JMaNGOS.git</connection>
-		<developerConnection>scm:git:http://github.com/JMaNGOS/JMaNGOS.git</developerConnection>
-		<url>http://github.com/JMaNGOS/JMaNGOS.git</url>
+		<connection>scm:git:git@github.com:JMaNGOS/JMaNGOS.git</connection>
+		<developerConnection>scm:git:git@github.com:JMaNGOS/JMaNGOS.git</developerConnection>
+		<url>https://github.com/JMaNGOS/JMaNGOS.git</url>
 	</scm>
 
 	<modules>
