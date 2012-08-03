@@ -215,7 +215,9 @@
 					<plugin>
 						<artifactId>maven-release-plugin</artifactId>
 						<configuration>
+							<dryRun>true</dryRun>
 							<autoVersionSubmodules>true</autoVersionSubmodules>
+							<goals>install deploy</goals>
 							<arguments>-Ddist=${dist} -Djenkins.buildNumber=${jenkins.buildNumber}</arguments>
 						</configuration>
 					</plugin>
