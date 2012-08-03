@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.jmangos</groupId>
 		<artifactId>jmangos</artifactId>
-		<version>0.0.009</version>
+		<version>0.0.010-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
