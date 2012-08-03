@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jmangos</groupId>
 	<artifactId>jmangos</artifactId>
-	<version>0.0.010-SNAPSHOT</version>
+	<version>0.0.010</version>
 	<packaging>pom</packaging>
 	<name>JMaNGOS</name>
 
@@ -15,7 +15,7 @@
 		<connection>scm:git:git@github.com:JMaNGOS/JMaNGOS.git</connection>
 		<developerConnection>scm:git:git@github.com:JMaNGOS/JMaNGOS.git</developerConnection>
 		<url>https://github.com/JMaNGOS/JMaNGOS.git</url>
-		<tag>HEAD</tag>
+		<tag>jmangos-0.0.010</tag>
 	</scm>
 
 	<modules>
