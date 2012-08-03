@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ Copyright (C) 2012 JMaNGOS <http://jmangos.org/>                                        
+                                                                                         
+ This program is free software; you can redistribute it and/or modify it                 
+ under the terms of the GNU General Public License as published by the                   
+ Free Software Foundation; either version 2 of the License, or (at your                  
+ option) any later version.                                                              
+                                                                                         
+ This program is distributed in the hope that it will be useful, but WITHOUT             
+ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or                   
+ FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for                
+ more details.                                                                           
+                                                                                         
+ You should have received a copy of the GNU General Public License along                 
+ with this program. If not, see <http://www.gnu.org/licenses/>.          
+-->
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="opcodes">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="opcodelist" minOccurs="1" maxOccurs="unbounded"
+					type="opcodelist">
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="opcodelist">
+		<xs:sequence>
+			<xs:element name="packet" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="id" type="xs:string" use="required" />
+					<xs:attribute name="name" type="xs:string"  use="required" />
+					<xs:attribute name="state" type="ChannelState"
+						default="CONNECTED" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="direction" type="PacketDirection" />
+		<xs:attribute name="package" type="xs:string" />
+	</xs:complexType>
+
+	<xs:simpleType name="PacketDirection">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="UPSTREAM" />
+			<xs:enumeration value="DOWNSTREAM" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="ChannelState">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CONNECTED" />
+			<xs:enumeration value="AUTHED" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
+

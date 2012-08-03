@@ -37,7 +37,7 @@ public class DatabaseConfig
 	private static final Logger	log	= Logger.getLogger(DatabaseConfig.class);
 
 	/** Configuration file location. */
-	public static final String	CONFIG_FILE	= "config/database/database.properties";
+	public static final String	CONFIG_FILE	= "conf/database/database.properties";
 
 	/**
 	 * Default database url.
@@ -50,11 +50,11 @@ public class DatabaseConfig
 	public static Class<?>		DATABASE_DRIVER;
 
 	/** Default database user. */
-	@Property(key = "database.user", defaultValue = "root")
+	@Property(key = "database.user", defaultValue = "JMaNGOS")
 	public static String		DATABASE_USER;
 
 	/** Default database password. */
-	@Property(key = "database.password", defaultValue = "root")
+	@Property(key = "database.password", defaultValue = "JMaNGOS")
 	public static String		DATABASE_PASSWORD;
 
 	/** Minimum amount of connections that are always active. */

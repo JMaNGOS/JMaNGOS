@@ -39,7 +39,7 @@ public class Config {
 	protected static final Logger log = Logger.getLogger(Config.class);
 
 	/** The Constant CONFIG_FILE. */
-	public static final String CONFIG_FILE = "config/network/auth.network.properties";
+	public static final String CONFIG_FILE = "conf/network/auth.network.properties";
 
 	/** Login Server address to client. */
 	@Property(key = "network.client.address", defaultValue = "*:3724")

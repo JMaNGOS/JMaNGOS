@@ -34,7 +34,7 @@ public class L2RPacketHandlerFactory extends AbstractPacketHandlerFactory {
 	 */
 	public L2RPacketHandlerFactory() {
 		addList(loadStaticData(PacketData.class,
-				"./data/packetData/packets.xsd",
-				"./data/packetData/lr-packets.xml"));
+				"./conf/packetData/packets.xsd",
+				"./conf/packetData/lr-packets.xml"));
 	}
 }

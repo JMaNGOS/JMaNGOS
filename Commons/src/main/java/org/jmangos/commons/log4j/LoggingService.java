@@ -46,7 +46,7 @@ public class LoggingService implements Service
 	public static final String	LOGGER_FACTORY_CLASS_PROPERTY	= "log4j.loggerfactory";
 
 	/** Default log4j configuration file. */
-	public static final String	LOGGER_CONFIG_FILE				= "./config/log4j.xml";
+	public static final String	LOGGER_CONFIG_FILE				= "./conf/log4j.xml";
 
 	/** Is Logging initialized or not?. */
 	private static boolean		initialized;
