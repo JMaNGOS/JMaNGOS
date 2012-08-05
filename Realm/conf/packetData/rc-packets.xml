@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (C) 2012 JMaNGOS <http://jmangos.org/>                                        
+                                                                                         
+ This program is free software; you can redistribute it and/or modify it                 
+ under the terms of the GNU General Public License as published by the                   
+ Free Software Foundation; either version 2 of the License, or (at your                  
+ option) any later version.                                                              
+                                                                                         
+ This program is distributed in the hope that it will be useful, but WITHOUT             
+ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or                   
+ FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for                
+ more details.                                                                           
+                                                                                         
+ You should have received a copy of the GNU General Public License along                 
+ with this program. If not, see <http://www.gnu.org/licenses/>.          
+-->
+<opcodes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="packets.xsd">
+	<opcodelist direction="DOWNSTREAM"
+		package="org.jmangos.realm.network.netty.packet.client.">
+		<packet name="CMSG_PING" id="1DC" state="AUTHED" />
+		<packet name="CMSG_AUTH_SESSION" id="1ED" />
+		<packet name="CMSG_READY_FOR_ACCOUNT_DATA_TIMES" id="4FF"
+			state="AUTHED" />
+		<packet name="CMSG_REALM_SPLIT" id="38C" state="AUTHED" />
+		<packet name="CMSG_CHAR_ENUM" id="37" state="AUTHED" />
+		<packet name="CMSG_PLAYER_LOGIN" id="3D" state="AUTHED" />
+		<packet name="CMSG_SET_ACTIVE_VOICE_CHANNEL" id="3D3" state="AUTHED" />
+		<packet name="CMSG_CANCEL_TRADE" id="11C" state="AUTHED" />
+		<packet name="CMSG_WORLD_STATE_UI_TIMER_UPDATE" id="4F6" state="AUTHED" />
+		<packet name="CMSG_PLAYED_TIME" id="1CC" state="AUTHED" />
+		<packet name="CMSG_NAME_QUERY" id="50" state="AUTHED" />
+		<packet name="CMSG_SET_ACTIONBAR_TOGGLES" id="2BF" state="AUTHED" />
+		<packet name="CMSG_QUERY_TIME" id="1CE" state="AUTHED" />
+		<packet name="CMSG_QUERY_NEXT_MAIL_TIME" id="284" state="AUTHED" />
+		<packet name="CMSG_LFG_GET_STATUS" id="296" state="AUTHED" />
+		<packet name="CMSG_VOICE_SESSION_ENABLE" id="3AF" state="AUTHED" />
+		<packet name="CMSG_ZONEUPDATE" id="1F4" state="AUTHED"></packet>
+		<packet name="CMSG_ITEM_QUERY_SINGLE" id="56" state="AUTHED" />
+		<packet name="CMSG_TUTORIAL_FLAG" id="FE" state="AUTHED" />
+	</opcodelist>
+	<opcodelist direction="UPSTREAM"
+		package="org.jmangos.realm.network.netty.packet.server.">
+		<packet name="SMSG_AUTH_CHALLENGE" id="1EC" />
+		<packet name="SMSG_PONG" id="1DD" />
+		<packet name="SMSG_AUTH_RESPONSE" id="1EE" />
+		<packet name="SMSG_ADDON_INFO" id="2EF"></packet>
+		<packet name="SMSG_ACCOUNT_DATA_TIMES" id="209" />
+		<packet name="SMSG_REALM_SPLIT" id="38B" />
+		<packet name="SMSG_CHAR_ENUM" id="3B" />
+		<packet name="SMSG_LOGIN_VERIFY_WORLD" id="236" />
+		<packet name="SMSG_TRADE_STATUS" id="120" />
+		<packet name="SMSG_CLIENTCACHE_VERSION" id="4AB" />
+		<packet name="SMSG_TUTORIAL_FLAGS" id="FD" />
+		<packet name="SMSG_FEATURE_SYSTEM_STATUS" id="3C9" />
+		<packet name="SMSG_MOTD" id="33D" />
+		<packet name="MSG_SET_DUNGEON_DIFFICULTY" id="329" />
+		<packet name="SMSG_SEND_UNLEARN_SPELLS" id="41E" />
+		<packet name="SMSG_INIT_WORLD_STATES" id="2C2" />
+		<packet name="SMSG_BINDPOINTUPDATE" id="155" />
+		<packet name="SMSG_LEARNED_DANCE_MOVES" id="455" />
+		<packet name="SMSG_INSTANCE_DIFFICULTY" id="33B" />
+		<packet name="SMSG_TALENTS_INFO" id="4C0" />
+		<packet name="SMSG_LOGIN_SETTIMESPEED" id="42" />
+		<packet name="SMSG_POWER_UPDATE" id="480" />
+		<packet name="SMSG_COMPRESSED_UPDATE_OBJECT" id="1F6" />
+		<packet name="SMSG_WORLD_STATE_UI_TIMER_UPDATE" id="4F7" />
+		<packet name="SMSG_PLAYED_TIME" id="1CD" />
+		<packet name="SMSG_NAME_QUERY_RESPONSE" id="51" />
+		<packet name="SMSG_QUERY_TIME_RESPONSE" id="1CF" />
+		<packet name="SMSG_ITEM_QUERY_SINGLE_RESPONSE" id="58" />
+		<packet name="SMSG_QUERY_NEXT_MAIL_TIME" id="284" />
+		<packet name="SMSG_ACTION_BUTTONS" id="129" />
+		<packet name="SMSG_INITIAL_SPELLS" id="12A" />
+		<packet name="SMSG_INITIALIZE_FACTIONS" id="122" />
+		<packet name="SMSG_EQUIPMENT_SET_LIST" id="4BC" />
+		<packet name="SMSG_TIME_SYNC_REQ" id="390" />
+		<packet name="SMSG_ALL_ACHIEVEMENT_DATA" id="47D" />
+		<packet name="SMSG_SPELL_GO" id="132" />
+	</opcodelist>
+</opcodes>

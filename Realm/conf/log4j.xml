@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+ Copyright (C) 2012 JMaNGOS <http://jmangos.org/>                                        
+                                                                                         
+ This program is free software; you can redistribute it and/or modify it                 
+ under the terms of the GNU General Public License as published by the                   
+ Free Software Foundation; either version 2 of the License, or (at your                  
+ option) any later version.                                                              
+                                                                                         
+ This program is distributed in the hope that it will be useful, but WITHOUT             
+ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or                   
+ FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for                
+ more details.                                                                           
+                                                                                         
+ You should have received a copy of the GNU General Public License along                 
+ with this program. If not, see <http://www.gnu.org/licenses/>.                          
+-->
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration>
+
+	<!-- Print information to console -->
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.EnhancedPatternLayout">
+			<param name="ConversionPattern" value="%p [%d{dd MMM HH:mm:ss,SSS}] %m%n" />
+		</layout>
+	</appender>
+
+	<!-- Print all that is shown in console to file -->
+	<appender name="CONSOLE_TO_FILE" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="log/console.log" />
+		<param name="append" value="false" />
+		<layout class="org.apache.log4j.EnhancedPatternLayout">
+			<param name="ConversionPattern" value="%p [%d{dd MMM yyyy HH:mm:ss,SSS}] %c:%L %m%n" />
+		</layout>
+	</appender>
+
+	<root>
+		<priority value="info"></priority>
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="CONSOLE_TO_FILE" />
+	</root>
+
+	<categoryFactory
+		class="org.jmangos.commons.log4j.ThrowableAsMessageAwareFactory" />
+
+</log4j:configuration>

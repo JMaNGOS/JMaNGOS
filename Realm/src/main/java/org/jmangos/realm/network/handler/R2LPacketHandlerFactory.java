@@ -29,7 +29,6 @@ import org.jmangos.commons.network.netty.model.PacketList;
 import org.jmangos.commons.network.netty.model.PacketTemplate;
 import org.jmangos.commons.service.ServiceContent;
 
-// TODO: Auto-generated Javadoc
 /**
  * A factory for creating R2LPacketHandler objects.
  */
@@ -46,8 +45,8 @@ public class R2LPacketHandlerFactory extends XmlDataLoader
 	 * Instantiates a new r2 l packet handler factory.
 	 */
 	public R2LPacketHandlerFactory() {
-		addList(loadStaticData(PacketData.class,"./data/packetData/packets.xsd",
-				"./data/packetData/rl-packets.xml"));
+		addList(loadStaticData(PacketData.class,"./conf/packetData/packets.xsd",
+				"./conf/packetData/rl-packets.xml"));
 	}
 
 	/**
@@ -95,28 +94,28 @@ public class R2LPacketHandlerFactory extends XmlDataLoader
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.handlers.PacketHandlerFactory#addPacket(org.wowemu.common.network.model.ReceivablePacket, org.wowemu.common.network.model.State[])
+	 * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#addPacket(org.jmangos.commons.network.model.ReceivablePacket, org.jmangos.commons.network.model.State[])
 	 */
 	public void addPacket(ReceivablePacket packetPrototype, State... states) {
 		cHandler.addPacketOpcode(packetPrototype, states);
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.handlers.PacketHandlerFactory#getServerPacketopCode(org.wowemu.common.network.model.SendablePacket)
+	 * @see org.jmangos.common.network.handlers.PacketHandlerFactory#getServerPacketopCode(org.jmangos.common.network.model.SendablePacket)
 	 */
 	public int getServerPacketopCode(SendablePacket packetClass) {
 		return sHandler.getOpCode(packetClass);
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.handlers.PacketHandlerFactory#handleClientPacket(int, org.wowemu.common.network.model.NetworkChannel)
+	 * @see org.jmangos.common.network.handlers.PacketHandlerFactory#handleClientPacket(int, org.jmangos.common.network.model.NetworkChannel)
 	 */
 	public ReceivablePacket handleClientPacket(int id, NetworkChannel ch) {
 		return cHandler.getPacket(id, ch);
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.handlers.PacketHandlerFactory#addPacket(java.lang.Class, int)
+	 * @see org.jmangos.common.network.handlers.PacketHandlerFactory#addPacket(java.lang.Class, int)
 	 */
 	public void addPacket(Class<? extends SendablePacket> packetPrototype,
 			int opcode) {

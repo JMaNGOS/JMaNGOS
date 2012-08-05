@@ -25,7 +25,6 @@ import org.jmangos.realm.config.Config;
 
 import com.google.inject.Inject;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class RealmNetworkService.
  */
@@ -40,16 +39,17 @@ public class RealmNetworkService extends AbstractNetworkService {
 	private ChannelPipelineFactory r2lPipelineFactory;
 
 	/* (non-Javadoc)
- * @see org.wowemu.common.service.Service#start()
+ * @see org.jmangos.commons.service.Service#start()
  */
 @Override
 	public void start() {
 		createServerChannel(Config.CLIENT_ADDRESS, r2cPipelineFactory);
-		createClientChannel(Config.LOGIN_ADDRESS, r2lPipelineFactory);
+		// not yet checked...
+		//createClientChannel(Config.LOGIN_ADDRESS, r2lPipelineFactory);
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.netty.service.NetworkService#status()
+	 * @see org.jmangos.commons.network.netty.service.NetworkService#status()
 	 */
 	@Override
 	public void status() {
@@ -57,7 +57,7 @@ public class RealmNetworkService extends AbstractNetworkService {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.service.Service#stop()
+	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override
 	public void stop() {

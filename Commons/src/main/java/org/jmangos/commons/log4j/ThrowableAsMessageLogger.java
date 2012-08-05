@@ -64,7 +64,7 @@ public class ThrowableAsMessageLogger extends Logger
 	@Override
 	public void error(Object message)
 	{
-		super.error(((String) message));
+		super.error(message);
 	}
 
 	/* (non-Javadoc)

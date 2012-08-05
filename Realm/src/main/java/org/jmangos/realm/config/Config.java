@@ -37,7 +37,7 @@ public class Config {
 	protected static final Logger log = Logger.getLogger(Config.class);
 	
 	/** The Constant CONFIG_FILE. */
-	public static final String	CONFIG_FILE	= "config/network/realm.network.properties";
+	public static final String	CONFIG_FILE	= "conf/network/realm.network.properties";
 	
 	/** Login Server address to client. */
 	@Property(key = "network.client.address", defaultValue = "*:8085")
@@ -51,7 +51,7 @@ public class Config {
 	@Property(key = "network.compatible", defaultValue = "NONE")
 	public static Compatiple COMPATIBLE;
 	// TODO use this...
-	@Property(key = "network.login.address", defaultValue = "localhost:3724")
+	@Property(key = "network.auth.address", defaultValue = "localhost:3724")
 	public static InetSocketAddress LOGIN_ADDRESS;
 	/**
 	 * Load configuration.
