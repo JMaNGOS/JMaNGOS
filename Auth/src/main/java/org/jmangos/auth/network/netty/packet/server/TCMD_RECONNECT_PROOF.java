@@ -19,7 +19,6 @@ package org.jmangos.auth.network.netty.packet.server;
 import org.jmangos.auth.network.netty.packet.AbstractWoWServerPacket;
 import org.jmangos.commons.network.model.State;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class <tt>TCMD_RECONNECT_PROOF</tt>.
  * 

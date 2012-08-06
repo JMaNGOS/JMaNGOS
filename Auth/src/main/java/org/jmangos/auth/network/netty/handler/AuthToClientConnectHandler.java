@@ -22,36 +22,40 @@ import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.State;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class L2CConnectHandler.
+ * The Class AuthToClientConnectHandler.
  */
-public class L2CConnectHandler implements ConnectHandler{
+public class AuthToClientConnectHandler implements ConnectHandler {
 
 	/** The Constant log. */
-	private static final Logger             log     = Logger.getLogger(L2CConnectHandler.class);
+	private static final Logger log = Logger
+			.getLogger(AuthToClientConnectHandler.class);
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ConnectHandler#onConnect(org.wowemu.common.network.model.NettyNetworkChannel, org.jboss.netty.channel.ChannelHandler)
+	/**
+	 * (non-Javadoc)
+	 * 
+	 * @see org.wowemu.common.network.model.ConnectHandler#onConnect(org.wowemu.common.network.model.NettyNetworkChannel,
+	 *      org.jboss.netty.channel.ChannelHandler)
 	 */
 	@Override
 	public void onConnect(NettyNetworkChannel networkChannel,
 			ChannelHandler handler) {
 		networkChannel.setChannelState(State.CONNECTED);
-		
-		log.info("Accepting connection from: "+ networkChannel.getAddress().getHostName());
-		
+
+		log.info("Accepting connection from: "
+				+ networkChannel.getAddress().getHostName());
+
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wowemu.common.network.model.ConnectHandler#onDisconnect(org.wowemu.common.network.model.NettyNetworkChannel)
 	 */
 	@Override
 	public void onDisconnect(NettyNetworkChannel networkChannel) {
-		log.info("Disconnection : "+ networkChannel.getAddress().getHostName());
-		
+		log.info("Disconnection : " + networkChannel.getAddress().getHostName());
+
 	}
-
-
 
 }

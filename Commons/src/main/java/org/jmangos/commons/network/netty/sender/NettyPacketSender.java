@@ -38,7 +38,7 @@ public class NettyPacketSender implements AbstractPacketSender {
 	 */
 	/** The packet service. */
 	@Inject
-	@Named("l2c")
+	@Named("AuthToClient")
 	private PacketHandlerFactory packetService;
 
 	/* (non-Javadoc)

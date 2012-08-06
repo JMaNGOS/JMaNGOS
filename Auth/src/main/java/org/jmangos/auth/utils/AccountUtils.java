@@ -25,7 +25,6 @@ import org.jmangos.auth.model.Account;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.utils.BigNumber;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class AccountUtils.
  */
@@ -46,7 +45,7 @@ public class AccountUtils {
 	 * @param Ir the ir
 	 * @return the hash map
 	 */
-	public static HashMap<String, BigNumber> setVSFields(String Ir)
+	public static HashMap<String, BigNumber> calculateVSFields(String Ir)
 	{
 		BigNumber I = new BigNumber(Ir);
 		HashMap<String, BigNumber> res = new HashMap<String, BigNumber>();
@@ -59,10 +58,10 @@ public class AccountUtils {
 			hash[i] = hash[length - 1 - i];
 			hash[length - 1 - i] = j;
 		}
-		System.out.println("passhash:"+new BigInteger(1, hash).toString(16).toUpperCase());
+		//System.out.println("passhash:"+new BigInteger(1, hash).toString(16).toUpperCase());
 		BigNumber s = new BigNumber();
 		s.setRand(32);
-		System.out.println("s: " + s.asHexStr());
+		//System.out.println("s: " + s.asHexStr());
 		
 		MessageDigest sha = null;
 		try
@@ -78,9 +77,9 @@ public class AccountUtils {
 		sha.update(hash);
 		BigNumber x = new BigNumber();
 		x.setBinary(sha.digest());
-		System.out.println("x: " + x.asHexStr());
+		//System.out.println("x: " + x.asHexStr());
 		BigNumber verifier = g.modPow(x, N);
-		System.out.println("v: " + verifier.asHexStr());
+		//System.out.println("v: " + verifier.asHexStr());
 		res.put("v", verifier);
 		res.put("s", s);
 		return res;

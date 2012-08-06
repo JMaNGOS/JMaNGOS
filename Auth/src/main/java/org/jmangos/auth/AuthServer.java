@@ -32,13 +32,12 @@ import org.jmangos.commons.threadpool.ThreadPoolManager;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class loginserver.
  *
- * @author minimajack
+ * @author MinimaJack
  */
-public class loginserver {
+public class AuthServer {
 
 	/**
 	 * The main method.

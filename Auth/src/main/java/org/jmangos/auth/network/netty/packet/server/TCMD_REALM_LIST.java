@@ -18,13 +18,12 @@ package org.jmangos.auth.network.netty.packet.server;
 
 import org.apache.log4j.Logger;
 import org.jmangos.auth.model.Account;
-import org.jmangos.auth.model.World;
+import org.jmangos.auth.model.Realm;
 import org.jmangos.auth.network.netty.packet.AbstractWoWServerPacket;
 import org.jmangos.auth.service.WorldListService;
 
 import javolution.util.FastMap;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TCMD_REALM_LIST.
  */
@@ -38,14 +37,13 @@ public class TCMD_REALM_LIST extends AbstractWoWServerPacket {
 	private WorldListService worldlist;
 
 	/**
-	 * Instantiates a new tCM d_ real m_ list.
+	 * Instantiates a new TCMD_REALM_LIST.
 	 */
 	public TCMD_REALM_LIST() {
-
 	}
 
 	/**
-	 * Instantiates a new tCM d_ real m_ list.
+	 * Instantiates a new TCMD_REALM_LIST.
 	 *
 	 * @param worldlist the worldlist
 	 */
@@ -54,7 +52,7 @@ public class TCMD_REALM_LIST extends AbstractWoWServerPacket {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+	 * @see org.jmangos.common.network.model.SendablePacket#writeImpl()
 	 */
 	@Override
 	protected void writeImpl() {
@@ -64,17 +62,17 @@ public class TCMD_REALM_LIST extends AbstractWoWServerPacket {
 		writeH(worldlist.getByteSize());
 		writeD(0);
 		writeH(worldlist.getSize());
-		for (World world : worldlist.getWorlds().values()) {
-			writeC(world.getIcon());
-			writeC((world.getAllowedSecurityLevel() > ((Account) (getChannel()
+		for (Realm realm : worldlist.getWorlds().values()) {
+			writeC(realm.getIcon());
+			writeC((realm.getAllowedSecurityLevel() > ((Account) (getChannel()
 					.getChanneledObject())).getAccessLevel()) ? 1 : 0);
-			writeC(world.getRealmflags());
-			writeS(world.getName());
-			writeS(world.getAddress());
-			writeF(world.getPopulation());
-			writeC((amountofCharacters.containsKey(world.getId())) ? amountofCharacters
-					.get(world.getId()) : 0);
-			writeC(world.getTimezone());
+			writeC(realm.getRealmflags());
+			writeS(realm.getName());
+			writeS(realm.getAddress());
+			writeF(realm.getPopulation());
+			writeC((amountofCharacters.containsKey(realm.getId())) ? amountofCharacters
+					.get(realm.getId()) : 0);
+			writeC(realm.getTimezone());
 			writeC(0x2C);
 		}
 		writeH(0x0010);

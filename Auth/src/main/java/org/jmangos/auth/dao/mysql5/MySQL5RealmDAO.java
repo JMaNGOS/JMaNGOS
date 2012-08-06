@@ -20,64 +20,62 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.jmangos.auth.dao.WorldDAO;
-import org.jmangos.auth.model.World;
+import org.jmangos.auth.dao.RealmDAO;
+import org.jmangos.auth.model.Realm;
 import org.jmangos.commons.database.DB;
 import org.jmangos.commons.database.ParamReadStH;
 import org.jmangos.commons.database.ReadStH;
 
 import javolution.util.FastMap;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class MySQL5WorldDAO.
- *
- * @author minimajack
- * @desc World DAO implementation for MySQL5
+ * The Class MySQL5RealmDAO.
+ * 
+ * @author MinimaJack
+ * 
+ * @desc Realm DAO implementation for MySQL5
  */
-public class MySQL5WorldDAO extends WorldDAO {
+public class MySQL5RealmDAO extends RealmDAO {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public FastMap<Integer, World> getAllWorlds() {
+	public FastMap<Integer, Realm> getAllRealms() {
 
-		final FastMap<Integer, World> result = new FastMap<Integer, World>();
-		DB
-				.select(
-						"SELECT * FROM realmd.realmlist WHERE (realmflags & 1) = 0 ORDER BY name;",
-						new ReadStH() {
-							@Override
-							public void handleRead(ResultSet resultSet)
-									throws SQLException {
-								while (resultSet.next()) {
-									World world = new World();
-									world.setId(resultSet.getInt("id"));
-									world.setName(resultSet.getString("name"));
-									world.setAddress(resultSet
-											.getString("address"));
-									world.setPort(resultSet.getInt("port"));
-									world.setIcon(resultSet.getInt("icon"));
-									world.setRealmflags(resultSet
-											.getInt("realmflags"));
-									world.setTimezone(resultSet
-											.getInt("timezone"));
-									world.setAllowedSecurityLevel(resultSet
-											.getInt("allowedSecurityLevel"));
-									world.setPopulation(resultSet
-											.getFloat("population"));
-									world.setRealmbuilds(resultSet
-											.getString("realmbuilds"));
-									result.put(world.getId(), world);
-								}
-							}
-						});
+		final FastMap<Integer, Realm> result = new FastMap<Integer, Realm>();
+		DB.select(
+				"SELECT * FROM realmd.realmlist WHERE (realmflags & 1) = 0 ORDER BY name;",
+				new ReadStH() {
+					@Override
+					public void handleRead(ResultSet resultSet)
+							throws SQLException {
+						while (resultSet.next()) {
+							Realm realm = new Realm();
+							realm.setId(resultSet.getInt("id"));
+							realm.setName(resultSet.getString("name"));
+							realm.setAddress(resultSet.getString("address"));
+							realm.setPort(resultSet.getInt("port"));
+							realm.setIcon(resultSet.getInt("icon"));
+							realm.setRealmflags(resultSet.getInt("realmflags"));
+							realm.setTimezone(resultSet.getInt("timezone"));
+							realm.setAllowedSecurityLevel(resultSet
+									.getInt("allowedSecurityLevel"));
+							realm.setPopulation(resultSet
+									.getFloat("population"));
+							realm.setRealmbuilds(resultSet
+									.getString("realmbuilds"));
+							result.put(realm.getId(), realm);
+						}
+					}
+				});
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.login.dao.WorldDAO#getAmountCharacters(java.lang.Integer)
+	/**
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jmangos.login.dao.RealmDAO#getAmountCharacters(java.lang.Integer)
 	 */
 	public FastMap<Integer, Integer> getAmountCharacters(final Integer id) {
 		final FastMap<Integer, Integer> result = new FastMap<Integer, Integer>();
@@ -94,8 +92,8 @@ public class MySQL5WorldDAO extends WorldDAO {
 					public void handleRead(ResultSet resultSet)
 							throws SQLException {
 						while (resultSet.next()) {
-							result.put(resultSet.getInt("realmid"), resultSet
-									.getInt("numchars"));
+							result.put(resultSet.getInt("realmid"),
+									resultSet.getInt("numchars"));
 						}
 					}
 

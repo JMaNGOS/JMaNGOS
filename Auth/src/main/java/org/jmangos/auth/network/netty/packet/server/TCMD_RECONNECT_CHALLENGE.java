@@ -20,7 +20,6 @@ import org.jmangos.auth.model.Account;
 import org.jmangos.auth.network.netty.packet.AbstractWoWServerPacket;
 import org.jmangos.commons.utils.BigNumber;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class <tt>TCMD_RECONNECT_CHALLENGE</tt>.
  */

@@ -21,8 +21,8 @@ import javax.inject.Inject;
 import javolution.util.FastMap;
 
 import org.apache.log4j.Logger;
-import org.jmangos.auth.dao.WorldDAO;
-import org.jmangos.auth.model.World;
+import org.jmangos.auth.dao.RealmDAO;
+import org.jmangos.auth.model.Realm;
 import org.jmangos.commons.service.Service;
 
 
@@ -33,23 +33,22 @@ public class WorldListService implements Service {
 	private static final Logger log = Logger.getLogger(WorldListService.class);
 
 	/**
-	 * Map with accounts that are active on LoginServer or joined GameServer and
-	 * are not authenticated yet.
+	 * Map with realms
 	 */
-	private FastMap<Integer, World> worlds;
+	private FastMap<Integer, Realm> realms;
 
 	/** The byte size. */
 	private static int byteSize;
 
 	/** The WORL ddao. */
 	@Inject
-	private WorldDAO WORLDdao;
+	private RealmDAO WORLDdao;
 
 	/**
 	 * Instantiates a new world list service.
 	 */
 	public WorldListService() {
-		worlds = new FastMap<Integer, World>().shared();
+		realms = new FastMap<Integer, Realm>().shared();
 	}
 
 	/**
@@ -57,8 +56,8 @@ public class WorldListService implements Service {
 	 *
 	 * @return the worlds
 	 */
-	public FastMap<Integer, World> getWorlds() {
-		return worlds;
+	public FastMap<Integer, Realm> getWorlds() {
+		return realms;
 	}
 
 	/**
@@ -66,7 +65,7 @@ public class WorldListService implements Service {
 	 */
 	public void start() {
 		update();
-		log.debug("WorldList loaded " + worlds.size() + " realms.");
+		log.debug("WorldList loaded " + realms.size() + " realms.");
 
 	}
 
@@ -78,7 +77,7 @@ public class WorldListService implements Service {
 	 */
 	public void reload() {
 		update();
-		log.debug("WorldList reloaded " + worlds.size() + " realms.");
+		log.debug("RealmList reloaded. Loaded " + realms.size() + " realms.");
 
 	}
 	
@@ -86,7 +85,8 @@ public class WorldListService implements Service {
 	 * Update.
 	 */
 	private void update(){
-		worlds = WORLDdao.getAllWorlds();
+		realms = WORLDdao.getAllRealms();
+		// update byte size all realms
 		setByteSize(calculateWorldsSize());	
 	}
 	
@@ -114,7 +114,7 @@ public class WorldListService implements Service {
 	 * @return the size
 	 */
 	public int getSize() {
-		return worlds.size();
+		return realms.size();
 	}
 
 	/**
@@ -124,8 +124,8 @@ public class WorldListService implements Service {
 	 */
 	public int calculateWorldsSize() {
 		int value = 8;
-		for (World world : worlds.values()) {
-			value += world.getSize();
+		for (Realm realm : realms.values()) {
+			value += realm.getSize();
 		}
 		return value;
 	}
@@ -140,17 +140,17 @@ public class WorldListService implements Service {
 		return getWorldDAO().getAmountCharacters(id);
 	}
 
-	private WorldDAO getWorldDAO() {
+	private RealmDAO getWorldDAO() {
 		return WORLDdao;
 	}
 
-	/*
+	/**
 	 * (non-Javadoc)
-	 * @see org.wowemu.common.service.Service#stop()
+	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override
 	public void stop() {
-		worlds.clear();
+		realms.clear();
 	}
 
 }

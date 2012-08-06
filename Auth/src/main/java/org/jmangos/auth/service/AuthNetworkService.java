@@ -25,48 +25,45 @@ import org.jmangos.commons.network.netty.service.AbstractNetworkService;
 
 import com.google.inject.Inject;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class LoginNetworkService.
  */
-public class LoginNetworkService extends AbstractNetworkService {
-
-	/** The l2c pipeline factory. */
+public class AuthNetworkService extends AbstractNetworkService {
+	/** The auth to client pipeline factory. */
 	@Inject
-	@Named("l2c")
-	private ChannelPipelineFactory l2cPipelineFactory;
+	@Named("AuthToClient")
+	private ChannelPipelineFactory authToClientPipelineFactory;
 
-	/** The l2r pipeline factory. */
-	@SuppressWarnings("unused")
+	/** The auth to realm pipeline factory. */
 	@Inject
-	@Named("l2r")
-	private ChannelPipelineFactory l2rPipelineFactory;
+	@Named("AuthToRealm")
+	private ChannelPipelineFactory authToRealmPipelineFactory;
 
-	/*
+	/**
 	 * (non-Javadoc)
 	 * 
-	 * @see org.wowemu.common.service.Service#start()
+	 * @see org.jmangos.commons.service.Service#start()
 	 */
 	@Override
 	public void start() {
-		createServerChannel(Config.CLIENT_ADDRESS, l2cPipelineFactory);
-		// createServerChannel(Config.REALM_ADDRESS, l2rPipelineFactory);
+		createServerChannel(Config.CLIENT_ADDRESS, authToClientPipelineFactory);
+		// createServerChannel(Config.REALM_ADDRESS, authToRealmPipelineFactory);
 	}
 
-	/*
+	/**
 	 * (non-Javadoc)
 	 * 
-	 * @see org.wowemu.common.network.netty.service.NetworkService#status()
+	 * @see org.jmangos.commons.network.netty.service.NetworkService#status()
 	 */
 	@Override
 	public void status() {
 		throw new NotImplementedException();
 	}
 
-	/*
+	/**
 	 * (non-Javadoc)
 	 * 
-	 * @see org.wowemu.common.service.Service#stop()
+	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override
 	public void stop() {

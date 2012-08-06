@@ -26,66 +26,68 @@ import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CMD_AUTH_LOGON_CHALLENGE.
  */
 public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
-	
+
 	/** The Constant logger. */
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger
 			.getLogger(CMD_AUTH_LOGON_CHALLENGE.class);
-	
+
 	/** The sender. */
 	@Inject
 	private AbstractPacketSender sender;
-	
+
 	/** The account service. */
 	@Inject
 	AccountService accountService;
-	
+
 	/** The login. */
 	private String login;
 
 	/**
-	 * Constructs new instance of <tt>R_CMD_AUTH_LOGON_CHALLENGE</tt> packet.
-	 *
-	 * @param opcode the opcode
+	 * Constructs new instance of <tt>CMD_AUTH_LOGON_CHALLENGE</tt> packet.
+	 * 
+	 * @param opcode
+	 *            the opcode
 	 */
-	
+
 	public CMD_AUTH_LOGON_CHALLENGE(int opcode) {
 		super(opcode);
 	}
-	
+
 	/**
-	 * Instantiates a new cM d_ aut h_ logo n_ challenge.
+	 * Instantiates a new CMD_AUTH_LOGON_CHALLENGE.
 	 */
 	public CMD_AUTH_LOGON_CHALLENGE() {
 		super();
-	}	
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#getMinimumLength()
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jmangos.commons.network.model.ReceivablePacket#getMinimumLength()
 	 */
-	public int getMinimumLength()
-	{
+	public int getMinimumLength() {
 		return 0;
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unused")
 	@Override
-	protected void readImpl()
-	{
+	protected void readImpl() {
 		int error = readC();
-		int size  = readH(); 
+		int size = readH();
 		byte[] gamename = readB(4);
 		int version1 = readC();
 		int version2 = readC();
 		int version3 = readC();
-		int build = readH(); 
+		int build = readH();
 		byte[] platform = readB(4);
 		byte[] os = readB(4);
 		byte[] country = readB(4);
@@ -97,17 +99,20 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
 
 	/**
 	 * {@inheritDoc}
-	 */ 
+	 */
 	@Override
 	protected void runImpl() {
-		WoWAuthResponse response = accountService.login(login, (NettyNetworkChannel)getClient());
-		
+		WoWAuthResponse response = accountService.login(login,
+				(NettyNetworkChannel) getClient());
+
 		switch (response) {
 		case WOW_FAIL_BANNED:
-			sender.sendAndClose(this.getClient() , new TCMD_AUTH_LOGON_CHALLENGE(response));
+			sender.sendAndClose(this.getClient(),
+					new TCMD_AUTH_LOGON_CHALLENGE(response));
 			break;
 		default:
-			sender.send(this.getClient() ,new TCMD_AUTH_LOGON_CHALLENGE(response));
+			sender.send(this.getClient(), new TCMD_AUTH_LOGON_CHALLENGE(
+					response));
 			break;
 		}
 	}

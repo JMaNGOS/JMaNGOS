@@ -34,7 +34,6 @@ import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.commons.utils.BigNumber;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CMD_AUTH_LOGON_PROOF.
  */
@@ -56,7 +55,7 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 	private WoWAuthResponse response;
 
 	/**
-	 * Instantiates a new cM d_ aut h_ logo n_ proof.
+	 * Instantiates a new CMD_AUTH_LOGON_PROOF.
 	 */
 	public CMD_AUTH_LOGON_PROOF() {
 		super();
@@ -73,10 +72,10 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 		int numberofKey = readC();
 		int securityFlag = readC();
 		
-		logger.info("a length " + a.length);
-		logger.info("a value " + new BigInteger(1,a).toString(16).toUpperCase());
-		logger.info("m1 length " + m1.length);
-		logger.info("m1 value " + new BigInteger(1,m1).toString(16).toUpperCase());
+		logger.debug("a length " + a.length);
+		logger.debug("a value " + new BigInteger(1,a).toString(16).toUpperCase());
+		logger.debug("m1 length " + m1.length);
+		logger.debug("m1 value " + new BigInteger(1,m1).toString(16).toUpperCase());
 		MessageDigest sha = null;
 		try {
 			sha = MessageDigest.getInstance("SHA-1");
@@ -85,15 +84,15 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 			return;
 		}
 		BigNumber B = getAccount().getcryptoB();
-		logger.info("B value " + B.asHexStr());
+		logger.debug("B value " + B.asHexStr());
 		sha.update(a);
 		sha.update(B.asByteArray(32));
 		BigNumber u = new BigNumber();
 		u.setBinary(sha.digest());
-		logger.info("u value" + u.asHexStr());
+		logger.debug("u value" + u.asHexStr());
 		BigNumber A = new BigNumber();
 		A.setBinary(a);
-		logger.info("A:"+A.asHexStr());	
+		logger.debug("A:"+A.asHexStr());	
 		BigNumber S = new BigNumber();
 		S = A.multiply(( getAccount().getV_crypto().modPow(u, AccountUtils.N))).modPow(
 				getAccount().getB() , AccountUtils.N);
@@ -120,14 +119,12 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 		for (int i = 0; i < 20; ++i) {
 			vK[i * 2 + 1] = t2[i];
 		}
-		//BigNumber K = new BigNumber();
-		//K.setBinary(vK);
 
 		byte[] hash = new byte[20];
-		logger.info("N:"+AccountUtils.N.asHexStr());
+		logger.debug("N:"+AccountUtils.N.asHexStr());
 		sha.update(AccountUtils.N.asByteArray(32));
 		hash = sha.digest();
-		logger.info("hash:"+new BigInteger(1,hash).toString(16).toUpperCase());
+		logger.debug("hash:"+new BigInteger(1,hash).toString(16).toUpperCase());
 		byte[] gH = new byte[20];
 		sha.update(AccountUtils.g.asByteArray(1));
 		gH = sha.digest();

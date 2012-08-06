@@ -29,7 +29,6 @@ import java.util.Set;
 import org.jmangos.auth.model.BanIp;
 import org.jmangos.commons.database.dao.DAO;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class BanIpDAO.
  * 

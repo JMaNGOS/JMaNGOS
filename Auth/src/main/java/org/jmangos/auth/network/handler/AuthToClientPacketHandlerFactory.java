@@ -14,46 +14,23 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.auth.dao;
+package org.jmangos.auth.network.handler;
 
-import org.jmangos.auth.model.World;
-import org.jmangos.commons.database.dao.DAO;
-
-import javolution.util.FastMap;
+import org.jmangos.commons.network.handlers.AbstractPacketHandlerFactory;
+import org.jmangos.commons.network.netty.model.PacketData;
 
 /**
- * The Class WorldDAO.
- * 
+ *
  * @author MinimaJack
- * 
  */
-public abstract class WorldDAO implements DAO {
+public class AuthToClientPacketHandlerFactory extends AbstractPacketHandlerFactory {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.wowemu.common.database.dao.DAO#getClassName()
+	/**
+	 * Instantiates a new l2 c packet handler factory.
 	 */
-	@Override
-	public String getClassName() {
-		return WorldDAO.class.getName();
+	public AuthToClientPacketHandlerFactory() {
+		addList(loadStaticData(PacketData.class,
+				"./conf/packetData/packets.xsd",
+				"./conf/packetData/lc-packets.xml"));
 	}
-
-	/**
-	 * Gets the all worlds.
-	 * 
-	 * @return the all worlds
-	 */
-	public abstract FastMap<Integer, World> getAllWorlds();
-
-	/**
-	 * Gets the amount characters.
-	 * 
-	 * @param id
-	 *            the id
-	 * @return the amount characters
-	 */
-	public abstract FastMap<Integer, Integer> getAmountCharacters(
-			final Integer id);
-
 }

@@ -20,7 +20,7 @@ package org.jmangos.auth.model;
 /**
  * The Class World.
  */
-public class World {
+public class Realm {
 	  
   	/** The id. */
   	private int id;
@@ -53,7 +53,7 @@ public class World {
   	private String realmbuilds;
 	  
 	/**
-	 * Instantiates a new world.
+	 * Instantiates a new realm.
 	 *
 	 * @param id the id
 	 * @param name the name
@@ -66,7 +66,7 @@ public class World {
 	 * @param population the population
 	 * @param realmbuilds the realmbuilds
 	 */
-	public World(int id, String name, String address, int port, int icon,
+	public Realm(int id, String name, String address, int port, int icon,
 			int realmflags, int timezone, int allowedSecurityLevel,
 			float population, String realmbuilds) {
 		this.id = id;
@@ -84,7 +84,7 @@ public class World {
 	/**
 	 * Instantiates a new world.
 	 */
-	public World() {
+	public Realm() {
 		
 	}
 	

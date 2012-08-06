@@ -30,38 +30,44 @@ import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.netty.receiver.NettyPacketReceiver;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class L2CChannelHandler.
- *
+ * The Class AuthToClientChannelHandler.
+ * 
  * @author minimajack
  */
-public class L2CChannelHandler extends SimpleChannelUpstreamHandler {
-	
+public class AuthToClientChannelHandler extends SimpleChannelUpstreamHandler {
+
 	/** The receiver. */
 	private final NettyPacketReceiver receiver;
-	
+
 	/** The network channel. */
 	private NettyNetworkChannel networkChannel;
-	
+
 	/** The address. */
 	@SuppressWarnings("unused")
 	private InetSocketAddress address;
-	
+
 	/** The packet service. */
 	private final PacketHandlerFactory packetService;
 
 	/** The connection handler. */
 	private ConnectHandler connectionHandler;
 
+	/** The Constant log. */
+	@SuppressWarnings("unused")
+	private static final Logger log = Logger.getLogger(AuthToClientChannelHandler.class);
+
 	/**
-	 * Instantiates a new l2 c channel handler.
-	 *
-	 * @param packetService the packet service
-	 * @param connectionHandler the connection handler
-	 * @param receiver the receiver
+	 * Instantiates a new Auth to Client channel handler.
+	 * 
+	 * @param packetService
+	 *            the packet service
+	 * @param connectionHandler
+	 *            the connection handler
+	 * @param receiver
+	 *            the receiver
 	 */
-	public L2CChannelHandler(PacketHandlerFactory packetService,
+	public AuthToClientChannelHandler(PacketHandlerFactory packetService,
 			ConnectHandler connectionHandler, NettyPacketReceiver receiver) {
 		super();
 
@@ -70,12 +76,11 @@ public class L2CChannelHandler extends SimpleChannelUpstreamHandler {
 		this.connectionHandler = connectionHandler;
 	}
 
-	/** The Constant log. */
-	@SuppressWarnings("unused")
-	private static final Logger log = Logger.getLogger(L2CChannelHandler.class);
-
-	/* (non-Javadoc)
-	 * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelConnected(org.jboss.netty.channel.ChannelHandlerContext, org.jboss.netty.channel.ChannelStateEvent)
+	/**
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelConnected(org.jboss.netty.channel.ChannelHandlerContext,
+	 *      org.jboss.netty.channel.ChannelStateEvent)
 	 */
 	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e)
@@ -85,12 +90,11 @@ public class L2CChannelHandler extends SimpleChannelUpstreamHandler {
 		connectionHandler.onConnect(networkChannel, this);
 	}
 
-	/*
+	/**
 	 * (non-Javadoc)
-	 * @see
-	 * org.jboss.netty.channel.SimpleChannelUpstreamHandler#messageReceived(
-	 * org.jboss.netty.channel.ChannelHandlerContext,
-	 * org.jboss.netty.channel.MessageEvent)
+	 * 
+	 * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#messageReceived(org.jboss.netty.channel.ChannelHandlerContext,
+	 *      org.jboss.netty.channel.MessageEvent)
 	 */
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) {
@@ -98,8 +102,11 @@ public class L2CChannelHandler extends SimpleChannelUpstreamHandler {
 				networkChannel);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelDisconnected(org.jboss.netty.channel.ChannelHandlerContext, org.jboss.netty.channel.ChannelStateEvent)
+	/**
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelDisconnected(org.jboss.netty.channel.ChannelHandlerContext,
+	 *      org.jboss.netty.channel.ChannelStateEvent)
 	 */
 	@Override
 	public void channelDisconnected(ChannelHandlerContext ctx,
@@ -107,8 +114,11 @@ public class L2CChannelHandler extends SimpleChannelUpstreamHandler {
 		connectionHandler.onDisconnect(networkChannel);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#exceptionCaught(org.jboss.netty.channel.ChannelHandlerContext, org.jboss.netty.channel.ExceptionEvent)
+	/**
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#exceptionCaught(org.jboss.netty.channel.ChannelHandlerContext,
+	 *      org.jboss.netty.channel.ExceptionEvent)
 	 */
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {

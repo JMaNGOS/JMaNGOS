@@ -28,25 +28,27 @@ import org.jmangos.auth.model.BanIp;
 import org.jmangos.commons.config.Compatiple;
 import org.jmangos.commons.service.Service;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class BanIpService.
+ * 
+ * @author MinimaJack
  */
 public class BanIpService implements Service {
 	/**
 	 * Logger for this class.
 	 */
 	private static final Logger log = Logger.getLogger(BanIpService.class);
-	
+
 	/** The ban ip dao. */
 	@Inject
 	private BanIpDAO banIpDAO;
-	
+
 	/** List of banned ip addresses. */
 	private static Set<BanIp> banList;
 
-	/*
+	/**
 	 * (non-Javadoc)
+	 * 
 	 * @see org.wowemu.common.service.Service#start()
 	 */
 	@Override
@@ -64,8 +66,9 @@ public class BanIpService implements Service {
 
 	/**
 	 * Checks if is banned.
-	 *
-	 * @param ip the ip
+	 * 
+	 * @param ip
+	 *            the ip
 	 * @return true, if is banned
 	 */
 	public boolean isBanned(String ip) {
@@ -85,8 +88,9 @@ public class BanIpService implements Service {
 
 	/**
 	 * Ban ip.
-	 *
-	 * @param ip the ip
+	 * 
+	 * @param ip
+	 *            the ip
 	 * @return true, if successful
 	 */
 	public boolean banIp(String ip) {
@@ -95,9 +99,11 @@ public class BanIpService implements Service {
 
 	/**
 	 * Bans ip.
-	 *
-	 * @param ip ip to ban
-	 * @param expireTime ban expiration time
+	 * 
+	 * @param ip
+	 *            ip to ban
+	 * @param expireTime
+	 *            ban expiration time
 	 * @return was ip banned or not
 	 */
 	public boolean banIp(String ip, Long expireTime) {
@@ -148,8 +154,9 @@ public class BanIpService implements Service {
 		return false;
 	}
 
-	/*
+	/**
 	 * (non-Javadoc)
+	 * 
 	 * @see org.wowemu.common.service.Service#stop()
 	 */
 	@Override

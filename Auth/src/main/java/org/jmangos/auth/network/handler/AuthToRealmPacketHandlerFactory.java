@@ -19,22 +19,19 @@ package org.jmangos.auth.network.handler;
 import org.jmangos.commons.network.handlers.AbstractPacketHandlerFactory;
 import org.jmangos.commons.network.netty.model.PacketData;
 
-// TODO: Auto-generated Javadoc
 /**
- * A factory for creating L2CPacketHandler objects.
- */
-/**
+ * 
  * @author MinimaJack
  *
  */
-public class L2CPacketHandlerFactory extends AbstractPacketHandlerFactory {
+public class AuthToRealmPacketHandlerFactory extends AbstractPacketHandlerFactory {
 
 	/**
-	 * Instantiates a new l2 c packet handler factory.
+	 * Instantiates a new l2 r packet handler factory.
 	 */
-	public L2CPacketHandlerFactory() {
+	public AuthToRealmPacketHandlerFactory() {
 		addList(loadStaticData(PacketData.class,
 				"./conf/packetData/packets.xsd",
-				"./conf/packetData/lc-packets.xml"));
+				"./conf/packetData/lr-packets.xml"));
 	}
 }

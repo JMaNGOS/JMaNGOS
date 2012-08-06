@@ -25,7 +25,6 @@ import org.jmangos.auth.service.AccountService;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CMD_RECONNECT_CHALLENGE.
  */
@@ -48,14 +47,14 @@ public class CMD_RECONNECT_CHALLENGE extends AbstractWoWClientPacket {
 	private String login;
 
 	/**
-	 * Instantiates a new cM d_ reconnec t_ challenge.
+	 * Instantiates a new CMD_RECONNECT_CHALLENGE.
 	 */
 	public CMD_RECONNECT_CHALLENGE() {
 		super();
 	}	
 	
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#getMinimumLength()
+	 * @see org.jmangos.commons.network.model.ReceivablePacket#getMinimumLength()
 	 */
 	public int getMinimumLength()
 	{

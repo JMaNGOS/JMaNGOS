@@ -28,27 +28,26 @@ import org.jmangos.auth.network.netty.packet.server.TCMD_RECONNECT_PROOF;
 import org.jmangos.auth.service.AccountService;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CMD_RECONNECT_PROOF.
  */
 public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
-	
+
 	/** The Constant logger. */
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger
 			.getLogger(CMD_RECONNECT_PROOF.class);
-	
+
 	/** The sender. */
 	@Inject
 	private AbstractPacketSender sender;
-	
+
 	/** The account service. */
 	@Inject
 	private AccountService accountService;
 
 	/**
-	 * Instantiates a new cM d_ reconnec t_ proof.
+	 * Instantiates a new CMD_RECONNECT_PROOF.
 	 */
 	public CMD_RECONNECT_PROOF() {
 		super();
@@ -72,7 +71,8 @@ public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
 			e.printStackTrace();
 			return;
 		}
-		String SessionKey = accountService.getSessionKey(getAccount().getName());
+		String SessionKey = accountService
+				.getSessionKey(getAccount().getName());
 
 		sha.update(getAccount().getName().getBytes());
 		sha.update(R1);
@@ -80,7 +80,6 @@ public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
 		sha.update(convertMangosSessionKey(SessionKey));
 
 		if (Arrays.equals(sha.digest(), R2)) {
-
 			sender.send(this.getClient(), new TCMD_RECONNECT_PROOF());
 		} else
 			getChannel().close();
@@ -92,21 +91,23 @@ public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
 	@Override
 	protected void runImpl() {
 	}
-	
+
 	/**
-	 * Convert mangos session key.
-	 *
-	 * @param hexkey the hexkey
+	 * Convert to mangos session key.
+	 * 
+	 * @param hexkey
+	 *            
 	 * @return the byte[]
 	 */
-	private byte[] convertMangosSessionKey(String hexkey){
+	private byte[] convertMangosSessionKey(String hexkey) {
 		int len = hexkey.length();
 		byte[] data = new byte[len / 2];
 		for (int i = 0; i < len; i += 2) {
-			data[ (len - i) / 2 - 1 ] = (byte) ((Character.digit(hexkey.charAt(i), 16) << 4) + Character
-					.digit(hexkey.charAt(i + 1), 16));
+			data[(len - i) / 2 - 1] = (byte) ((Character.digit(
+					hexkey.charAt(i), 16) << 4) + Character.digit(
+					hexkey.charAt(i + 1), 16));
 		}
 		return data;
-		
+
 	}
 }

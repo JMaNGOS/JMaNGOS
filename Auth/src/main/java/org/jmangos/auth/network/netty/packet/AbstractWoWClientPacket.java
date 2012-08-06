@@ -39,11 +39,9 @@ import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.ReceivablePacket;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractWoWClientPacket.
  *
- * @author Mr. Poke
  */
 public abstract class AbstractWoWClientPacket extends ReceivablePacket
 {
@@ -60,7 +58,7 @@ public abstract class AbstractWoWClientPacket extends ReceivablePacket
 	}
 	
 	/**
-	 * Instantiates a new abstract wo w client packet.
+	 * Instantiates a new abstract wow client packet.
 	 */
 	public AbstractWoWClientPacket()
 	{

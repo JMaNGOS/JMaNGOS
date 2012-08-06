@@ -21,9 +21,6 @@ import org.jmangos.auth.network.netty.packet.AbstractWoWServerPacket;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.model.State;
 
-
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class TCMD_AUTH_LOGON_PROOF.
  */
@@ -33,7 +30,7 @@ public class TCMD_AUTH_LOGON_PROOF extends AbstractWoWServerPacket {
 	private WoWAuthResponse response;
 	
 	/**
-	 * Instantiates a new tCM d_ aut h_ logo n_ proof.
+	 * Instantiates a new TCMD_AUTH_LOGON_PROOF.
 	 */
 	public TCMD_AUTH_LOGON_PROOF() {
 	}
@@ -41,7 +38,7 @@ public class TCMD_AUTH_LOGON_PROOF extends AbstractWoWServerPacket {
 	/**
 	 * Constructs new instance of <tt>T_CMD_AUTH_LOGON_PROOF</tt> packet.
 	 *
-	 * @param response the response
+	 * @param response the WoWAuthResponse
 	 */
 	public TCMD_AUTH_LOGON_PROOF(WoWAuthResponse response) {
 		this.response = response;

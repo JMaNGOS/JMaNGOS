@@ -20,7 +20,6 @@ import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.SendablePacket;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractWoWServerPacket.
  */

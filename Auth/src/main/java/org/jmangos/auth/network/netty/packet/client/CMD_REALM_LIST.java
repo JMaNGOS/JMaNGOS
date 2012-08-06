@@ -23,7 +23,6 @@ import org.jmangos.auth.network.netty.packet.server.TCMD_REALM_LIST;
 import org.jmangos.auth.service.WorldListService;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CMD_REALM_LIST.
  */
@@ -40,7 +39,7 @@ public class CMD_REALM_LIST extends AbstractWoWClientPacket {
 	 * {@inheritDoc}
 	 */
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#getMinimumLength()
+	 * @see org.jmangos.common.network.model.ReceivablePacket#getMinimumLength()
 	 */
 	@Override
 	public int getMinimumLength() {
@@ -48,7 +47,7 @@ public class CMD_REALM_LIST extends AbstractWoWClientPacket {
 	}
 
 	/**
-	 * Instantiates a new cM d_ real m_ list.
+	 * Instantiates a new CMD_REALM_LIST.
 	 */
 	public CMD_REALM_LIST() {
 		super();
@@ -59,7 +58,6 @@ public class CMD_REALM_LIST extends AbstractWoWClientPacket {
 	@Override
 	protected void readImpl()
 	{
-		
 		readB(getAvaliableBytes());
 	}
 
@@ -68,6 +66,6 @@ public class CMD_REALM_LIST extends AbstractWoWClientPacket {
 	 */
 	@Override
 	protected void runImpl() {
-		sender.send(this.getClient() ,new TCMD_REALM_LIST(worldlist));
+		sender.send(getClient() ,new TCMD_REALM_LIST(worldlist));
 	}
 }

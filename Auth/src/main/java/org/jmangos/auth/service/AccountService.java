@@ -27,9 +27,9 @@ import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.utils.BigNumber;
 
-// TODO: Auto-generated Javadoc
 /**
  * This class is responsible for controlling all account actions.
+ * @author MinimaJack
  */
 public class AccountService {
 	
@@ -71,7 +71,7 @@ public class AccountService {
 		channelHandler.setChanneledObject(account);
 		if (account.getV().length() != 32 * 2
 				|| account.getS().length() != 32 * 2) {
-			variable = AccountUtils.setVSFields(account.getPasswordHash());
+			variable = AccountUtils.calculateVSFields(account.getPasswordHash());
 			s = variable.get("s");
 			v = variable.get("v");
 			updateSV(account);

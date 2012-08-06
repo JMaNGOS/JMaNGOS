@@ -14,27 +14,46 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.auth.network.handler;
+package org.jmangos.auth.dao;
 
-import org.jmangos.commons.network.handlers.AbstractPacketHandlerFactory;
-import org.jmangos.commons.network.netty.model.PacketData;
+import org.jmangos.auth.model.Realm;
+import org.jmangos.commons.database.dao.DAO;
 
-// TODO: Auto-generated Javadoc
+import javolution.util.FastMap;
+
 /**
- * A factory for creating L2RPacketHandler objects.
- */
-/**
+ * The Class WorldDAO.
+ * 
  * @author MinimaJack
- *
+ * 
  */
-public class L2RPacketHandlerFactory extends AbstractPacketHandlerFactory {
+public abstract class RealmDAO implements DAO {
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.wowemu.common.database.dao.DAO#getClassName()
+	 */
+	@Override
+	public String getClassName() {
+		return RealmDAO.class.getName();
+	}
 
 	/**
-	 * Instantiates a new l2 r packet handler factory.
+	 * Gets the all worlds.
+	 * 
+	 * @return the all worlds
 	 */
-	public L2RPacketHandlerFactory() {
-		addList(loadStaticData(PacketData.class,
-				"./conf/packetData/packets.xsd",
-				"./conf/packetData/lr-packets.xml"));
-	}
+	public abstract FastMap<Integer, Realm> getAllRealms();
+
+	/**
+	 * Gets the amount characters.
+	 * 
+	 * @param id
+	 *            the id
+	 * @return the amount characters
+	 */
+	public abstract FastMap<Integer, Integer> getAmountCharacters(
+			final Integer id);
+
 }

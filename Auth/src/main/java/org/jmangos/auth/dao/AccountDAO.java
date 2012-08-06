@@ -19,7 +19,6 @@ package org.jmangos.auth.dao;
 import org.jmangos.auth.model.Account;
 import org.jmangos.commons.database.dao.DAO;
 
-// TODO: Auto-generated Javadoc
 /**
  * DAO that manages accounts.
  *

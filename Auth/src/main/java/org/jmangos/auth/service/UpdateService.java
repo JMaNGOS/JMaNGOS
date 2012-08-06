@@ -31,19 +31,18 @@ import org.jmangos.commons.task.TaskManager;
 import org.jmangos.commons.task.TaskPriority;
 import org.jmangos.commons.threadpool.ThreadPoolManager;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class UpdateService.
  */
 public class UpdateService implements Service {
-	
+
 	/** The task manager. */
 	private TaskManager taskManager = new TaskManager();
-	
+
 	/** The thread pool manager. */
 	@Inject
 	private ThreadPoolManager threadPoolManager;
-	
+
 	/** The world list service. */
 	@Inject
 	private WorldListService worldListService;
@@ -52,12 +51,14 @@ public class UpdateService implements Service {
 	 * The Enum UpdateWorldTaskId.
 	 */
 	private static enum UpdateWorldTaskId implements TaskId {
-		
-		/** The L s_ worl d_ update. */
-		LS_WORLD_UPDATE;
 
-		/* (non-Javadoc)
-		 * @see org.wowemu.common.task.TaskId#getPriority()
+		/** The REALMS_UPDATE. */
+		REALMS_UPDATE;
+
+		/**
+		 * (non-Javadoc)
+		 * 
+		 * @see org.jmangos.commons.task.TaskId#getPriority()
 		 */
 		@Override
 		public TaskPriority getPriority() {
@@ -66,20 +67,24 @@ public class UpdateService implements Service {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.service.Service#start()
+	/**
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jmangos.commons.service.Service#start()
 	 */
 	@Override
 	public void start() {
-			taskManager.addNewTask(UpdateWorldTaskId.LS_WORLD_UPDATE,
-					threadPoolManager.scheduleAtFixedRate(
-							new LUpdateWorldList(),
-							Config.UPDATE_INTERVAL * 1000,
-							Config.UPDATE_INTERVAL * 1000));
+		taskManager.addNewTask(UpdateWorldTaskId.REALMS_UPDATE,
+				threadPoolManager.scheduleAtFixedRate(
+						new AuthUpdateWorldList(),
+						Config.UPDATE_INTERVAL * 1000,
+						Config.UPDATE_INTERVAL * 1000));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.service.Service#stop()
+	/**
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override
 	public void stop() {
@@ -87,11 +92,12 @@ public class UpdateService implements Service {
 	}
 
 	/**
-	 * The Class LUpdateWorldList.
+	 * The Class AuthUpdateWorldList.
 	 */
-	private final class LUpdateWorldList implements Runnable {
-		
-		/* (non-Javadoc)
+	private final class AuthUpdateWorldList implements Runnable {
+		/**
+		 * (non-Javadoc)
+		 * 
 		 * @see java.lang.Runnable#run()
 		 */
 		@Override
