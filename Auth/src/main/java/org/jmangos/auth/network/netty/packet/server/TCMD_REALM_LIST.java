@@ -28,11 +28,11 @@ import javolution.util.FastMap;
  * The Class TCMD_REALM_LIST.
  */
 public class TCMD_REALM_LIST extends AbstractWoWServerPacket {
-	
+
 	/** The Constant log. */
 	@SuppressWarnings("unused")
 	private static final Logger log = Logger.getLogger(TCMD_REALM_LIST.class);
-	
+
 	/** The worldlist. */
 	private WorldListService worldlist;
 
@@ -44,14 +44,17 @@ public class TCMD_REALM_LIST extends AbstractWoWServerPacket {
 
 	/**
 	 * Instantiates a new TCMD_REALM_LIST.
-	 *
-	 * @param worldlist the worldlist
+	 * 
+	 * @param worldlist
+	 *            the worldlist
 	 */
 	public TCMD_REALM_LIST(WorldListService worldlist) {
 		this.worldlist = worldlist;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jmangos.common.network.model.SendablePacket#writeImpl()
 	 */
 	@Override

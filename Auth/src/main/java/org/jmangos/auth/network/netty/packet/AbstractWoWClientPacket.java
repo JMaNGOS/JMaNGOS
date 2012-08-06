@@ -38,40 +38,36 @@ import org.jmangos.auth.model.Account;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.ReceivablePacket;
 
-
 /**
  * The Class AbstractWoWClientPacket.
- *
+ * 
  */
-public abstract class AbstractWoWClientPacket extends ReceivablePacket
-{
-	
+public abstract class AbstractWoWClientPacket extends ReceivablePacket {
+
 	/**
 	 * Instantiates a new abstract wo w client packet.
-	 *
-	 * @param opcode the opcode
+	 * 
+	 * @param opcode
+	 *            the opcode
 	 */
-	public AbstractWoWClientPacket(int opcode)
-	{
+	public AbstractWoWClientPacket(int opcode) {
 		super(opcode);
-		
+
 	}
-	
+
 	/**
 	 * Instantiates a new abstract wow client packet.
 	 */
-	public AbstractWoWClientPacket()
-	{
+	public AbstractWoWClientPacket() {
 		super();
 	}
-	
+
 	/**
 	 * Gets the account.
-	 *
+	 * 
 	 * @return the account
 	 */
-	public Account getAccount(){ 
-		return (Account)((NettyNetworkChannel) _client).getChanneledObject();
+	public Account getAccount() {
+		return (Account) ((NettyNetworkChannel) _client).getChanneledObject();
 	}
 }
-

@@ -33,17 +33,19 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 /**
- * The Class loginserver.
- *
+ * The Class AuthServer.
+ * 
  * @author MinimaJack
  */
 public class AuthServer {
 
 	/**
 	 * The main method.
-	 *
-	 * @param args the arguments
-	 * @throws Exception the exception
+	 * 
+	 * @param args
+	 *            the arguments
+	 * @throws Exception
+	 *             the exception
 	 */
 	public static void main(String[] args) throws Exception {
 		Injector injector = Guice.createInjector(new HandlerDM());

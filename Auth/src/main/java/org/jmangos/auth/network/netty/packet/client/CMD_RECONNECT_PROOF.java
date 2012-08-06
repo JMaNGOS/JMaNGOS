@@ -96,7 +96,7 @@ public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
 	 * Convert to mangos session key.
 	 * 
 	 * @param hexkey
-	 *            
+	 * 
 	 * @return the byte[]
 	 */
 	private byte[] convertMangosSessionKey(String hexkey) {

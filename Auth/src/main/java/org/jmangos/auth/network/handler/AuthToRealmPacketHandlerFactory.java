@@ -22,12 +22,13 @@ import org.jmangos.commons.network.netty.model.PacketData;
 /**
  * 
  * @author MinimaJack
- *
+ * 
  */
-public class AuthToRealmPacketHandlerFactory extends AbstractPacketHandlerFactory {
+public class AuthToRealmPacketHandlerFactory extends
+		AbstractPacketHandlerFactory {
 
 	/**
-	 * Instantiates a new l2 r packet handler factory.
+	 * Instantiates a new auth to realm packet handler factory.
 	 */
 	public AuthToRealmPacketHandlerFactory() {
 		addList(loadStaticData(PacketData.class,

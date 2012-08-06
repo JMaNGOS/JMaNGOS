@@ -21,7 +21,6 @@ import org.jmangos.commons.network.model.ChanneledObject;
 import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.utils.BigNumber;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Account.
  */
@@ -47,10 +46,10 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/** The s. */
 	private String s;
-	
+
 	/** The v. */
 	private String v;
-	
+
 	/** The M2. */
 	private byte[] M2;
 
@@ -68,16 +67,16 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/** The v_crypto. */
 	private BigNumber v_crypto;
-	
+
 	/** The _reconnect proof. */
-	private BigNumber _reconnectProof =  new BigNumber();
+	private BigNumber _reconnectProof = new BigNumber();
 
 	/** The msession key. */
 	private String msessionKey;
 
 	/**
 	 * Gets the _reconnect proof.
-	 *
+	 * 
 	 * @return the _reconnect proof
 	 */
 	public final BigNumber get_reconnectProof() {
@@ -86,8 +85,9 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Sets the _reconnect proof.
-	 *
-	 * @param _reconnectProof the new _reconnect proof
+	 * 
+	 * @param _reconnectProof
+	 *            the new _reconnect proof
 	 */
 	public final void set_reconnectProof(BigNumber _reconnectProof) {
 		this._reconnectProof = _reconnectProof;
@@ -95,8 +95,9 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Instantiates a new account.
-	 *
-	 * @param objectId the object id
+	 * 
+	 * @param objectId
+	 *            the object id
 	 */
 	public Account(int objectId) {
 		super(objectId);
@@ -104,8 +105,9 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Retunrns true if players name and password has are equals.
-	 *
-	 * @param o another player to check
+	 * 
+	 * @param o
+	 *            another player to check
 	 * @return true if names and password hash matches
 	 */
 	@Override
@@ -132,7 +134,7 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Returns access level of account.
-	 *
+	 * 
 	 * @return access level of account
 	 */
 	public byte getAccessLevel() {
@@ -141,7 +143,7 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Gets the crypto b.
-	 *
+	 * 
 	 * @return the crypto b
 	 */
 	public final BigNumber getcryptoB() {
@@ -150,14 +152,16 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Gets the b.
-	 *
+	 * 
 	 * @return the b
 	 */
 	public final BigNumber getB() {
 		return b;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wowemu.common.network.model.ChanneledObject#getChannel()
 	 */
 	@Override
@@ -167,7 +171,7 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Returns last ip that player played from.
-	 *
+	 * 
 	 * @return last ip that player played from
 	 */
 	public String getLastIp() {
@@ -176,7 +180,7 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Returns last server that player visited.
-	 *
+	 * 
 	 * @return last server that player visited
 	 */
 	public byte getLastServer() {
@@ -185,7 +189,7 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Returns account activated.
-	 *
+	 * 
 	 * @return access level of account
 	 */
 	public byte getLocked() {
@@ -194,7 +198,7 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Gets the m2.
-	 *
+	 * 
 	 * @return the m2
 	 */
 	public byte[] getM2() {
@@ -203,7 +207,7 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Returns account name.
-	 *
+	 * 
 	 * @return account name
 	 */
 	public String getName() {
@@ -212,7 +216,7 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Returns password hash.
-	 *
+	 * 
 	 * @return password hash
 	 */
 	public String getPasswordHash() {
@@ -221,7 +225,7 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Gets the s.
-	 *
+	 * 
 	 * @return the s
 	 */
 	public String getS() {
@@ -230,7 +234,7 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Gets the s_crypto.
-	 *
+	 * 
 	 * @return the s_crypto
 	 */
 	public final BigNumber getS_crypto() {
@@ -239,7 +243,7 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Gets the v.
-	 *
+	 * 
 	 * @return the v
 	 */
 	public String getV() {
@@ -248,7 +252,7 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Gets the v_crypto.
-	 *
+	 * 
 	 * @return the v_crypto
 	 */
 	public final BigNumber getV_crypto() {
@@ -272,8 +276,9 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Sets access level of account.
-	 *
-	 * @param accessLevel access level of account
+	 * 
+	 * @param accessLevel
+	 *            access level of account
 	 */
 	public void setAccessLevel(byte accessLevel) {
 		this.accessLevel = accessLevel;
@@ -281,8 +286,9 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Sets the b.
-	 *
-	 * @param b the new b
+	 * 
+	 * @param b
+	 *            the new b
 	 */
 	public void setB(BigNumber b) {
 		this.b = b;
@@ -291,16 +297,21 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Sets the b_crypto.
-	 *
-	 * @param b2 the new b_crypto
+	 * 
+	 * @param b2
+	 *            the new b_crypto
 	 */
 	public void setB_crypto(BigNumber b2) {
 		this.cryptoB = b2;
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ChanneledObject#setChannel(org.wowemu.common.network.model.NetworkChannel)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.wowemu.common.network.model.ChanneledObject#setChannel(org.wowemu
+	 * .common.network.model.NetworkChannel)
 	 */
 	@Override
 	public void setChannel(NetworkChannel channel) {
@@ -310,8 +321,9 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Sets last ip that player players from.
-	 *
-	 * @param lastIp last ip that player played from
+	 * 
+	 * @param lastIp
+	 *            last ip that player played from
 	 */
 	public void setLastIp(String lastIp) {
 		this.lastIp = lastIp;
@@ -319,8 +331,9 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Sets last server that player visited.
-	 *
-	 * @param lastServer last server that player visited
+	 * 
+	 * @param lastServer
+	 *            last server that player visited
 	 */
 	public void setLastServer(byte lastServer) {
 		this.lastServer = lastServer;
@@ -328,8 +341,9 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Sets access level of account.
-	 *
-	 * @param activated access level of account
+	 * 
+	 * @param activated
+	 *            access level of account
 	 */
 	public void setLocked(byte activated) {
 		this.locked = activated;
@@ -337,8 +351,9 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Sets the m2.
-	 *
-	 * @param bs the m2 to set
+	 * 
+	 * @param bs
+	 *            the m2 to set
 	 */
 	public void setM2(byte[] bs) {
 		M2 = bs;
@@ -346,8 +361,9 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Sets account name.
-	 *
-	 * @param name account name
+	 * 
+	 * @param name
+	 *            account name
 	 */
 	public void setName(String name) {
 		this.username = name;
@@ -355,8 +371,9 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Sets password hash.
-	 *
-	 * @param passwordHash password hash
+	 * 
+	 * @param passwordHash
+	 *            password hash
 	 */
 	public void setPasswordHash(String passwordHash) {
 		this.passwordHash = passwordHash;
@@ -364,8 +381,9 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Sets the s.
-	 *
-	 * @param s2 the new s
+	 * 
+	 * @param s2
+	 *            the new s
 	 */
 	public void sets(BigNumber s2) {
 		this.s_crypto = s2;
@@ -374,8 +392,9 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Sets the s.
-	 *
-	 * @param s the new s
+	 * 
+	 * @param s
+	 *            the new s
 	 */
 	public void setS(String s) {
 		this.s = s;
@@ -383,8 +402,9 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Sets the v.
-	 *
-	 * @param v the new v
+	 * 
+	 * @param v
+	 *            the new v
 	 */
 	public void setV(String v) {
 		this.v = v;
@@ -392,8 +412,9 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Sets the v_crypto.
-	 *
-	 * @param v_crypto the new v_crypto
+	 * 
+	 * @param v_crypto
+	 *            the new v_crypto
 	 */
 	public final void setV_crypto(BigNumber v_crypto) {
 		this.v_crypto = v_crypto;
@@ -401,12 +422,13 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	/**
 	 * Sets the session key.
-	 *
-	 * @param string the new session key
+	 * 
+	 * @param string
+	 *            the new session key
 	 */
 	public void setSessionKey(String string) {
 		this.setMsessionKey(string);
-		
+
 	}
 
 	public void setMsessionKey(String msessionKey) {

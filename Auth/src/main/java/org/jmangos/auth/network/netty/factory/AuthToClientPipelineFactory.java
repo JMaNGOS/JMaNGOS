@@ -37,7 +37,6 @@ import javax.inject.Named;
  * 
  * @author MinimaJack
  */
-
 public class AuthToClientPipelineFactory extends BasicPipelineFactory {
 
 	/** The connection handler. */

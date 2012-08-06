@@ -28,17 +28,18 @@ public class TCMD_AUTH_LOGON_PROOF extends AbstractWoWServerPacket {
 
 	/** The response. */
 	private WoWAuthResponse response;
-	
+
 	/**
 	 * Instantiates a new TCMD_AUTH_LOGON_PROOF.
 	 */
 	public TCMD_AUTH_LOGON_PROOF() {
 	}
-	
+
 	/**
 	 * Constructs new instance of <tt>T_CMD_AUTH_LOGON_PROOF</tt> packet.
-	 *
-	 * @param response the WoWAuthResponse
+	 * 
+	 * @param response
+	 *            the WoWAuthResponse
 	 */
 	public TCMD_AUTH_LOGON_PROOF(WoWAuthResponse response) {
 		this.response = response;

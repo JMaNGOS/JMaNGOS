@@ -50,8 +50,8 @@ import com.google.inject.name.Names;
  * The Class HandlerDM.
  */
 public class HandlerDM extends AbstractModule {
-	
-	/* (non-Javadoc)
+
+	/**
 	 * @see com.google.inject.AbstractModule#configure()
 	 */
 	@Override
@@ -60,18 +60,23 @@ public class HandlerDM extends AbstractModule {
 				Scopes.SINGLETON);
 		bind(ThreadPoolManager.class).to(CommonThreadPoolManager.class).in(
 				Scopes.SINGLETON);
-		
-		bind(PacketHandlerFactory.class).annotatedWith(Names.named("AuthToClient")).to(
-				AuthToClientPacketHandlerFactory.class).in(Scopes.SINGLETON);
-		bind(PacketHandlerFactory.class).annotatedWith(Names.named("AuthToRealm")).to(
-				AuthToRealmPacketHandlerFactory.class).in(Scopes.SINGLETON);
-		bind(ChannelPipelineFactory.class).annotatedWith(Names.named("AuthToClient"))
+
+		bind(PacketHandlerFactory.class)
+				.annotatedWith(Names.named("AuthToClient"))
+				.to(AuthToClientPacketHandlerFactory.class)
+				.in(Scopes.SINGLETON);
+		bind(PacketHandlerFactory.class)
+				.annotatedWith(Names.named("AuthToRealm"))
+				.to(AuthToRealmPacketHandlerFactory.class).in(Scopes.SINGLETON);
+		bind(ChannelPipelineFactory.class)
+				.annotatedWith(Names.named("AuthToClient"))
 				.to(AuthToClientPipelineFactory.class).in(Scopes.SINGLETON);
-		bind(ChannelPipelineFactory.class).annotatedWith(Names.named("AuthToRealm"))
+		bind(ChannelPipelineFactory.class)
+				.annotatedWith(Names.named("AuthToRealm"))
 				.to(AuthToRealmPipelineFactory.class).in(Scopes.SINGLETON);
 
-		bind(ConnectHandler.class).annotatedWith(Names.named("AuthToClient")).to(
-				AuthToClientConnectHandler.class).in(Scopes.SINGLETON);
+		bind(ConnectHandler.class).annotatedWith(Names.named("AuthToClient"))
+				.to(AuthToClientConnectHandler.class).in(Scopes.SINGLETON);
 		bind(AbstractPacketSender.class).to(NettyPacketSender.class).in(
 				Scopes.SINGLETON);
 

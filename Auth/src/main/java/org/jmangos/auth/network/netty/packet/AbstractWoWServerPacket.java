@@ -19,19 +19,17 @@ package org.jmangos.auth.network.netty.packet;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.SendablePacket;
 
-
 /**
  * The Class AbstractWoWServerPacket.
  */
-public abstract class AbstractWoWServerPacket extends SendablePacket
-{
-	
+public abstract class AbstractWoWServerPacket extends SendablePacket {
+
 	/**
 	 * Gets the channel.
-	 *
+	 * 
 	 * @return the channel
 	 */
-	public NettyNetworkChannel getChannel(){ 
+	public NettyNetworkChannel getChannel() {
 		return (NettyNetworkChannel) channel;
 	}
 }
