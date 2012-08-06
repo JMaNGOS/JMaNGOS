@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jmangos</groupId>
 	<artifactId>jmangos</artifactId>
-	<version>0.0.012-SNAPSHOT</version>
+	<version>0.0.001-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>JMaNGOS</name>
 
