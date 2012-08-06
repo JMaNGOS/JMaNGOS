@@ -31,7 +31,6 @@ import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.base.item.ItemPrototype;
 import org.jmangos.realm.model.base.update.ItemFields;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ItemStorages.
  */
@@ -49,8 +48,8 @@ public class ItemStorages
 	/** The item prototypes. */
 	private TIntObjectHashMap<ItemPrototype> itemPrototypes = new TIntObjectHashMap<ItemPrototype>();
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.dataholder.DataLoadService#get()
+	/** (non-Javadoc)
+	 * @see org.jmangos.commons.dataholder.DataLoadService#get()
 	 */
 	@Override
 	public TIntObjectHashMap<ItemPrototype> get() {
@@ -94,17 +93,17 @@ public class ItemStorages
 		}
 		item.initfields();
 		if (item.loadValues(itemplate.getData().split(" "))) {
-			logger.info("Good items " + proto.getName() + " count " + item.GetUInt32Value(ItemFields.ITEM_FIELD_STACK_COUNT));
+			logger.debug("Good items " + proto.getName() + " count " + item.GetUInt32Value(ItemFields.ITEM_FIELD_STACK_COUNT));
 			
 			return item;
 		} else {
-			logger.info("Bad items" + proto.getName());
+			logger.debug("Bad items" + proto.getName());
 			return null;
 		}
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.dataholder.DataLoadService#load()
+	 * @see org.jmangos.commons.dataholder.DataLoadService#load()
 	 */
 	@Override
 	public TIntObjectHashMap<ItemPrototype> load() {
@@ -113,7 +112,7 @@ public class ItemStorages
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.dataholder.DataLoadService#reload()
+	 * @see org.jmangos.commons.dataholder.DataLoadService#reload()
 	 */
 	@Override
 	public TIntObjectHashMap<ItemPrototype> reload() {
@@ -122,7 +121,7 @@ public class ItemStorages
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.dataholder.DataLoadService#save()
+	 * @see org.jmangos.commons.dataholder.DataLoadService#save()
 	 */
 	@Override
 	public void save() {
@@ -131,7 +130,7 @@ public class ItemStorages
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.service.Service#start()
+	 * @see org.jmangos.commons.service.Service#start()
 	 */
 	@Override
 	public void start() {
@@ -140,7 +139,7 @@ public class ItemStorages
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.service.Service#stop()
+	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override
 	public void stop() {

@@ -18,7 +18,6 @@ package org.jmangos.realm.utils;
 
 import java.util.Calendar;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Utils.
  */

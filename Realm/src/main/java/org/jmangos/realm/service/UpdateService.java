@@ -30,7 +30,6 @@ import org.jmangos.commons.task.TaskManager;
 import org.jmangos.commons.task.TaskPriority;
 import org.jmangos.commons.threadpool.ThreadPoolManager;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class UpdateService.
  */
@@ -50,13 +49,13 @@ public class UpdateService implements Service {
 	/**
 	 * The Enum UpdateWorldTaskId.
 	 */
-	private static enum UpdateWorldTaskId implements TaskId {
+	private static enum UpdateRealmTaskId implements TaskId {
 		
 		/** The L s_ worl d_ update. */
-		LS_WORLD_UPDATE;
+		REALM_MAP_UPDATE;
 
 		/* (non-Javadoc)
-		 * @see org.wowemu.common.task.TaskId#getPriority()
+		 * @see org.jmangos.commons.task.TaskId#getPriority()
 		 */
 		@Override
 		public TaskPriority getPriority() {
@@ -66,16 +65,16 @@ public class UpdateService implements Service {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.service.Service#start()
+	 * @see org.jmangos.commons.service.Service#start()
 	 */
 	@Override
 	public void start() {
-		taskManager.addNewTask(UpdateWorldTaskId.LS_WORLD_UPDATE, threadPoolManager.scheduleAtFixedRate(
-				new LUpdateWorldList(), 100, 100));
+		taskManager.addNewTask(UpdateRealmTaskId.REALM_MAP_UPDATE, threadPoolManager.scheduleAtFixedRate(
+				new RealmUpdateWorldList(), 100, 100));
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.service.Service#stop()
+	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override
 	public void stop() {
@@ -85,7 +84,7 @@ public class UpdateService implements Service {
 	/**
 	 * The Class LUpdateWorldList.
 	 */
-	private final class LUpdateWorldList implements Runnable {
+	private final class RealmUpdateWorldList implements Runnable {
 		
 		/* (non-Javadoc)
 		 * @see java.lang.Runnable#run()

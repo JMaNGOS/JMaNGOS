@@ -30,7 +30,7 @@ import org.jmangos.realm.model.base.PlayerClassLevelInfo;
 /**
  * DAO that manages items.
  * 
- * @author minimajack
+ * @author MinimaJack
  */
 public class MySQL5QuestDAO extends QuestDAO {
 	
@@ -38,7 +38,7 @@ public class MySQL5QuestDAO extends QuestDAO {
 	private static final Logger log = Logger.getLogger(MySQL5QuestDAO.class);
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.realm.dao.QuestDAO#loadQuestPrototypes()
+	 * @see org.jmangos.realm.dao.QuestDAO#loadQuestPrototypes()
 	 */
 	@Override
 	public TIntObjectHashMap<PlayerClassLevelInfo> loadQuestPrototypes() {

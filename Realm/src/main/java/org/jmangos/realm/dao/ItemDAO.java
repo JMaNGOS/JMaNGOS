@@ -28,7 +28,7 @@ import org.jmangos.realm.model.base.item.ItemPrototype;
 public abstract class ItemDAO implements DAO {
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.database.dao.DAO#getClassName()
+	 * @see org.jmangos.commons.database.dao.DAO#getClassName()
 	 */
 	@Override
 	public String getClassName() {

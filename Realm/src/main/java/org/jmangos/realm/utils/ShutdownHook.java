@@ -29,33 +29,29 @@ import org.jmangos.commons.database.DatabaseFactory;
 
 import com.google.inject.Inject;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ShutdownHook.
  */
-public class ShutdownHook extends Thread
-{
-	
+public class ShutdownHook extends Thread {
+
 	/** The DF. */
 	@Inject
 	private DatabaseFactory DF;
-	
-	/** Logger for this class. */
-	private static final Logger	log			= Logger.getLogger(ShutdownHook.class);
 
-	/* (non-Javadoc)
+	/** Logger for this class. */
+	private static final Logger log = Logger.getLogger(ShutdownHook.class);
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Thread#run()
 	 */
 	@Override
-	public void run()
-	{
-		try
-		{
+	public void run() {
+		try {
 			log.info("Shutdown DatabaseFactory");
 			DF.stop();
-		}
-		catch (Throwable t)
-		{
+		} catch (Throwable t) {
 			log.error("Can't shutdown DatabaseFactory", t);
 		}
 

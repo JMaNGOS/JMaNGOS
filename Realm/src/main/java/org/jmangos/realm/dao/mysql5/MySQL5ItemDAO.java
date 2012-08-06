@@ -31,11 +31,10 @@ import org.jmangos.realm.model.base.item.ItemPrototype;
 import org.jmangos.realm.model.base.item._ItemStat;
 import org.jmangos.realm.model.base.item._Socket;
 
-// TODO: Auto-generated Javadoc
 /**
  * DAO that manages items.
  * 
- * @author minimajack
+ * @author MinimaJack
  */
 public class MySQL5ItemDAO extends ItemDAO {
 	
@@ -52,7 +51,7 @@ public class MySQL5ItemDAO extends ItemDAO {
 	private static final byte START_DAMAGES_DATA = 51;
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.realm.dao.ItemDAO#loadItemPrototypes()
+	 * @see org.jmangos.realm.dao.ItemDAO#loadItemPrototypes()
 	 */
 	@Override
 	public TIntObjectHashMap<ItemPrototype> loadItemPrototypes() {
@@ -76,7 +75,7 @@ public class MySQL5ItemDAO extends ItemDAO {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.realm.dao.ItemDAO#loadItemPrototype(int)
+	 * @see org.jmangos.realm.dao.ItemDAO#loadItemPrototype(int)
 	 */
 	@Override
 	public ItemPrototype loadItemPrototype(int guid) {

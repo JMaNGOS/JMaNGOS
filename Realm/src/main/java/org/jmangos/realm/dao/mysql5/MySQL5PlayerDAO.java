@@ -29,7 +29,6 @@ import org.jmangos.realm.model.InventoryTemplate;
 import org.jmangos.realm.model.player.PlayerCharacterData;
 import org.jmangos.realm.model.player.PlayerHomeBindData;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class MySQL5PlayerDAO.
  */
@@ -40,7 +39,7 @@ public class MySQL5PlayerDAO extends PlayerDAO {
 			.getLogger(MySQL5PlayerDAO.class);
 	
 	/* (non-Javadoc)
-	 * @see org.wowemu.realm.dao.PlayerDAO#loadHomeBind(int)
+	 * @see org.jmangos.realm.dao.PlayerDAO#loadHomeBind(int)
 	 */
 	@Override
 	public PlayerHomeBindData loadHomeBind(int guid) {
@@ -67,7 +66,7 @@ public class MySQL5PlayerDAO extends PlayerDAO {
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.wowemu.realm.dao.PlayerDAO#loadFromDB(int)
+	 * @see org.jmangos.realm.dao.PlayerDAO#loadFromDB(int)
 	 */
 	@Override
 	public PlayerCharacterData loadFromDB(int guid) {
@@ -103,7 +102,7 @@ public class MySQL5PlayerDAO extends PlayerDAO {
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.wowemu.realm.dao.PlayerDAO#loadInventory(int)
+	 * @see org.jmangos.realm.dao.PlayerDAO#loadInventory(int)
 	 */
 	@Override
 	public List<InventoryTemplate> loadInventory(int guid) {

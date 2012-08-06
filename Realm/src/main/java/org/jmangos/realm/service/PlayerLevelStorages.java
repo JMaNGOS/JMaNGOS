@@ -26,55 +26,61 @@ import org.jmangos.realm.model.base.PlayerLevelInfo;
 
 import com.google.inject.Inject;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class PlayerLevelStorages.
  */
-public class PlayerLevelStorages
-		implements
-			DataLoadService<HashMap<RaceClassLevel, PlayerLevelInfo>> {
-	
+public class PlayerLevelStorages implements
+		DataLoadService<HashMap<RaceClassLevel, PlayerLevelInfo>> {
+
 	/** The Constant log. */
 	private static final Logger log = Logger
-	.getLogger(PlayerLevelStorages.class);
-	
+			.getLogger(PlayerLevelStorages.class);
+
 	/** The simple data dao. */
 	@Inject
 	SimpleDataDAO simpleDataDAO;
-	
+
 	/** The Player Race Class Level info. */
-	private HashMap<RaceClassLevel, PlayerLevelInfo> PlayerRCLI = new HashMap<RaceClassLevel, PlayerLevelInfo>();
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.service.Service#start()
+	private HashMap<RaceClassLevel, PlayerLevelInfo> playerRCLI = new HashMap<RaceClassLevel, PlayerLevelInfo>();
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jmangos.commons.service.Service#start()
 	 */
 	@Override
 	public void start() {
 		load();
-		log.info("Loaded " + PlayerRCLI.size() + " PlayerLevelInfos");
-		
+		log.info("Loaded " + playerRCLI.size() + " PlayerLevelInfos");
+
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.service.Service#stop()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override
 	public void stop() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.dataholder.DataLoadService#load()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jmangos.commons.dataholder.DataLoadService#load()
 	 */
 	@Override
 	public HashMap<RaceClassLevel, PlayerLevelInfo> load() {
 		// TODO Auto-generated method stub
-		return PlayerRCLI = simpleDataDAO.getRaceClassLevelInfos();
+		return playerRCLI = simpleDataDAO.getRaceClassLevelInfos();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.dataholder.DataLoadService#reload()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jmangos.commons.dataholder.DataLoadService#reload()
 	 */
 	@Override
 	public HashMap<RaceClassLevel, PlayerLevelInfo> reload() {
@@ -82,17 +88,21 @@ public class PlayerLevelStorages
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.dataholder.DataLoadService#save()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jmangos.commons.dataholder.DataLoadService#save()
 	 */
 	@Override
 	public void save() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.dataholder.DataLoadService#get()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jmangos.commons.dataholder.DataLoadService#get()
 	 */
 	@Override
 	public HashMap<RaceClassLevel, PlayerLevelInfo> get() {
@@ -102,16 +112,19 @@ public class PlayerLevelStorages
 
 	/**
 	 * Gets the.
-	 *
-	 * @param race the race
-	 * @param clazz the clazz
-	 * @param level the level
+	 * 
+	 * @param race
+	 *            the race
+	 * @param clazz
+	 *            the clazz
+	 * @param level
+	 *            the level
 	 * @return the player level info
 	 */
 	public PlayerLevelInfo get(int race, int clazz, int level) {
 		RaceClassLevel cl = new RaceClassLevel(race, clazz, level);
-		if (PlayerRCLI.containsKey(cl)) {
-			return PlayerRCLI.get(cl);
+		if (playerRCLI.containsKey(cl)) {
+			return playerRCLI.get(cl);
 		} else {
 			log.warn("can't find proper PlayerClassLevelInfo");
 			return null;

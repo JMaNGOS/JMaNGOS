@@ -20,7 +20,6 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 
 import org.jmangos.realm.model.base.PlayerClassLevelInfo;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class QuestDAO.
  */

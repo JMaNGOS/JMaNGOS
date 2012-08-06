@@ -29,11 +29,10 @@ import org.jmangos.realm.model.account.AccountData;
 import org.jmangos.realm.model.base.character.CharactersData;
 import org.jmangos.realm.model.base.item.ItemPrototype;
 
-// TODO: Auto-generated Javadoc
 /**
  * This class is responsible for controlling all account actions.
  *
- * @author minimajack
+ * @author MinimaJack
  */
 public class AccountService {
 	

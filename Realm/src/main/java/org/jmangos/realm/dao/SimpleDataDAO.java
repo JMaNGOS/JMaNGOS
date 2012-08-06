@@ -24,14 +24,13 @@ import org.jmangos.realm.model.RaceClassLevel;
 import org.jmangos.realm.model.base.PlayerClassLevelInfo;
 import org.jmangos.realm.model.base.PlayerLevelInfo;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SimpleDataDAO.
  */
 public abstract class SimpleDataDAO implements DAO {
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.database.dao.DAO#getClassName()
+	 * @see org.jmangos.commons.database.dao.DAO#getClassName()
 	 */
 	@Override
 	public String getClassName() {

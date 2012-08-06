@@ -31,9 +31,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 public class MySQL5AccountDAO extends AccountDAO {
-	
+
 	/** Logger. */
 	private static final Logger log = Logger.getLogger(MySQL5AccountDAO.class);
 
@@ -119,8 +118,12 @@ public class MySQL5AccountDAO extends AccountDAO {
 		return -1;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.realm.dao.AccountDAO#updateSecurityKey(org.wowemu.realm.model.account.Account)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jmangos.realms.dao.AccountDAO#updateSecurityKey(org.wowemu.realm.model
+	 * .account.Account)
 	 */
 	public boolean updateSecurityKey(Account account) {
 		int result = 0;
@@ -141,8 +144,11 @@ public class MySQL5AccountDAO extends AccountDAO {
 		return result > 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.realm.dao.AccountDAO#saveSessionKey(java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jmangos.realms.dao.AccountDAO#saveSessionKey(java.lang.String,
+	 * java.lang.String)
 	 */
 	public boolean saveSessionKey(String username, String key) {
 		int result = 0;
@@ -228,7 +234,7 @@ public class MySQL5AccountDAO extends AccountDAO {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.wowemu.login.dao.AccountDAO#getSessionKey(java.lang.String)
+	 * @see org.jmangos.realm.dao.AccountDAO#getSessionKey(java.lang.String)
 	 */
 	@Override
 	public String getSessionKey(String username) {
@@ -251,8 +257,10 @@ public class MySQL5AccountDAO extends AccountDAO {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.realm.dao.AccountDAO#getAccountData(int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jmangos.realm.dao.AccountDAO#getAccountData(int)
 	 */
 	@Override
 	public HashMap<Integer, AccountData> getAccountData(int id) {
@@ -278,8 +286,10 @@ public class MySQL5AccountDAO extends AccountDAO {
 		return adf;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.realm.dao.AccountDAO#getCharactersData(int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jmangos.realm.dao.AccountDAO#getCharactersData(int)
 	 */
 	@Override
 	public List<CharactersData> getCharactersData(int guid) {
@@ -325,8 +335,10 @@ public class MySQL5AccountDAO extends AccountDAO {
 		return adf;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.realm.dao.AccountDAO#getTutorialsData(int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jmangos.realm.dao.AccountDAO#getTutorialsData(int)
 	 */
 	@Override
 	public int[] getTutorialsData(int guid) {
@@ -340,7 +352,7 @@ public class MySQL5AccountDAO extends AccountDAO {
 
 			if (rs.next()) {
 				for (int i = 0; i < 8; ++i)
-					tutData[i] = rs.getInt(i+1);
+					tutData[i] = rs.getInt(i + 1);
 			}
 		} catch (Exception e) {
 			log.error("Can't get TutorialsData for account with id: " + guid, e);

@@ -23,11 +23,10 @@ import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class EventLogHandler.
  *
- * @author minimajack
+ * @author MinimaJack
  */
 public class EventLogHandler extends SimpleChannelUpstreamHandler {
 

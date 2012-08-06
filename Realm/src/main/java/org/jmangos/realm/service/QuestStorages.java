@@ -25,7 +25,6 @@ import org.jmangos.commons.dataholder.DataLoadService;
 import org.jmangos.realm.dao.QuestDAO;
 import org.jmangos.realm.model.base.PlayerClassLevelInfo;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class QuestStorages.
  */
@@ -44,7 +43,7 @@ public class QuestStorages
 	private QuestDAO questDAO;
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.service.Service#start()
+	 * @see org.jmangos.commons.service.Service#start()
 	 */
 	@Override
 	public void start() {
@@ -54,7 +53,7 @@ public class QuestStorages
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.service.Service#stop()
+	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override
 	public void stop() {
@@ -63,7 +62,7 @@ public class QuestStorages
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.dataholder.DataLoadService#load()
+	 * @see org.jmangos.commons.dataholder.DataLoadService#load()
 	 */
 	@Override
 	public TIntObjectHashMap<PlayerClassLevelInfo> load() {
@@ -72,7 +71,7 @@ public class QuestStorages
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.dataholder.DataLoadService#reload()
+	 * @see org.jmangos.commons.dataholder.DataLoadService#reload()
 	 */
 	@Override
 	public TIntObjectHashMap<PlayerClassLevelInfo> reload() {
@@ -81,7 +80,7 @@ public class QuestStorages
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.dataholder.DataLoadService#save()
+	 * @see org.jmangos.commons.dataholder.DataLoadService#save()
 	 */
 	@Override
 	public void save() {
@@ -90,7 +89,7 @@ public class QuestStorages
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.dataholder.DataLoadService#get()
+	 * @see org.jmangos.commons.dataholder.DataLoadService#get()
 	 */
 	@Override
 	public TIntObjectHashMap<PlayerClassLevelInfo> get() {

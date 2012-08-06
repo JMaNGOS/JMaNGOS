@@ -30,12 +30,12 @@ import com.google.inject.Inject;
  */
 public class RealmNetworkService extends AbstractNetworkService {
 	
-	/** The r2c pipeline factory. */
+	/** The RealmToClient pipeline factory. */
 	@Inject
-	@Named("r2c")
+	@Named("RealmToClient")
 	private ChannelPipelineFactory r2cPipelineFactory;
 	@Inject
-	@Named("r2l")
+	@Named("RealmToAuth")
 	private ChannelPipelineFactory r2lPipelineFactory;
 
 	/* (non-Javadoc)

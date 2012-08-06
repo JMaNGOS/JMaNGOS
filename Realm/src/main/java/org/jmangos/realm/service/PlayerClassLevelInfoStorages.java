@@ -27,7 +27,6 @@ import org.jmangos.realm.model.base.PlayerClassLevelInfo;
 
 import com.google.inject.Inject;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class PlayerClassLevelInfoStorages.
  */
@@ -44,19 +43,19 @@ public class PlayerClassLevelInfoStorages
 	SimpleDataDAO simpleDataDAO;
 	
 	/** The Player cli. */
-	private HashMap<ClassLevel, PlayerClassLevelInfo> PlayerCLI = new HashMap<ClassLevel, PlayerClassLevelInfo>();
+	private HashMap<ClassLevel, PlayerClassLevelInfo> playerCLI = new HashMap<ClassLevel, PlayerClassLevelInfo>();
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.service.Service#start()
+	 * @see org.jmangos.commons.service.Service#start()
 	 */
 	@Override
 	public void start() {
 		load();
-		log.info("Loaded " + PlayerCLI.size() + " PlayerClassLevelInfos");
+		log.info("Loaded " + playerCLI.size() + " PlayerClassLevelInfos");
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.service.Service#stop()
+	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override
 	public void stop() {
@@ -65,24 +64,24 @@ public class PlayerClassLevelInfoStorages
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.dataholder.DataLoadService#load()
+	 * @see org.jmangos.commons.dataholder.DataLoadService#load()
 	 */
 	@Override
 	public HashMap<ClassLevel, PlayerClassLevelInfo> load() {
-		return PlayerCLI = simpleDataDAO.getClassLevelInfos();
+		return playerCLI = simpleDataDAO.getClassLevelInfos();
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.dataholder.DataLoadService#reload()
+	 * @see org.jmangos.commons.dataholder.DataLoadService#reload()
 	 */
 	@Override
 	public HashMap<ClassLevel, PlayerClassLevelInfo> reload() {
-		PlayerCLI.clear();
+		playerCLI.clear();
 		return load();
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.dataholder.DataLoadService#save()
+	 * @see org.jmangos.commons.dataholder.DataLoadService#save()
 	 */
 	@Override
 	public void save() {
@@ -99,8 +98,8 @@ public class PlayerClassLevelInfoStorages
 	 */
 	public PlayerClassLevelInfo get(byte clazz, byte level) {
 		ClassLevel cl = new ClassLevel(clazz, level);
-		if (PlayerCLI.containsKey(cl)) {
-			return PlayerCLI.get(cl);
+		if (playerCLI.containsKey(cl)) {
+			return playerCLI.get(cl);
 		} else {
 			log.warn("can't find proper PlayerClassLevelInfo");
 			return null;
@@ -108,7 +107,7 @@ public class PlayerClassLevelInfoStorages
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.dataholder.DataLoadService#get()
+	 * @see org.jmangos.commons.dataholder.DataLoadService#get()
 	 */
 	@Override
 	public HashMap<ClassLevel, PlayerClassLevelInfo> get() {

@@ -16,7 +16,6 @@
  *******************************************************************************/
 package org.jmangos.realm.service;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SimpleStorages.
  */

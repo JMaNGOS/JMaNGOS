@@ -25,7 +25,7 @@ import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.frame.FrameDecoder;
 import org.jmangos.realm.network.crypt.Crypt;
-import org.jmangos.realm.network.netty.handler.R2CChannelHandler;
+import org.jmangos.realm.network.netty.handler.RealmToClientChannelHandler;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -48,7 +48,7 @@ public class PacketFrameDecoder extends FrameDecoder {
 			return null;
 		}
 		message.markReaderIndex();
-		R2CChannelHandler channelHandler = (R2CChannelHandler) ctx
+		RealmToClientChannelHandler channelHandler = (RealmToClientChannelHandler) ctx
 				.getPipeline().getLast();
 		Crypt crypt = channelHandler.getCrypt();
 		byte[] header = new byte[6];

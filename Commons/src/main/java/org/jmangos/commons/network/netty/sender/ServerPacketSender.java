@@ -38,7 +38,7 @@ public class ServerPacketSender implements AbstractPacketSender {
 	 */
 	/** The packet service. */
 	@Inject
-	@Named("r2l")
+	@Named("RealmToAuth")
 	private PacketHandlerFactory packetService;
 
 	/* (non-Javadoc)

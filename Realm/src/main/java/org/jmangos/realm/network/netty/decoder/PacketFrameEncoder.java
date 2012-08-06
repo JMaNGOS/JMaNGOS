@@ -28,9 +28,8 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
-import org.jmangos.realm.network.netty.handler.R2CChannelHandler;
+import org.jmangos.realm.network.netty.handler.RealmToClientChannelHandler;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class PacketFrameEncoder.
  */
@@ -48,7 +47,7 @@ public class PacketFrameEncoder extends OneToOneEncoder {
 			Object msg) throws Exception {
 		ChannelBuffer message = (ChannelBuffer) msg;
 
-		R2CChannelHandler channelHandler = (R2CChannelHandler) ctx
+		RealmToClientChannelHandler channelHandler = (RealmToClientChannelHandler) ctx
 				.getPipeline().getLast();
 		int opcode = message.readUnsignedShort();
 		int size = message.readableBytes()+2;
@@ -71,14 +70,12 @@ public class PacketFrameEncoder extends OneToOneEncoder {
 		List<String> d =  breakStringInChunks(new BigInteger(1,tmp.array()).toString(16).toUpperCase(),16);
 		for (Iterator<String> iterator = d.iterator(); iterator.hasNext();) {
 			String string =  iterator.next();
-			log.info(string);
+			log.debug(string);
 		}
-		log.info("");
 		return frame;
 	}
 	
 	/**
-	 * Break string in chunks.
 	 *
 	 * @param text the text
 	 * @param chunkSize the chunk size

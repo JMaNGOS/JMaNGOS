@@ -30,33 +30,37 @@ import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.netty.factory.NetworkChannelFactory;
 import org.jmangos.commons.network.netty.receiver.NettyPacketReceiver;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ReconnectingChannelHandler.
  */
 public class ReconnectingChannelHandler extends SimpleChannelUpstreamHandler {
-	
+
 	/** The Constant log. */
 	private static final Logger log = Logger
 			.getLogger(ReconnectingChannelHandler.class);
-	
+
 	/** The Constant RECONNECT_DELAY. */
 	private static final long RECONNECT_DELAY = 5;
-	
+
 	/** The timer. */
 	private Timer timer;
-	
+
 	/** The channel factory. */
 	private NetworkChannelFactory channelFactory;
 
 	/**
 	 * Instantiates a new reconnecting channel handler.
-	 *
-	 * @param timer the timer
-	 * @param channelFactory the channel factory
-	 * @param packetService the packet service
-	 * @param connectionHandler the connection handler
-	 * @param nettyPacketReceiver the netty packet receiver
+	 * 
+	 * @param timer
+	 *            the timer
+	 * @param channelFactory
+	 *            the channel factory
+	 * @param packetService
+	 *            the packet service
+	 * @param connectionHandler
+	 *            the connection handler
+	 * @param nettyPacketReceiver
+	 *            the netty packet receiver
 	 */
 	public ReconnectingChannelHandler(Timer timer,
 			NetworkChannelFactory channelFactory,
@@ -67,8 +71,11 @@ public class ReconnectingChannelHandler extends SimpleChannelUpstreamHandler {
 		this.channelFactory = channelFactory;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelClosed(org.jboss.netty.channel.ChannelHandlerContext, org.jboss.netty.channel.ChannelStateEvent)
+	/**
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelClosed(org.jboss.netty.channel.ChannelHandlerContext,
+	 *      org.jboss.netty.channel.ChannelStateEvent)
 	 */
 	@Override
 	public void channelClosed(ChannelHandlerContext ctx, ChannelStateEvent e)

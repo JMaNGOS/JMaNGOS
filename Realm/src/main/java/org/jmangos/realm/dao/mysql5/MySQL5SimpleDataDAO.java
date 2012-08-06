@@ -28,11 +28,10 @@ import org.jmangos.realm.model.RaceClassLevel;
 import org.jmangos.realm.model.base.PlayerClassLevelInfo;
 import org.jmangos.realm.model.base.PlayerLevelInfo;
 
-// TODO: Auto-generated Javadoc
 /**
  * DAO that manages items.
  * 
- * @author minimajack
+ * @author MinimaJack
  */
 public class MySQL5SimpleDataDAO extends SimpleDataDAO {
 	
@@ -41,7 +40,7 @@ public class MySQL5SimpleDataDAO extends SimpleDataDAO {
 			.getLogger(MySQL5SimpleDataDAO.class);
 	
 	/* (non-Javadoc)
-	 * @see org.wowemu.realm.dao.SimpleDataDAO#getClassLevelInfos()
+	 * @see org.jmangos.realm.dao.SimpleDataDAO#getClassLevelInfos()
 	 */
 	@Override
 	public HashMap<ClassLevel, PlayerClassLevelInfo> getClassLevelInfos() {
@@ -67,7 +66,7 @@ public class MySQL5SimpleDataDAO extends SimpleDataDAO {
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.wowemu.realm.dao.SimpleDataDAO#getRaceClassLevelInfos()
+	 * @see org.jmangos.realm.dao.SimpleDataDAO#getRaceClassLevelInfos()
 	 */
 	@Override
 	public HashMap<RaceClassLevel, PlayerLevelInfo> getRaceClassLevelInfos() {

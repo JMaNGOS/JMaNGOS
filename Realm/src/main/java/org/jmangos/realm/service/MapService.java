@@ -22,7 +22,6 @@ import gnu.trove.procedure.TObjectProcedure;
 import org.jmangos.commons.service.Service;
 import org.jmangos.realm.model.base.Map;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class MapService.
  */
@@ -35,7 +34,7 @@ public class MapService implements Service {
 	private MapUpdater mapUpdater = new MapUpdater();
 	
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.service.Service#start()
+	 * @see org.jmangos.commons.service.Service#start()
 	 */
 	@Override
 	public void start() {
@@ -43,7 +42,7 @@ public class MapService implements Service {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.service.Service#stop()
+	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override
 	public void stop() {

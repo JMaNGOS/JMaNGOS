@@ -41,29 +41,28 @@ import org.jmangos.realm.model.player.PlayerCharacterData;
 import org.jmangos.realm.model.unit.Powers;
 import org.jmangos.realm.model.unit.SpellSchools;
 import org.jmangos.realm.model.unit.Stats;
-import org.jmangos.realm.network.netty.packet.server.MSG_SET_DUNGEON_DIFFICULTY;
-import org.jmangos.realm.network.netty.packet.server.SMSG_ACCOUNT_DATA_TIMES;
-import org.jmangos.realm.network.netty.packet.server.SMSG_ACTION_BUTTONS;
-import org.jmangos.realm.network.netty.packet.server.SMSG_ALL_ACHIEVEMENT_DATA;
-import org.jmangos.realm.network.netty.packet.server.SMSG_BINDPOINTUPDATE;
-import org.jmangos.realm.network.netty.packet.server.SMSG_COMPRESSED_UPDATE_OBJECT;
-import org.jmangos.realm.network.netty.packet.server.SMSG_EQUIPMENT_SET_LIST;
-import org.jmangos.realm.network.netty.packet.server.SMSG_FEATURE_SYSTEM_STATUS;
-import org.jmangos.realm.network.netty.packet.server.SMSG_INITIALIZE_FACTIONS;
-import org.jmangos.realm.network.netty.packet.server.SMSG_INITIAL_SPELLS;
-import org.jmangos.realm.network.netty.packet.server.SMSG_INIT_WORLD_STATES;
-import org.jmangos.realm.network.netty.packet.server.SMSG_INSTANCE_DIFFICULTY;
-import org.jmangos.realm.network.netty.packet.server.SMSG_LEARNED_DANCE_MOVES;
-import org.jmangos.realm.network.netty.packet.server.SMSG_LOGIN_SETTIMESPEED;
-import org.jmangos.realm.network.netty.packet.server.SMSG_LOGIN_VERIFY_WORLD;
-import org.jmangos.realm.network.netty.packet.server.SMSG_MOTD;
-import org.jmangos.realm.network.netty.packet.server.SMSG_PLAYED_TIME;
-import org.jmangos.realm.network.netty.packet.server.SMSG_POWER_UPDATE;
-import org.jmangos.realm.network.netty.packet.server.SMSG_SPELL_GO;
-import org.jmangos.realm.network.netty.packet.server.SMSG_TALENTS_INFO;
-import org.jmangos.realm.network.netty.packet.server.SMSG_TIME_SYNC_REQ;
+import org.jmangos.realm.network.netty.packetClient.server.MSG_SET_DUNGEON_DIFFICULTY;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_ACCOUNT_DATA_TIMES;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_ACTION_BUTTONS;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_ALL_ACHIEVEMENT_DATA;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_BINDPOINTUPDATE;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_COMPRESSED_UPDATE_OBJECT;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_EQUIPMENT_SET_LIST;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_FEATURE_SYSTEM_STATUS;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_INITIALIZE_FACTIONS;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_INITIAL_SPELLS;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_INIT_WORLD_STATES;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_INSTANCE_DIFFICULTY;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_LEARNED_DANCE_MOVES;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_LOGIN_SETTIMESPEED;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_LOGIN_VERIFY_WORLD;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_MOTD;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_PLAYED_TIME;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_POWER_UPDATE;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_SPELL_GO;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_TALENTS_INFO;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_TIME_SYNC_REQ;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class PlayerService.
  */
@@ -244,17 +243,15 @@ public class PlayerService {
 		for (InventoryTemplate iT: inventoryTemplate) {
 			ItemPrototype proto = itemStorages.get(iT.getItem_id());
 			if(proto != null){
-				logger.info(proto.getName() + " - " + iT.getSlot());
+				logger.debug(proto.getName() + " - " + iT.getSlot());
 				Item item = itemStorages.loadFromDB(iT,proto);
 				if( Item.IsInventoryPos( Item.INVENTORY_SLOT_BAG_0, iT.getSlot() )){
-					logger.info(proto.getName() + " - " +"in INVENTORY_SLOT_BAG_0");
+					logger.debug(proto.getName() + " - " +"in INVENTORY_SLOT_BAG_0");
 				}
 				if( Item.IsEquipmentPos( Item.INVENTORY_SLOT_BAG_0, iT.getSlot() )){
-					logger.info(proto.getName() + " - " +"in INVENTORY_SLOT_BAG_0 and can equip");
+					logger.debug(proto.getName() + " - " +"in INVENTORY_SLOT_BAG_0 and can equip");
 					player.equipItem(iT.getSlot(), item);
-					//Item* m_items[PLAYER_SLOTS_COUNT];
 				}
-				//item.LoadFromDB(iT, player.getObjectGuid().getRawValue());
 			}
 		}
 		

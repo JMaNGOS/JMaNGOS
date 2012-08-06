@@ -16,7 +16,6 @@
  *******************************************************************************/
 package org.jmangos.realm.utils;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class StringUtils.
  */

@@ -30,7 +30,7 @@ import org.jmangos.realm.model.player.PlayerHomeBindData;
 public abstract class PlayerDAO implements DAO {
 
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.database.dao.DAO#getClassName()
+	 * @see org.jmangos.commons.database.dao.DAO#getClassName()
 	 */
 	@Override
 	public String getClassName() {
