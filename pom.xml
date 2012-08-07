@@ -241,7 +241,7 @@
 							<findbugsXmlOutput>true</findbugsXmlOutput>
 							<findbugsXmlWithMessages>true</findbugsXmlWithMessages>
 							<xmlOutput>true</xmlOutput>
-							<jvmArgs>-Xmx128m -Xms128m -XX:MaxPermSize=128m</jvmArgs>
+							<fork>false</fork>
 						</configuration>
 					</plugin>
 				</plugins>
