@@ -225,10 +225,10 @@
 			</build>
 		</profile>
 		<profile>
-			<id>test</id>
+			<id>findBugs</id>
 			<activation>
 				<property>
-					<name>test</name>
+					<name>findBugs</name>
 					<value>true</value>
 				</property>
 			</activation>
