@@ -154,6 +154,7 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 			sha.update(vK);
 
 			getAccount().setM2(sha.digest());
+			getAccount().setvK(vK);
 			ArrayUtils.reverse(vK);
 			accountService.updateSessionKey(getAccount().getName(),
 					new BigInteger(1, vK).toString(16).toUpperCase());

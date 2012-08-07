@@ -74,6 +74,8 @@ public class Account extends NamedObject implements ChanneledObject {
 	/** The msession key. */
 	private String msessionKey;
 
+	private byte[] vK;
+
 	/**
 	 * Gets the _reconnect proof.
 	 * 
@@ -437,5 +439,14 @@ public class Account extends NamedObject implements ChanneledObject {
 
 	public String getMsessionKey() {
 		return msessionKey;
+	}
+
+	public byte[] getvK() {
+		return vK;
+	}
+
+	public void setvK(byte[] vK) {
+		//need clone
+		this.vK = vK.clone();
 	}
 }

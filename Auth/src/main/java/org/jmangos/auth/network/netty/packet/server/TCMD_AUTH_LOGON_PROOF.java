@@ -66,7 +66,6 @@ public class TCMD_AUTH_LOGON_PROOF extends AbstractWoWServerPacket {
 			// unkFlags
 			writeC(0);
 			writeC(0);
-			getChannel().setChannelState(State.AUTHED);
 		}
 	}
 }

@@ -24,17 +24,23 @@ import javax.inject.Named;
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
+import org.jmangos.realm.network.netty.decoder.AuthPacketFrameDecoder;
+import org.jmangos.realm.network.netty.decoder.AuthPacketFrameEncoder;
 import org.jmangos.realm.network.netty.decoder.PacketFrameDecoder;
 import org.jmangos.realm.network.netty.decoder.PacketFrameEncoder;
+import org.jmangos.realm.network.netty.handler.RealmToAuthChannelHandler;
 import org.jmangos.realm.network.netty.packetAuth.AbstractRealmClientPacket;
-import org.jmangos.realm.network.netty.packetAuth.server.CMD_AUTH_ENABLE_CRYPT;
+import org.jmangos.realm.network.netty.packetAuth.server.CMD_TEST_CRYPT;
+
+// TODO: Auto-generated Javadoc
 /**
  * The Class CMD_AUTH_LOGON_PROOF.
  */
-public class CMD_AUTH_LOGON_PROOF extends AbstractRealmClientPacket {
+public class CMD_AUTH_ENABLE_CRYPT extends AbstractRealmClientPacket {
 
 	/** The logger. */
-	private static Logger logger = Logger.getLogger(CMD_AUTH_LOGON_PROOF.class);
+	private static Logger logger = Logger
+			.getLogger(CMD_AUTH_ENABLE_CRYPT.class);
 	@Inject
 	@Named("RealmToAuth")
 	private AbstractPacketSender sender;
@@ -46,15 +52,8 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractRealmClientPacket {
 	 */
 	@Override
 	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		logger.info("WoWAuthResponse " + readC());
-	//	ChannelPipeline pipeline = getClient().getChannel().getPipeline();
-	//	pipeline.addFirst("framedecoder", new PacketFrameDecoder());
-	//	pipeline.addFirst("encoder", new PacketFrameEncoder());
-		/*
-		 * if (readC() == WoWAuthResponse.WOW_SUCCESS.getMessageId()) {
-		 * logger.info( WoWAuthResponse.WOW_SUCCESS); }
-		 */
-
+		// read size of the packet before enable encryption
+		readC();
 	}
 
 	/*
@@ -64,7 +63,11 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractRealmClientPacket {
 	 */
 	@Override
 	protected void runImpl() {
-		sender.send(getClient(), new CMD_AUTH_ENABLE_CRYPT());
-		
+		ChannelPipeline pipeline = getClient().getChannel().getPipeline();
+		pipeline.addFirst("framedecoder", new AuthPacketFrameDecoder());
+		pipeline.addFirst("encoder", new AuthPacketFrameEncoder());
+		RealmToAuthChannelHandler channelHandler = (RealmToAuthChannelHandler)pipeline.getLast();
+		channelHandler.getCrypt().init(channelHandler.getSeed());
+		sender.send(getClient(), new CMD_TEST_CRYPT());
 	}
 }

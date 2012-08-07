@@ -14,25 +14,38 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.auth.network.handler;
+package org.jmangos.auth.network.netty.packet.server;
 
-import org.jmangos.commons.network.handlers.AbstractPacketHandlerFactory;
-import org.jmangos.commons.network.netty.model.PacketData;
+import org.apache.log4j.Logger;
+import org.jmangos.auth.model.Account;
+import org.jmangos.auth.model.Realm;
+import org.jmangos.auth.network.netty.packet.AbstractWoWServerPacket;
+import org.jmangos.auth.service.WorldListService;
+
+import javolution.util.FastMap;
 
 /**
- * 
- * @author MinimaJack
- * 
+ * The Class TCMD_REALM_LIST.
  */
-public class AuthToRealmPacketHandlerFactory extends
-		AbstractPacketHandlerFactory {
+public class TCMD_AUTH_ENABLE_CRYPT extends AbstractWoWServerPacket {
+
+	/** The Constant log. */
+	@SuppressWarnings("unused")
+	private static final Logger log = Logger.getLogger(TCMD_AUTH_ENABLE_CRYPT.class);
 
 	/**
-	 * Instantiates a new auth to realm packet handler factory.
+	 * Instantiates a new TCMD_REALM_LIST.
 	 */
-	public AuthToRealmPacketHandlerFactory() {
-		addList(loadStaticData(PacketData.class,
-				"./conf/packetData/packets.xsd",
-				"./conf/packetData/lr-packets.xml"));
+	public TCMD_AUTH_ENABLE_CRYPT() {
+	}
+
+	/**
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jmangos.common.network.model.SendablePacket#writeImpl()
+	 */
+	@Override
+	protected void writeImpl() {
+		
 	}
 }

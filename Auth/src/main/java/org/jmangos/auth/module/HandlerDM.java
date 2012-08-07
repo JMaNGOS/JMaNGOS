@@ -24,9 +24,7 @@ import org.jmangos.auth.dao.mysql5.MySQL5AccountDAO;
 import org.jmangos.auth.dao.mysql5.MySQL5BannedIpDAO;
 import org.jmangos.auth.dao.mysql5.MySQL5RealmDAO;
 import org.jmangos.auth.network.handler.AuthToClientPacketHandlerFactory;
-import org.jmangos.auth.network.handler.AuthToRealmPacketHandlerFactory;
 import org.jmangos.auth.network.netty.factory.AuthToClientPipelineFactory;
-import org.jmangos.auth.network.netty.factory.AuthToRealmPipelineFactory;
 import org.jmangos.auth.network.netty.handler.AuthToClientConnectHandler;
 import org.jmangos.auth.service.AccountService;
 import org.jmangos.auth.service.BanIpService;
@@ -65,15 +63,9 @@ public class HandlerDM extends AbstractModule {
 				.annotatedWith(Names.named("AuthToClient"))
 				.to(AuthToClientPacketHandlerFactory.class)
 				.in(Scopes.SINGLETON);
-		bind(PacketHandlerFactory.class)
-				.annotatedWith(Names.named("AuthToRealm"))
-				.to(AuthToRealmPacketHandlerFactory.class).in(Scopes.SINGLETON);
 		bind(ChannelPipelineFactory.class)
 				.annotatedWith(Names.named("AuthToClient"))
 				.to(AuthToClientPipelineFactory.class).in(Scopes.SINGLETON);
-		bind(ChannelPipelineFactory.class)
-				.annotatedWith(Names.named("AuthToRealm"))
-				.to(AuthToRealmPipelineFactory.class).in(Scopes.SINGLETON);
 
 		bind(ConnectHandler.class).annotatedWith(Names.named("AuthToClient"))
 				.to(AuthToClientConnectHandler.class).in(Scopes.SINGLETON);
