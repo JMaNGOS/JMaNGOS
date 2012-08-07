@@ -24,106 +24,90 @@
  */
 package org.jmangos.auth.model;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class BanIp.
  */
-public class BanIp
-{
-        
-        /** Returns ip mask. */
-        private String          ip;
+public class BanIp {
 
+	/** Returns ip mask. */
+	private String ip;
 
-        /** Returns expiration time. */
-        private Long       timeEnd;
+	/** Returns expiration time. */
+	private Long timeEnd;
 
+	/**
+	 * Checks if ban is still active.
+	 * 
+	 * @return true if ban is still active
+	 */
+	public boolean isActive() {
+		return timeEnd == null || timeEnd > System.currentTimeMillis() / 1000;
+	}
 
-        /**
-         * Checks if ban is still active.
-         *
-         * @return true if ban is still active
-         */
-        public boolean isActive()
-        {
-                return timeEnd == null || timeEnd > System.currentTimeMillis()/1000;
-        }
+	/**
+	 * Returns ip.
+	 * 
+	 * @return ip
+	 */
+	public String getIp() {
+		return ip;
+	}
 
-        /**
-         * Returns ip.
-         *
-         * @return ip
-         */
-        public String getIp()
-        {
-                return ip;
-        }
+	/**
+	 * Sets ip mask.
+	 * 
+	 * @param ip
+	 *            the new ip
+	 */
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
 
+	/**
+	 * Returns expiration time of ban.
+	 * 
+	 * @return expiration time of ban
+	 */
+	public Long getTimeEnd() {
+		return timeEnd;
+	}
 
-        /**
-         * Sets ip mask.
-         *
-         * @param ip the new ip
-         */
-        public void setIp(String ip)
-        {
-                this.ip = ip;
-        }
+	/**
+	 * Sets expiration time of ban.
+	 * 
+	 * @param timeEnd
+	 *            expiration time of ban
+	 */
+	public void setTimeEnd(Long timeEnd) {
+		this.timeEnd = timeEnd;
+	}
 
+	/**
+	 * Returns true if this ip ban is equal to another. Based on {@link #ip}
+	 * 
+	 * @param o
+	 *            another ip ban
+	 * @return true if ban's are equals
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof BanIp))
+			return false;
 
-        /**
-         * Returns expiration time of ban.
-         *
-         * @return expiration time of ban
-         */
-        public Long getTimeEnd()
-        {
-                return timeEnd;
-        }
+		BanIp banIp = (BanIp) o;
 
+		return !(ip != null ? !ip.equals(banIp.ip) : banIp.ip != null);
+	}
 
-        /**
-         * Sets expiration time of ban.
-         *
-         * @param timeEnd expiration time of ban
-         */
-        public void setTimeEnd(Long timeEnd)
-        {
-                this.timeEnd = timeEnd;
-        }
-
-
-        /**
-         * Returns true if this ip ban is equal to another. Based on {@link #ip}
-         * 
-         * @param o
-         *            another ip ban
-         * @return true if ban's are equals
-         */
-        @Override
-        public boolean equals(Object o)
-        {
-                if (this == o)
-                        return true;
-                if (!(o instanceof BanIp))
-                        return false;
-
-
-                BanIp banIp = (BanIp) o;
-
-
-                return !(ip != null ? !ip.equals(banIp.ip) : banIp.ip != null);
-        }
-
-
-        /**
-         * Returns ban's hashcode. Based on mask
-         * 
-         * @return ban's hashcode
-         */
-        @Override
-        public int hashCode()
-        {
-                return ip != null ? ip.hashCode() : 0;
-        }
+	/**
+	 * Returns ban's hashcode. Based on mask
+	 * 
+	 * @return ban's hashcode
+	 */
+	@Override
+	public int hashCode() {
+		return ip != null ? ip.hashCode() : 0;
+	}
 }

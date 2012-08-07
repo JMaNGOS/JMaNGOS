@@ -14,9 +14,8 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.realm.network.crypt;
+package org.jmangos.commons.network.crypt;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SARC4.
  */
@@ -32,9 +31,9 @@ public class SARC4 {
     private int y;
 	
 	/**
-	 * Inits the.
+	 * Init by seed.
 	 *
-	 * @param key the key
+	 * @param key - seed
 	 * @return true, if successful
 	 */
 	public boolean init(byte[] key) {
@@ -75,7 +74,7 @@ public class SARC4 {
 	 * @param buf the buf
 	 * @return the byte[]
 	 */
-	public byte[] Update(byte[] buf){
+	public byte[] update(byte[] buf){
 
 	        int xorIndex;
 	        byte tmp;

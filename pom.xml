@@ -236,10 +236,10 @@
 			</build>
 		</profile>
 		<profile>
-			<id>test</id>
+			<id>findBugs</id>
 			<activation>
 				<property>
-					<name>test</name>
+					<name>findBugs</name>
 					<value>true</value>
 				</property>
 			</activation>
@@ -252,6 +252,7 @@
 							<findbugsXmlOutput>true</findbugsXmlOutput>
 							<findbugsXmlWithMessages>true</findbugsXmlWithMessages>
 							<xmlOutput>true</xmlOutput>
+							<fork>false</fork>
 						</configuration>
 					</plugin>
 				</plugins>

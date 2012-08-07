@@ -26,15 +26,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-// TODO: Auto-generated Javadoc
 /**
  * MySQL5 Account DAO implementation.
- *
+ * 
  * @author MinimaJack
- *
+ * 
  */
 public class MySQL5AccountDAO extends AccountDAO {
-	
+
 	/** Logger. */
 	private static final Logger log = Logger.getLogger(MySQL5AccountDAO.class);
 
@@ -120,8 +119,12 @@ public class MySQL5AccountDAO extends AccountDAO {
 		return -1;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.login.dao.AccountDAO#updateSecurityKey(org.wowemu.login.model.Account)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.wowemu.login.dao.AccountDAO#updateSecurityKey(org.wowemu.login.model
+	 * .Account)
 	 */
 	public boolean updateSecurityKey(Account account) {
 		int result = 0;
@@ -142,8 +145,11 @@ public class MySQL5AccountDAO extends AccountDAO {
 		return result > 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.login.dao.AccountDAO#updateSessionKey(java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.wowemu.login.dao.AccountDAO#updateSessionKey(java.lang.String,
+	 * java.lang.String)
 	 */
 	public boolean updateSessionKey(String username, String key) {
 		int result = 0;
@@ -224,8 +230,10 @@ public class MySQL5AccountDAO extends AccountDAO {
 
 		return lastIp;
 	}
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.wowemu.login.dao.AccountDAO#getSessionKey(java.lang.String)
 	 */
 	@Override

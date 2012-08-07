@@ -14,22 +14,29 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.auth.network.netty.packet;
+package org.jmangos.realm.network.netty.packetAuth.server;
 
-import org.jmangos.commons.network.model.NettyNetworkChannel;
-import org.jmangos.commons.network.model.SendablePacket;
+
+import org.jmangos.realm.network.netty.packetAuth.AbstractRealmServerPacket;
 
 /**
- * The Class AbstractWoWServerPacket.
+ * The Class CMD_TEST_CRYPT.
  */
-public abstract class AbstractWoWServerPacket extends SendablePacket {
-
-	/**
-	 * Gets the channel.
-	 * 
-	 * @return the channel
+public class CMD_TEST_CRYPT  extends AbstractRealmServerPacket {
+	
+	public CMD_TEST_CRYPT() {
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
 	 */
-	public NettyNetworkChannel getChannel() {
-		return (NettyNetworkChannel) channel;
+	@Override
+	protected void writeImpl() {
+		writeC('C');
+		writeC('R');
+		writeC('Y');
+		writeC('P');
+		writeC('T');
 	}
 }
+

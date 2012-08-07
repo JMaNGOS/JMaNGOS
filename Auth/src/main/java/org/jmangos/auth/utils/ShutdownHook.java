@@ -42,7 +42,6 @@ public class ShutdownHook extends Thread {
 	private static final Logger log = Logger.getLogger(ShutdownHook.class);
 
 	/**
-	 * (non-Javadoc)
 	 * 
 	 * @see java.lang.Thread#run()
 	 */

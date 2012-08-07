@@ -45,7 +45,6 @@ public class CMD_AUTH_LOGON_PROOF  extends AbstractRealmServerPacket {
 	 * @param m1 the m1
 	 */
 	public CMD_AUTH_LOGON_PROOF(byte[] a, byte[] m1) {
-		ArrayUtils.reverse(a);
 		this.a = a;
 		this.m1 = m1;
 	}

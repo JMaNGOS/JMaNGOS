@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.realm.network.crypt;
+package org.jmangos.auth.network.crypt;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -25,36 +25,38 @@ import org.jmangos.commons.network.crypt.SARC4;
  * The Class Crypt.
  */
 public class Crypt {
-	
+
 	/** The Server encryption key. */
-	byte[] serverEncryptionKey = { (byte) 0xCC,  (byte)0x98,  (byte)0xAE, 0x04,
-			(byte)0xE8,  (byte)0x97, (byte)0xEA,  (byte)0xCA, 0x12,
-			(byte)0xDD,  (byte)0xC0,  (byte)0x93, 0x42,  (byte)0x91, 0x53,
+	byte[] clientDecryptionKey = { (byte) 0xCC, (byte) 0x98, (byte) 0xAE, 0x04,
+			(byte) 0xE8, (byte) 0x97, (byte) 0xEA, (byte) 0xCA, 0x12,
+			(byte) 0xDD, (byte) 0xC0, (byte) 0x93, 0x42, (byte) 0x91, 0x53,
 			0x57 };
-	
+
 	/** The Server decryption key. */
-	byte[] clientDecryptionKey = { (byte) 0xC2, (byte) 0xB3, 0x72, 0x3C, (byte) 0xC6, (byte) 0xAE, (byte) 0xD9,
-			(byte) 0xB5, 0x34, 0x3C, 0x53, (byte) 0xEE, 0x2F, 0x43, 0x67, (byte) 0xCE };
+	byte[] serverEncryptionKey = { (byte) 0xC2, (byte) 0xB3, 0x72, 0x3C,
+			(byte) 0xC6, (byte) 0xAE, (byte) 0xD9, (byte) 0xB5, 0x34, 0x3C,
+			0x53, (byte) 0xEE, 0x2F, 0x43, 0x67, (byte) 0xCE };
 
 	/** The is enabled. */
 	private boolean isEnabled = false;
 
-	/** The _client decrypt. */
-	private SARC4 clientDecryptSARC4 = new SARC4(); 
-	
-	/** The _server encrypt. */
-	private SARC4 serverEncryptSARC4 = new SARC4(); 
+	/** The client decrypt. */
+	private SARC4 clientDecryptSARC4 = new SARC4();
+
+	/** The server encrypt. */
+	private SARC4 serverEncryptSARC4 = new SARC4();
 
 	/**
 	 * Instantiates a new crypt.
 	 */
-	public Crypt() { 
+	public Crypt() {
 	}
 
 	/**
 	 * Decrypt.
-	 *
-	 * @param data the data
+	 * 
+	 * @param data
+	 *            the data
 	 * @return the byte[]
 	 */
 	public byte[] decrypt(byte[] data) {
@@ -65,62 +67,63 @@ public class Crypt {
 
 	/**
 	 * Encrypt.
-	 *
-	 * @param data the data
+	 * 
+	 * @param data
+	 *            the data
 	 * @return the byte[]
 	 */
 	public byte[] encrypt(byte[] data) {
 		if (!isEnabled)
-			return data; 
+			return data;
 		return serverEncryptSARC4.update(data);
 
 	}
-	
+
 	/**
-	 * Init crypto-system.
-	 *
-	 * @param key is seed
+	 * Inits the.
+	 * 
+	 * @param key
+	 *            the key
 	 */
-	public void init(byte[] key){
-		
-		byte[] encryptHash = getKey(serverEncryptionKey,key);
-		clientDecryptSARC4.init(encryptHash);
-		
-		byte[] decryptHash = getKey(clientDecryptionKey,key);
+	public void init(byte[] key) {
+		byte[] decryptHash = getKey(clientDecryptionKey, key);
+
 		serverEncryptSARC4.init(decryptHash);
-		
+		byte[] encryptHash = getKey(serverEncryptionKey, key);
+
+		clientDecryptSARC4.init(encryptHash);
 		byte[] tar = new byte[1024];
-		for(int i = 0; i < tar.length; i++)
-		 {
+		for (int i = 0; i < tar.length; i++) {
 			tar[i] = 0;
-		 }
+		}
 		serverEncryptSARC4.update(tar);
-		for(int i = 0; i < tar.length; i++)
-		 {
+		for (int i = 0; i < tar.length; i++) {
 			tar[i] = 0;
-		 }
-		 clientDecryptSARC4.update(tar);
+		}
+		clientDecryptSARC4.update(tar);
 		this.isEnabled = true;
 	}
-	
+
 	/**
-	 * Gets the encryption key.
-	 *
-	 * @param EncryptionKey the encryption key
-	 * @param key the key
+	 * Gets the key.
+	 * 
+	 * @param EncryptionKey
+	 *            the encryption key
+	 * @param key
+	 *            the key
 	 * @return the key
 	 */
-	private byte[] getKey(byte[] EncryptionKey,byte[] key) {
+	private byte[] getKey(byte[] EncryptionKey, byte[] key) {
 		SecretKeySpec ds = new SecretKeySpec(EncryptionKey, "HmacSHA1");
 		Mac m;
 		try {
 			m = Mac.getInstance("HmacSHA1");
 			m.init(ds);
-			return  m.doFinal(key);
+			return m.doFinal(key);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;		
+		return null;
 	}
 
 }

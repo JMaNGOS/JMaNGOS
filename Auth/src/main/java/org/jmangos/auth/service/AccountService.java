@@ -29,36 +29,43 @@ import org.jmangos.commons.utils.BigNumber;
 
 /**
  * This class is responsible for controlling all account actions.
+ * 
  * @author MinimaJack
  */
 public class AccountService {
-	
+
 	/** The account dao. */
 	@Inject
-	private  AccountDAO accountDAO;
-	
+	private AccountDAO accountDAO;
+
 	/**
 	 * Load clean.
-	 *
-	 * @param name the name
-	 * @param channelHandler the channel handler
+	 * 
+	 * @param name
+	 *            the name
+	 * @param channelHandler
+	 *            the channel handler
 	 */
 	public void loadClean(String name, NettyNetworkChannel channelHandler) {
 		Account account = loadAccount(name);
 		channelHandler.setChanneledObject(account);
 	}
-	
+
 	/**
 	 * Login.
-	 *
-	 * @param name the name
-	 * @param channelHandler the channel handler
+	 * 
+	 * @param name
+	 *            the name
+	 * @param channelHandler
+	 *            the channel handler
 	 * @return the wo w auth response
 	 */
 	public WoWAuthResponse login(String name, NettyNetworkChannel channelHandler) {
-		//if (BannedIpController.isBanned(channelHandler.getAddress().getAddress().getHostAddress())) {
-		//	return WoWAuthResponse.WOW_FAIL_BANNED;
-		//}
+		// if
+		// (BannedIpController.isBanned(channelHandler.getAddress().getAddress().getHostAddress()))
+		// {
+		// return WoWAuthResponse.WOW_FAIL_BANNED;
+		// }
 		;
 		Account account = loadAccount(name);
 		HashMap<String, BigNumber> variable = new HashMap<String, BigNumber>();
@@ -71,7 +78,8 @@ public class AccountService {
 		channelHandler.setChanneledObject(account);
 		if (account.getV().length() != 32 * 2
 				|| account.getS().length() != 32 * 2) {
-			variable = AccountUtils.calculateVSFields(account.getPasswordHash());
+			variable = AccountUtils
+					.calculateVSFields(account.getPasswordHash());
 			s = variable.get("s");
 			v = variable.get("v");
 			updateSV(account);
@@ -79,22 +87,23 @@ public class AccountService {
 			s.setHexStr(account.getS());
 			v.setHexStr(account.getV());
 		}
-		
+
 		BigNumber B = AccountUtils.getB(v, channelHandler);
 		account.setB_crypto(B);
 		account.sets(s);
 		account.setV_crypto(v);
-		
-		accountDAO.updateLastIp(account.getObjectId(),
-				channelHandler.getAddress().getAddress().getHostAddress());
-		
+
+		accountDAO.updateLastIp(account.getObjectId(), channelHandler
+				.getAddress().getAddress().getHostAddress());
+
 		return WoWAuthResponse.WOW_SUCCESS;
 	}
 
 	/**
 	 * Update sv.
-	 *
-	 * @param account the account
+	 * 
+	 * @param account
+	 *            the account
 	 */
 	public void updateSV(Account account) {
 		accountDAO.updateSecurityKey(account);
@@ -103,8 +112,9 @@ public class AccountService {
 	/**
 	 * Loads account from DB and returns it, or returns null if account was not
 	 * loaded.
-	 *
-	 * @param name Account name
+	 * 
+	 * @param name
+	 *            Account name
 	 * @return loaded account or null
 	 */
 	public Account loadAccount(String name) {
@@ -113,9 +123,11 @@ public class AccountService {
 
 	/**
 	 * Update session key.
-	 *
-	 * @param username the username
-	 * @param Key the key
+	 * 
+	 * @param username
+	 *            the username
+	 * @param Key
+	 *            the key
 	 */
 	public void updateSessionKey(String username, String Key) {
 		accountDAO.updateSessionKey(username, Key);
@@ -123,8 +135,9 @@ public class AccountService {
 
 	/**
 	 * Gets the session key.
-	 *
-	 * @param username the username
+	 * 
+	 * @param username
+	 *            the username
 	 * @return the session key
 	 */
 	public String getSessionKey(String username) {

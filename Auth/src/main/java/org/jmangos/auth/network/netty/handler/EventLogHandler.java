@@ -27,7 +27,7 @@ import org.jboss.netty.handler.timeout.ReadTimeoutException;
 /**
  * The Class EventLogHandler.
  * 
- * @author minimajack
+ * @author MinimaJack
  */
 public class EventLogHandler extends SimpleChannelUpstreamHandler {
 
@@ -59,6 +59,7 @@ public class EventLogHandler extends SimpleChannelUpstreamHandler {
 			ctx.sendUpstream(e);
 		}
 		log.info("Exception caught: \n " + e);
+		e.getCause().printStackTrace();
 		ctx.sendUpstream(e);
 	}
 

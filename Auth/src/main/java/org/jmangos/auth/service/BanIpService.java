@@ -47,7 +47,6 @@ public class BanIpService implements Service {
 	private static Set<BanIp> banList;
 
 	/**
-	 * (non-Javadoc)
 	 * 
 	 * @see org.wowemu.common.service.Service#start()
 	 */
@@ -155,7 +154,6 @@ public class BanIpService implements Service {
 	}
 
 	/**
-	 * (non-Javadoc)
 	 * 
 	 * @see org.wowemu.common.service.Service#stop()
 	 */
