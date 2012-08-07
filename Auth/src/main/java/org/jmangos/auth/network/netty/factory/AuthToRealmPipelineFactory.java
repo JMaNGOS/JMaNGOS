@@ -37,7 +37,6 @@ import javax.inject.Named;
  * 
  * @author MinimaJack
  */
-
 public class AuthToRealmPipelineFactory extends BasicPipelineFactory {
 
 	/** The connection handler. */

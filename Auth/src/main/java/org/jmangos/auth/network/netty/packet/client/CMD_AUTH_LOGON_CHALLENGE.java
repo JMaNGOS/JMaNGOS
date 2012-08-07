@@ -65,11 +65,9 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
 		super();
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
 	 * 
-	 * @see
-	 * org.jmangos.commons.network.model.ReceivablePacket#getMinimumLength()
+	 * @see org.jmangos.commons.network.model.ReceivablePacket#getMinimumLength()
 	 */
 	public int getMinimumLength() {
 		return 0;

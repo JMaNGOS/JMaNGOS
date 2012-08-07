@@ -20,13 +20,14 @@ import org.jmangos.commons.network.handlers.AbstractPacketHandlerFactory;
 import org.jmangos.commons.network.netty.model.PacketData;
 
 /**
- *
+ * 
  * @author MinimaJack
  */
-public class AuthToClientPacketHandlerFactory extends AbstractPacketHandlerFactory {
+public class AuthToClientPacketHandlerFactory extends
+		AbstractPacketHandlerFactory {
 
 	/**
-	 * Instantiates a new l2 c packet handler factory.
+	 * Instantiates a new auth to client packet handler factory.
 	 */
 	public AuthToClientPacketHandlerFactory() {
 		addList(loadStaticData(PacketData.class,

@@ -25,7 +25,6 @@ import org.jmangos.auth.dao.RealmDAO;
 import org.jmangos.auth.model.Realm;
 import org.jmangos.commons.service.Service;
 
-
 public class WorldListService implements Service {
 	/**
 	 * Logger for this class.
@@ -53,7 +52,7 @@ public class WorldListService implements Service {
 
 	/**
 	 * Gets the worlds.
-	 *
+	 * 
 	 * @return the worlds
 	 */
 	public FastMap<Integer, Realm> getWorlds() {
@@ -72,7 +71,7 @@ public class WorldListService implements Service {
 	/**
 	 * Loads account from DB and returns it, or returns null if account was not
 	 * loaded.
-	 *
+	 * 
 	 * @return loaded account or null
 	 */
 	public void reload() {
@@ -80,19 +79,19 @@ public class WorldListService implements Service {
 		log.debug("RealmList reloaded. Loaded " + realms.size() + " realms.");
 
 	}
-	
+
 	/**
 	 * Update.
 	 */
-	private void update(){
+	private void update() {
 		realms = WORLDdao.getAllRealms();
 		// update byte size all realms
-		setByteSize(calculateWorldsSize());	
+		setByteSize(calculateWorldsSize());
 	}
-	
+
 	/**
 	 * Gets the byte size.
-	 *
+	 * 
 	 * @return the byteSize
 	 */
 	public int getByteSize() {
@@ -101,8 +100,9 @@ public class WorldListService implements Service {
 
 	/**
 	 * Sets the byte size.
-	 *
-	 * @param byteSyze the new byte size
+	 * 
+	 * @param byteSyze
+	 *            the new byte size
 	 */
 	public static void setByteSize(int byteSyze) {
 		WorldListService.byteSize = byteSyze;
@@ -110,7 +110,7 @@ public class WorldListService implements Service {
 
 	/**
 	 * Gets the size.
-	 *
+	 * 
 	 * @return the size
 	 */
 	public int getSize() {
@@ -119,7 +119,7 @@ public class WorldListService implements Service {
 
 	/**
 	 * Calculate worlds size.
-	 *
+	 * 
 	 * @return the int
 	 */
 	public int calculateWorldsSize() {
@@ -132,8 +132,9 @@ public class WorldListService implements Service {
 
 	/**
 	 * Gets the amount characters.
-	 *
-	 * @param id the id
+	 * 
+	 * @param id
+	 *            the id
 	 * @return the amount characters
 	 */
 	public FastMap<Integer, Integer> getAmountCharacters(Integer id) {
@@ -146,6 +147,7 @@ public class WorldListService implements Service {
 
 	/**
 	 * (non-Javadoc)
+	 * 
 	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override

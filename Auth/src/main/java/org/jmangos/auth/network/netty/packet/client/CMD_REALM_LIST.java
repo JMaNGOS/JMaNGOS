@@ -27,18 +27,21 @@ import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
  * The Class CMD_REALM_LIST.
  */
 public class CMD_REALM_LIST extends AbstractWoWClientPacket {
-	
+
 	/** The sender. */
 	@Inject
 	private AbstractPacketSender sender;
-	
+
 	/** The worldlist. */
 	@Inject
 	private WorldListService worldlist;
-	/* 
+
+	/*
 	 * {@inheritDoc}
 	 */
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jmangos.common.network.model.ReceivablePacket#getMinimumLength()
 	 */
 	@Override
@@ -52,12 +55,12 @@ public class CMD_REALM_LIST extends AbstractWoWClientPacket {
 	public CMD_REALM_LIST() {
 		super();
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void readImpl()
-	{
+	protected void readImpl() {
 		readB(getAvaliableBytes());
 	}
 
@@ -66,6 +69,6 @@ public class CMD_REALM_LIST extends AbstractWoWClientPacket {
 	 */
 	@Override
 	protected void runImpl() {
-		sender.send(getClient() ,new TCMD_REALM_LIST(worldlist));
+		sender.send(getClient(), new TCMD_REALM_LIST(worldlist));
 	}
 }

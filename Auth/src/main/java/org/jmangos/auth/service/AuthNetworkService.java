@@ -40,18 +40,15 @@ public class AuthNetworkService extends AbstractNetworkService {
 	private ChannelPipelineFactory authToRealmPipelineFactory;
 
 	/**
-	 * (non-Javadoc)
 	 * 
 	 * @see org.jmangos.commons.service.Service#start()
 	 */
 	@Override
 	public void start() {
 		createServerChannel(Config.CLIENT_ADDRESS, authToClientPipelineFactory);
-		// createServerChannel(Config.REALM_ADDRESS, authToRealmPipelineFactory);
 	}
 
 	/**
-	 * (non-Javadoc)
 	 * 
 	 * @see org.jmangos.commons.network.netty.service.NetworkService#status()
 	 */
@@ -61,8 +58,6 @@ public class AuthNetworkService extends AbstractNetworkService {
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
 	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override
