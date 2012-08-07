@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jmangos</groupId>
 	<artifactId>jmangos</artifactId>
@@ -193,8 +194,8 @@
 
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>build-helper-maven-plugin</artifactId>
-					<version>1.7</version>
+					<artifactId>findbugs-maven-plugin</artifactId>
+					<version>2.5.2</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -218,6 +219,28 @@
 							<autoVersionSubmodules>true</autoVersionSubmodules>
 							<goals>deploy</goals>
 							<arguments>-Ddist=${dist} -Djenkins.buildNumber=${jenkins.buildNumber}</arguments>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>test</id>
+			<activation>
+				<property>
+					<name>test</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>findbugs-maven-plugin</artifactId>
+						<configuration>
+							<findbugsXmlOutput>true</findbugsXmlOutput>
+							<findbugsXmlWithMessages>true</findbugsXmlWithMessages>
+							<xmlOutput>true</xmlOutput>
 						</configuration>
 					</plugin>
 				</plugins>
