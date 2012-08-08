@@ -14,29 +14,36 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.realm.network.netty.packetAuth.client;
+package org.jmangos.auth.network.netty.packet.client;
 
 import java.nio.BufferUnderflowException;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.apache.log4j.Logger;
-import org.jmangos.commons.model.WoWAuthResponse;
+import org.jboss.netty.channel.ChannelPipeline;
+import org.jmangos.auth.network.netty.decoder.RealmPacketFrameDecoder;
+import org.jmangos.auth.network.netty.decoder.RealmPacketFrameEncoder;
+import org.jmangos.auth.network.netty.handler.AuthToClientChannelHandler;
+import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
+import org.jmangos.auth.network.netty.packet.server.TCMD_AUTH_ENABLE_CRYPT;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
-import org.jmangos.realm.network.netty.packetAuth.AbstractRealmClientPacket;
-import org.jmangos.realm.network.netty.packetAuth.server.CMD_AUTH_ENABLE_CRYPT;
 
 /**
- * The Class <tt>CMD_AUTH_LOGON_PROOF</tt>.
+ * The Class <tt>CMD_AUTH_ENABLE_CRYPT</tt>.
  */
-public class CMD_AUTH_LOGON_PROOF extends AbstractRealmClientPacket {
+public class CMD_AUTH_ENABLE_CRYPT extends AbstractWoWClientPacket {
 
 	/** The logger. */
-	private static Logger logger = Logger.getLogger(CMD_AUTH_LOGON_PROOF.class);
+	private static Logger logger = Logger
+			.getLogger(CMD_AUTH_ENABLE_CRYPT.class);
+	/** The sender. */
 	@Inject
-	@Named("RealmToAuth")
 	private AbstractPacketSender sender;
+
+	public CMD_AUTH_ENABLE_CRYPT() {
+		super();
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -45,8 +52,15 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractRealmClientPacket {
 	 */
 	@Override
 	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		if (readC() == WoWAuthResponse.WOW_SUCCESS.getMessageId()) {
-			logger.debug ("CMD_AUTH_LOGON_PROOF succes");
+		// TODO 5 - magic number send to config like realm acces
+		if (getAccount().getAccessLevel() == 5) {
+			logger.info("Realm " + getAccount().getName() + " started crypt");
+			ChannelPipeline pipeline = getClient().getChannel().getPipeline();
+			pipeline.addFirst("framedecoder", new RealmPacketFrameDecoder());
+			pipeline.addFirst("encoder", new RealmPacketFrameEncoder());
+			AuthToClientChannelHandler channelHandler = (AuthToClientChannelHandler) pipeline
+					.getLast();
+			channelHandler.getCrypt().init(getAccount().getvK());
 		}
 	}
 
@@ -57,7 +71,7 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractRealmClientPacket {
 	 */
 	@Override
 	protected void runImpl() {
-		sender.send(getClient(), new CMD_AUTH_ENABLE_CRYPT());
+		sender.send(this.getClient(), new TCMD_AUTH_ENABLE_CRYPT());
 
 	}
 }

@@ -16,56 +16,51 @@
  *******************************************************************************/
 package org.jmangos.auth.network.netty.packet.client;
 
+import java.nio.BufferUnderflowException;
+
 import javax.inject.Inject;
 
+import org.apache.log4j.Logger;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
-import org.jmangos.auth.network.netty.packet.server.TCMD_REALM_LIST;
-import org.jmangos.auth.service.WorldListService;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 
 /**
- * The Class <tt>CMD_REALM_LIST</tt>.
+ * The Class <tt>CMD_TEST_CRYPT</tt>.
  */
-public class CMD_REALM_LIST extends AbstractWoWClientPacket {
+public class CMD_TEST_CRYPT extends AbstractWoWClientPacket {
 
+	/** The logger. */
+	private static Logger logger = Logger
+			.getLogger(CMD_TEST_CRYPT.class);
 	/** The sender. */
 	@Inject
 	private AbstractPacketSender sender;
-
-	/** The worldlist. */
-	@Inject
-	private WorldListService worldlist;
+	
+	public CMD_TEST_CRYPT() {
+		super();
+	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.jmangos.commons.network.model.ReceivablePacket#getMinimumLength()
+	 * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
 	 */
 	@Override
-	public int getMinimumLength() {
-		return 4;
+	protected void readImpl() throws BufferUnderflowException, RuntimeException {
+		logger.debug( (char)readC());
+		logger.debug( (char)readC());
+		logger.debug( (char)readC());
+		logger.debug( (char)readC());
+		logger.debug( (char)readC());
 	}
 
-	/**
-	 * Instantiates a new CMD_REALM_LIST.
-	 */
-	public CMD_REALM_LIST() {
-		super();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void readImpl() {
-		readB(getAvaliableBytes());
-	}
-
-	/**
-	 * {@inheritDoc}
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
 	 */
 	@Override
 	protected void runImpl() {
-		sender.send(getClient(), new TCMD_REALM_LIST(worldlist));
+
 	}
 }

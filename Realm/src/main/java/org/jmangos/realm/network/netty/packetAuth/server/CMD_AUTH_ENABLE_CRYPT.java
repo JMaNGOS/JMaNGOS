@@ -20,31 +20,11 @@ package org.jmangos.realm.network.netty.packetAuth.server;
 import org.jmangos.realm.network.netty.packetAuth.AbstractRealmServerPacket;
 
 /**
- * The Class <tt>CMD_AUTH_LOGON_PROOF</tt>.
+ * The Class <tt>CMD_AUTH_ENABLE_CRYPT</tt>.
  */
-public class CMD_AUTH_LOGON_PROOF  extends AbstractRealmServerPacket {
+public class CMD_AUTH_ENABLE_CRYPT  extends AbstractRealmServerPacket {
 	
-	/** The m1. */
-	private byte[] m1;
-	
-	/** The a. */
-	private byte[] a; 
-	
-	/**
-	 * Instantiates a new jmangos.
-	 */
-	public CMD_AUTH_LOGON_PROOF() {
-	}
-	
-	/**
-	 * Instantiates a new jmangos.
-	 *
-	 * @param a the a
-	 * @param m1 the m1
-	 */
-	public CMD_AUTH_LOGON_PROOF(byte[] a, byte[] m1) {
-		this.a = a;
-		this.m1 = m1;
+	public CMD_AUTH_ENABLE_CRYPT() {
 	}
 	
 	/* (non-Javadoc)
@@ -52,11 +32,7 @@ public class CMD_AUTH_LOGON_PROOF  extends AbstractRealmServerPacket {
 	 */
 	@Override
 	protected void writeImpl() {
-		byte[] crc = new byte[20];
-		writeB(a);
-		writeB(m1); 
-		writeB(crc);
-		writeH(0);
+		
 	}
 }
 

@@ -34,7 +34,7 @@ import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.commons.utils.BigNumber;
 
 /**
- * The Class CMD_AUTH_LOGON_PROOF.
+ * The Class <tt>CMD_AUTH_LOGON_PROOF</tt>.
  */
 public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 
@@ -154,6 +154,7 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 			sha.update(vK);
 
 			getAccount().setM2(sha.digest());
+			getAccount().setvK(vK);
 			ArrayUtils.reverse(vK);
 			accountService.updateSessionKey(getAccount().getName(),
 					new BigInteger(1, vK).toString(16).toUpperCase());

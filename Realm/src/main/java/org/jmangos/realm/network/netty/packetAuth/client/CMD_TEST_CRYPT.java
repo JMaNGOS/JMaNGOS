@@ -14,58 +14,48 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.auth.network.netty.packet.client;
+package org.jmangos.realm.network.netty.packetAuth.client;
+
+import java.nio.BufferUnderflowException;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
-import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
-import org.jmangos.auth.network.netty.packet.server.TCMD_REALM_LIST;
-import org.jmangos.auth.service.WorldListService;
+import org.apache.log4j.Logger;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
+import org.jmangos.realm.network.netty.packetAuth.AbstractRealmClientPacket;
 
 /**
- * The Class <tt>CMD_REALM_LIST</tt>.
+ * The Class <tt>CMD_TEST_CRYPT</tt>.
  */
-public class CMD_REALM_LIST extends AbstractWoWClientPacket {
+public class CMD_TEST_CRYPT extends AbstractRealmClientPacket {
 
-	/** The sender. */
+	/** The logger. */
+	@SuppressWarnings("unused")
+	private static Logger logger = Logger
+			.getLogger(CMD_TEST_CRYPT.class);
 	@Inject
+	@Named("RealmToAuth")
 	private AbstractPacketSender sender;
-
-	/** The worldlist. */
-	@Inject
-	private WorldListService worldlist;
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.jmangos.commons.network.model.ReceivablePacket#getMinimumLength()
+	 * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
 	 */
 	@Override
-	public int getMinimumLength() {
-		return 4;
+	protected void readImpl() throws BufferUnderflowException, RuntimeException {
+		
 	}
 
-	/**
-	 * Instantiates a new CMD_REALM_LIST.
-	 */
-	public CMD_REALM_LIST() {
-		super();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void readImpl() {
-		readB(getAvaliableBytes());
-	}
-
-	/**
-	 * {@inheritDoc}
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
 	 */
 	@Override
 	protected void runImpl() {
-		sender.send(getClient(), new TCMD_REALM_LIST(worldlist));
+		
+		
 	}
 }

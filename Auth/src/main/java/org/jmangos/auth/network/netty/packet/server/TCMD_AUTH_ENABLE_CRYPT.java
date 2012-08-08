@@ -16,56 +16,31 @@
  *******************************************************************************/
 package org.jmangos.auth.network.netty.packet.server;
 
-import org.jmangos.auth.model.Account;
+import org.apache.log4j.Logger;
 import org.jmangos.auth.network.netty.packet.AbstractWoWServerPacket;
-import org.jmangos.commons.model.WoWAuthResponse;
-import org.jmangos.commons.network.model.State;
 
 /**
- * The Class <tt>TCMD_AUTH_LOGON_PROOF</tt>.
+ * The Class <tt>TCMD_AUTH_ENABLE_CRYPT</tt>.
  */
-public class TCMD_AUTH_LOGON_PROOF extends AbstractWoWServerPacket {
+public class TCMD_AUTH_ENABLE_CRYPT extends AbstractWoWServerPacket {
 
-	/** The response. */
-	private WoWAuthResponse response;
+	/** The Constant log. */
+	@SuppressWarnings("unused")
+	private static final Logger log = Logger.getLogger(TCMD_AUTH_ENABLE_CRYPT.class);
 
 	/**
-	 * Instantiates a new <tt>TCMD_AUTH_LOGON_PROOF</tt>.
+	 * Instantiates a new <tt>TCMD_AUTH_ENABLE_CRYPT</tt>.
 	 */
-	public TCMD_AUTH_LOGON_PROOF() {
+	public TCMD_AUTH_ENABLE_CRYPT() {
 	}
 
 	/**
-	 * Constructs new instance of <tt>TCMD_AUTH_LOGON_PROOF</tt> packet.
+	 * (non-Javadoc)
 	 * 
-	 * @param response
-	 *            the WoWAuthResponse
-	 */
-	public TCMD_AUTH_LOGON_PROOF(WoWAuthResponse response) {
-		this.response = response;
-	}
-
-	/**
-	 * {@inheritDoc}
+	 * @see org.jmangos.common.network.model.SendablePacket#writeImpl()
 	 */
 	@Override
 	protected void writeImpl() {
-		writeC(response.getMessageId());
-		if (response == WoWAuthResponse.WOW_SUCCESS) {
-			getChannel().setChannelState(State.AUTHED);
-			writeB(((Account) (getChannel().getChanneledObject())).getM2());
-			writeC(0);
-			writeC(-128);
-			writeC(0);
-			writeC(0);
-			// surveyId
-			writeC(0);
-			writeC(0);
-			writeC(0);
-			writeC(0);
-			// unkFlags
-			writeC(0);
-			writeC(0);
-		}
+		
 	}
 }

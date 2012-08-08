@@ -25,6 +25,7 @@ import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
+import org.jmangos.auth.network.crypt.Crypt;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
@@ -58,6 +59,7 @@ public class AuthToClientChannelHandler extends SimpleChannelUpstreamHandler {
 	private static final Logger log = Logger
 			.getLogger(AuthToClientChannelHandler.class);
 
+	private Crypt crypt = new Crypt();
 	/**
 	 * Instantiates a new Auth to Client channel handler.
 	 * 
@@ -122,5 +124,13 @@ public class AuthToClientChannelHandler extends SimpleChannelUpstreamHandler {
 	 */
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
+	}
+
+	public Crypt getCrypt() {
+		return crypt;
+	}
+
+	public void setCrypt(Crypt crypt) {
+		this.crypt = crypt;
 	}
 }
