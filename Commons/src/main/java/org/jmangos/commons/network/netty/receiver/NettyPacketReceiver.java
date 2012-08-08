@@ -42,8 +42,7 @@ public class NettyPacketReceiver {
 	public void receivePacket(PacketHandlerFactory packetHandler, ChannelBuffer buffer,
 		      NetworkChannel networkChannel) {
 		    int packetId = buffer.readUnsignedByte();
-		    log.info("got packet:"+ packetId);
-		    log.info("size this packet:"+ buffer.readableBytes());
+		    log.debug(String.format("[RESIVE PACKET] :  0x%02X", packetId));
 		    readAndRunPacket(packetHandler, buffer, packetId, networkChannel);
 		  }
 
@@ -63,7 +62,7 @@ public class NettyPacketReceiver {
 			cp.setClient(networkChannel);
 			if (cp.getAvaliableBytes() < cp.getMinimumLength())
 			{
-				log.info("BUFFER_UNDER_FLOW"  + networkChannel + cp);
+				log.warn("BUFFER_UNDER_FLOW"  + networkChannel + cp);
 			}
 			else if (cp.read()){
 				

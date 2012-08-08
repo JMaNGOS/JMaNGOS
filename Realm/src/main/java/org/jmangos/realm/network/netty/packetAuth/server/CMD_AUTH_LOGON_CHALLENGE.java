@@ -16,19 +16,16 @@
  *******************************************************************************/
 package org.jmangos.realm.network.netty.packetAuth.server;
 
+import org.jmangos.realm.config.Config;
 import org.jmangos.realm.network.netty.packetAuth.AbstractRealmServerPacket;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class CMD_AUTH_LOGON_CHALLENGE.
+ * The Class <tt>CMD_AUTH_LOGON_CHALLENGE</tt>.
  */
 public class CMD_AUTH_LOGON_CHALLENGE  extends AbstractRealmServerPacket {
 	
-	/** The name. */
-	private static String name = "ADMINISTRATOR"; 
-	
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+	 * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
 	 */
 	@Override
 	protected void writeImpl() {
@@ -45,8 +42,8 @@ public class CMD_AUTH_LOGON_CHALLENGE  extends AbstractRealmServerPacket {
 		writeB(empt);
 		writeD(0);
 		writeD(0);
-		writeC(name.length());
-		writeB(name.getBytes());
+		writeC(Config.AUTH_LOGIN.length());
+		writeB(Config.AUTH_LOGIN.toUpperCase().getBytes());
 	}
 }
 

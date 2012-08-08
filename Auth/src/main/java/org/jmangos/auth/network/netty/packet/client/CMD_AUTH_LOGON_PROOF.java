@@ -34,7 +34,7 @@ import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.commons.utils.BigNumber;
 
 /**
- * The Class CMD_AUTH_LOGON_PROOF.
+ * The Class <tt>CMD_AUTH_LOGON_PROOF</tt>.
  */
 public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 

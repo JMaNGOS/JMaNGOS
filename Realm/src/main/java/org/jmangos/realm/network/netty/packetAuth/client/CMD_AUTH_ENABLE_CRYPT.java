@@ -32,9 +32,8 @@ import org.jmangos.realm.network.netty.handler.RealmToAuthChannelHandler;
 import org.jmangos.realm.network.netty.packetAuth.AbstractRealmClientPacket;
 import org.jmangos.realm.network.netty.packetAuth.server.CMD_TEST_CRYPT;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class CMD_AUTH_LOGON_PROOF.
+ * The Class <tt>CMD_AUTH_ENABLE_CRYPT</tt>.
  */
 public class CMD_AUTH_ENABLE_CRYPT extends AbstractRealmClientPacket {
 
@@ -48,7 +47,7 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractRealmClientPacket {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
+	 * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
 	 */
 	@Override
 	protected void readImpl() throws BufferUnderflowException, RuntimeException {
@@ -59,7 +58,7 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractRealmClientPacket {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
+	 * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
 	 */
 	@Override
 	protected void runImpl() {

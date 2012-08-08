@@ -45,7 +45,7 @@ public class RealmNetworkService extends AbstractNetworkService {
 	public void start() {
 		createServerChannel(Config.CLIENT_ADDRESS, realmToClientPipelineFactory);
 		// not yet checked...
-		createClientChannel(Config.LOGIN_ADDRESS, realmToAuthPipelineFactory);
+		createClientChannel(Config.AUTH_ADDRESS, realmToAuthPipelineFactory);
 	}
 
 	/* (non-Javadoc)

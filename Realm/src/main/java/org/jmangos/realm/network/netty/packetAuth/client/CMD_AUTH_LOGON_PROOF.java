@@ -22,14 +22,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
-import org.jboss.netty.channel.ChannelPipeline;
+import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
-import org.jmangos.realm.network.netty.decoder.PacketFrameDecoder;
-import org.jmangos.realm.network.netty.decoder.PacketFrameEncoder;
 import org.jmangos.realm.network.netty.packetAuth.AbstractRealmClientPacket;
 import org.jmangos.realm.network.netty.packetAuth.server.CMD_AUTH_ENABLE_CRYPT;
+
 /**
- * The Class CMD_AUTH_LOGON_PROOF.
+ * The Class <tt>CMD_AUTH_LOGON_PROOF</tt>.
  */
 public class CMD_AUTH_LOGON_PROOF extends AbstractRealmClientPacket {
 
@@ -42,29 +41,23 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractRealmClientPacket {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
+	 * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
 	 */
 	@Override
 	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		logger.info("WoWAuthResponse " + readC());
-	//	ChannelPipeline pipeline = getClient().getChannel().getPipeline();
-	//	pipeline.addFirst("framedecoder", new PacketFrameDecoder());
-	//	pipeline.addFirst("encoder", new PacketFrameEncoder());
-		/*
-		 * if (readC() == WoWAuthResponse.WOW_SUCCESS.getMessageId()) {
-		 * logger.info( WoWAuthResponse.WOW_SUCCESS); }
-		 */
-
+		if (readC() == WoWAuthResponse.WOW_SUCCESS.getMessageId()) {
+			logger.debug ("CMD_AUTH_LOGON_PROOF succes");
+		}
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
+	 * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
 	 */
 	@Override
 	protected void runImpl() {
 		sender.send(getClient(), new CMD_AUTH_ENABLE_CRYPT());
-		
+
 	}
 }
