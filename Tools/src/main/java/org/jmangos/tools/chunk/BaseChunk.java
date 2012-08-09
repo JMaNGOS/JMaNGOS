@@ -24,7 +24,7 @@ import javolution.io.Struct;
 public abstract class BaseChunk extends Struct {
 
 	protected final UTF8String chunkType = new UTF8String(4);
-	protected final Unsigned32 ChunkSize = new Unsigned32();
+	protected final Signed32 ChunkSize = new Signed32();
 	protected int size = 0;
 	protected static int HEADERSIZE = 8;
 	public int globalOffcet = 0;
@@ -37,14 +37,13 @@ public abstract class BaseChunk extends Struct {
 		return globalOffcet;
 	}
 
-	public final void setGlobalOffcet(long l) {
-		this.globalOffcet = (int) l;
+	public final void setGlobalOffset(int l) {
+		this.globalOffcet = l;
 	}
 
-	public abstract BaseChunk reads(ByteBuffer bb, int offset, long size);
+	public abstract BaseChunk reads(ByteBuffer bb, int offset, int size);
 
 	public ByteOrder byteOrder() {
 		return ByteOrder.LITTLE_ENDIAN;
 	}
-
 }

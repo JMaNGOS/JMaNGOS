@@ -58,7 +58,7 @@ public class ADTChunk extends BaseChunk {
 			return new UNKChunk().setChunkType(ch.toString()).reads(bb, offset, tch.ChunkSize.get());
 		}
 	}
-	public ADTChunk reads(ByteBuffer bb, int offset, long size) {
+	public ADTChunk reads(ByteBuffer bb, int offset, int size) {
 		return this;
 	}
 }

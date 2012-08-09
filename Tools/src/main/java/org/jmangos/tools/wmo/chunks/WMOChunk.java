@@ -72,7 +72,7 @@ public class WMOChunk extends BaseChunk {
 	}
 
 	@Override
-	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
+	public BaseChunk reads(ByteBuffer bb, int offset, int size) {
 		return this;
 	}
 }

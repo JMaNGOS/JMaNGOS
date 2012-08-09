@@ -21,34 +21,46 @@ import java.nio.ByteBuffer;
 import org.jmangos.tools.chunk.BaseChunk;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
-public class MODSChunk extends WMOChunk{
-	class MODSEntry extends WMOChunk{ 
-		UTF8String  setName = new UTF8String(20);
-		Unsigned32 	Index = new Unsigned32();
-		Unsigned32 countInSet = new Unsigned32(); 		
-		Unsigned32 unknown  = new Unsigned32();
+/**
+ * Chunk <tt>MODS</tt><br>
+ * Defines doodad sets.
+ * 
+ * @author MinimaJack
+ * 
+ */
+public class MODSChunk extends WMOChunk {
+	class MODSEntry extends WMOChunk {
+		/** Set name. */
+		UTF8String setName = new UTF8String(20);
+		/** Index of first doodad instance in MODD chunk. */
+		Unsigned32 index = new Unsigned32();
+		/** Count in set. */
+		Unsigned32 countInSet = new Unsigned32();
+		Unsigned32 unknown = new Unsigned32();
 	}
 
 	private MODSEntry[] MODSEntries;
+
 	@Override
-	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
-		MODSEntries = new MODSEntry[(int) (size /32)];
-		for (int i = 0; i < (size /32); i++) {
+	public BaseChunk reads(ByteBuffer bb, int offset, int size) {
+		MODSEntries = new MODSEntry[(int) (size / 32)];
+		for (int i = 0; i < (size / 32); i++) {
 			MODSEntries[i] = new MODSEntry();
-			MODSEntries[i].setByteBuffer(bb, offset + 32*i);
+			MODSEntries[i].setByteBuffer(bb, offset + 32 * i);
 		}
-		setGlobalOffcet(offset + size + HEADERSIZE);
+		setGlobalOffset(offset + size + HEADERSIZE);
 		this.setByteBuffer(bb, offset);
-		return this;	
+		return this;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("[MODSChunk] MODSEntries size:") .append(MODSEntries.length);
+		sb.append("[MODSChunk] MODSEntries size:").append(MODSEntries.length);
 		for (int i = 0; i < MODSEntries.length; i++) {
 			sb.append("\n\tsetName:").append(MODSEntries[i].setName.get());
-			sb.append("\n\tFirstIndex:").append(MODSEntries[i].Index.get());
-			sb.append("\n\tcountInSet:").append(MODSEntries[i].countInSet.get());
+			sb.append("\n\tFirstIndex:").append(MODSEntries[i].index.get());
+			sb.append("\n\tcountInSet:")
+					.append(MODSEntries[i].countInSet.get());
 		}
 		return sb.toString();
 	}
