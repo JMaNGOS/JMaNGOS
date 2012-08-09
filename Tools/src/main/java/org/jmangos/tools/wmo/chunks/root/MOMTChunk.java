@@ -21,14 +21,23 @@ import java.nio.ByteBuffer;
 import org.jmangos.tools.chunk.BaseChunk;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
+/**
+ * Chunk <tt>MOMT</tt><br>
+ * Materials used in this map.
+ * 
+ * @author MinimaJack
+ * 
+ */
 public class MOMTChunk extends WMOChunk{
 	class MOMTEntry extends WMOChunk{ 
 		/*000h*/  Unsigned32 flags_0 = new Unsigned32();   		
 		/*004h*/  Unsigned32 SpecularMode = new Unsigned32();
 		/*008h*/  Unsigned32 blendMode = new Unsigned32();
+		/** Start position for the first texture filename in the MOTX data block */
 		/*00Ch*/  Unsigned32 texture_1 = new Unsigned32();	
 		/*010h*/  Unsigned32 color_1 = new Unsigned32(); 
 		/*014h*/  Unsigned32 flags_1 = new Unsigned32();
+		/** Start position for the second texture filename in the MOTX data block */
 		/*018h*/  Unsigned32 texture_2 = new Unsigned32();	
 		/*01Ch*/  Unsigned32 color_2 = new Unsigned32();
 		/*020h*/  Unsigned32 flags_2 = new Unsigned32();
@@ -58,13 +67,13 @@ public class MOMTChunk extends WMOChunk{
 
 	private MOMTEntry[] MOMTEntries;
 	@Override
-	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
+	public BaseChunk reads(ByteBuffer bb, int offset, int size) {
 		MOMTEntries = new MOMTEntry[(int) (size /64)];
 		for (int i = 0; i < (size /64); i++) {
 			MOMTEntries[i] = new MOMTEntry();
 			MOMTEntries[i].setByteBuffer(bb, offset + 64*i);
 		}
-		setGlobalOffcet(offset + size + HEADERSIZE);
+		setGlobalOffset(offset + size + HEADERSIZE);
 		this.setByteBuffer(bb, offset);
 		return this;	
 	}

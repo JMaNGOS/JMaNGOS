@@ -20,15 +20,21 @@ import java.nio.ByteBuffer;
 
 import org.jmangos.tools.chunk.BaseChunk;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
-
+/**
+ * Chunk <tt>MONR</tt><br> 
+ * Contains normals, in (X,Z,-Y) order.
+ * 
+ * @author MinimaJack
+ *
+ */
 public class MONRChunk extends WMOChunk{
 	Float32[] normals;		
 
 	@Override
-	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
-		setGlobalOffcet(offset + size + HEADERSIZE);
+	public BaseChunk reads(ByteBuffer bb, int offset, int size) {
+		setGlobalOffset(offset + size + HEADERSIZE);
 		this.setByteBuffer(bb, offset);
-		normals = array(new Float32[(int) (size/4)]);
+		normals = array(new Float32[size/4]);
 		return this;	
 	}
 	public String toString(){

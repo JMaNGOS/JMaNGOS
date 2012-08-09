@@ -23,8 +23,8 @@ public class UNKChunk extends BaseChunk{
 	private int soff;
 
 	@Override
-	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
-		setGlobalOffcet(offset + size + HEADERSIZE);
+	public BaseChunk reads(ByteBuffer bb, int offset, int size) {
+		setGlobalOffset(offset + size + HEADERSIZE);
 		this.soff = offset;
 		this.setByteBuffer(bb, offset);
 		return this;	

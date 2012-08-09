@@ -35,14 +35,14 @@ public class MODFChunk extends ADTChunk{
 	}
 	MODFEntry[] MODFEntries;
 	@Override
-	public ADTChunk reads(ByteBuffer bb, int offset, long size) {
+	public ADTChunk reads(ByteBuffer bb, int offset, int size) {
 		this.size = (int) size;
 		MODFEntries = new MODFEntry[(int) (size /64)];
 		for (int i = 0; i < (size /64); i++) {
 			MODFEntries[i] = new MODFEntry();
 			MODFEntries[i].setByteBuffer(bb, offset + 64*i);
 		}
-		setGlobalOffcet(offset + size + HEADERSIZE);
+		setGlobalOffset(offset + size + HEADERSIZE);
 		this.setByteBuffer(bb, offset);
 		return this;	
 	}

@@ -20,6 +20,13 @@ import java.nio.ByteBuffer;
 
 import org.jmangos.tools.adt.chunks.ADTChunk;
 
+/**
+ * Chunk <tt>MCNK</tt><br>
+ * Pointers to MCNK chunks and their sizes.
+ * 
+ * @author MinimaJack
+ * 
+ */
 public class MCNKChunk extends ADTChunk{
 	public class MCNKHeader extends ADTChunk{
 		public MCVT fHeight;
@@ -59,8 +66,8 @@ public class MCNKChunk extends ADTChunk{
 	public MCNKHeader fMCNKHeader;
 
 	@Override
-	public ADTChunk reads(ByteBuffer bb, int offset, long size) {
-		setGlobalOffcet(offset + size + HEADERSIZE);
+	public ADTChunk reads(ByteBuffer bb, int offset, int size) {
+		setGlobalOffset(offset + size + HEADERSIZE);
 		this.size = (int) size;
 		this.setByteBuffer(bb, offset);
 		fMCNKHeader =  new MCNKHeader();

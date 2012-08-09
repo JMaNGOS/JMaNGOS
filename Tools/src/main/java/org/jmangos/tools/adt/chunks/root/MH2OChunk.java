@@ -53,8 +53,8 @@ public class MH2OChunk extends ADTChunk{
 	public MH2OHeader[] MH2OHeaders =  new MH2OHeader[16*16];
 
 	@Override
-	public ADTChunk reads(ByteBuffer bb, int offset, long size) {
-		setGlobalOffcet(offset + size + HEADERSIZE);
+	public ADTChunk reads(ByteBuffer bb, int offset, int size) {
+		setGlobalOffset(offset + size + HEADERSIZE);
 		this.size = (int) size;
 		this.setByteBuffer(bb, offset);
 		for (int i = 0; i < 256; i++) {

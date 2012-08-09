@@ -50,7 +50,8 @@ public class WmoRoot {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} finally {
-			fis.close();
+			if (fis != null)
+				fis.close();
 		}
 		return result;
 	}

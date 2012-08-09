@@ -21,14 +21,21 @@ import java.nio.ByteBuffer;
 import org.jmangos.tools.chunk.BaseChunk;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
+/**
+ * Chunk <tt>MOPT</tt><br>
+ * Portal vertices. 
+ * 
+ * @author MinimaJack
+ * 
+ */
 public class MOPVChunk extends WMOChunk{
 	Float32[] vertices;		
 
 	@Override
-	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
-		setGlobalOffcet(offset + size + HEADERSIZE);
+	public BaseChunk reads(ByteBuffer bb, int offset, int size) {
+		setGlobalOffset(offset + size + HEADERSIZE);
 		this.setByteBuffer(bb, offset);
-		vertices = array(new Float32[(int) (size/4)]);
+		vertices = array(new Float32[size/4]);
 		return this;	
 	}
 	public String toString(){
