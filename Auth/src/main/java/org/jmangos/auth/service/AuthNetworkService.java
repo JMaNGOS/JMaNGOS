@@ -29,6 +29,10 @@ import com.google.inject.Inject;
  * The Class LoginNetworkService.
  */
 public class AuthNetworkService extends AbstractNetworkService {
+	
+	@javax.inject.Inject
+	private Config config;
+	
 	/** The auth to client pipeline factory. */
 	@Inject
 	@Named("AuthToClient")
@@ -40,7 +44,7 @@ public class AuthNetworkService extends AbstractNetworkService {
 	 */
 	@Override
 	public void start() {
-		createServerChannel(Config.CLIENT_ADDRESS, authToClientPipelineFactory);
+		createServerChannel(config.CLIENT_ADDRESS, authToClientPipelineFactory);
 	}
 
 	/**

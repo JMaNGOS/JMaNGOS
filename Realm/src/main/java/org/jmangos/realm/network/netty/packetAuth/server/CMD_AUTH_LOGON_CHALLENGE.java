@@ -16,6 +16,8 @@
  *******************************************************************************/
 package org.jmangos.realm.network.netty.packetAuth.server;
 
+import javax.inject.Inject;
+
 import org.jmangos.realm.config.Config;
 import org.jmangos.realm.network.netty.packetAuth.AbstractRealmServerPacket;
 
@@ -23,6 +25,9 @@ import org.jmangos.realm.network.netty.packetAuth.AbstractRealmServerPacket;
  * The Class <tt>CMD_AUTH_LOGON_CHALLENGE</tt>.
  */
 public class CMD_AUTH_LOGON_CHALLENGE  extends AbstractRealmServerPacket {
+	
+	@Inject
+	private Config config;
 	
 	/* (non-Javadoc)
 	 * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
@@ -42,8 +47,8 @@ public class CMD_AUTH_LOGON_CHALLENGE  extends AbstractRealmServerPacket {
 		writeB(empt);
 		writeD(0);
 		writeD(0);
-		writeC(Config.AUTH_LOGIN.length());
-		writeB(Config.AUTH_LOGIN.toUpperCase().getBytes());
+		writeC(config.AUTH_LOGIN.length());
+		writeB(config.AUTH_LOGIN.toUpperCase().getBytes());
 	}
 }
 

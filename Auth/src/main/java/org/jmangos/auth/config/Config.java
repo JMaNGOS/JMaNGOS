@@ -16,15 +16,13 @@
  *******************************************************************************/
 package org.jmangos.auth.config;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import javax.inject.Singleton;
+
 import org.jmangos.commons.config.Compatiple;
-import org.jmangos.commons.configuration.ConfigurableProcessor;
+import org.jmangos.commons.configuration.AbstractConfig;
 import org.jmangos.commons.configuration.Property;
-import org.jmangos.commons.utils.PropertiesUtils;
 
 /**
  * The Class Config.
@@ -32,40 +30,28 @@ import org.jmangos.commons.utils.PropertiesUtils;
  * @author MinimaJack
  * 
  */
-public class Config {
-	/**
-	 * Logger for this class.
-	 */
-	protected static final Logger log = Logger.getLogger(Config.class);
+@Singleton
+public class Config extends AbstractConfig {
 
 	/** The Constant CONFIG_FILE. */
-	public static final String CONFIG_FILE = "conf/network/auth.network.properties";
+	private static final String CONFIG_FILE = "conf/network/auth.network.properties";
 
 	/** Login Server address to client. */
 	@Property(key = "network.client.address", defaultValue = "*:3724")
-	public static InetSocketAddress CLIENT_ADDRESS;
+	public InetSocketAddress CLIENT_ADDRESS;
 
 	/** The UPDAT e_ interval. */
 	@Property(key = "network.service.updateRealmlistInterval", defaultValue = "60")
-	public static int UPDATE_INTERVAL;
+	public int UPDATE_INTERVAL;
 
 	/** The COMPATIBLE. */
 	@Property(key = "network.compatible", defaultValue = "NONE")
-	public static Compatiple COMPATIBLE;
+	public Compatiple COMPATIBLE;
 
 	/**
 	 * Load configuration.
 	 */
-	public void load() {
-
-		Properties p;
-		try {
-			p = PropertiesUtils.load(CONFIG_FILE);
-		} catch (IOException e) {
-			log.fatal("Can't load network configuration...");
-			throw new Error("Can't load " + CONFIG_FILE, e);
-		}
-
-		ConfigurableProcessor.process(Config.class, p);
+	protected Config() {
+		super(CONFIG_FILE);
 	}
 }

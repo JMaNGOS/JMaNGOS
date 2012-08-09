@@ -16,6 +16,8 @@
  *******************************************************************************/
 package org.jmangos.auth;
 
+import javax.inject.Inject;
+
 import org.jmangos.auth.config.Config;
 import org.jmangos.auth.module.HandlerDM;
 import org.jmangos.auth.service.BanIpService;
@@ -38,6 +40,9 @@ import com.google.inject.Injector;
  * @author MinimaJack
  */
 public class AuthServer {
+	
+	@Inject 
+	private static Config config;
 
 	/**
 	 * The main method.
@@ -53,13 +58,12 @@ public class AuthServer {
 		injector.getInstance(LoggingService.class).start();
 		injector.getInstance(DatabaseFactory.class).start();
 		injector.getInstance(WorldListService.class).start();
-		injector.getInstance(Config.class).load();
-		if (Config.COMPATIBLE != Compatiple.MANGOS) {
+		if (config.COMPATIBLE != Compatiple.MANGOS) {
 			injector.getInstance(BanIpService.class).start();
 		}
 		injector.getInstance(ThreadPoolManager.class).start();
 
-		if (Config.COMPATIBLE == Compatiple.MANGOS)
+		if (config.COMPATIBLE == Compatiple.MANGOS)
 			injector.getInstance(UpdateService.class).start();
 
 		Runtime.getRuntime().addShutdownHook(

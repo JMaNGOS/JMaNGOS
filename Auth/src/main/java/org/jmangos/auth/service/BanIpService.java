@@ -38,6 +38,9 @@ public class BanIpService implements Service {
 	 * Logger for this class.
 	 */
 	private static final Logger log = Logger.getLogger(BanIpService.class);
+	
+	@Inject
+	private Config config;
 
 	/** The ban ip dao. */
 	@Inject
@@ -71,7 +74,7 @@ public class BanIpService implements Service {
 	 * @return true, if is banned
 	 */
 	public boolean isBanned(String ip) {
-		if (Config.COMPATIBLE == Compatiple.MANGOS) {
+		if (config.COMPATIBLE == Compatiple.MANGOS) {
 			BanIp result = banIpDAO.getBan(ip);
 			if (result != null) {
 				return true;
