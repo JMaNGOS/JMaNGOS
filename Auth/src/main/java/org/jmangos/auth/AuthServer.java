@@ -25,6 +25,7 @@ import org.jmangos.auth.service.UpdateService;
 import org.jmangos.auth.service.WorldListService;
 import org.jmangos.auth.utils.ShutdownHook;
 import org.jmangos.commons.config.Compatiple;
+import org.jmangos.commons.database.DatabaseConfig;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.log4j.LoggingService;
 import org.jmangos.commons.network.netty.service.NetworkService;
@@ -41,7 +42,6 @@ import com.google.inject.Injector;
  */
 public class AuthServer {
 	
-	@Inject 
 	private static Config config;
 
 	/**
@@ -56,6 +56,8 @@ public class AuthServer {
 		Injector injector = Guice.createInjector(new HandlerDM());
 		ServiceContent.setInjector(injector);
 		injector.getInstance(LoggingService.class).start();
+		config = injector.getInstance(Config.class);
+		injector.getInstance(DatabaseConfig.class);
 		injector.getInstance(DatabaseFactory.class).start();
 		injector.getInstance(WorldListService.class).start();
 		if (config.COMPATIBLE != Compatiple.MANGOS) {

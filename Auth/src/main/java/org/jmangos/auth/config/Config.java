@@ -42,7 +42,7 @@ public class Config extends AbstractConfig {
 
 	/** The UPDAT e_ interval. */
 	@Property(key = "network.service.updateRealmlistInterval", defaultValue = "60")
-	public int UPDATE_INTERVAL;
+	public Integer UPDATE_INTERVAL;
 
 	/** The COMPATIBLE. */
 	@Property(key = "network.compatible", defaultValue = "NONE")

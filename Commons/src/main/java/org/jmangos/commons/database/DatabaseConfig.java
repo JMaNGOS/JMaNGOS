@@ -16,12 +16,15 @@
  *******************************************************************************/
 package org.jmangos.commons.database;
 
+import javax.inject.Singleton;
+
 import org.jmangos.commons.configuration.AbstractConfig;
 import org.jmangos.commons.configuration.Property;
 
 /**
  * This class holds all configuration of database.
  */
+@Singleton
 public class DatabaseConfig extends AbstractConfig {
 	
 	/** Configuration file location. */
@@ -31,7 +34,7 @@ public class DatabaseConfig extends AbstractConfig {
 	 * Default database url.
 	 */
 	@Property(key = "database.url", defaultValue = "jdbc:mysql://localhost:3306/realmd")
-	public String DATABASE_URL = "jdbc:mysql://localhost:3306/realmd";
+	public String DATABASE_URL;
 
 	/** Name of database Driver. */
 	@Property(key = "database.driver", defaultValue = "com.mysql.jdbc.Driver")
@@ -47,11 +50,11 @@ public class DatabaseConfig extends AbstractConfig {
 
 	/** Minimum amount of connections that are always active. */
 	@Property(key = "database.connections.min", defaultValue = "2")
-	public int DATABASE_CONNECTIONS_MIN;
+	public Integer DATABASE_CONNECTIONS_MIN;
 
 	/** Maximum amount of connections that are allowed to use. */
 	@Property(key = "database.connections.max", defaultValue = "10")
-	public int DATABASE_CONNECTIONS_MAX;
+	public Integer DATABASE_CONNECTIONS_MAX;
 
 	/**
 	 * Loads database configuration.

@@ -17,6 +17,7 @@
 package org.jmangos.auth.module;
 
 import org.jboss.netty.channel.ChannelPipelineFactory;
+import org.jmangos.auth.config.Config;
 import org.jmangos.auth.dao.AccountDAO;
 import org.jmangos.auth.dao.BanIpDAO;
 import org.jmangos.auth.dao.RealmDAO;
@@ -31,6 +32,8 @@ import org.jmangos.auth.service.BanIpService;
 import org.jmangos.auth.service.AuthNetworkService;
 import org.jmangos.auth.service.WorldListService;
 import org.jmangos.auth.utils.ShutdownHook;
+import org.jmangos.commons.configuration.AbstractConfig;
+import org.jmangos.commons.database.DatabaseConfig;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.ConnectHandler;

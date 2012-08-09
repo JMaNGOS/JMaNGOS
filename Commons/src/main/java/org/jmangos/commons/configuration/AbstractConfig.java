@@ -34,15 +34,9 @@ public abstract class AbstractConfig {
 					Modifier.isFinal(field.getModifiers())) {
 				continue;
 			}
-			
 			if (field.isAnnotationPresent(Property.class)) {
 				processField(obj, field, properties);
 			}
-		}
-		
-		Class<? extends Object> superClass = obj.getClass().getSuperclass();
-		if (!superClass.equals(Object.class)) {
-			process(obj, properties);
 		}
 	}
 	
@@ -68,7 +62,7 @@ public abstract class AbstractConfig {
 	
 	private static String findPropertyByKey(String key, Properties... properties) {
 		for (Properties current : properties) {
-			if (current.contains(key)) {
+			if (current.containsKey(key)) {
 				return current.getProperty(key);
 			}
 		}

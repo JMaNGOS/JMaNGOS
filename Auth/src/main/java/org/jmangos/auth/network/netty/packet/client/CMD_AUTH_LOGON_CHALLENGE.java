@@ -102,7 +102,6 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
 	protected void runImpl() {
 		WoWAuthResponse response = accountService.login(login,
 				(NettyNetworkChannel) getClient());
-
 		switch (response) {
 		case WOW_FAIL_BANNED:
 			sender.sendAndClose(this.getClient(),

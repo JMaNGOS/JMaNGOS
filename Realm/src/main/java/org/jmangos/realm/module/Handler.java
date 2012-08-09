@@ -104,7 +104,6 @@ public class Handler extends AbstractModule {
 		bind(MapService.class).in(Scopes.SINGLETON);
 		bind(AccountService.class).in(Scopes.SINGLETON);
 		bind(DatabaseFactory.class).in(Scopes.SINGLETON);
-		bind(DatabaseFactory.class).in(Scopes.SINGLETON);
 		bind(ShutdownHook.class).in(Scopes.SINGLETON);
 
 	}

@@ -30,7 +30,7 @@ import com.google.inject.Inject;
  */
 public class RealmNetworkService extends AbstractNetworkService {
 	
-	@javax.inject.Inject
+	@Inject
 	private Config config;
 	
 	/** The RealmToClient pipeline factory. */
