@@ -40,8 +40,7 @@ import java.nio.charset.Charset;
  */
 public abstract class SendablePacket extends AbstractPacket
 {
-	
-	/** The channel. */
+    /** The channel. */
 	protected NetworkChannel channel;
 
 	/**
@@ -261,4 +260,24 @@ public abstract class SendablePacket extends AbstractPacket
 		this.channel = channel;
 		
 	}
+
+    /**
+     * Get packet opcode
+     * It's useful to send/implement packet from dynamic groovy
+     * @deprecated don't use int production mode yet!!
+     */
+    @Deprecated
+    public Integer getOpcode() {
+        return opCode;
+    }
+
+    /**
+     * Sets packet opcode if it's not in the config XML file.
+     * It's useful to send/implement packet from dynamic groovy
+     * @deprecated don't use int production mode yet!!
+     */
+    @Deprecated
+    public void setOpcode(int opcode) {
+        this.opCode = opcode;
+    }
 }
