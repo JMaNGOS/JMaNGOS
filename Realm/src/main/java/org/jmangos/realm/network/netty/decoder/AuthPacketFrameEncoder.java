@@ -29,7 +29,6 @@ import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
 import org.jmangos.realm.network.netty.handler.RealmToAuthChannelHandler;
-import org.jmangos.realm.network.netty.handler.RealmToClientChannelHandler;
 
 /**
  * The Class PacketFrameEncoder.
@@ -52,7 +51,6 @@ public class AuthPacketFrameEncoder extends OneToOneEncoder {
 				.getPipeline().getLast();
 		int opcode = message.readUnsignedByte();
 		int size = message.readableBytes();
-		//byte[] encryptHeader = channelHandler.getCrypt().decrypt(header);
 		ChannelBuffer frame = ChannelBuffers.buffer(ByteOrder.LITTLE_ENDIAN,
 				(size +  3 ));
 		frame.writeByte(opcode);
@@ -62,7 +60,7 @@ public class AuthPacketFrameEncoder extends OneToOneEncoder {
 		message.readBytes(tmpa);
 		tmpa = channelHandler.getCrypt().encrypt(tmpa);
 		frame.writeBytes(tmpa);
-		log.info(String.format("[SEND PACKET] :  0x%02X", opcode));
+		log.debug(String.format("[SEND PACKET] :  0x%02X", opcode));
 		List<String> d =  breakStringInChunks(new BigInteger(1,tmpa).toString(16).toUpperCase(),16);
 		for (Iterator<String> iterator = d.iterator(); iterator.hasNext();) {
 			String string =  iterator.next();

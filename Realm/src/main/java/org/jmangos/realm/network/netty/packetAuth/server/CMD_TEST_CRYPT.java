@@ -20,7 +20,7 @@ package org.jmangos.realm.network.netty.packetAuth.server;
 import org.jmangos.realm.network.netty.packetAuth.AbstractRealmServerPacket;
 
 /**
- * The Class CMD_TEST_CRYPT.
+ * The Class <tt>CMD_TEST_CRYPT</tt>.
  */
 public class CMD_TEST_CRYPT  extends AbstractRealmServerPacket {
 	
@@ -28,7 +28,7 @@ public class CMD_TEST_CRYPT  extends AbstractRealmServerPacket {
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+	 * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
 	 */
 	@Override
 	protected void writeImpl() {

@@ -9,8 +9,23 @@
 	<name>JMaNGOS</name>
 
 	<url>http://jmangos.org/</url>
-	<description>JMaNGOS is a full featured World of Warcraft server, including authentication, client updates, and world content serving. JMaNGOS in not MaNGOS on Java. It's a new way.</description>
+	<description>JMaNGOS is a full featured World of Warcraft server, including authentication, client updates, and world content serving. JMaNGOS is not a MaNGOS on Java. It's a new way.</description>
 	<inceptionYear>2012</inceptionYear>
+
+	<organization>
+		<name>JMaNGOS</name>
+		<url>http://jmangos.org/</url>
+	</organization>
+
+	<issueManagement>
+		<url>https://github.com/JMaNGOS/JMaNGOS/issues</url>
+		<system>GitHub</system>
+	</issueManagement>
+
+	<ciManagement>
+		<system>Jenkins</system>
+		<url>http://jenkins.jmangos.org/</url>
+	</ciManagement>
 
 	<scm>
 		<connection>scm:git:git@github.com:JMaNGOS/JMaNGOS.git</connection>
@@ -207,6 +222,11 @@
 					<artifactId>findbugs-maven-plugin</artifactId>
 					<version>2.5.2</version>
 				</plugin>
+
+				<plugin>
+					<artifactId>maven-checkstyle-plugin</artifactId>
+					<version>2.9.1</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -255,6 +275,23 @@
 							<xmlOutput>true</xmlOutput>
 							<fork>false</fork>
 						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>checkStyle</id>
+			<activation>
+				<property>
+					<name>checkStyle</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-checkstyle-plugin</artifactId>
 					</plugin>
 				</plugins>
 			</build>

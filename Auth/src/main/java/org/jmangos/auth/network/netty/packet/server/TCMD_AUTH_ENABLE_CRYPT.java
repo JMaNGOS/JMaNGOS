@@ -17,15 +17,10 @@
 package org.jmangos.auth.network.netty.packet.server;
 
 import org.apache.log4j.Logger;
-import org.jmangos.auth.model.Account;
-import org.jmangos.auth.model.Realm;
 import org.jmangos.auth.network.netty.packet.AbstractWoWServerPacket;
-import org.jmangos.auth.service.WorldListService;
-
-import javolution.util.FastMap;
 
 /**
- * The Class TCMD_REALM_LIST.
+ * The Class <tt>TCMD_AUTH_ENABLE_CRYPT</tt>.
  */
 public class TCMD_AUTH_ENABLE_CRYPT extends AbstractWoWServerPacket {
 
@@ -34,7 +29,7 @@ public class TCMD_AUTH_ENABLE_CRYPT extends AbstractWoWServerPacket {
 	private static final Logger log = Logger.getLogger(TCMD_AUTH_ENABLE_CRYPT.class);
 
 	/**
-	 * Instantiates a new TCMD_REALM_LIST.
+	 * Instantiates a new <tt>TCMD_AUTH_ENABLE_CRYPT</tt>.
 	 */
 	public TCMD_AUTH_ENABLE_CRYPT() {
 	}

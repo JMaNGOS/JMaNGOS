@@ -67,7 +67,7 @@ public final class DB
 	{
 		Connection con = null;
 		PreparedStatement stmt = null;
-		ResultSet rset;
+		ResultSet rset = null;
 
 		try
 		{
@@ -94,6 +94,8 @@ public final class DB
 					con.close();
 				if(stmt != null)
 					stmt.close();
+				if (rset != null)
+					rset.close();
 			}
 			catch(Exception e)
 			{
@@ -127,7 +129,7 @@ public final class DB
 	{
 		Connection con = null;
 		CallableStatement stmt = null;
-		ResultSet rset;
+		ResultSet rset = null;
 
 		try
 		{
@@ -154,6 +156,8 @@ public final class DB
 					con.close();
 				if(stmt != null)
 					stmt.close();
+				if (rset != null)
+					rset.close();
 			}
 			catch(Exception e)
 			{

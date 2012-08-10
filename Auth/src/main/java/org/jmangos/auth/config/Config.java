@@ -53,10 +53,6 @@ public class Config {
 	@Property(key = "network.compatible", defaultValue = "NONE")
 	public static Compatiple COMPATIBLE;
 
-	/** The REAL m_ address. */
-	@Property(key = "network.realm.address", defaultValue = "*:3740")
-	public static InetSocketAddress REALM_ADDRESS;
-
 	/**
 	 * Load configuration.
 	 */

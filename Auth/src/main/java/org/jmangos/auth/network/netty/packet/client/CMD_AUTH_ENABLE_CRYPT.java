@@ -20,7 +20,6 @@ import java.nio.BufferUnderflowException;
 
 import javax.inject.Inject;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jmangos.auth.network.netty.decoder.RealmPacketFrameDecoder;
@@ -31,7 +30,7 @@ import org.jmangos.auth.network.netty.packet.server.TCMD_AUTH_ENABLE_CRYPT;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 
 /**
- * The Class CMD_AUTH_ENABLE_CRYPT.
+ * The Class <tt>CMD_AUTH_ENABLE_CRYPT</tt>.
  */
 public class CMD_AUTH_ENABLE_CRYPT extends AbstractWoWClientPacket {
 
@@ -41,7 +40,7 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractWoWClientPacket {
 	/** The sender. */
 	@Inject
 	private AbstractPacketSender sender;
-	
+
 	public CMD_AUTH_ENABLE_CRYPT() {
 		super();
 	}
@@ -49,16 +48,18 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractWoWClientPacket {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
+	 * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
 	 */
 	@Override
 	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		if (getAccount().getAccessLevel() > 2) {
-			logger.info("Realm started crypt");
+		// TODO 5 - magic number send to config like realm acces
+		if (getAccount().getAccessLevel() == 5) {
+			logger.info("Realm " + getAccount().getName() + " started crypt");
 			ChannelPipeline pipeline = getClient().getChannel().getPipeline();
 			pipeline.addFirst("framedecoder", new RealmPacketFrameDecoder());
 			pipeline.addFirst("encoder", new RealmPacketFrameEncoder());
-			AuthToClientChannelHandler channelHandler = (AuthToClientChannelHandler) pipeline.getLast();
+			AuthToClientChannelHandler channelHandler = (AuthToClientChannelHandler) pipeline
+					.getLast();
 			channelHandler.getCrypt().init(getAccount().getvK());
 		}
 	}
@@ -66,7 +67,7 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractWoWClientPacket {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
+	 * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
 	 */
 	@Override
 	protected void runImpl() {

@@ -30,6 +30,8 @@
  */
 package org.jmangos.commons.network.model;
 
+import java.nio.charset.Charset;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class SendablePacket.
@@ -215,7 +217,7 @@ public abstract class SendablePacket extends AbstractPacket
 	 */
 	protected final void writeS(String charSequence)
 	{
-		getByteBuffer().writeBytes(charSequence.getBytes());
+		getByteBuffer().writeBytes(charSequence.getBytes(Charset.forName("utf-8")));
 		getByteBuffer().writeByte((byte) 0);
 	}
 

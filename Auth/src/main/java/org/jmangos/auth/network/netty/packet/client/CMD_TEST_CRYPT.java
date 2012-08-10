@@ -21,16 +21,11 @@ import java.nio.BufferUnderflowException;
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
-import org.jboss.netty.channel.ChannelPipeline;
-import org.jmangos.auth.network.netty.decoder.RealmPacketFrameDecoder;
-import org.jmangos.auth.network.netty.decoder.RealmPacketFrameEncoder;
-import org.jmangos.auth.network.netty.handler.AuthToClientChannelHandler;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
-import org.jmangos.auth.network.netty.packet.server.TCMD_AUTH_ENABLE_CRYPT;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 
 /**
- * The Class CMD_AUTH_ENABLE_CRYPT.
+ * The Class <tt>CMD_TEST_CRYPT</tt>.
  */
 public class CMD_TEST_CRYPT extends AbstractWoWClientPacket {
 
@@ -48,7 +43,7 @@ public class CMD_TEST_CRYPT extends AbstractWoWClientPacket {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
+	 * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
 	 */
 	@Override
 	protected void readImpl() throws BufferUnderflowException, RuntimeException {
@@ -62,7 +57,7 @@ public class CMD_TEST_CRYPT extends AbstractWoWClientPacket {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
+	 * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
 	 */
 	@Override
 	protected void runImpl() {

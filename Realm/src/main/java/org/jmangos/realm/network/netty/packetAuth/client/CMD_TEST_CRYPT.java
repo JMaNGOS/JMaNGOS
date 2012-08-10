@@ -22,22 +22,16 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.log4j.Logger;
-import org.jboss.netty.channel.ChannelPipeline;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
-import org.jmangos.realm.network.netty.decoder.AuthPacketFrameDecoder;
-import org.jmangos.realm.network.netty.decoder.AuthPacketFrameEncoder;
-import org.jmangos.realm.network.netty.decoder.PacketFrameDecoder;
-import org.jmangos.realm.network.netty.decoder.PacketFrameEncoder;
-import org.jmangos.realm.network.netty.handler.RealmToAuthChannelHandler;
 import org.jmangos.realm.network.netty.packetAuth.AbstractRealmClientPacket;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class CMD_AUTH_LOGON_PROOF.
+ * The Class <tt>CMD_TEST_CRYPT</tt>.
  */
 public class CMD_TEST_CRYPT extends AbstractRealmClientPacket {
 
 	/** The logger. */
+	@SuppressWarnings("unused")
 	private static Logger logger = Logger
 			.getLogger(CMD_TEST_CRYPT.class);
 	@Inject
@@ -47,7 +41,7 @@ public class CMD_TEST_CRYPT extends AbstractRealmClientPacket {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
+	 * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
 	 */
 	@Override
 	protected void readImpl() throws BufferUnderflowException, RuntimeException {
@@ -57,7 +51,7 @@ public class CMD_TEST_CRYPT extends AbstractRealmClientPacket {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
+	 * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
 	 */
 	@Override
 	protected void runImpl() {

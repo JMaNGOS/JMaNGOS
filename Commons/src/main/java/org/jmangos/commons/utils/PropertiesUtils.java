@@ -48,11 +48,17 @@ public class PropertiesUtils
 	 */
 	public static Properties load(File file) throws IOException
 	{
-		FileInputStream fis = new FileInputStream(file);
-		Properties p = new Properties();
-		p.load(fis);
-		fis.close();
-		return p;
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream(file);
+			Properties p = new Properties();
+			p.load(fis);
+			return p;
+		} finally {
+			if (fis != null) {
+				fis.close();
+			}
+		}
 	}
 
 	/**
