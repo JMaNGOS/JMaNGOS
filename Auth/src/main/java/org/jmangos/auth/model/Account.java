@@ -21,62 +21,98 @@ import org.jmangos.commons.network.model.ChanneledObject;
 import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.utils.BigNumber;
 
+import javax.persistence.*;
+
 /**
  * The Class Account.
  */
+@Entity
+@Table
 public class Account extends NamedObject implements ChanneledObject {
 
+    @Id
+    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
 	/** The user name. */
+    @Column(unique = true)
 	private String username;
 
 	/** Password hash. */
+    @Column(name="sha_password_hash")
 	private String passwordHash;
 
 	/** Access level of account 0 = regular user, > 0 = GM. */
+    @Column(name="gmlevel")
 	private byte accessLevel;
 
 	/** Account activated. */
-	private byte locked;
+    @Column(name="locked")
+	private boolean locked;
 
 	/** last server visited by user -1 if none. */
-	private byte lastServer;
+    @Column(name="last_server")
+	private byte lastServer = -1;
 
 	/** Last ip of user -1 if none. */
+    @Column(name="last_ip")
 	private String lastIp;
 
 	/** The s. */
-	private String s;
+    @Column(name="s", nullable = false)
+	private String s = "";
 
 	/** The v. */
-	private String v;
+    @Column(name="v", nullable = false)
+	private String v = "";
 
 	/** The M2. */
+    @Transient
 	private byte[] M2;
 
 	/** The channel. */
+    @Transient
 	private NetworkChannel channel;
 
 	/** The b. */
+    @Transient
 	private BigNumber b;
 
 	/** The crypto b. */
+    @Transient
 	private BigNumber cryptoB;
 
 	/** The s_crypto. */
+    @Transient
 	private BigNumber s_crypto;
 
 	/** The v_crypto. */
+    @Transient
 	private BigNumber v_crypto;
 
 	/** The _reconnect proof. */
+    @Transient
 	private BigNumber _reconnectProof = new BigNumber();
 
 	/** The msession key. */
+    @Column(name="session_key")
 	private String msessionKey;
 
-	private byte[] vK;
+    @Transient
+    private byte[] vK;
 
-	/**
+    public Account() {}
+
+    /**
+     * Returns account's ID
+     * @return int account id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
 	 * Gets the _reconnect proof.
 	 * 
 	 * @return the _reconnect proof
@@ -194,7 +230,7 @@ public class Account extends NamedObject implements ChanneledObject {
 	 * 
 	 * @return access level of account
 	 */
-	public byte getLocked() {
+	public boolean getLocked() {
 		return locked;
 	}
 
@@ -347,7 +383,7 @@ public class Account extends NamedObject implements ChanneledObject {
 	 * @param activated
 	 *            access level of account
 	 */
-	public void setLocked(byte activated) {
+	public void setLocked(boolean activated) {
 		this.locked = activated;
 	}
 

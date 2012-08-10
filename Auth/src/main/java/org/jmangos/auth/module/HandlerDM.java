@@ -20,9 +20,7 @@ import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jmangos.auth.dao.AccountDAO;
 import org.jmangos.auth.dao.BanIpDAO;
 import org.jmangos.auth.dao.RealmDAO;
-import org.jmangos.auth.dao.mysql5.MySQL5AccountDAO;
 import org.jmangos.auth.dao.mysql5.MySQL5BannedIpDAO;
-import org.jmangos.auth.dao.mysql5.MySQL5RealmDAO;
 import org.jmangos.auth.network.handler.AuthToClientPacketHandlerFactory;
 import org.jmangos.auth.network.netty.factory.AuthToClientPipelineFactory;
 import org.jmangos.auth.network.netty.handler.AuthToClientConnectHandler;
@@ -72,9 +70,9 @@ public class HandlerDM extends AbstractModule {
 		bind(AbstractPacketSender.class).to(NettyPacketSender.class).in(
 				Scopes.SINGLETON);
 
-		bind(RealmDAO.class).to(MySQL5RealmDAO.class).in(Scopes.SINGLETON);
-		bind(AccountDAO.class).to(MySQL5AccountDAO.class).in(Scopes.SINGLETON);
+		//bind(RealmDAO.class).to(MySQL5RealmDAO.class).in(Scopes.SINGLETON);
 		bind(BanIpDAO.class).to(MySQL5BannedIpDAO.class).in(Scopes.SINGLETON);
+        //bind(AccountDAO.class).in(Scopes.SINGLETON);
 
 		bind(WorldListService.class).in(Scopes.SINGLETON);
 		bind(BanIpService.class).in(Scopes.SINGLETON);

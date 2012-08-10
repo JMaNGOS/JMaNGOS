@@ -74,6 +74,12 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.5.5</version>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.9</version>
+            <scope>runtime</scope>
+        </dependency>
 	</dependencies>
 
 	<build>

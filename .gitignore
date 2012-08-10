@@ -6,3 +6,4 @@
 *.ids
 *.iws
 *target/
+.idea

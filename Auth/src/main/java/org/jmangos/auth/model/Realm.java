@@ -16,39 +16,54 @@
  *******************************************************************************/
 package org.jmangos.auth.model;
 
+import javax.persistence.*;
+
 /**
  * The Class World.
  */
+@Entity
+@Table
 public class Realm {
 
 	/** The id. */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	/** The name. */
+    @Column(nullable = false)
 	private String name;
 
 	/** The address. */
+    @Column(nullable = false)
 	private String address;
 
 	/** The port. */
+    @Column
 	private int port;
 
 	/** The icon. */
+    @Column
 	private int icon;
 
 	/** The realmflags. */
+    @Column
 	private int realmflags;
 
 	/** The timezone. */
+    @Column
 	private int timezone;
 
 	/** The allowed security level. */
-	private int allowedSecurityLevel;
+    @Column
+	private int allowedSecurityLevel = 0;
 
 	/** The population. */
-	private float population;
+    @Column
+	private float population = 0.0f;
 
 	/** The realmbuilds. */
+    @Column(nullable = false)
 	private String realmbuilds;
 
 	/**

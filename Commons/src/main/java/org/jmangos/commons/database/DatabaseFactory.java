@@ -62,7 +62,7 @@ public class DatabaseFactory implements Service
      */
     private static SessionFactory worldSessionFactory;
     private static SessionFactory charactersSessionFactory;
-
+    private static SessionFactory accountsSessionFactory;
 
 	/**
 	 * Initializes DatabaseFactory.
@@ -274,6 +274,24 @@ public class DatabaseFactory implements Service
      */
     public static SessionFactory getCharactersSessionFactory() {
         return charactersSessionFactory;
+    }
+
+    public static SessionFactory getAccountsSessionFactory() {
+        if ( accountsSessionFactory == null ) {
+            // Bring up hibernate
+            AnnotationConfiguration config = new AnnotationConfiguration();
+            config.setProperty( "hibernate.connection.driver_class", "com.mysql.jdbc.Driver" );
+            config.setProperty( "hibernate.connection.url", "jdbc:mysql://localhost/accounts" );
+            config.setProperty( "hibernate.connection.username", "root" );
+            config.setProperty( "hibernate.connection.password", "" );
+            config.setProperty( "hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect" );
+            config.configure();
+
+            accountsSessionFactory = config.buildSessionFactory();
+            log.info( "Hibernate accountsSessionFactory initialized..." );
+        }
+
+        return accountsSessionFactory;
     }
 
 	/**
