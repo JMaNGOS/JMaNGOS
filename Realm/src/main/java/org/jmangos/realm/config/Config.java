@@ -49,9 +49,18 @@ public class Config {
 	/** The COMPATIBLE. */
 	@Property(key = "network.compatible", defaultValue = "NONE")
 	public static Compatiple COMPATIBLE;
-	// TODO use this...
+	
+	/** Auth server to connect */
 	@Property(key = "network.auth.address", defaultValue = "localhost:3724")
-	public static InetSocketAddress LOGIN_ADDRESS;
+	public static InetSocketAddress AUTH_ADDRESS;
+
+	/** Auth login */
+	@Property(key = "network.auth.login", defaultValue = "JMaNGOS")
+	public static String AUTH_LOGIN;
+
+	/** Auth login */
+	@Property(key = "network.auth.password", defaultValue = "JMaNGOS")
+	public static String AUTH_PASSWORD;
 
 	/**
 	 * Load configuration.

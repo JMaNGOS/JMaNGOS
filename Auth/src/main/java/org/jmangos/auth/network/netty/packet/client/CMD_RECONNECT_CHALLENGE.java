@@ -26,7 +26,7 @@ import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 
 /**
- * The Class CMD_RECONNECT_CHALLENGE.
+ * The Class <tt>CMD_RECONNECT_CHALLENGE</tt>.
  */
 public class CMD_RECONNECT_CHALLENGE extends AbstractWoWClientPacket {
 

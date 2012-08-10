@@ -26,6 +26,7 @@ import org.jmangos.realm.model.base.guid.TypeId;
 import org.jmangos.realm.model.base.guid.TypeMask;
 import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.base.update.PlayerFields;
+import org.jmangos.realm.model.base.update.UnitFields;
 import org.jmangos.realm.model.unit.Powers;
 import org.jmangos.realm.model.unit.SpellSchools;
 import org.jmangos.realm.model.unit.Stats;
@@ -106,7 +107,7 @@ public class Player extends Units implements ChanneledObject {
 	public Player(CharactersData cd) {
 		super(cd.getObjectId());
 		setName(cd.getName());
-		valuesCount = PlayerFields.PLAYER_END;
+		valuesCount = PlayerFields.PLAYER_END.getValue();
 		objectType.add(TypeMask.TYPEMASK_PLAYER);
 		objectTypeId = TypeId.TYPEID_PLAYER;
 		characterData = cd;
@@ -132,7 +133,7 @@ public class Player extends Units implements ChanneledObject {
 	 */
 	public Player(long guid) {
 		super(guid);
-		valuesCount = PlayerFields.PLAYER_END;
+		valuesCount = PlayerFields.PLAYER_END.getValue();
 		objectType.add(TypeMask.TYPEMASK_PLAYER);
 		objectTypeId = TypeId.TYPEID_PLAYER;
 		for (int i = 0; i < BaseModGroup.BASEMOD_END.ordinal(); ++i) {
@@ -272,17 +273,17 @@ public class Player extends Units implements ChanneledObject {
 				GetResistance(SpellSchools.SPELL_SCHOOL_SHADOW),
 				GetResistance(SpellSchools.SPELL_SCHOOL_ARCANE)));
 		logger.debug(String.format(
-				"MIN_DAMAGE is: \t\t%f\tMAX_DAMAGE is: \t\t%f",
-				GetFloatValue(PlayerFields.UNIT_FIELD_MINDAMAGE),
-				GetFloatValue(PlayerFields.UNIT_FIELD_MAXDAMAGE)));
+                "MIN_DAMAGE is: \t\t%f\tMAX_DAMAGE is: \t\t%f",
+                GetFloatValue(UnitFields.UNIT_FIELD_MINDAMAGE),
+                GetFloatValue(UnitFields.UNIT_FIELD_MAXDAMAGE)));
 		logger.debug(String.format(
 				"MIN_OFFHAND_DAMAGE is: \t%f\tMAX_OFFHAND_DAMAGE is: \t%f",
-				GetFloatValue(PlayerFields.UNIT_FIELD_MINOFFHANDDAMAGE),
-				GetFloatValue(PlayerFields.UNIT_FIELD_MAXOFFHANDDAMAGE)));
+				GetFloatValue(UnitFields.UNIT_FIELD_MINOFFHANDDAMAGE),
+				GetFloatValue(UnitFields.UNIT_FIELD_MAXOFFHANDDAMAGE)));
 		logger.debug(String.format(
 				"MIN_RANGED_DAMAGE is: \t%f\tMAX_RANGED_DAMAGE is: \t%f",
-				GetFloatValue(PlayerFields.UNIT_FIELD_MINRANGEDDAMAGE),
-				GetFloatValue(PlayerFields.UNIT_FIELD_MAXRANGEDDAMAGE)));
+				GetFloatValue(UnitFields.UNIT_FIELD_MINRANGEDDAMAGE),
+				GetFloatValue(UnitFields.UNIT_FIELD_MAXRANGEDDAMAGE)));
 		logger.debug(String.format(
 				"ATTACK_TIME is: \t\t%d\t\tRANGE_ATTACK_TIME is: \t%d",
 				GetAttackTime(WeaponAttackType.BASE_ATTACK), GetAttackTime(WeaponAttackType.RANGED_ATTACK)));
@@ -309,4 +310,5 @@ public class Player extends Units implements ChanneledObject {
 		 items[slot] = item;
 		
 	}
+
 }

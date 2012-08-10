@@ -38,9 +38,7 @@ public final class DB
 	/**
 	 * Empty Constructor.
 	 */
-	private DB()
-	{
-
+	private DB() {
 	}
 
 	/**
@@ -50,9 +48,10 @@ public final class DB
 	 * @param reader the reader
 	 * @return boolean Success
 	 */
-	public static boolean select(String query, ReadStH reader)
-	{
-		return select(query, reader, null);
+    @Deprecated
+	public static boolean select(String query, ReadStH reader) {
+        throw new UnsupportedOperationException( "User Hibernate Session instead. (See DatabaseFactory class)" );
+		//return select(query, reader, null);
 	}
 
 	/**
@@ -63,44 +62,9 @@ public final class DB
 	 * @param errMsg the err msg
 	 * @return boolean Success
 	 */
-	public static boolean select(String query, ReadStH reader, String errMsg)
-	{
-		Connection con = null;
-		PreparedStatement stmt = null;
-		ResultSet rset;
-
-		try
-		{
-			con = DatabaseFactory.getConnection();
-			stmt = con.prepareStatement(query);
-			if(reader instanceof ParamReadStH)
-				((ParamReadStH) reader).setParams(stmt);
-			rset = stmt.executeQuery();
-			reader.handleRead(rset);
-		}
-		catch(Exception e)
-		{
-			if(errMsg == null)
-				log.warn("Error executing select query " + e, e);
-			else
-				log.warn(errMsg + " " + e, e);
-			return false;
-		}
-		finally
-		{
-			try
-			{
-				if(con != null)
-					con.close();
-				if(stmt != null)
-					stmt.close();
-			}
-			catch(Exception e)
-			{
-				log.warn("Failed to close DB connection " + e, e);
-			}
-		}
-		return true;
+    @Deprecated
+	public static boolean select(String query, ReadStH reader, String errMsg) {
+		throw new UnsupportedOperationException( "User Hibernate Session instead. (See DatabaseFactory class)" );
 	}
 	
 	/**
@@ -110,9 +74,10 @@ public final class DB
 	 * @param reader the reader
 	 * @return boolean
 	 */
-	public static boolean call(String query, ReadStH reader)
-	{
-		return call(query, reader, null);
+    @Deprecated
+	public static boolean call(String query, ReadStH reader) {
+        throw new UnsupportedOperationException( "User Hibernate Session instead. (See DatabaseFactory class)" );
+		//return call(query, reader, null);
 	}
 	
 	/**
@@ -123,11 +88,13 @@ public final class DB
 	 * @param errMsg the err msg
 	 * @return true, if successful
 	 */
-	public static boolean call(String query, ReadStH reader, String errMsg)
-	{
+    @Deprecated
+	public static boolean call(String query, ReadStH reader, String errMsg) {
+        throw new UnsupportedOperationException( "User Hibernate Session instead. (See DatabaseFactory class)" );
+        /*
 		Connection con = null;
 		CallableStatement stmt = null;
-		ResultSet rset;
+		ResultSet rset = null;
 
 		try
 		{
@@ -154,6 +121,8 @@ public final class DB
 					con.close();
 				if(stmt != null)
 					stmt.close();
+				if (rset != null)
+					rset.close();
 			}
 			catch(Exception e)
 			{
@@ -161,6 +130,7 @@ public final class DB
 			}
 		}
 		return true;
+		*/
 	}
 
 	/**
@@ -170,9 +140,10 @@ public final class DB
 	 * @param query the query
 	 * @return boolean Success
 	 */
-	public static boolean insertUpdate(String query)
-	{
-		return insertUpdate(query, null, null);
+    @Deprecated
+    public static boolean insertUpdate(String query) {
+        throw new UnsupportedOperationException( "User Hibernate Session instead. (See DatabaseFactory class)" );
+		//return insertUpdate(query, null, null);
 	}
 
 	/**
@@ -183,8 +154,8 @@ public final class DB
 	 * @param errMsg the err msg
 	 * @return success
 	 */
-	public static boolean insertUpdate(String query, String errMsg)
-	{
+    @Deprecated
+	public static boolean insertUpdate(String query, String errMsg) {
 		return insertUpdate(query, null, errMsg);
 	}
 	
@@ -196,9 +167,10 @@ public final class DB
 	 * @param batch the batch
 	 * @return boolean Success
 	 */
-	public static boolean insertUpdate(String query, IUStH batch)
-	{
-		return insertUpdate(query, batch, null);
+    @Deprecated
+	public static boolean insertUpdate(String query, IUStH batch) {
+        throw new UnsupportedOperationException( "User Hibernate Session instead. (See DatabaseFactory class)" );
+		//return insertUpdate(query, batch, null);
 	}
 
 	/**
@@ -211,8 +183,10 @@ public final class DB
 	 * @param errMsg the err msg
 	 * @return boolean Success
 	 */
-	public static boolean insertUpdate(String query, IUStH batch, String errMsg)
-	{
+    @Deprecated
+	public static boolean insertUpdate(String query, IUStH batch, String errMsg) {
+        throw new UnsupportedOperationException( "User Hibernate Session instead. (See DatabaseFactory class)" );
+        /*
 		Connection con = null;
 		PreparedStatement stmt = null;
 
@@ -249,7 +223,7 @@ public final class DB
 				log.warn("Failed to close DB connection " + e, e);
 			}
 		}
-		return true;
+		return true;*/
 	}
 
 	/**
@@ -258,10 +232,12 @@ public final class DB
 	 * @return new Transaction object
 	 * @throws SQLException the sQL exception
 	 */
-	public static Transaction beginTransaction() throws SQLException
-	{
+    @Deprecated
+	public static Transaction beginTransaction() throws SQLException {
+        throw new UnsupportedOperationException( "User Hibernate Session instead. (See DatabaseFactory class)" );
+        /*
 		Connection con = DatabaseFactory.getConnection();
-		return new Transaction(con);
+		return new Transaction(con);*/
 	}
 
 	/**
@@ -272,9 +248,10 @@ public final class DB
 	 * @return Prepared statement if ok or null if error happend while creating
 	 * {@link java.sql.ResultSet#CONCUR_READ_ONLY}
 	 */
-	public static PreparedStatement prepareStatement(String sql)
-	{
-		return prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+    @Deprecated
+	public static PreparedStatement prepareStatement(String sql) {
+        throw new UnsupportedOperationException( "User Hibernate Session instead. (See DatabaseFactory class)" );
+		//return prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 	}
 
 	/**
@@ -293,8 +270,10 @@ public final class DB
 	 *            <code>ResultSet.CONCUR_UPDATABLE</code>
 	 * @return Prepared Statement if ok or null if error happened while creating
 	 */
-	public static PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency)
-	{
+    @Deprecated
+	public static PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency) {
+        throw new UnsupportedOperationException( "User Hibernate Session instead. (See DatabaseFactory class)" );
+        /*
 		Connection c = null;
 		PreparedStatement ps = null;
 		try
@@ -318,7 +297,7 @@ public final class DB
 			}
 		}
 
-		return ps;
+		return ps;*/
 	}
 
 	/**
@@ -327,8 +306,10 @@ public final class DB
 	 * @param statement PreparedStatement to execute
 	 * @return returns result of {@link java.sql.PreparedStatement#executeQuery()} or -1 in case of error
 	 */
-	public static int executeUpdate(PreparedStatement statement)
-	{
+    @Deprecated
+	public static int executeUpdate(PreparedStatement statement) {
+        throw new UnsupportedOperationException( "User Hibernate Session instead. (See DatabaseFactory class)" );
+        /*
 		try
 		{
 			return statement.executeUpdate();
@@ -339,6 +320,7 @@ public final class DB
 		}
 
 		return -1;
+		*/
 	}
 
 	/**
@@ -346,10 +328,11 @@ public final class DB
 	 *
 	 * @param statement PreparedStatement to close
 	 */
-	public static void executeUpdateAndClose(PreparedStatement statement)
-	{
-		executeUpdate(statement);
-		close(statement);
+    @Deprecated
+	public static void executeUpdateAndClose(PreparedStatement statement) {
+        throw new UnsupportedOperationException( "User Hibernate Session instead. (See DatabaseFactory class)" );
+        /*executeUpdate(statement);
+		close(statement);*/
 	}
 
 	/**
@@ -358,9 +341,10 @@ public final class DB
 	 * @param statement preparedStement to execute
 	 * @return ResultSet or null if error
 	 */
-	public static ResultSet executeQuerry(PreparedStatement statement)
-	{
-		ResultSet rs = null;
+    @Deprecated
+	public static ResultSet executeQuerry(PreparedStatement statement) {
+        throw new UnsupportedOperationException( "User Hibernate Session instead. (See DatabaseFactory class)" );
+        /*ResultSet rs = null;
 		try
 		{
 			rs = statement.executeQuery();
@@ -369,7 +353,7 @@ public final class DB
 		{
 			log.error("Error while executing querry", e);
 		}
-		return rs;
+		return rs;*/
 	}
 
 	/**
@@ -377,9 +361,10 @@ public final class DB
 	 *
 	 * @param statement statement to close
 	 */
-	public static void close(PreparedStatement statement)
-	{
-
+    @Deprecated
+	public static void close(PreparedStatement statement) {
+        throw new UnsupportedOperationException( "User Hibernate Session instead. (See DatabaseFactory class)" );
+        /*
 		try
 		{
 			if(statement.isClosed())
@@ -397,5 +382,6 @@ public final class DB
 		{
 			log.error("Error while closing PreparedStatement", e);
 		}
+		*/
 	}
 }

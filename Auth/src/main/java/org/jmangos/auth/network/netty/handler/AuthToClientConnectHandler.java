@@ -34,7 +34,7 @@ public class AuthToClientConnectHandler implements ConnectHandler {
 	/**
 	 * (non-Javadoc)
 	 * 
-	 * @see org.wowemu.common.network.model.ConnectHandler#onConnect(org.wowemu.common.network.model.NettyNetworkChannel,
+	 * @see org.jmangos.commons.network.model.ConnectHandler#onConnect(org.wowemu.common.network.model.NettyNetworkChannel,
 	 *      org.jboss.netty.channel.ChannelHandler)
 	 */
 	@Override
@@ -50,7 +50,7 @@ public class AuthToClientConnectHandler implements ConnectHandler {
 	/**
 	 * (non-Javadoc)
 	 * 
-	 * @see org.wowemu.common.network.model.ConnectHandler#onDisconnect(org.wowemu.common.network.model.NettyNetworkChannel)
+	 * @see org.jmangos.commons.network.model.ConnectHandler#onDisconnect(org.wowemu.common.network.model.NettyNetworkChannel)
 	 */
 	@Override
 	public void onDisconnect(NettyNetworkChannel networkChannel) {

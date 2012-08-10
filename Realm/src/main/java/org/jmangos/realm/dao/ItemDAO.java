@@ -25,7 +25,7 @@ import org.jmangos.realm.model.base.item.ItemPrototype;
 /**
  * The Class ItemDAO.
  */
-public abstract class ItemDAO implements DAO {
+public class ItemDAO implements DAO {
 
 	/* (non-Javadoc)
 	 * @see org.jmangos.commons.database.dao.DAO#getClassName()
@@ -40,7 +40,9 @@ public abstract class ItemDAO implements DAO {
 	 *
 	 * @return the t int object hash map
 	 */
-	public abstract TIntObjectHashMap<ItemPrototype> loadItemPrototypes();
+	public TIntObjectHashMap<ItemPrototype> loadItemPrototypes() {
+        return new TIntObjectHashMap<ItemPrototype>();
+    }
 
 	/**
 	 * Load item prototype.
@@ -48,5 +50,7 @@ public abstract class ItemDAO implements DAO {
 	 * @param guid the guid
 	 * @return the item prototype
 	 */
-	public abstract ItemPrototype loadItemPrototype(int guid);
+	public ItemPrototype loadItemPrototype(int guid) {
+        return null;
+    }
 }

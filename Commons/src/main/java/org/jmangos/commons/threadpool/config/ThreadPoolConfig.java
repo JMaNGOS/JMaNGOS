@@ -23,9 +23,9 @@ package org.jmangos.commons.threadpool.config;
 public class ThreadPoolConfig {
 
   /** The GENERA l_ pool. */
-  public static Integer GENERAL_POOL = 5;
+  public final static Integer GENERAL_POOL = 5;
 
   /** The INSTAN t_ pool. */
-  public static Integer INSTANT_POOL = 5;
+  public final static Integer INSTANT_POOL = 5;
 
 }

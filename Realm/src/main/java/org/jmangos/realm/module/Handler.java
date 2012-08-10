@@ -92,7 +92,7 @@ public class Handler extends AbstractModule {
 
 		bind(AccountDAO.class).to(MySQL5AccountDAO.class).in(Scopes.SINGLETON);
 		bind(PlayerDAO.class).to(MySQL5PlayerDAO.class).in(Scopes.SINGLETON);
-		bind(ItemDAO.class).to(MySQL5ItemDAO.class).in(Scopes.SINGLETON);
+		bind(ItemDAO.class)/*.to(MySQL5ItemDAO.class)*/.in(Scopes.SINGLETON);
 		bind(SimpleDataDAO.class).to(MySQL5SimpleDataDAO.class).in(
 				Scopes.SINGLETON);
 		bind(ItemStorages.class).in(Scopes.SINGLETON);
@@ -103,7 +103,6 @@ public class Handler extends AbstractModule {
 		bind(PlayerLevelStorages.class).in(Scopes.SINGLETON);
 		bind(MapService.class).in(Scopes.SINGLETON);
 		bind(AccountService.class).in(Scopes.SINGLETON);
-		bind(DatabaseFactory.class).in(Scopes.SINGLETON);
 		bind(DatabaseFactory.class).in(Scopes.SINGLETON);
 		bind(ShutdownHook.class).in(Scopes.SINGLETON);
 

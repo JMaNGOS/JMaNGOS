@@ -29,7 +29,7 @@ import org.jmangos.auth.service.AccountService;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 
 /**
- * The Class CMD_RECONNECT_PROOF.
+ * The Class <tt>CMD_RECONNECT_PROOF</tt>.
  */
 public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
 
@@ -47,7 +47,7 @@ public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
 	private AccountService accountService;
 
 	/**
-	 * Instantiates a new CMD_RECONNECT_PROOF.
+	 * Instantiates a new <tt>CMD_RECONNECT_PROOF</tt>.
 	 */
 	public CMD_RECONNECT_PROOF() {
 		super();

@@ -19,30 +19,31 @@ package org.jmangos.realm.network.crypt;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-// TODO: Auto-generated Javadoc
+import org.jmangos.commons.network.crypt.SARC4;
+
 /**
  * The Class Crypt.
  */
 public class Crypt {
 	
 	/** The Server encryption key. */
-	byte[] ServerEncryptionKey = { (byte) 0xCC,  (byte)0x98,  (byte)0xAE, 0x04,
+	byte[] serverEncryptionKey = { (byte) 0xCC,  (byte)0x98,  (byte)0xAE, 0x04,
 			(byte)0xE8,  (byte)0x97, (byte)0xEA,  (byte)0xCA, 0x12,
 			(byte)0xDD,  (byte)0xC0,  (byte)0x93, 0x42,  (byte)0x91, 0x53,
 			0x57 };
 	
 	/** The Server decryption key. */
-	byte[] ServerDecryptionKey = { (byte) 0xC2, (byte) 0xB3, 0x72, 0x3C, (byte) 0xC6, (byte) 0xAE, (byte) 0xD9,
+	byte[] clientDecryptionKey = { (byte) 0xC2, (byte) 0xB3, 0x72, 0x3C, (byte) 0xC6, (byte) 0xAE, (byte) 0xD9,
 			(byte) 0xB5, 0x34, 0x3C, 0x53, (byte) 0xEE, 0x2F, 0x43, 0x67, (byte) 0xCE };
 
 	/** The is enabled. */
 	private boolean isEnabled = false;
 
 	/** The _client decrypt. */
-	private SARC4 _clientDecrypt = new SARC4(); 
+	private SARC4 clientDecryptSARC4 = new SARC4(); 
 	
 	/** The _server encrypt. */
-	private SARC4 _serverEncrypt = new SARC4(); 
+	private SARC4 serverEncryptSARC4 = new SARC4(); 
 
 	/**
 	 * Instantiates a new crypt.
@@ -59,7 +60,7 @@ public class Crypt {
 	public byte[] decrypt(byte[] data) {
 		if (!isEnabled)
 			return data;
-		return _clientDecrypt.Update(data);
+		return clientDecryptSARC4.update(data);
 	}
 
 	/**
@@ -71,36 +72,39 @@ public class Crypt {
 	public byte[] encrypt(byte[] data) {
 		if (!isEnabled)
 			return data; 
-		return _serverEncrypt.Update(data);
+		return serverEncryptSARC4.update(data);
 
 	}
 	
 	/**
-	 * Inits the.
+	 * Init crypto-system.
 	 *
-	 * @param key the key
+	 * @param key is seed
 	 */
 	public void init(byte[] key){
-		byte[] encryptHash = getKey(ServerEncryptionKey,key);
-		_clientDecrypt.init(encryptHash);
-		byte[] decryptHash = getKey(ServerDecryptionKey,key);
-		_serverEncrypt.init(decryptHash);
+		
+		byte[] encryptHash = getKey(serverEncryptionKey,key);
+		clientDecryptSARC4.init(encryptHash);
+		
+		byte[] decryptHash = getKey(clientDecryptionKey,key);
+		serverEncryptSARC4.init(decryptHash);
+		
 		byte[] tar = new byte[1024];
 		for(int i = 0; i < tar.length; i++)
 		 {
 			tar[i] = 0;
 		 }
-		_serverEncrypt.Update(tar);
+		serverEncryptSARC4.update(tar);
 		for(int i = 0; i < tar.length; i++)
 		 {
 			tar[i] = 0;
 		 }
-		 _clientDecrypt.Update(tar);
+		 clientDecryptSARC4.update(tar);
 		this.isEnabled = true;
 	}
 	
 	/**
-	 * Gets the key.
+	 * Gets the encryption key.
 	 *
 	 * @param EncryptionKey the encryption key
 	 * @param key the key

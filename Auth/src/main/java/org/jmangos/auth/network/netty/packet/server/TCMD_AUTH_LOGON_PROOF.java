@@ -22,7 +22,7 @@ import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.model.State;
 
 /**
- * The Class TCMD_AUTH_LOGON_PROOF.
+ * The Class <tt>TCMD_AUTH_LOGON_PROOF</tt>.
  */
 public class TCMD_AUTH_LOGON_PROOF extends AbstractWoWServerPacket {
 
@@ -30,13 +30,13 @@ public class TCMD_AUTH_LOGON_PROOF extends AbstractWoWServerPacket {
 	private WoWAuthResponse response;
 
 	/**
-	 * Instantiates a new TCMD_AUTH_LOGON_PROOF.
+	 * Instantiates a new <tt>TCMD_AUTH_LOGON_PROOF</tt>.
 	 */
 	public TCMD_AUTH_LOGON_PROOF() {
 	}
 
 	/**
-	 * Constructs new instance of <tt>T_CMD_AUTH_LOGON_PROOF</tt> packet.
+	 * Constructs new instance of <tt>TCMD_AUTH_LOGON_PROOF</tt> packet.
 	 * 
 	 * @param response
 	 *            the WoWAuthResponse
@@ -66,7 +66,6 @@ public class TCMD_AUTH_LOGON_PROOF extends AbstractWoWServerPacket {
 			// unkFlags
 			writeC(0);
 			writeC(0);
-			getChannel().setChannelState(State.AUTHED);
 		}
 	}
 }

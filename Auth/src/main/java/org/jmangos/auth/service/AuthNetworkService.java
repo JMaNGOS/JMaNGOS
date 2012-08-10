@@ -34,11 +34,6 @@ public class AuthNetworkService extends AbstractNetworkService {
 	@Named("AuthToClient")
 	private ChannelPipelineFactory authToClientPipelineFactory;
 
-	/** The auth to realm pipeline factory. */
-	@Inject
-	@Named("AuthToRealm")
-	private ChannelPipelineFactory authToRealmPipelineFactory;
-
 	/**
 	 * 
 	 * @see org.jmangos.commons.service.Service#start()

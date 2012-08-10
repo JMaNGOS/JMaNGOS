@@ -33,19 +33,19 @@ public class RealmNetworkService extends AbstractNetworkService {
 	/** The RealmToClient pipeline factory. */
 	@Inject
 	@Named("RealmToClient")
-	private ChannelPipelineFactory r2cPipelineFactory;
+	private ChannelPipelineFactory realmToClientPipelineFactory;
 	@Inject
 	@Named("RealmToAuth")
-	private ChannelPipelineFactory r2lPipelineFactory;
+	private ChannelPipelineFactory realmToAuthPipelineFactory;
 
 	/* (non-Javadoc)
  * @see org.jmangos.commons.service.Service#start()
  */
 @Override
 	public void start() {
-		createServerChannel(Config.CLIENT_ADDRESS, r2cPipelineFactory);
+		createServerChannel(Config.CLIENT_ADDRESS, realmToClientPipelineFactory);
 		// not yet checked...
-		//createClientChannel(Config.LOGIN_ADDRESS, r2lPipelineFactory);
+		createClientChannel(Config.AUTH_ADDRESS, realmToAuthPipelineFactory);
 	}
 
 	/* (non-Javadoc)

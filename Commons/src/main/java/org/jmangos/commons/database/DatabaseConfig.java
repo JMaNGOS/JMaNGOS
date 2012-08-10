@@ -40,32 +40,105 @@ public class DatabaseConfig
 	public static final String	CONFIG_FILE	= "conf/database/database.properties";
 
 	/**
-	 * Default database url.
+	 *  Default world driver class to database
 	 */
-	@Property(key = "database.url", defaultValue = "jdbc:mysql://localhost:3306/realmd")
-	public static String		DATABASE_URL = "jdbc:mysql://localhost:3306/realmd";
+	@Property(key = "world.database.driver", defaultValue = "com.mysql.jdbc.Driver" )
+    public static String        WORLD_DATABASE_DRIVER;
 
-	/** Name of database Driver. */
-	@Property(key = "database.driver", defaultValue = "com.mysql.jdbc.Driver")
-	public static Class<?>		DATABASE_DRIVER;
+    /**
+	 * World database uri !!!with trailing slash!!!
+	 */
+	@Property(key = "world.database.url", defaultValue="jdbc:mysql://localhost:3306/")
+	public static String 		WORLD_DATABASE_URL = "jdbc:mysql://localhost:3306/";
 
-	/** Default database user. */
-	@Property(key = "database.user", defaultValue = "JMaNGOS")
-	public static String		DATABASE_USER;
+    /**
+	 * World Database Hibernate dialect (see http://hibernate.org)
+	 */
+	@Property(key = "world.database.dialect", defaultValue="org.hibernate.dialect.MySQL5Dialect")
+	public static String 		WORLD_DATABASE_DIALECT;
 
-	/** Default database password. */
-	@Property(key = "database.password", defaultValue = "JMaNGOS")
-	public static String		DATABASE_PASSWORD;
+    /**
+	 * World Database user
+	 */
+	@Property(key = "world.database.user", defaultValue="JMaNGOS")
+	public static String 		WORLD_DATABASE_USER;
 
-	/** Minimum amount of connections that are always active. */
-	@Property(key = "database.connections.min", defaultValue = "2")
-	public static int			DATABASE_CONNECTIONS_MIN;
+    /**
+	 * World Database password
+	 */
+	@Property(key = "world.database.password", defaultValue="JMaNGOS")
+	public static String 		WORLD_DATABASE_PASSWORD;
 
-	/** Maximum amount of connections that are allowed to use. */
-	@Property(key = "database.connections.max", defaultValue = "10")
-	public static int			DATABASE_CONNECTIONS_MAX;
-	
-	/**
+    /**
+	 * World Database name
+	 */
+	@Property(key = "world.database.name", defaultValue="mangos")
+	public static String 		WORLD_DATABASE_NAME;
+
+    /**
+	 * World Minimum amount of database connections
+	 */
+	@Property(key = "world.database.connections.min", defaultValue="5")
+	public static Integer 		WORLD_DATABASE_CONNECTIONS_MIN;
+
+    /**
+	 * World Maximum amount of database connections
+	 */
+	@Property(key = "world.database.connections.max", defaultValue="10")
+	public static String 		WORLD_DATABASE_CONNECTIONS_MAX;
+
+    /****************************-- CHARACTER --******************************/
+    /**
+     *  Default chars driver class to database
+     */
+    @Property(key = "chars.database.driver", defaultValue = "com.mysql.jdbc.Driver" )
+    public static String        CHARS_DATABASE_DRIVER;
+
+    /**
+     * Characters database uri !!!with trailing slash!!!
+     */
+    @Property(key = "chars.database.url", defaultValue="jdbc:mysql://localhost:3306/")
+    public static String 		CHARS_DATABASE_URL = "jdbc:mysql://localhost:3306/";
+
+    /**
+     * Characters Database Hibernate dialect (see http://hibernate.org)
+     */
+    @Property(key = "chars.database.dialect", defaultValue="org.hibernate.dialect.MySQL5Dialect")
+    public static String 		CHARS_DATABASE_DIALECT;
+
+    /**
+     * Characters Database user
+     */
+    @Property(key = "chars.database.user", defaultValue="JMaNGOS")
+    public static String 		CHARS_DATABASE_USER;
+
+    /**
+     * Characters Database password
+     */
+    @Property(key = "chars.database.password", defaultValue="JMaNGOS")
+    public static String 		CHARS_DATABASE_PASSWORD;
+
+    /**
+     * Characters Database name
+     */
+    @Property(key = "chars.database.name", defaultValue="mangos")
+    public static String 		CHARS_DATABASE_NAME;
+
+    /**
+     * Characters Minimum amount of database connections
+     */
+    @Property(key = "chars.database.connections.min", defaultValue="5")
+    public static Integer 		CHARS_DATABASE_CONNECTIONS_MIN;
+
+    /**
+     * Characters Maximum amount of database connections
+     */
+    @Property(key = "chars.database.connections.max", defaultValue="10")
+    public static String 		CHARS_DATABASE_CONNECTIONS_MAX;
+
+
+
+    /**
 	 * Loads database configuration.
 	 */
 	public static void load()

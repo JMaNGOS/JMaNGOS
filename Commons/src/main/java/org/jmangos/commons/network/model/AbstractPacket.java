@@ -41,8 +41,11 @@ import org.jboss.netty.buffer.ChannelBuffer;
 abstract class AbstractPacket
 {
 	
-	/** The op code. */
-	protected int		opCode;
+	/**
+     * The op code.
+     * WARNING! Don't use in production mode! Just in test case!
+     */
+	protected Integer		opCode;
 	
 	/** The buf. */
 	private ChannelBuffer	buf;

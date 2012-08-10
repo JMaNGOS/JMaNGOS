@@ -30,6 +30,8 @@
  */
 package org.jmangos.commons.network.model;
 
+import java.nio.charset.Charset;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class SendablePacket.
@@ -38,8 +40,7 @@ package org.jmangos.commons.network.model;
  */
 public abstract class SendablePacket extends AbstractPacket
 {
-	
-	/** The channel. */
+    /** The channel. */
 	protected NetworkChannel channel;
 
 	/**
@@ -215,7 +216,7 @@ public abstract class SendablePacket extends AbstractPacket
 	 */
 	protected final void writeS(String charSequence)
 	{
-		getByteBuffer().writeBytes(charSequence.getBytes());
+		getByteBuffer().writeBytes(charSequence.getBytes(Charset.forName("utf-8")));
 		getByteBuffer().writeByte((byte) 0);
 	}
 
@@ -259,4 +260,24 @@ public abstract class SendablePacket extends AbstractPacket
 		this.channel = channel;
 		
 	}
+
+    /**
+     * Get packet opcode
+     * It's useful to send/implement packet from dynamic groovy
+     * @deprecated don't use int production mode yet!!
+     */
+    @Deprecated
+    public Integer getOpcode() {
+        return opCode;
+    }
+
+    /**
+     * Sets packet opcode if it's not in the config XML file.
+     * It's useful to send/implement packet from dynamic groovy
+     * @deprecated don't use int production mode yet!!
+     */
+    @Deprecated
+    public void setOpcode(int opcode) {
+        this.opCode = opcode;
+    }
 }

@@ -25,6 +25,10 @@ public class ManagedObject {
   /** The object id. */
   private final int objectId;
 
+  public ManagedObject() {
+      objectId = (int)Math.random();
+  }
+
   /**
    * Instantiates a new managed object.
    *

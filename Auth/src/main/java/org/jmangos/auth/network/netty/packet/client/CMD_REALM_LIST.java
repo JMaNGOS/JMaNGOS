@@ -24,7 +24,7 @@ import org.jmangos.auth.service.WorldListService;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 
 /**
- * The Class CMD_REALM_LIST.
+ * The Class <tt>CMD_REALM_LIST</tt>.
  */
 public class CMD_REALM_LIST extends AbstractWoWClientPacket {
 
@@ -37,12 +37,9 @@ public class CMD_REALM_LIST extends AbstractWoWClientPacket {
 	private WorldListService worldlist;
 
 	/*
-	 * {@inheritDoc}
-	 */
-	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.jmangos.common.network.model.ReceivablePacket#getMinimumLength()
+	 * @see org.jmangos.commons.network.model.ReceivablePacket#getMinimumLength()
 	 */
 	@Override
 	public int getMinimumLength() {

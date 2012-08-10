@@ -25,7 +25,7 @@ import org.jmangos.auth.service.WorldListService;
 import javolution.util.FastMap;
 
 /**
- * The Class TCMD_REALM_LIST.
+ * The Class <tt>TCMD_REALM_LIST</tt>.
  */
 public class TCMD_REALM_LIST extends AbstractWoWServerPacket {
 
@@ -37,7 +37,7 @@ public class TCMD_REALM_LIST extends AbstractWoWServerPacket {
 	private WorldListService worldlist;
 
 	/**
-	 * Instantiates a new TCMD_REALM_LIST.
+	 * Instantiates a new <tt>TCMD_REALM_LIST</tt>.
 	 */
 	public TCMD_REALM_LIST() {
 	}
@@ -55,7 +55,7 @@ public class TCMD_REALM_LIST extends AbstractWoWServerPacket {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.jmangos.common.network.model.SendablePacket#writeImpl()
+	 * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
 	 */
 	@Override
 	protected void writeImpl() {

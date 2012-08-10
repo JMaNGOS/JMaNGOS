@@ -51,7 +51,7 @@ public class AuthServer {
 		Injector injector = Guice.createInjector(new HandlerDM());
 		ServiceContent.setInjector(injector);
 		injector.getInstance(LoggingService.class).start();
-		injector.getInstance(DatabaseFactory.class).start();
+		//injector.getInstance(DatabaseFactory.class).start();
 		injector.getInstance(WorldListService.class).start();
 		injector.getInstance(Config.class).load();
 		if (Config.COMPATIBLE != Compatiple.MANGOS) {

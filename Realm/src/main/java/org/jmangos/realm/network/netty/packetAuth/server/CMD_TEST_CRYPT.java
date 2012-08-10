@@ -14,25 +14,29 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.auth.network.handler;
+package org.jmangos.realm.network.netty.packetAuth.server;
 
-import org.jmangos.commons.network.handlers.AbstractPacketHandlerFactory;
-import org.jmangos.commons.network.netty.model.PacketData;
+
+import org.jmangos.realm.network.netty.packetAuth.AbstractRealmServerPacket;
 
 /**
- * 
- * @author MinimaJack
- * 
+ * The Class <tt>CMD_TEST_CRYPT</tt>.
  */
-public class AuthToRealmPacketHandlerFactory extends
-		AbstractPacketHandlerFactory {
-
-	/**
-	 * Instantiates a new auth to realm packet handler factory.
+public class CMD_TEST_CRYPT  extends AbstractRealmServerPacket {
+	
+	public CMD_TEST_CRYPT() {
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
 	 */
-	public AuthToRealmPacketHandlerFactory() {
-		addList(loadStaticData(PacketData.class,
-				"./conf/packetData/packets.xsd",
-				"./conf/packetData/lr-packets.xml"));
+	@Override
+	protected void writeImpl() {
+		writeC('C');
+		writeC('R');
+		writeC('Y');
+		writeC('P');
+		writeC('T');
 	}
 }
+

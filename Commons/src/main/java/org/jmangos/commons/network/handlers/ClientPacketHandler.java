@@ -19,6 +19,7 @@ package org.jmangos.commons.network.handlers;
 import javolution.util.FastMap;
 
 import org.apache.log4j.Logger;
+import org.jmangos.commons.OpcodeTable;
 import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.model.ReceivablePacket;
 import org.jmangos.commons.network.model.State;
@@ -78,9 +79,11 @@ public class ClientPacketHandler {
 	 * @param id the id
 	 */
 	protected static void unknownPacket(State state, int id) {
-		log.warn(String.format(
-				"[UNKNOWN PACKET] : received 0x%02X, state=%s %n", id, state
-						.toString()));
+		log.warn(String.format("[UNKNOWN PACKET] : received 0x%03X, state=%s %n", id, state.toString()));
+
+        if ( OpcodeTable.getOpcode( id ) != null ) {
+            log.warn( String.format( "Maybe this packet is unimplemented: " + OpcodeTable.getOpcode(id) ) );
+        }
 	}
 
 	/**

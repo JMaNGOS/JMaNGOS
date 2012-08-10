@@ -37,7 +37,10 @@ public class ServerPacketHandler
 	{
 		Integer opcode = opcodes.get(packetClass.getClass());
 		if (opcode == null)
-			throw new IllegalArgumentException("There is no opcode for " + packetClass + " defined.");
+            if ( packetClass.getOpcode() == null )
+			    throw new IllegalArgumentException("There is no opcode for " + packetClass + " defined.");
+            else
+                opcode = packetClass.getOpcode();
 
 		return opcode;
 	}
