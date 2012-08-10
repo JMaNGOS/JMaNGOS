@@ -113,7 +113,7 @@ public class DatabaseFactory implements Service {
             config.setProperty( "hibernate.connection.password", DatabaseConfig.WORLD_DATABASE_PASSWORD );
             config.setProperty( "hibernate.dialect", DatabaseConfig.WORLD_DATABASE_DIALECT );
             // TODO: configure cache and pool
-            config.configure("classpath*:/world.cfg.xml");
+            config.configure("world.cfg.xml");
             worldSessionFactory = config.buildSessionFactory();
             worldSessionFactory.getStatistics().setStatisticsEnabled( true );
 
@@ -138,7 +138,7 @@ public class DatabaseFactory implements Service {
             config.setProperty( "hibernate.connection.password", DatabaseConfig.CHARS_DATABASE_PASSWORD );
             config.setProperty( "hibernate.dialect", DatabaseConfig.CHARS_DATABASE_DIALECT );
             // TODO: configure cache and pool
-            config.configure("classpath*:/characters.cfg.xml");
+            config.configure("/characters.cfg.xml");
 
             charactersSessionFactory = config.buildSessionFactory();
             charactersSessionFactory.getStatistics().setStatisticsEnabled( true );
