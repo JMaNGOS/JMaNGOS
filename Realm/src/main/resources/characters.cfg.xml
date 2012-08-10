@@ -3,10 +3,9 @@
         "-//Hibernate/Hibernate Configuration DTD//EN"
         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory>
+    <session-factory name="characters">
         <!-- DB schema will be updated if needed -->
         <property name="hbm2ddl.auto">update</property>
-        <mapping class="org.jmangos.realm.domain.QuestTemplate"/>
         <mapping class="org.jmangos.realm.domain.Characters"/>
     </session-factory>
 </hibernate-configuration>
