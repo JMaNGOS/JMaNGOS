@@ -39,8 +39,10 @@ public class DatabaseFactory implements Service {
 	/**
 	 * Initializes DatabaseFactory.
 	 */
-	public synchronized void start()
-	{
+	public synchronized void start() {
+        // Loading config fields
+        DatabaseConfig.load();
+
 		try {
 			getCharactersSessionFactory();
             getWorldSessionFactory();
