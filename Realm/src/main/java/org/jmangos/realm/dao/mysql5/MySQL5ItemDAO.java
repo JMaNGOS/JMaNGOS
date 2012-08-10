@@ -105,7 +105,10 @@ public class MySQL5ItemDAO extends ItemDAO {
 	 * @return the prototype by data
 	 * @throws SQLException the sQL exception
 	 */
+    @Deprecated
 	private ItemPrototype getPrototypeByData(ResultSet rs) throws SQLException {
+        throw new UnsupportedOperationException( "Old JDBC stuff. Use Hibernate Session!" );
+        /*
 		ItemPrototype itemPrototype = new ItemPrototype(rs.getInt("entry"), rs.getInt("class"), rs.getInt("subClass"),
 				rs.getInt("unk0"), rs.getInt("displayid"), rs.getInt("quality"), rs.getLong("flags"),  (int) rs
 						.getLong("flags2"), (byte) rs.getInt("buyCount"), rs.getInt("buyPrice"),
@@ -152,6 +155,6 @@ public class MySQL5ItemDAO extends ItemDAO {
 					.getFloat(START_DAMAGES_DATA + 1 + 3 * i), rs.getByte(START_DAMAGES_DATA + 2 + 3 * i), i);
 		}
 
-		return itemPrototype;
+		return itemPrototype;*/
 	}
 }

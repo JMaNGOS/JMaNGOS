@@ -7,6 +7,6 @@
         <!-- DB schema will be updated if needed -->
         <property name="hbm2ddl.auto">update</property>
         <mapping class="org.jmangos.realm.domain.QuestTemplate"/>
-        <mapping class="org.jmangos.realm.domain.ItemTemplate"/>
+        <mapping class="org.jmangos.realm.model.base.item.ItemPrototype"/>
     </session-factory>
 </hibernate-configuration>
