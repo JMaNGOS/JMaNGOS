@@ -220,7 +220,7 @@ public class PlayerService {
     }
 
     public void savePlayer( Player player ) {
-        Session session = databaseFactory.sessionFactory.openSession();
+        Session session = databaseFactory.getWorldSessionFactory().openSession();
         Characters character = new Characters();
         character.setAccount( 1 );
         character.setGuid( new Long( player.getObjectGuid().getRawValue() ).intValue() );
