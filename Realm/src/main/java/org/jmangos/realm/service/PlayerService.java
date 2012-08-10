@@ -227,7 +227,7 @@ public class PlayerService {
         character.setPlayerBytes( player.GetUInt32Value( PlayerFields.PLAYER_BYTES ) );
         character.setPlayerBytes2(player.GetUInt32Value(PlayerFields.PLAYER_BYTES_2));
         character.setName( player.getName() );
-        character.setRace( Races.WARRIOR );
+        character.setRace( Races.GNOME );
         character.setClazz( Classes.CLASS_PRIEST );
 
         session.getTransaction().begin();
