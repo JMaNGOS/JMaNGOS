@@ -27,6 +27,8 @@ import org.apache.commons.dbcp.DriverManagerConnectionFactory;
 import org.apache.commons.dbcp.PoolingDataSource;
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.apache.log4j.Logger;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
 import org.jmangos.commons.service.Service;
 
 public class DatabaseFactory implements Service
@@ -54,6 +56,14 @@ public class DatabaseFactory implements Service
 	 */
 	private static int					databaseMinorVersion;
 
+
+    /**
+     * Returns Hibernate Session
+     */
+    private static SessionFactory worldSessionFactory;
+    private static SessionFactory charactersSessionFactory;
+
+
 	/**
 	 * Initializes DatabaseFactory.
 	 */
@@ -64,7 +74,35 @@ public class DatabaseFactory implements Service
 			return;
 		}
 
-		DatabaseConfig.load();
+        // TODO: cleanup old JDBC crap
+
+        // Bring up hibernate
+        AnnotationConfiguration config = new AnnotationConfiguration();
+        config.setProperty( "hibernate.connection.driver_class", "com.mysql.jdbc.Driver" );
+        config.setProperty( "hibernate.connection.url", "jdbc:mysql://localhost/characters" );
+        config.setProperty( "hibernate.connection.username", "root" );
+        config.setProperty( "hibernate.connection.password", "" );
+        config.setProperty( "hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect" );
+        config.addPackage( "org.jmangos.realm.domain" );
+        config.configure();
+
+        this.worldSessionFactory = config.buildSessionFactory();
+
+        log.info( "Hibernate worldSessionFactory initialized..." );
+
+        config = new AnnotationConfiguration();
+        config.setProperty( "hibernate.connection.driver_class", "com.mysql.jdbc.Driver" );
+        config.setProperty( "hibernate.connection.url", "jdbc:mysql://localhost/characters" );
+        config.setProperty( "hibernate.connection.username", "root" );
+        config.setProperty( "hibernate.connection.password", "" );
+        config.setProperty( "hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect" );
+        config.addPackage( "org.jmangos.realm.domain" );
+        config.configure();
+
+        this.charactersSessionFactory = config.buildSessionFactory();
+        log.info( "Hibernate characterSessionFactory initialized..." );
+
+        DatabaseConfig.load();
 
 		try
 		{
@@ -221,6 +259,22 @@ public class DatabaseFactory implements Service
 	{
 		return databaseMinorVersion;
 	}
+
+    /**
+     * Returns World Database's hibernate session
+     * @return Hibernate Session
+     */
+    public static SessionFactory getWorldSessionFactory() {
+        return worldSessionFactory;
+    }
+
+    /**
+     * Returns Character Database's hibernate session
+     * @return Hibernate Session
+     */
+    public static SessionFactory getCharactersSessionFactory() {
+        return charactersSessionFactory;
+    }
 
 	/**
 	 * Default constructor.

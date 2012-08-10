@@ -16,6 +16,11 @@
  *******************************************************************************/
 package org.jmangos.realm;
 
+import groovy.ui.Console;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.log4j.LoggingService;
 import org.jmangos.commons.network.netty.service.NetworkService;
@@ -38,14 +43,16 @@ import com.google.inject.Injector;
  */
 @SuppressWarnings("unused")
 public class RealmServer {
-	
+
+    public static Console console;
 	/**
 	 * The main method.
 	 *
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-		Injector injector = Guice.createInjector(new Handler());
+        // Initializing Hibernate
+        Injector injector = Guice.createInjector(new Handler());
 		ServiceContent.setInjector(injector);
 		
 		injector.getInstance(LoggingService.class).start();
@@ -53,13 +60,18 @@ public class RealmServer {
 		injector.getInstance(Config.class).load();
 		injector.getInstance(DatabaseFactory.class).start();
 		Runtime.getRuntime().addShutdownHook(injector.getInstance(ShutdownHook.class));
-		//injector.getInstance(ItemStorages.class).start();
+		injector.getInstance(ItemStorages.class).start();
 		injector.getInstance(MapService.class).start();
 		injector.getInstance(PlayerClassLevelInfoStorages.class).start();
 		injector.getInstance(PlayerLevelStorages.class).start();
-//		injector.getInstance(UpdateService.class).start();
+		injector.getInstance(UpdateService.class).start();
 		
 		System.gc();
-		injector.getInstance(NetworkService.class).start();
+
+        console = new Console();
+        console.setVariable( "injector", injector );
+        console.run();
+
+        injector.getInstance(NetworkService.class).start();
 	}
 }
