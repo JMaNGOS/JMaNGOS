@@ -21,6 +21,8 @@ import java.nio.ByteBuffer;
 import org.jmangos.tools.adt.chunks.ADTChunk;
 
 public class MH2OChunk extends ADTChunk{
+	private int fullSize = 0;
+	
 	class MH2OHeader extends ADTChunk{
 		public final Unsigned32 ofsInformation = new Unsigned32();
 		public final Unsigned32 layerCount = new Unsigned32();
@@ -55,7 +57,7 @@ public class MH2OChunk extends ADTChunk{
 	@Override
 	public ADTChunk reads(ByteBuffer bb, int offset, int size) {
 		setGlobalOffset(offset + size + HEADERSIZE);
-		this.size = (int) size;
+		this.setFullSize(size);
 		this.setByteBuffer(bb, offset);
 		for (int i = 0; i < 256; i++) {
 			MH2OHeaders[i] = new MH2OHeader();
@@ -110,8 +112,14 @@ public class MH2OChunk extends ADTChunk{
 		return g;
 	}
 	
+	public Integer getFullSize() {
+		return fullSize;
+	}
+	public void setFullSize(int fullSize) {
+		this.fullSize = fullSize;
+	}
 	public String toString(){
-		return "[MH2OChunk] size:" + size +
+		return "[MH2OChunk] size:" + getFullSize() +
 		"\n water : " +  getOffsets(); 
 	}
 

@@ -16,34 +16,65 @@
  *******************************************************************************/
 package org.jmangos.tools.chunk;
 
-import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 import javolution.io.Struct;
 
+/**
+ * Class <tt>BaseChunk</tt> base class for all WOW chunks, contains header with
+ * chunk type and chunk size
+ * 
+ * @author MinimaJack
+ * 
+ */
 public abstract class BaseChunk extends Struct {
+	/** Chunk type. */
+	private final UTF8String chunkType = new UTF8String(4);
+	/** Chunk size. */
+	private final Signed32 chunkSize = new Signed32();
+	/** Header size. */
+	protected static final int HEADERSIZE = 8;
+	/** Global offset in byte buffer. */
+	private int globalOffcet = 0;
 
-	protected final UTF8String chunkType = new UTF8String(4);
-	protected final Signed32 ChunkSize = new Signed32();
-	protected int size = 0;
-	protected static int HEADERSIZE = 8;
-	public int globalOffcet = 0;
-
-	public BaseChunk() {
-		super();
-	}
-
+	/**
+	 * 
+	 * @return global offset.
+	 */
 	public final int getGlobalOffcet() {
 		return globalOffcet;
 	}
 
-	public final void setGlobalOffset(int l) {
-		this.globalOffcet = l;
+	/**
+	 * Set global offset.
+	 * 
+	 * @param offset
+	 *            - global offset
+	 */
+	public final void setGlobalOffset(final int offset) {
+		this.globalOffcet = offset;
 	}
 
-	public abstract BaseChunk reads(ByteBuffer bb, int offset, int size);
+	/**
+	 * @return the chunkType
+	 */
+	protected final String getChunkType() {
+		return chunkType.get();
+	}
 
-	public ByteOrder byteOrder() {
+	/**
+	 * @return size of chunk
+	 */
+	protected final int getChunkSize() {
+		return chunkSize.get();
+	}
+
+	/**
+	 * Set {@link java.nio.ByteOrder} for structure
+	 * 
+	 * @return LITTLE_ENDIAN byte order
+	 */
+	public final ByteOrder byteOrder() {
 		return ByteOrder.LITTLE_ENDIAN;
 	}
 }

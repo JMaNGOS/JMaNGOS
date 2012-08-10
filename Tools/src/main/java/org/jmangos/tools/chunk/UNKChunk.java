@@ -18,7 +18,7 @@ package org.jmangos.tools.chunk;
 
 import java.nio.ByteBuffer;
 
-public class UNKChunk extends BaseChunk{
+public class UNKChunk extends BaseChunk implements Readable{
 	private String ch;
 	private int soff;
 

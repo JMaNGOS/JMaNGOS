@@ -19,6 +19,7 @@ package org.jmangos.tools.wmo.chunks.root;
 import java.nio.ByteBuffer;
 
 import org.jmangos.tools.chunk.BaseChunk;
+import org.jmangos.tools.chunk.Readable;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
 /**
@@ -28,7 +29,7 @@ import org.jmangos.tools.wmo.chunks.WMOChunk;
  * @author MinimaJack
  * 
  */
-public class MODSChunk extends WMOChunk {
+public class MODSChunk extends WMOChunk implements Readable {
 	class MODSEntry extends WMOChunk {
 		/** Set name. */
 		UTF8String setName = new UTF8String(20);

@@ -19,26 +19,28 @@ package org.jmangos.tools.wmo.chunks.group;
 import java.nio.ByteBuffer;
 
 import org.jmangos.tools.chunk.BaseChunk;
+import org.jmangos.tools.chunk.Readable;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
 /**
- * Chunk <tt>MOVT</tt><br> 
+ * Chunk <tt>MOVT</tt><br>
  * Contains vertexes.
  * 
  * @author MinimaJack
- *
+ * 
  */
-public class MOVTChunk extends WMOChunk{
-	public Float32[] vertices;		
+public class MOVTChunk extends WMOChunk implements Readable {
+	public Float32[] vertices;
 
 	@Override
 	public BaseChunk reads(ByteBuffer bb, int offset, int size) {
 		setGlobalOffset(offset + size + HEADERSIZE);
 		this.setByteBuffer(bb, offset);
-		vertices = array(new Float32[(int) (size/4)]);
-		return this;	
+		vertices = array(new Float32[(int) (size / 4)]);
+		return this;
 	}
-	public String toString(){
+
+	public String toString() {
 		return "[MOVTChunk] \n\tVertices count:" + vertices.length;
 	}
 }

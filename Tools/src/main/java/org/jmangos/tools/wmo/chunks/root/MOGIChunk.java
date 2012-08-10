@@ -19,6 +19,7 @@ package org.jmangos.tools.wmo.chunks.root;
 import java.nio.ByteBuffer;
 
 import org.jmangos.tools.chunk.BaseChunk;
+import org.jmangos.tools.chunk.Readable;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
 /**
@@ -28,7 +29,7 @@ import org.jmangos.tools.wmo.chunks.WMOChunk;
  * @author MinimaJack
  * 
  */
-public class MOGIChunk extends WMOChunk {
+public class MOGIChunk extends WMOChunk implements Readable {
 	class MOGIEntry extends WMOChunk {
 		Unsigned32 flags = new Unsigned32();
 		Float32[] bbox1 = array(new Float32[3]);

@@ -19,6 +19,7 @@ package org.jmangos.tools.wmo.chunks.root;
 import java.nio.ByteBuffer;
 
 import org.jmangos.tools.chunk.BaseChunk;
+import org.jmangos.tools.chunk.Readable;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
 /**
@@ -28,7 +29,7 @@ import org.jmangos.tools.wmo.chunks.WMOChunk;
  * @author MinimaJack
  * 
  */
-public class MOHDChunk extends WMOChunk {
+public class MOHDChunk extends WMOChunk implements Readable{
 	/** Number of materials. */
 	Unsigned32 nTextures = new Unsigned32();
 	/** Number of WMO groups. */

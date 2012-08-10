@@ -19,25 +19,47 @@ package org.jmangos.tools.wmo.chunks.group;
 import java.nio.ByteBuffer;
 
 import org.jmangos.tools.chunk.BaseChunk;
+import org.jmangos.tools.chunk.Readable;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
+
 /**
- * Chunk <tt>MONR</tt><br> 
+ * Chunk <tt>MONR</tt><br>
  * Contains normals, in (X,Z,-Y) order.
  * 
  * @author MinimaJack
- *
+ * 
  */
-public class MONRChunk extends WMOChunk{
-	Float32[] normals;		
+public class MONRChunk extends WMOChunk implements Readable {
+	/** Normals */
+	private Float32[] normals;
+	/** count bytes in float */
+	private static final byte COUNT_BYTES_FLOAT = 4;
 
 	@Override
-	public BaseChunk reads(ByteBuffer bb, int offset, int size) {
+	public final BaseChunk reads(final ByteBuffer bb, final int offset, final int size) {
 		setGlobalOffset(offset + size + HEADERSIZE);
 		this.setByteBuffer(bb, offset);
-		normals = array(new Float32[size/4]);
-		return this;	
+		setNormals(array(new Float32[size / COUNT_BYTES_FLOAT]));
+		return this;
 	}
-	public String toString(){
-		return "[MONRChunk] \n\tNormals count:" + normals.length;
+
+	/**
+	 * @return the normals
+	 */
+	public final Float32[] getNormals() {
+		return normals;
+	}
+
+	/**
+	 * @param norm
+	 *            the normals to set
+	 */
+	public final void setNormals(final Float32[] norm) {
+		this.normals = norm;
+	}
+
+	@Override
+	public final String toString() {
+		return "[MONRChunk] \n\tNormals count:" + getNormals().length;
 	}
 }

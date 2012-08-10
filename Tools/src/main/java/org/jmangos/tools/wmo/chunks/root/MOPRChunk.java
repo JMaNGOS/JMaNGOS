@@ -19,6 +19,7 @@ package org.jmangos.tools.wmo.chunks.root;
 import java.nio.ByteBuffer;
 
 import org.jmangos.tools.chunk.BaseChunk;
+import org.jmangos.tools.chunk.Readable;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
 /**
@@ -28,7 +29,7 @@ import org.jmangos.tools.wmo.chunks.WMOChunk;
  * @author MinimaJack
  * 
  */
-public class MOPRChunk extends WMOChunk {
+public class MOPRChunk extends WMOChunk implements Readable {
 	class MOPREntry extends WMOChunk {
 		Unsigned16 portalIndex = new Unsigned16();
 		Unsigned16 wmoGroupIndex = new Unsigned16();

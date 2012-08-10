@@ -23,6 +23,7 @@ import java.nio.charset.CharsetDecoder;
 import java.util.ArrayList;
 
 import org.jmangos.tools.chunk.BaseChunk;
+import org.jmangos.tools.chunk.Readable;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
 /**
@@ -32,7 +33,7 @@ import org.jmangos.tools.wmo.chunks.WMOChunk;
  * @author MinimaJack
  * 
  */
-public class MOGNChunk extends WMOChunk {
+public class MOGNChunk extends WMOChunk implements Readable {
 	ArrayList<String> groupNames = new ArrayList<String>();
 
 	@Override

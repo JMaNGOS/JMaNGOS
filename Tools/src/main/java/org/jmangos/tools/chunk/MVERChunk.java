@@ -18,7 +18,7 @@ package org.jmangos.tools.chunk;
 
 import java.nio.ByteBuffer;
 
-public class MVERChunk extends BaseChunk{
+public class MVERChunk extends BaseChunk implements Readable{
 	Unsigned32 Version = new Unsigned32();
 	
 	@Override
