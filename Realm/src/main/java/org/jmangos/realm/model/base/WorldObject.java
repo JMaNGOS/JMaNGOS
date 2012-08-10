@@ -17,7 +17,9 @@
 package org.jmangos.realm.model.base;
 
 import java.nio.ByteOrder;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
@@ -25,6 +27,7 @@ import org.jmangos.commons.model.NamedObject;
 import org.jmangos.realm.model.base.guid.ObjectGuid;
 import org.jmangos.realm.model.base.guid.TypeId;
 import org.jmangos.realm.model.base.guid.TypeMask;
+import org.jmangos.realm.model.base.update.PlayerFields;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -49,6 +52,8 @@ public class WorldObject extends NamedObject {
 	
 	/** The values count. */
 	protected int valuesCount = 0;
+
+    public List<Integer> updateFlagList = new ArrayList<Integer>();
 
 	/**
 	 * Instantiates a new world object.
@@ -128,8 +133,20 @@ public class WorldObject extends NamedObject {
 	 */
 	public void SetUInt32Value(int i, int value) {
 		m_uint32Values.setInt(i*4, value);
+        updateFlagList.add( i );
 	}
-	
+
+    /**
+     * Sets the u int32 value.
+     *
+     * @param playerFields the PlayerFields enum
+     * @param value the value
+     */
+    public void SetUInt32Value( PlayerFields playerFields, int value) {
+        m_uint32Values.setInt(playerFields.getValue()*4, value);
+        updateFlagList.add( playerFields.getValue() );
+    }
+
 	/**
 	 * Gets the u int32 value.
 	 *
@@ -139,7 +156,17 @@ public class WorldObject extends NamedObject {
 	public int GetUInt32Value(int i) {
 		return m_uint32Values.getInt(i*4);
 	}
-	
+
+    /**
+     * Gets the u int32 value.
+     *
+     * @param playerField the PlayerField
+     * @return the int
+     */
+    public int GetUInt32Value( PlayerFields playerField ) {
+        return m_uint32Values.getInt( playerField.getValue() * 4 );
+    }
+
 	/**
 	 * Sets the u int64 value.
 	 *
@@ -148,18 +175,41 @@ public class WorldObject extends NamedObject {
 	 */
 	public void SetUInt64Value(int i, long value) {
 		m_uint32Values.setLong(i*4, value);
+        updateFlagList.add( i );
 	}
+
+    /**
+     * Sets the u int64 value.
+     *
+     * @param playerFields the i
+     * @param value the value
+     */
+    public void SetUInt64Value( PlayerFields playerFields, long value) {
+        m_uint32Values.setLong( playerFields.getValue() * 4, value);
+        updateFlagList.add( playerFields.getValue() );
+    }
 	
 	/**
-	 * Gets the u int64 value.
-	 *
-	 * @param i the i
-	 * @param value the value
-	 * @return the long
-	 */
-	public long GetUInt64Value(int i, long value) {
-		return m_uint32Values.getLong(i*4);
-	}
+     * Gets the u int64 value.
+     *
+     * @param i the i
+     * @param value the value
+     * @return the long
+     */
+    public long GetUInt64Value(int i, long value) {
+        return m_uint32Values.getLong(i*4);
+    }
+
+    /**
+     * Gets the u int64 value.
+     *
+     * @param playerFields the i
+     * @param value the value
+     * @return the long
+     */
+    public long GetUInt64Value( PlayerFields playerFields, long value) {
+        return m_uint32Values.getLong( playerFields.getValue() * 4 );
+    }
 	
 	/**
 	 * _ load into data field.
@@ -207,7 +257,19 @@ public class WorldObject extends NamedObject {
 	    	rvalue |= (value << (offset * 8));
 	    }
 	    SetUInt32Value(index, rvalue);
+        updateFlagList.add( index );
 	}
+
+    /**
+     * Sets the byte value.
+     *
+     * @param playerFields the PlayerFields index
+     * @param offset the offset
+     * @param value the value
+     */
+    public void SetByteValue( PlayerFields playerFields, int offset, byte value){
+        SetByteValue( playerFields.getValue(), offset, value );
+    }
 	
 	/**
 	 * Sets the float value.
@@ -217,15 +279,26 @@ public class WorldObject extends NamedObject {
 	 */
 	public void SetFloatValue(int i, float value) {
 		m_uint32Values.setFloat(i*4, value);
+        updateFlagList.add( i );
 	}
 	
 	/**
-	 * Gets the float value.
-	 *
-	 * @param i the i
-	 * @return the float
-	 */
-	public float GetFloatValue(int i) {
-		return m_uint32Values.getFloat(i*4);
-	}
+     * Gets the float value.
+     *
+     * @param i the i
+     * @return the float
+     */
+    public float GetFloatValue(int i) {
+        return m_uint32Values.getFloat(i*4);
+    }
+
+    /**
+     * Gets the float value.
+     *
+     * @param playerFields the i
+     * @return the float
+     */
+    public float GetFloatValue( PlayerFields playerFields ) {
+        return GetFloatValue( playerFields.getValue() );
+    }
 }
