@@ -21,8 +21,7 @@
 		package="org.jmangos.realm.network.netty.packetClient.client.">
 		<packet name="CMSG_PING" id="1DC" state="AUTHED" />
 		<packet name="CMSG_AUTH_SESSION" id="1ED" />
-		<packet name="CMSG_READY_FOR_ACCOUNT_DATA_TIMES" id="4FF"
-			state="AUTHED" />
+		<packet name="CMSG_READY_FOR_ACCOUNT_DATA_TIMES" id="4FF" state="AUTHED" />
 		<packet name="CMSG_REALM_SPLIT" id="38C" state="AUTHED" />
 		<packet name="CMSG_CHAR_ENUM" id="37" state="AUTHED" />
 		<packet name="CMSG_PLAYER_LOGIN" id="3D" state="AUTHED" />
@@ -39,7 +38,15 @@
 		<packet name="CMSG_ZONEUPDATE" id="1F4" state="AUTHED"></packet>
 		<packet name="CMSG_ITEM_QUERY_SINGLE" id="56" state="AUTHED" />
 		<packet name="CMSG_TUTORIAL_FLAG" id="FE" state="AUTHED" />
-	</opcodelist>
+
+        <!-- paalgyula implemented packets -->
+        <packet name="CMSG_CHAR_CREATE" id="36" state="AUTHED"/>
+        <packet name="CMSG_REQUEST_RAID_INFO" id="2CD" state="AUTHED"/>
+        <packet name="CMSG_STANDSTATECHANGED" id="101" state="AUTHED"/>
+        <packet name="CMSG_QUEST_QUERY" id="5C" state="AUTHED"/>
+        <packet name="MSG_MOVE_FALL_LAND" id="C9" state="AUTHED"/>
+        <packet name="CMSG_MOVE_TIME_SKIPPED" id="2CE" state="AUTHED"/>
+    </opcodelist>
 	<opcodelist direction="UPSTREAM"
 		package="org.jmangos.realm.network.netty.packetClient.server.">
 		<packet name="SMSG_AUTH_CHALLENGE" id="1EC" />
@@ -78,5 +85,13 @@
 		<packet name="SMSG_TIME_SYNC_REQ" id="390" />
 		<packet name="SMSG_ALL_ACHIEVEMENT_DATA" id="47D" />
 		<packet name="SMSG_SPELL_GO" id="132" />
+
+        <!-- paalgyula implemented packets -->
+        <packet name="SMSG_CHAR_CREATE" id="3A"/>
+        <packet name="SMSG_RAID_INSTANCE_INFO" id="2CC"/>
+        <packet name="SMSG_MESSAGE_CHAT" id="96" />
+        <packet name="MSG_MOVE_TIME_SKIPPED" id="319" />
+        <packet name="SMSG_QUEST_QUERY_RESPONSE" id="5D" />
+        <packet name="SMSG_UPDATE_OBJECT" id="A9"/>
 	</opcodelist>
 </opcodes>
