@@ -16,6 +16,8 @@
  *******************************************************************************/
 package org.jmangos.auth.network.netty.packet.client;
 
+import java.nio.charset.Charset;
+
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
@@ -76,23 +78,34 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unused")
 	@Override
 	protected void readImpl() {
-		int error = readC();
-		int size = readH();
-		byte[] gamename = readB(4);
-		int version1 = readC();
-		int version2 = readC();
-		int version3 = readC();
-		int build = readH();
-		byte[] platform = readB(4);
-		byte[] os = readB(4);
-		byte[] country = readB(4);
-		int timezone_bias = readD();
-		int ip = readD();
+		/** int error = */
+		readC();
+		/** int size = */
+		readH();
+		/** byte[] gamename = */
+		readB(4);
+		/** int version1 = */
+		readC();
+		/** int version2 = */
+		readC();
+		/** int version3 = */
+		readC();
+		/** int build = */
+		readH();
+		/** byte[] platform = */
+		readB(4);
+		/** byte[] os = */
+		readB(4);
+		/** byte[] country = */
+		readB(4);
+		/** int timezone_bias = */
+		readD();
+		/** int ip = */
+		readD();
 		int lenLogin = readC();
-		login = new String(readB(lenLogin), 0, lenLogin);
+		login = new String(readB(lenLogin), Charset.forName("UTF-8"));
 	}
 
 	/**
@@ -102,7 +115,6 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
 	protected void runImpl() {
 		WoWAuthResponse response = accountService.login(login,
 				(NettyNetworkChannel) getClient());
-
 		switch (response) {
 		case WOW_FAIL_BANNED:
 			sender.sendAndClose(this.getClient(),

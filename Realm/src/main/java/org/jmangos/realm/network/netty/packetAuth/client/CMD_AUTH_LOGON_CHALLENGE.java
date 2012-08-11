@@ -44,6 +44,9 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmClientPacket {
 	/** The logger. */
 	private static Logger logger = Logger
 			.getLogger(CMD_AUTH_LOGON_CHALLENGE.class);
+	
+	@Inject
+	private Config config;
 
 	/** The sender. */
 	@Inject
@@ -87,8 +90,8 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmClientPacket {
 			ArrayUtils.reverse(Nb);
 			BigInteger a = new BigInteger(1, random.generateSeed(19));
 
-			byte[] passhash = sha.digest(Config.AUTH_LOGIN.toUpperCase()
-					.concat(":").concat(Config.AUTH_PASSWORD.toUpperCase())
+			byte[] passhash = sha.digest(config.AUTH_LOGIN.toUpperCase()
+					.concat(":").concat(config.AUTH_PASSWORD.toUpperCase())
 					.getBytes());
 			sha.update(saltb);
 			sha.update(passhash);
@@ -145,7 +148,7 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmClientPacket {
 			}
 
 			byte[] t4 = new byte[20];
-			t4 = sha.digest(Config.AUTH_LOGIN.toUpperCase().getBytes());
+			t4 = sha.digest(config.AUTH_LOGIN.toUpperCase().getBytes());
 
 			sha.update(hash);
 			logger.debug("hash:" + StringUtils.toHexString(hash));

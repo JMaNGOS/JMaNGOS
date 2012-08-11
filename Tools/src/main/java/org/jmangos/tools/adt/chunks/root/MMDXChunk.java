@@ -29,8 +29,8 @@ public class MMDXChunk extends ADTChunk {
 	private int offset;
 
 	@Override
-	public ADTChunk reads(ByteBuffer bb, int offset, long size) {
-		setGlobalOffcet(offset + size + HEADERSIZE);
+	public ADTChunk reads(ByteBuffer bb, int offset, int size) {
+		setGlobalOffset(offset + size + HEADERSIZE);
 		this.setByteBuffer(bb, offset);
 		this.offset = offset;
 		return this;

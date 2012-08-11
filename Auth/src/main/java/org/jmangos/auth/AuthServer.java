@@ -16,6 +16,8 @@
  *******************************************************************************/
 package org.jmangos.auth;
 
+import javax.inject.Inject;
+
 import org.jmangos.auth.config.Config;
 import org.jmangos.auth.module.HandlerDM;
 import org.jmangos.auth.service.BanIpService;
@@ -23,6 +25,7 @@ import org.jmangos.auth.service.UpdateService;
 import org.jmangos.auth.service.WorldListService;
 import org.jmangos.auth.utils.ShutdownHook;
 import org.jmangos.commons.config.Compatiple;
+import org.jmangos.commons.database.DatabaseConfig;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.log4j.LoggingService;
 import org.jmangos.commons.network.netty.service.NetworkService;
@@ -38,6 +41,8 @@ import com.google.inject.Injector;
  * @author MinimaJack
  */
 public class AuthServer {
+	
+	private static Config config;
 
 	/**
 	 * The main method.
@@ -51,15 +56,16 @@ public class AuthServer {
 		Injector injector = Guice.createInjector(new HandlerDM());
 		ServiceContent.setInjector(injector);
 		injector.getInstance(LoggingService.class).start();
+		config = injector.getInstance(Config.class);
+		injector.getInstance(DatabaseConfig.class);
 		injector.getInstance(DatabaseFactory.class).start();
 		injector.getInstance(WorldListService.class).start();
-		injector.getInstance(Config.class).load();
-		if (Config.COMPATIBLE != Compatiple.MANGOS) {
+		if (config.COMPATIBLE != Compatiple.MANGOS) {
 			injector.getInstance(BanIpService.class).start();
 		}
 		injector.getInstance(ThreadPoolManager.class).start();
 
-		if (Config.COMPATIBLE == Compatiple.MANGOS)
+		if (config.COMPATIBLE == Compatiple.MANGOS)
 			injector.getInstance(UpdateService.class).start();
 
 		Runtime.getRuntime().addShutdownHook(

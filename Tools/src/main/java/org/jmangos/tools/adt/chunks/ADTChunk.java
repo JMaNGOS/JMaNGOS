@@ -28,37 +28,41 @@ public class ADTChunk extends BaseChunk {
 		ChunkedTypes ch;
 		ADTChunk tch = new ADTChunk();
 		tch.setByteBuffer(bb, offset);
-		ch = ChunkedTypes.get(tch.chunkType.get());
+		ch = ChunkedTypes.get(tch.getChunkType());
+		int chunkSize = tch.getChunkSize();
 		switch (ch) {
 		case MVER:
-			return new MVERChunk().reads(bb, offset, tch.ChunkSize.get());
+			return new MVERChunk().reads(bb, offset, chunkSize);
 		case MHDR:
-			return new MHDRChunk().reads(bb, offset, tch.ChunkSize.get());
+			return new MHDRChunk().reads(bb, offset, chunkSize);
 		case MTEX:
-			return new MTEXChunk().reads(bb, offset, tch.ChunkSize.get());
+			return new MTEXChunk().reads(bb, offset, chunkSize);
 		case MMDX:
-			return new MMDXChunk().reads(bb, offset, tch.ChunkSize.get());
+			return new MMDXChunk().reads(bb, offset, chunkSize);
 		case MMID:
-			return new MMIDChunk().reads(bb, offset, tch.ChunkSize.get());
+			return new MMIDChunk().reads(bb, offset, chunkSize);
 		case MWMO:
-			return new MWMOChunk().reads(bb, offset, tch.ChunkSize.get());
+			return new MWMOChunk().reads(bb, offset, chunkSize);
 		case MWID:
-			return new MWIDChunk().reads(bb, offset, tch.ChunkSize.get());
+			return new MWIDChunk().reads(bb, offset, chunkSize);
 		case MCIN:
-			return new MCINChunk().reads(bb, offset, tch.ChunkSize.get());
+			return new MCINChunk().reads(bb, offset, chunkSize);
 		case MDDF:
-			return new MDDFChunk().reads(bb, offset, tch.ChunkSize.get());
+			return new MDDFChunk().reads(bb, offset, chunkSize);
 		case MODF:
-			return new MODFChunk().reads(bb, offset, tch.ChunkSize.get());
+			return new MODFChunk().reads(bb, offset, chunkSize);
 		case MH2O:
-			return new MH2OChunk().reads(bb, offset, tch.ChunkSize.get());
+			return new MH2OChunk().reads(bb, offset, chunkSize);
 		case MCNK:
-			return new MCNKChunk().reads(bb, offset, tch.ChunkSize.get());
+			return new MCNKChunk().reads(bb, offset, chunkSize);
 		default:
-			return new UNKChunk().setChunkType(ch.toString()).reads(bb, offset, tch.ChunkSize.get());
+			UNKChunk uCh = new UNKChunk();
+			uCh.setChunkType(ch.toString());
+			uCh.reads(bb, offset, chunkSize);
+			return uCh;
 		}
 	}
-	public ADTChunk reads(ByteBuffer bb, int offset, long size) {
+	public ADTChunk reads(ByteBuffer bb, int offset, int size) {
 		return this;
 	}
 }

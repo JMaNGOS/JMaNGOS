@@ -72,6 +72,8 @@ public class NettyPacketReceiver {
 			} else if (cp.read()) {
 
 			}
+		}else{
+			System.out.println("Handle of ReceivablePacket is null.");
 		}
 	}
 }

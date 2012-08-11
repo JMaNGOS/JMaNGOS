@@ -20,8 +20,17 @@ import java.nio.ByteBuffer;
 
 import org.jmangos.tools.adt.chunks.ADTChunk;
 
-public class MCNKChunk extends ADTChunk{
-	public class MCNKHeader extends ADTChunk{
+/**
+ * Chunk <tt>MCNK</tt><br>
+ * Pointers to MCNK chunks and their sizes.
+ * 
+ * @author MinimaJack
+ * 
+ */
+public class MCNKChunk extends ADTChunk {
+	private int fullSize = 0;
+
+	public class MCNKHeader extends ADTChunk {
 		public MCVT fHeight;
 		public final Unsigned32 flags = new Unsigned32();
 		public final Unsigned32 IndexX = new Unsigned32();
@@ -48,38 +57,50 @@ public class MCNKChunk extends ADTChunk{
 		public final Unsigned32 sizeLiquid = new Unsigned32();
 		public final Float32[] position = array(new Float32[3]);
 	}
-	public class MCVT extends ADTChunk{
+
+	public class MCVT extends ADTChunk {
 		public final Float32[] position = array(new Float32[145]);
-		public String toString(){
+
+		public String toString() {
 			return "[MCVTChunk] size:" + position.length;
 		}
 	}
-	
 
 	public MCNKHeader fMCNKHeader;
 
 	@Override
-	public ADTChunk reads(ByteBuffer bb, int offset, long size) {
-		setGlobalOffcet(offset + size + HEADERSIZE);
-		this.size = (int) size;
+	public ADTChunk reads(ByteBuffer bb, int offset, int size) {
+		setGlobalOffset(offset + size + HEADERSIZE);
+		setFullSize(size);
 		this.setByteBuffer(bb, offset);
-		fMCNKHeader =  new MCNKHeader();
+		fMCNKHeader = new MCNKHeader();
 		fMCNKHeader.setByteBuffer(bb, offset);
 		fMCNKHeader.fHeight = new MCVT();
-		fMCNKHeader.fHeight.setByteBuffer(bb, (int) (offset + fMCNKHeader.ofsHeight.get()));
-		return this;	
+		fMCNKHeader.fHeight.setByteBuffer(bb,
+				(int) (offset + fMCNKHeader.ofsHeight.get()));
+		return this;
 	}
-	public String getOffsets(){
+
+	public String getOffsets() {
 		String g = "";
 		for (int i = 0; i < 3; i++) {
-			g+="\n position "+fMCNKHeader.position[i];
+			g += "\n position " + fMCNKHeader.position[i];
 		}
 		return g;
 	}
-	
-	public String toString(){
-		return "[MCNKChunk] size:" + size +
-		"\n position : " +  getOffsets(); 
+
+	public int getFullSize() {
+		return fullSize;
 	}
+
+	public void setFullSize(int fullSize) {
+		this.fullSize = fullSize;
+	}
+
+	public String toString() {
+		return "[MCNKChunk] size:" + getFullSize() + "\n position : "
+				+ getOffsets();
+	}
+
 
 }

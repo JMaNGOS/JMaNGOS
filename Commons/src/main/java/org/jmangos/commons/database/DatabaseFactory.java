@@ -20,6 +20,8 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.ConnectionFactory;
@@ -33,6 +35,9 @@ public class DatabaseFactory implements Service {
 
 	/** Logger for this class. */
 	private static final Logger log = Logger.getLogger(DatabaseFactory.class);
+
+	@Inject
+	private DatabaseConfig databaseConfig;
 
 	/**
 	 * Data Source Generates all Connections This variable is also used as
@@ -69,10 +74,8 @@ public class DatabaseFactory implements Service {
 			return;
 		}
 
-		DatabaseConfig.load();
-
 		try {
-			DatabaseConfig.DATABASE_DRIVER.newInstance();
+			databaseConfig.DATABASE_DRIVER.newInstance();
 		} catch (Exception e) {
 			log.fatal("Error obtaining DB driver", e);
 			throw new Error("DB Driver doesnt exist!");
@@ -80,13 +83,13 @@ public class DatabaseFactory implements Service {
 
 		connectionPool = new GenericObjectPool();
 
-		if (DatabaseConfig.DATABASE_CONNECTIONS_MIN > DatabaseConfig.DATABASE_CONNECTIONS_MAX) {
+		if (databaseConfig.DATABASE_CONNECTIONS_MIN > databaseConfig.DATABASE_CONNECTIONS_MAX) {
 			log.error("Please check your database configuration. Minimum amount of connections is > maximum");
-			DatabaseConfig.DATABASE_CONNECTIONS_MAX = DatabaseConfig.DATABASE_CONNECTIONS_MIN;
+			databaseConfig.DATABASE_CONNECTIONS_MAX = databaseConfig.DATABASE_CONNECTIONS_MIN;
 		}
 
-		connectionPool.setMaxIdle(DatabaseConfig.DATABASE_CONNECTIONS_MIN);
-		connectionPool.setMaxActive(DatabaseConfig.DATABASE_CONNECTIONS_MAX);
+		connectionPool.setMaxIdle(databaseConfig.DATABASE_CONNECTIONS_MIN);
+		connectionPool.setMaxActive(databaseConfig.DATABASE_CONNECTIONS_MAX);
 
 		try {
 			dataSource = setupDataSource();
@@ -98,7 +101,8 @@ public class DatabaseFactory implements Service {
 			c.close();
 		} catch (Exception e) {
 			log.fatal("Error with connection string: "
-					+ DatabaseConfig.DATABASE_URL, e);
+					+ databaseConfig.DATABASE_URL, e);
+
 			throw new Error("DatabaseFactory not initialized!");
 		}
 
@@ -112,10 +116,12 @@ public class DatabaseFactory implements Service {
 	 * @throws Exception
 	 *             if initialization failed
 	 */
-	private static DataSource setupDataSource() throws Exception {
+
+	private DataSource setupDataSource() throws Exception {
 		ConnectionFactory conFactory = new DriverManagerConnectionFactory(
-				DatabaseConfig.DATABASE_URL, DatabaseConfig.DATABASE_USER,
-				DatabaseConfig.DATABASE_PASSWORD);
+				databaseConfig.DATABASE_URL, databaseConfig.DATABASE_USER,
+				databaseConfig.DATABASE_PASSWORD);
+
 		new PoolableConnectionFactoryW(conFactory, connectionPool, null, 1,
 				false, true);
 		return new PoolingDataSource(connectionPool);

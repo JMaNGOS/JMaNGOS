@@ -16,65 +16,48 @@
  *******************************************************************************/
 package org.jmangos.realm.config;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.Properties;
 
-import org.apache.log4j.Logger;
 import org.jmangos.commons.config.Compatiple;
-import org.jmangos.commons.configuration.ConfigurableProcessor;
+import org.jmangos.commons.configuration.AbstractConfig;
 import org.jmangos.commons.configuration.Property;
-import org.jmangos.commons.utils.PropertiesUtils;
 
 /**
  * The Class Config.
  */
-public class Config {
-	/**
-	 * Logger for this class.
-	 */
-	protected static final Logger log = Logger.getLogger(Config.class);
+public class Config extends AbstractConfig {
 
 	/** The Constant CONFIG_FILE. */
-	public static final String CONFIG_FILE = "./conf/network/realm.network.properties";
+	private static final String CONFIG_FILE = "./conf/network/realm.network.properties";
 
 	/** Login Server address to client. */
 	@Property(key = "network.client.address", defaultValue = "*:8085")
-	public static InetSocketAddress CLIENT_ADDRESS;
+	public InetSocketAddress CLIENT_ADDRESS;
 
 	/** The UPDAT e_ interval. */
 	@Property(key = "network.service.updateRealmlistInterval", defaultValue = "60")
-	public static int UPDATE_INTERVAL;
+	public Integer UPDATE_INTERVAL;
 
 	/** The COMPATIBLE. */
 	@Property(key = "network.compatible", defaultValue = "NONE")
-	public static Compatiple COMPATIBLE;
-	
+	public Compatiple COMPATIBLE;
+
 	/** Auth server to connect */
 	@Property(key = "network.auth.address", defaultValue = "localhost:3724")
-	public static InetSocketAddress AUTH_ADDRESS;
+	public InetSocketAddress AUTH_ADDRESS;
 
 	/** Auth login */
 	@Property(key = "network.auth.login", defaultValue = "JMaNGOS")
-	public static String AUTH_LOGIN;
+	public String AUTH_LOGIN;
 
 	/** Auth login */
 	@Property(key = "network.auth.password", defaultValue = "JMaNGOS")
-	public static String AUTH_PASSWORD;
+	public String AUTH_PASSWORD;
 
 	/**
 	 * Load configuration.
 	 */
-	public void load() {
-
-		Properties p;
-		try {
-			p = PropertiesUtils.load(CONFIG_FILE);
-		} catch (IOException e) {
-			log.fatal("Can't load network configuration...");
-			throw new Error("Can't load " + CONFIG_FILE, e);
-		}
-
-		ConfigurableProcessor.process(Config.class, p);
+	public Config() {
+		super(CONFIG_FILE);
 	}
 }

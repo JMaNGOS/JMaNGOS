@@ -25,12 +25,27 @@ import java.nio.ByteOrder;
 
 import org.jmangos.tools.chunk.BaseChunk;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
-import org.jmangos.tools.wmo.chunks.group.*;
+import org.jmangos.tools.wmo.chunks.group.MOGPChunk;
 
+/**
+ * WmoGroup class for load MOGPChunk from given file
+ * 
+ * @author MinimaJack
+ */
 public class WmoGroup {
-	public MOGPChunk groupChunk;
+	/** Main chunk of wmo group. */
+	private MOGPChunk groupChunk;
 
-	public static WmoGroup read(File f) throws IOException {
+	/**
+	 * Read MOGP chunk from file.
+	 * 
+	 * @param f
+	 *            - wmo group file
+	 * @throws IOException
+	 *             if some I/O error occurs
+	 * @return WmoGroup object from given file
+	 * */
+	public static WmoGroup read(final File f) throws IOException {
 		FileInputStream fis = null;
 		ByteBuffer bb = ByteBuffer.allocate((int) f.length());
 		WmoGroup result = new WmoGroup();
@@ -39,20 +54,37 @@ public class WmoGroup {
 			fis.getChannel().read(bb);
 			bb.rewind();
 			bb.order(ByteOrder.LITTLE_ENDIAN);
-			
 			int glOffset = 0;
-			while (glOffset < (int)f.length()) {
-				BaseChunk ch = new WMOChunk().readChunkByHeader(bb,glOffset);
-				if (ch instanceof MOGPChunk){
-					result.groupChunk = (MOGPChunk) ch;
+			while (glOffset < (int) f.length()) {
+				BaseChunk ch = new WMOChunk().readChunkByHeader(bb, glOffset);
+				if (ch instanceof MOGPChunk) {
+					result.setGroupChunk((MOGPChunk) ch);
 				}
 				glOffset = ch.getGlobalOffcet();
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} finally {
-			fis.close();
+			if (fis != null) {
+				fis.close();
+			}
 		}
 		return result;
 	}
+
+	/**
+	 * @return the groupChunk
+	 */
+	public final MOGPChunk getGroupChunk() {
+		return groupChunk;
+	}
+
+	/**
+	 * @param chunk
+	 *            the MOGPChunk to set
+	 */
+	public final void setGroupChunk(final MOGPChunk chunk) {
+		this.groupChunk = chunk;
+	}
+
 }

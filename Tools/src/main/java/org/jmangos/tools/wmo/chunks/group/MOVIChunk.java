@@ -19,19 +19,28 @@ package org.jmangos.tools.wmo.chunks.group;
 import java.nio.ByteBuffer;
 
 import org.jmangos.tools.chunk.BaseChunk;
+import org.jmangos.tools.chunk.Readable;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
-public class MOVIChunk extends WMOChunk{
-	public Unsigned16[] indecies;		
+/**
+ * Chunk <tt>MOVI</tt><br>
+ * Contains Vertex indices.
+ * 
+ * @author MinimaJack
+ * 
+ */
+public class MOVIChunk extends WMOChunk implements Readable {
+	public Unsigned16[] indecies;
 
 	@Override
-	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
-		setGlobalOffcet(offset + size + HEADERSIZE);
+	public BaseChunk reads(ByteBuffer bb, int offset, int size) {
+		setGlobalOffset(offset + size + HEADERSIZE);
 		this.setByteBuffer(bb, offset);
-		indecies = array(new Unsigned16[(int) (size/2)]);
-		return this;	
+		indecies = array(new Unsigned16[size / 2]);
+		return this;
 	}
-	public String toString(){
+
+	public String toString() {
 		return "[MOVIChunk] \n\tIndecies count:" + indecies.length;
 	}
 }

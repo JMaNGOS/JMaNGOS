@@ -16,6 +16,8 @@
  *******************************************************************************/
 package org.jmangos.realm;
 
+import javax.inject.Inject;
+
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.log4j.LoggingService;
 import org.jmangos.commons.network.netty.service.NetworkService;
@@ -50,7 +52,6 @@ public class RealmServer {
 		
 		injector.getInstance(LoggingService.class).start();
 		injector.getInstance(ThreadPoolManager.class).start();
-		injector.getInstance(Config.class).load();
 		injector.getInstance(DatabaseFactory.class).start();
 		Runtime.getRuntime().addShutdownHook(injector.getInstance(ShutdownHook.class));
 		//injector.getInstance(ItemStorages.class).start();
