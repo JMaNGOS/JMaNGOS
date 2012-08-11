@@ -76,9 +76,10 @@ public class PlayerClassLevelInfoStorages
 	 * @see org.jmangos.commons.dataholder.DataLoadService#reload()
 	 */
 	@Override
-	public HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> reload() {
-		playerCLI.clear();
-		return load();
+	public void reload() {
+		HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> tempPlayerCLI = load();
+        playerCLI = tempPlayerCLI;
+        tempPlayerCLI = null;
 	}
 
 	/* (non-Javadoc)

@@ -115,9 +115,9 @@ public class ItemStorages
 	 * @see org.jmangos.commons.dataholder.DataLoadService#reload()
 	 */
 	@Override
-	public TIntObjectHashMap<ItemPrototype> reload() {
-		itemPrototypes.clear();
-		return load();
+	public void reload() {
+        TIntObjectHashMap<ItemPrototype> itemProrotypesTemp = itemDAO.loadItemPrototypes();
+		itemPrototypes = itemProrotypesTemp;
 	}
 
 	/* (non-Javadoc)

@@ -7,9 +7,9 @@
         <!-- DB schema will be updated if needed -->
         <property name="hbm2ddl.auto">update</property>
         <property name="current_session_context_class">thread</property>
-        <mapping class="org.jmangos.realm.domain.QuestTemplate"/>
         <mapping class="org.jmangos.realm.model.base.item.ItemPrototype"/>
         <mapping class="org.jmangos.realm.model.base.PlayerLevelInfo"/>
         <mapping class="org.jmangos.realm.model.base.PlayerClassLevelInfo"/>
+        <mapping class="org.jmangos.realm.model.base.QuestPrototype"/>
     </session-factory>
 </hibernate-configuration>

@@ -84,9 +84,10 @@ public class PlayerLevelStorages implements
 	 * @see org.jmangos.commons.dataholder.DataLoadService#reload()
 	 */
 	@Override
-	public HashMap<PlayerLevelInfoPK, PlayerLevelInfo> reload() {
-		// TODO Auto-generated method stub
-		return null;
+	public void reload() {
+        HashMap<PlayerLevelInfoPK, PlayerLevelInfo> playerRCLITemp = simpleDataDAO.getRaceClassLevelInfos();
+        playerRCLI = playerRCLITemp;
+        playerRCLITemp = null;
 	}
 
 	/*

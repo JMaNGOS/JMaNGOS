@@ -48,12 +48,10 @@ public class RealmToAuthConnectHandler implements ConnectHandler {
 	 *      org.jboss.netty.channel.ChannelHandler)
 	 */
 	@Override
-	public void onConnect(NettyNetworkChannel networkChannel,
-			ChannelHandler handler) {
+	public void onConnect(NettyNetworkChannel networkChannel, ChannelHandler handler) {
 		networkChannel.setChannelState(State.CONNECTED);
 		log.info("Connection to: " + networkChannel.getAddress());
 		sender.send(networkChannel, new CMD_AUTH_LOGON_CHALLENGE());
-
 	}
 
 	/**
