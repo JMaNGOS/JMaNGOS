@@ -118,13 +118,13 @@ public class DatabaseFactory implements Service {
     public static SessionFactory getWorldSessionFactory() {
         if (charactersSessionFactory == null) {
             AnnotationConfiguration config = new AnnotationConfiguration();
-            config.setProperty( "hibernate.connection.driver_class", DatabaseConfig.ACCOUNT_DATABASE_DRIVER );
-            config.setProperty( "hibernate.connection.url", DatabaseConfig.ACCOUNT_DATABASE_URL + DatabaseConfig.ACCOUNT_DATABASE_NAME + "?autoReconnect=true" );
-            config.setProperty( "hibernate.connection.username", DatabaseConfig.ACCOUNT_DATABASE_USER );
-            config.setProperty( "hibernate.connection.password", DatabaseConfig.ACCOUNT_DATABASE_PASSWORD );
-            config.setProperty( "hibernate.dialect", DatabaseConfig.ACCOUNT_DATABASE_DIALECT );
-            config.setProperty( "hibernate.c3p0.min_size", DatabaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MIN.toString() );
-            config.setProperty( "hibernate.c3p0.max_size", DatabaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MAX.toString() );
+            config.setProperty( "hibernate.connection.driver_class", DatabaseConfig.WORLD_DATABASE_DRIVER );
+            config.setProperty( "hibernate.connection.url", DatabaseConfig.WORLD_DATABASE_URL + DatabaseConfig.WORLD_DATABASE_NAME + "?autoReconnect=true" );
+            config.setProperty( "hibernate.connection.username", DatabaseConfig.WORLD_DATABASE_USER );
+            config.setProperty( "hibernate.connection.password", DatabaseConfig.WORLD_DATABASE_PASSWORD );
+            config.setProperty( "hibernate.dialect", DatabaseConfig.WORLD_DATABASE_DIALECT );
+            config.setProperty( "hibernate.c3p0.min_size", DatabaseConfig.WORLD_DATABASE_CONNECTIONS_MIN.toString() );
+            config.setProperty( "hibernate.c3p0.max_size", DatabaseConfig.WORLD_DATABASE_CONNECTIONS_MAX.toString() );
             config.configure("world.cfg.xml");
             worldSessionFactory = config.buildSessionFactory();
             worldSessionFactory.getStatistics().setStatisticsEnabled( true );
