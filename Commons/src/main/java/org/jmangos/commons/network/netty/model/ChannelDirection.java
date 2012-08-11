@@ -16,36 +16,36 @@
  *******************************************************************************/
 package org.jmangos.commons.network.netty.model;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Enum ChannelDirection.
  */
 public enum ChannelDirection {
-	  
-  	/** The UPSTREAM. */
-  	UPSTREAM(1),
-	  
-  	/** The DOWNSTREAM. */
-  	DOWNSTREAM(1 << 1);
 
-	  /** The id. */
-  	private int id;
+	/** The UPSTREAM. */
+	UPSTREAM(1),
 
-	  /**
-  	 * Instantiates a new channel direction.
-  	 *
-  	 * @param id the id
-  	 */
-	  ChannelDirection(int id) {
-	    this.id = id;
-	  }
+	/** The DOWNSTREAM. */
+	DOWNSTREAM(1 << 1);
 
-	  /**
-  	 * Gets the id.
-  	 *
-  	 * @return the id
-  	 */
-	  public int getId() {
-	    return id;
-	  }
+	/** The id. */
+	private int id;
+
+	/**
+	 * Instantiates a new channel direction.
+	 * 
+	 * @param id
+	 *            the id
+	 */
+	ChannelDirection(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * Gets the id.
+	 * 
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
 }

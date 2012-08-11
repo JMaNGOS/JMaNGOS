@@ -102,6 +102,7 @@ public class DatabaseFactory implements Service {
 		} catch (Exception e) {
 			log.fatal("Error with connection string: "
 					+ databaseConfig.DATABASE_URL, e);
+
 			throw new Error("DatabaseFactory not initialized!");
 		}
 
@@ -115,10 +116,12 @@ public class DatabaseFactory implements Service {
 	 * @throws Exception
 	 *             if initialization failed
 	 */
+
 	private DataSource setupDataSource() throws Exception {
 		ConnectionFactory conFactory = new DriverManagerConnectionFactory(
 				databaseConfig.DATABASE_URL, databaseConfig.DATABASE_USER,
 				databaseConfig.DATABASE_PASSWORD);
+
 		new PoolableConnectionFactoryW(conFactory, connectionPool, null, 1,
 				false, true);
 		return new PoolingDataSource(connectionPool);

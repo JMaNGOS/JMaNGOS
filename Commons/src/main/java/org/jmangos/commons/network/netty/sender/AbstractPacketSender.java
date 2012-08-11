@@ -19,25 +19,28 @@ package org.jmangos.commons.network.netty.sender;
 import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.model.SendablePacket;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface AbstractPacketSender.
  */
 public interface AbstractPacketSender {
-	
+
 	/**
 	 * Send.
-	 *
-	 * @param channel the channel
-	 * @param packet the packet
+	 * 
+	 * @param channel
+	 *            the channel
+	 * @param packet
+	 *            the packet
 	 */
 	public void send(NetworkChannel channel, SendablePacket packet);
- 
+
 	/**
 	 * Send and close.
-	 *
-	 * @param channel the channel
-	 * @param networkPacket the network packet
+	 * 
+	 * @param channel
+	 *            the channel
+	 * @param networkPacket
+	 *            the network packet
 	 */
 	void sendAndClose(NetworkChannel channel, SendablePacket networkPacket);
 }

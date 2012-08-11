@@ -19,14 +19,15 @@ package org.jmangos.commons.database;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public interface ParamReadStH extends ReadStH
-{
-	
+public interface ParamReadStH extends ReadStH {
+
 	/**
 	 * Enables coder to manually modify statement parameters.
-	 *
-	 * @param stmt the new params
-	 * @throws SQLException the sQL exception
+	 * 
+	 * @param stmt
+	 *            the new params
+	 * @throws SQLException
+	 *             the sQL exception
 	 */
 	public void setParams(PreparedStatement stmt) throws SQLException;
 }

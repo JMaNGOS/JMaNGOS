@@ -24,40 +24,41 @@ import java.nio.ByteOrder;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class NetworkUtil.
- *
+ * 
  * @author vangula
  */
 public class NetworkUtil {
 
-	  /**
-  	 * New channel buffer.
-  	 *
-  	 * @return the channel buffer
-  	 */
-	  public static final ChannelBuffer newChannelBuffer() {
-	    return newChannelBuffer(65536);
-	  }
+	/**
+	 * New channel buffer.
+	 * 
+	 * @return the channel buffer
+	 */
+	public static final ChannelBuffer newChannelBuffer() {
+		return newChannelBuffer(65536);
+	}
 
-	  /**
-  	 * New channel buffer.
-  	 *
-  	 * @param size the size
-  	 * @return the channel buffer
-  	 */
-	  public static final ChannelBuffer newChannelBuffer(int size) {
-	    return ChannelBuffers.buffer(ByteOrder.LITTLE_ENDIAN, size);
-	  }
-	  
-  	/**
-  	 * New dinamic channel buffer.
-  	 *
-  	 * @param size the size
-  	 * @return the channel buffer
-  	 */
-	  public static final ChannelBuffer newDinamicChannelBuffer(int size) {
-	    return ChannelBuffers.dynamicBuffer(ByteOrder.LITTLE_ENDIAN, size);
-	  }
+	/**
+	 * New channel buffer.
+	 * 
+	 * @param size
+	 *            the size
+	 * @return the channel buffer
+	 */
+	public static final ChannelBuffer newChannelBuffer(int size) {
+		return ChannelBuffers.buffer(ByteOrder.LITTLE_ENDIAN, size);
+	}
+
+	/**
+	 * New dinamic channel buffer.
+	 * 
+	 * @param size
+	 *            the size
+	 * @return the channel buffer
+	 */
+	public static final ChannelBuffer newDinamicChannelBuffer(int size) {
+		return ChannelBuffers.dynamicBuffer(ByteOrder.LITTLE_ENDIAN, size);
+	}
 }

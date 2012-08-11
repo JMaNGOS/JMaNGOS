@@ -18,43 +18,48 @@ package org.jmangos.commons.network.handlers;
 
 import org.jmangos.commons.network.model.*;
 
-// TODO: Auto-generated Javadoc
 /**
  * A factory for creating PacketHandler objects.
  */
-public interface PacketHandlerFactory
-{
+public interface PacketHandlerFactory {
 
 	/**
 	 * Adds the packet.
-	 *
-	 * @param packetPrototype the packet prototype
-	 * @param states the states
+	 * 
+	 * @param packetPrototype
+	 *            the packet prototype
+	 * @param states
+	 *            the states
 	 */
 	public void addPacket(ReceivablePacket packetPrototype, State... states);
-	
+
 	/**
 	 * Adds the packet.
-	 *
-	 * @param packetPrototype the packet prototype
-	 * @param opcode the opcode
+	 * 
+	 * @param packetPrototype
+	 *            the packet prototype
+	 * @param opcode
+	 *            the opcode
 	 */
 	public void addPacket(Class<? extends SendablePacket> packetPrototype,
 			int opcode);
 
 	/**
 	 * Gets the server packetop code.
-	 *
-	 * @param packetClass the packet class
+	 * 
+	 * @param packetClass
+	 *            the packet class
 	 * @return the server packetop code
 	 */
 	public int getServerPacketopCode(SendablePacket packetClass);
 
 	/**
 	 * Handle client packet.
-	 *
-	 * @param id the id
-	 * @param ch the ch
+	 * 
+	 * @param id
+	 *            the id
+	 * @param ch
+	 *            the ch
 	 * @return the receivable packet
 	 */
 	public ReceivablePacket handleClientPacket(int id, NetworkChannel ch);

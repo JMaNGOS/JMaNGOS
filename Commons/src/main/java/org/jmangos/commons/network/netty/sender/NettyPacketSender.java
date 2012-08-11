@@ -27,8 +27,6 @@ import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.model.SendablePacket;
 import org.jmangos.commons.network.utils.NetworkUtil;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class NettyPacketSender.
  */
@@ -41,19 +39,25 @@ public class NettyPacketSender implements AbstractPacketSender {
 	@Named("AuthToClient")
 	private PacketHandlerFactory packetService;
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.netty.sender.AbstractPacketSender#send(org.wowemu.common.network.model.NetworkChannel, org.wowemu.common.network.model.SendablePacket)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.wowemu.common.network.netty.sender.AbstractPacketSender#send(org.
+	 * wowemu.common.network.model.NetworkChannel,
+	 * org.wowemu.common.network.model.SendablePacket)
 	 */
 	public void send(NetworkChannel channel, SendablePacket packet) {
-		packet.setChannel(channel); 
+		packet.setChannel(channel);
 		ChannelBuffer buffer = sendImpl(packet);
 		writeToChannel(channel, buffer);
 	}
 
 	/**
 	 * Send impl.
-	 *
-	 * @param packet the packet
+	 * 
+	 * @param packet
+	 *            the packet
 	 * @return the channel buffer
 	 */
 	protected ChannelBuffer sendImpl(SendablePacket packet) {
@@ -66,9 +70,11 @@ public class NettyPacketSender implements AbstractPacketSender {
 
 	/**
 	 * Write to channel.
-	 *
-	 * @param channel the channel
-	 * @param buffer the buffer
+	 * 
+	 * @param channel
+	 *            the channel
+	 * @param buffer
+	 *            the buffer
 	 */
 	protected void writeToChannel(NetworkChannel channel, Object buffer) {
 		writePacket(channel, buffer);
@@ -76,9 +82,11 @@ public class NettyPacketSender implements AbstractPacketSender {
 
 	/**
 	 * Write to channel and close.
-	 *
-	 * @param channel the channel
-	 * @param buffer the buffer
+	 * 
+	 * @param channel
+	 *            the channel
+	 * @param buffer
+	 *            the buffer
 	 */
 	protected void writeToChannelAndClose(NetworkChannel channel, Object buffer) {
 		((Channel) channel.getChannel()).write(buffer).addListener(
@@ -87,7 +95,7 @@ public class NettyPacketSender implements AbstractPacketSender {
 
 	/**
 	 * Gets the buffer.
-	 *
+	 * 
 	 * @return the buffer
 	 */
 	protected ChannelBuffer getBuffer() {
@@ -95,12 +103,17 @@ public class NettyPacketSender implements AbstractPacketSender {
 		return buffer;
 	}
 
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.netty.sender.AbstractPacketSender#sendAndClose(org.wowemu.common.network.model.NetworkChannel, org.wowemu.common.network.model.SendablePacket)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.wowemu.common.network.netty.sender.AbstractPacketSender#sendAndClose
+	 * (org.wowemu.common.network.model.NetworkChannel,
+	 * org.wowemu.common.network.model.SendablePacket)
 	 */
 	@Override
-	public void sendAndClose(NetworkChannel channel, SendablePacket networkPacket) {
+	public void sendAndClose(NetworkChannel channel,
+			SendablePacket networkPacket) {
 		Object buffer = sendImpl(networkPacket);
 		writePacket(channel, buffer);
 		channel.getChannel().close();
@@ -108,9 +121,11 @@ public class NettyPacketSender implements AbstractPacketSender {
 
 	/**
 	 * Write packet.
-	 *
-	 * @param channel the channel
-	 * @param buffer the buffer
+	 * 
+	 * @param channel
+	 *            the channel
+	 * @param buffer
+	 *            the buffer
 	 */
 	private void writePacket(NetworkChannel channel, Object buffer) {
 		channel.write(buffer);

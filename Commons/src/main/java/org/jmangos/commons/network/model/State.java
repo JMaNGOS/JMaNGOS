@@ -16,15 +16,13 @@
  *******************************************************************************/
 package org.jmangos.commons.network.model;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Enum State.
  */
-public enum State
-{
-	
+public enum State {
+
 	/** The CONNECTED. */
-	CONNECTED, 
- /** The AUTHED. */
- AUTHED;
+	CONNECTED,
+	/** The AUTHED. */
+	AUTHED;
 }

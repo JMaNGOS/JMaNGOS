@@ -446,7 +446,7 @@ public class Account extends NamedObject implements ChanneledObject {
 	}
 
 	public void setvK(byte[] vK) {
-		//need clone
+		// need clone
 		this.vK = vK.clone();
 	}
 }

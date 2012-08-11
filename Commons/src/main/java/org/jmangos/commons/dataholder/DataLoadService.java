@@ -18,37 +18,37 @@ package org.jmangos.commons.dataholder;
 
 import org.jmangos.commons.service.Service;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface DataLoadService.
- *
- * @param <T> the generic type
+ * 
+ * @param <T>
+ *            the generic type
  */
-public interface DataLoadService<T> extends Service{
+public interface DataLoadService<T> extends Service {
 
-  /**
-   * Initial loading of data (on startup).
-   *
-   * @return the t
-   */
-  public T load();
+	/**
+	 * Initial loading of data (on startup).
+	 * 
+	 * @return the t
+	 */
+	public T load();
 
-  /**
-   * Reloading of data (after <method>load()</method> was executed).
-   *
-   * @return the t
-   */
-  public T reload();
+	/**
+	 * Reloading of data (after <method>load()</method> was executed).
+	 * 
+	 * @return the t
+	 */
+	public T reload();
 
-  /**
-   * Save of modified data.
-   */
-  public void save();
+	/**
+	 * Save of modified data.
+	 */
+	public void save();
 
-  /**
-   * Retrieves already loaded data or null.
-   *
-   * @return the t
-   */
-  public T get();
+	/**
+	 * Retrieves already loaded data or null.
+	 * 
+	 * @return the t
+	 */
+	public T get();
 }

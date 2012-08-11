@@ -34,7 +34,8 @@ import org.xml.sax.SAXException;
 public class XmlDataLoader {
 
 	/**
-	 *  Load static data.
+	 * Load static data.
+	 * 
 	 * @param <T>
 	 * @param clazz
 	 * @param Schema
@@ -55,7 +56,7 @@ public class XmlDataLoader {
 		return null;
 	}
 
-	public <T> T loadStaticData(Class<T> clazz,  String XmlFile) {
+	public <T> T loadStaticData(Class<T> clazz, String XmlFile) {
 		try {
 			JAXBContext jc = JAXBContext.newInstance(clazz);
 			Unmarshaller un = jc.createUnmarshaller();
@@ -67,6 +68,7 @@ public class XmlDataLoader {
 		}
 		return null;
 	}
+
 	/**
 	 * Gets the schema.
 	 * 

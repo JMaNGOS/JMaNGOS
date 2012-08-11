@@ -16,11 +16,10 @@
  *******************************************************************************/
 package org.jmangos.commons.database.dao;
 
-public interface DAO
-{
+public interface DAO {
 	/**
-	 * Unique identifier for DAO class, all subclasses must have same identifiers. Must return {@link Class#getName()}
-	 * of abstract class
+	 * Unique identifier for DAO class, all subclasses must have same
+	 * identifiers. Must return {@link Class#getName()} of abstract class
 	 * 
 	 * @return identifier of DAO class
 	 */

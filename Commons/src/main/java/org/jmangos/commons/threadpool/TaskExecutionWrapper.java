@@ -18,37 +18,39 @@ package org.jmangos.commons.threadpool;
 
 import org.apache.log4j.Logger;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class TaskExecutionWrapper.
  */
 public class TaskExecutionWrapper implements Runnable {
 
-  /** The Constant log. */
-  private static final Logger log = Logger.getLogger(TaskExecutionWrapper.class);
+	/** The Constant log. */
+	private static final Logger log = Logger
+			.getLogger(TaskExecutionWrapper.class);
 
-  /** The runnable. */
-  private Runnable runnable;
+	/** The runnable. */
+	private Runnable runnable;
 
-  /**
-   * Instantiates a new task execution wrapper.
-   *
-   * @param runnable the runnable
-   */
-  public TaskExecutionWrapper(Runnable runnable) {
-    this.runnable = runnable;
-  }
+	/**
+	 * Instantiates a new task execution wrapper.
+	 * 
+	 * @param runnable
+	 *            the runnable
+	 */
+	public TaskExecutionWrapper(Runnable runnable) {
+		this.runnable = runnable;
+	}
 
-  /* (non-Javadoc)
-   * @see java.lang.Runnable#run()
-   */
-  @Override
-  public void run() {
-    try {
-      runnable.run();
-    } catch (Exception e) {
-      log.error("Exception during execution of the task", e);
-    }
-  }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Runnable#run()
+	 */
+	@Override
+	public void run() {
+		try {
+			runnable.run();
+		} catch (Exception e) {
+			log.error("Exception during execution of the task", e);
+		}
+	}
 }
