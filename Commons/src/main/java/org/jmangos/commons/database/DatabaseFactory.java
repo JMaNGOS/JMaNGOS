@@ -32,7 +32,7 @@ public class DatabaseFactory implements Service {
 	/**
      * Returns Hibernate Session
      */
-    private static SessionFactory ACCOUNTSessionFactory;
+    private static SessionFactory worldSessionFactory;
     private static SessionFactory charactersSessionFactory;
     private static SessionFactory accountsSessionFactory;
 
@@ -73,7 +73,7 @@ public class DatabaseFactory implements Service {
 	public int getActiveConnections()
 	{
         Long count = getCharactersSessionFactory().getStatistics().getSessionOpenCount() - getCharactersSessionFactory().getStatistics().getSessionCloseCount();
-		count += getACCOUNTSessionFactory().getStatistics().getSessionOpenCount() - getACCOUNTSessionFactory().getStatistics().getSessionCloseCount();
+		count += getWorldSessionFactory().getStatistics().getSessionOpenCount() - getWorldSessionFactory().getStatistics().getSessionCloseCount();
 
         return count.intValue();
 	}
@@ -96,8 +96,8 @@ public class DatabaseFactory implements Service {
 	 */
 	public synchronized void stop() {
 		try {
-            if( ACCOUNTSessionFactory != null )
-			    ACCOUNTSessionFactory.close();
+            if( worldSessionFactory != null )
+			    worldSessionFactory.close();
             if (charactersSessionFactory != null)
                 charactersSessionFactory.close();
             if (accountsSessionFactory!=null)
@@ -106,7 +106,7 @@ public class DatabaseFactory implements Service {
 			log.warn("Failed to shutdown DatabaseFactory", e);
 		}
 
-		ACCOUNTSessionFactory = null;
+		worldSessionFactory = null;
         charactersSessionFactory = null;
         accountsSessionFactory = null;
 	}
@@ -115,7 +115,7 @@ public class DatabaseFactory implements Service {
      * Returns ACCOUNT Database's hibernate session
      * @return Hibernate Session
      */
-    public static SessionFactory getACCOUNTSessionFactory() {
+    public static SessionFactory getWorldSessionFactory() {
         if (charactersSessionFactory == null) {
             AnnotationConfiguration config = new AnnotationConfiguration();
             config.setProperty( "hibernate.connection.driver_class", DatabaseConfig.ACCOUNT_DATABASE_DRIVER );
@@ -126,13 +126,13 @@ public class DatabaseFactory implements Service {
             config.setProperty( "hibernate.c3p0.min_size", DatabaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MIN.toString() );
             config.setProperty( "hibernate.c3p0.max_size", DatabaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MAX.toString() );
             config.configure("ACCOUNT.cfg.xml");
-            ACCOUNTSessionFactory = config.buildSessionFactory();
-            ACCOUNTSessionFactory.getStatistics().setStatisticsEnabled( true );
+            worldSessionFactory = config.buildSessionFactory();
+            worldSessionFactory.getStatistics().setStatisticsEnabled( true );
 
             log.info( "Hibernate ACCOUNTSessionFactory initialized..." );
         }
             
-        return ACCOUNTSessionFactory;
+        return worldSessionFactory;
     }
 
     /**
