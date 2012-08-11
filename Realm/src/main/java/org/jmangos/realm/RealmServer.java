@@ -70,7 +70,7 @@ public class RealmServer {
 
         console = new Console();
         console.setVariable( "injector", injector );
-        console.run();
+        //console.run();
 
         injector.getInstance(NetworkService.class).start();
 	}
