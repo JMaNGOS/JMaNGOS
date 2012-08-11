@@ -116,6 +116,16 @@
 				<version>3.2.7.Final</version>
 			</dependency>
 			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>3.1.2.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>4.1.5.SP1</version>
+			</dependency>
+			<dependency>
 				<groupId>net.sf.trove4j</groupId>
 				<artifactId>trove4j</artifactId>
 				<version>3.0.3</version>
