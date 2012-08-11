@@ -33,7 +33,6 @@ import org.jmangos.realm.service.PlayerService;
 public class CMSG_PLAYER_LOGIN  extends AbstractWoWClientPacket {
 	
 	/** The sender. */
-	@SuppressWarnings("unused")
 	@Inject
 	@Named("client")
 	private AbstractPacketSender sender;

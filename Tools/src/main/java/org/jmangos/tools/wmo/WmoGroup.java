@@ -56,7 +56,7 @@ public class WmoGroup {
 			bb.order(ByteOrder.LITTLE_ENDIAN);
 			int glOffset = 0;
 			while (glOffset < (int) f.length()) {
-				BaseChunk ch = new WMOChunk().readChunkByHeader(bb, glOffset);
+				BaseChunk ch = WMOChunk.readChunkByHeader(bb, glOffset);
 				if (ch instanceof MOGPChunk) {
 					result.setGroupChunk((MOGPChunk) ch);
 				}

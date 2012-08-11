@@ -16,8 +16,6 @@
  *******************************************************************************/
 package org.jmangos.auth;
 
-import javax.inject.Inject;
-
 import org.jmangos.auth.config.Config;
 import org.jmangos.auth.module.HandlerDM;
 import org.jmangos.auth.service.BanIpService;

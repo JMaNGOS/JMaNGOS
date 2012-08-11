@@ -64,7 +64,6 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unused")
 	@Override
 	protected void readImpl() {
 		byte[] a = readB(32);

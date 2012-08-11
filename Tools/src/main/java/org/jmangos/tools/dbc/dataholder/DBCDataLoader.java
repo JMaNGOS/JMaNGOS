@@ -32,33 +32,35 @@ public class DBCDataLoader {
 		if (!dbcHeader.isCorrect()) {
 			return null;
 		}
-		T Entry = null;
+		T bdcEntry = null;
 		try {
-			Entry = clazz.newInstance();
-		/*	System.out.println("[ " + Entry.getClass().getSimpleName() + " ]");
-			System.out.println("Record size is: " + Entry.size());
-			System.out.println("Size in dbc header " + dbcHeader.RecordSize.get());*/
+			bdcEntry = clazz.newInstance();
+			bdcEntry.setByteBuffer(bb, DBCBaseStruct.HEADER_SIZE);
+			bdcEntry.setStringBufferPosition(DBCBaseStruct.HEADER_SIZE
+					+ dbcHeader.RecordsCount.get() * dbcHeader.RecordSize.get());
+			bdcEntry.setCount(dbcHeader.RecordsCount.get());
+			bdcEntry.setSkipLenght(dbcHeader.RecordSize.get() - bdcEntry.size());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Entry.setByteBuffer(bb, DBCBaseStruct.HEADER_SIZE);
-		Entry.setStringBufferPosition(DBCBaseStruct.HEADER_SIZE + dbcHeader.RecordsCount.get()
-				* dbcHeader.RecordSize.get());
-		Entry.setCount(dbcHeader.RecordsCount.get());
-		Entry.setSkipLenght(dbcHeader.RecordSize.get() - Entry.size());
-		return Entry;
+
+		return bdcEntry;
 	}
-	public static <T extends DBCStruct<T>> boolean saveDBC2XML(Class<T> clazz, String dbcpath, String xmlPath, boolean full){
+
+	public static <T extends DBCStruct<T>> boolean saveDBC2XML(Class<T> clazz,
+			String dbcpath, String xmlPath, boolean full) {
 		try {
-			//String name = clazz.getSimpleName();
-		//	name = dbcpath.concat(name.substring(0, name.length()-5)).concat(".dbc");
+			// String name = clazz.getSimpleName();
+			// name = dbcpath.concat(name.substring(0,
+			// name.length()-5)).concat(".dbc");
 			T Entry = DBCDataLoader.loadStaticData(clazz, dbcpath);
-			Entry.saveToXML(xmlPath,full);
+			Entry.saveToXML(xmlPath, full);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return true;
 	}
+
 	public static ByteBuffer getByteBufferFromFile(String file) {
 		FileInputStream fIn = null;
 		FileChannel fChan;
@@ -71,6 +73,7 @@ public class DBCDataLoader {
 			mBuf = ByteBuffer.allocate((int) fSize);
 			fChan.read(mBuf);
 			mBuf.rewind();
+			mBuf.order(ByteOrder.LITTLE_ENDIAN);
 			fChan.close();
 			fIn.close();
 		} catch (FileNotFoundException e) {
@@ -78,7 +81,6 @@ public class DBCDataLoader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		mBuf.order(ByteOrder.LITTLE_ENDIAN);
 		return mBuf;
 	}
 }

@@ -58,7 +58,7 @@ public class AuthPacketFrameDecoder extends FrameDecoder {
 				ByteOrder.LITTLE_ENDIAN, header);
 		byte opcode = clientHeader.readByte();
 		int size = clientHeader.readShort();
-		if ((size < 0) || (size > 10240) || (opcode > 10240)) {
+		if ((size < 0) || (size > 10240)) {
 			log
 					.error("PacketFrameDecoder::decode: realm sent malformed packet size = "
 							+ size + " , opcode = " + opcode);

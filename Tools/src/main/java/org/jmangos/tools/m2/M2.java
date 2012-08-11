@@ -132,7 +132,9 @@ public class M2 {
 			bb.rewind();
 			result = read(bb);
 		} finally {
-			fis.close();
+			if (fis != null) {
+				fis.close();
+			}
 		}
 		return result;
 	}
@@ -182,16 +184,17 @@ public class M2 {
 		for (int index = 0; index < result.lengths.nTextures; index++) {
 			if (result.data.textures[index].type == 0) {
 				bb.position(result.data.textures[index].ofsFilename);
-				result.data.textures[index].setFileName(ByteBufferUtil.readString(bb,
-						result.data.textures[index].lenFilename));
+				result.data.textures[index]
+						.setFileName(ByteBufferUtil.readString(bb,
+								result.data.textures[index].lenFilename));
 			}
 		}
 	}
-	
-	public Textures[] getTextures(){
+
+	public Textures[] getTextures() {
 		return data.textures;
 	}
-	
+
 	class _offsets {
 		int ofsName;
 		int ofsGlobalSequences;

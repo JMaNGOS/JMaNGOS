@@ -26,8 +26,6 @@ import org.jboss.netty.channel.ChannelPipeline;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.decoder.AuthPacketFrameDecoder;
 import org.jmangos.realm.network.netty.decoder.AuthPacketFrameEncoder;
-import org.jmangos.realm.network.netty.decoder.PacketFrameDecoder;
-import org.jmangos.realm.network.netty.decoder.PacketFrameEncoder;
 import org.jmangos.realm.network.netty.handler.RealmToAuthChannelHandler;
 import org.jmangos.realm.network.netty.packetAuth.AbstractRealmClientPacket;
 import org.jmangos.realm.network.netty.packetAuth.server.CMD_TEST_CRYPT;
@@ -38,6 +36,7 @@ import org.jmangos.realm.network.netty.packetAuth.server.CMD_TEST_CRYPT;
 public class CMD_AUTH_ENABLE_CRYPT extends AbstractRealmClientPacket {
 
 	/** The logger. */
+	@SuppressWarnings("unused")
 	private static Logger logger = Logger
 			.getLogger(CMD_AUTH_ENABLE_CRYPT.class);
 	@Inject
