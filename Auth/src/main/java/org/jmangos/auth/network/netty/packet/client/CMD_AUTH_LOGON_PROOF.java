@@ -17,6 +17,7 @@
 package org.jmangos.auth.network.netty.packet.client;
 
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -68,9 +69,10 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 	protected void readImpl() {
 		byte[] a = readB(32);
 		byte[] m1 = readB(20);
-		byte[] crc = readB(20);
-		int numberofKey = readC();
-		int securityFlag = readC();
+		/** byte[] crc = */
+		readB(20);
+		/**int numberofKey =  */readC();
+		/**int securityFlag =  */readC();
 
 		logger.debug("a length " + a.length);
 		logger.debug("a value "
@@ -95,8 +97,7 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 		BigNumber A = new BigNumber();
 		A.setBinary(a);
 		logger.debug("A:" + A.asHexStr());
-		BigNumber S = new BigNumber();
-		S = A.multiply((getAccount().getV_crypto().modPow(u, AccountUtils.N)))
+		BigNumber S = A.multiply((getAccount().getV_crypto().modPow(u, AccountUtils.N)))
 				.modPow(getAccount().getB(), AccountUtils.N);
 
 		byte[] t = new byte[32];
@@ -136,7 +137,7 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 		}
 
 		byte[] t4 = new byte[20];
-		sha.update(getAccount().getName().getBytes());
+		sha.update(getAccount().getName().getBytes(Charset.forName("UTF-8")));
 		t4 = sha.digest();
 
 		sha.update(hash);
