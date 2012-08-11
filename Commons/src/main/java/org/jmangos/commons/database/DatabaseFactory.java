@@ -125,7 +125,7 @@ public class DatabaseFactory implements Service {
             config.setProperty( "hibernate.dialect", DatabaseConfig.ACCOUNT_DATABASE_DIALECT );
             config.setProperty( "hibernate.c3p0.min_size", DatabaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MIN.toString() );
             config.setProperty( "hibernate.c3p0.max_size", DatabaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MAX.toString() );
-            config.configure("ACCOUNT.cfg.xml");
+            config.configure("world.cfg.xml");
             worldSessionFactory = config.buildSessionFactory();
             worldSessionFactory.getStatistics().setStatisticsEnabled( true );
 
