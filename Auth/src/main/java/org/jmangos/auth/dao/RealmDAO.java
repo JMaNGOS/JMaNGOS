@@ -16,6 +16,7 @@
  *******************************************************************************/
 package org.jmangos.auth.dao;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.jmangos.auth.model.Realm;
@@ -25,6 +26,7 @@ import org.jmangos.commons.database.dao.DAO;
 import javolution.util.FastMap;
 
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * The Class WorldDAO.
@@ -51,17 +53,15 @@ public class RealmDAO implements DAO {
 	 */
 	public FastMap<Integer, Realm> getAllRealms() {
         Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
-        Query query = session.createQuery("select r from Realm r");
-        Iterator<Realm> realmIterator = query.iterate();
-        FastMap<Integer, Realm> map = new FastMap<Integer, Realm>();
+        Criteria criteria = session.createCriteria(Realm.class);
+        FastMap<Integer, Realm> realmFastMap = new FastMap<Integer, Realm>();
+        List<Realm> realmList = (List<Realm>)criteria.list();
 
-        while ( realmIterator.hasNext() ) {
-            Realm realm = realmIterator.next();
-            map.put( realm.getId(), realm );
-        }
+        for ( Realm realm : realmList )
+            realmFastMap.put( realm.getId(), realm );
 
         session.close();
-        return map;
+        return realmFastMap;
     }
 
 	/**
