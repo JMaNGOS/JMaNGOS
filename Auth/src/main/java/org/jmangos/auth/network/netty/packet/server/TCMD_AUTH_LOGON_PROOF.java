@@ -16,7 +16,7 @@
  *******************************************************************************/
 package org.jmangos.auth.network.netty.packet.server;
 
-import org.jmangos.auth.model.Account;
+import org.jmangos.commons.model.Account;
 import org.jmangos.auth.network.netty.packet.AbstractWoWServerPacket;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.model.State;

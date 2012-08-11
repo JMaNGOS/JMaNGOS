@@ -43,15 +43,26 @@ public class DatabaseFactory implements Service {
         // Loading config fields
         DatabaseConfig.load();
 
+        /*try {
+            getAccountsSessionFactory();
+        } catch (Exception e ) {
+            log.fatal("Account Database initialization error!", e);
+        }
+
 		try {
-			getCharactersSessionFactory();
-            getWorldSessionFactory();
+            getCharactersSessionFactory();
 		} catch(Exception e) {
-			log.fatal("Database initialization error!", e);
-			throw new Error("DatabaseFactory not initialized!");
+			log.fatal("Character Database initialization error!", e);
 		}
 
-		log.info("Successfully connected to database");
+        try {
+            getWorldSessionFactory();
+        } catch (Exception e ) {
+            log.fatal("World Database initialization error!", e);
+        }
+
+        log.info("Successfully connected to database");
+        */
 	}
 
 	/**
@@ -152,12 +163,13 @@ public class DatabaseFactory implements Service {
         if ( accountsSessionFactory == null ) {
             // Bring up hibernate
             AnnotationConfiguration config = new AnnotationConfiguration();
-            config.setProperty( "hibernate.connection.driver_class", "com.mysql.jdbc.Driver" );
-            config.setProperty( "hibernate.connection.url", "jdbc:mysql://localhost/accounts" );
-            config.setProperty( "hibernate.connection.username", "root" );
-            config.setProperty( "hibernate.connection.password", "" );
-            config.setProperty( "hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect" );
-            config.configure();
+            config.setProperty( "hibernate.connection.driver_class", DatabaseConfig.ACCOUNT_DATABASE_DRIVER );
+            config.setProperty( "hibernate.connection.url", DatabaseConfig.ACCOUNT_DATABASE_URL + DatabaseConfig.ACCOUNT_DATABASE_NAME );
+            config.setProperty( "hibernate.connection.username", DatabaseConfig.ACCOUNT_DATABASE_USER );
+            config.setProperty( "hibernate.connection.password", DatabaseConfig.ACCOUNT_DATABASE_PASSWORD );
+            config.setProperty( "hibernate.dialect", DatabaseConfig.ACCOUNT_DATABASE_DIALECT );
+            // TODO: configure cache and pool
+            config.configure("/accounts.cfg.xml");
 
             accountsSessionFactory = config.buildSessionFactory();
             log.info( "Hibernate accountsSessionFactory initialized..." );

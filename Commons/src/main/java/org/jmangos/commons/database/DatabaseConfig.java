@@ -121,7 +121,7 @@ public class DatabaseConfig
     /**
      * Characters Database name
      */
-    @Property(key = "chars.database.name", defaultValue="mangos")
+    @Property(key = "chars.database.name", defaultValue="characters")
     public static String 		CHARS_DATABASE_NAME;
 
     /**
@@ -136,6 +136,55 @@ public class DatabaseConfig
     @Property(key = "chars.database.connections.max", defaultValue="10")
     public static String 		CHARS_DATABASE_CONNECTIONS_MAX;
 
+
+    /****************************-- ACCOUNT --******************************/
+    /**
+     *  Default chars driver class to database
+     */
+    @Property(key = "account.database.driver", defaultValue = "com.mysql.jdbc.Driver" )
+    public static String        ACCOUNT_DATABASE_DRIVER;
+
+    /**
+     * Account database uri !!!with trailing slash!!!
+     */
+    @Property(key = "account.database.url", defaultValue="jdbc:mysql://localhost:3306/")
+    public static String 		ACCOUNT_DATABASE_URL = "jdbc:mysql://localhost:3306/";
+
+    /**
+     * Characters Database Hibernate dialect (see http://hibernate.org)
+     */
+    @Property(key = "account.database.dialect", defaultValue="org.hibernate.dialect.MySQL5Dialect")
+    public static String 		ACCOUNT_DATABASE_DIALECT;
+
+    /**
+     * Characters Database user
+     */
+    @Property(key = "account.database.user", defaultValue="JMaNGOS")
+    public static String 		ACCOUNT_DATABASE_USER;
+
+    /**
+     * Characters Database password
+     */
+    @Property(key = "account.database.password", defaultValue="JMaNGOS")
+    public static String 		ACCOUNT_DATABASE_PASSWORD;
+
+    /**
+     * Characters Database name
+     */
+    @Property(key = "account.database.name", defaultValue="accounts")
+    public static String 		ACCOUNT_DATABASE_NAME;
+
+    /**
+     * Characters Minimum amount of database connections
+     */
+    @Property(key = "account.database.connections.min", defaultValue="5")
+    public static Integer 		ACCOUNT_DATABASE_CONNECTIONS_MIN;
+
+    /**
+     * Characters Maximum amount of database connections
+     */
+    @Property(key = "account.database.connections.max", defaultValue="10")
+    public static String 		ACCOUNT_DATABASE_CONNECTIONS_MAX;
 
 
     /**

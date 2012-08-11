@@ -18,7 +18,6 @@ package org.jmangos.auth.dao;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.jmangos.auth.model.Account;
 import org.jmangos.auth.model.Realm;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;

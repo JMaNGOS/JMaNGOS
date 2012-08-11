@@ -19,7 +19,7 @@ package org.jmangos.auth.dao;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.jmangos.auth.model.Account;
+import org.jmangos.commons.model.Account;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
 

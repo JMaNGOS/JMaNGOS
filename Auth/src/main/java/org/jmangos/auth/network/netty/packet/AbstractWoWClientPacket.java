@@ -34,7 +34,7 @@
  */
 package org.jmangos.auth.network.netty.packet;
 
-import org.jmangos.auth.model.Account;
+import org.jmangos.commons.model.Account;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.ReceivablePacket;
 
