@@ -42,9 +42,7 @@ public class AccountDAO implements DAO
 	public Account getAccount(String name) {
         Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
         Query query = session.createQuery("select a from Account a where a.username = :name").setString( "name", name );
-        Account account = (Account)query.uniqueResult();
-        session.close();
-        return account;
+        return (Account)query.uniqueResult();
     }
 
 	/**
@@ -72,7 +70,6 @@ public class AccountDAO implements DAO
         Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
         Query query = session.createQuery("select a from Account a");
         int accCount = query.list().size();
-        session.close();
         return accCount;
     }
 
@@ -196,8 +193,7 @@ public class AccountDAO implements DAO
 	 * @return uniquire class name for all implementations
 	 */
 	@Override
-	public final String getClassName() 
-	{
+	public final String getClassName()  {
 		return AccountDAO.class.getName();
 	}
 
@@ -253,8 +249,6 @@ public class AccountDAO implements DAO
             return "";
         }
 
-        String sessionKey = account.getMsessionKey();
-        session.close();
-        return sessionKey;
+        return account.getMsessionKey();
     }
 }
