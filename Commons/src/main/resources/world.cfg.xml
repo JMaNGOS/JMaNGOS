@@ -11,5 +11,6 @@
         <mapping class="org.jmangos.realm.model.base.PlayerLevelInfo"/>
         <mapping class="org.jmangos.realm.model.base.PlayerClassLevelInfo"/>
         <mapping class="org.jmangos.realm.model.base.QuestPrototype"/>
+        <mapping class="org.jmangos.realm.model.base.Playercreateinfo"/>
     </session-factory>
 </hibernate-configuration>

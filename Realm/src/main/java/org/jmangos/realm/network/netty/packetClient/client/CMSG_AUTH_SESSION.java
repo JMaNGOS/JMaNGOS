@@ -35,9 +35,9 @@ import javolution.text.TextBuilder;
 import org.apache.log4j.Logger;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+import org.jmangos.commons.model.Account;
 import org.jmangos.commons.network.model.State;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
-import org.jmangos.realm.model.account.Account;
 import org.jmangos.realm.model.base.AddonInfo;
 import org.jmangos.realm.network.netty.handler.RealmToClientChannelHandler;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
@@ -179,9 +179,10 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
 		channelHandler.getCrypt().init(convertMangosSessionKey(SessionKey));
 		sender.send(getClient(), new SMSG_AUTH_RESPONSE());
 		getClient().setChannelState(State.AUTHED);
-		account.setTutorials(
-				accountService.loadTutorialsDataFromDB(account.getObjectId()));
-		sender.send(getClient(), new SMSG_ADDON_INFO());
+        // TODO: what is this?
+		/*account.setTutorials(
+				accountService.loadTutorialsDataFromDB(account.getObjectId()));*/
+		//sender.send(getClient(), new SMSG_ADDON_INFO());
 		sender.send(getClient(), new SMSG_CLIENTCACHE_VERSION());
 		sender.send(getClient(), new SMSG_TUTORIAL_FLAGS());
 

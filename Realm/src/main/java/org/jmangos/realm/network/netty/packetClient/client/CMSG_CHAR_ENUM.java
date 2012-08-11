@@ -54,8 +54,7 @@ public class CMSG_CHAR_ENUM  extends AbstractWoWClientPacket {
 	 */
 	@Override
 	protected void runImpl() {
-		getAccount().setCharactersData(accountService.getCharactersData(getAccount().getObjectId()));
-		sender.send(getClient(), new SMSG_CHAR_ENUM(getAccount().getCharactersData()));
+		sender.send(getClient(), new SMSG_CHAR_ENUM( accountService.getCharacters( getAccount().getId() ) ));
 	}
 
 }

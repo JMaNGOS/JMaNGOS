@@ -21,7 +21,9 @@ import java.util.HashMap;
 import org.apache.log4j.Logger;
 import org.jmangos.commons.dataholder.DataLoadService;
 import org.jmangos.realm.dao.SimpleDataDAO;
+import org.jmangos.realm.model.Classes;
 import org.jmangos.realm.model.RaceClassLevel;
+import org.jmangos.realm.model.Races;
 import org.jmangos.realm.model.base.PlayerLevelInfo;
 
 import com.google.inject.Inject;
@@ -124,13 +126,28 @@ public class PlayerLevelStorages implements
 	 * @return the player level info
 	 */
 	public PlayerLevelInfo get(int race, int clazz, int level) {
-		RaceClassLevel cl = new RaceClassLevel(race, clazz, level);
+        PlayerLevelInfoPK cl = new PlayerLevelInfoPK(race, clazz, level);
 		if (playerRCLI.containsKey(cl)) {
 			return playerRCLI.get(cl);
 		} else {
-			log.warn("can't find proper PlayerClassLevelInfo");
+			log.warn("can't find proper PlayerClassLevelInfo PCLI size: " + playerRCLI.size());
 			return null;
 		}
 	}
+
+    /**
+     * Gets the.
+     *
+     * @param race
+     *            the race
+     * @param clazz
+     *            the clazz
+     * @param level
+     *            the level
+     * @return the player level info
+     */
+    public PlayerLevelInfo get(Races race, Classes clazz, int level) {
+        return get( race.getValue(), clazz.getValue(), level );
+    }
 
 }

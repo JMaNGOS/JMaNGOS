@@ -60,7 +60,7 @@ public class CMSG_REQUEST_ACCOUNT_DATA extends AbstractWoWClientPacket {
 	protected void runImpl() {
 		if (type > AccountDataType.NUM_ACCOUNT_DATA_TYPES.getValue())
 			return;
-		HashMap<Integer, AccountData> adata = getAccount().getAccountData();
+		HashMap<Integer, AccountData> adata = new HashMap<Integer, AccountData>(); //getAccount().getAccountData(); /* disabled by paalgyula */
 		if (adata.containsKey(type)) {
 			Deflater compressor = new Deflater();
 			byte[] dataToCompress = adata.get(type).getData().getBytes();

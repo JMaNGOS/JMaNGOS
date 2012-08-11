@@ -22,11 +22,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.jmangos.commons.model.Account;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.realm.dao.AccountDAO;
-import org.jmangos.realm.model.account.Account;
 import org.jmangos.realm.model.account.AccountData;
-import org.jmangos.realm.model.base.character.CharactersData;
+import org.jmangos.realm.model.base.character.CharacterData;
 import org.jmangos.realm.model.base.item.ItemPrototype;
 
 /**
@@ -89,30 +89,6 @@ public class AccountService {
 	}
 
 	/**
-	 * Gets the characters data.
-	 *
-	 * @param guid the guid
-	 * @return the characters data
-	 */
-	public List<CharactersData> getCharactersData(int guid) {
-		List<CharactersData> charactersData = accountDAO.getCharactersData(guid);
-		for (Iterator<CharactersData> chdIterator = charactersData.iterator(); chdIterator.hasNext();) {
-			CharactersData characterData = chdIterator.next();
-			for (int i = 0; i < characterData.getItems().length; i++) {
-				ItemPrototype itemPrototype = itemStorages.get(characterData.getItems()[i].getDisplayInfoID());
-				if (itemPrototype != null) {
-					characterData.getItems()[i].setDisplayInfoID(itemPrototype.getDisplayInfoID());
-					characterData.getItems()[i].setInventoryType(itemPrototype.getInventoryType());
-				} else {
-					characterData.getItems()[i].setDisplayInfoID(0);
-					characterData.getItems()[i].setEnchantAuraId(0);
-				}
-			}
-		}
-		return charactersData;
-	}
-
-	/**
 	 * Gets the session key from db.
 	 *
 	 * @param username the username
@@ -133,4 +109,12 @@ public class AccountService {
 	public int[] loadTutorialsDataFromDB(int guid) {
 		return accountDAO.getTutorialsData(guid);
 	}
+
+    /**
+     * Search account's characters
+     * @param accountId account to query
+     */
+    public List<CharacterData> getCharacters( int accountId ) {
+        return accountDAO.getCharacters( accountId );
+    }
 }

@@ -21,6 +21,7 @@ import java.nio.BufferUnderflowException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.log4j.Logger;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_ACCOUNT_DATA_TIMES;
@@ -46,7 +47,7 @@ public class CMSG_READY_FOR_ACCOUNT_DATA_TIMES extends AbstractWoWClientPacket {
 	 */
 	@Override
 	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-
+        Logger.getLogger( getClass() ).info( "CMSG_READY_FOR_ACCOUNT_DATA_TIMES received!" );
 	}
 	
 	/* (non-Javadoc)
@@ -54,11 +55,12 @@ public class CMSG_READY_FOR_ACCOUNT_DATA_TIMES extends AbstractWoWClientPacket {
 	 */
 	@Override
 	protected void runImpl() {
-		getAccount().setAccountData(
+        // TODO: reimplement account data save
+		/*getAccount().setAccountData(
 				accountServise.getAccountData(getAccount().getObjectId()));
 		sender.send(getClient(), new SMSG_ACCOUNT_DATA_TIMES(
 				SMSG_ACCOUNT_DATA_TIMES.GLOBAL_CACHE_MASK, getAccount()
-						.getAccountData()));
+						.getAccountData()));*/
 
 	}
 }

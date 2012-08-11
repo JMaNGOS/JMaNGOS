@@ -29,6 +29,11 @@ public class PlayerClassLevelInfoPK implements Serializable {
         this.level = level;
     }
 
+    public PlayerClassLevelInfoPK( int clazz, int level ) {
+        this.clazz = clazz;
+        this.level = level;
+    }
+
     public int getClazz() {
         return clazz;
     }

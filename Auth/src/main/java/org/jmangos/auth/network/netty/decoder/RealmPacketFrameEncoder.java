@@ -29,6 +29,7 @@ import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
 import org.jmangos.auth.network.netty.handler.AuthToClientChannelHandler;
+import org.jmangos.commons.OpcodeTable;
 
 /**
  * The Class PacketFrameEncoder.
@@ -61,7 +62,7 @@ public class RealmPacketFrameEncoder extends OneToOneEncoder {
 		message.readBytes(tmpa);
 		frame.writeBytes(channelHandler.getCrypt().encrypt(tmpa));
 		
-		log.debug(String.format("[SEND PACKET] :  0x%02X", opcode));
+		log.debug(String.format("[SEND PACKET] :  0x%02X - %s", opcode, OpcodeTable.getOpcode( opcode ) ) );
 		List<String> d =  breakStringInChunks(new BigInteger(1,tmpa).toString(16).toUpperCase(),16);
 		for (Iterator<String> iterator = d.iterator(); iterator.hasNext();) {
 			String string =  iterator.next();

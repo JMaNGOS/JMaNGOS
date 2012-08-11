@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 import org.jmangos.commons.dataholder.DataLoadService;
 import org.jmangos.realm.dao.SimpleDataDAO;
 import org.jmangos.realm.model.ClassLevel;
+import org.jmangos.realm.model.Classes;
 import org.jmangos.realm.model.base.PlayerClassLevelInfo;
 
 import com.google.inject.Inject;
@@ -91,15 +92,15 @@ public class PlayerClassLevelInfoStorages
 
 	}
 
-	/**
+    /**
 	 * Gets the.
 	 *
 	 * @param clazz the clazz
 	 * @param level the level
 	 * @return the player class level info
 	 */
-	public PlayerClassLevelInfo get(byte clazz, byte level) {
-		ClassLevel cl = new ClassLevel(clazz, level);
+	public PlayerClassLevelInfo get(int clazz, int level) {
+        PlayerClassLevelInfoPK cl = new PlayerClassLevelInfoPK(clazz, level);
 		if (playerCLI.containsKey(cl)) {
 			return playerCLI.get(cl);
 		} else {
@@ -107,6 +108,16 @@ public class PlayerClassLevelInfoStorages
 			return null;
 		}
 	}
+
+    /**
+     * Gets the.
+     * @param clazz the clazz
+     * @param level the level
+     * @return the player class level info
+     */
+    public PlayerClassLevelInfo get(Classes clazz, int level) {
+        return get( clazz.getValue(), level );
+    }
 
 	/* (non-Javadoc)
 	 * @see org.jmangos.commons.dataholder.DataLoadService#get()
