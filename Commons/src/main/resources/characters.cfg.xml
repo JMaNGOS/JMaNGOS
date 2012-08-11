@@ -8,5 +8,6 @@
         <property name="hbm2ddl.auto">update</property>
         <property name="current_session_context_class">thread</property>
         <mapping class="org.jmangos.realm.model.base.character.CharacterData"/>
+        <mapping class="org.jmangos.realm.model.player.PlayerHomeBindData"/>
     </session-factory>
 </hibernate-configuration>

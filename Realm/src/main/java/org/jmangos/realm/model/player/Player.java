@@ -55,9 +55,6 @@ public class Player extends Units implements ChanneledObject {
 	/** The channel. */
 	private NetworkChannel channel;
 	
-	/** The home bind. */
-	private PlayerHomeBindData homeBind;
-
 	/** The Weapon proficiency. */
 	int WeaponProficiency = 0;
 	
@@ -147,7 +144,7 @@ public class Player extends Units implements ChanneledObject {
 	 * @return the home bind
 	 */
 	public final PlayerHomeBindData getHomeBind() {
-		return homeBind;
+		return characterData.getHomeBindData();
 	}
 
 	/**
@@ -197,12 +194,12 @@ public class Player extends Units implements ChanneledObject {
 	/**
 	 * Sets the home bind.
 	 *
-	 * @param HomeBind the home bind
+	 * @param homeBind the home bind
 	 * @return true, if successful
 	 */
-	public boolean setHomeBind(PlayerHomeBindData HomeBind) {
-		if (HomeBind != null) {
-			this.homeBind = HomeBind;
+	public boolean setHomeBind(PlayerHomeBindData homeBind) {
+		if (homeBind != null) {
+			characterData.setHomeBindData( homeBind );
 			return true;
 		} else {
 			return false;

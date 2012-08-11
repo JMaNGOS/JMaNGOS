@@ -220,7 +220,11 @@ public class WorldObject extends NamedObject {
 	 */
 	public void _LoadIntoDataField(String[] strings, int from, int count) {
 		for (int i = 0; i < strings.length; i++) {
-			SetUInt32Value(from + i, Integer.decode(strings[i]));
+            try {
+			    SetUInt32Value(from + i, Integer.decode(strings[i]));
+            } catch (NumberFormatException e) {
+                // Hmmmm... Manual DB Edit? N00B!
+            }
 		}
 	}
 	

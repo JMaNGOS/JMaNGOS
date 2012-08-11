@@ -288,7 +288,7 @@ public class PlayerService {
 		player.outDebugValue();
 
         // TODO: characters_homebind tabla integracioja
-		player.setHomeBind( null );
+		player.setHomeBind( player.getHomeBind() );
 		InitStatsForLevel(player);
 		//LoadInventory(player);
 		player.outDebugValue();

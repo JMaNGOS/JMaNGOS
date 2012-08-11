@@ -10,6 +10,7 @@ import org.jmangos.realm.model.Races;
 import org.jmangos.realm.model.base.Playercreateinfo;
 import org.jmangos.realm.model.base.PlayercreateinfoPK;
 import org.jmangos.realm.model.base.character.CharacterData;
+import org.jmangos.realm.model.player.PlayerHomeBindData;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_CHAR_CREATE;
 
@@ -101,9 +102,8 @@ public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
         // Hair(facial), Bankslot
         charData.setPlayerBytes2( ( facialHair /*| (0xEE << 8)*/  | ( 0x02 << 24 ) ) );
 
-        // TODO: implement explored zones, known titles
-        charData.setExploredZones( "" );
-        charData.setKnownTitles("");
+        charData.setExploredZones( Integer.toString( info.getZone() ) );
+        charData.setKnownTitles( "0" );
 
         // TODO: make a config to create some inital value
         charData.setMoney( 0 );
@@ -113,8 +113,17 @@ public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
         // First login
         charData.setAtLoginFlags( 0x1 );
 
-        session.getTransaction().begin();
+        // Set home (hs) location
+        PlayerHomeBindData phbd = new PlayerHomeBindData();
+        phbd.setHomeBindAreaId( charData.getZone() );
+        phbd.setHomeBindMapId( charData.getMap() );
+        phbd.setHomeBindPositionX( charData.getPositionX() );
+        phbd.setHomeBindPositionY( charData.getPositionY() );
+        phbd.setHomeBindPositionZ( charData.getPositionZ() );
 
+        charData.setHomeBindData( phbd );
+
+        session.getTransaction().begin();
         try {
             session.save( charData );
             session.getTransaction().commit();
