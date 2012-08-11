@@ -112,7 +112,7 @@ public class DatabaseFactory implements Service {
 	}
 
 	/**
-     * Returns ACCOUNT Database's hibernate session
+     * Returns World Database's hibernate session
      * @return Hibernate Session
      */
     public static SessionFactory getWorldSessionFactory() {
@@ -129,7 +129,7 @@ public class DatabaseFactory implements Service {
             worldSessionFactory = config.buildSessionFactory();
             worldSessionFactory.getStatistics().setStatisticsEnabled( true );
 
-            log.info( "Hibernate ACCOUNTSessionFactory initialized..." );
+            log.info( "Hibernate worldSessionFactory initialized..." );
         }
             
         return worldSessionFactory;
