@@ -18,39 +18,41 @@ package org.jmangos.commons.model;
 
 /**
  * The Class ManagedObject.
- *
+ * 
  */
 public class ManagedObject {
 
-  /** The object id. */
-  private final int objectId;
+	/** The object id. */
+	private final int objectId;
 
-  /**
-   * Instantiates a new managed object.
-   *
-   * @param objectId the object id
-   */
-  public ManagedObject(int objectId) {
-    this.objectId = objectId;
-  }
+	/**
+	 * Instantiates a new managed object.
+	 * 
+	 * @param objectId
+	 *            the object id
+	 */
+	public ManagedObject(int objectId) {
+		this.objectId = objectId;
+	}
 
-  /**
-   * Gets the object id.
-   *
-   * @return objectId
-   */
-  public final int getObjectId() {
-    return objectId;
-  }
-  
-  /**
-   * Sets the object id.
-   *
-   * @param objectId the object id
-   * @return the int
-   * @set objectId
-   */
-  public final int setObjectId(int objectId) {
-    return objectId;
-  }
+	/**
+	 * Gets the object id.
+	 * 
+	 * @return objectId
+	 */
+	public final int getObjectId() {
+		return objectId;
+	}
+
+	/**
+	 * Sets the object id.
+	 * 
+	 * @param objectId
+	 *            the object id
+	 * @return the int
+	 * @set objectId
+	 */
+	public final int setObjectId(int objectId) {
+		return objectId;
+	}
 }

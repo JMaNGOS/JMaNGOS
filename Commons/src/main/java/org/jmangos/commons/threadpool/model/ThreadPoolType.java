@@ -16,16 +16,15 @@
  *******************************************************************************/
 package org.jmangos.commons.threadpool.model;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Enum ThreadPoolType.
- *
+ * 
  */
 public enum ThreadPoolType {
-  
-  /** The SCHEDULED. */
-  SCHEDULED,
-  
-  /** The INSTANT. */
-  INSTANT
+
+	/** The SCHEDULED. */
+	SCHEDULED,
+
+	/** The INSTANT. */
+	INSTANT
 }

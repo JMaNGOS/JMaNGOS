@@ -16,27 +16,27 @@
  *******************************************************************************/
 package org.jmangos.commons.config;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Enum Compatiple.
- *
+ * 
  * @author MinimaJack
  */
 public enum Compatiple {
-	
+
 	/** The NONE. */
 	NONE(0x00),
-	
+
 	/** The MANGOS. */
 	MANGOS(0x01);
-	
+
 	/** The message id. */
 	private int messageId;
 
 	/**
 	 * Instantiates a new compatiple.
-	 *
-	 * @param messageId the message id
+	 * 
+	 * @param messageId
+	 *            the message id
 	 */
 	Compatiple(int messageId) {
 		this.messageId = messageId;
@@ -44,11 +44,10 @@ public enum Compatiple {
 
 	/**
 	 * Gets the message id.
-	 *
+	 * 
 	 * @return the message id
 	 */
-	public int getMessageId()
-	{
+	public int getMessageId() {
 		return messageId;
 	}
 }

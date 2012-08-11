@@ -21,22 +21,18 @@ import java.lang.reflect.Field;
 import org.jmangos.commons.configuration.PropertyTransformer;
 import org.jmangos.commons.configuration.TransformationException;
 
-
-public class ClassTransformer implements PropertyTransformer<Class<?>>
-{
+public class ClassTransformer implements PropertyTransformer<Class<?>> {
 	/** Shared instance. */
-	public static final ClassTransformer	SHARED_INSTANCE	= new ClassTransformer();
+	public static final ClassTransformer SHARED_INSTANCE = new ClassTransformer();
 
 	@Override
-	public Class<?> transform(String value, Field field) throws TransformationException
-	{
-		try
-		{
+	public Class<?> transform(String value, Field field)
+			throws TransformationException {
+		try {
 			return Class.forName(value, false, getClass().getClassLoader());
-		}
-		catch (ClassNotFoundException e)
-		{
-			throw new TransformationException("Cannot find class with name '" + value + "'");
+		} catch (ClassNotFoundException e) {
+			throw new TransformationException("Cannot find class with name '"
+					+ value + "'");
 		}
 	}
 }

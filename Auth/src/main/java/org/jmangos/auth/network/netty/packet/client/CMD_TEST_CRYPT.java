@@ -30,12 +30,11 @@ import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 public class CMD_TEST_CRYPT extends AbstractWoWClientPacket {
 
 	/** The logger. */
-	private static Logger logger = Logger
-			.getLogger(CMD_TEST_CRYPT.class);
+	private static Logger logger = Logger.getLogger(CMD_TEST_CRYPT.class);
 	/** The sender. */
 	@Inject
 	private AbstractPacketSender sender;
-	
+
 	public CMD_TEST_CRYPT() {
 		super();
 	}
@@ -47,11 +46,11 @@ public class CMD_TEST_CRYPT extends AbstractWoWClientPacket {
 	 */
 	@Override
 	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		logger.debug( (char)readC());
-		logger.debug( (char)readC());
-		logger.debug( (char)readC());
-		logger.debug( (char)readC());
-		logger.debug( (char)readC());
+		logger.debug((char) readC());
+		logger.debug((char) readC());
+		logger.debug((char) readC());
+		logger.debug((char) readC());
+		logger.debug((char) readC());
 	}
 
 	/*

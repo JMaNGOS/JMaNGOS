@@ -22,31 +22,29 @@ import java.util.regex.Pattern;
 import org.jmangos.commons.configuration.PropertyTransformer;
 import org.jmangos.commons.configuration.TransformationException;
 
-
 @SuppressWarnings("unchecked")
-public class PatternTransformer implements PropertyTransformer
-{
-	
+public class PatternTransformer implements PropertyTransformer {
+
 	/** Shared instance of this transformer. */
-	public static final PatternTransformer	SHARED_INSTANCE	= new PatternTransformer();
+	public static final PatternTransformer SHARED_INSTANCE = new PatternTransformer();
 
 	/**
 	 * Transforms String to Pattern object.
-	 *
-	 * @param value value that will be transformed
-	 * @param field value will be assigned to this field
+	 * 
+	 * @param value
+	 *            value that will be transformed
+	 * @param field
+	 *            value will be assigned to this field
 	 * @return Pattern Object
-	 * @throws TransformationException if pattern is not valid
+	 * @throws TransformationException
+	 *             if pattern is not valid
 	 */
 	@Override
-	public Pattern transform(String value, Field field) throws TransformationException
-	{
-		try
-		{
+	public Pattern transform(String value, Field field)
+			throws TransformationException {
+		try {
 			return Pattern.compile(value);
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw new TransformationException("Not valid RegExp: " + value, e);
 		}
 	}

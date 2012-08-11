@@ -22,50 +22,55 @@ import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.model.ReceivablePacket;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class NettyPacketReceiver.
  */
 public class NettyPacketReceiver {
-	
+
 	/** The Constant log. */
-	private static final Logger             log     = Logger.getLogger(NettyPacketReceiver.class);
+	private static final Logger log = Logger
+			.getLogger(NettyPacketReceiver.class);
 
 	/**
 	 * Receive packet.
-	 *
-	 * @param packetHandler the packet handler
-	 * @param buffer the buffer
-	 * @param networkChannel the network channel
+	 * 
+	 * @param packetHandler
+	 *            the packet handler
+	 * @param buffer
+	 *            the buffer
+	 * @param networkChannel
+	 *            the network channel
 	 */
-	public void receivePacket(PacketHandlerFactory packetHandler, ChannelBuffer buffer,
-		      NetworkChannel networkChannel) {
-		    int packetId = buffer.readUnsignedByte();
-		    log.debug(String.format("[RESIVE PACKET] :  0x%02X", packetId));
-		    readAndRunPacket(packetHandler, buffer, packetId, networkChannel);
-		  }
+	public void receivePacket(PacketHandlerFactory packetHandler,
+			ChannelBuffer buffer, NetworkChannel networkChannel) {
+		int packetId = buffer.readUnsignedByte();
+		log.debug(String.format("[RESIVE PACKET] :  0x%02X", packetId));
+		readAndRunPacket(packetHandler, buffer, packetId, networkChannel);
+	}
 
 	/**
 	 * Read and run packet.
-	 *
-	 * @param packetHandler the packet handler
-	 * @param buffer the buffer
-	 * @param packetId the packet id
-	 * @param networkChannel the network channel
+	 * 
+	 * @param packetHandler
+	 *            the packet handler
+	 * @param buffer
+	 *            the buffer
+	 * @param packetId
+	 *            the packet id
+	 * @param networkChannel
+	 *            the network channel
 	 */
-	private void readAndRunPacket(PacketHandlerFactory packetHandler, ChannelBuffer buffer, int packetId, NetworkChannel networkChannel) {
-		ReceivablePacket cp = packetHandler.handleClientPacket(packetId, networkChannel);
-		if (cp != null)
-		{
-			cp.setByteBuffer(buffer); 
+	private void readAndRunPacket(PacketHandlerFactory packetHandler,
+			ChannelBuffer buffer, int packetId, NetworkChannel networkChannel) {
+		ReceivablePacket cp = packetHandler.handleClientPacket(packetId,
+				networkChannel);
+		if (cp != null) {
+			cp.setByteBuffer(buffer);
 			cp.setClient(networkChannel);
-			if (cp.getAvaliableBytes() < cp.getMinimumLength())
-			{
-				log.warn("BUFFER_UNDER_FLOW"  + networkChannel + cp);
-			}
-			else if (cp.read()){
-				
+			if (cp.getAvaliableBytes() < cp.getMinimumLength()) {
+				log.warn("BUFFER_UNDER_FLOW" + networkChannel + cp);
+			} else if (cp.read()) {
+
 			}
 		}
 	}

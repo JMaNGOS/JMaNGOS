@@ -19,19 +19,19 @@ package org.jmangos.commons.database;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 
-
 /**
  * The Interface CallReadStH.
- *
+ * 
  */
-public interface CallReadStH extends ReadStH
-{
-	
+public interface CallReadStH extends ReadStH {
+
 	/**
 	 * Sets the params.
-	 *
-	 * @param stmt the new params
-	 * @throws SQLException the sQL exception
+	 * 
+	 * @param stmt
+	 *            the new params
+	 * @throws SQLException
+	 *             the sQL exception
 	 */
 	public void setParams(CallableStatement stmt) throws SQLException;
 }

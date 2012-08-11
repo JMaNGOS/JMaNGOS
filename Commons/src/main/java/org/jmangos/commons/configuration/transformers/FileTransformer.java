@@ -22,25 +22,27 @@ import java.lang.reflect.Field;
 import org.jmangos.commons.configuration.PropertyTransformer;
 import org.jmangos.commons.configuration.TransformationException;
 
-
-public class FileTransformer implements PropertyTransformer<File>
-{
+public class FileTransformer implements PropertyTransformer<File> {
 	/**
-	 * Shared instance of this transformer. It's thread-safe so no need of multiple instances
+	 * Shared instance of this transformer. It's thread-safe so no need of
+	 * multiple instances
 	 */
-	public static final FileTransformer	SHARED_INSTANCE	= new FileTransformer();
+	public static final FileTransformer SHARED_INSTANCE = new FileTransformer();
 
 	/**
 	 * Transforms String to the file.
-	 *
-	 * @param value value that will be transformed
-	 * @param field value will be assigned to this field
+	 * 
+	 * @param value
+	 *            value that will be transformed
+	 * @param field
+	 *            value will be assigned to this field
 	 * @return File object that represents string
-	 * @throws TransformationException the transformation exception
+	 * @throws TransformationException
+	 *             the transformation exception
 	 */
 	@Override
-	public File transform(String value, Field field) throws TransformationException
-	{
+	public File transform(String value, Field field)
+			throws TransformationException {
 		return new File(value);
 	}
 }

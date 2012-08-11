@@ -27,14 +27,14 @@ public class ConfigurableProcessor {
 	/**
 	 * Logger.
 	 */
-	private static final Logger log = Logger.getLogger(ConfigurableProcessor.class);
+	private static final Logger log = Logger
+			.getLogger(ConfigurableProcessor.class);
 
 	/**
 	 * This method is an entry point to the parser logic.<br>
-	 * Any object that have {@link Property} annotation in it or it's
-	 * parent class/interface can be submitted here.<br>
-	 * Object fields will be parsed.
-	 * (non-static)<br>
+	 * Any object that have {@link Property} annotation in it or it's parent
+	 * class/interface can be submitted here.<br>
+	 * Object fields will be parsed. (non-static)<br>
 	 * 
 	 * @param object
 	 *            Object that has {@link Property} annotations.
@@ -48,7 +48,7 @@ public class ConfigurableProcessor {
 
 		process(clazz, object, properties);
 	}
-	
+
 	/**
 	 * This method is an entry point to the parser logic.<br>
 	 * Any object or class that have {@link Property} annotation in it or it's
@@ -65,7 +65,8 @@ public class ConfigurableProcessor {
 	 *            {@link Property#key()}
 	 */
 
-	public static void process(Class<? extends Object> clazz, Properties... properties) {
+	public static void process(Class<? extends Object> clazz,
+			Properties... properties) {
 		process(clazz, null, properties);
 	}
 
@@ -81,7 +82,8 @@ public class ConfigurableProcessor {
 	 *            Properties with keys\values
 	 */
 
-	private static void process(Class<? extends Object> clazz, Object obj, Properties[] props) {
+	private static void process(Class<? extends Object> clazz, Object obj,
+			Properties[] props) {
 		processFields(clazz, obj, props);
 
 		// Interfaces can't have any object fields, only static
@@ -113,8 +115,8 @@ public class ConfigurableProcessor {
 	 *            Properties with keys\values
 	 */
 
-	private static void processFields(Class<? extends Object> clazz, Object obj,
-			Properties[] props) {
+	private static void processFields(Class<? extends Object> clazz,
+			Object obj, Properties[] props) {
 		for (Field f : clazz.getDeclaredFields()) {
 			// Static fields should not be modified when processing object
 			if (Modifier.isStatic(f.getModifiers()) && obj != null) {
@@ -211,8 +213,8 @@ public class ConfigurableProcessor {
 					+ " of class " + field.getDeclaringClass().getName());
 		}
 
-		PropertyTransformer<? extends Object> pt = PropertyTransformerFactory.newTransformer(
-				field.getType(), property.propertyTransformer());
+		PropertyTransformer<? extends Object> pt = PropertyTransformerFactory
+				.newTransformer(field.getType(), property.propertyTransformer());
 		return pt.transform(value, field);
 	}
 

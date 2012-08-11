@@ -20,86 +20,87 @@ import java.net.InetSocketAddress;
 
 import org.jboss.netty.channel.Channel;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface NetworkChannel.
  */
 public interface NetworkChannel {
 
-  /**
-   * Gets the channel id.
-   *
-   * @return unique ID for context's channel
-   */
-  int getChannelId();
+	/**
+	 * Gets the channel id.
+	 * 
+	 * @return unique ID for context's channel
+	 */
+	int getChannelId();
 
-  /**
-   * Gets the object id.
-   *
-   * @return ID of channeled object or -1
-   */
-  int getObjectId();
+	/**
+	 * Gets the object id.
+	 * 
+	 * @return ID of channeled object or -1
+	 */
+	int getObjectId();
 
-  /**
-   * Gets the channel.
-   *
-   * @return the channel
-   */
-  Channel getChannel();
+	/**
+	 * Gets the channel.
+	 * 
+	 * @return the channel
+	 */
+	Channel getChannel();
 
-  /**
-   * Gets the address.
-   *
-   * @return the address
-   */
- // ChannelHandler getHandler();
+	/**
+	 * Gets the address.
+	 * 
+	 * @return the address
+	 */
+	// ChannelHandler getHandler();
 
-  /**
-   * @param channeledObject
-   */
-//  void setChanneledObject(ChanneledObject channeledObject);
+	/**
+	 * @param channeledObject
+	 */
+	// void setChanneledObject(ChanneledObject channeledObject);
 
-  /**
-   * @return top-level channeled object that initiated connection
-   */
- // ChanneledObject getChanneledObject();
+	/**
+	 * @return top-level channeled object that initiated connection
+	 */
+	// ChanneledObject getChanneledObject();
 
-  /**
-   * @return in-game object that performs actions
-   */
-//  ManagedObject getActingObject();
+	/**
+	 * @return in-game object that performs actions
+	 */
+	// ManagedObject getActingObject();
 
-  /**
-   * @param actingObject
-   */
- // void setActingObject(ManagedObject actingObject);
-  public InetSocketAddress getAddress();
-  
-  /**
-   * Gets the channel state.
-   *
-   * @return channel state
-   */
-  State getChannelState();
+	/**
+	 * @param actingObject
+	 */
+	// void setActingObject(ManagedObject actingObject);
+	public InetSocketAddress getAddress();
 
-  /**
-   * Sets the channel state.
-   *
-   * @param channelState the new channel state
-   */
-  void setChannelState(State channelState);
+	/**
+	 * Gets the channel state.
+	 * 
+	 * @return channel state
+	 */
+	State getChannelState();
 
-  /**
-   * Checks if is connected.
-   *
-   * @return true, if is connected
-   */
-  boolean isConnected();
+	/**
+	 * Sets the channel state.
+	 * 
+	 * @param channelState
+	 *            the new channel state
+	 */
+	void setChannelState(State channelState);
 
-  /**
-   * Write.
-   *
-   * @param buffer the buffer
-   */
-  void write(Object buffer);
+	/**
+	 * Checks if is connected.
+	 * 
+	 * @return true, if is connected
+	 */
+	boolean isConnected();
+
+	/**
+	 * Write.
+	 * 
+	 * @param buffer
+	 *            the buffer
+	 */
+	void write(Object buffer);
 }

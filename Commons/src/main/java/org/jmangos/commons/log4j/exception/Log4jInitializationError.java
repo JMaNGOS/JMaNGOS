@@ -19,10 +19,9 @@
  */
 package org.jmangos.commons.log4j.exception;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Log4jInitializationError.
- *
+ * 
  * @author admin
  */
 public class Log4jInitializationError extends Error {
@@ -38,8 +37,9 @@ public class Log4jInitializationError extends Error {
 
 	/**
 	 * Creates new error.
-	 *
-	 * @param message error description
+	 * 
+	 * @param message
+	 *            error description
 	 */
 	public Log4jInitializationError(String message) {
 		super(message);
@@ -47,9 +47,11 @@ public class Log4jInitializationError extends Error {
 
 	/**
 	 * Creates new error.
-	 *
-	 * @param message error description
-	 * @param cause reason of this error
+	 * 
+	 * @param message
+	 *            error description
+	 * @param cause
+	 *            reason of this error
 	 */
 	public Log4jInitializationError(String message, Throwable cause) {
 		super(message, cause);
@@ -57,8 +59,9 @@ public class Log4jInitializationError extends Error {
 
 	/**
 	 * Creates new error.
-	 *
-	 * @param cause reason of this error
+	 * 
+	 * @param cause
+	 *            reason of this error
 	 */
 	public Log4jInitializationError(Throwable cause) {
 		super(cause);

@@ -24,30 +24,31 @@ import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
 
-public class PropertiesUtils
-{
-	
+public class PropertiesUtils {
+
 	/**
 	 * Loads properties by given file.
-	 *
-	 * @param file filename
+	 * 
+	 * @param file
+	 *            filename
 	 * @return loaded properties
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static Properties load(String file) throws IOException
-	{
+	public static Properties load(String file) throws IOException {
 		return load(new File(file));
 	}
 
 	/**
 	 * Loads properties by given file.
-	 *
-	 * @param file filename
+	 * 
+	 * @param file
+	 *            filename
 	 * @return loaded properties
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static Properties load(File file) throws IOException
-	{
+	public static Properties load(File file) throws IOException {
 		FileInputStream fis = null;
 		try {
 			fis = new FileInputStream(file);
@@ -63,16 +64,16 @@ public class PropertiesUtils
 
 	/**
 	 * Loads properties from given files.
-	 *
-	 * @param files list of string that represents files
+	 * 
+	 * @param files
+	 *            list of string that represents files
 	 * @return array of loaded properties
-	 * @throws IOException if was unable to read properties
+	 * @throws IOException
+	 *             if was unable to read properties
 	 */
-	public static Properties[] load(String... files) throws IOException
-	{
+	public static Properties[] load(String... files) throws IOException {
 		Properties[] result = new Properties[files.length];
-		for (int i = 0; i < result.length; i++)
-		{
+		for (int i = 0; i < result.length; i++) {
 			result[i] = load(files[i]);
 		}
 		return result;
@@ -80,16 +81,16 @@ public class PropertiesUtils
 
 	/**
 	 * Loades properties from given files.
-	 *
-	 * @param files list of files
+	 * 
+	 * @param files
+	 *            list of files
 	 * @return array of loaded properties
-	 * @throws IOException if was unable to read properties
+	 * @throws IOException
+	 *             if was unable to read properties
 	 */
-	public static Properties[] load(File... files) throws IOException
-	{
+	public static Properties[] load(File... files) throws IOException {
 		Properties[] result = new Properties[files.length];
-		for (int i = 0; i < result.length; i++)
-		{
+		for (int i = 0; i < result.length; i++) {
 			result[i] = load(files[i]);
 		}
 		return result;
@@ -104,8 +105,8 @@ public class PropertiesUtils
 	 * @throws IOException
 	 *             if was unable to read properties
 	 */
-	public static Properties[] loadAllFromDirectory(String dir) throws IOException
-	{
+	public static Properties[] loadAllFromDirectory(String dir)
+			throws IOException {
 		return loadAllFromDirectory(new File(dir), false);
 	}
 
@@ -118,8 +119,8 @@ public class PropertiesUtils
 	 * @throws IOException
 	 *             if was unable to read properties
 	 */
-	public static Properties[] loadAllFromDirectory(File dir) throws IOException
-	{
+	public static Properties[] loadAllFromDirectory(File dir)
+			throws IOException {
 		return loadAllFromDirectory(dir, false);
 	}
 
@@ -134,8 +135,8 @@ public class PropertiesUtils
 	 * @throws IOException
 	 *             if was unable to read properties
 	 */
-	public static Properties[] loadAllFromDirectory(String dir, boolean recursive) throws IOException
-	{
+	public static Properties[] loadAllFromDirectory(String dir,
+			boolean recursive) throws IOException {
 		return loadAllFromDirectory(new File(dir), recursive);
 	}
 
@@ -150,10 +151,10 @@ public class PropertiesUtils
 	 * @throws IOException
 	 *             if was unable to read properties
 	 */
-	public static Properties[] loadAllFromDirectory(File dir, boolean recursive) throws IOException
-	{
-		Collection<File> files = FileUtils.listFiles(dir, new String[]
-		{ "properties" }, recursive);
+	public static Properties[] loadAllFromDirectory(File dir, boolean recursive)
+			throws IOException {
+		Collection<File> files = FileUtils.listFiles(dir,
+				new String[] { "properties" }, recursive);
 		return load(files.toArray(new File[files.size()]));
 	}
 }

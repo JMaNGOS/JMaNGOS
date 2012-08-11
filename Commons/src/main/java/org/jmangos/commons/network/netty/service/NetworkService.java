@@ -18,16 +18,13 @@ package org.jmangos.commons.network.netty.service;
 
 import org.jmangos.commons.service.Service;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Interface NetworkService.
  */
 public interface NetworkService extends Service {
 
-		  /**
-  		 * Current status of network.
-  		 */
-		  void status();
-		}
-
+	/**
+	 * Current status of network.
+	 */
+	void status();
+}

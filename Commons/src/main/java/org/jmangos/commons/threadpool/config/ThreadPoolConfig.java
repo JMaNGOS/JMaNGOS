@@ -16,16 +16,15 @@
  *******************************************************************************/
 package org.jmangos.commons.threadpool.config;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ThreadPoolConfig.
  */
 public class ThreadPoolConfig {
 
-  /** The GENERA l_ pool. */
-  public final static Integer GENERAL_POOL = 5;
+	/** The GENERA l_ pool. */
+	public final static Integer GENERAL_POOL = 5;
 
-  /** The INSTAN t_ pool. */
-  public final static Integer INSTANT_POOL = 5;
+	/** The INSTAN t_ pool. */
+	public final static Integer INSTANT_POOL = 5;
 
 }

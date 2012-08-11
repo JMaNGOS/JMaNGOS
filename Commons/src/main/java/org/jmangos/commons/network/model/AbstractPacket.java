@@ -32,75 +32,70 @@ package org.jmangos.commons.network.model;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractPacket.
- *
+ * 
  * @author KenM
  */
-abstract class AbstractPacket
-{
-	
+abstract class AbstractPacket {
+
 	/** The op code. */
-	protected int		opCode;
-	
+	protected int opCode;
+
 	/** The buf. */
-	private ChannelBuffer	buf;
+	private ChannelBuffer buf;
 
 	/**
 	 * Instantiates a new abstract packet.
 	 */
-	public AbstractPacket()
-	{
+	public AbstractPacket() {
 	}
 
 	/**
 	 * Instantiates a new abstract packet.
-	 *
-	 * @param opCode the op code
+	 * 
+	 * @param opCode
+	 *            the op code
 	 */
-	public AbstractPacket(int opCode)
-	{
+	public AbstractPacket(int opCode) {
 		this.opCode = opCode;
 	}
 
 	/**
 	 * Sets the byte buffer.
-	 *
-	 * @param buffer the new byte buffer
+	 * 
+	 * @param buffer
+	 *            the new byte buffer
 	 */
-	public final void setByteBuffer(ChannelBuffer buffer)
-	{
-		this.buf = buffer; 
+	public final void setByteBuffer(ChannelBuffer buffer) {
+		this.buf = buffer;
 	}
 
 	/**
 	 * Gets the byte buffer.
-	 *
+	 * 
 	 * @return the byte buffer
 	 */
-	public final ChannelBuffer getByteBuffer()
-	{
+	public final ChannelBuffer getByteBuffer() {
 		return buf;
 	}
 
 	/**
 	 * Gets the op code.
-	 *
+	 * 
 	 * @return the op code
 	 */
-	public int getOpCode()
-	{
+	public int getOpCode() {
 		return opCode;
 	}
 
 	/**
 	 * Sets the op code.
-	 *
-	 * @param opCode the new op code
+	 * 
+	 * @param opCode
+	 *            the new op code
 	 */
-	public void setOpCode(int opCode)
-	{
+	public void setOpCode(int opCode) {
 		this.opCode = opCode;
 	}
 }

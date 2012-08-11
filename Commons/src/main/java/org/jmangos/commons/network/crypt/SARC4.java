@@ -20,84 +20,86 @@ package org.jmangos.commons.network.crypt;
  * The Class SARC4.
  */
 public class SARC4 {
-	
+
 	/** The state. */
 	private byte state[] = new byte[256];
-    
-    /** The x. */
-    private int x;
-    
-    /** The y. */
-    private int y;
-	
+
+	/** The x. */
+	private int x;
+
+	/** The y. */
+	private int y;
+
 	/**
 	 * Init by seed.
-	 *
-	 * @param key - seed
+	 * 
+	 * @param key
+	 *            - seed
 	 * @return true, if successful
 	 */
 	public boolean init(byte[] key) {
 
-        for (int i=0; i < 256; i++) {
-            state[i] = (byte)i;
-        }
-        
-        x = 0;
-        y = 0;
-        
-        int index1 = 0;
-        int index2 = 0;
-        
-        byte tmp;
-        
-        if (key == null || key.length == 0) {
-            throw new NullPointerException();
-        }
-        
-        for (int i=0; i < 256; i++) {
+		for (int i = 0; i < 256; i++) {
+			state[i] = (byte) i;
+		}
 
-            index2 = ((key[index1] & 0xff) + (state[i] & 0xff) + index2) & 0xff;
+		x = 0;
+		y = 0;
 
-            tmp = state[i];
-            state[i] = state[index2];
-            state[index2] = tmp;
-            
-            index1 = (index1 + 1) % key.length;
-        }
+		int index1 = 0;
+		int index2 = 0;
+
+		byte tmp;
+
+		if (key == null || key.length == 0) {
+			throw new NullPointerException();
+		}
+
+		for (int i = 0; i < 256; i++) {
+
+			index2 = ((key[index1] & 0xff) + (state[i] & 0xff) + index2) & 0xff;
+
+			tmp = state[i];
+			state[i] = state[index2];
+			state[index2] = tmp;
+
+			index1 = (index1 + 1) % key.length;
+		}
 		return true;
-		
+
 	}
-	
+
 	/**
 	 * Update.
-	 *
-	 * @param buf the buf
+	 * 
+	 * @param buf
+	 *            the buf
 	 * @return the byte[]
 	 */
-	public byte[] update(byte[] buf){
+	public byte[] update(byte[] buf) {
 
-	        int xorIndex;
-	        byte tmp;
-	        
-	        if (buf == null) {
-	            return null;
-	        }
-	        
-	        byte[] result = new byte[buf.length];
-	        
-	        for (int i=0; i < buf.length; i++) {
+		int xorIndex;
+		byte tmp;
 
-	            x = (x + 1) & 0xff;
-	            y = ((state[x] & 0xff) + y) & 0xff;
+		if (buf == null) {
+			return null;
+		}
 
-	            tmp = state[x];
-	            state[x] = state[y];
-	            state[y] = tmp;
-	            
-	            xorIndex = ((state[x] &0xff) + (state[y] & 0xff)) & 0xff;
-	            result[i] = (byte)(buf[i] ^ state[xorIndex]);
-	        }
-	        
-	        return result;
-	    }
+		byte[] result = new byte[buf.length];
+
+		for (int i = 0; i < buf.length; i++) {
+
+			x = (x + 1) & 0xff;
+			y = ((state[x] & 0xff) + y) & 0xff;
+
+			tmp = state[x];
+			state[x] = state[y];
+			state[y] = tmp;
+
+			xorIndex = ((state[x] & 0xff) + (state[y] & 0xff)) & 0xff;
+			result[i] = (byte) (buf[i] ^ state[xorIndex]);
+		}
+
+		return result;
 	}
+}

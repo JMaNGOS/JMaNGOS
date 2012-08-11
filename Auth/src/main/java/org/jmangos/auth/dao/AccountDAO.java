@@ -21,94 +21,103 @@ import org.jmangos.commons.database.dao.DAO;
 
 /**
  * DAO that manages accounts.
- *
+ * 
  * @author MinimaJack
- *
+ * 
  */
-public abstract class AccountDAO implements DAO
-{
-	
+public abstract class AccountDAO implements DAO {
+
 	/**
 	 * Returns account by name or null.
-	 *
-	 * @param name account name
+	 * 
+	 * @param name
+	 *            account name
 	 * @return account object or null
 	 */
 	public abstract Account getAccount(String name);
 
 	/**
 	 * Retuns account id or -1 in case of error.
-	 *
-	 * @param name name of account
+	 * 
+	 * @param name
+	 *            name of account
 	 * @return id or -1 in case of error
 	 */
 	public abstract int getAccountId(String name);
 
 	/**
 	 * Reruns account count If error occured - returns -1.
-	 *
+	 * 
 	 * @return account count
 	 */
 	public abstract int getAccountCount();
 
 	/**
 	 * Update security key.
-	 *
-	 * @param account the account
+	 * 
+	 * @param account
+	 *            the account
 	 * @return true, if successful
 	 */
 	public abstract boolean updateSecurityKey(Account account);
-	
+
 	/**
 	 * Updates lastServer field of account.
-	 *
-	 * @param accountId account id
-	 * @param lastServer last accessed server
+	 * 
+	 * @param accountId
+	 *            account id
+	 * @param lastServer
+	 *            last accessed server
 	 * @return was updated successful or not
 	 */
 	public abstract boolean updateLastServer(int accountId, byte lastServer);
 
 	/**
 	 * Updates last ip that was used to access an account.
-	 *
-	 * @param accountId account id
-	 * @param ip ip address
+	 * 
+	 * @param accountId
+	 *            account id
+	 * @param ip
+	 *            ip address
 	 * @return was update successful or not
 	 */
 	public abstract boolean updateLastIp(int accountId, String ip);
 
 	/**
 	 * Get last ip that was used to access an account.
-	 *
-	 * @param accountId account id
+	 * 
+	 * @param accountId
+	 *            account id
 	 * @return ip address
 	 */
 	public abstract String getLastIp(int accountId);
 
 	/**
 	 * Returns uniquire class name for all implementations.
-	 *
+	 * 
 	 * @return uniquire class name for all implementations
 	 */
 	@Override
-	public final String getClassName() 
-	{
+	public final String getClassName() {
 		return AccountDAO.class.getName();
 	}
 
 	/**
 	 * Update session key.
-	 *
-	 * @param username the username
-	 * @param key the key
+	 * 
+	 * @param username
+	 *            the username
+	 * @param key
+	 *            the key
 	 * @return true, if successful
 	 */
 	public abstract boolean updateSessionKey(String username, String key);
 
 	/**
 	 * Gets the session key.
-	 *
-	 * @param username the username
+	 * 
+	 * @param username
+	 *            the username
 	 * @return the session key
 	 */
 	public abstract String getSessionKey(String username);

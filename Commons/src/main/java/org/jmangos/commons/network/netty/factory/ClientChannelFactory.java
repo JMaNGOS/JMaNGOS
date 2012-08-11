@@ -28,7 +28,6 @@ import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 
-// TODO: Auto-generated Javadoc
 /**
  * A factory for creating ClientChannel objects.
  */
@@ -36,17 +35,18 @@ public class ClientChannelFactory implements NetworkChannelFactory {
 
 	/** The channel factory. */
 	private ChannelFactory channelFactory;
-	
+
 	/** The isa. */
 	private InetSocketAddress isa;
-	
+
 	/** The bootstrap. */
 	private ClientBootstrap bootstrap;
 
 	/**
 	 * Instantiates a new client channel factory.
-	 *
-	 * @param isa the isa
+	 * 
+	 * @param isa
+	 *            the isa
 	 */
 	public ClientChannelFactory(InetSocketAddress isa) {
 		this.channelFactory = new NioClientSocketChannelFactory(
@@ -55,8 +55,11 @@ public class ClientChannelFactory implements NetworkChannelFactory {
 		this.isa = isa;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.netty.factory.NetworkChannelFactory#connect()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.wowemu.common.network.netty.factory.NetworkChannelFactory#connect()
 	 */
 	@Override
 	public Channel connect() {
@@ -64,8 +67,12 @@ public class ClientChannelFactory implements NetworkChannelFactory {
 		return channelFuture.awaitUninterruptibly().getChannel();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.netty.factory.NetworkChannelFactory#initialize(org.jboss.netty.channel.ChannelPipelineFactory)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.wowemu.common.network.netty.factory.NetworkChannelFactory#initialize
+	 * (org.jboss.netty.channel.ChannelPipelineFactory)
 	 */
 	@Override
 	public void initialize(ChannelPipelineFactory pipelineFactory) {
@@ -82,8 +89,12 @@ public class ClientChannelFactory implements NetworkChannelFactory {
 		((BasicPipelineFactory) pipelineFactory).setChannelFactory(this);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.netty.factory.NetworkChannelFactory#getAddress()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.wowemu.common.network.netty.factory.NetworkChannelFactory#getAddress
+	 * ()
 	 */
 	@Override
 	public InetSocketAddress getAddress() {
