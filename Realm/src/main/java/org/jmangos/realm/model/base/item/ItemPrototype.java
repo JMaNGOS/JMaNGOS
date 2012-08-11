@@ -196,6 +196,7 @@ public class ItemPrototype extends NamedObject {
 	// ScalingStatValues.dbc
 
 	/** damages. */
+    /*
     @Columns(columns = {
             @Column(name = "dmg_min1", nullable = false, insertable = true, updatable = true, length = 12, precision = 0),
             @Column(name = "dmg_max1", nullable = false, insertable = true, updatable = true, length = 12, precision = 0),
@@ -203,7 +204,8 @@ public class ItemPrototype extends NamedObject {
             @Column(name = "dmg_min2", nullable = false, insertable = true, updatable = true, length = 12, precision = 0),
             @Column(name = "dmg_max2", nullable = false, insertable = true, updatable = true, length = 12, precision = 0),
             @Column(name = "dmg_type2", nullable = false, insertable = true, updatable = true, length = 3, precision = 0),
-    })
+    })*/
+    @Transient
     private _Damage[] Damage = new _Damage[MAX_ITEM_PROTO_DAMAGES];
 
 	/** The Armor. */
@@ -399,7 +401,7 @@ public class ItemPrototype extends NamedObject {
 	
 	/** The Script id. */
     @Basic
-    @Column(name = "HolidayId", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    @Column(name = "ScriptId", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private int ScriptId;
 	
 	/** The Disenchant id. */

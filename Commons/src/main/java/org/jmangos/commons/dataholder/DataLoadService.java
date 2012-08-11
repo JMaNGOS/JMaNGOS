@@ -35,10 +35,9 @@ public interface DataLoadService<T> extends Service{
 
   /**
    * Reloading of data (after <method>load()</method> was executed).
-   *
-   * @return the t
+   * it's not load! no return, just represent the store
    */
-  public T reload();
+  public void reload();
 
   /**
    * Save of modified data.

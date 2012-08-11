@@ -26,13 +26,14 @@ import org.jmangos.realm.model.ClassLevel;
 import org.jmangos.realm.model.base.PlayerClassLevelInfo;
 
 import com.google.inject.Inject;
+import org.jmangos.realm.model.base.PlayerClassLevelInfoPK;
 
 /**
  * The Class PlayerClassLevelInfoStorages.
  */
 public class PlayerClassLevelInfoStorages
 		implements
-			DataLoadService<HashMap<ClassLevel, PlayerClassLevelInfo>> {
+			DataLoadService<HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo>> {
 	
 	/** The Constant log. */
 	private static final Logger log = Logger
@@ -43,7 +44,7 @@ public class PlayerClassLevelInfoStorages
 	SimpleDataDAO simpleDataDAO;
 	
 	/** The Player cli. */
-	private HashMap<ClassLevel, PlayerClassLevelInfo> playerCLI = new HashMap<ClassLevel, PlayerClassLevelInfo>();
+	private HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> playerCLI = new HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo>();
 
 	/* (non-Javadoc)
 	 * @see org.jmangos.commons.service.Service#start()
@@ -67,7 +68,7 @@ public class PlayerClassLevelInfoStorages
 	 * @see org.jmangos.commons.dataholder.DataLoadService#load()
 	 */
 	@Override
-	public HashMap<ClassLevel, PlayerClassLevelInfo> load() {
+	public HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> load() {
 		return playerCLI = simpleDataDAO.getClassLevelInfos();
 	}
 
@@ -75,9 +76,10 @@ public class PlayerClassLevelInfoStorages
 	 * @see org.jmangos.commons.dataholder.DataLoadService#reload()
 	 */
 	@Override
-	public HashMap<ClassLevel, PlayerClassLevelInfo> reload() {
-		playerCLI.clear();
-		return load();
+	public void reload() {
+		HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> tempPlayerCLI = load();
+        playerCLI = tempPlayerCLI;
+        tempPlayerCLI = null;
 	}
 
 	/* (non-Javadoc)
@@ -110,7 +112,7 @@ public class PlayerClassLevelInfoStorages
 	 * @see org.jmangos.commons.dataholder.DataLoadService#get()
 	 */
 	@Override
-	public HashMap<ClassLevel, PlayerClassLevelInfo> get() {
+	public HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> get() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -21,7 +21,7 @@ import java.util.HashMap;
 import javax.inject.Inject;
 
 import org.jmangos.auth.dao.AccountDAO;
-import org.jmangos.auth.model.Account;
+import org.jmangos.commons.model.Account;
 import org.jmangos.auth.utils.AccountUtils;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.model.NettyNetworkChannel;

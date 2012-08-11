@@ -1,16 +1,16 @@
 package org.jmangos.realm.network.netty.packetClient.client
 
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket
-import java.util.logging.Logger
 import javax.inject.Inject
 import org.jmangos.commons.database.DatabaseFactory
-import org.jmangos.realm.domain.QuestTemplate
+
 import java.nio.BufferUnderflowException
-import org.hibernate.Session
-import org.hibernate.Query
+
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_QUEST_QUERY_RESPONSE
 import javax.inject.Named
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender
+import org.jmangos.realm.service.QuestStorages
+import org.apache.log4j.Logger
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,16 +20,19 @@ import org.jmangos.commons.network.netty.sender.AbstractPacketSender
  * To change this template use File | Settings | File Templates.
  */
 public class CMSG_QUEST_QUERY extends AbstractWoWClientPacket {
-    Logger log = Logger.getLogger(CMSG_QUEST_QUERY.class.getSimpleName());
+    Logger log = Logger.getLogger( CMSG_QUEST_QUERY.class );
 
     @Inject
     @Named("client")
     private AbstractPacketSender sender;
 
     @Inject
+    private QuestStorages questStorages;
+
+    @Inject
     private DatabaseFactory databaseFactory;
 
-    private def questTemplate = null;
+    private def questProrotype = null;
 
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
@@ -37,18 +40,16 @@ public class CMSG_QUEST_QUERY extends AbstractWoWClientPacket {
         log.info("Quest query received (#" + questId + ")");
         skipAll();
 
-        Session session = databaseFactory.sessionFactory.openSession();
-        Query questTemplateQuery = session.createQuery("select qt from QuestTemplate qt where qt.id = :id").setInteger("id", questId);
-        questTemplate = (QuestTemplate) questTemplateQuery.uniqueResult();
+        questProrotype = questStorages.getQuest( );
     }
 
     @Override
     protected void runImpl() {
-        if (questTemplate == null)
+        if (questProrotype == null)
             return;
 
         def questResponse = new SMSG_QUEST_QUERY_RESPONSE()
-        questResponse.setQuest questTemplate
+        questResponse.setQuest questProrotype
 
         sender.send player.channel, questResponse
     }

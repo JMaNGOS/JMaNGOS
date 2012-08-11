@@ -22,17 +22,17 @@ package org.jmangos.realm.model.unit;
  */
 public enum Stats {
 	
-	/** The STA t_ strength. */
-	STAT_STRENGTH, 
- /** The STA t_ agility. */
- STAT_AGILITY, 
- /** The STA t_ stamina. */
- STAT_STAMINA, 
- /** The STA t_ intellect. */
- STAT_INTELLECT, 
- /** The STA t_ spirit. */
- STAT_SPIRIT;
+	/** The STRENGTH. */
+	STRENGTH,
+    /** The AGILITY. */
+    AGILITY,
+    /** The STAMINA. */
+    STAMINA,
+    /** The INTELLECT. */
+    INTELLECT,
+    /** The SPIRIT. */
+    SPIRIT;
 	
-	/** The MA x_ stats. */
+	/** The MAX stats. */
 	public static int MAX_STATS = 5;
 }

@@ -253,11 +253,11 @@ public class Player extends Units implements ChanneledObject {
 		logger.debug(String.format("HP is: \t\t\t%d\t\tMP is: \t\t\t%d",
 				GetMaxHealth(), GetMaxPower(Powers.POWER_MANA)));
 		logger.debug(String.format("AGILITY is: \t\t%f\tSTRENGTH is: \t\t%f",
-				GetStat(Stats.STAT_AGILITY), GetStat(Stats.STAT_STRENGTH)));
+				GetStat(Stats.AGILITY), GetStat(Stats.STRENGTH)));
 		logger.debug(String.format("INTELLECT is: \t\t%f\tSPIRIT is: \t\t%f",
-				GetStat(Stats.STAT_INTELLECT), GetStat(Stats.STAT_SPIRIT)));
+				GetStat(Stats.INTELLECT), GetStat(Stats.SPIRIT)));
 		logger.debug(String.format("STAMINA is: \t\t%f",
-				GetStat(Stats.STAT_STAMINA)));
+				GetStat(Stats.STAMINA)));
 		logger.debug(String
 				.format("Armor is: \t\t\t%d\t\tBlock is: \t\t%f", GetArmor(),
 						GetFloatValue(PlayerFields.PLAYER_BLOCK_PERCENTAGE)));

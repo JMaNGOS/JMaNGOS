@@ -1,18 +1,17 @@
 package org.jmangos.realm.network.netty.packetClient.server
 
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket
-import org.jmangos.realm.domain.QuestTemplate
+import org.jmangos.realm.model.base.QuestPrototype
 
 /**
  * Created with IntelliJ IDEA.
- * User: Goofy
+ * User: paalgyula
  * Date: 2012.08.08.
  * Time: 14:52
- * To change this template use File | Settings | File Templates.
  */
 class SMSG_QUEST_QUERY_RESPONSE extends AbstractWoWServerPacket {
 
-    def QuestTemplate questTemplate;
+    def QuestPrototype questTemplate;
     def setQuest = { questTemplate ->
         this.questTemplate = questTemplate
     }

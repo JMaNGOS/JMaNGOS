@@ -23,7 +23,6 @@ import gnu.trove.map.hash.TLongObjectHashMap;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import groovy.ui.Console;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
@@ -364,7 +363,7 @@ public class PlayerService {
 				.getBasehealth());
 		player.SetUInt32Value(UnitFields.UNIT_FIELD_BASE_MANA, classInfo
 				.getBasemana());
-		player.SetArmor(info.getStats(Stats.STAT_AGILITY) * 2);
+		player.SetArmor(info.getStats(Stats.AGILITY) * 2);
 
 		// InitStatBuffMods();
 

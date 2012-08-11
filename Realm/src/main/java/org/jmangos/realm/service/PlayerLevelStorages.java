@@ -25,12 +25,13 @@ import org.jmangos.realm.model.RaceClassLevel;
 import org.jmangos.realm.model.base.PlayerLevelInfo;
 
 import com.google.inject.Inject;
+import org.jmangos.realm.model.base.PlayerLevelInfoPK;
 
 /**
  * The Class PlayerLevelStorages.
  */
 public class PlayerLevelStorages implements
-		DataLoadService<HashMap<RaceClassLevel, PlayerLevelInfo>> {
+		DataLoadService<HashMap<PlayerLevelInfoPK, PlayerLevelInfo>> {
 
 	/** The Constant log. */
 	private static final Logger log = Logger
@@ -41,7 +42,7 @@ public class PlayerLevelStorages implements
 	SimpleDataDAO simpleDataDAO;
 
 	/** The Player Race Class Level info. */
-	private HashMap<RaceClassLevel, PlayerLevelInfo> playerRCLI = new HashMap<RaceClassLevel, PlayerLevelInfo>();
+	private HashMap<PlayerLevelInfoPK, PlayerLevelInfo> playerRCLI = new HashMap<PlayerLevelInfoPK, PlayerLevelInfo>();
 
 	/*
 	 * (non-Javadoc)
@@ -72,7 +73,7 @@ public class PlayerLevelStorages implements
 	 * @see org.jmangos.commons.dataholder.DataLoadService#load()
 	 */
 	@Override
-	public HashMap<RaceClassLevel, PlayerLevelInfo> load() {
+	public HashMap<PlayerLevelInfoPK, PlayerLevelInfo> load() {
 		// TODO Auto-generated method stub
 		return playerRCLI = simpleDataDAO.getRaceClassLevelInfos();
 	}
@@ -83,9 +84,10 @@ public class PlayerLevelStorages implements
 	 * @see org.jmangos.commons.dataholder.DataLoadService#reload()
 	 */
 	@Override
-	public HashMap<RaceClassLevel, PlayerLevelInfo> reload() {
-		// TODO Auto-generated method stub
-		return null;
+	public void reload() {
+        HashMap<PlayerLevelInfoPK, PlayerLevelInfo> playerRCLITemp = simpleDataDAO.getRaceClassLevelInfos();
+        playerRCLI = playerRCLITemp;
+        playerRCLITemp = null;
 	}
 
 	/*
@@ -105,7 +107,7 @@ public class PlayerLevelStorages implements
 	 * @see org.jmangos.commons.dataholder.DataLoadService#get()
 	 */
 	@Override
-	public HashMap<RaceClassLevel, PlayerLevelInfo> get() {
+	public HashMap<PlayerLevelInfoPK, PlayerLevelInfo> get() {
 		// TODO Auto-generated method stub
 		return null;
 	}
