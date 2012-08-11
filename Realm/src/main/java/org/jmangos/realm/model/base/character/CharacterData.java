@@ -2,8 +2,10 @@ package org.jmangos.realm.model.base.character;
 
 import org.jmangos.realm.model.Classes;
 import org.jmangos.realm.model.Races;
+import org.jmangos.realm.model.player.PlayerHomeBindData;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -53,7 +55,7 @@ public class CharacterData {
 	private boolean cinematic;
     
     @Enumerated(EnumType.STRING)
-	@Column(name = "class", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
+	@Column(name = "class", nullable = true, insertable = true, updatable = true, length = 50, precision = 0)
 	private Classes clazz;
     
     @Basic
@@ -197,7 +199,7 @@ public class CharacterData {
 	private int power7;
 
     @Enumerated(EnumType.STRING)
-	@Column(name = "race", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
+	@Column(name = "race", nullable = true, insertable = true, updatable = true, length = 50, precision = 0)
 	private Races race;
     
     @Basic
@@ -287,6 +289,9 @@ public class CharacterData {
     @Basic
 	@Column(name = "zone", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
 	private int zone;
+
+    @OneToOne(targetEntity = PlayerHomeBindData.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private PlayerHomeBindData homeBindData;
 
     /**
      * Empty constructor
@@ -835,5 +840,13 @@ public class CharacterData {
 
     public void setRace(Races race) {
         this.race = race;
+    }
+
+    public PlayerHomeBindData getHomeBindData() {
+        return homeBindData;
+    }
+
+    public void setHomeBindData(PlayerHomeBindData homeBindData) {
+        this.homeBindData = homeBindData;
     }
 }
