@@ -32,7 +32,7 @@ public class DatabaseFactory implements Service {
 	/**
      * Returns Hibernate Session
      */
-    private static SessionFactory worldSessionFactory;
+    private static SessionFactory ACCOUNTSessionFactory;
     private static SessionFactory charactersSessionFactory;
     private static SessionFactory accountsSessionFactory;
 
@@ -56,9 +56,9 @@ public class DatabaseFactory implements Service {
 		}
 
         try {
-            getWorldSessionFactory();
+            getACCOUNTSessionFactory();
         } catch (Exception e ) {
-            log.fatal("World Database initialization error!", e);
+            log.fatal("ACCOUNT Database initialization error!", e);
         }
 
         log.info("Successfully connected to database");
@@ -73,7 +73,7 @@ public class DatabaseFactory implements Service {
 	public int getActiveConnections()
 	{
         Long count = getCharactersSessionFactory().getStatistics().getSessionOpenCount() - getCharactersSessionFactory().getStatistics().getSessionCloseCount();
-		count += getWorldSessionFactory().getStatistics().getSessionOpenCount() - getWorldSessionFactory().getStatistics().getSessionCloseCount();
+		count += getACCOUNTSessionFactory().getStatistics().getSessionOpenCount() - getACCOUNTSessionFactory().getStatistics().getSessionCloseCount();
 
         return count.intValue();
 	}
@@ -96,8 +96,8 @@ public class DatabaseFactory implements Service {
 	 */
 	public synchronized void stop() {
 		try {
-            if( worldSessionFactory != null )
-			    worldSessionFactory.close();
+            if( ACCOUNTSessionFactory != null )
+			    ACCOUNTSessionFactory.close();
             if (charactersSessionFactory != null)
                 charactersSessionFactory.close();
             if (accountsSessionFactory!=null)
@@ -106,32 +106,33 @@ public class DatabaseFactory implements Service {
 			log.warn("Failed to shutdown DatabaseFactory", e);
 		}
 
-		worldSessionFactory = null;
+		ACCOUNTSessionFactory = null;
         charactersSessionFactory = null;
         accountsSessionFactory = null;
 	}
 
 	/**
-     * Returns World Database's hibernate session
+     * Returns ACCOUNT Database's hibernate session
      * @return Hibernate Session
      */
-    public static SessionFactory getWorldSessionFactory() {
+    public static SessionFactory getACCOUNTSessionFactory() {
         if (charactersSessionFactory == null) {
             AnnotationConfiguration config = new AnnotationConfiguration();
-            config.setProperty( "hibernate.connection.driver_class", DatabaseConfig.WORLD_DATABASE_DRIVER );
-            config.setProperty( "hibernate.connection.url", DatabaseConfig.WORLD_DATABASE_URL + DatabaseConfig.WORLD_DATABASE_NAME );
-            config.setProperty( "hibernate.connection.username", DatabaseConfig.WORLD_DATABASE_USER );
-            config.setProperty( "hibernate.connection.password", DatabaseConfig.WORLD_DATABASE_PASSWORD );
-            config.setProperty( "hibernate.dialect", DatabaseConfig.WORLD_DATABASE_DIALECT );
-            // TODO: configure cache and pool
-            config.configure("world.cfg.xml");
-            worldSessionFactory = config.buildSessionFactory();
-            worldSessionFactory.getStatistics().setStatisticsEnabled( true );
+            config.setProperty( "hibernate.connection.driver_class", DatabaseConfig.ACCOUNT_DATABASE_DRIVER );
+            config.setProperty( "hibernate.connection.url", DatabaseConfig.ACCOUNT_DATABASE_URL + DatabaseConfig.ACCOUNT_DATABASE_NAME + "?autoReconnect=true" );
+            config.setProperty( "hibernate.connection.username", DatabaseConfig.ACCOUNT_DATABASE_USER );
+            config.setProperty( "hibernate.connection.password", DatabaseConfig.ACCOUNT_DATABASE_PASSWORD );
+            config.setProperty( "hibernate.dialect", DatabaseConfig.ACCOUNT_DATABASE_DIALECT );
+            config.setProperty( "hibernate.c3p0.min_size", DatabaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MIN.toString() );
+            config.setProperty( "hibernate.c3p0.max_size", DatabaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MAX.toString() );
+            config.configure("ACCOUNT.cfg.xml");
+            ACCOUNTSessionFactory = config.buildSessionFactory();
+            ACCOUNTSessionFactory.getStatistics().setStatisticsEnabled( true );
 
-            log.info( "Hibernate worldSessionFactory initialized..." );
+            log.info( "Hibernate ACCOUNTSessionFactory initialized..." );
         }
             
-        return worldSessionFactory;
+        return ACCOUNTSessionFactory;
     }
 
     /**
@@ -144,11 +145,12 @@ public class DatabaseFactory implements Service {
 
             AnnotationConfiguration config = new AnnotationConfiguration();
             config.setProperty( "hibernate.connection.driver_class", DatabaseConfig.CHARS_DATABASE_DRIVER );
-            config.setProperty( "hibernate.connection.url", DatabaseConfig.CHARS_DATABASE_URL + DatabaseConfig.CHARS_DATABASE_NAME );
+            config.setProperty( "hibernate.connection.url", DatabaseConfig.CHARS_DATABASE_URL + DatabaseConfig.CHARS_DATABASE_NAME + "?autoReconnect=true" );
             config.setProperty( "hibernate.connection.username", DatabaseConfig.CHARS_DATABASE_USER );
             config.setProperty( "hibernate.connection.password", DatabaseConfig.CHARS_DATABASE_PASSWORD );
             config.setProperty( "hibernate.dialect", DatabaseConfig.CHARS_DATABASE_DIALECT );
-            // TODO: configure cache and pool
+            config.setProperty( "hibernate.c3p0.min_size", DatabaseConfig.CHARS_DATABASE_CONNECTIONS_MIN.toString() );
+            config.setProperty( "hibernate.c3p0.max_size", DatabaseConfig.CHARS_DATABASE_CONNECTIONS_MAX.toString() );
             config.configure("/characters.cfg.xml");
 
             charactersSessionFactory = config.buildSessionFactory();
@@ -164,11 +166,12 @@ public class DatabaseFactory implements Service {
             // Bring up hibernate
             AnnotationConfiguration config = new AnnotationConfiguration();
             config.setProperty( "hibernate.connection.driver_class", DatabaseConfig.ACCOUNT_DATABASE_DRIVER );
-            config.setProperty( "hibernate.connection.url", DatabaseConfig.ACCOUNT_DATABASE_URL + DatabaseConfig.ACCOUNT_DATABASE_NAME );
+            config.setProperty( "hibernate.connection.url", DatabaseConfig.ACCOUNT_DATABASE_URL + DatabaseConfig.ACCOUNT_DATABASE_NAME + "?autoReconnect=true" );
             config.setProperty( "hibernate.connection.username", DatabaseConfig.ACCOUNT_DATABASE_USER );
             config.setProperty( "hibernate.connection.password", DatabaseConfig.ACCOUNT_DATABASE_PASSWORD );
             config.setProperty( "hibernate.dialect", DatabaseConfig.ACCOUNT_DATABASE_DIALECT );
-            // TODO: configure cache and pool
+            config.setProperty( "hibernate.c3p0.min_size", DatabaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MIN.toString() );
+            config.setProperty( "hibernate.c3p0.max_size", DatabaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MAX.toString() );
             config.configure("/accounts.cfg.xml");
 
             accountsSessionFactory = config.buildSessionFactory();

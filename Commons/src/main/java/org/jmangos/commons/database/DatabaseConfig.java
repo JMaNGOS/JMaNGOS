@@ -85,7 +85,7 @@ public class DatabaseConfig
 	 * World Maximum amount of database connections
 	 */
 	@Property(key = "world.database.connections.max", defaultValue="10")
-	public static String 		WORLD_DATABASE_CONNECTIONS_MAX;
+	public static Integer 		WORLD_DATABASE_CONNECTIONS_MAX;
 
     /****************************-- CHARACTER --******************************/
     /**
@@ -134,7 +134,7 @@ public class DatabaseConfig
      * Characters Maximum amount of database connections
      */
     @Property(key = "chars.database.connections.max", defaultValue="10")
-    public static String 		CHARS_DATABASE_CONNECTIONS_MAX;
+    public static Integer 		CHARS_DATABASE_CONNECTIONS_MAX;
 
 
     /****************************-- ACCOUNT --******************************/
@@ -184,7 +184,7 @@ public class DatabaseConfig
      * Characters Maximum amount of database connections
      */
     @Property(key = "account.database.connections.max", defaultValue="10")
-    public static String 		ACCOUNT_DATABASE_CONNECTIONS_MAX;
+    public static Integer 		ACCOUNT_DATABASE_CONNECTIONS_MAX;
 
 
     /**
