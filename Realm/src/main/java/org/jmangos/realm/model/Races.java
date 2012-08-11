@@ -2,23 +2,40 @@ package org.jmangos.realm.model;
 
 /**
  * Created with IntelliJ IDEA.
- * User: ITEXPERT
+ * User: paalgyula
  * Date: 2012.08.10.
  * Time: 4:24
- * To change this template use File | Settings | File Templates.
  */
 public enum Races {
-    HUMAN,
-    DWARF,
-    NIGHT_ELF,
-    GNOME,
-    DRAENEI,
-    //WORGEN,
-    //PANDAREN,
-    ORC,
-    UNDEAD,
-    TAUREN,
-    TROLL,
-    BLOOD_ELF,
-    //GOBLIN
+    DRAENEI(0x11),
+    DWARF(0x03),
+    GNOME(0x07),
+    HUMAN(0x01),
+    NIGHTELF(0x04),
+    BLOODELF(0x10),
+    ORC(0x02),
+    TAUREN(0x06),
+    TROLL(0x08),
+    UNDEAD(0x05);
+
+    private int value;
+    Races(int value) {
+        this.value = value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return this.value;
+    }
+
+    public static Races get( int value ) {
+        for ( Races val : values() )
+            if ( val.getValue() == value )
+                return val;
+
+        return null;
+    }
 }
