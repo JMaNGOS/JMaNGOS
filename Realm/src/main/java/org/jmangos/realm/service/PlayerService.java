@@ -26,19 +26,18 @@ import javax.inject.Named;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
+import org.jmangos.commons.model.Account;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.RealmServer;
 import org.jmangos.realm.dao.PlayerDAO;
-import org.jmangos.realm.domain.Characters;
 import org.jmangos.realm.model.Classes;
 import org.jmangos.realm.model.InventoryTemplate;
 import org.jmangos.realm.model.Races;
-import org.jmangos.realm.model.account.Account;
 import org.jmangos.realm.model.base.PlayerClassLevelInfo;
 import org.jmangos.realm.model.base.PlayerLevelInfo;
 import org.jmangos.realm.model.base.WorldObject;
-import org.jmangos.realm.model.base.character.CharactersData;
+import org.jmangos.realm.model.base.character.CharacterData;
 import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.base.item.ItemPrototype;
 import org.jmangos.realm.model.base.update.PlayerFields;
@@ -107,7 +106,7 @@ public class PlayerService {
 	 */
 	public Player preparePlayer(NettyNetworkChannel chanel, long guid) {
 		Account curAccount = (Account) chanel.getChanneledObject();
-		Player player = new Player(curAccount.getCharacterData(guid));
+		Player player = new Player( playerDAO.getCharacter( guid ) );
 		player.setChannel(chanel);
 		chanel.setActiveObject(player);
 		return player;
@@ -176,9 +175,9 @@ public class PlayerService {
         sender.send(player.getChannel(), new SMSG_INSTANCE_DIFFICULTY());
 
         sender.send(player.getChannel(), new SMSG_LOGIN_VERIFY_WORLD(player));
-		sender.send(player.getChannel(), new SMSG_ACCOUNT_DATA_TIMES(
-				SMSG_ACCOUNT_DATA_TIMES.PER_CHARACTER_CACHE_MASK, player
-						.getAccount().getAccountData()));
+        // TODO: Reimplement (not needed to log in!)
+		/*sender.send(player.getChannel(), new SMSG_ACCOUNT_DATA_TIMES(
+				SMSG_ACCOUNT_DATA_TIMES.PER_CHARACTER_CACHE_MASK, player.getAccount().getAccountData()));*/
 		sender.send(player.getChannel(), new SMSG_FEATURE_SYSTEM_STATUS());
 		//sender.send(player.getChannel(), new SMSG_LEARNED_DANCE_MOVES());
 		sender.send(player.getChannel(), new SMSG_BINDPOINTUPDATE(player));
@@ -203,13 +202,14 @@ public class PlayerService {
 
         PlayerService.playerlist.put(player.getObjectId(), player);
 
+        /**
+         * Groovy console pass parameters
+         */
         RealmServer.console.setVariable( "playerService", this );
         RealmServer.console.setVariable( "sender", sender );
-        RealmServer.console.setVariable("player", player);
+        RealmServer.console.setVariable( "player", player );
         RealmServer.console.setVariable( "updatePacket", updatePacket );
         RealmServer.console.setVariable( "update", new SMSG_UPDATE_OBJECT( player ) );
-
-        player.update();
 
         return player;
 	}
@@ -220,7 +220,7 @@ public class PlayerService {
 
     public void savePlayer( Player player ) {
         Session session = databaseFactory.getWorldSessionFactory().openSession();
-        Characters character = new Characters();
+        CharacterData character = new CharacterData();
         character.setAccount( 1 );
         character.setGuid( new Long( player.getObjectGuid().getRawValue() ).intValue() );
         character.setPlayerBytes( player.GetUInt32Value( PlayerFields.PLAYER_BYTES ) );
@@ -253,45 +253,33 @@ public class PlayerService {
 	 */
 	public boolean LoadFromDB(Player player) {
 		player.initfields();
-		PlayerCharacterData plchd = playerDAO.loadFromDB(player.getObjectId());
-		player.SetUInt64Value(UnitFields.OBJECT_FIELD_GUID, player
-				.getObjectGuid().getRawValue());
-		CharactersData ch = player.getCharacterData();
+        player.SetUInt64Value(UnitFields.OBJECT_FIELD_GUID, player.getObjectGuid().getRawValue());
+		CharacterData ch = player.getCharacterData();
 		int bytes0 = 0;
-		bytes0 |= ch.getRace();
-		bytes0 |= ch.getClazz() << 8;
+		bytes0 |= ch.getRace().getValue();
+		bytes0 |= ch.getClazz().getValue() << 8;
 		bytes0 |= ch.getGender() << 16;
 		player.SetUInt32Value( UnitFields.UNIT_FIELD_BYTES_0, bytes0);
 		player.SetUInt32Value( UnitFields.UNIT_FIELD_LEVEL, ch.getLevel());
-		player.SetUInt32Value( PlayerFields.PLAYER_XP, plchd.getXP());
-		player._LoadIntoDataField(plchd.getExploredZones().split(" "),
-				PlayerFields.PLAYER_EXPLORED_ZONES_1.getValue(),
-				PLAYER_EXPLORED_ZONES_SIZE);
-		player._LoadIntoDataField(plchd.getKnownTitles().split(" "),
-				PlayerFields.PLAYER__FIELD_KNOWN_TITLES.getValue(), KNOWN_TITLES_SIZE * 2);
+		player.SetUInt32Value( PlayerFields.PLAYER_XP, ch.getXp() );
+		player._LoadIntoDataField( ch.getExploredZones().split(" "), PlayerFields.PLAYER_EXPLORED_ZONES_1.getValue(), PLAYER_EXPLORED_ZONES_SIZE );
+		player._LoadIntoDataField( ch.getKnownTitles().split(" "), PlayerFields.PLAYER__FIELD_KNOWN_TITLES.getValue(), KNOWN_TITLES_SIZE * 2 );
 
-		player.SetFloatValue(UnitFields.UNIT_FIELD_BOUNDINGRADIUS,
-				0.388999998569489f);
+		player.SetFloatValue(UnitFields.UNIT_FIELD_BOUNDINGRADIUS, 0.388999998569489f);
 		player.SetFloatValue(UnitFields.UNIT_FIELD_COMBATREACH, 1.5f);
 		player.SetFloatValue(UnitFields.UNIT_FIELD_HOVERHEIGHT, 1.0f);
-		player.setMoney(plchd.getMoney());
+		player.setMoney( ch.getMoney() );
 
-		player.SetUInt32Value(PlayerFields.PLAYER_BYTES, ch.getPlayerBytes());
-		player
-				.SetUInt32Value(PlayerFields.PLAYER_BYTES_2, ch
-						.getPlayerBytes2());
-		player.SetUInt32Value(PlayerFields.PLAYER_BYTES_3,
-				(plchd.getDrunk() & 0xFFFE) | ch.getGender());
-		player.SetUInt32Value(PlayerFields.PLAYER_FLAGS, ch.getPlayerFlags());
-		player.SetUInt32Value(PlayerFields.PLAYER_FIELD_WATCHED_FACTION_INDEX,
-				plchd.getWatchedFaction());
+		player.SetUInt32Value( PlayerFields.PLAYER_BYTES, ch.getPlayerBytes());
+		player.SetUInt32Value( PlayerFields.PLAYER_BYTES_2, ch.getPlayerBytes2() );
+		player.SetUInt32Value( PlayerFields.PLAYER_BYTES_3, ( ch.getDrunk() & 0xFFFE) | ch.getGender() );
+		player.SetUInt32Value( PlayerFields.PLAYER_FLAGS, ch.getPlayerFlags() );
+		player.SetUInt32Value( PlayerFields.PLAYER_FIELD_WATCHED_FACTION_INDEX, ch.getWatchedFaction() );
 
-		player.SetUInt64Value(PlayerFields.PLAYER_FIELD_KNOWN_CURRENCIES, plchd
-				.getKnownCurrencies());
+		player.SetUInt64Value( PlayerFields.PLAYER_FIELD_KNOWN_CURRENCIES, ch.getKnownCurrencies() );
 
-		player.SetUInt32Value(PlayerFields.PLAYER_AMMO_ID, plchd.getAmmoId());
-		player.SetByteValue(PlayerFields.PLAYER_FIELD_BYTES, 2, plchd
-				.getActionBars());
+		player.SetUInt32Value( PlayerFields.PLAYER_AMMO_ID, ch.getAmmoId() );
+		player.SetByteValue( PlayerFields.PLAYER_FIELD_BYTES, 2, (byte)ch.getActionBars() );
 		// FIXME load from dbc
 		int modelId = 0;
 		player.SetUInt32Value(UnitFields.UNIT_FIELD_DISPLAYID, modelId);
@@ -299,9 +287,10 @@ public class PlayerService {
 
 		player.outDebugValue();
 
-		player.setHomeBind(playerDAO.loadHomeBind(player.getObjectId()));
+        // TODO: characters_homebind tabla integracioja
+		player.setHomeBind( null );
 		InitStatsForLevel(player);
-		LoadInventory(player);
+		//LoadInventory(player);
 		player.outDebugValue();
 		return false;
 	}
@@ -347,23 +336,32 @@ public class PlayerService {
 		player.SetUInt32Value(PlayerFields.PLAYER_FIELD_MAX_LEVEL,
 				CONFIG_UINT32_MAX_PLAYER_LEVEL);
 		player.SetUInt32Value(PlayerFields.PLAYER_NEXT_LEVEL_XP, simpleStorages
-				.GetXPForLevel(player.getCharacterData().getLevel()));
+				.GetXPForLevel( (byte)player.getCharacterData().getLevel() ) );
 
 		// UpdateSkillsForLevel ();
 
 		player.SetFloatValue(UnitFields.UNIT_MOD_CAST_SPEED, 1.0f);
 
 		for (Stats stat : Stats.values()) {
-			int val = info.getStats(stat);
-			player.setCreateStat(stat, val);
-			player.SetUInt32Value(UnitFields.UNIT_FIELD_STAT0
-					+ stat.ordinal(), val);
+            try {
+                int val = info.getStats(stat);
+                player.setCreateStat(stat, val);
+                player.SetUInt32Value(UnitFields.UNIT_FIELD_STAT0
+                        + stat.ordinal(), val);
+            } catch (Exception e) {
+                logger.info( "Error while loading stats..." );
+            }
 		}
-		player.SetUInt32Value(UnitFields.UNIT_FIELD_BASE_HEALTH, classInfo
-				.getBasehealth());
-		player.SetUInt32Value(UnitFields.UNIT_FIELD_BASE_MANA, classInfo
-				.getBasemana());
-		player.SetArmor(info.getStats(Stats.AGILITY) * 2);
+
+        try {
+            player.SetUInt32Value(UnitFields.UNIT_FIELD_BASE_HEALTH, classInfo
+                    .getBasehealth());
+            player.SetUInt32Value(UnitFields.UNIT_FIELD_BASE_MANA, classInfo
+                    .getBasemana());
+            player.SetArmor(info.getStats(Stats.AGILITY) * 2);
+        } catch (Exception e) {
+            logger.info( "Error while loading base units (hp, mana, armor )" );
+        }
 
 		// InitStatBuffMods();
 
@@ -385,7 +383,9 @@ public class PlayerService {
 		for (Powers power : Powers.values())
 			player.SetMaxPower(power, player.GetCreatePowers(power));
 
-		player.SetMaxHealth(classInfo.getBasehealth());
+        // TODO TEMP DISABLED
+		//player.SetMaxHealth(classInfo.getBasehealth());
+
 		// stamina bonus will applied later
 
 		// player.SetFlag(PlayerFields.UNIT_FIELD_FLAGS,

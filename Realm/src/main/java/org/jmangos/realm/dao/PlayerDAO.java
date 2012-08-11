@@ -18,8 +18,11 @@ package org.jmangos.realm.dao;
 
 import java.util.List;
 
+import org.hibernate.Session;
+import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
 import org.jmangos.realm.model.InventoryTemplate;
+import org.jmangos.realm.model.base.character.CharacterData;
 import org.jmangos.realm.model.player.PlayerCharacterData;
 import org.jmangos.realm.model.player.PlayerHomeBindData;
 
@@ -36,6 +39,12 @@ public abstract class PlayerDAO implements DAO {
 	public String getClassName() {
 		return PlayerDAO.class.getName();
 	}
+
+    public CharacterData getCharacter( long characterId ) {
+        Session session = DatabaseFactory.getCharactersSessionFactory().openSession();
+        CharacterData characterData = (CharacterData)session.get( CharacterData.class, characterId );
+        return characterData;
+    }
 
 	/**
 	 * Load home bind.

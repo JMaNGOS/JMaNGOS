@@ -7,6 +7,6 @@
         <!-- DB schema will be updated if needed -->
         <property name="hbm2ddl.auto">update</property>
         <property name="current_session_context_class">thread</property>
-        <mapping class="org.jmangos.realm.domain.Characters"/>
+        <mapping class="org.jmangos.realm.model.base.character.CharacterData"/>
     </session-factory>
 </hibernate-configuration>

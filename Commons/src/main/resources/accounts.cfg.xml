@@ -8,6 +8,6 @@
         <property name="hbm2ddl.auto">update</property>
         <property name="current_session_context_class">thread</property>
         <mapping class="org.jmangos.commons.model.Account"/>
-        <mapping class="org.jmangos.auth.model.Realm"/>
+        <mapping class="org.jmangos.commons.model.Realm"/>
     </session-factory>
 </hibernate-configuration>

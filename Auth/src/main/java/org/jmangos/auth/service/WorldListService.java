@@ -22,7 +22,7 @@ import javolution.util.FastMap;
 
 import org.apache.log4j.Logger;
 import org.jmangos.auth.dao.RealmDAO;
-import org.jmangos.auth.model.Realm;
+import org.jmangos.commons.model.Realm;
 import org.jmangos.commons.service.Service;
 
 public class WorldListService implements Service {

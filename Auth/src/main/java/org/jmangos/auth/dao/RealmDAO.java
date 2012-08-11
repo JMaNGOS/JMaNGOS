@@ -17,15 +17,13 @@
 package org.jmangos.auth.dao;
 
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
-import org.jmangos.auth.model.Realm;
+import org.jmangos.commons.model.Realm;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
 
 import javolution.util.FastMap;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**

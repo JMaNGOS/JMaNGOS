@@ -38,9 +38,10 @@ public class CMSG_TUTORIAL_FLAG extends AbstractWoWClientPacket {
 		}
 		int rInt = (Flag % 32);
 
-		int tutorials = getAccount().getTutorials(wInt);
+        // TODO:FIXME
+		int tutorials = 0;//getAccount().getTutorials(wInt); /* disabled by paalgyula */
 		tutorials |= (1 << rInt);
-		getAccount().setTutorials(tutorials, wInt);
+		//getAccount().setTutorials(tutorials, wInt); /* disabled by paalgyula */
 
 	}
 	

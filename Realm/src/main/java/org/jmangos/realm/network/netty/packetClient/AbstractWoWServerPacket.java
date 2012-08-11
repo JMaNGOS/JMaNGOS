@@ -16,9 +16,9 @@
  *******************************************************************************/
 package org.jmangos.realm.network.netty.packetClient;
 
+import org.jmangos.commons.model.Account;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.SendablePacket;
-import org.jmangos.realm.model.account.Account;
 import org.jmangos.realm.model.player.Player;
 
 /**
@@ -39,8 +39,7 @@ public abstract class AbstractWoWServerPacket extends SendablePacket
 	/** (non-Javadoc)
 	 * @see org.jmangos.commons.network.model.SendablePacket#write()
 	 */
-	public void write() throws RuntimeException
-	{
+	public void write() throws RuntimeException {
 		writeH(this.opCode);
 		writeImpl();
 	}
@@ -50,7 +49,7 @@ public abstract class AbstractWoWServerPacket extends SendablePacket
 	 *
 	 * @return the account
 	 */
-	public Account getAccount(){ 
+	public Account getAccount(){
 		return (Account)(getChannel().getChanneledObject());
 	}
 	

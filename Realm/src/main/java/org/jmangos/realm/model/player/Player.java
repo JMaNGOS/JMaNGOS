@@ -17,11 +17,11 @@
 package org.jmangos.realm.model.player;
 
 import org.apache.log4j.Logger;
+import org.jmangos.commons.model.Account;
 import org.jmangos.commons.network.model.ChanneledObject;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.NetworkChannel;
-import org.jmangos.realm.model.account.Account;
-import org.jmangos.realm.model.base.character.CharactersData;
+import org.jmangos.realm.model.base.character.CharacterData;
 import org.jmangos.realm.model.base.guid.TypeId;
 import org.jmangos.realm.model.base.guid.TypeMask;
 import org.jmangos.realm.model.base.item.Item;
@@ -50,7 +50,7 @@ public class Player extends Units implements ChanneledObject {
 	final static int TRADE_SLOT_COUNT = 7;
 
 	/** The character data. */
-	private CharactersData characterData;
+	private CharacterData characterData;
 	
 	/** The channel. */
 	private NetworkChannel channel;
@@ -104,8 +104,8 @@ public class Player extends Units implements ChanneledObject {
 	 *
 	 * @param cd the cd
 	 */
-	public Player(CharactersData cd) {
-		super(cd.getObjectId());
+	public Player(CharacterData cd) {
+		super(cd.getGuid());
 		setName(cd.getName());
 		valuesCount = PlayerFields.PLAYER_END.getValue();
 		objectType.add(TypeMask.TYPEMASK_PLAYER);
@@ -121,7 +121,7 @@ public class Player extends Units implements ChanneledObject {
 	 *
 	 * @param characterData the characterData to set
 	 */
-	public final void setCharacterData(CharactersData characterData) {
+	public final void setCharacterData(CharacterData characterData) {
 		this.characterData = characterData;
 		setName(characterData.getName());
 	}
@@ -164,7 +164,7 @@ public class Player extends Units implements ChanneledObject {
 	 *
 	 * @return the characterData
 	 */
-	public CharactersData getCharacterData() {
+	public CharacterData getCharacterData() {
 		return characterData;
 	}
 
@@ -191,8 +191,7 @@ public class Player extends Units implements ChanneledObject {
 	 * @return the account
 	 */
 	public Account getAccount() {
-		return (Account) ((NettyNetworkChannel) getChannel())
-				.getChanneledObject();
+		return (Account)((NettyNetworkChannel) getChannel()).getChanneledObject();
 	}
 
 	/**

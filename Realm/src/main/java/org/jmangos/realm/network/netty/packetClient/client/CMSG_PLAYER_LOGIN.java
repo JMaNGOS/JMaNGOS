@@ -61,7 +61,6 @@ public class CMSG_PLAYER_LOGIN  extends AbstractWoWClientPacket {
 		Player player = playerService.preparePlayer(getClient(), guid);
 		playerService.LoadFromDB(player);
 		playerService.sendInicialPackets(player);
-		
 	}
 
 }

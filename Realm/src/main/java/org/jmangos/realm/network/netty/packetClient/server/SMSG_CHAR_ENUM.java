@@ -19,18 +19,17 @@ package org.jmangos.realm.network.netty.packetClient.server;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.jmangos.realm.model.base.character.CharactersData;
+import org.jmangos.realm.model.base.character.CharacterData;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 import org.jmangos.realm.network.netty.packetClient.client.CMSG_AUTH_SESSION;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SMSG_CHAR_ENUM.
  */
 public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
 	
 	/** The charlist. */
-	private List<CharactersData> charlist;
+	private List<CharacterData> charlist;
 	
 	/** The Constant logger. */
 	private static final Logger logger = Logger
@@ -47,7 +46,7 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
 	 *
 	 * @param charlist the charlist
 	 */
-	public SMSG_CHAR_ENUM(List<CharactersData> charlist) {
+	public SMSG_CHAR_ENUM(List<CharacterData> charlist) {
 		this.charlist = charlist;
 	}
 
@@ -58,11 +57,12 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
 	public void writeImpl() {
 		logger.info("CHARLIST SIZE "+charlist.size());
 		writeC(charlist.size());
-		for (CharactersData character : charlist) {
-			writeQ(character.getObjectId());
+		for (CharacterData character : charlist) {
+			writeQ(character.getGuid());
+            //writePackedGuid( character.getGuid() );
 			writeS(character.getName());
-			writeC(character.getRace());
-			writeC(character.getClazz());
+			writeC((byte)character.getRace().getValue());
+			writeC((byte)character.getClazz().getValue());
 			writeC(character.getGender());
 			int playerBytes = character.getPlayerBytes();
 			writeC(playerBytes & 0xFF);
@@ -73,25 +73,33 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
 			writeC(character.getLevel());
 			writeD(character.getZone());
 			writeD(character.getMap());
-			writeF(character.getPos_x());
-			writeF(character.getPos_y());
-			writeF(character.getPos_z());
-			writeD(character.getGuildId());
+			writeF(character.getPositionX());
+			writeF(character.getPositionY());
+			writeF(character.getPositionY());
+            // TODO: implement guild
+			writeD( -1 );
+            // Ban, dead, help, cloak, rename values. default: no flags
 			writeD(0);
 			writeD(character.getAtLoginFlags());
-			writeC(0); // FIXME check at login first
-			writeD(character.getPetDisplayId());
-			writeD(character.getPetLevel());
-			writeD(character.getPetFamily());
-			for (int i = 0; i < character.getItems().length; i++) {
-				writeD(character.getItems()[i].getDisplayInfoID());
+
+            writeC(0); // FIXME check at login first
+            // TODO: implement Pet!
+			writeD( 0x00 /*character.getPetDisplayId()*/ );
+			writeD( 0x00 /*character.getPetLevel()*/ );
+			writeD( 0x00 /*character.getPetFamily()*/ );
+
+            // TODO: implement inventory
+			/*for (int i = 0; i < character.getItems().length; i++) {
+				writeD(character.getItems-()[i].getDisplayInfoID());
 				writeC(character.getItems()[i].getDisplayInfoID());
 				writeD(character.getItems()[i].getEnchantAuraId());
-			}
-			for (int i = 0; i < character.getBags().length; i++) {
-				writeD(0);
-				writeC(0);
-				writeD(0);
+			}*/
+
+            // TODO: implement bags
+            for (int i = 0; i < /*character.getBags().length*/23; i++) {
+				writeD(0); // DisplayID
+				writeC(0); // InventoryType
+				writeD(0); // Enchantment
 			}
 		}
 

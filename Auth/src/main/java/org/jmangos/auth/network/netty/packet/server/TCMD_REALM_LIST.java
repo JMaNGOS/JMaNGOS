@@ -18,7 +18,7 @@ package org.jmangos.auth.network.netty.packet.server;
 
 import org.apache.log4j.Logger;
 import org.jmangos.commons.model.Account;
-import org.jmangos.auth.model.Realm;
+import org.jmangos.commons.model.Realm;
 import org.jmangos.auth.network.netty.packet.AbstractWoWServerPacket;
 import org.jmangos.auth.service.WorldListService;
 

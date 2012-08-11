@@ -30,7 +30,8 @@ public class SMSG_TUTORIAL_FLAGS extends AbstractWoWServerPacket {
 	@Override
 	protected void writeImpl() {
 		for (int i = 0; i < 8; i++) {
-			writeD(getAccount().getTutorials(i));
+            // TODO: reimplement tutorials
+			writeD( 0x111111 /*getAccount().getTutorials(i) disabled by paalgyula */);
 		}
 	}
 }
