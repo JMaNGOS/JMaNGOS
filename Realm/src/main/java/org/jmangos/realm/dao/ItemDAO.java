@@ -26,7 +26,6 @@ import org.jmangos.realm.model.base.item.ItemPrototype;
 
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ItemDAO.
  */
@@ -53,6 +52,7 @@ public class ItemDAO implements DAO {
         Query query = session.createQuery( "from ItemPrototype" );
 
         TIntObjectHashMap<ItemPrototype> map = new TIntObjectHashMap<ItemPrototype>();
+        @SuppressWarnings("unchecked")
         List<ItemPrototype> itemPrototypeList = (List<ItemPrototype>)query.list();
 
         // Fill map
