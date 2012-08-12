@@ -18,8 +18,14 @@ package org.jmangos.realm.dao;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
+import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
 import org.jmangos.realm.model.base.item.ItemPrototype;
+
+import java.util.List;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -41,7 +47,17 @@ public class ItemDAO implements DAO {
 	 * @return the t int object hash map
 	 */
 	public TIntObjectHashMap<ItemPrototype> loadItemPrototypes() {
-        return new TIntObjectHashMap<ItemPrototype>();
+        Session session = DatabaseFactory.getWorldSessionFactory().openSession();
+        Criteria crit = session.createCriteria(ItemPrototype.class);
+
+        TIntObjectHashMap<ItemPrototype> map = new TIntObjectHashMap<ItemPrototype>();
+
+        // Fill map
+        for ( ItemPrototype item : (List<ItemPrototype>)crit.list() ) {
+            map.put( item.getEntry(), item );
+        }
+
+        return map;
     }
 
 	/**
@@ -51,6 +67,7 @@ public class ItemDAO implements DAO {
 	 * @return the item prototype
 	 */
 	public ItemPrototype loadItemPrototype(int guid) {
-        return null;
+        Session session = DatabaseFactory.getWorldSessionFactory().openSession();
+        return (ItemPrototype)session.get( ItemPrototype.class, guid );
     }
 }
