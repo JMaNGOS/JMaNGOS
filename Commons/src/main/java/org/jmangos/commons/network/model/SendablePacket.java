@@ -53,7 +53,7 @@ public abstract class SendablePacket extends AbstractPacket
 	/**
 	 * Write c.
 	 *
-	 * @param value the value
+	 * @param value the value (uint8)
 	 */
 	protected final void writeC(boolean value)
 	{
@@ -63,7 +63,7 @@ public abstract class SendablePacket extends AbstractPacket
 	/**
 	 * Write c.
 	 *
-	 * @param value the value
+	 * @param value the value (uint8)
 	 */
 	protected final void writeC(int value)
 	{
@@ -73,7 +73,7 @@ public abstract class SendablePacket extends AbstractPacket
 	/**
 	 * Write h.
 	 *
-	 * @param value the value
+	 * @param value the value (uint16)
 	 */
 	protected final void writeH(boolean value)
 	{
@@ -83,7 +83,7 @@ public abstract class SendablePacket extends AbstractPacket
 	/**
 	 * Write h.
 	 *
-	 * @param value the value
+	 * @param value the value (uint16)
 	 */
 	protected final void writeH(int value)
 	{
@@ -93,7 +93,7 @@ public abstract class SendablePacket extends AbstractPacket
 	/**
 	 * Write d.
 	 *
-	 * @param value the value
+	 * @param value the value (uint32)
 	 */
 	protected final void writeD(boolean value)
 	{
@@ -103,7 +103,7 @@ public abstract class SendablePacket extends AbstractPacket
 	/**
 	 * Write d.
 	 *
-	 * @param value the value
+	 * @param value the value (uint32)
 	 */
 	protected final void writeD(int value)
 	{
@@ -113,7 +113,7 @@ public abstract class SendablePacket extends AbstractPacket
 	/**
 	 * Write d.
 	 *
-	 * @param value the value
+	 * @param value the value (uint32)
 	 */
 	protected final void writeD(long value)
 	{
@@ -123,7 +123,7 @@ public abstract class SendablePacket extends AbstractPacket
 	/**
 	 * Write q.
 	 *
-	 * @param value the value
+	 * @param value the value (uint64)
 	 */
 	protected final void writeQ(boolean value)
 	{
@@ -133,7 +133,7 @@ public abstract class SendablePacket extends AbstractPacket
 	/**
 	 * Write q.
 	 *
-	 * @param value the value
+	 * @param value the value (uint64)
 	 */
 	protected final void writeQ(long value)
 	{
@@ -143,7 +143,7 @@ public abstract class SendablePacket extends AbstractPacket
 	/**
 	 * Write f.
 	 *
-	 * @param value the value
+	 * @param value the value (float)
 	 */
 	protected final void writeF(float value)
 	{
@@ -153,7 +153,7 @@ public abstract class SendablePacket extends AbstractPacket
 	/**
 	 * Write f.
 	 *
-	 * @param value the value
+	 * @param value the value (float)
 	 */
 	protected final void writeF(int value)
 	{
@@ -173,7 +173,7 @@ public abstract class SendablePacket extends AbstractPacket
 	/**
 	 * Write packed guid.
 	 *
-	 * @param guid the guid
+	 * @param guid the guid (uint64)
 	 */
 	protected final void writePackedGuid(long guid)
 	{

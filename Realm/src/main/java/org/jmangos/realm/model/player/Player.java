@@ -26,13 +26,8 @@ import org.jmangos.realm.model.base.guid.TypeId;
 import org.jmangos.realm.model.base.guid.TypeMask;
 import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.base.update.PlayerFields;
-import org.jmangos.realm.model.base.update.UnitFields;
-import org.jmangos.realm.model.unit.Powers;
-import org.jmangos.realm.model.unit.SpellSchools;
-import org.jmangos.realm.model.unit.Stats;
-import org.jmangos.realm.model.unit.UnitMoveType;
-import org.jmangos.realm.model.unit.Units;
-import org.jmangos.realm.model.unit.WeaponAttackType;
+import org.jmangos.realm.model.base.update.UnitField;
+import org.jmangos.realm.model.unit.*;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -270,16 +265,16 @@ public class Player extends Units implements ChanneledObject {
 				GetResistance(SpellSchools.SPELL_SCHOOL_ARCANE)));
 		logger.debug(String.format(
                 "MIN_DAMAGE is: \t\t%f\tMAX_DAMAGE is: \t\t%f",
-                GetFloatValue(UnitFields.UNIT_FIELD_MINDAMAGE),
-                GetFloatValue(UnitFields.UNIT_FIELD_MAXDAMAGE)));
+                GetFloatValue(UnitField.UNIT_FIELD_MINDAMAGE),
+                GetFloatValue(UnitField.UNIT_FIELD_MAXDAMAGE)));
 		logger.debug(String.format(
 				"MIN_OFFHAND_DAMAGE is: \t%f\tMAX_OFFHAND_DAMAGE is: \t%f",
-				GetFloatValue(UnitFields.UNIT_FIELD_MINOFFHANDDAMAGE),
-				GetFloatValue(UnitFields.UNIT_FIELD_MAXOFFHANDDAMAGE)));
+				GetFloatValue(UnitField.UNIT_FIELD_MINOFFHANDDAMAGE),
+				GetFloatValue(UnitField.UNIT_FIELD_MAXOFFHANDDAMAGE)));
 		logger.debug(String.format(
 				"MIN_RANGED_DAMAGE is: \t%f\tMAX_RANGED_DAMAGE is: \t%f",
-				GetFloatValue(UnitFields.UNIT_FIELD_MINRANGEDDAMAGE),
-				GetFloatValue(UnitFields.UNIT_FIELD_MAXRANGEDDAMAGE)));
+				GetFloatValue(UnitField.UNIT_FIELD_MINRANGEDDAMAGE),
+				GetFloatValue(UnitField.UNIT_FIELD_MAXRANGEDDAMAGE)));
 		logger.debug(String.format(
 				"ATTACK_TIME is: \t\t%d\t\tRANGE_ATTACK_TIME is: \t%d",
 				GetAttackTime(WeaponAttackType.BASE_ATTACK), GetAttackTime(WeaponAttackType.RANGED_ATTACK)));

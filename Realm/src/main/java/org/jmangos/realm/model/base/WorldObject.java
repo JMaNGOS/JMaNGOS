@@ -16,18 +16,18 @@
  *******************************************************************************/
 package org.jmangos.realm.model.base;
 
-import java.nio.ByteOrder;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jmangos.commons.model.NamedObject;
 import org.jmangos.realm.model.base.guid.ObjectGuid;
 import org.jmangos.realm.model.base.guid.TypeId;
 import org.jmangos.realm.model.base.guid.TypeMask;
-import org.jmangos.realm.model.base.update.PlayerFields;
+import org.jmangos.realm.model.base.update.UpdateField;
+
+import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -139,12 +139,12 @@ public class WorldObject extends NamedObject {
     /**
      * Sets the u int32 value.
      *
-     * @param playerFields the PlayerFields enum
+     * @param playerField the PlayerFields enum
      * @param value the value
      */
-    public void SetUInt32Value( PlayerFields playerFields, int value) {
-        m_uint32Values.setInt(playerFields.getValue()*4, value);
-        updateFlagList.add( playerFields.getValue() );
+    public void SetUInt32Value( UpdateField playerField, int value) {
+        m_uint32Values.setInt(playerField.getValue()*4, value);
+        updateFlagList.add( playerField.getValue() );
     }
 
 	/**
@@ -160,11 +160,11 @@ public class WorldObject extends NamedObject {
     /**
      * Gets the u int32 value.
      *
-     * @param playerField the PlayerField
+     * @param updateField the PlayerField
      * @return the int
      */
-    public int GetUInt32Value( PlayerFields playerField ) {
-        return m_uint32Values.getInt( playerField.getValue() * 4 );
+    public int GetUInt32Value( UpdateField updateField) {
+        return m_uint32Values.getInt( updateField.getValue() * 4 );
     }
 
 	/**
@@ -181,12 +181,11 @@ public class WorldObject extends NamedObject {
     /**
      * Sets the u int64 value.
      *
-     * @param playerFields the i
+     * @param updateField the i
      * @param value the value
      */
-    public void SetUInt64Value( PlayerFields playerFields, long value) {
-        m_uint32Values.setLong( playerFields.getValue() * 4, value);
-        updateFlagList.add( playerFields.getValue() );
+    public void SetUInt64Value( UpdateField updateField, long value) {
+        SetUInt64Value( updateField.getValue(), value );
     }
 	
 	/**
@@ -203,12 +202,12 @@ public class WorldObject extends NamedObject {
     /**
      * Gets the u int64 value.
      *
-     * @param playerFields the i
+     * @param updateField the i
      * @param value the value
      * @return the long
      */
-    public long GetUInt64Value( PlayerFields playerFields, long value) {
-        return m_uint32Values.getLong( playerFields.getValue() * 4 );
+    public long GetUInt64Value( UpdateField updateField, long value) {
+        return m_uint32Values.getLong( updateField.getValue() * 4 );
     }
 	
 	/**
@@ -267,12 +266,12 @@ public class WorldObject extends NamedObject {
     /**
      * Sets the byte value.
      *
-     * @param playerFields the PlayerFields index
+     * @param updateField the PlayerFields index
      * @param offset the offset
      * @param value the value
      */
-    public void SetByteValue( PlayerFields playerFields, int offset, byte value){
-        SetByteValue( playerFields.getValue(), offset, value );
+    public void SetByteValue( UpdateField updateField, int offset, byte value){
+        SetByteValue( updateField.getValue(), offset, value );
     }
 	
 	/**
@@ -285,6 +284,16 @@ public class WorldObject extends NamedObject {
 		m_uint32Values.setFloat(i*4, value);
         updateFlagList.add( i );
 	}
+
+    /**
+     * Sets the float value.
+     *
+     * @param field the field
+     * @param value the value
+     */
+    public void SetFloatValue( UpdateField field, float value ) {
+        SetFloatValue( field.getValue(), value );
+    }
 	
 	/**
      * Gets the float value.
@@ -299,10 +308,10 @@ public class WorldObject extends NamedObject {
     /**
      * Gets the float value.
      *
-     * @param playerFields the i
+     * @param updateField the i
      * @return the float
      */
-    public float GetFloatValue( PlayerFields playerFields ) {
-        return GetFloatValue( playerFields.getValue() );
+    public float GetFloatValue( UpdateField updateField ) {
+        return GetFloatValue(updateField.getValue());
     }
 }

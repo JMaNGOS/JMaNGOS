@@ -34,8 +34,9 @@ import org.jmangos.realm.model.base.WorldObject;
 import org.jmangos.realm.model.base.character.CharacterData;
 import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.base.item.ItemPrototype;
+import org.jmangos.realm.model.base.update.ObjectFields;
 import org.jmangos.realm.model.base.update.PlayerFields;
-import org.jmangos.realm.model.base.update.UnitFields;
+import org.jmangos.realm.model.base.update.UnitField;
 import org.jmangos.realm.model.player.Player;
 import org.jmangos.realm.model.unit.Powers;
 import org.jmangos.realm.model.unit.SpellSchools;
@@ -253,21 +254,21 @@ public class PlayerService {
 	 */
 	public boolean LoadFromDB(Player player) {
 		player.initfields();
-        player.SetUInt64Value(UnitFields.OBJECT_FIELD_GUID, player.getObjectGuid().getRawValue());
+        player.SetUInt64Value( ObjectFields.OBJECT_FIELD_GUID, player.getObjectGuid().getRawValue() );
 		CharacterData ch = player.getCharacterData();
 		int bytes0 = 0;
 		bytes0 |= ch.getRace().getValue();
 		bytes0 |= ch.getClazz().getValue() << 8;
 		bytes0 |= ch.getGender() << 16;
-		player.SetUInt32Value( UnitFields.UNIT_FIELD_BYTES_0, bytes0);
-		player.SetUInt32Value( UnitFields.UNIT_FIELD_LEVEL, ch.getLevel());
+		player.SetUInt32Value( UnitField.UNIT_FIELD_BYTES_0, bytes0);
+		player.SetUInt32Value( UnitField.UNIT_FIELD_LEVEL, ch.getLevel());
 		player.SetUInt32Value( PlayerFields.PLAYER_XP, ch.getXp() );
 		player._LoadIntoDataField( ch.getExploredZones().split(" "), PlayerFields.PLAYER_EXPLORED_ZONES_1.getValue(), PLAYER_EXPLORED_ZONES_SIZE );
 		player._LoadIntoDataField( ch.getKnownTitles().split(" "), PlayerFields.PLAYER__FIELD_KNOWN_TITLES.getValue(), KNOWN_TITLES_SIZE * 2 );
 
-		player.SetFloatValue(UnitFields.UNIT_FIELD_BOUNDINGRADIUS, 0.388999998569489f);
-		player.SetFloatValue(UnitFields.UNIT_FIELD_COMBATREACH, 1.5f);
-		player.SetFloatValue(UnitFields.UNIT_FIELD_HOVERHEIGHT, 1.0f);
+		player.SetFloatValue(UnitField.UNIT_FIELD_BOUNDINGRADIUS, 0.388999998569489f);
+		player.SetFloatValue(UnitField.UNIT_FIELD_COMBATREACH, 1.5f);
+		player.SetFloatValue(UnitField.UNIT_FIELD_HOVERHEIGHT, 1.0f);
 		player.setMoney(ch.getMoney());
 
 		player.SetUInt32Value( PlayerFields.PLAYER_BYTES, ch.getPlayerBytes());
@@ -282,8 +283,8 @@ public class PlayerService {
 		player.SetByteValue( PlayerFields.PLAYER_FIELD_BYTES, 2, (byte)ch.getActionBars() );
 		// FIXME load from dbc
 		int modelId = 0;
-		player.SetUInt32Value(UnitFields.UNIT_FIELD_DISPLAYID, modelId);
-		player.SetUInt32Value(UnitFields.UNIT_FIELD_NATIVEDISPLAYID, modelId);
+		player.SetUInt32Value(UnitField.UNIT_FIELD_DISPLAYID, modelId);
+		player.SetUInt32Value(UnitField.UNIT_FIELD_NATIVEDISPLAYID, modelId);
 
 		player.outDebugValue();
 
@@ -340,23 +341,22 @@ public class PlayerService {
 
 		// UpdateSkillsForLevel ();
 
-		player.SetFloatValue(UnitFields.UNIT_MOD_CAST_SPEED, 1.0f);
+		player.SetFloatValue(UnitField.UNIT_MOD_CAST_SPEED, 1.0f);
 
 		for (Stats stat : Stats.values()) {
             try {
                 int val = info.getStats(stat);
                 player.setCreateStat(stat, val);
-                player.SetUInt32Value(UnitFields.UNIT_FIELD_STAT0
-                        + stat.ordinal(), val);
+                player.SetUInt32Value(UnitField.UNIT_FIELD_STAT0.getValue() + stat.ordinal(), val);
             } catch (Exception e) {
                 logger.info( "Error while loading stats..." );
             }
 		}
 
         try {
-            player.SetUInt32Value(UnitFields.UNIT_FIELD_BASE_HEALTH, classInfo
+            player.SetUInt32Value(UnitField.UNIT_FIELD_BASE_HEALTH, classInfo
                     .getBasehealth());
-            player.SetUInt32Value(UnitFields.UNIT_FIELD_BASE_MANA, classInfo
+            player.SetUInt32Value(UnitField.UNIT_FIELD_BASE_MANA, classInfo
                     .getBasemana());
             player.SetArmor(info.getStats(Stats.AGILITY) * 2);
         } catch (Exception e) {
@@ -369,11 +369,10 @@ public class PlayerService {
 			player.SetFloatValue(PlayerFields.PLAYER_FIELD_MOD_DAMAGE_DONE_PCT.getValue()
 					+ spellscool.ordinal(), 1.00f);
 
-		player.SetFloatValue(UnitFields.UNIT_FIELD_BASEATTACKTIME, 2000.0f);
-		player.SetFloatValue(UnitFields.UNIT_FIELD_BASEATTACKTIME + 1,
-				2000.0f);
+		player.SetFloatValue(UnitField.UNIT_FIELD_BASEATTACKTIME, 2000.0f);
+		player.SetFloatValue(UnitField.UNIT_FIELD_BASEATTACKTIME.getValue() + 1, 2000.0f);
 		// offhand attack time
-		player.SetFloatValue(UnitFields.UNIT_FIELD_RANGEDATTACKTIME, 2000.0f);
+		player.SetFloatValue(UnitField.UNIT_FIELD_RANGEDATTACKTIME, 2000.0f);
 
 		// set armor (resistance 0) to original value (create_agility*2)
 

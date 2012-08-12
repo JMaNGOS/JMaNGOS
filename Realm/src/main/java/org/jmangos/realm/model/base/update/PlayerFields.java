@@ -21,9 +21,9 @@ package org.jmangos.realm.model.base.update;
  * The Class PlayerFields.
  */
 
-import static org.jmangos.realm.model.base.update.UnitFields.UNIT_END;
+import static org.jmangos.realm.model.base.update.UnitField.UNIT_END;
 
-public enum PlayerFields {
+public enum PlayerFields implements UpdateField {
     PLAYER_DUEL_ARBITTER(UNIT_END + 0x0000),
     /**
      * The PLAYER_DUEL_ARBITTER.
@@ -88,7 +88,12 @@ public enum PlayerFields {
     /**
      * The PLAYER_QUEST_LOG_1_4.
      */
-    PLAYER_QUEST_LOG_1_4(UNIT_END + 0x000E), // Size: 1; Type: INT; Flags: PRIVATE
+    PLAYER_QUEST_LOG_1_4(UNIT_END + 0x000D), // Size: 1; Type: INT; Flags: PRIVATE
+
+    /**
+     *
+     */
+    PLAYER_QUEST_LOG_1_5(UNIT_END + 0x000E), // Size: 1; Type: INT; Flags: PRIVATE
 
     /**
      * The PLAYER_QUEST_LOG_2_1.
@@ -104,6 +109,11 @@ public enum PlayerFields {
      * The PLAYER_QUEST_LOG_2_3.
      */
     PLAYER_QUEST_LOG_2_3(UNIT_END + 0x0011), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
+
+    /**
+     *
+     */
+    PLAYER_QUEST_LOG_2_4(UNIT_END + 0x0012), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
 
     /**
      * The PLAYER_QUEST_LOG_2_5.
@@ -125,6 +135,8 @@ public enum PlayerFields {
      */
     PLAYER_QUEST_LOG_3_3(UNIT_END + 0x0016), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
 
+
+    PLAYER_QUEST_LOG_3_4(UNIT_END + 0x0017), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
     /**
      * The PLAYE r_ ques t_ lo g_3_5.
      */
@@ -145,6 +157,8 @@ public enum PlayerFields {
      */
     PLAYER_QUEST_LOG_4_3(UNIT_END + 0x001B), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
 
+
+    PLAYER_QUEST_LOG_4_4(UNIT_END + 0x001C), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
     /**
      * The PLAYE r_ ques t_ lo g_4_5.
      */
@@ -165,6 +179,8 @@ public enum PlayerFields {
      */
     PLAYER_QUEST_LOG_5_3(UNIT_END + 0x0020), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
 
+
+    PLAYER_QUEST_LOG_5_4(UNIT_END + 0x0021), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
     /**
      * The PLAYE r_ ques t_ lo g_5_5.
      */
@@ -186,6 +202,10 @@ public enum PlayerFields {
     PLAYER_QUEST_LOG_6_3(UNIT_END + 0x0025), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
 
     /**
+     * Fuck it
+     */
+    PLAYER_QUEST_LOG_6_4(UNIT_END + 0x0026), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
+    /**
      * The PLAYE r_ ques t_ lo g_6_5.
      */
     PLAYER_QUEST_LOG_6_5(UNIT_END + 0x0027), // Size: 1; Type: INT; Flags: PRIVATE
@@ -204,6 +224,11 @@ public enum PlayerFields {
      * The PLAYE r_ ques t_ lo g_7_3.
      */
     PLAYER_QUEST_LOG_7_3(UNIT_END + 0x002A), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
+
+    /**
+     *
+     */
+    PLAYER_QUEST_LOG_7_4(UNIT_END + 0x002B), // Size: 1; Type: INT; Flags: PRIVATE
 
     /**
      * The PLAYE r_ ques t_ lo g_7_5.
@@ -246,6 +271,11 @@ public enum PlayerFields {
     PLAYER_QUEST_LOG_9_3(UNIT_END + 0x0034), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
 
     /**
+     *
+     */
+    PLAYER_QUEST_LOG_9_4(UNIT_END + 0x0035), // Size: 1; Type: INT; Flags: PRIVATE
+
+    /**
      * The PLAYE r_ ques t_ lo g_9_5.
      */
     PLAYER_QUEST_LOG_9_5(UNIT_END + 0x0036), // Size: 1; Type: INT; Flags: PRIVATE
@@ -264,6 +294,11 @@ public enum PlayerFields {
      * The PLAYE r_ ques t_ lo g_10_3.
      */
     PLAYER_QUEST_LOG_10_3(UNIT_END + 0x0039), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
+
+    /**
+     *
+     */
+    PLAYER_QUEST_LOG_10_4(UNIT_END + 0x003A), // Size: 1; Type: INT; Flags: PRIVATE
 
     /**
      * The PLAYE r_ ques t_ lo g_10_5.
@@ -286,6 +321,11 @@ public enum PlayerFields {
     PLAYER_QUEST_LOG_11_3(UNIT_END + 0x003E), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
 
     /**
+     *
+     */
+    PLAYER_QUEST_LOG_11_4(UNIT_END + 0x003F), // Size: 1; Type: INT; Flags: PRIVATE
+
+    /**
      * The PLAYE r_ ques t_ lo g_11_5.
      */
     PLAYER_QUEST_LOG_11_5(UNIT_END + 0x0040), // Size: 1; Type: INT; Flags: PRIVATE
@@ -304,6 +344,11 @@ public enum PlayerFields {
      * The PLAYE r_ ques t_ lo g_12_3.
      */
     PLAYER_QUEST_LOG_12_3(UNIT_END + 0x0043), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
+
+    /**
+     *
+     */
+    PLAYER_QUEST_LOG_12_4(UNIT_END + 0x0044), // Size: 1; Type: INT; Flags: PRIVATE
 
     /**
      * The PLAYE r_ ques t_ lo g_12_5.
@@ -326,6 +371,11 @@ public enum PlayerFields {
     PLAYER_QUEST_LOG_13_3(UNIT_END + 0x0048), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
 
     /**
+     *
+     */
+    PLAYER_QUEST_LOG_13_4(UNIT_END + 0x0049), // Size: 1; Type: INT; Flags: PRIVATE
+
+    /**
      * The PLAYE r_ ques t_ lo g_13_5.
      */
     PLAYER_QUEST_LOG_13_5(UNIT_END + 0x004A), // Size: 1; Type: INT; Flags: PRIVATE
@@ -344,6 +394,11 @@ public enum PlayerFields {
      * The PLAYE r_ ques t_ lo g_14_3.
      */
     PLAYER_QUEST_LOG_14_3(UNIT_END + 0x004D), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
+
+    /**
+     *
+     */
+    PLAYER_QUEST_LOG_14_4(UNIT_END + 0x004E), // Size: 1; Type: INT; Flags: PRIVATE
 
     /**
      * The PLAYE r_ ques t_ lo g_14_5.
@@ -366,6 +421,11 @@ public enum PlayerFields {
     PLAYER_QUEST_LOG_15_3(UNIT_END + 0x0052), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
 
     /**
+     *
+     */
+    PLAYER_QUEST_LOG_15_4(UNIT_END + 0x0053), // Size: 1; Type: INT; Flags: PRIVATE
+
+    /**
      * The PLAYE r_ ques t_ lo g_15_5.
      */
     PLAYER_QUEST_LOG_15_5(UNIT_END + 0x0054), // Size: 1; Type: INT; Flags: PRIVATE
@@ -384,6 +444,11 @@ public enum PlayerFields {
      * The PLAYE r_ ques t_ lo g_16_3.
      */
     PLAYER_QUEST_LOG_16_3(UNIT_END + 0x0057), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
+
+    /**
+     *
+     */
+    PLAYER_QUEST_LOG_16_4(UNIT_END + 0x0058), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
 
     /**
      * The PLAYE r_ ques t_ lo g_16_5.
@@ -406,6 +471,11 @@ public enum PlayerFields {
     PLAYER_QUEST_LOG_17_3(UNIT_END + 0x005C), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
 
     /**
+     *
+     */
+    PLAYER_QUEST_LOG_17_4(UNIT_END + 0x005D), // Size: 1; Type: INT; Flags: PRIVATE
+
+    /**
      * The PLAYE r_ ques t_ lo g_17_5.
      */
     PLAYER_QUEST_LOG_17_5(UNIT_END + 0x005E), // Size: 1; Type: INT; Flags: PRIVATE
@@ -424,6 +494,11 @@ public enum PlayerFields {
      * The PLAYE r_ ques t_ lo g_18_3.
      */
     PLAYER_QUEST_LOG_18_3(UNIT_END + 0x0061), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
+
+    /**
+     *
+     */
+    PLAYER_QUEST_LOG_18_4(UNIT_END + 0x0062), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
 
     /**
      * The PLAYE r_ ques t_ lo g_18_5.
@@ -446,6 +521,10 @@ public enum PlayerFields {
     PLAYER_QUEST_LOG_19_3(UNIT_END + 0x0066), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
 
     /**
+     *
+     */
+    PLAYER_QUEST_LOG_19_4(UNIT_END + 0x0067), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
+    /**
      * The PLAYE r_ ques t_ lo g_19_5.
      */
     PLAYER_QUEST_LOG_19_5(UNIT_END + 0x0068), // Size: 1; Type: INT; Flags: PRIVATE
@@ -464,6 +543,11 @@ public enum PlayerFields {
      * The PLAYE r_ ques t_ lo g_20_3.
      */
     PLAYER_QUEST_LOG_20_3(UNIT_END + 0x006B), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
+
+    /**
+     *
+     */
+    PLAYER_QUEST_LOG_20_4(UNIT_END + 0x006C), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
 
     /**
      * The PLAYE r_ ques t_ lo g_20_5.
@@ -486,6 +570,11 @@ public enum PlayerFields {
     PLAYER_QUEST_LOG_21_3(UNIT_END + 0x0070), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
 
     /**
+     *
+     */
+    PLAYER_QUEST_LOG_21_4(UNIT_END + 0x0071), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
+
+    /**
      * The PLAYE r_ ques t_ lo g_21_5.
      */
     PLAYER_QUEST_LOG_21_5(UNIT_END + 0x0072), // Size: 1; Type: INT; Flags: PRIVATE
@@ -504,6 +593,11 @@ public enum PlayerFields {
      * The PLAYE r_ ques t_ lo g_22_3.
      */
     PLAYER_QUEST_LOG_22_3(UNIT_END + 0x0075), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
+
+    /**
+     *
+     */
+    PLAYER_QUEST_LOG_22_4(UNIT_END + 0x0076), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
 
     /**
      * The PLAYE r_ ques t_ lo g_22_5.
@@ -526,6 +620,11 @@ public enum PlayerFields {
     PLAYER_QUEST_LOG_23_3(UNIT_END + 0x007A), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
 
     /**
+     *
+     */
+    PLAYER_QUEST_LOG_23_4(UNIT_END + 0x007B), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
+
+    /**
      * The PLAYE r_ ques t_ lo g_23_5.
      */
     PLAYER_QUEST_LOG_23_5(UNIT_END + 0x007C), // Size: 1; Type: INT; Flags: PRIVATE
@@ -546,6 +645,11 @@ public enum PlayerFields {
     PLAYER_QUEST_LOG_24_3(UNIT_END + 0x007F), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
 
     /**
+     *
+     */
+    PLAYER_QUEST_LOG_24_4(UNIT_END + 0x0080), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
+
+    /**
      * The PLAYE r_ ques t_ lo g_24_5.
      */
     PLAYER_QUEST_LOG_24_5(UNIT_END + 0x0081), // Size: 1; Type: INT; Flags: PRIVATE
@@ -564,6 +668,11 @@ public enum PlayerFields {
      * The PLAYE r_ ques t_ lo g_25_3.
      */
     PLAYER_QUEST_LOG_25_3(UNIT_END + 0x0084), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
+
+    /**
+     *
+     */
+    PLAYER_QUEST_LOG_25_4(UNIT_END + 0x0085), // Size: 2; Type: TWO_SHORT; Flags: PRIVATE
 
     /**
      * The PLAYE r_ ques t_ lo g_25_5.
@@ -1111,11 +1220,21 @@ public enum PlayerFields {
         this.value = value;
     }
 
+    @Override
+    public UpdateFieldType getType() {
+        return UpdateFieldType.INT;
+    }
+
+    @Override
+    public int getSize() {
+        return 0;
+    }
+
     public int getValue( ) {
         return this.value;
     }
 
-    public PlayerFields get( int value ) {
+    public static PlayerFields get( int value ) {
         for( PlayerFields pf : values() ) {
             if ( pf.getValue() == value )
                 return pf;

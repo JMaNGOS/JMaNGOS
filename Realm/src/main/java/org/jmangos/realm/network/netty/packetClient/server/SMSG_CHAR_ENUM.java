@@ -24,6 +24,7 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 import org.jmangos.realm.network.netty.packetClient.client.CMSG_AUTH_SESSION;
 import org.jmangos.realm.service.ItemStorages;
 
+import java.util.BitSet;
 import java.util.List;
 
 /**
@@ -123,6 +124,8 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
 				writeC(0); // InventoryType
 				writeD(0); // Enchantment
 			}*/
+
+            new BitSet();
 		}
 
 	}
