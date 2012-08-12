@@ -46,6 +46,7 @@
         <packet name="CMSG_QUEST_QUERY" id="5C" state="AUTHED"/>
         <packet name="MSG_MOVE_FALL_LAND" id="C9" state="AUTHED"/>
         <packet name="CMSG_MOVE_TIME_SKIPPED" id="2CE" state="AUTHED"/>
+        <packet name="CMSG_LOGOUT_REQUEST" id="0x04B" state="AUTHED"/>
     </opcodelist>
 	<opcodelist direction="UPSTREAM"
 		package="org.jmangos.realm.network.netty.packetClient.server.">
@@ -93,5 +94,6 @@
         <packet name="MSG_MOVE_TIME_SKIPPED" id="319" />
         <packet name="SMSG_QUEST_QUERY_RESPONSE" id="5D" />
         <packet name="SMSG_UPDATE_OBJECT" id="A9"/>
+        <packet name="SMSG_LOGOUT_COMPLETE" id="4D"/>
 	</opcodelist>
 </opcodes>
