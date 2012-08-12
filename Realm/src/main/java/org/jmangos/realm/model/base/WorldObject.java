@@ -19,17 +19,18 @@ package org.jmangos.realm.model.base;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jmangos.commons.model.NamedObject;
+import org.jmangos.commons.network.model.UpdateField;
+import org.jmangos.commons.network.model.UpdateFieldType;
 import org.jmangos.realm.model.base.guid.ObjectGuid;
 import org.jmangos.realm.model.base.guid.TypeId;
 import org.jmangos.realm.model.base.guid.TypeMask;
-import org.jmangos.realm.model.base.update.UpdateField;
 
 import java.nio.ByteOrder;
-import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.EnumSet;
-import java.util.List;
+import java.util.HashMap;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class WorldObject.
  */
@@ -53,7 +54,11 @@ public class WorldObject extends NamedObject {
 	/** The values count. */
 	protected int valuesCount = 0;
 
-    public List<Integer> updateFlagList = new ArrayList<Integer>();
+    /** BitSet for update packet */
+    protected BitSet bitSet = new BitSet();
+
+    /** Mapping filed value types */
+    protected HashMap<Integer, UpdateFieldType> bitTypes = new HashMap<Integer, UpdateFieldType>();
 
 	/**
 	 * Instantiates a new world object.
@@ -114,7 +119,7 @@ public class WorldObject extends NamedObject {
 	 * Update.
 	 */
 	public void update() {
-		System.out.println(m_uint32Values.capacity());
+        System.out.println(m_uint32Values.capacity());
 	}
 
 	/**
@@ -133,18 +138,18 @@ public class WorldObject extends NamedObject {
 	 */
 	public void SetUInt32Value(int i, int value) {
 		m_uint32Values.setInt(i*4, value);
-        updateFlagList.add( i );
+        bitSet.set( i );
+        bitTypes.put( i, UpdateFieldType.INT );
 	}
 
     /**
      * Sets the u int32 value.
      *
-     * @param playerField the PlayerFields enum
+     * @param updateField the PlayerFields enum
      * @param value the value
      */
-    public void SetUInt32Value( UpdateField playerField, int value) {
-        m_uint32Values.setInt(playerField.getValue()*4, value);
-        updateFlagList.add( playerField.getValue() );
+    public void SetUInt32Value( UpdateField updateField, int value) {
+        SetUInt32Value( updateField.getValue(), value );
     }
 
 	/**
@@ -175,7 +180,8 @@ public class WorldObject extends NamedObject {
 	 */
 	public void SetUInt64Value(int i, long value) {
 		m_uint32Values.setLong(i*4, value);
-        updateFlagList.add( i );
+        bitSet.set(i);
+        bitTypes.put( i, UpdateFieldType.LONG );
 	}
 
     /**
@@ -192,10 +198,9 @@ public class WorldObject extends NamedObject {
      * Gets the u int64 value.
      *
      * @param i the i
-     * @param value the value
      * @return the long
      */
-    public long GetUInt64Value(int i, long value) {
+    public long GetUInt64Value(int i) {
         return m_uint32Values.getLong(i*4);
     }
 
@@ -203,10 +208,9 @@ public class WorldObject extends NamedObject {
      * Gets the u int64 value.
      *
      * @param updateField the i
-     * @param value the value
      * @return the long
      */
-    public long GetUInt64Value( UpdateField updateField, long value) {
+    public long GetUInt64Value( UpdateField updateField ) {
         return m_uint32Values.getLong( updateField.getValue() * 4 );
     }
 	
@@ -260,7 +264,8 @@ public class WorldObject extends NamedObject {
 	    	rvalue |= (value << (offset * 8));
 	    }
 	    SetUInt32Value(index, rvalue);
-        updateFlagList.add( index );
+        bitSet.set(index);
+        bitTypes.put( index, UpdateFieldType.INT );
 	}
 
     /**
@@ -282,7 +287,8 @@ public class WorldObject extends NamedObject {
 	 */
 	public void SetFloatValue(int i, float value) {
 		m_uint32Values.setFloat(i*4, value);
-        updateFlagList.add( i );
+        bitSet.set(i);
+        bitTypes.put( i, UpdateFieldType.FLOAT );
 	}
 
     /**
@@ -302,7 +308,7 @@ public class WorldObject extends NamedObject {
      * @return the float
      */
     public float GetFloatValue(int i) {
-        return m_uint32Values.getFloat(i*4);
+        return m_uint32Values.getFloat(i * 4);
     }
 
     /**
@@ -313,5 +319,21 @@ public class WorldObject extends NamedObject {
      */
     public float GetFloatValue( UpdateField updateField ) {
         return GetFloatValue(updateField.getValue());
+    }
+
+    /** Updatemask */
+    public BitSet getBitSet() {
+        return bitSet;
+    }
+
+    /** Updatemask index-type map */
+    public HashMap<Integer, UpdateFieldType> getBitTypes() {
+        return bitTypes;
+    }
+
+    // For clear any pending display changes
+    public void clearBits() {
+        bitTypes.clear();
+        bitSet.clear();
     }
 }

@@ -16,6 +16,9 @@
  *******************************************************************************/
 package org.jmangos.realm.model.base.update;
 
+import org.jmangos.commons.network.model.UpdateField;
+import org.jmangos.commons.network.model.UpdateFieldType;
+
 import static org.jmangos.realm.model.base.update.ItemFields.ITEM_END;
 
 /**

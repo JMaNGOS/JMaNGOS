@@ -1,4 +1,4 @@
-package org.jmangos.realm.model.base.update;
+package org.jmangos.commons.network.model;
 
 /**
  * Created with IntelliJ IDEA.

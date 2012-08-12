@@ -65,10 +65,18 @@ public abstract class SendablePacket extends AbstractPacket
 	 *
 	 * @param value the value (uint8)
 	 */
-	protected final void writeC(int value)
-	{
+	protected final void writeC(int value) {
 		getByteBuffer().writeByte((byte) value);
 	}
+
+    /**
+     * Write c.
+     *
+     * @param value the value (uint8)
+     */
+    protected final void writeC(UpdateField value) {
+        writeC( value.getValue() );
+    }
 
 	/**
 	 * Write h.
@@ -196,7 +204,7 @@ public abstract class SendablePacket extends AbstractPacket
 	}
 	
 	/**
-	 * Same as {@link SendablePacket#writeS(CharSequence)}, except that <code>'\000'</code> won't be written automatically.<br>
+	 * Same as {@link SendablePacket#writeS(String)}, except that <code>'\000'</code> won't be written automatically.<br>
 	 * So this way there is no need to concat multiple Strings into a single one.
 	 *
 	 * @param charSequence the char sequence

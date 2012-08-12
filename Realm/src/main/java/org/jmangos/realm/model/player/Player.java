@@ -21,6 +21,7 @@ import org.jmangos.commons.model.Account;
 import org.jmangos.commons.network.model.ChanneledObject;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.NetworkChannel;
+import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.model.base.character.CharacterData;
 import org.jmangos.realm.model.base.guid.TypeId;
 import org.jmangos.realm.model.base.guid.TypeMask;
@@ -28,13 +29,21 @@ import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.base.update.PlayerFields;
 import org.jmangos.realm.model.base.update.UnitField;
 import org.jmangos.realm.model.unit.*;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_UPDATE_OBJECT;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class Player.
  */
 public class Player extends Units implements ChanneledObject {
-	
+
+    @Inject
+    @Named("client")
+    AbstractPacketSender sender;
+
 	/** The Constant logger. */
 	private static final Logger logger = Logger.getLogger(Player.class);
 	
@@ -302,4 +311,14 @@ public class Player extends Units implements ChanneledObject {
 		
 	}
 
+    public void setCreateBits() {
+        for ( int i = 0;i<PlayerFields.PLAYER_END.getValue();i++ )
+            if( GetUInt32Value(i) > 0 )
+                SetUInt32Value( i, GetUInt32Value( i ) );
+    }
+
+    @Override
+    public void update() {
+        sender.send( getChannel(), new SMSG_UPDATE_OBJECT( this ) );
+    }
 }

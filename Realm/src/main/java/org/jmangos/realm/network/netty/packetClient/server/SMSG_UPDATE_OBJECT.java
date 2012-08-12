@@ -1,14 +1,11 @@
 package org.jmangos.realm.network.netty.packetClient.server;
 
-import com.jcraft.jzlib.InflaterInputStream;
 import org.apache.log4j.Logger;
 import org.jmangos.realm.model.UpdateType;
-import org.jmangos.realm.model.base.update.PlayerFields;
 import org.jmangos.realm.model.player.Player;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import java.util.BitSet;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,11 +15,9 @@ import java.io.IOException;
  * To change this template use File | Settings | File Templates.
  */
 public class SMSG_UPDATE_OBJECT extends AbstractWoWServerPacket {
+    Logger log = Logger.getLogger(getClass());
+
     private Player player;
-    private byte[] bPacket;
-    private UpdateType updateType = UpdateType.VALUES;
-    private PlayerFields playerFields = PlayerFields.PLAYER_XP;
-    private int value = 0;
 
     public SMSG_UPDATE_OBJECT() {};
 
@@ -30,37 +25,46 @@ public class SMSG_UPDATE_OBJECT extends AbstractWoWServerPacket {
         this.player = player;
     }
 
-    public void setPacket( byte[] packet ) {
-        this.bPacket = packet;
-    }
-
-    public void setUpdateType(UpdateType updateType) {
-        this.updateType = updateType;
-    }
-
-    public void setPlayerFields(PlayerFields playerFields) {
-        this.playerFields = playerFields;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
-    }
-
     @Override
     protected void writeImpl() {
-        // Decoding tauren
-        byte[] decompressed = null;
-        try {
-            InflaterInputStream dis = new InflaterInputStream( new ByteArrayInputStream( bPacket ));
-            decompressed = new byte[dis.available()];
-            dis.read( decompressed );
-            writeB( decompressed );
-        } catch (IOException e) {
-            Logger.getLogger( SMSG_UPDATE_OBJECT.class ).fatal("Nem sikerult kitomoriteni a csomagot", e);
-            //writeC( 0x01 );
-            //writePackedGuid( player.getObjectGuid().getRawValue() );
-            writeB( bPacket );
-            return;
+        BitSet bits = player.getBitSet();
+
+        byte[] bytes = new byte[bits.length()/8+1];
+        for (int i=0; i<bits.length(); i++) {
+            if (bits.get(i)) {
+                bytes[bytes.length-i/8-1] |= 1<<(i%8);
+            }
         }
+
+        writeC( bytes.length ); // Size
+        writeC( UpdateType.VALUES );
+        writePackedGuid( player.getCharacterData().getGuid() );
+        writeB( bytes );
+
+        for( int i = 0; i<bits.length(); i++ ) {
+            if ( !bits.get(i) )
+                continue;
+
+            if ( !player.getBitTypes().containsKey( i ) )
+                log.fatal( "Key not found: " + i );
+
+            switch ( player.getBitTypes().get(i) ) {
+                case FLOAT:
+                    writeF( player.GetFloatValue( i ) );
+                    break;
+                case INT:
+                    writeD( player.GetUInt32Value( i ) );
+                    break;
+                case LONG:
+                    writeD( player.GetUInt64Value( i ) );
+                    break;
+                default:
+                    log.fatal( "UNKNOWN SIZE!!! AAAaaaaAAAaaaa index: " + i );
+                    //throw new Exception( "Fatal error at update packet!" );
+            }
+        }
+
+        player.clearBits();
+        log.info( "Update complete. packets cleared." );
     }
 }

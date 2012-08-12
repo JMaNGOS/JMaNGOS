@@ -21,6 +21,9 @@ package org.jmangos.realm.model.base.update;
  * The Class PlayerFields.
  */
 
+import org.jmangos.commons.network.model.UpdateField;
+import org.jmangos.commons.network.model.UpdateFieldType;
+
 import static org.jmangos.realm.model.base.update.UnitField.UNIT_END;
 
 public enum PlayerFields implements UpdateField {

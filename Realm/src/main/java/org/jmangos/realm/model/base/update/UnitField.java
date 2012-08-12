@@ -16,8 +16,11 @@
  *******************************************************************************/
 package org.jmangos.realm.model.base.update;
 
+import org.jmangos.commons.network.model.UpdateField;
+import org.jmangos.commons.network.model.UpdateFieldType;
+
+import static org.jmangos.commons.network.model.UpdateFieldType.*;
 import static org.jmangos.realm.model.base.update.ObjectFields.OBJECT_END;
-import static org.jmangos.realm.model.base.update.UpdateFieldType.*;
 
 /**
  * The Class UnitField.

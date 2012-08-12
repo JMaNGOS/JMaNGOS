@@ -15,6 +15,9 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
 package org.jmangos.realm.model.base.update;
+import org.jmangos.commons.network.model.UpdateField;
+import org.jmangos.commons.network.model.UpdateFieldType;
+
 import static org.jmangos.realm.model.base.update.ObjectFields.OBJECT_END;
 // TODO: Auto-generated Javadoc
 /**

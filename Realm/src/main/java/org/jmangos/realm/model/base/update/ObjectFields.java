@@ -17,6 +17,10 @@
 package org.jmangos.realm.model.base.update;
 
 // TODO: Auto-generated Javadoc
+
+import org.jmangos.commons.network.model.UpdateField;
+import org.jmangos.commons.network.model.UpdateFieldType;
+
 /**
  * The Class ObjectFields.
  */
