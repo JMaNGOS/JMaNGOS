@@ -19,7 +19,6 @@ package org.jmangos.realm.dbc.dataholder;
 import javolution.io.Struct;
 
 import javax.xml.bind.annotation.XmlAttribute;
-import java.io.*;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -111,27 +110,6 @@ public abstract class DBCStruct<T extends DBCStruct<T>> extends DBCBaseStruct
 
 	}
 
-	public void saveToXML(String path, boolean full) throws IOException {
-		this.mode = full;
-		Writer out = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(path + this.getClass().getSimpleName()
-						+ ".xml"), "UTF-8"));
-		try {
-			String header = this.getClass().getSimpleName() + "List";
-			cacheFields(full);
-			out
-					.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
-			out.write("<" + header + ">\n");
-			toXML(out);
-			out.write("</" + header + ">");
-			out.flush();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			out.close();
-		}
-	}
-
 	public void cacheFields( boolean mode) {
 		Field[] f = this.getClass().getFields();
 		List<String> TFiledsName = new ArrayList<String>();
@@ -167,87 +145,6 @@ public abstract class DBCStruct<T extends DBCStruct<T>> extends DBCBaseStruct
 		FiledsName = TFiledsName.toArray();
 	}
 
-	public void toXML(Writer out) throws IOException {
-		Field[] f = this.getClass().getFields();
-		int counter = 0;
-		do {
-			out.write("\t<" + this.getClass().getSimpleName() + " ");
-			for (int i = 0; i < f.length; i++) {
-				if (Modifier.isStatic(f[i].getModifiers())
-						|| !f[i].isAnnotationPresent(XmlAttribute.class)) {
-					continue;
-				}
-				XmlAttribute property = f[i].getAnnotation(XmlAttribute.class);
-				if (property.name() != null & (property.required() | mode)) {
-					try {
-						if (f[i].getType() == InternalString.class
-								|| f[i].getType() == MultiInternalString.class) {
-							if (mode) {
-								String escapedString = escapeCharacters((f[i]
-										.get(this)).toString());
-								if ((escapedString.length() > 0)
-										| property.required()) {
-									writeAttr((String) FiledsName[counter],
-											escapedString, out);
-								}
-								counter++;
-							}
-						} else if (f[i].getType().isArray()) {
-							Object sd = f[i].get(this);
-							for (int j = 0; j < Array.getLength(sd); j++) {
-								Array.get(sd, j);
-								writeAttr((String) FiledsName[counter++], Array
-										.get(sd, j).toString(), out);
-							}
-						} else {
-							writeAttr((String) FiledsName[counter++], f[i].get(
-									this).toString(), out);
-						}
-
-					} catch (IllegalArgumentException e) {
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						e.printStackTrace();
-					}
-
-				}
-			}
-			out.write("/>\n");
-			counter = 0;
-		} while (this.next() != null);
-	}
-
-	public void writeAttr(String name, String value, Writer out)
-			throws IOException {
-		out.write(name + "=\"" + value + "\" ");
-	}
-
-	public String escapeCharacters(String str) {
-		if (str == null)
-			return "";
-		StringBuffer s = new StringBuffer(str);
-		for (int i = 0; i < s.length(); i++)
-			switch (s.charAt(i)) {
-			case '\"':
-				s = s.replace(i++, i, "&quot;");
-				break;
-			case '&':
-				s = s.replace(i++, i, "&amp;");
-				break;
-			case '<':
-				s = s.replace(i++, i, "&lt;");
-				break;
-			case '>':
-				s = s.replace(i++, i, "&gt;");
-				break;
-			case '\'':
-				s = s.replace(i++, i, "&apos;");
-				break;
-			default:
-				break;
-			}
-		return s.toString();
-	}
 
 	public void setCurrposition(int currposition) {
 		this.currposition = currposition;

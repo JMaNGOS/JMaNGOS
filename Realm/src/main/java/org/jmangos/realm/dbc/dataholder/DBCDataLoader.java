@@ -48,17 +48,7 @@ public class DBCDataLoader {
 		Entry.setSkipLenght(dbcHeader.RecordSize.get() - Entry.size());
 		return Entry;
 	}
-	public static <T extends DBCStruct<T>> boolean saveDBC2XML(Class<T> clazz, String dbcpath, String xmlPath, boolean full){
-		try {
-			//String name = clazz.getSimpleName();
-		//	name = dbcpath.concat(name.substring(0, name.length()-5)).concat(".dbc");
-			T Entry = DBCDataLoader.loadStaticData(clazz, dbcpath);
-			Entry.saveToXML(xmlPath,full);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return true;
-	}
+
 	public static ByteBuffer getByteBufferFromFile(String file) {
 		FileInputStream fIn = null;
 		FileChannel fChan;
