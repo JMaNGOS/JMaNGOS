@@ -50,9 +50,41 @@ public class Config extends AbstractConfig {
 	@Property(key = "network.auth.login", defaultValue = "JMaNGOS")
 	public String AUTH_LOGIN;
 
-	/** Auth login */
+	/** Auth password */
 	@Property(key = "network.auth.password", defaultValue = "JMaNGOS")
 	public String AUTH_PASSWORD;
+	
+	/** Displayed name in realmList */
+	@Property(key = "network.realm.name", defaultValue = "JMaNGOS")
+	public String REALM_NAME;
+
+	/** Address for clients */
+	@Property(key = "network.realm.address", defaultValue = "127.0.0.1")
+	public String REALM_ADDRESS;
+
+	/** Port for clients */
+	@Property(key = "network.realm.port", defaultValue = "8085")
+	public Integer REALM_PORT;
+
+	/** Icon for clients */
+	@Property(key = "network.realm.icon", defaultValue = "1")
+	public Integer REALM_ICON;
+
+	/** Icon for clients */
+	@Property(key = "network.realm.flags", defaultValue = "0")
+	public Integer REALM_FLAGS;
+
+	/** Timezone for clients */
+	@Property(key = "network.realm.timezone", defaultValue = "1")
+	public Integer REALM_TIME_ZONE;
+
+	/** AllowedSecurityLevel for clients */
+	@Property(key = "network.realm.allowedSecurityLevel", defaultValue = "0")
+	public Integer REALM_ALLOWED_SECURITY_LVL;
+
+	/** Allowed client build */
+	@Property(key = "network.realm.allowedClientBuild", defaultValue = "12340")
+	public String REALM_ALLOWED_CLIENT_BUILD;
 
 	/**
 	 * Load configuration.

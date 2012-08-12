@@ -26,6 +26,7 @@
 		<packet id="10" name="CMD_REALM_LIST" state="AUTHED" />
 		<packet id="50" name="CMD_AUTH_ENABLE_CRYPT" state="AUTHED" />
 		<packet id="51" name="CMD_TEST_CRYPT" state="AUTHED" />
+		<packet id="52" name="CMD_REALM_DATA" state="AUTHED" />
 	</opcodelist>
 	<opcodelist direction="UPSTREAM"
 		package="org.jmangos.auth.network.netty.packet.server.">

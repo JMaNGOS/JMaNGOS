@@ -30,5 +30,6 @@
 		<packet name="CMD_AUTH_LOGON_PROOF" id="1" />
 		<packet name="CMD_AUTH_ENABLE_CRYPT" id="50" />
 		<packet name="CMD_TEST_CRYPT" id="51" />
+		<packet name="CMD_REALM_DATA" id="52" />
 	</opcodelist>
 </opcodes>

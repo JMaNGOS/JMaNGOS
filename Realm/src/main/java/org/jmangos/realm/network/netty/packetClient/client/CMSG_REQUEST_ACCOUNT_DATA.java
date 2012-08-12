@@ -37,6 +37,7 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 public class CMSG_REQUEST_ACCOUNT_DATA extends AbstractWoWClientPacket {
 
 	/** The sender. */
+	@SuppressWarnings("unused")
 	@Inject
 	@Named("client")
 	private AbstractPacketSender sender;

@@ -21,27 +21,25 @@ import java.nio.BufferUnderflowException;
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
-import org.jboss.netty.channel.ChannelPipeline;
-import org.jmangos.auth.network.netty.decoder.RealmPacketFrameDecoder;
-import org.jmangos.auth.network.netty.decoder.RealmPacketFrameEncoder;
-import org.jmangos.auth.network.netty.handler.AuthToClientChannelHandler;
+import org.jmangos.auth.model.Realm;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
-import org.jmangos.auth.network.netty.packet.server.TCMD_AUTH_ENABLE_CRYPT;
+import org.jmangos.auth.service.WorldListService;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 
 /**
- * The Class <tt>CMD_AUTH_ENABLE_CRYPT</tt>.
+ * The Class <tt>CMD_REALM_DATA</tt>.
  */
-public class CMD_AUTH_ENABLE_CRYPT extends AbstractWoWClientPacket {
+public class CMD_REALM_DATA extends AbstractWoWClientPacket {
 
 	/** The logger. */
-	private static Logger logger = Logger
-			.getLogger(CMD_AUTH_ENABLE_CRYPT.class);
+	private static Logger logger = Logger.getLogger(CMD_REALM_DATA.class);
 	/** The sender. */
 	@Inject
 	private AbstractPacketSender sender;
+	@Inject
+	private WorldListService realmListService;
 
-	public CMD_AUTH_ENABLE_CRYPT() {
+	public CMD_REALM_DATA() {
 		super();
 	}
 
@@ -52,16 +50,20 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractWoWClientPacket {
 	 */
 	@Override
 	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		// TODO 5 - magic number send to config like realm acces
-		if (getAccount().getAccessLevel() == 5) {
-			logger.info("Realm " + getAccount().getName() + " started crypt");
-			ChannelPipeline pipeline = getClient().getChannel().getPipeline();
-			pipeline.addFirst("framedecoder", new RealmPacketFrameDecoder());
-			pipeline.addFirst("encoder", new RealmPacketFrameEncoder());
-			AuthToClientChannelHandler channelHandler = (AuthToClientChannelHandler) pipeline
-					.getLast();
-			channelHandler.getCrypt().init(getAccount().getvK());
-		}
+		logger.debug("Receive realm info from realm account: "
+				+ getAccount().getName());
+		Realm realm = new Realm();
+		realm.setId(getAccount().getObjectId());
+		realm.setName(readS());
+		realm.setAddress(readS());
+		realm.setPort(readD());
+		realm.setIcon(readC());
+		realm.setRealmflags(readC());
+		realm.setTimezone(readC());
+		realm.setAllowedSecurityLevel(readC());
+		realm.setPopulation(readF());
+		realm.setRealmbuilds(readS());
+		realmListService.addFromConnected(realm);
 	}
 
 	/*
@@ -71,7 +73,6 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractWoWClientPacket {
 	 */
 	@Override
 	protected void runImpl() {
-		sender.send(this.getClient(), new TCMD_AUTH_ENABLE_CRYPT());
 
 	}
 }

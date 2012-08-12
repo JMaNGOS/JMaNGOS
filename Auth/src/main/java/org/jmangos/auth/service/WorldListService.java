@@ -29,12 +29,14 @@ public class WorldListService implements Service {
 	/**
 	 * Logger for this class.
 	 */
-	private static final Logger log = Logger.getLogger(WorldListService.class);
+	private static final Logger logger = Logger
+			.getLogger(WorldListService.class);
 
 	/**
 	 * Map with realms
 	 */
-	private FastMap<Integer, Realm> realms;
+	private FastMap<Integer, Realm> realms = new FastMap<Integer, Realm>()
+			.shared();
 
 	/** The byte size. */
 	private static int byteSize;
@@ -59,12 +61,23 @@ public class WorldListService implements Service {
 		return realms;
 	}
 
+	public void addFromConnected(Realm newRealm) {
+		if (realms.containsKey(newRealm.getId())) {
+			logger.debug("Server with this id already connected. Replaced data.");
+			realms.remove(newRealm.getId());
+			realms.put(newRealm.getId(), newRealm);
+		} else {
+			realms.put(newRealm.getId(), newRealm);
+			setByteSize(calculateWorldsSize());
+		}
+	}
+
 	/**
 	 * Loads list of banned ip.
 	 */
 	public void start() {
 		update();
-		log.debug("WorldList loaded " + realms.size() + " realms.");
+		logger.debug("WorldList loaded " + realms.size() + " realms.");
 
 	}
 
@@ -75,8 +88,8 @@ public class WorldListService implements Service {
 	 * @return loaded account or null
 	 */
 	public void reload() {
-		update();
-		log.debug("RealmList reloaded. Loaded " + realms.size() + " realms.");
+		//update();
+		logger.debug("RealmList reloaded. Loaded " + realms.size() + " realms.");
 
 	}
 
@@ -84,7 +97,14 @@ public class WorldListService implements Service {
 	 * Update.
 	 */
 	private void update() {
-		realms = WORLDdao.getAllRealms();
+		FastMap<Integer, Realm> trealms = WORLDdao.getAllRealms();
+		for (Realm realm : trealms.values()) {
+			if (realms.containsKey(realm.getId())) {
+				realms.get(realm.getId()).setPopulation(realm.getPopulation());
+			} else {
+				realms.put(realm.getId(), realm);
+			}
+		}
 		// update byte size all realms
 		setByteSize(calculateWorldsSize());
 	}

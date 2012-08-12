@@ -31,6 +31,7 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 public class CMSG_LFG_GET_STATUS  extends AbstractWoWClientPacket {
 	
 	/** The sender. */
+	@SuppressWarnings("unused")
 	@Inject
 	@Named("client")
 	private AbstractPacketSender sender;
