@@ -26,7 +26,7 @@ import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.RealmServer;
 import org.jmangos.realm.dao.PlayerDAO;
 import org.jmangos.realm.model.Classes;
-import org.jmangos.realm.model.InventoryTemplate;
+import org.jmangos.realm.model.InventoryItem;
 import org.jmangos.realm.model.Races;
 import org.jmangos.realm.model.base.PlayerClassLevelInfo;
 import org.jmangos.realm.model.base.PlayerLevelInfo;
@@ -301,9 +301,9 @@ public class PlayerService {
 	 * @param player the player
 	 */
 	public void LoadInventory(Player player) {
-		List<InventoryTemplate> inventoryTemplate = playerDAO
+		List<InventoryItem> inventoryItem = playerDAO
 				.loadInventory(player.getObjectId());
-		for (InventoryTemplate iT: inventoryTemplate) {
+		for (InventoryItem iT: inventoryItem) {
 			ItemPrototype proto = itemStorages.get(iT.getItem_id());
 			if(proto != null){
 				logger.debug(proto.getName() + " - " + iT.getSlot());

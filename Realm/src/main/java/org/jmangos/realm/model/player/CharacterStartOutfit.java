@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class CharacterStartOutfit {
 
-    static class ItemSlot {
+    public static class ItemSlot {
         int displayId;
         int itemId;
         int inventorySlot;
@@ -65,11 +65,13 @@ public class CharacterStartOutfit {
 
         try {
             for( int i=0; i < entry.ItemDisplayId.length; i++ ) {
-                items.add(new ItemSlot(
-                        Integer.parseInt(entry.ItemDisplayId[i].toString()),
-                        Integer.parseInt(entry.ItemId[i].toString()),
-                        Integer.parseInt(entry.ItemInventorySlot[i].toString())
-                ));
+                // Don't add -1 to memory...
+                if ( Integer.parseInt(entry.ItemDisplayId[i].toString()) != -1 )
+                    items.add(new ItemSlot(
+                            Integer.parseInt(entry.ItemDisplayId[i].toString()),
+                            Integer.parseInt(entry.ItemId[i].toString()),
+                            Integer.parseInt(entry.ItemInventorySlot[i].toString())
+                    ));
             }
         } catch (IndexOutOfBoundsException e) {/* that's all :) */}
     }

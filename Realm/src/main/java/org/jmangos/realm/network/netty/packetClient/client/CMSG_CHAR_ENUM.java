@@ -16,15 +16,15 @@
  *******************************************************************************/
 package org.jmangos.realm.network.netty.packetClient.client;
 
-import java.nio.BufferUnderflowException;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_CHAR_ENUM;
 import org.jmangos.realm.service.AccountService;
+import org.jmangos.realm.service.ItemStorages;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.nio.BufferUnderflowException;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -40,6 +40,9 @@ public class CMSG_CHAR_ENUM  extends AbstractWoWClientPacket {
 	/** The account service. */
 	@Inject
 	private AccountService accountService;
+
+    @Inject
+    private ItemStorages itemStorages;
 	
 	/* (non-Javadoc)
 	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()

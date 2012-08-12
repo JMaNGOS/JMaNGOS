@@ -6,17 +6,21 @@ import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.model.Classes;
+import org.jmangos.realm.model.InventoryItem;
 import org.jmangos.realm.model.Races;
 import org.jmangos.realm.model.base.Playercreateinfo;
 import org.jmangos.realm.model.base.PlayercreateinfoPK;
 import org.jmangos.realm.model.base.character.CharacterData;
+import org.jmangos.realm.model.player.CharacterStartOutfit;
 import org.jmangos.realm.model.player.PlayerHomeBindData;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_CHAR_CREATE;
+import org.jmangos.realm.service.DBCStorage;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.nio.BufferUnderflowException;
+import java.util.Iterator;
 
 /**
  * Created with IntelliJ IDEA.
@@ -31,6 +35,9 @@ public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
     @Inject
     @Named("client")
     private AbstractPacketSender sender;
+
+    @Inject
+    private DBCStorage dbcStorage;
 
     String charName;
     Integer charRace;
@@ -123,13 +130,34 @@ public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
 
         charData.setHomeBindData( phbd );
 
+        // Inventory items
+        Iterator<CharacterStartOutfit> outfitItr = dbcStorage.getOutfitEntries().iterator();
+        CharacterStartOutfit startOutfit = null;
+        while (outfitItr.hasNext()) {
+            startOutfit = outfitItr.next();
+            if( (startOutfit.clazz == charClass) && (startOutfit.gender == gender) && (startOutfit.race == charRace) ) {
+                break;
+            }
+            startOutfit = null;
+        }
+
         session.getTransaction().begin();
+
         try {
-            session.save( charData );
+            session.save(charData);
+
+            Iterator<CharacterStartOutfit.ItemSlot> itr = startOutfit.getItems().iterator();
+            while ( itr.hasNext() ) {
+                CharacterStartOutfit.ItemSlot item = itr.next();
+                InventoryItem inventoryItem = new InventoryItem( item.getItemId(), item.getInventorySlot() );
+                charData.getInventory().add(inventoryItem);
+                log.info( "Adding item for character: " + item.getItemId() + " SlotId: " + item.getInventorySlot() );
+            }
+
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
-            log.fatal( "Error while creating character: " + Classes.get( charClass ) + " " + Races.get( charRace ) );
+            log.fatal( "Error while creating character: " + Classes.get( charClass ) + " " + Races.get( charRace ), e );
             sender.send( getClient(), new SMSG_CHAR_CREATE( SMSG_CHAR_CREATE.CharCreateCodes.ERROR ) );
             return;
         }

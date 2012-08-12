@@ -17,27 +17,51 @@
 package org.jmangos.realm.model;
 
 // TODO: Auto-generated Javadoc
+
+import javax.persistence.*;
+
 /**
- * The Class InventoryTemplate.
+ * The Class InventoryItem.
  */
-public class InventoryTemplate {
-	
-	/** The bag_guid. */
-	private int bag_guid;
+@Entity
+@Table(name="character_inventory")
+public class InventoryItem {
+
+    /** The bag_guid. */
+    @Basic
+    @Column(name="bag", length = 11, nullable = false)
+    private int bag_guid;
 	
 	/** The item_guid. */
-	private int item_guid;
+    @Basic
+    @Column(name="item_template", length = 11, nullable = false)
+    private int item_guid;
 	
 	/** The item_id. */
-	private int item_id;
+    @Id
+    @TableGenerator(table = "sequences", allocationSize = 1, name = "char_inv_item")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "char_inv_item")
+    @Column(name="item", length = 11, nullable = false)
+    private int item_id;
 	
 	/** The slot. */
-	private byte slot;
-	
-	/** The data. */
-	private String data;
-	
-	/**
+    @Basic
+    @Column(name="slot", length = 3, nullable = false)
+    private int slot;
+
+    @Basic
+    @Column(name="data", length = 512, nullable = false)
+    private String data = "";
+
+    public InventoryItem() {
+    }
+
+    public InventoryItem(int item_guid, int slot) {
+        this.item_guid = item_guid;
+        this.slot = slot;
+    }
+
+    /**
 	 * Instantiates a new inventory template.
 	 *
 	 * @param data the data
@@ -46,8 +70,7 @@ public class InventoryTemplate {
 	 * @param itemGuid the item guid
 	 * @param itemId the item id
 	 */
-	public InventoryTemplate(String data, int bagGuid, byte slot, int itemGuid, int itemId) {
-		this.data = data;
+	public InventoryItem(String data, int bagGuid, byte slot, int itemGuid, int itemId) {
 		bag_guid = bagGuid;
 		this.slot = slot;
 		item_guid = itemGuid;
@@ -122,25 +145,15 @@ public class InventoryTemplate {
 	 *
 	 * @param slot the slot to set
 	 */
-	public final void setSlot(byte slot) {
+	public final void setSlot(int slot) {
 		this.slot = slot;
 	}
-	
-	/**
-	 * Sets the data.
-	 *
-	 * @param data the new data
-	 */
-	public void setData(String data) {
-		this.data = data;
-	}
-	
-	/**
-	 * Gets the data.
-	 *
-	 * @return the data
-	 */
-	public String getData() {
-		return data;
-	}
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
 }

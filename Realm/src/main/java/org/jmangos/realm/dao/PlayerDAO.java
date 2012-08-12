@@ -19,7 +19,7 @@ package org.jmangos.realm.dao;
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
-import org.jmangos.realm.model.InventoryTemplate;
+import org.jmangos.realm.model.InventoryItem;
 import org.jmangos.realm.model.base.character.CharacterData;
 import org.jmangos.realm.model.player.PlayerHomeBindData;
 
@@ -64,9 +64,9 @@ public class PlayerDAO implements DAO {
 	 * @param objectId the object id
 	 * @return the list
 	 */
-	public List<InventoryTemplate> loadInventory(int objectId) {
+	public List<InventoryItem> loadInventory(int objectId) {
         // TODO: implement
-        return new ArrayList<InventoryTemplate>();
+        return new ArrayList<InventoryItem>();
     }
 
 }

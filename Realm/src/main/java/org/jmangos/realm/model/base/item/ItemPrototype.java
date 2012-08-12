@@ -68,7 +68,7 @@ public class ItemPrototype extends NamedObject {
 	/** The Display info id. */
     @Basic
     @Column(name = "displayid", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
-    private int DisplayInfoID; // id from ItemDisplayInfo.dbc
+    private int displayId; // id from ItemDisplayInfo.dbc
 	
 	/** The Quality. */
     @Basic
@@ -494,7 +494,7 @@ public class ItemPrototype extends NamedObject {
 	 * @return the displayInfoID
 	 */
 	public int getDisplayInfoID() {
-		return DisplayInfoID;
+		return displayId;
 	}
 
 	/**
@@ -503,7 +503,7 @@ public class ItemPrototype extends NamedObject {
 	 * @param displayInfoID the displayInfoID to set
 	 */
 	public void setDisplayInfoID(int displayInfoID) {
-		DisplayInfoID = displayInfoID;
+		displayId = displayInfoID;
 	}
 
 	/**

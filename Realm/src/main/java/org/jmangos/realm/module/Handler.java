@@ -79,7 +79,7 @@ public class Handler extends AbstractModule {
 		bind(ConnectHandler.class).annotatedWith(Names.named("RealmToAuth")).to(
 				RealmToAuthConnectHandler.class).in(Scopes.SINGLETON);
 
-		bind(AccountDAO.class).in(Scopes.SINGLETON);
+        bind(AccountDAO.class).in(Scopes.SINGLETON);
 		bind(PlayerDAO.class).in(Scopes.SINGLETON);
 		bind(ItemDAO.class).in(Scopes.SINGLETON);
 		bind(SimpleDataDAO.class).in(Scopes.SINGLETON);

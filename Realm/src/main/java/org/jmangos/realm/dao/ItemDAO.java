@@ -49,7 +49,7 @@ public class ItemDAO implements DAO {
         Long eTime = System.currentTimeMillis();
 
         Session session = DatabaseFactory.getWorldSessionFactory().openSession();
-        Query query = session.createQuery( "from ItemPrototype" );
+        Query query = session.createQuery( "from ItemPrototype order by id" );
 
         TIntObjectHashMap<ItemPrototype> map = new TIntObjectHashMap<ItemPrototype>();
         @SuppressWarnings("unchecked")
@@ -73,6 +73,7 @@ public class ItemDAO implements DAO {
 	 * @return the item prototype
 	 */
 	public ItemPrototype loadItemPrototype(int guid) {
+        log.info( "Loading single item from database with id: " + guid );
         Session session = DatabaseFactory.getWorldSessionFactory().openSession();
         return (ItemPrototype)session.get( ItemPrototype.class, guid );
     }

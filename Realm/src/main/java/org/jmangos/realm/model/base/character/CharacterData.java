@@ -1,10 +1,12 @@
 package org.jmangos.realm.model.base.character;
 
 import org.jmangos.realm.model.Classes;
+import org.jmangos.realm.model.InventoryItem;
 import org.jmangos.realm.model.Races;
 import org.jmangos.realm.model.player.PlayerHomeBindData;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +20,8 @@ import java.util.List;
 @Table(name = "characters")
 public class CharacterData {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @TableGenerator(table = "sequences", allocationSize = 1, name = "char_seq")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "char_seq")
 	@Column(name = "guid", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	private long guid;
     
@@ -292,6 +295,24 @@ public class CharacterData {
 
     @OneToOne(targetEntity = PlayerHomeBindData.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private PlayerHomeBindData homeBindData;
+
+    @JoinColumn(referencedColumnName = "guid")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<InventoryItem> inventory = new ArrayList<InventoryItem>();
+
+    /**
+     * Find item by inventory slot
+     * @param slot
+     * @return
+     */
+    public InventoryItem findInventorySlot( int slot ) {
+        for( InventoryItem invItem : inventory ) {
+            if ( invItem.getSlot() == slot )
+                return invItem;
+        }
+        // :( not found
+        return null;
+    }
 
     /**
      * Empty constructor
@@ -848,5 +869,13 @@ public class CharacterData {
 
     public void setHomeBindData(PlayerHomeBindData homeBindData) {
         this.homeBindData = homeBindData;
+    }
+
+    public List<InventoryItem> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(List<InventoryItem> inventory) {
+        this.inventory = inventory;
     }
 }

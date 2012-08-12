@@ -18,7 +18,7 @@ import java.nio.BufferUnderflowException;
 public class CMSG_LOGOUT_REQUEST extends AbstractWoWClientPacket {
 
     @Inject
-    @Named("server")
+    @Named("client")
     private AbstractPacketSender sender;
 
     @Override
@@ -28,6 +28,7 @@ public class CMSG_LOGOUT_REQUEST extends AbstractWoWClientPacket {
 
     @Override
     protected void runImpl() {
+        // TODO: implement SMSG_LOGOUT_RESPONSE
         sender.send( getPlayer().getChannel(), new SMSG_LOGOUT_COMPLETE());
     }
 }

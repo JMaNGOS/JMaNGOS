@@ -17,19 +17,18 @@
 package org.jmangos.realm.service;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
-
-import javax.inject.Inject;
-
 import org.apache.log4j.Logger;
 import org.jmangos.commons.dataholder.DataLoadService;
 import org.jmangos.realm.dao.ItemDAO;
-import org.jmangos.realm.model.InventoryTemplate;
+import org.jmangos.realm.model.InventoryItem;
 import org.jmangos.realm.model.base.guid.HighGuid;
 import org.jmangos.realm.model.base.item.Bag;
 import org.jmangos.realm.model.base.item.InventoryType;
 import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.base.item.ItemPrototype;
 import org.jmangos.realm.model.base.update.ItemFields;
+
+import javax.inject.Inject;
 
 /**
  * The Class ItemStorages.
@@ -63,9 +62,11 @@ public class ItemStorages
 	 * @return the item prototype
 	 */
 	public ItemPrototype get(int guid) {
-		if (itemPrototypes.contains(guid)) {
-			return itemPrototypes.get(guid);
+		if (itemPrototypes.containsKey(guid)) {
+            logger.debug(String.format("The specified id: %d hit in the storage! DisplayInfoID: %d", guid, itemPrototypes.get(guid).getDisplayInfoID()));
+            return itemPrototypes.get(guid);
 		} else {
+            logger.debug(String.format("The specified id: %d not in the store. Trying to load directly from the database!", guid));
 			ItemPrototype ip = itemDAO.loadItemPrototype(guid);
 			if (ip != null) {
 				itemPrototypes.put(ip.getObjectId(), ip);
@@ -82,7 +83,7 @@ public class ItemStorages
 	 * @param proto the proto
 	 * @return the item
 	 */
-	public Item loadFromDB(InventoryTemplate itemplate, ItemPrototype proto) {
+	public Item loadFromDB(InventoryItem itemplate, ItemPrototype proto) {
 		long guid = HighGuid.HIGHGUID_ITEM.getValue() << 48| itemplate.getItem_guid();
 		Item item = null;
 		if(proto.getInventoryType() == InventoryType.INVTYPE_BAG){
@@ -94,7 +95,7 @@ public class ItemStorages
 		item.initfields();
 		if (item.loadValues(itemplate.getData().split(" "))) {
 			logger.debug("Good items " + proto.getName() + " count " + item.GetUInt32Value(ItemFields.ITEM_FIELD_STACK_COUNT));
-			
+
 			return item;
 		} else {
 			logger.debug("Bad items" + proto.getName());
@@ -135,7 +136,6 @@ public class ItemStorages
 	@Override
 	public void start() {
 		load();
-		logger.info("Loaded " + itemPrototypes.size() + " ItemPrototypes");
 	}
 
 	/* (non-Javadoc)

@@ -23,7 +23,7 @@ public class MSG_MOVE_TIME_SKIPPED extends AbstractWoWServerPacket {
 
     @Override
     protected void writeImpl() {
-        writeQ( guid );
+        writePackedGuid( guid );
         writeD( time_dif );
     }
 }
