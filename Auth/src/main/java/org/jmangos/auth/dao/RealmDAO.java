@@ -16,13 +16,12 @@
  *******************************************************************************/
 package org.jmangos.auth.dao;
 
+import javolution.util.FastMap;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.jmangos.commons.model.Realm;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
-
-import javolution.util.FastMap;
+import org.jmangos.commons.model.Realm;
 
 import java.util.List;
 
@@ -53,6 +52,7 @@ public class RealmDAO implements DAO {
         Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Realm.class);
         FastMap<Integer, Realm> realmFastMap = new FastMap<Integer, Realm>();
+        @SuppressWarnings("unchecked")
         List<Realm> realmList = (List<Realm>)criteria.list();
 
         for ( Realm realm : realmList )
