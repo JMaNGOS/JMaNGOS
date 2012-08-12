@@ -16,13 +16,10 @@
  *******************************************************************************/
 package org.jmangos.commons.database;
 
-import org.apache.commons.pool.impl.GenericObjectPool;
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.jmangos.commons.service.Service;
-
-import javax.sql.DataSource;
 
 public class DatabaseFactory implements Service {
 
@@ -42,27 +39,6 @@ public class DatabaseFactory implements Service {
 	public synchronized void start() {
         // Loading config fields
         DatabaseConfig.load();
-
-        /*try {
-            getAccountsSessionFactory();
-        } catch (Exception e ) {
-            log.fatal("Account Database initialization error!", e);
-        }
-
-		try {
-            getCharactersSessionFactory();
-		} catch(Exception e) {
-			log.fatal("Character Database initialization error!", e);
-		}
-
-        try {
-            getACCOUNTSessionFactory();
-        } catch (Exception e ) {
-            log.fatal("ACCOUNT Database initialization error!", e);
-        }
-
-        log.info("Successfully connected to database");
-        */
 	}
 
 	/**
@@ -115,7 +91,7 @@ public class DatabaseFactory implements Service {
      * Returns World Database's hibernate session
      * @return Hibernate Session
      */
-    public static SessionFactory getWorldSessionFactory() {
+    public synchronized static SessionFactory getWorldSessionFactory() {
         if (charactersSessionFactory == null) {
             AnnotationConfiguration config = new AnnotationConfiguration();
             config.setProperty( "hibernate.connection.driver_class", DatabaseConfig.WORLD_DATABASE_DRIVER );
@@ -139,7 +115,7 @@ public class DatabaseFactory implements Service {
      * Returns Character Database's hibernate session
      * @return Hibernate Session
      */
-    public static SessionFactory getCharactersSessionFactory() {
+    public synchronized static SessionFactory getCharactersSessionFactory() {
         if ( charactersSessionFactory == null ) {
             // Bring up hibernate
 
@@ -161,7 +137,7 @@ public class DatabaseFactory implements Service {
         return charactersSessionFactory;
     }
 
-    public static SessionFactory getAccountsSessionFactory() {
+    public synchronized static SessionFactory getAccountsSessionFactory() {
         if ( accountsSessionFactory == null ) {
             // Bring up hibernate
             AnnotationConfiguration config = new AnnotationConfiguration();

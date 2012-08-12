@@ -1,19 +1,14 @@
 package org.jmangos.realm.network.netty.packetClient.server;
 
-import com.jcraft.jzlib.DeflaterOutputStream;
+import com.jcraft.jzlib.InflaterInputStream;
 import org.apache.log4j.Logger;
-import org.jmangos.realm.RealmServer;
 import org.jmangos.realm.model.UpdateType;
 import org.jmangos.realm.model.base.update.PlayerFields;
 import org.jmangos.realm.model.player.Player;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Iterator;
-import com.jcraft.jzlib.InflaterInputStream;
-import sun.misc.IOUtils;
 
 /**
  * Created with IntelliJ IDEA.
@@ -67,7 +62,5 @@ public class SMSG_UPDATE_OBJECT extends AbstractWoWServerPacket {
             writeB( bPacket );
             return;
         }
-
-        player.getObjectGuid().getRawValue();
     }
 }

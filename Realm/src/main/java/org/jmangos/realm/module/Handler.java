@@ -16,6 +16,9 @@
  *******************************************************************************/
 package org.jmangos.realm.module;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.Scopes;
+import com.google.inject.name.Names;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
@@ -34,22 +37,12 @@ import org.jmangos.realm.dao.SimpleDataDAO;
 import org.jmangos.realm.dao.mysql5.MySQL5PlayerDAO;
 import org.jmangos.realm.network.handler.RealmToAuthPacketHandlerFactory;
 import org.jmangos.realm.network.handler.RealmToClientPacketHandlerFactory;
-import org.jmangos.realm.network.netty.factory.RealmToClientPipelineFactory;
 import org.jmangos.realm.network.netty.factory.RealmToAuthPipelineFactory;
-import org.jmangos.realm.network.netty.handler.RealmToClientConnectHandler;
+import org.jmangos.realm.network.netty.factory.RealmToClientPipelineFactory;
 import org.jmangos.realm.network.netty.handler.RealmToAuthConnectHandler;
-import org.jmangos.realm.service.AccountService;
-import org.jmangos.realm.service.ItemStorages;
-import org.jmangos.realm.service.MapService;
-import org.jmangos.realm.service.PlayerClassLevelInfoStorages;
-import org.jmangos.realm.service.PlayerLevelStorages;
-import org.jmangos.realm.service.RealmNetworkService;
-import org.jmangos.realm.service.SimpleStorages;
+import org.jmangos.realm.network.netty.handler.RealmToClientConnectHandler;
+import org.jmangos.realm.service.*;
 import org.jmangos.realm.utils.ShutdownHook;
-
-import com.google.inject.AbstractModule;
-import com.google.inject.Scopes;
-import com.google.inject.name.Names;
 
 
 /**
@@ -92,6 +85,7 @@ public class Handler extends AbstractModule {
 		bind(ItemDAO.class)/*.to(MySQL5ItemDAO.class)*/.in(Scopes.SINGLETON);
 		bind(SimpleDataDAO.class)/*.to(MySQL5SimpleDataDAO.class)*/.in(Scopes.SINGLETON);
 		bind(ItemStorages.class).in(Scopes.SINGLETON);
+        bind(DBCStorage.class).in(Scopes.SINGLETON);
 		bind(SimpleStorages.class).in(Scopes.SINGLETON);
 		bind(Config.class).in(Scopes.SINGLETON);
 

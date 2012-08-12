@@ -16,13 +16,7 @@
  *******************************************************************************/
 package org.jmangos.realm.service;
 
-import java.util.List;
-
 import gnu.trove.map.hash.TLongObjectHashMap;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
@@ -43,11 +37,14 @@ import org.jmangos.realm.model.base.item.ItemPrototype;
 import org.jmangos.realm.model.base.update.PlayerFields;
 import org.jmangos.realm.model.base.update.UnitFields;
 import org.jmangos.realm.model.player.Player;
-import org.jmangos.realm.model.player.PlayerCharacterData;
 import org.jmangos.realm.model.unit.Powers;
 import org.jmangos.realm.model.unit.SpellSchools;
 import org.jmangos.realm.model.unit.Stats;
 import org.jmangos.realm.network.netty.packetClient.server.*;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.List;
 
 /**
  * The Class PlayerService.
@@ -93,6 +90,10 @@ public class PlayerService {
 	/** The item storages. */
 	@Inject
 	private ItemStorages itemStorages;
+
+    /** The DBC Storage */
+    @Inject
+    private DBCStorage dbcStorage;
 
 	/** The playerlist. */
 	private static TLongObjectHashMap<Player> playerlist = new TLongObjectHashMap<Player>();
@@ -196,8 +197,8 @@ public class PlayerService {
 		sender.send(player.getChannel(), new SMSG_PLAYED_TIME());
 
         SMSG_COMPRESSED_UPDATE_OBJECT updatePacket = new SMSG_COMPRESSED_UPDATE_OBJECT( player, taurenBytes );
+        sender.send(player.getChannel(), updatePacket );
 
-        //sender.send(player.getChannel(), updatePacket );
         sender.send(player.getChannel(), new SMSG_MOTD("Test MotD String@test".split("@")));
 
         PlayerService.playerlist.put(player.getObjectId(), player);
@@ -208,8 +209,7 @@ public class PlayerService {
         RealmServer.console.setVariable( "playerService", this );
         RealmServer.console.setVariable( "sender", sender );
         RealmServer.console.setVariable( "player", player );
-        RealmServer.console.setVariable( "updatePacket", updatePacket );
-        RealmServer.console.setVariable( "update", new SMSG_UPDATE_OBJECT( player ) );
+        RealmServer.console.setVariable( "dbcStorage", dbcStorage );
 
         return player;
 	}
@@ -268,10 +268,10 @@ public class PlayerService {
 		player.SetFloatValue(UnitFields.UNIT_FIELD_BOUNDINGRADIUS, 0.388999998569489f);
 		player.SetFloatValue(UnitFields.UNIT_FIELD_COMBATREACH, 1.5f);
 		player.SetFloatValue(UnitFields.UNIT_FIELD_HOVERHEIGHT, 1.0f);
-		player.setMoney( ch.getMoney() );
+		player.setMoney(ch.getMoney());
 
 		player.SetUInt32Value( PlayerFields.PLAYER_BYTES, ch.getPlayerBytes());
-		player.SetUInt32Value( PlayerFields.PLAYER_BYTES_2, ch.getPlayerBytes2() );
+		player.SetUInt32Value(PlayerFields.PLAYER_BYTES_2, ch.getPlayerBytes2());
 		player.SetUInt32Value( PlayerFields.PLAYER_BYTES_3, ( ch.getDrunk() & 0xFFFE) | ch.getGender() );
 		player.SetUInt32Value( PlayerFields.PLAYER_FLAGS, ch.getPlayerFlags() );
 		player.SetUInt32Value( PlayerFields.PLAYER_FIELD_WATCHED_FACTION_INDEX, ch.getWatchedFaction() );

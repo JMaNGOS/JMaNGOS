@@ -16,7 +16,6 @@
  *******************************************************************************/
 package org.jmangos.realm.model.base.item;
 
-import org.hibernate.annotations.Columns;
 import org.jmangos.commons.model.NamedObject;
 
 import javax.persistence.*;
@@ -27,7 +26,7 @@ import javax.persistence.*;
  * @author minimajack
  */
 @Entity
-@Table(name="item_prototype")
+@Table(name="item_template")
 public class ItemPrototype extends NamedObject {
 	
 	/** The Constant MAX_ITEM_PROTO_STATS. */
@@ -61,7 +60,11 @@ public class ItemPrototype extends NamedObject {
     @Basic
     @Column(name = "unk0", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private int Unk0;
-	
+
+    @Basic
+    @Column(name="name", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
+    private String itemName;
+
 	/** The Display info id. */
     @Basic
     @Column(name = "displayid", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
@@ -85,7 +88,7 @@ public class ItemPrototype extends NamedObject {
 	/** The Buy count. */
     @Basic
     @Column(name = "BuyCount", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
-    private byte BuyCount;
+    private int BuyCount;
 	
 	/** The Buy price. */
     @Basic
@@ -175,14 +178,14 @@ public class ItemPrototype extends NamedObject {
 	/** The Stats count. */
     @Basic
     @Column(name = "StatsCount", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
-    private int StatsCount;
+    private int statsCount;
 
     //TODO: item bytes implement
     //@Basic
     //@Column(name = "stat_type1", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
     /** item stats. */
     @Transient
-	private Object[] ItemStat;
+	private Object[] itemStat;
 
 	/** The Scaling stat distribution. */
     @Basic
@@ -399,10 +402,10 @@ public class ItemPrototype extends NamedObject {
     @Column(name = "HolidayId", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private int HolidayId; // id from Holidays.dbc
 	
-	/** The Script id. */
+	/** The Script name. */
     @Basic
-    @Column(name = "ScriptId", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
-    private int ScriptId;
+    @Column(name = "ScriptName", nullable = false, insertable = true, updatable = true, length = 64, precision = 0)
+    private String ScriptName;
 	
 	/** The Disenchant id. */
     @Basic
@@ -553,7 +556,7 @@ public class ItemPrototype extends NamedObject {
 	 *
 	 * @param buyCount the buyCount to set
 	 */
-	public void setBuyCount(byte buyCount) {
+	public void setBuyCount(int buyCount) {
 		BuyCount = buyCount;
 	}
 
@@ -869,7 +872,7 @@ public class ItemPrototype extends NamedObject {
 	 * @return the statsCount
 	 */
 	public int getStatsCount() {
-		return StatsCount;
+		return statsCount;
 	}
 
 	/**
@@ -878,7 +881,7 @@ public class ItemPrototype extends NamedObject {
 	 * @param statsCount the statsCount to set
 	 */
 	public void setStatsCount(int statsCount) {
-		StatsCount = statsCount;
+		statsCount = statsCount;
 	}
 
 	/**
@@ -888,7 +891,7 @@ public class ItemPrototype extends NamedObject {
 	 * @return the _ItemStat
 	 */
 	public _ItemStat getItemStat(int i) {
-		return (_ItemStat) ItemStat[i];
+		return (_ItemStat) itemStat[i];
 	}
 
 	/**
@@ -897,7 +900,7 @@ public class ItemPrototype extends NamedObject {
 	 * @param is the new item stat
 	 */
 	public void setItemStat(Object[] is) {
-		ItemStat = is;
+		itemStat = is;
 	}
 
 	/**
@@ -1636,17 +1639,17 @@ public class ItemPrototype extends NamedObject {
 	 *
 	 * @return the scriptId
 	 */
-	public int getScriptId() {
-		return ScriptId;
+	public String getScriptId() {
+		return ScriptName;
 	}
 
 	/**
 	 * Sets the script id.
 	 *
-	 * @param scriptId the scriptId to set
+	 * @param scriptName the scriptId to set
 	 */
-	public void setScriptId(int scriptId) {
-		ScriptId = scriptId;
+	public void setScriptId(String scriptName) {
+		ScriptName = scriptName;
 	}
 
 	/**
@@ -1757,4 +1760,19 @@ public class ItemPrototype extends NamedObject {
 		Flags2 = flags2;
 	}
 
+    public int getEntry() {
+        return entry;
+    }
+
+    public void setEntry(int entry) {
+        this.entry = entry;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
 }

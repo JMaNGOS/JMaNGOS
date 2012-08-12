@@ -16,11 +16,9 @@
  *******************************************************************************/
 package org.jmangos.realm;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import groovy.ui.Console;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.log4j.LoggingService;
 import org.jmangos.commons.network.netty.service.NetworkService;
@@ -28,15 +26,8 @@ import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.commons.threadpool.ThreadPoolManager;
 import org.jmangos.realm.config.Config;
 import org.jmangos.realm.module.Handler;
-import org.jmangos.realm.service.ItemStorages;
-import org.jmangos.realm.service.MapService;
-import org.jmangos.realm.service.PlayerClassLevelInfoStorages;
-import org.jmangos.realm.service.PlayerLevelStorages;
-import org.jmangos.realm.service.UpdateService;
+import org.jmangos.realm.service.*;
 import org.jmangos.realm.utils.ShutdownHook;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 
 /**
  * The Class RealmServer.
@@ -60,11 +51,12 @@ public class RealmServer {
 		injector.getInstance(Config.class).load();
 		injector.getInstance(DatabaseFactory.class).start();
 		Runtime.getRuntime().addShutdownHook(injector.getInstance(ShutdownHook.class));
-		injector.getInstance(ItemStorages.class).start();
 		injector.getInstance(MapService.class).start();
 		injector.getInstance(PlayerClassLevelInfoStorages.class).start();
 		injector.getInstance(PlayerLevelStorages.class).start();
-		injector.getInstance(UpdateService.class).start();
+        injector.getInstance(ItemStorages.class).start();
+        injector.getInstance(DBCStorage.class).start();
+        injector.getInstance(UpdateService.class).start();
 		
 		System.gc();
 

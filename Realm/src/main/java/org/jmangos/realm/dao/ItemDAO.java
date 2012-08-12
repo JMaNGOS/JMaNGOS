@@ -17,10 +17,9 @@
 package org.jmangos.realm.dao;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
-
-import org.hibernate.Criteria;
+import org.apache.log4j.Logger;
+import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Criterion;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
 import org.jmangos.realm.model.base.item.ItemPrototype;
@@ -32,6 +31,7 @@ import java.util.List;
  * The Class ItemDAO.
  */
 public class ItemDAO implements DAO {
+    Logger log = Logger.getLogger( getClass() );
 
 	/* (non-Javadoc)
 	 * @see org.jmangos.commons.database.dao.DAO#getClassName()
@@ -47,15 +47,21 @@ public class ItemDAO implements DAO {
 	 * @return the t int object hash map
 	 */
 	public TIntObjectHashMap<ItemPrototype> loadItemPrototypes() {
+        Long eTime = System.currentTimeMillis();
+
         Session session = DatabaseFactory.getWorldSessionFactory().openSession();
-        Criteria crit = session.createCriteria(ItemPrototype.class);
+        Query query = session.createQuery( "from ItemPrototype" );
 
         TIntObjectHashMap<ItemPrototype> map = new TIntObjectHashMap<ItemPrototype>();
+        List<ItemPrototype> itemPrototypeList = (List<ItemPrototype>)query.list();
 
         // Fill map
-        for ( ItemPrototype item : (List<ItemPrototype>)crit.list() ) {
+        for ( ItemPrototype item : itemPrototypeList ) {
             map.put( item.getEntry(), item );
         }
+
+        eTime = System.currentTimeMillis() - eTime;
+        log.info( String.format( "Loaded [%d] ItemPrototypes under %d ms", map.size(), eTime ) );
 
         return map;
     }
