@@ -142,7 +142,8 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
 			/* int unk1 = */addonInfo.readInt();
 			addonLists.add(new AddonInfo(addonName, enabled, crc));
 		}
-		/* int unk2 = */addonInfo.readInt();
+
+        /* int unk2 = */addonInfo.readInt();
 	}
 
 	/* (non-Javadoc)
@@ -182,7 +183,9 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
         // TODO: what is this?
 		/*account.setTutorials(
 				accountService.loadTutorialsDataFromDB(account.getObjectId()));*/
-		//sender.send(getClient(), new SMSG_ADDON_INFO());
+        SMSG_ADDON_INFO addonInfoPacket = new SMSG_ADDON_INFO( addonLists );
+
+		sender.send(getClient(), addonInfoPacket );
 		sender.send(getClient(), new SMSG_CLIENTCACHE_VERSION());
 		sender.send(getClient(), new SMSG_TUTORIAL_FLAGS());
 
