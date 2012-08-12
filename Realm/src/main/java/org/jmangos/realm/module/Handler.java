@@ -34,7 +34,6 @@ import org.jmangos.realm.dao.AccountDAO;
 import org.jmangos.realm.dao.ItemDAO;
 import org.jmangos.realm.dao.PlayerDAO;
 import org.jmangos.realm.dao.SimpleDataDAO;
-import org.jmangos.realm.dao.mysql5.MySQL5PlayerDAO;
 import org.jmangos.realm.network.handler.RealmToAuthPacketHandlerFactory;
 import org.jmangos.realm.network.handler.RealmToClientPacketHandlerFactory;
 import org.jmangos.realm.network.netty.factory.RealmToAuthPipelineFactory;
@@ -80,10 +79,10 @@ public class Handler extends AbstractModule {
 		bind(ConnectHandler.class).annotatedWith(Names.named("RealmToAuth")).to(
 				RealmToAuthConnectHandler.class).in(Scopes.SINGLETON);
 
-		bind(AccountDAO.class)/*.to(MySQL5AccountDAO.class)*/.in(Scopes.SINGLETON);
-		bind(PlayerDAO.class).to(MySQL5PlayerDAO.class).in(Scopes.SINGLETON);
-		bind(ItemDAO.class)/*.to(MySQL5ItemDAO.class)*/.in(Scopes.SINGLETON);
-		bind(SimpleDataDAO.class)/*.to(MySQL5SimpleDataDAO.class)*/.in(Scopes.SINGLETON);
+		bind(AccountDAO.class).in(Scopes.SINGLETON);
+		bind(PlayerDAO.class).in(Scopes.SINGLETON);
+		bind(ItemDAO.class).in(Scopes.SINGLETON);
+		bind(SimpleDataDAO.class).in(Scopes.SINGLETON);
 		bind(ItemStorages.class).in(Scopes.SINGLETON);
         bind(DBCStorage.class).in(Scopes.SINGLETON);
 		bind(SimpleStorages.class).in(Scopes.SINGLETON);

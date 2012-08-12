@@ -16,21 +16,21 @@
  *******************************************************************************/
 package org.jmangos.realm.dao;
 
-import java.util.List;
-
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
 import org.jmangos.realm.model.InventoryTemplate;
 import org.jmangos.realm.model.base.character.CharacterData;
-import org.jmangos.realm.model.player.PlayerCharacterData;
 import org.jmangos.realm.model.player.PlayerHomeBindData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PlayerDAO.
  */
-public abstract class PlayerDAO implements DAO {
+public class PlayerDAO implements DAO {
 
 	/* (non-Javadoc)
 	 * @see org.jmangos.commons.database.dao.DAO#getClassName()
@@ -52,15 +52,11 @@ public abstract class PlayerDAO implements DAO {
 	 * @param objectId the object id
 	 * @return the player home bind data
 	 */
-	public abstract PlayerHomeBindData loadHomeBind(int objectId);
-
-	/**
-	 * Load from db.
-	 *
-	 * @param objectId the object id
-	 * @return the player character data
-	 */
-	public abstract PlayerCharacterData loadFromDB(int objectId);
+	public PlayerHomeBindData loadHomeBind(int objectId) {
+        Session session = DatabaseFactory.getCharactersSessionFactory().openSession();
+        CharacterData characterData = (CharacterData)session.get( CharacterData.class, objectId );
+        return characterData.getHomeBindData();
+    }
 
 	/**
 	 * Load inventory.
@@ -68,6 +64,9 @@ public abstract class PlayerDAO implements DAO {
 	 * @param objectId the object id
 	 * @return the list
 	 */
-	public abstract List<InventoryTemplate> loadInventory(int objectId) ;
+	public List<InventoryTemplate> loadInventory(int objectId) {
+        // TODO: implement
+        return new ArrayList<InventoryTemplate>();
+    }
 
 }
