@@ -45,8 +45,7 @@ public class RealmToAuthPacketHandlerFactory extends XmlDataLoader
 	 * Instantiates a new r2 l packet handler factory.
 	 */
 	public RealmToAuthPacketHandlerFactory() {
-		addList(loadStaticData(PacketData.class,"./conf/packetData/packets.xsd",
-				"./conf/packetData/rl-packets.xml"));
+		
 	}
 
 	/**
@@ -121,5 +120,15 @@ public class RealmToAuthPacketHandlerFactory extends XmlDataLoader
 			int opcode) {
 		sHandler.addPacketOpcode(packetPrototype, opcode);
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#loadPacket()
+	 */
+	@Override
+	public void loadPacket() {
+		addList(loadStaticData(PacketData.class,"./conf/packetData/packets.xsd",
+				"./conf/packetData/rl-packets.xml"));		
 	}
 }

@@ -30,8 +30,20 @@ public class AuthToClientPacketHandlerFactory extends
 	 * Instantiates a new auth to client packet handler factory.
 	 */
 	public AuthToClientPacketHandlerFactory() {
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jmangos.commons.network.handlers.PacketHandlerFactory#loadPacket()
+	 */
+	@Override
+	public void loadPacket() {
 		addList(loadStaticData(PacketData.class,
 				"./conf/packetData/packets.xsd",
 				"./conf/packetData/lc-packets.xml"));
+
 	}
 }
