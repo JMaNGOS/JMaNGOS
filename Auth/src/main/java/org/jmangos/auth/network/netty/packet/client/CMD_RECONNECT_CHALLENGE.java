@@ -66,8 +66,8 @@ public class CMD_RECONNECT_CHALLENGE extends AbstractWoWClientPacket {
 	@SuppressWarnings("unused")
 	@Override
 	protected void readImpl() {
-		int error = readC(); // error
-		int size = readH(); // size
+		readC(); // error
+		readH(); // size
 		readB(4); // gamename
 		readC(); // version 3
 		readC(); // version 5
