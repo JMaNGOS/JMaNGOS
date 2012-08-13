@@ -66,7 +66,7 @@ public class AccountService {
 		// {
 		// return WoWAuthResponse.WOW_FAIL_BANNED;
 		// }
-		;
+
 		Account account = loadAccount(name);
 		HashMap<String, BigNumber> variable; // calculateVSFields will create it.
 		BigNumber s = new BigNumber();
