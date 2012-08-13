@@ -40,7 +40,8 @@
 		<module>Realm</module>
 		<module>Tools</module>
 		<module>Install</module>
-	</modules>
+        <module>DBCImporter</module>
+    </modules>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -124,17 +125,6 @@
 				<groupId>org.lwjgl.lwjgl</groupId>
 				<artifactId>lwjgl</artifactId>
 				<version>2.8.3</version>
-			</dependency>
-			<dependency>
-				<groupId>org.lwjgl.lwjgl</groupId>
-				<artifactId>lwjgl_util</artifactId>
-				<version>2.8.3</version>
-			</dependency>
-			<dependency>
-				<groupId>org.lwjgl.lwjgl</groupId>
-				<artifactId>lwjgl-platform</artifactId>
-				<version>2.8.3</version>
-				<type>pom</type>
 			</dependency>
 			<dependency>
 				<groupId>org.critterai</groupId>
