@@ -31,9 +31,7 @@ public class RealmListService implements Service {
 	 */
 	private final Logger log = Logger.getLogger(getClass());
 
-	private final long UPDATE_INTERVAL = 2000;
-
-	/**
+    /**
 	 * Map with realms
 	 */
 	private FastMap<Integer, Realm> realms = new FastMap<Integer, Realm>()
@@ -53,10 +51,12 @@ public class RealmListService implements Service {
 	 * 
 	 * @return the worlds
 	 */
+    @SuppressWarnings("unused")
 	public FastMap<Integer, Realm> getWorlds() {
 		return realms;
 	}
 
+    @SuppressWarnings("unused")
 	public void addFromConnected(Realm newRealm) {
 		if (realms.containsKey(newRealm.getId())) {
 			log.debug("Server with this id already connected. Replaced data.");
@@ -84,7 +84,8 @@ public class RealmListService implements Service {
 		if(nextUpdateTime > System.currentTimeMillis()){
 			return;
 		}
-		nextUpdateTime = System.currentTimeMillis() + UPDATE_INTERVAL;
+        long UPDATE_INTERVAL = 2000;
+        nextUpdateTime = System.currentTimeMillis() + UPDATE_INTERVAL;
 		FastMap<Integer, Realm> trealms = realmDAO.getAllRealms();
 		for (Realm realm : trealms.values()) {
 			if (realms.containsKey(realm.getId())) {
@@ -102,6 +103,7 @@ public class RealmListService implements Service {
 	 * 
 	 * @return the byteSize
 	 */
+    @SuppressWarnings("unused")
 	public int getByteSize() {
 		return byteSize;
 	}
@@ -111,6 +113,7 @@ public class RealmListService implements Service {
 	 * 
 	 * @return the size
 	 */
+    @SuppressWarnings("unused")
 	public int getRealmCount() {
 		return realms.size();
 	}
@@ -135,6 +138,7 @@ public class RealmListService implements Service {
 	 *            the id
 	 * @return the amount characters
 	 */
+    @SuppressWarnings("unused")
 	public FastMap<Integer, Integer> getAmountCharacters(Integer id) {
 		return getWorldDAO().getAmountCharacters(id);
 	}
