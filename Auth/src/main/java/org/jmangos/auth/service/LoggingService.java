@@ -20,6 +20,7 @@
 package org.jmangos.auth.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -40,6 +41,7 @@ import org.jmangos.commons.service.Service;
  * 
  * @author MinimaJack
  */
+
 public class LoggingService implements Service {
 	/**
 	 * Property that represents {@link org.apache.log4j.spi.LoggerFactory} class
@@ -60,6 +62,13 @@ public class LoggingService implements Service {
 	 *             the log4j initialization error
 	 */
 	public void start() throws Log4jInitializationError {
+        LogManager manager = LogManager.getLogManager();
+        try {
+            manager.readConfiguration( getClass().getResourceAsStream("/logging.properties") );
+        } catch (IOException e) {
+            Logger.getLogger(Log4jInitializationError.class.getSimpleName()).severe( "logging.properties not found in the classpath! Please restore it!" );
+        }
+
 		File f = new File(LOGGER_CONFIG_FILE);
 
 		if (!f.exists()) {
@@ -97,12 +106,7 @@ public class LoggingService implements Service {
 
 		overrideDefaultLoggerFactory();
 
-		Logger logger = LogManager.getLogManager().getLogger("");
-		for (Handler h : logger.getHandlers()) {
-			logger.removeHandler(h);
-		}
-
-		logger.addHandler(new JuliToLog4JHandler());
+		/** JULI bridge configured via slf4j bridge */
 	}
 
 	/**
