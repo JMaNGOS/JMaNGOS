@@ -61,8 +61,8 @@ public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
 	protected void readImpl() {
 		byte[] R1 = readB(16);
 		byte[] R2 = readB(20);
-		byte[] R3 = readB(20);
-		int numberofKey = readC();
+		//byte[] R3 = readB(20); // Unused..
+		/*int numberofKey = */readC(); // unused
 
 		MessageDigest sha = null;
 		try {

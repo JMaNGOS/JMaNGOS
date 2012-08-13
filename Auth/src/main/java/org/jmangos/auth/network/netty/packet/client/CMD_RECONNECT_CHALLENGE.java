@@ -66,18 +66,18 @@ public class CMD_RECONNECT_CHALLENGE extends AbstractWoWClientPacket {
 	@SuppressWarnings("unused")
 	@Override
 	protected void readImpl() {
-		int error = readC();
-		int size = readH();
-		byte[] gamename = readB(4);
-		int version1 = readC();
-		int version2 = readC();
-		int version3 = readC();
-		int build = readH();
-		byte[] platform = readB(4);
-		byte[] os = readB(4);
-		byte[] country = readB(4);
-		int timezone_bias = readD();
-		int ip = readD();
+		int error = readC(); // error
+		int size = readH(); // size
+		readB(4); // gamename
+		readC(); // version 3
+		readC(); // version 5
+		readC(); // version 5
+		readH(); // client buildNr
+		readB(4); // platform
+		readB(4); // OS
+		readB(4); // country (enUS)
+        /*int timezone_bias = */readD();
+		/*int ip = */readD();
 		int lenLogin = readC();
 		login = new String(readB(lenLogin), 0, lenLogin);
 	}

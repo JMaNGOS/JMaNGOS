@@ -68,7 +68,7 @@ public class AccountService {
 		// }
 		;
 		Account account = loadAccount(name);
-		HashMap<String, BigNumber> variable = new HashMap<String, BigNumber>();
+		HashMap<String, BigNumber> variable; // calculateVSFields will create it.
 		BigNumber s = new BigNumber();
 		BigNumber v = new BigNumber();
 

@@ -21,17 +21,16 @@ package org.jmangos.auth.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.logging.Handler;
 import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.log4j.Hierarchy;
+import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
-import org.jmangos.commons.log4j.JuliToLog4JHandler;
 import org.jmangos.commons.log4j.ThrowableAsMessageAwareFactory;
 import org.jmangos.commons.log4j.exception.Log4jInitializationError;
 import org.jmangos.commons.service.Service;
@@ -62,11 +61,21 @@ public class LoggingService implements Service {
 	 *             the log4j initialization error
 	 */
 	public void start() throws Log4jInitializationError {
-        LogManager manager = LogManager.getLogManager();
+        InputStream is = LoggingService.class.getResourceAsStream("/logging.properties");
         try {
-            manager.readConfiguration( getClass().getResourceAsStream("/logging.properties") );
+            LogManager manager = LogManager.getLogManager();
+            manager.readConfiguration(is);
         } catch (IOException e) {
-            Logger.getLogger(Log4jInitializationError.class.getSimpleName()).severe( "logging.properties not found in the classpath! Please restore it!" );
+            Logger.getLogger(getClass()).fatal( "logging.properties not found in the classpath! Please restore it!" );
+        } finally {
+            // FindBugs warning fix...
+            if ( is != null )
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    // It will be never thrown
+                    Logger.getLogger(getClass()).fatal( "Can't close the logging.properties resource stream!" );
+                }
         }
 
 		File f = new File(LOGGER_CONFIG_FILE);
@@ -141,7 +150,7 @@ public class LoggingService implements Service {
 	/**
 	 * (non-Javadoc)
 	 * 
-	 * @see org.wowemu.common.service.Service#stop()
+	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override
 	public void stop() {
