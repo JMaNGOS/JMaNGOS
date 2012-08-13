@@ -881,7 +881,7 @@ public class ItemPrototype extends NamedObject {
 	 * @param statsCount the statsCount to set
 	 */
 	public void setStatsCount(int statsCount) {
-		statsCount = statsCount;
+		this.statsCount = statsCount;
 	}
 
 	/**
