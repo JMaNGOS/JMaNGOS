@@ -95,12 +95,7 @@ public class LoggingService implements Service {
 		overrideDefaultLoggerFactory();
 
 		// Initialize JULI to Log4J bridge
-		Logger logger = LogManager.getLogManager().getLogger("");
-		for (Handler h : logger.getHandlers()) {
-			logger.removeHandler(h);
-		}
-
-		logger.addHandler(new JuliToLog4JHandler());
+		/** configured via slf4j bridge */
 	}
 
 	/**
