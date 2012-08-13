@@ -89,7 +89,7 @@ public class BLP {
 	
 	private static void readMipMaps(BLP result, ByteBuffer bb) {
 		for (int index = 0; index < result.mipmapOffsets.length; index ++) {
-			if ((result.mipmapOffsets[index] > 0) & (result.mipmapOffsets[index] < bb.capacity())) {
+			if ((result.mipmapOffsets[index] > 0) && (result.mipmapOffsets[index] < bb.capacity())) {
 				bb.position(result.mipmapOffsets[index]);
 				if((bb.position() + result.mipmapSize[index]) > bb.capacity())
 					continue;
