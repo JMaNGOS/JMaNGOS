@@ -19,18 +19,17 @@
  */
 package org.jmangos.auth.network.netty.factory;
 
-import static org.jboss.netty.channel.Channels.*;
+import static org.jboss.netty.channel.Channels.pipeline;
+
+import javax.inject.Inject;
 
 import org.jboss.netty.channel.ChannelPipeline;
-import org.jmangos.auth.network.netty.handler.EventLogHandler;
 import org.jmangos.auth.network.netty.handler.AuthToClientChannelHandler;
+import org.jmangos.auth.network.netty.handler.EventLogHandler;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.netty.factory.BasicPipelineFactory;
 import org.jmangos.commons.network.netty.receiver.NettyPacketReceiver;
-
-import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  * A factory for creating Auth-Client Pipeline objects.
@@ -41,12 +40,10 @@ public class AuthToClientPipelineFactory extends BasicPipelineFactory {
 
 	/** The connection handler. */
 	@Inject
-	@Named("AuthToClient")
 	private ConnectHandler connectionHandler;
 
 	/** The packet service. */
 	@Inject
-	@Named("AuthToClient")
 	private PacketHandlerFactory packetService;
 
 	/**

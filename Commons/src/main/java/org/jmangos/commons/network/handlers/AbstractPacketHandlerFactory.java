@@ -60,14 +60,24 @@ public abstract class AbstractPacketHandlerFactory extends XmlDataLoader
 			case DOWNSTREAM:
 				for (Object pt : plist.data.values()) {
 					try {
-						ReceivablePacket packet = (ReceivablePacket) cl
-								.loadClass(
-										plist.getPackageName()
-												+ ((PacketTemplate) pt)
-														.getName())
-								.newInstance();
+
+						Class<?> clazz = Class.forName(plist.getPackageName()
+								+ ((PacketTemplate) pt).getName(), false, this
+								.getClass().getClassLoader());
+						ReceivablePacket packet = (ReceivablePacket) ServiceContent
+								.getContext().getBean("org.jmangos.auth.network.netty.packet.client.CMD_REALM_LIST");
+
+						// ReceivablePacket packet = (ReceivablePacket) cl
+						// .loadClass(
+						// plist.getPackageName()
+						// + ((PacketTemplate) pt)
+						// .getName())
+						// .newInstance();
 						packet.setOpCode(((PacketTemplate) pt).getTemplateId());
-						ServiceContent.getInjector().injectMembers(packet);
+						// //ServiceContent.getInjector().injectMembers(packet);
+						// ServiceContent.getContext().
+						// getAutowireCapableBeanFactory().configureBean(packet,
+						// packet.getClass().getSimpleName());
 						addPacket(packet, ((PacketTemplate) pt).getState());
 					} catch (Exception e) {
 						e.printStackTrace();

@@ -22,10 +22,12 @@ import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
 import org.jmangos.auth.network.netty.packet.server.TCMD_REALM_LIST;
 import org.jmangos.auth.service.WorldListService;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class <tt>CMD_REALM_LIST</tt>.
  */
+@Component
 public class CMD_REALM_LIST extends AbstractWoWClientPacket {
 
 	/** The sender. */

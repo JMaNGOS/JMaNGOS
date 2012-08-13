@@ -23,10 +23,12 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class <tt>CMD_TEST_CRYPT</tt>.
  */
+@Component
 public class CMD_TEST_CRYPT extends AbstractWoWClientPacket {
 
 	/** The logger. */

@@ -16,6 +16,7 @@
  *******************************************************************************/
 package org.jmangos.auth.service;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.lang.NotImplementedException;
@@ -23,19 +24,16 @@ import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jmangos.auth.config.Config;
 import org.jmangos.commons.network.netty.service.AbstractNetworkService;
 
-import com.google.inject.Inject;
-
 /**
  * The Class LoginNetworkService.
  */
 public class AuthNetworkService extends AbstractNetworkService {
-	
-	@javax.inject.Inject
+
+	@Inject
 	private Config config;
-	
+
 	/** The auth to client pipeline factory. */
 	@Inject
-	@Named("AuthToClient")
 	private ChannelPipelineFactory authToClientPipelineFactory;
 
 	/**

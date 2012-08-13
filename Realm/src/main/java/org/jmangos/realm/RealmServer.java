@@ -31,6 +31,8 @@ import org.jmangos.realm.service.PlayerClassLevelInfoStorages;
 import org.jmangos.realm.service.PlayerLevelStorages;
 import org.jmangos.realm.service.UpdateService;
 import org.jmangos.realm.utils.ShutdownHook;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -47,6 +49,11 @@ public class RealmServer {
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
+		
+		ApplicationContext context = new FileSystemXmlApplicationContext(
+				"conf/context/realm-context.xml");
+		ServiceContent.setContext(context);
+		
 		Injector injector = Guice.createInjector(new Handler());
 		ServiceContent.setInjector(injector);
 		

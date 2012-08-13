@@ -16,6 +16,8 @@
  *******************************************************************************/
 package org.jmangos.commons.service;
 
+import org.springframework.context.ApplicationContext;
+
 import com.google.inject.Injector;
 
 /**
@@ -25,6 +27,8 @@ public final class ServiceContent {
 
 	/** The injector. */
 	private static Injector injector;
+
+	private static ApplicationContext context;
 
 	/**
 	 * Sets the injector.
@@ -46,4 +50,11 @@ public final class ServiceContent {
 		return injector;
 	}
 
+	public static ApplicationContext getContext() {
+		return context;
+	}
+
+	public static void setContext(ApplicationContext context) {
+		ServiceContent.context = context;
+	}
 }

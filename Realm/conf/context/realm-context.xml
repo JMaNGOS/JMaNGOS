@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (C) 2012 JMaNGOS <http://jmangos.org/>                                        
+                                                                                         
+ This program is free software; you can redistribute it and/or modify it                 
+ under the terms of the GNU General Public License as published by the                   
+ Free Software Foundation; either version 2 of the License, or (at your                  
+ option) any later version.                                                              
+                                                                                         
+ This program is distributed in the hope that it will be useful, but WITHOUT             
+ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or                   
+ FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for                
+ more details.                                                                           
+                                                                                         
+ You should have received a copy of the GNU General Public License along                 
+ with this program. If not, see <http://www.gnu.org/licenses/>.          
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+    
+    <context:component-scan base-package="org.jmangos.realm" />
+    
+    <context:annotation-config base-package="org.jmangos.realm" />
+    
+    <bean id="log4jInitialization" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetClass" value="org.springframework.util.Log4jConfigurer" />
+        <property name="targetMethod" value="initLogging" />
+        <property name="arguments">
+            <list>
+                <value>conf/log4j.xml</value>
+            </list>
+        </property>
+       </bean>
+    
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="conf/database/database.properties" />
+    </bean>
+    
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://${database.hostname}/${database.dbname}" />
+        <property name="username" value="${database.username}" />
+        <property name="password" value="${database.password}" />
+    </bean>
+    
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="showSql" value="true" />
+                <property name="generateDdl" value="true" />
+                <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <tx:annotation-driven transaction-manager="transactionManager" />
+    
+    <bean id="loggingService" class="org.jmangos.commons.log4j.LoggingService" />
+    <bean id="config" class="org.jmangos.auth.config.Config" />
+    <bean id="databaseConfig" class="org.jmangos.commons.database.DatabaseConfig" />
+    <bean id="databaseFactory" class="org.jmangos.commons.database.DatabaseFactory" />
+    
+    <bean id="realmDAO" class="org.jmangos.auth.dao.mysql5.MySQL5RealmDAO" />
+    <bean id="accountDAO" class="org.jmangos.auth.dao.mysql5.MySQL5AccountDAO" />
+    <bean id="bannedIpDAO" class="org.jmangos.auth.dao.mysql5.MySQL5BannedIpDAO" />
+    
+    <bean id="worldListService" class="org.jmangos.auth.service.WorldListService" />
+    <bean id="banIpService" class="org.jmangos.auth.service.BanIpService" />
+    <bean id="threadPoolManager" class="org.jmangos.commons.threadpool.CommonThreadPoolManager" />
+    <bean id="updateService" class="org.jmangos.auth.service.UpdateService" />
+    <bean id="shutdownHook" class="org.jmangos.auth.utils.ShutdownHook" />
+    
+	<bean id="packetService" class="org.jmangos.auth.network.handler.AuthToClientPacketHandlerFactory" />
+	<bean id="connectionHandler" class="org.jmangos.auth.network.netty.handler.AuthToClientConnectHandler" />
+    <bean id="authToClientPipelineFactory" class="org.jmangos.auth.network.netty.factory.AuthToClientPipelineFactory" />
+    <bean id="authNetworkService" class="org.jmangos.auth.service.AuthNetworkService" />
+    
+    
+    
+</beans> 

@@ -16,10 +16,9 @@
  *******************************************************************************/
 package org.jmangos.auth;
 
-import javax.inject.Inject;
-
 import org.jmangos.auth.config.Config;
-import org.jmangos.auth.module.HandlerDM;
+import org.jmangos.auth.network.netty.packet.client.CMD_AUTH_LOGON_CHALLENGE;
+import org.jmangos.auth.service.AuthNetworkService;
 import org.jmangos.auth.service.BanIpService;
 import org.jmangos.auth.service.UpdateService;
 import org.jmangos.auth.service.WorldListService;
@@ -28,12 +27,10 @@ import org.jmangos.commons.config.Compatiple;
 import org.jmangos.commons.database.DatabaseConfig;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.log4j.LoggingService;
-import org.jmangos.commons.network.netty.service.NetworkService;
 import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.commons.threadpool.ThreadPoolManager;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 /**
  * The Class AuthServer.
@@ -41,7 +38,7 @@ import com.google.inject.Injector;
  * @author MinimaJack
  */
 public class AuthServer {
-	
+
 	private static Config config;
 
 	/**
@@ -52,25 +49,29 @@ public class AuthServer {
 	 * @throws Exception
 	 *             the exception
 	 */
-	public static void main(String[] args) throws Exception {
-		Injector injector = Guice.createInjector(new HandlerDM());
-		ServiceContent.setInjector(injector);
-		injector.getInstance(LoggingService.class).start();
-		config = injector.getInstance(Config.class);
-		injector.getInstance(DatabaseConfig.class);
-		injector.getInstance(DatabaseFactory.class).start();
-		injector.getInstance(WorldListService.class).start();
+	public static void main(String[] args) throws Exception {;
+
+		ApplicationContext context = new FileSystemXmlApplicationContext(
+				"conf/context/auth-context.xml");
+		ServiceContent.setContext(context);
+
+		context.getBean(LoggingService.class).start();
+		config = context.getBean(Config.class);
+		context.getBean(DatabaseConfig.class); // not actual!
+		context.getBean(DatabaseFactory.class).start(); // not actual!
+		context.getBean(WorldListService.class).start();
 		if (config.COMPATIBLE != Compatiple.MANGOS) {
-			injector.getInstance(BanIpService.class).start();
+			context.getBean(BanIpService.class).start();
 		}
-		injector.getInstance(ThreadPoolManager.class).start();
-
-		if (config.COMPATIBLE == Compatiple.MANGOS)
-			injector.getInstance(UpdateService.class).start();
-
+		context.getBean(ThreadPoolManager.class).start();
+		if (config.COMPATIBLE == Compatiple.MANGOS) {
+			context.getBean(UpdateService.class).start();
+		}
 		Runtime.getRuntime().addShutdownHook(
-				injector.getInstance(ShutdownHook.class));
+				context.getBean(ShutdownHook.class));
 		System.gc();
-		injector.getInstance(NetworkService.class).start();
+		context.getBean(AuthNetworkService.class).start();
+		context.getBean(CMD_AUTH_LOGON_CHALLENGE.class);
+
 	}
 }

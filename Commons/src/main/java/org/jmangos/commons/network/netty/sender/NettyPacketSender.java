@@ -26,17 +26,18 @@ import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.model.SendablePacket;
 import org.jmangos.commons.network.utils.NetworkUtil;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class NettyPacketSender.
  */
+@Component
 public class NettyPacketSender implements AbstractPacketSender {
 	/*
 	 * @Inject private Network network;
 	 */
 	/** The packet service. */
 	@Inject
-	@Named("AuthToClient")
 	private PacketHandlerFactory packetService;
 
 	/*

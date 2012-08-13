@@ -33,10 +33,12 @@ import org.jmangos.auth.utils.AccountUtils;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.commons.utils.BigNumber;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class <tt>CMD_AUTH_LOGON_PROOF</tt>.
  */
+@Component
 public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 
 	/** The Constant logger. */
