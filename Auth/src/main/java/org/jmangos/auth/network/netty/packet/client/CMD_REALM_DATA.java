@@ -37,7 +37,7 @@ public class CMD_REALM_DATA extends AbstractWoWClientPacket {
 	@Inject
 	private AbstractPacketSender sender;
 	@Inject
-	private WorldListService realmListService;
+	private RealmListService realmListService;
 
 	public CMD_REALM_DATA() {
 		super();

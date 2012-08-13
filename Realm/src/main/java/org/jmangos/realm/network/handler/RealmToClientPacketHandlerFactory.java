@@ -32,12 +32,12 @@ import org.jmangos.commons.service.ServiceContent;
 /**
  * A factory for creating RealmPacketHandler objects.
  */
-public class RealmToClientPacketHandlerFactory extends XmlDataLoader
-		implements PacketHandlerFactory {
+public class RealmToClientPacketHandlerFactory extends XmlDataLoader implements
+		PacketHandlerFactory {
 
 	/** The c handler. */
 	ClientPacketHandler cHandler = new ClientPacketHandler();
-	
+
 	/** The s handler. */
 	ServerPacketHandler sHandler = new ServerPacketHandler();
 
@@ -45,17 +45,18 @@ public class RealmToClientPacketHandlerFactory extends XmlDataLoader
 	 * Instantiates a new realm packet handler factory.
 	 */
 	public RealmToClientPacketHandlerFactory() {
-		addList(loadStaticData(PacketData.class,"./conf/packetData/packets.xsd",
-				"./conf/packetData/rc-packets.xml"));
+
 	}
 
 	/**
 	 * Adds the list.
-	 *
-	 * @param pl the pl
+	 * 
+	 * @param pl
+	 *            the pl
 	 */
 	public void addList(PacketData pl) {
-		ClassLoader cl = RealmToClientPacketHandlerFactory.class.getClassLoader();
+		ClassLoader cl = RealmToClientPacketHandlerFactory.class
+				.getClassLoader();
 		for (PacketList plist : pl.templates) {
 			switch (plist.getDirection()) {
 			case DOWNSTREAM:
@@ -93,33 +94,62 @@ public class RealmToClientPacketHandlerFactory extends XmlDataLoader
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#addPacket(org.jmangos.commons.network.model.ReceivablePacket, org.jmangos.commons.network.model.State[])
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jmangos.commons.network.handlers.PacketHandlerFactory#addPacket(org
+	 * .jmangos.commons.network.model.ReceivablePacket,
+	 * org.jmangos.commons.network.model.State[])
 	 */
 	public void addPacket(ReceivablePacket packetPrototype, State... states) {
 		cHandler.addPacketOpcode(packetPrototype, states);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#getServerPacketopCode(org.jmangos.commons.network.model.SendablePacket)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#
+	 * getServerPacketopCode(org.jmangos.commons.network.model.SendablePacket)
 	 */
 	public int getServerPacketopCode(SendablePacket packetClass) {
 		return sHandler.getOpCode(packetClass);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#handleClientPacket(int, org.jmangos.commons.network.model.NetworkChannel)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jmangos.commons.network.handlers.PacketHandlerFactory#handleClientPacket
+	 * (int, org.jmangos.commons.network.model.NetworkChannel)
 	 */
 	public ReceivablePacket handleClientPacket(int id, NetworkChannel ch) {
 		return cHandler.getPacket(id, ch);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#addPacket(java.lang.Class, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jmangos.commons.network.handlers.PacketHandlerFactory#addPacket(java
+	 * .lang.Class, int)
 	 */
 	public void addPacket(Class<? extends SendablePacket> packetPrototype,
 			int opcode) {
 		sHandler.addPacketOpcode(packetPrototype, opcode);
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jmangos.commons.network.handlers.PacketHandlerFactory#loadPacket()
+	 */
+	@Override
+	public void loadPacket() {
+		addList(loadStaticData(PacketData.class,
+				"./conf/packetData/packets.xsd",
+				"./conf/packetData/rc-packets.xml"));
 	}
 }

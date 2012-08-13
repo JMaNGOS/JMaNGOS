@@ -27,7 +27,7 @@ import org.jmangos.auth.network.netty.handler.AuthToClientConnectHandler;
 import org.jmangos.auth.service.AccountService;
 import org.jmangos.auth.service.BanIpService;
 import org.jmangos.auth.service.AuthNetworkService;
-import org.jmangos.auth.service.WorldListService;
+import org.jmangos.auth.service.RealmListService;
 import org.jmangos.auth.utils.ShutdownHook;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
@@ -74,7 +74,7 @@ public class HandlerDM extends AbstractModule {
 		bind(BanIpDAO.class).to(MySQL5BannedIpDAO.class).in(Scopes.SINGLETON);
         //bind(AccountDAO.class).in(Scopes.SINGLETON);
 
-		bind(WorldListService.class).in(Scopes.SINGLETON);
+		bind(RealmListService.class).in(Scopes.SINGLETON);
 		bind(BanIpService.class).in(Scopes.SINGLETON);
 
 		bind(DatabaseFactory.class).in(Scopes.SINGLETON);

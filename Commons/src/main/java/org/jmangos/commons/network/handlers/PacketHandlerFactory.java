@@ -63,4 +63,10 @@ public interface PacketHandlerFactory {
 	 * @return the receivable packet
 	 */
 	public ReceivablePacket handleClientPacket(int id, NetworkChannel ch);
+	
+	/**
+	 * Load packet.
+	 * 
+	 */
+	public void loadPacket();
 }

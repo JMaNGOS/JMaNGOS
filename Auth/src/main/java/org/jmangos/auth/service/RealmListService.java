@@ -25,11 +25,13 @@ import org.jmangos.auth.dao.RealmDAO;
 import org.jmangos.commons.model.Realm;
 import org.jmangos.commons.service.Service;
 
-public class WorldListService implements Service {
+public class RealmListService implements Service {
 	/**
 	 * Logger for this class.
 	 */
-	private static final Logger log = Logger.getLogger(WorldListService.class);
+	private final Logger log = Logger.getLogger(getClass());
+
+	private final long UPDATE_INTERVAL = 2000;
 
 	/**
 	 * Map with realms
@@ -38,18 +40,13 @@ public class WorldListService implements Service {
 			.shared();
 
 	/** The byte size. */
-	private static int byteSize;
+	private int byteSize;
 
-	/** The WORL ddao. */
+	/** The realm dao. */
 	@Inject
-	private RealmDAO WORLDdao;
+	private RealmDAO realmDAO;
 
-	/**
-	 * Instantiates a new world list service.
-	 */
-	public WorldListService() {
-		realms = new FastMap<Integer, Realm>().shared();
-	}
+	private long nextUpdateTime = 0;
 
 	/**
 	 * Gets the worlds.
@@ -67,7 +64,7 @@ public class WorldListService implements Service {
 			realms.put(newRealm.getId(), newRealm);
 		} else {
 			realms.put(newRealm.getId(), newRealm);
-			setByteSize(calculateWorldsSize());
+			byteSize = calculateWorldsSize();
 		}
 	}
 
@@ -81,22 +78,14 @@ public class WorldListService implements Service {
 	}
 
 	/**
-	 * Loads account from DB and returns it, or returns null if account was not
-	 * loaded.
-	 * 
-	 * @return loaded account or null
+	 * Update if need
 	 */
-	public void reload() {
-		update();
-		log.debug("RealmList reloaded. Loaded " + realms.size() + " realms.");
-
-	}
-
-	/**
-	 * Update.
-	 */
-	private void update() {
-		FastMap<Integer, Realm> trealms = WORLDdao.getAllRealms();
+	synchronized public void update() {
+		if(nextUpdateTime > System.currentTimeMillis()){
+			return;
+		}
+		nextUpdateTime = System.currentTimeMillis() + UPDATE_INTERVAL;
+		FastMap<Integer, Realm> trealms = realmDAO.getAllRealms();
 		for (Realm realm : trealms.values()) {
 			if (realms.containsKey(realm.getId())) {
 				realms.get(realm.getId()).setPopulation(realm.getPopulation());
@@ -105,7 +94,7 @@ public class WorldListService implements Service {
 			}
 		}
 		// update byte size all realms
-		setByteSize(calculateWorldsSize());
+		byteSize = calculateWorldsSize();
 	}
 
 	/**
@@ -118,21 +107,11 @@ public class WorldListService implements Service {
 	}
 
 	/**
-	 * Sets the byte size.
-	 * 
-	 * @param byteSyze
-	 *            the new byte size
-	 */
-	public static void setByteSize(int byteSyze) {
-		WorldListService.byteSize = byteSyze;
-	}
-
-	/**
 	 * Gets the size.
 	 * 
 	 * @return the size
 	 */
-	public int getSize() {
+	public int getRealmCount() {
 		return realms.size();
 	}
 
@@ -161,7 +140,7 @@ public class WorldListService implements Service {
 	}
 
 	private RealmDAO getWorldDAO() {
-		return WORLDdao;
+		return realmDAO;
 	}
 
 	/**

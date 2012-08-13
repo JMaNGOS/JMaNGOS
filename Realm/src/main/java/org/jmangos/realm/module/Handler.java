@@ -65,8 +65,10 @@ public class Handler extends AbstractModule {
 
 		bind(AbstractPacketSender.class).annotatedWith(Names.named("RealmToAuth")).to(
 				ServerPacketSender.class).in(Scopes.SINGLETON);
+		
 		bind(PacketHandlerFactory.class).annotatedWith(Names.named("AuthToClient")).to(
 				RealmToClientPacketHandlerFactory.class).in(Scopes.SINGLETON);
+
 		bind(PacketHandlerFactory.class).annotatedWith(Names.named("RealmToAuth")).to(
 				RealmToAuthPacketHandlerFactory.class).in(Scopes.SINGLETON);
 
