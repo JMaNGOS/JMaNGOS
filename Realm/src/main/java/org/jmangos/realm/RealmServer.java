@@ -57,7 +57,12 @@ public class RealmServer {
         injector.getInstance(ItemStorages.class).start();
         injector.getInstance(DBCStorage.class).start();
         injector.getInstance(UpdateService.class).start();
-		
+
+        // Initialize all session factory before allow clients to connect
+        DatabaseFactory.getAccountsSessionFactory();
+        DatabaseFactory.getCharactersSessionFactory();
+        DatabaseFactory.getWorldSessionFactory();
+
 		System.gc();
 
         injector.getInstance(NetworkService.class).start();
@@ -65,6 +70,6 @@ public class RealmServer {
         console = new Console();
         console.setVariable( "injector", injector );
         console.setVariable( "itemStorage", injector.getInstance( ItemStorages.class ) );
-        console.run();
+        //console.run();
     }
 }
