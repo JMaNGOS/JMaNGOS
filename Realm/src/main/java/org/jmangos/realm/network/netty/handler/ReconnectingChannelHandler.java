@@ -29,6 +29,10 @@ import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.netty.factory.NetworkChannelFactory;
 import org.jmangos.commons.network.netty.receiver.NettyPacketReceiver;
+import org.jmangos.commons.service.ServiceContent;
+import org.jmangos.realm.config.Config;
+
+import com.google.inject.Inject;
 
 /**
  * The Class ReconnectingChannelHandler.
@@ -39,15 +43,14 @@ public class ReconnectingChannelHandler extends SimpleChannelUpstreamHandler {
 	private static final Logger log = Logger
 			.getLogger(ReconnectingChannelHandler.class);
 
-	/** The Constant RECONNECT_DELAY. */
-	private static final long RECONNECT_DELAY = 5;
-
 	/** The timer. */
 	private Timer timer;
 
 	/** The channel factory. */
 	private NetworkChannelFactory channelFactory;
 
+	/** Config */
+	Config config;
 	/**
 	 * Instantiates a new reconnecting channel handler.
 	 * 
@@ -67,6 +70,7 @@ public class ReconnectingChannelHandler extends SimpleChannelUpstreamHandler {
 			PacketHandlerFactory packetService,
 			ConnectHandler connectionHandler,
 			NettyPacketReceiver nettyPacketReceiver) {
+		config = ServiceContent.getInjector().getInstance(Config.class);
 		this.timer = timer;
 		this.channelFactory = channelFactory;
 	}
@@ -86,7 +90,7 @@ public class ReconnectingChannelHandler extends SimpleChannelUpstreamHandler {
 				log.info("Reconnecting to: " + channelFactory.getAddress());
 				channelFactory.connect();
 			}
-		}, RECONNECT_DELAY, TimeUnit.SECONDS);
+		}, config.AUTH_RECONNECT_DELAY, TimeUnit.MILLISECONDS);
 
 	}
 }

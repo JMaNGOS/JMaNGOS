@@ -46,7 +46,7 @@ public abstract class AbstractNetworkService implements NetworkService {
 		ServerChannelFactory channelFactory = new ServerChannelFactory(address);
 		channelFactory.initialize(pipelineFactory);
 		Channel channel = channelFactory.connect();
-		log.info("Initialized channel : " + channel.getLocalAddress());
+		log.info("Initialized server channel : " + channel.getLocalAddress());
 	}
 
 	/**
@@ -61,7 +61,7 @@ public abstract class AbstractNetworkService implements NetworkService {
 			ChannelPipelineFactory pipelineFactory) {
 		ClientChannelFactory channelFactory = new ClientChannelFactory(address);
 		channelFactory.initialize(pipelineFactory);
-		Channel channel = channelFactory.connect();
-		log.info("Initialized channel : {}" + channel.getLocalAddress());
+		channelFactory.connect();
+		log.info("Initialized client channel to " + address);
 	}
 }

@@ -53,7 +53,7 @@ public class Config extends AbstractConfig {
 	/** Auth password */
 	@Property(key = "network.auth.password", defaultValue = "JMaNGOS")
 	public String AUTH_PASSWORD;
-	
+
 	/** Displayed name in realmList */
 	@Property(key = "network.realm.name", defaultValue = "JMaNGOS")
 	public String REALM_NAME;
@@ -85,6 +85,10 @@ public class Config extends AbstractConfig {
 	/** Allowed client build */
 	@Property(key = "network.realm.allowedClientBuild", defaultValue = "12340")
 	public String REALM_ALLOWED_CLIENT_BUILD;
+
+	/** Time to reconnect realm with auth server in milliseconds */
+	@Property(key = "network.realm.reconnectDelay", defaultValue = "5000")
+	public Long AUTH_RECONNECT_DELAY;
 
 	/**
 	 * Load configuration.
