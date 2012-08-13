@@ -24,24 +24,45 @@
  */
 package org.jmangos.auth.model;
 
+import org.hibernate.annotations.IndexColumn;
+
+import javax.persistence.*;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Calendar;
+
 /**
  * The Class BanIp.
  */
+@Entity
+@Table(name="ip_banned")
 public class BanIp {
 
 	/** Returns ip mask. */
+    @Id
+    @IndexColumn(name="ip")
+    @Column(name="ip", length = 18, unique = true, nullable = false)
 	private String ip;
 
 	/** Returns expiration time. */
-	private Long timeEnd;
+    @Column(name="banned_time", nullable = true)
+	private Timestamp timeEnd = null;
 
-	/**
+    public BanIp() {
+    }
+
+    public BanIp(String ip, Timestamp timeEnd) {
+        this.ip = ip;
+        this.timeEnd = timeEnd;
+    }
+
+    /**
 	 * Checks if ban is still active.
 	 * 
 	 * @return true if ban is still active
 	 */
-	public boolean isActive() {
-		return timeEnd == null || timeEnd > System.currentTimeMillis() / 1000;
+    public boolean isActive() {
+		return timeEnd.before(Calendar.getInstance().getTime());
 	}
 
 	/**
@@ -68,7 +89,7 @@ public class BanIp {
 	 * 
 	 * @return expiration time of ban
 	 */
-	public Long getTimeEnd() {
+	public Timestamp getTimeEnd() {
 		return timeEnd;
 	}
 
@@ -78,7 +99,7 @@ public class BanIp {
 	 * @param timeEnd
 	 *            expiration time of ban
 	 */
-	public void setTimeEnd(Long timeEnd) {
+	public void setTimeEnd(Timestamp timeEnd) {
 		this.timeEnd = timeEnd;
 	}
 
@@ -90,6 +111,7 @@ public class BanIp {
 	 * @return true if ban's are equals
 	 */
 	@Override
+    //TODO: implement CDIR
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
