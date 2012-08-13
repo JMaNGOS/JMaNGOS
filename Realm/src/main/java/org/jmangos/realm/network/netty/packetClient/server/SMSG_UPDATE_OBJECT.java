@@ -57,7 +57,7 @@ public class SMSG_UPDATE_OBJECT extends AbstractWoWServerPacket {
                     writeD( player.GetUInt32Value( i ) );
                     break;
                 case LONG:
-                    writeD( player.GetUInt64Value( i ) );
+                    writeQ( player.GetUInt64Value( i ) );
                     break;
                 default:
                     log.fatal( "UNKNOWN SIZE!!! AAAaaaaAAAaaaa index: " + i );
