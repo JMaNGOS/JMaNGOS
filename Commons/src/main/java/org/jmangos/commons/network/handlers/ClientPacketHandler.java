@@ -29,7 +29,7 @@ import org.jmangos.commons.network.model.State;
  * The Class ClientPacketHandler.
  */
 public class ClientPacketHandler {
-	
+
 	/** The Constant log. */
 	private static final Logger log = Logger
 			.getLogger(ClientPacketHandler.class);
@@ -39,9 +39,11 @@ public class ClientPacketHandler {
 
 	/**
 	 * Gets the packet.
-	 *
-	 * @param id the id
-	 * @param ch the ch
+	 * 
+	 * @param id
+	 *            the id
+	 * @param ch
+	 *            the ch
 	 * @return the packet
 	 */
 	public ReceivablePacket getPacket(int id, NetworkChannel ch) {
@@ -63,9 +65,11 @@ public class ClientPacketHandler {
 
 	/**
 	 * Handle.
-	 *
-	 * @param id the id
-	 * @param ch the ch
+	 * 
+	 * @param id
+	 *            the id
+	 * @param ch
+	 *            the ch
 	 * @return the receivable packet
 	 */
 	public ReceivablePacket handle(int id, NetworkChannel ch) {
@@ -74,9 +78,11 @@ public class ClientPacketHandler {
 
 	/**
 	 * Unknown packet.
-	 *
-	 * @param state the state
-	 * @param id the id
+	 * 
+	 * @param state
+	 *            the state
+	 * @param id
+	 *            the id
 	 */
 	protected static void unknownPacket(State state, int id) {
 		log.warn(String.format("[UNKNOWN PACKET] : received 0x%03X, state=%s %n", id, state.toString()));
@@ -88,9 +94,11 @@ public class ClientPacketHandler {
 
 	/**
 	 * Adds the packet opcode.
-	 *
-	 * @param packetPrototype the packet prototype
-	 * @param states the states
+	 * 
+	 * @param packetPrototype
+	 *            the packet prototype
+	 * @param states
+	 *            the states
 	 */
 	public void addPacketOpcode(ReceivablePacket packetPrototype, State[] states) {
 		for (State state : states) {
@@ -102,6 +110,6 @@ public class ClientPacketHandler {
 			}
 			pm.put(packetPrototype.getOpCode(), packetPrototype);
 		}
-		
+
 	}
 }

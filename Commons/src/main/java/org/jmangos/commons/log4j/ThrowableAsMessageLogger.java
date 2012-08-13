@@ -19,25 +19,26 @@ package org.jmangos.commons.log4j;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 
-public class ThrowableAsMessageLogger extends Logger
-{
-	
+public class ThrowableAsMessageLogger extends Logger {
+
 	/**
 	 * Creates new instance of this logger.
-	 *
-	 * @param name logger's name
+	 * 
+	 * @param name
+	 *            logger's name
 	 */
-	protected ThrowableAsMessageLogger(String name)
-	{
+	protected ThrowableAsMessageLogger(String name) {
 		super(name);
 	}
 
 	/**
-	 * This method checks if message is instance of throwbale and throwable is null. If it is so it will move message to
-	 * throwable and set localized message of throwable as message of the log record
+	 * This method checks if message is instance of throwbale and throwable is
+	 * null. If it is so it will move message to throwable and set localized
+	 * message of throwable as message of the log record
 	 * 
 	 * @param fqcn
-	 *            fully qualified class name, it would be used to get the line of call
+	 *            fully qualified class name, it would be used to get the line
+	 *            of call
 	 * @param level
 	 *            level of log record
 	 * @param message
@@ -46,11 +47,10 @@ public class ThrowableAsMessageLogger extends Logger
 	 *            throwable, if any present
 	 */
 	@Override
-	protected void forcedLog(String fqcn, Priority level, Object message, Throwable t)
-	{
+	protected void forcedLog(String fqcn, Priority level, Object message,
+			Throwable t) {
 
-		if (message instanceof Throwable && t == null)
-		{
+		if (message instanceof Throwable && t == null) {
 			t = (Throwable) message;
 			message = t.getLocalizedMessage();
 		}
@@ -58,21 +58,24 @@ public class ThrowableAsMessageLogger extends Logger
 		super.forcedLog(fqcn, level, message, t);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.apache.log4j.Category#error(java.lang.Object)
 	 */
 	@Override
-	public void error(Object message)
-	{
+	public void error(Object message) {
 		super.error(message);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.apache.log4j.Category#error(java.lang.Object, java.lang.Throwable)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.apache.log4j.Category#error(java.lang.Object,
+	 * java.lang.Throwable)
 	 */
 	@Override
-	public void error(Object message, Throwable t)
-	{
+	public void error(Object message, Throwable t) {
 		super.error(((String) message), t);
 	}
 }

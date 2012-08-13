@@ -60,6 +60,7 @@ public class AuthToClientChannelHandler extends SimpleChannelUpstreamHandler {
 			.getLogger(AuthToClientChannelHandler.class);
 
 	private Crypt crypt = new Crypt();
+
 	/**
 	 * Instantiates a new Auth to Client channel handler.
 	 * 

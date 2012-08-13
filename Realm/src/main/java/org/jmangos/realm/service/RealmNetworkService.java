@@ -30,6 +30,9 @@ import com.google.inject.Inject;
  */
 public class RealmNetworkService extends AbstractNetworkService {
 	
+	@Inject
+	private Config config;
+	
 	/** The RealmToClient pipeline factory. */
 	@Inject
 	@Named("RealmToClient")
@@ -43,9 +46,9 @@ public class RealmNetworkService extends AbstractNetworkService {
  */
 @Override
 	public void start() {
-		createServerChannel(Config.CLIENT_ADDRESS, realmToClientPipelineFactory);
+		createServerChannel(config.CLIENT_ADDRESS, realmToClientPipelineFactory);
 		// not yet checked...
-		createClientChannel(Config.AUTH_ADDRESS, realmToAuthPipelineFactory);
+		createClientChannel(config.AUTH_ADDRESS, realmToAuthPipelineFactory);
 	}
 
 	/* (non-Javadoc)

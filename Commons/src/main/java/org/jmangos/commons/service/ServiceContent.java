@@ -18,33 +18,32 @@ package org.jmangos.commons.service;
 
 import com.google.inject.Injector;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class ServiceContent.
  */
 public final class ServiceContent {
 
-		  /** The injector. */
-  		private static Injector injector;
+	/** The injector. */
+	private static Injector injector;
 
-		  /**
-  		 * Sets the injector.
-  		 *
-  		 * @param injector the injector to set
-  		 * @return instance
-  		 */
-		  public static final void setInjector(Injector injector) {
-		    ServiceContent.injector = injector;
-		  }
+	/**
+	 * Sets the injector.
+	 * 
+	 * @param injector
+	 *            the injector to set
+	 * @return instance
+	 */
+	public static final void setInjector(Injector injector) {
+		ServiceContent.injector = injector;
+	}
 
-		  /**
-  		 * Gets the injector.
-  		 *
-  		 * @return the injector
-  		 */
-		  public static final Injector getInjector() {
-		    return injector;
-		  }
+	/**
+	 * Gets the injector.
+	 * 
+	 * @return the injector
+	 */
+	public static final Injector getInjector() {
+		return injector;
+	}
 
-		}
+}

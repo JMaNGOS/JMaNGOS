@@ -19,6 +19,7 @@ package org.jmangos.realm;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import groovy.ui.Console;
+import org.jmangos.commons.database.DatabaseConfig;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.log4j.LoggingService;
 import org.jmangos.commons.network.netty.service.NetworkService;
@@ -42,14 +43,15 @@ public class RealmServer {
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-        // Initializing Hibernate
-        Injector injector = Guice.createInjector(new Handler());
+		Injector injector = Guice.createInjector(new Handler());
 		ServiceContent.setInjector(injector);
-		
-		injector.getInstance(LoggingService.class).start();
+
+        // Config loaders
+        injector.getInstance(Config.class);
+
+        injector.getInstance(LoggingService.class).start();
 		injector.getInstance(ThreadPoolManager.class).start();
-		injector.getInstance(Config.class).load();
-		injector.getInstance(DatabaseFactory.class).start();
+        injector.getInstance(DatabaseFactory.class).start();
 		Runtime.getRuntime().addShutdownHook(injector.getInstance(ShutdownHook.class));
 		injector.getInstance(MapService.class).start();
 		injector.getInstance(PlayerClassLevelInfoStorages.class).start();

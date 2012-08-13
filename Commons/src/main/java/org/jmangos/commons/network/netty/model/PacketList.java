@@ -30,7 +30,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.log4j.Logger;
 import org.jmangos.commons.network.netty.model.PacketTemplate;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class PacketList.
  */

@@ -16,24 +16,23 @@
  *******************************************************************************/
 package org.jmangos.commons.task;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface TaskId.
- *
+ * 
  */
 public interface TaskId {
 
-  /**
-   * Name.
-   *
-   * @return the string
-   */
-  String name();
+	/**
+	 * Name.
+	 * 
+	 * @return the string
+	 */
+	String name();
 
-  /**
-   * Gets the priority.
-   *
-   * @return priority of this task
-   */
-  TaskPriority getPriority();
+	/**
+	 * Gets the priority.
+	 * 
+	 * @return priority of this task
+	 */
+	TaskPriority getPriority();
 }

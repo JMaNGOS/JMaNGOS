@@ -21,6 +21,8 @@ package org.jmangos.realm.network.netty.factory;
 
 import static org.jboss.netty.channel.Channels.*;
 
+import java.util.concurrent.TimeUnit;
+
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.util.HashedWheelTimer;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
@@ -51,19 +53,15 @@ public class RealmToAuthPipelineFactory extends BasicPipelineFactory {
 	@Named("RealmToAuth")
 	private PacketHandlerFactory packetService;
 	
-	/** The timer. */
-	private HashedWheelTimer timer;
-
 	/* (non-Javadoc)
 	 * @see org.jboss.netty.channel.ChannelPipelineFactory#getPipeline()
 	 */
 	public ChannelPipeline getPipeline() throws Exception {
 		ChannelPipeline pipeline = pipeline();
-		timer = new HashedWheelTimer();
 		pipeline.addLast("executor", getExecutorHandler());
 		pipeline.addLast("eventlog", new EventLogHandler());
 		// and then business logic.
-		pipeline.addLast("handler", new RealmToAuthChannelHandler(timer,
+		pipeline.addLast("handler", new RealmToAuthChannelHandler(
 				channelFactory, packetService, connectionHandler,
 				new NettyPacketReceiver()));
 

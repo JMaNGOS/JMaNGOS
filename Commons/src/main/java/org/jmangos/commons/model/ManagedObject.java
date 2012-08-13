@@ -18,7 +18,7 @@ package org.jmangos.commons.model;
 
 /**
  * The Class ManagedObject.
- *
+ * 
  */
 public class ManagedObject {
 

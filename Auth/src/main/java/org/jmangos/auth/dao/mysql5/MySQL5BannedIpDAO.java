@@ -69,11 +69,11 @@ public class MySQL5BannedIpDAO extends BanIpDAO {
 									throws SQLException {
 								preparedStatement
 										.setString(1, bannedIP.getIp());
-								preparedStatement.setLong(2, System
-										.currentTimeMillis() / 1000);
-								preparedStatement.setLong(3, System
-										.currentTimeMillis()
-										/ 1000 + bannedIP.getTimeEnd());
+								preparedStatement.setLong(2,
+										System.currentTimeMillis() / 1000);
+								preparedStatement.setLong(3,
+										System.currentTimeMillis() / 1000
+												+ bannedIP.getTimeEnd());
 								preparedStatement.execute();
 							}
 						});
@@ -162,54 +162,50 @@ public class MySQL5BannedIpDAO extends BanIpDAO {
 	public Set<BanIp> getAllBans() {
 
 		final Set<BanIp> result = new HashSet<BanIp>();
-		DB
-				.select(
-						"SELECT t1.* FROM realmd.ip_banned t1 RIGHT JOIN (select MAX(unbandate) as maxu, ip FROM realmd.ip_banned GROUP BY ip) t2 ON t1.unbandate = t2.maxu AND t1.ip = t2.ip AND t1.unbandate > UNIX_TIMESTAMP()",
-						new ReadStH() {
-							@Override
-							public void handleRead(ResultSet resultSet)
-									throws SQLException {
-								while (resultSet.next()) {
-									BanIp ip = new BanIp();
-									ip.setIp(resultSet.getString("ip"));
-									ip.setTimeEnd(resultSet
-											.getLong("unbandate"));
-									result.add(ip);
-								}
-							}
-						});
+		DB.select(
+				"SELECT t1.* FROM realmd.ip_banned t1 RIGHT JOIN (select MAX(unbandate) as maxu, ip FROM realmd.ip_banned GROUP BY ip) t2 ON t1.unbandate = t2.maxu AND t1.ip = t2.ip AND t1.unbandate > UNIX_TIMESTAMP()",
+				new ReadStH() {
+					@Override
+					public void handleRead(ResultSet resultSet)
+							throws SQLException {
+						while (resultSet.next()) {
+							BanIp ip = new BanIp();
+							ip.setIp(resultSet.getString("ip"));
+							ip.setTimeEnd(resultSet.getLong("unbandate"));
+							result.add(ip);
+						}
+					}
+				});
 		return result;
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.wowemu.login.dao.BanIpDAO#getBan(java.lang.String)
 	 */
 	@Override
 	public BanIp getBan(final String ip) {
 		final BanIp result = new BanIp();
-		DB
-				.select(
-						" SELECT unbandate FROM ip_banned WHERE (unbandate = bandate OR unbandate > UNIX_TIMESTAMP()) AND ip = ?",
-						new ParamReadStH() {
+		DB.select(
+				" SELECT unbandate FROM ip_banned WHERE (unbandate = bandate OR unbandate > UNIX_TIMESTAMP()) AND ip = ?",
+				new ParamReadStH() {
 
-							@Override
-							public void setParams(
-									PreparedStatement preparedStatement)
-									throws SQLException {
-								preparedStatement.setString(1, ip);
-							}
+					@Override
+					public void setParams(PreparedStatement preparedStatement)
+							throws SQLException {
+						preparedStatement.setString(1, ip);
+					}
 
-							@Override
-							public void handleRead(ResultSet resultSet)
-									throws SQLException {
-								resultSet.next(); // mask is unique, only one
-													// result allowed
-								result.setIp(resultSet.getString("ip"));
-								result.setTimeEnd(resultSet
-										.getLong("unbandate"));
-							}
-						});
+					@Override
+					public void handleRead(ResultSet resultSet)
+							throws SQLException {
+						resultSet.next(); // mask is unique, only one
+											// result allowed
+						result.setIp(resultSet.getString("ip"));
+						result.setTimeEnd(resultSet.getLong("unbandate"));
+					}
+				});
 		return result;
 	}
 }

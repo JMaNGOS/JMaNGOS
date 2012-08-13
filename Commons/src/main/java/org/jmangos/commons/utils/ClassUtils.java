@@ -16,11 +16,11 @@
  *******************************************************************************/
 package org.jmangos.commons.utils;
 
-public class ClassUtils
-{
+public class ClassUtils {
 	/**
-	 * Return true if class a is either equivalent to class b, or if class a is a subclass of class b, i.e. if a either
-	 * "extends" or "implements" b. Note tht either or both "Class" objects may represent interfaces.
+	 * Return true if class a is either equivalent to class b, or if class a is
+	 * a subclass of class b, i.e. if a either "extends" or "implements" b. Note
+	 * tht either or both "Class" objects may represent interfaces.
 	 * 
 	 * @param a
 	 *            class
@@ -28,32 +28,24 @@ public class ClassUtils
 	 *            class
 	 * @return true if a == b or a extends b or a implements b
 	 */
-	public static boolean isSubclass(Class<?> a, Class<?> b)
-	{
+	public static boolean isSubclass(Class<?> a, Class<?> b) {
 		// We rely on the fact that for any given java class or
 		// Primitive type there is a unique Class object, so
 		// we can use object equivalence in the comparisons.
-		if (a == b)
-		{
+		if (a == b) {
 			return true;
 		}
-		if (a == null || b == null)
-		{
+		if (a == null || b == null) {
 			return false;
 		}
-		for (Class<?> x = a; x != null; x = x.getSuperclass())
-		{
-			if (x == b)
-			{
+		for (Class<?> x = a; x != null; x = x.getSuperclass()) {
+			if (x == b) {
 				return true;
 			}
-			if (b.isInterface())
-			{
+			if (b.isInterface()) {
 				Class<?>[] interfaces = x.getInterfaces();
-				for (Class<?> anInterface : interfaces)
-				{
-					if (isSubclass(anInterface, b))
-					{
+				for (Class<?> anInterface : interfaces) {
+					if (isSubclass(anInterface, b)) {
 						return true;
 					}
 				}
@@ -64,32 +56,32 @@ public class ClassUtils
 
 	/**
 	 * Checks if class in member of the package.
-	 *
-	 * @param clazz class to check
-	 * @param packageName package
+	 * 
+	 * @param clazz
+	 *            class to check
+	 * @param packageName
+	 *            package
 	 * @return true if is member
 	 */
-	public static boolean isPackageMember(Class<?> clazz, String packageName)
-	{
+	public static boolean isPackageMember(Class<?> clazz, String packageName) {
 		return isPackageMember(clazz.getName(), packageName);
 	}
 
 	/**
 	 * Checks if classNames belongs to package.
-	 *
-	 * @param className class name
-	 * @param packageName package
+	 * 
+	 * @param className
+	 *            class name
+	 * @param packageName
+	 *            package
 	 * @return true if belongs
 	 */
-	public static boolean isPackageMember(String className, String packageName)
-	{
-		if (!className.contains("."))
-		{
+	public static boolean isPackageMember(String className, String packageName) {
+		if (!className.contains(".")) {
 			return packageName == null || packageName.isEmpty();
-		}
-		else
-		{
-			String classPackage = className.substring(0, className.lastIndexOf('.'));
+		} else {
+			String classPackage = className.substring(0,
+					className.lastIndexOf('.'));
 			return packageName.equals(classPackage);
 		}
 	}

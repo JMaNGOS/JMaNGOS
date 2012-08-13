@@ -40,8 +40,13 @@ public class RealmPacketFrameEncoder extends OneToOneEncoder {
 	private static final Logger log = Logger
 			.getLogger(RealmPacketFrameEncoder.class);
 
-	/* (non-Javadoc)
-	 * @see org.jboss.netty.handler.codec.oneone.OneToOneEncoder#encode(org.jboss.netty.channel.ChannelHandlerContext, org.jboss.netty.channel.Channel, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.netty.handler.codec.oneone.OneToOneEncoder#encode(org.jboss
+	 * .netty.channel.ChannelHandlerContext, org.jboss.netty.channel.Channel,
+	 * java.lang.Object)
 	 */
 	@Override
 	protected Object encode(ChannelHandlerContext ctx, Channel channel,
@@ -52,7 +57,7 @@ public class RealmPacketFrameEncoder extends OneToOneEncoder {
 				.getPipeline().getLast();
 		int opcode = message.readUnsignedByte();
 		int size = message.readableBytes();
-		
+
 		ChannelBuffer frame = ChannelBuffers.buffer(ByteOrder.LITTLE_ENDIAN,
 				(size + 3));
 		frame.writeByte(opcode);
@@ -61,9 +66,10 @@ public class RealmPacketFrameEncoder extends OneToOneEncoder {
 		byte[] tmpa = new byte[message.readableBytes()];
 		message.readBytes(tmpa);
 		frame.writeBytes(channelHandler.getCrypt().encrypt(tmpa));
-		
-		log.debug(String.format("[SEND PACKET] :  0x%02X - %s", opcode, OpcodeTable.getOpcode( opcode ) ) );
-		List<String> d =  breakStringInChunks(new BigInteger(1,tmpa).toString(16).toUpperCase(),16);
+
+		log.debug(String.format("[SEND PACKET] :  0x%02X", opcode));
+		List<String> d = breakStringInChunks(
+				new BigInteger(1, tmpa).toString(16).toUpperCase(), 16);
 		for (Iterator<String> iterator = d.iterator(); iterator.hasNext();) {
 			String string =  iterator.next();
 			log.debug(string);

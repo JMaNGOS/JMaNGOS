@@ -22,7 +22,6 @@ import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandler;
 import org.jmangos.commons.model.ManagedObject;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class NettyNetworkChannel.
  */
@@ -30,7 +29,7 @@ public class NettyNetworkChannel implements NetworkChannel {
 
 	/**
 	 * Gets the channeled object.
-	 *
+	 * 
 	 * @return the channeled object
 	 */
 	public final ChanneledObject getChanneledObject() {
@@ -39,8 +38,9 @@ public class NettyNetworkChannel implements NetworkChannel {
 
 	/**
 	 * Sets the channeled object.
-	 *
-	 * @param channeledObject the new channeled object
+	 * 
+	 * @param channeledObject
+	 *            the new channeled object
 	 */
 	public final void setChanneledObject(ChanneledObject channeledObject) {
 		this.channeledObject = channeledObject;
@@ -54,14 +54,14 @@ public class NettyNetworkChannel implements NetworkChannel {
 	 * During initial connection this object can be null.<br>
 	 * Example: Account
 	 */
-	 private ChanneledObject channeledObject;
+	private ChanneledObject channeledObject;
 
 	/** In-game object (example: Player). */
-	 private ManagedObject activeObject;
+	private ManagedObject activeObject;
 
 	/**
 	 * Gets the active object.
-	 *
+	 * 
 	 * @return the active object
 	 */
 	public final ManagedObject getActiveObject() {
@@ -70,28 +70,31 @@ public class NettyNetworkChannel implements NetworkChannel {
 
 	/**
 	 * Sets the active object.
-	 *
-	 * @param activeObject the new active object
+	 * 
+	 * @param activeObject
+	 *            the new active object
 	 */
 	public final void setActiveObject(ManagedObject activeObject) {
 		this.activeObject = activeObject;
 	}
 
 	/** Channel handler. */
-	 @SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	private ChannelHandler handler;
 
 	/** The state. */
-	private State state; 
+	private State state;
 
 	/** The address. */
 	private InetSocketAddress address;
-	
+
 	/**
 	 * Channel state.
-	 *
-	 * @param handler the handler
-	 * @param channel the channel
+	 * 
+	 * @param handler
+	 *            the handler
+	 * @param channel
+	 *            the channel
 	 */
 	// private ChannelState channelState;
 
@@ -102,25 +105,32 @@ public class NettyNetworkChannel implements NetworkChannel {
 	public NettyNetworkChannel(ChannelHandler handler, Channel channel) {
 		this.handler = handler;
 		this.channel = channel;
-		this.address = (InetSocketAddress)channel.getRemoteAddress(); 
+		this.address = (InetSocketAddress) channel.getRemoteAddress();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wowemu.common.network.model.NetworkChannel#getAddress()
 	 */
 	public final InetSocketAddress getAddress() {
 		return address;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.NetworkChannel#write(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.wowemu.common.network.model.NetworkChannel#write(java.lang.Object)
 	 */
 	@Override
 	public void write(Object buffer) {
 		channel.write(buffer);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wowemu.common.network.model.NetworkChannel#getChannelId()
 	 */
 	@Override
@@ -128,15 +138,19 @@ public class NettyNetworkChannel implements NetworkChannel {
 		return channel.getId();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wowemu.common.network.model.NetworkChannel#getObjectId()
 	 */
 	@Override
 	public int getObjectId() {
-		 return channeledObject != null ? channeledObject.getObjectId() : -1;
+		return channeledObject != null ? channeledObject.getObjectId() : -1;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wowemu.common.network.model.NetworkChannel#getChannel()
 	 */
 	@Override
@@ -151,7 +165,9 @@ public class NettyNetworkChannel implements NetworkChannel {
 		this.channel.close();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wowemu.common.network.model.NetworkChannel#isConnected()
 	 */
 	@Override
@@ -159,8 +175,12 @@ public class NettyNetworkChannel implements NetworkChannel {
 		return channel.isConnected();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.NetworkChannel#setChannelState(org.wowemu.common.network.model.State)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.wowemu.common.network.model.NetworkChannel#setChannelState(org.wowemu
+	 * .common.network.model.State)
 	 */
 	@Override
 	public void setChannelState(State channelState) {
@@ -168,7 +188,9 @@ public class NettyNetworkChannel implements NetworkChannel {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wowemu.common.network.model.NetworkChannel#getChannelState()
 	 */
 	@Override

@@ -40,6 +40,8 @@ import com.google.inject.Injector;
  */
 public class AuthServer {
 
+    private static Config config;
+
 	/**
 	 * The main method.
 	 * 
@@ -49,20 +51,19 @@ public class AuthServer {
 	 *             the exception
 	 */
 	public static void main(String[] args) throws Exception {
-        // First of all, load database config
-
 		Injector injector = Guice.createInjector(new HandlerDM());
 		ServiceContent.setInjector(injector);
 		injector.getInstance(LoggingService.class).start();
 		injector.getInstance(DatabaseFactory.class).start();
 		injector.getInstance(WorldListService.class).start();
-		injector.getInstance(Config.class).load();
-		if (Config.COMPATIBLE != Compatiple.MANGOS) {
+		config = injector.getInstance(Config.class);
+
+		if (config.COMPATIBLE != Compatiple.MANGOS) {
 			injector.getInstance(BanIpService.class).start();
 		}
 		injector.getInstance(ThreadPoolManager.class).start();
 
-		if (Config.COMPATIBLE == Compatiple.MANGOS)
+		if (config.COMPATIBLE == Compatiple.MANGOS)
 			injector.getInstance(UpdateService.class).start();
 
 		Runtime.getRuntime().addShutdownHook(

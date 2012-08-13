@@ -16,7 +16,6 @@
  *******************************************************************************/
 package org.jmangos.commons.model;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Enum WoWAuthResponse.
  */

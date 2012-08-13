@@ -16,22 +16,21 @@
  *******************************************************************************/
 package org.jmangos.commons.task;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Enum TaskPriority.
- *
+ * 
  */
 public enum TaskPriority {
-  
-  /** The CRITICAL. */
-  CRITICAL,
-  
-  /** The HIGH. */
-  HIGH,
-  
-  /** The NORMAL. */
-  NORMAL,
-  
-  /** The LOW. */
-  LOW
+
+	/** The CRITICAL. */
+	CRITICAL,
+
+	/** The HIGH. */
+	HIGH,
+
+	/** The NORMAL. */
+	NORMAL,
+
+	/** The LOW. */
+	LOW
 }

@@ -16,65 +16,84 @@
  *******************************************************************************/
 package org.jmangos.realm.config;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.Properties;
 
-import org.apache.log4j.Logger;
 import org.jmangos.commons.config.Compatiple;
-import org.jmangos.commons.configuration.ConfigurableProcessor;
+import org.jmangos.commons.configuration.AbstractConfig;
 import org.jmangos.commons.configuration.Property;
-import org.jmangos.commons.utils.PropertiesUtils;
 
 /**
  * The Class Config.
  */
-public class Config {
-	/**
-	 * Logger for this class.
-	 */
-	protected static final Logger log = Logger.getLogger(Config.class);
+public class Config extends AbstractConfig {
 
 	/** The Constant CONFIG_FILE. */
-	public static final String CONFIG_FILE = "./conf/network/realm.network.properties";
+	private static final String CONFIG_FILE = "./conf/network/realm.network.properties";
 
 	/** Login Server address to client. */
 	@Property(key = "network.client.address", defaultValue = "*:8085")
-	public static InetSocketAddress CLIENT_ADDRESS;
+	public InetSocketAddress CLIENT_ADDRESS;
 
 	/** The UPDAT e_ interval. */
 	@Property(key = "network.service.updateRealmlistInterval", defaultValue = "60")
-	public static int UPDATE_INTERVAL;
+	public Integer UPDATE_INTERVAL;
 
 	/** The COMPATIBLE. */
 	@Property(key = "network.compatible", defaultValue = "NONE")
-	public static Compatiple COMPATIBLE;
-	
+	public Compatiple COMPATIBLE;
+
 	/** Auth server to connect */
 	@Property(key = "network.auth.address", defaultValue = "localhost:3724")
-	public static InetSocketAddress AUTH_ADDRESS;
+	public InetSocketAddress AUTH_ADDRESS;
 
 	/** Auth login */
 	@Property(key = "network.auth.login", defaultValue = "JMaNGOS")
-	public static String AUTH_LOGIN;
+	public String AUTH_LOGIN;
 
-	/** Auth login */
+	/** Auth password */
 	@Property(key = "network.auth.password", defaultValue = "JMaNGOS")
-	public static String AUTH_PASSWORD;
+	public String AUTH_PASSWORD;
+
+	/** Displayed name in realmList */
+	@Property(key = "network.realm.name", defaultValue = "JMaNGOS")
+	public String REALM_NAME;
+
+	/** Address for clients */
+	@Property(key = "network.realm.address", defaultValue = "127.0.0.1")
+	public String REALM_ADDRESS;
+
+	/** Port for clients */
+	@Property(key = "network.realm.port", defaultValue = "8085")
+	public Integer REALM_PORT;
+
+	/** Icon for clients */
+	@Property(key = "network.realm.icon", defaultValue = "1")
+	public Integer REALM_ICON;
+
+	/** Icon for clients */
+	@Property(key = "network.realm.flags", defaultValue = "0")
+	public Integer REALM_FLAGS;
+
+	/** Timezone for clients */
+	@Property(key = "network.realm.timezone", defaultValue = "1")
+	public Integer REALM_TIME_ZONE;
+
+	/** AllowedSecurityLevel for clients */
+	@Property(key = "network.realm.allowedSecurityLevel", defaultValue = "0")
+	public Integer REALM_ALLOWED_SECURITY_LVL;
+
+	/** Allowed client build */
+	@Property(key = "network.realm.allowedClientBuild", defaultValue = "12340")
+	public String REALM_ALLOWED_CLIENT_BUILD;
+
+	/** Time to reconnect realm with auth server in milliseconds */
+	@Property(key = "network.realm.reconnectDelay", defaultValue = "5000")
+	public Long AUTH_RECONNECT_DELAY;
 
 	/**
 	 * Load configuration.
 	 */
-	public void load() {
-
-		Properties p;
-		try {
-			p = PropertiesUtils.load(CONFIG_FILE);
-		} catch (IOException e) {
-			log.fatal("Can't load network configuration...");
-			throw new Error("Can't load " + CONFIG_FILE, e);
-		}
-
-		ConfigurableProcessor.process(Config.class, p);
+	public Config() {
+		super(CONFIG_FILE);
 	}
 }

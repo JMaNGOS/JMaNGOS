@@ -20,10 +20,9 @@ package org.jmangos.commons.network.handlers;
 import org.jmangos.commons.network.model.SendablePacket;
 
 import javolution.util.FastMap;
- 
-public class ServerPacketHandler
-{
-	
+
+public class ServerPacketHandler {
+
 	/** The opcodes. */
 	private final FastMap<Class<? extends SendablePacket>, Integer>	opcodes	= new FastMap<Class<? extends SendablePacket>, Integer>();
 
@@ -33,8 +32,7 @@ public class ServerPacketHandler
 	 * @param packetClass the packet class
 	 * @return the op code
 	 */
-	public int getOpCode(SendablePacket packetClass)
-	{
+	public int getOpCode(SendablePacket packetClass) {
 		Integer opcode = opcodes.get(packetClass.getClass());
 		if (opcode == null)
             if ( packetClass.getOpcode() == null )
@@ -47,9 +45,11 @@ public class ServerPacketHandler
 
 	/**
 	 * Adds the packet opcode.
-	 *
-	 * @param packetPrototype the packet prototype
-	 * @param opcode the opcode
+	 * 
+	 * @param packetPrototype
+	 *            the packet prototype
+	 * @param opcode
+	 *            the opcode
 	 */
 	public void addPacketOpcode(Class<? extends SendablePacket> packetPrototype, int opcode)
 	{ 

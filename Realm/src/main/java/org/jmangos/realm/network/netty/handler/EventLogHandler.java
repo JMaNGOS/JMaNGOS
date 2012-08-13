@@ -19,13 +19,14 @@ package org.jmangos.realm.network.netty.handler;
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
+import org.jboss.netty.channel.DefaultExceptionEvent;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 
 /**
  * The Class EventLogHandler.
- *
+ * 
  * @author MinimaJack
  */
 public class EventLogHandler extends SimpleChannelUpstreamHandler {
@@ -33,8 +34,13 @@ public class EventLogHandler extends SimpleChannelUpstreamHandler {
 	/** The Constant log. */
 	private static final Logger log = Logger.getLogger(EventLogHandler.class);
 
-	/* (non-Javadoc)
-	 * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#messageReceived(org.jboss.netty.channel.ChannelHandlerContext, org.jboss.netty.channel.MessageEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.netty.channel.SimpleChannelUpstreamHandler#messageReceived(
+	 * org.jboss.netty.channel.ChannelHandlerContext,
+	 * org.jboss.netty.channel.MessageEvent)
 	 */
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)
@@ -42,26 +48,35 @@ public class EventLogHandler extends SimpleChannelUpstreamHandler {
 		ctx.sendUpstream(e);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#exceptionCaught(org.jboss.netty.channel.ChannelHandlerContext, org.jboss.netty.channel.ExceptionEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.netty.channel.SimpleChannelUpstreamHandler#exceptionCaught(
+	 * org.jboss.netty.channel.ChannelHandlerContext,
+	 * org.jboss.netty.channel.ExceptionEvent)
 	 */
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e)
 			throws Exception {
-		/*if ( e instanceof DefaultExceptionEvent && e.getCause() !=null
+		if (e instanceof DefaultExceptionEvent
+				&& e.getCause() != null
 				&& (e.getCause().getMessage().equals("connection timed out") || e
-						.getCause().getMessage().equals("Connection refused"))) {
-			
+						.getCause().getMessage().contains("Connection refused"))) {
 			log.warn("Connection timed out");
-
-		} else {*/
+		} else {
 			log.warn("Exception caught: ", e.getCause());
-		//}
+		}
 		ctx.sendUpstream(e);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelConnected(org.jboss.netty.channel.ChannelHandlerContext, org.jboss.netty.channel.ChannelStateEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelConnected
+	 * (org.jboss.netty.channel.ChannelHandlerContext,
+	 * org.jboss.netty.channel.ChannelStateEvent)
 	 */
 	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e)
@@ -69,8 +84,13 @@ public class EventLogHandler extends SimpleChannelUpstreamHandler {
 		ctx.sendUpstream(e);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelDisconnected(org.jboss.netty.channel.ChannelHandlerContext, org.jboss.netty.channel.ChannelStateEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelDisconnected
+	 * (org.jboss.netty.channel.ChannelHandlerContext,
+	 * org.jboss.netty.channel.ChannelStateEvent)
 	 */
 	@Override
 	public void channelDisconnected(ChannelHandlerContext ctx,

@@ -31,13 +31,18 @@ import org.jmangos.auth.network.netty.handler.AuthToClientChannelHandler;
  * The Class PacketFrameDecoder.
  */
 public class RealmPacketFrameDecoder extends FrameDecoder {
-	
+
 	/** The Constant log. */
 	private static final Logger log = Logger
 			.getLogger(RealmPacketFrameDecoder.class);
 
-	/* (non-Javadoc)
-	 * @see org.jboss.netty.handler.codec.frame.FrameDecoder#decode(org.jboss.netty.channel.ChannelHandlerContext, org.jboss.netty.channel.Channel, org.jboss.netty.buffer.ChannelBuffer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.netty.handler.codec.frame.FrameDecoder#decode(org.jboss.netty
+	 * .channel.ChannelHandlerContext, org.jboss.netty.channel.Channel,
+	 * org.jboss.netty.buffer.ChannelBuffer)
 	 */
 	@Override
 	protected Object decode(ChannelHandlerContext ctx, Channel channel,
@@ -49,23 +54,22 @@ public class RealmPacketFrameDecoder extends FrameDecoder {
 		message.markReaderIndex();
 		AuthToClientChannelHandler channelHandler = (AuthToClientChannelHandler) ctx
 				.getPipeline().getLast();
-		
+
 		Crypt crypt = channelHandler.getCrypt();
 		byte[] header = new byte[3];
-		
+
 		message.readBytes(header);
 		ChannelBuffer clientHeader = ChannelBuffers.wrappedBuffer(
 				ByteOrder.LITTLE_ENDIAN, header);
 		byte opcode = clientHeader.readByte();
 		int size = clientHeader.readShort();
-		if ((size < 0) || (size > 10240) || (opcode > 10240)) {
-			log
-					.error("PacketFrameDecoder::decode: realm sent malformed packet size = "
-							+ size + " , opcode = " + opcode);
-			 channel.close();
-			 return null;
+		if ((size < 0) || (size > 10240)) {
+			log.error("PacketFrameDecoder::decode: realm sent malformed packet size = "
+					+ size + " , opcode = " + opcode);
+			channel.close();
+			return null;
 		}
-		
+
 		if (message.readableBytes() < size) {
 			message.resetReaderIndex();
 			return null;

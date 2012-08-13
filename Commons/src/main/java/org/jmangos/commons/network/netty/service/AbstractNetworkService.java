@@ -24,41 +24,44 @@ import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jmangos.commons.network.netty.factory.ClientChannelFactory;
 import org.jmangos.commons.network.netty.factory.ServerChannelFactory;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractNetworkService.
  */
 public abstract class AbstractNetworkService implements NetworkService {
-	
+
 	/** The Constant log. */
 	private static final Logger log = Logger
 			.getLogger(AbstractNetworkService.class);
 
-	  /**
-  	 * Creates the server channel.
-  	 *
-  	 * @param address the address
-  	 * @param pipelineFactory the pipeline factory
-  	 */
-	  protected void createServerChannel(InetSocketAddress address,
-	      ChannelPipelineFactory pipelineFactory) {
-	    ServerChannelFactory channelFactory = new ServerChannelFactory(address);
-	    channelFactory.initialize(pipelineFactory);
-	    Channel channel = channelFactory.connect();
-	    log.info("Initialized channel : " + channel.getLocalAddress());
-	  }
+	/**
+	 * Creates the server channel.
+	 * 
+	 * @param address
+	 *            the address
+	 * @param pipelineFactory
+	 *            the pipeline factory
+	 */
+	protected void createServerChannel(InetSocketAddress address,
+			ChannelPipelineFactory pipelineFactory) {
+		ServerChannelFactory channelFactory = new ServerChannelFactory(address);
+		channelFactory.initialize(pipelineFactory);
+		Channel channel = channelFactory.connect();
+		log.info("Initialized server channel : " + channel.getLocalAddress());
+	}
 
-	  /**
-  	 * Creates the client channel.
-  	 *
-  	 * @param address the address
-  	 * @param pipelineFactory the pipeline factory
-  	 */ 
-	  protected void createClientChannel(InetSocketAddress address,
-	      ChannelPipelineFactory pipelineFactory) {
-	    ClientChannelFactory channelFactory = new ClientChannelFactory(address);
-	    channelFactory.initialize(pipelineFactory);
-	    Channel channel = channelFactory.connect();
-	    log.info("Initialized channel : {}" + channel.getLocalAddress());
-	  }
+	/**
+	 * Creates the client channel.
+	 * 
+	 * @param address
+	 *            the address
+	 * @param pipelineFactory
+	 *            the pipeline factory
+	 */
+	protected void createClientChannel(InetSocketAddress address,
+			ChannelPipelineFactory pipelineFactory) {
+		ClientChannelFactory channelFactory = new ClientChannelFactory(address);
+		channelFactory.initialize(pipelineFactory);
+		channelFactory.connect();
+		log.info("Initialized client channel to " + address);
+	}
 }

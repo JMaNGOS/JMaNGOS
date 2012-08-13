@@ -24,14 +24,11 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class DB.
  */
-public final class DB
-{
-	
+public final class DB {
+
 	/** Logger. */
 	protected static final Logger	log	= Logger.getLogger(DB.class);
 

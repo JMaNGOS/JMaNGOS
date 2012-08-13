@@ -20,11 +20,15 @@ import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.jmangos.commons.service.Service;
+import org.jmangos.commons.service.ServiceContent;
 
 public class DatabaseFactory implements Service {
 
 	/** Logger for this class. */
 	private static final Logger			log	= Logger.getLogger(DatabaseFactory.class);
+
+    /** Database config */
+    private static DatabaseConfig databaseConfig = ServiceContent.getInjector().getInstance( DatabaseConfig.class );
 
 	/**
      * Returns Hibernate Session
@@ -38,16 +42,14 @@ public class DatabaseFactory implements Service {
 	 */
 	public synchronized void start() {
         // Loading config fields
-        DatabaseConfig.load();
-	}
+    }
 
 	/**
 	 * Returns number of active connections in the pool.
 	 * 
 	 * @return int Active DB Connections
 	 */
-	public int getActiveConnections()
-	{
+	public int getActiveConnections() {
         Long count = getCharactersSessionFactory().getStatistics().getSessionOpenCount() - getCharactersSessionFactory().getStatistics().getSessionCloseCount();
 		count += getWorldSessionFactory().getStatistics().getSessionOpenCount() - getWorldSessionFactory().getStatistics().getSessionCloseCount();
 
@@ -94,13 +96,13 @@ public class DatabaseFactory implements Service {
     public synchronized static SessionFactory getWorldSessionFactory() {
         if (charactersSessionFactory == null) {
             AnnotationConfiguration config = new AnnotationConfiguration();
-            config.setProperty( "hibernate.connection.driver_class", DatabaseConfig.WORLD_DATABASE_DRIVER );
-            config.setProperty( "hibernate.connection.url", DatabaseConfig.WORLD_DATABASE_URL + DatabaseConfig.WORLD_DATABASE_NAME + "?autoReconnect=true" );
-            config.setProperty( "hibernate.connection.username", DatabaseConfig.WORLD_DATABASE_USER );
-            config.setProperty( "hibernate.connection.password", DatabaseConfig.WORLD_DATABASE_PASSWORD );
-            config.setProperty( "hibernate.dialect", DatabaseConfig.WORLD_DATABASE_DIALECT );
-            config.setProperty( "hibernate.c3p0.min_size", DatabaseConfig.WORLD_DATABASE_CONNECTIONS_MIN.toString() );
-            config.setProperty( "hibernate.c3p0.max_size", DatabaseConfig.WORLD_DATABASE_CONNECTIONS_MAX.toString() );
+            config.setProperty( "hibernate.connection.driver_class", databaseConfig.WORLD_DATABASE_DRIVER );
+            config.setProperty( "hibernate.connection.url", databaseConfig.WORLD_DATABASE_URL + databaseConfig.WORLD_DATABASE_NAME + "?autoReconnect=true" );
+            config.setProperty( "hibernate.connection.username", databaseConfig.WORLD_DATABASE_USER );
+            config.setProperty( "hibernate.connection.password", databaseConfig.WORLD_DATABASE_PASSWORD );
+            config.setProperty( "hibernate.dialect", databaseConfig.WORLD_DATABASE_DIALECT );
+            config.setProperty( "hibernate.c3p0.min_size", databaseConfig.WORLD_DATABASE_CONNECTIONS_MIN.toString() );
+            config.setProperty( "hibernate.c3p0.max_size", databaseConfig.WORLD_DATABASE_CONNECTIONS_MAX.toString() );
             config.configure("world.cfg.xml");
             worldSessionFactory = config.buildSessionFactory();
             worldSessionFactory.getStatistics().setStatisticsEnabled( true );
@@ -120,13 +122,13 @@ public class DatabaseFactory implements Service {
             // Bring up hibernate
 
             AnnotationConfiguration config = new AnnotationConfiguration();
-            config.setProperty( "hibernate.connection.driver_class", DatabaseConfig.CHARS_DATABASE_DRIVER );
-            config.setProperty( "hibernate.connection.url", DatabaseConfig.CHARS_DATABASE_URL + DatabaseConfig.CHARS_DATABASE_NAME + "?autoReconnect=true" );
-            config.setProperty( "hibernate.connection.username", DatabaseConfig.CHARS_DATABASE_USER );
-            config.setProperty( "hibernate.connection.password", DatabaseConfig.CHARS_DATABASE_PASSWORD );
-            config.setProperty( "hibernate.dialect", DatabaseConfig.CHARS_DATABASE_DIALECT );
-            config.setProperty( "hibernate.c3p0.min_size", DatabaseConfig.CHARS_DATABASE_CONNECTIONS_MIN.toString() );
-            config.setProperty( "hibernate.c3p0.max_size", DatabaseConfig.CHARS_DATABASE_CONNECTIONS_MAX.toString() );
+            config.setProperty( "hibernate.connection.driver_class", databaseConfig.CHARS_DATABASE_DRIVER );
+            config.setProperty( "hibernate.connection.url", databaseConfig.CHARS_DATABASE_URL + databaseConfig.CHARS_DATABASE_NAME + "?autoReconnect=true" );
+            config.setProperty( "hibernate.connection.username", databaseConfig.CHARS_DATABASE_USER );
+            config.setProperty( "hibernate.connection.password", databaseConfig.CHARS_DATABASE_PASSWORD );
+            config.setProperty( "hibernate.dialect", databaseConfig.CHARS_DATABASE_DIALECT );
+            config.setProperty( "hibernate.c3p0.min_size", databaseConfig.CHARS_DATABASE_CONNECTIONS_MIN.toString() );
+            config.setProperty( "hibernate.c3p0.max_size", databaseConfig.CHARS_DATABASE_CONNECTIONS_MAX.toString() );
             config.configure("/characters.cfg.xml");
 
             charactersSessionFactory = config.buildSessionFactory();
@@ -141,13 +143,13 @@ public class DatabaseFactory implements Service {
         if ( accountsSessionFactory == null ) {
             // Bring up hibernate
             AnnotationConfiguration config = new AnnotationConfiguration();
-            config.setProperty( "hibernate.connection.driver_class", DatabaseConfig.ACCOUNT_DATABASE_DRIVER );
-            config.setProperty( "hibernate.connection.url", DatabaseConfig.ACCOUNT_DATABASE_URL + DatabaseConfig.ACCOUNT_DATABASE_NAME + "?autoReconnect=true" );
-            config.setProperty( "hibernate.connection.username", DatabaseConfig.ACCOUNT_DATABASE_USER );
-            config.setProperty( "hibernate.connection.password", DatabaseConfig.ACCOUNT_DATABASE_PASSWORD );
-            config.setProperty( "hibernate.dialect", DatabaseConfig.ACCOUNT_DATABASE_DIALECT );
-            config.setProperty( "hibernate.c3p0.min_size", DatabaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MIN.toString() );
-            config.setProperty( "hibernate.c3p0.max_size", DatabaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MAX.toString() );
+            config.setProperty( "hibernate.connection.driver_class", databaseConfig.ACCOUNT_DATABASE_DRIVER );
+            config.setProperty( "hibernate.connection.url", databaseConfig.ACCOUNT_DATABASE_URL + databaseConfig.ACCOUNT_DATABASE_NAME + "?autoReconnect=true" );
+            config.setProperty( "hibernate.connection.username", databaseConfig.ACCOUNT_DATABASE_USER );
+            config.setProperty( "hibernate.connection.password", databaseConfig.ACCOUNT_DATABASE_PASSWORD );
+            config.setProperty( "hibernate.dialect", databaseConfig.ACCOUNT_DATABASE_DIALECT );
+            config.setProperty( "hibernate.c3p0.min_size", databaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MIN.toString() );
+            config.setProperty( "hibernate.c3p0.max_size", databaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MAX.toString() );
             config.configure("/accounts.cfg.xml");
 
             accountsSessionFactory = config.buildSessionFactory();

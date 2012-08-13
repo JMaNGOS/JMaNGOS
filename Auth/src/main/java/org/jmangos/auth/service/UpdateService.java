@@ -35,6 +35,9 @@ import org.jmangos.commons.threadpool.ThreadPoolManager;
  * The Class UpdateService.
  */
 public class UpdateService implements Service {
+	
+	@Inject
+	private Config config;
 
 	/** The task manager. */
 	private TaskManager taskManager = new TaskManager();
@@ -77,8 +80,8 @@ public class UpdateService implements Service {
 		taskManager.addNewTask(UpdateWorldTaskId.REALMS_UPDATE,
 				threadPoolManager.scheduleAtFixedRate(
 						new AuthUpdateWorldList(),
-						Config.UPDATE_INTERVAL * 1000,
-						Config.UPDATE_INTERVAL * 1000));
+						config.UPDATE_INTERVAL * 1000,
+						config.UPDATE_INTERVAL * 1000));
 	}
 
 	/**

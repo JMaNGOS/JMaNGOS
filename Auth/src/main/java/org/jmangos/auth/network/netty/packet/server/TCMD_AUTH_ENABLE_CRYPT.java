@@ -26,7 +26,8 @@ public class TCMD_AUTH_ENABLE_CRYPT extends AbstractWoWServerPacket {
 
 	/** The Constant log. */
 	@SuppressWarnings("unused")
-	private static final Logger log = Logger.getLogger(TCMD_AUTH_ENABLE_CRYPT.class);
+	private static final Logger log = Logger
+			.getLogger(TCMD_AUTH_ENABLE_CRYPT.class);
 
 	/**
 	 * Instantiates a new <tt>TCMD_AUTH_ENABLE_CRYPT</tt>.
@@ -41,6 +42,6 @@ public class TCMD_AUTH_ENABLE_CRYPT extends AbstractWoWServerPacket {
 	 */
 	@Override
 	protected void writeImpl() {
-		
+
 	}
 }

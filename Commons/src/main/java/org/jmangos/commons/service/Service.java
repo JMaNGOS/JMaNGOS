@@ -16,18 +16,17 @@
  *******************************************************************************/
 package org.jmangos.commons.service;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface Service.
  */
 public interface Service {
-	  /**
-	   * Starts the service. Method returns only after service completely started.
-	   */
-	  void start();
+	/**
+	 * Starts the service. Method returns only after service completely started.
+	 */
+	void start();
 
-	  /**
-	   * Stops the service. Method returns only after service completely stopped.
-	   */
-	  void stop();
-	}
+	/**
+	 * Stops the service. Method returns only after service completely stopped.
+	 */
+	void stop();
+}
