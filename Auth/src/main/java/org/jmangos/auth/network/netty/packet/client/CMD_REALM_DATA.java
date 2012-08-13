@@ -16,8 +16,6 @@
  *******************************************************************************/
 package org.jmangos.auth.network.netty.packet.client;
 
-import java.nio.BufferUnderflowException;
-
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
@@ -46,7 +44,7 @@ public class CMD_REALM_DATA extends AbstractWoWClientPacket {
 	 * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
 	 */
 	@Override
-	protected void readImpl() throws BufferUnderflowException, RuntimeException {
+	protected void readImpl() throws RuntimeException {
 		logger.debug("Receive realm info from realm account: "
 				+ getAccount().getName());
 		Realm realm = new Realm();
