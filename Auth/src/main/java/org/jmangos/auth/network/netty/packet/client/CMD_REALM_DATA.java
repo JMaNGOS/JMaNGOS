@@ -23,7 +23,7 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.jmangos.auth.model.Realm;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
-import org.jmangos.auth.service.WorldListService;
+import org.jmangos.auth.service.RealmListService;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 
 /**
@@ -37,7 +37,7 @@ public class CMD_REALM_DATA extends AbstractWoWClientPacket {
 	@Inject
 	private AbstractPacketSender sender;
 	@Inject
-	private WorldListService realmListService;
+	private RealmListService realmListService;
 
 	public CMD_REALM_DATA() {
 		super();

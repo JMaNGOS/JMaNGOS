@@ -31,7 +31,7 @@ import com.google.inject.Inject;
  */
 public class AuthNetworkService extends AbstractNetworkService {
 	
-	@javax.inject.Inject
+	@Inject
 	private Config config;
 	
 	/** The auth to client pipeline factory. */

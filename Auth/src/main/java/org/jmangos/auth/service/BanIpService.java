@@ -38,7 +38,7 @@ public class BanIpService implements Service {
 	 * Logger for this class.
 	 */
 	private static final Logger log = Logger.getLogger(BanIpService.class);
-	
+
 	@Inject
 	private Config config;
 
@@ -47,7 +47,7 @@ public class BanIpService implements Service {
 	private BanIpDAO banIpDAO;
 
 	/** List of banned ip addresses. */
-	private static Set<BanIp> banList;
+	private Set<BanIp> banList;
 
 	/**
 	 * 
@@ -56,7 +56,8 @@ public class BanIpService implements Service {
 	@Override
 	public void start() {
 		update();
-		log.debug("BannedIpService loaded " + banList.size() + " IP bans.");
+		log.debug(String.format("BannedIpService loaded %d IP bans.",
+				banList.size()));
 	}
 
 	/**
@@ -74,6 +75,8 @@ public class BanIpService implements Service {
 	 * @return true, if is banned
 	 */
 	public boolean isBanned(String ip) {
+		// if auth server run in compatible mode...all ban info need get from
+		// DB.
 		if (config.COMPATIBLE == Compatiple.MANGOS) {
 			BanIp result = banIpDAO.getBan(ip);
 			if (result != null) {
