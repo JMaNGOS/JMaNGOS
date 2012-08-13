@@ -40,7 +40,6 @@
 		<module>Realm</module>
 		<module>Tools</module>
 		<module>Install</module>
-        <module>DBCImporter</module>
     </modules>
 
 	<properties>
