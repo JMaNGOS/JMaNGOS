@@ -22,7 +22,7 @@ import org.jmangos.tools.dbc.dataholder.DBCStruct;
 
 public class FactionTemplateEntry extends DBCStruct<FactionTemplateEntry> 
 {
-	public static int MAX_FAXTION_MASK = 4;
+	public final static int MAX_FAXTION_MASK = 4;
 	@XmlAttribute(name="id", required=true)
 	public final Unsigned32 ID = new Unsigned32();
 	@XmlAttribute(name="faction", required=true)

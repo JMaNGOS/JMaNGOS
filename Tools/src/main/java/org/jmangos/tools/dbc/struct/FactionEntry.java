@@ -22,7 +22,7 @@ import org.jmangos.tools.dbc.dataholder.DBCStruct;
 
 public class FactionEntry extends DBCStruct<FactionEntry> 
 {
-	public static int MAX_REP = 4;
+	public final static int MAX_REP = 4;
 	@XmlAttribute(name="id", required=true)
 	public final Unsigned32 ID = new Unsigned32();                                              // 0, holiday id
 	@XmlAttribute(name="reputationListID", required=true)

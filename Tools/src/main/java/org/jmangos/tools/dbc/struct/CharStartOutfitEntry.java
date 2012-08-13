@@ -22,7 +22,7 @@ import org.jmangos.tools.dbc.dataholder.DBCStruct;
 
 
 public class CharStartOutfitEntry extends DBCStruct<CharStartOutfitEntry> {
-	public static int MAX_OUTFIT_ITEMS = 24;
+	public final static int MAX_OUTFIT_ITEMS = 24;
 	@XmlAttribute(name="id")
     public final Unsigned32 id = new Unsigned32();  
 	@XmlAttribute(name="race" ,required=true)
