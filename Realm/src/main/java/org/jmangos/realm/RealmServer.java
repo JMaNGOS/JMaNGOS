@@ -60,10 +60,11 @@ public class RealmServer {
 		
 		System.gc();
 
+        injector.getInstance(NetworkService.class).start();
+
         console = new Console();
         console.setVariable( "injector", injector );
-        //console.run();
-
-        injector.getInstance(NetworkService.class).start();
-	}
+        console.setVariable( "itemStorage", injector.getInstance( ItemStorages.class ) );
+        console.run();
+    }
 }

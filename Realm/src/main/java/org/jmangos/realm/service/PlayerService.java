@@ -197,11 +197,11 @@ public class PlayerService {
 		sender.send(player.getChannel(), new SMSG_SPELL_GO());
 		sender.send(player.getChannel(), new SMSG_PLAYED_TIME());
 
-        //SMSG_COMPRESSED_UPDATE_OBJECT updatePacket = new SMSG_COMPRESSED_UPDATE_OBJECT( player, taurenBytes );
-        //sender.send(player.getChannel(), updatePacket );
+        SMSG_COMPRESSED_UPDATE_OBJECT updatePacket = new SMSG_COMPRESSED_UPDATE_OBJECT( player, taurenBytes );
+        sender.send(player.getChannel(), updatePacket );
 
         player.setCreateBits();
-        sender.send( player.getChannel(), new SMSG_UPDATE_OBJECT( player ) );
+        player.update();
 
         sender.send(player.getChannel(), new SMSG_MOTD("Test MotD String@test".split("@")));
 
@@ -217,10 +217,6 @@ public class PlayerService {
 
         return player;
 	}
-
-    public void updatePlayer( Player player ) {
-        sender.send( player.getChannel(), new SMSG_UPDATE_OBJECT( player ) );
-    }
 
     public void savePlayer( Player player ) {
         Session session = databaseFactory.getWorldSessionFactory().openSession();

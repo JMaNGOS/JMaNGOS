@@ -22,6 +22,9 @@ import org.jmangos.commons.network.model.ChanneledObject;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
+import org.jmangos.commons.network.netty.sender.NettyPacketSender;
+import org.jmangos.commons.service.ServiceContent;
+import org.jmangos.realm.model.UpdateType;
 import org.jmangos.realm.model.base.character.CharacterData;
 import org.jmangos.realm.model.base.guid.TypeId;
 import org.jmangos.realm.model.base.guid.TypeMask;
@@ -31,8 +34,7 @@ import org.jmangos.realm.model.base.update.UnitField;
 import org.jmangos.realm.model.unit.*;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_UPDATE_OBJECT;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import java.util.BitSet;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -40,8 +42,6 @@ import javax.inject.Named;
  */
 public class Player extends Units implements ChanneledObject {
 
-    @Inject
-    @Named("client")
     AbstractPacketSender sender;
 
 	/** The Constant logger. */
@@ -109,12 +109,14 @@ public class Player extends Units implements ChanneledObject {
 		super(cd.getGuid());
 		setName(cd.getName());
 		valuesCount = PlayerFields.PLAYER_END.getValue();
+        bitSet = new BitSet( valuesCount );
 		objectType.add(TypeMask.TYPEMASK_PLAYER);
 		objectTypeId = TypeId.TYPEID_PLAYER;
 		characterData = cd;
 		for (int i = 0; i < BaseModGroup.BASEMOD_END.ordinal(); ++i) {
 			auraBaseMod[i][BaseModType.PCT_MOD.ordinal()] = 1.0f;
 		}
+        sender = ServiceContent.getInjector().getInstance( NettyPacketSender.class );
 	}
 
 	/**
@@ -135,11 +137,13 @@ public class Player extends Units implements ChanneledObject {
 	public Player(long guid) {
 		super(guid);
 		valuesCount = PlayerFields.PLAYER_END.getValue();
+        bitSet = new BitSet( valuesCount );
 		objectType.add(TypeMask.TYPEMASK_PLAYER);
 		objectTypeId = TypeId.TYPEID_PLAYER;
 		for (int i = 0; i < BaseModGroup.BASEMOD_END.ordinal(); ++i) {
 			auraBaseMod[i][BaseModType.PCT_MOD.ordinal()] = 1.0f;
 		}
+        sender = ServiceContent.getInjector().getInstance( NettyPacketSender.class );
 	}
 
 	/**
@@ -312,13 +316,18 @@ public class Player extends Units implements ChanneledObject {
 	}
 
     public void setCreateBits() {
-        for ( int i = 0;i<PlayerFields.PLAYER_END.getValue();i++ )
-            if( GetUInt32Value(i) > 0 )
-                SetUInt32Value( i, GetUInt32Value( i ) );
+        int values[] = new int[]{5,6,33,40,41,42,46,48,100,101,108,109,158,160,161,162,163,164,166,168,169,193,194,198,200,220,232,233,234,238,240,244,245,255,256,257,296,328,360,361,362,363,364,365,368,375,409,410,412,416,418,419,421,422,423,424,449,456,457,458,462,464,513,574,576,577,578,579,580,582,584,585,609,610,614,616};
+        for ( int i : values )
+            SetUInt32Value( i, GetUInt32Value( i ) );
+    }
+
+    public void create() {
+        setCreateBits();
+        sender.send( getChannel(), new SMSG_UPDATE_OBJECT( this, UpdateType.CREATE_OBJECT_2 ) );
     }
 
     @Override
     public void update() {
-        sender.send( getChannel(), new SMSG_UPDATE_OBJECT( this ) );
+        sender.send( getChannel(), new SMSG_UPDATE_OBJECT( this, UpdateType.VALUES ) );
     }
 }

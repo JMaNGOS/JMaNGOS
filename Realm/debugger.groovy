@@ -1,6 +1,20 @@
-import java.nio.*;
-import org.jmangos.realm.network.netty.packetClient.server.*;
-import com.jcraft.jzlib.*;
+import com.jcraft.jzlib.DeflaterOutputStream
+import com.jcraft.jzlib.InflaterInputStream
+import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_UPDATE_OBJECT
+
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
+
+class UpdatePacket extends AbstractWoWServerPacket {
+    public UpdatePacket() {
+        opCode = 0xA9
+    }
+    
+    void writeImpl() {
+        
+    }
+}
 
 byte[] taurenBytes = [
     (byte)0x78,(byte)0x01,(byte)0x85,(byte)0x94,(byte)0x4D,(byte)0x48,(byte)0x54,(byte)0x51,(byte)0x14,(byte)0xC7,(byte)0xEF,(byte)0xBD
@@ -79,13 +93,17 @@ def uint16 = new byte[2]
 def uint32 = new byte[4]
 def uint64 = new byte[8]
 
+
+
 bais.read( uint32 )
 def m_fieldsCount = ByteBuffer.wrap( uint32 ).order(ByteOrder.LITTLE_ENDIAN).int
 println "Fields to update: $m_fieldsCount"
 bais.read( uint8 );
 bais.read( uint64 );
 
-def updateMasks = [:]
+def updateMasks = []
+def updateMasks2 = []
+
 for( i = 0; i<m_fieldsCount; i++ ) {
     def mask = new byte[4];
     bais.read( mask );
@@ -93,6 +111,16 @@ for( i = 0; i<m_fieldsCount; i++ ) {
     def maskInt = ByteBuffer.wrap( mask ).order(ByteOrder.LITTLE_ENDIAN).int
     updateMasks.add maskInt
 }
+
+for( i = 0; i<m_fieldsCount; i++ ) {
+    def mask = new byte[4];
+    bais.read( mask );
+    
+    def maskInt = ByteBuffer.wrap( mask ).order(ByteOrder.LITTLE_ENDIAN).int
+    updateMasks2.add maskInt
+}
+
+
 
 /*for ( i in 100..200 )
     dataPacket[i] = 0x00
@@ -149,15 +177,37 @@ dataPacket[1333] = 0xff;
 // MAX
 dataPacket[1341] = 0xff;
 
-dataPacket[4] = 0x02; // UPDATE
+// Intelect
+dataPacket[71*20+1] = 0x01
 
-//dataPacket[0] = 0x1
+// Spirit 5-7
+dataPacket[71*20+7] = 0x01
+
+// Coin 13-15
+dataPacket[90*20+13] = 0x01
+
+// XP
+dataPacket[83*20+9] = 0xff
+
+// Level
+dataPacket[68*20+12] = 0xff
+
+//dataPacket[4] = 0x03; // CREATE SELF
+
+dataPacket[0] = 0x20
 
 // Zip
 def compAOS = new ByteArrayOutputStream();
 def compDOS = new DeflaterOutputStream( compAOS );
 compDOS.write( dataPacket );
 
+//for ( i=0;i<dataPacket.size();i++ ) {
+//    if (i%20==0) println()
+//    print String.format( "0x%02X,", dataPacket[i] )
+//}
+
 updatePacket.setPacket( dataPacket );
 sender.send( player.getChannel(), updatePacket );
+
+// Disconnect player
 //player.getChannel().close()

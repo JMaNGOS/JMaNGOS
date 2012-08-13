@@ -18,10 +18,11 @@ public class SMSG_UPDATE_OBJECT extends AbstractWoWServerPacket {
     Logger log = Logger.getLogger(getClass());
 
     private Player player;
+    private UpdateType updateType = UpdateType.VALUES;
 
     public SMSG_UPDATE_OBJECT() {};
 
-    public SMSG_UPDATE_OBJECT( Player player ) {
+    public SMSG_UPDATE_OBJECT( Player player, UpdateType updateType ) {
         this.player = player;
     }
 
@@ -37,7 +38,7 @@ public class SMSG_UPDATE_OBJECT extends AbstractWoWServerPacket {
         }
 
         writeC( bytes.length ); // Size
-        writeC( UpdateType.VALUES );
+        writeC( updateType );
         writePackedGuid( player.getCharacterData().getGuid() );
         writeB( bytes );
 
