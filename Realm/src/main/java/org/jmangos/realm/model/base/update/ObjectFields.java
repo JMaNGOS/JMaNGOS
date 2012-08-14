@@ -26,22 +26,32 @@ import org.jmangos.commons.network.model.UpdateFieldType;
  */
 public enum ObjectFields implements UpdateField {
     
-    /** The OBJEC t_ fiel d_ guid. */
-    OBJECT_FIELD_GUID( 0x0000 ), // Size: 2, Type: LONG, Flags: PUBLIC
+    /** The OBJECT_FIELD_GUID
+     *  Size: 2, Type: LONG, Flags: PUBLIC
+     */
+    OBJECT_FIELD_GUID( 0x0000 ),
     
-    /** The OBJEC t_ fiel d_ type. */
-    OBJECT_FIELD_TYPE( 0x0002 ), // Size: 1, Type: INT, Flags: PUBLIC
+    /** The OBJECT_FIELD_TYPE
+     *  Size: 1, Type: INT, Flags: PUBLIC
+     */
+    OBJECT_FIELD_TYPE( 0x0002 ),
     
-    /** The OBJEC t_ fiel d_ entry. */
-    OBJECT_FIELD_ENTRY( 0x0003 ), // Size: 1, Type: INT, Flags: PUBLIC
+    /** The OBJECT_FIELD_ENTRY
+     *  Size: 1, Type: INT, Flags: PUBLIC
+     */
+    OBJECT_FIELD_ENTRY( 0x0003 ),
     
-    /** The OBJEC t_ fiel d_ scal e_ x. */
-    OBJECT_FIELD_SCALE_X( 0x0004 ), // Size: 1, Type: FLOAT, Flags: PUBLIC
+    /** The OBJECT_FIELD_SCALE_X
+     *  Size: 1, Type: FLOAT, Flags: PUBLIC
+     */
+    OBJECT_FIELD_SCALE_X( 0x0004 ),
     
-    /** The OBJEC t_ fiel d_ padding. */
-    OBJECT_FIELD_PADDING( 0x0005 ); // Size: 1, Type: INT, Flags: NONE
+    /** The OBJECT_FIELD_PADDING
+     *  Size: 1, Type: INT, Flags: NONE
+     */
+    OBJECT_FIELD_PADDING( 0x0005 );
     
-    /** The OBJEC t_ end. */
+    /** The OBJECT_END */
     public static int OBJECT_END           = 0x0006;
 
     int value;
