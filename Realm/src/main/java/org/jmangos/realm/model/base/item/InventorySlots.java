@@ -56,4 +56,11 @@ public enum InventorySlots {
     public int getValue() {
         return this.value;
     }
+
+    public static InventorySlots get( int value ) {
+        for ( InventorySlots slot : values() )
+            if ( slot.getValue() == value )
+                return slot;
+        return null;
+    }
 }
