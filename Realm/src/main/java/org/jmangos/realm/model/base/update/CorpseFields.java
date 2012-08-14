@@ -25,37 +25,57 @@ import static org.jmangos.realm.model.base.update.ObjectFields.OBJECT_END;
  */
 public enum CorpseFields implements UpdateField {
     
-    /** The CORPS e_ fiel d_ owner. */
-    CORPSE_FIELD_OWNER( OBJECT_END + 0x0000 ), 		 // Size: 2, Type: LONG, Flags: PUBLIC
+    /** The CORPSE_FIELD_OWNER
+     *  Size: 2, Type: LONG, Flags: PUBLIC
+     */
+    CORPSE_FIELD_OWNER( OBJECT_END + 0x0000 ),
     
-    /** The CORPS e_ fiel d_ party. */
-    CORPSE_FIELD_PARTY( OBJECT_END + 0x0002 ), 		 // Size: 2, Type: LONG, Flags: PUBLIC
+    /** The CORPSE_FIELD_PARTY
+     *  Size: 2, Type: LONG, Flags: PUBLIC
+     */
+    CORPSE_FIELD_PARTY( OBJECT_END + 0x0002 ),
     
-    /** The CORPS e_ fiel d_ displa y_ id. */
-    CORPSE_FIELD_DISPLAY_ID( OBJECT_END + 0x0004 ), 		 // Size: 1, Type: INT, Flags: PUBLIC
+    /** The CORPSE_FIELD_DISPLAY_ID
+     *  Size: 1, Type: INT, Flags: PUBLIC
+     */
+    CORPSE_FIELD_DISPLAY_ID( OBJECT_END + 0x0004 ),
     
-    /** The CORPS e_ fiel d_ item. */
-    CORPSE_FIELD_ITEM( OBJECT_END + 0x0005 ), 		 // Size: 19, Type: INT, Flags: PUBLIC
+    /** The CORPSE_FIELD_ITEM
+     *  Size: 19, Type: INT, Flags: PUBLIC
+     */
+    CORPSE_FIELD_ITEM( OBJECT_END + 0x0005 ),
     
-    /** The CORPS e_ fiel d_ byte s_1. */
-    CORPSE_FIELD_BYTES_1( OBJECT_END + 0x0018 ), 		 // Size: 1, Type: BYTES, Flags: PUBLIC
+    /** The CORPSE_FIELD_BYTES_1
+     *  Size: 1, Type: BYTES, Flags: PUBLIC
+     */
+    CORPSE_FIELD_BYTES_1( OBJECT_END + 0x0018 ),
     
-    /** The CORPS e_ fiel d_ byte s_2. */
-    CORPSE_FIELD_BYTES_2( OBJECT_END + 0x0019 ), 		 // Size: 1, Type: BYTES, Flags: PUBLIC
+    /** The CORPSE_FIELD_BYTES_2
+     *  Size: 1, Type: BYTES, Flags: PUBLIC
+     */
+    CORPSE_FIELD_BYTES_2( OBJECT_END + 0x0019 ),
     
-    /** The CORPS e_ fiel d_ guild. */
-    CORPSE_FIELD_GUILD( OBJECT_END + 0x001A ), 		 // Size: 1, Type: INT, Flags: PUBLIC
+    /** The CORPSE_FIELD_GUILD
+     *  Size: 1, Type: INT, Flags: PUBLIC
+     */
+    CORPSE_FIELD_GUILD( OBJECT_END + 0x001A ),
     
-    /** The CORPS e_ fiel d_ flags. */
-    CORPSE_FIELD_FLAGS( OBJECT_END + 0x001B ), 		 // Size: 1, Type: INT, Flags: PUBLIC
+    /** The CORPSE_FIELD_FLAGS
+     *  Size: 1, Type: INT, Flags: PUBLIC
+     */
+    CORPSE_FIELD_FLAGS( OBJECT_END + 0x001B ),
     
-    /** The CORPS e_ fiel d_ dynami c_ flags. */
-    CORPSE_FIELD_DYNAMIC_FLAGS( OBJECT_END + 0x001C ), 		 // Size: 1, Type: INT, Flags: DYNAMIC
+    /** The CORPSE_FIELD_DYNAMIC_FLAGS
+     *  Size: 1, Type: INT, Flags: DYNAMIC
+     */
+    CORPSE_FIELD_DYNAMIC_FLAGS( OBJECT_END + 0x001C ),
     
-    /** The CORPS e_ fiel d_ pad. */
-    CORPSE_FIELD_PAD( OBJECT_END + 0x001D ); 		 // Size: 1, Type: INT, Flags: NONE
+    /** The CORPSE_FIELD_PAD
+     *  Size: 1, Type: INT, Flags: NONE
+     */
+    CORPSE_FIELD_PAD( OBJECT_END + 0x001D );
     
-    /** The CORPS e_ end. */
+    /** The CORPSE_END */
     public static int CORPSE_END = OBJECT_END + 0x001E;
 
     int value;
