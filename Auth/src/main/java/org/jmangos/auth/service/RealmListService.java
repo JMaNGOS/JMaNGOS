@@ -145,6 +145,13 @@ public class RealmListService implements Service {
 	}
 
 	/**
+	 * @return the realms
+	 */
+	public final FastMap<Integer, Realm> getRealms() {
+		return realms;
+	}
+
+	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see org.jmangos.commons.service.Service#stop()

@@ -20,6 +20,7 @@ import org.jmangos.auth.config.Config;
 import org.jmangos.auth.module.HandlerDM;
 import org.jmangos.auth.service.BanIpService;
 import org.jmangos.auth.service.RealmListService;
+import org.jmangos.auth.service.jmx.JmxRealmList;
 import org.jmangos.auth.utils.ShutdownHook;
 import org.jmangos.commons.database.DatabaseConfig;
 import org.jmangos.commons.database.DatabaseFactory;
@@ -56,9 +57,13 @@ public class AuthServer {
 		injector.getInstance(RealmListService.class).start();
 		injector.getInstance(BanIpService.class).start();
 		injector.getInstance(ThreadPoolManager.class).start();
+		
+		injector.getInstance(JmxRealmList.class).start();
+		
 		Runtime.getRuntime().addShutdownHook(
 				injector.getInstance(ShutdownHook.class));
 		System.gc();
+		
 		injector.getInstance(NetworkService.class).start();
 	}
 }

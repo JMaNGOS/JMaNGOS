@@ -30,6 +30,7 @@ import org.jmangos.auth.service.AccountService;
 import org.jmangos.auth.service.BanIpService;
 import org.jmangos.auth.service.AuthNetworkService;
 import org.jmangos.auth.service.RealmListService;
+import org.jmangos.auth.service.jmx.JmxRealmList;
 import org.jmangos.auth.utils.ShutdownHook;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.module.CommonModule;
@@ -88,6 +89,8 @@ public class HandlerDM extends AbstractModule {
 		bind(DatabaseFactory.class).in(Scopes.SINGLETON);
 		bind(AccountService.class).in(Scopes.SINGLETON);
 		bind(ShutdownHook.class).in(Scopes.SINGLETON);
+		
+		bind(JmxRealmList.class).in(Scopes.SINGLETON);
 
 	}
 }
