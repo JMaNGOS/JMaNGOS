@@ -36,6 +36,13 @@ public enum UpdateType implements UpdateField {
     public int getValue() {
         return this.value;
     }
-    
-    
+
+    public static UpdateField get( int value ) {
+        for( UpdateField pf : values() ) {
+            if ( pf.getValue() == value )
+                return pf;
+        }
+        // Not found :O
+        return null;
+    }
 }
