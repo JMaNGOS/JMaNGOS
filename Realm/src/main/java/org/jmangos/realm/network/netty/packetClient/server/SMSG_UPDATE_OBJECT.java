@@ -2,6 +2,7 @@ package org.jmangos.realm.network.netty.packetClient.server;
 
 import org.apache.log4j.Logger;
 import org.jmangos.realm.model.UpdateType;
+import org.jmangos.realm.model.base.update.UpdateFieldUtils;
 import org.jmangos.realm.model.player.Player;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 
@@ -36,25 +37,24 @@ public class SMSG_UPDATE_OBJECT extends AbstractWoWServerPacket {
     protected void writeImpl() {
         BitSet bits = player.getBitSet();
 
-        byte[] bytes = new byte[bits.length()/8+1];
-        for (int i=0; i<bits.length(); i++) {
-            if (bits.get(i)) {
-                bytes[bytes.length-i/8-1] |= 1<<(i%8);
-            }
-        }
+        byte[] bytes = bits.toByteArray();
+        log.info( "Bytes size: " + bytes.length );
 
+        // C or D?
         writeC( bytes.length ); // Size
-        writeC( updateType );
+
         if ( guid != null )
             writeB( guid.toByteArray() );
         else
-            writePackedGuid( player.getCharacterData().getGuid() );
+            writePackedGuid(player.getCharacterData().getGuid());
 
         writeB( bytes );
 
         for( int i = 0; i<bits.length(); i++ ) {
             if ( !bits.get(i) )
                 continue;
+
+            log.info( "Updating object: " + UpdateFieldUtils.getField(i) + " Type: " + player.getBitTypes().get( i ) );
 
             if ( !player.getBitTypes().containsKey( i ) )
                 log.fatal( "Key not found: " + i );
