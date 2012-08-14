@@ -42,12 +42,6 @@ public class TCMD_AUTH_LOGON_CHALLENGE extends AbstractWoWServerPacket {
 	}
 
 	/**
-	 * 
-	 */
-	public TCMD_AUTH_LOGON_CHALLENGE() {
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override

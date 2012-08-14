@@ -25,6 +25,7 @@ import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.handler.timeout.ReadTimeoutException;
+import org.jboss.netty.util.HashedWheelTimer;
 import org.jboss.netty.util.Timer;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.ConnectHandler;
@@ -76,12 +77,12 @@ public class RealmToAuthChannelHandler extends ReconnectingChannelHandler {
 	 * @param nettyPacketReceiver
 	 *            the netty packet receiver
 	 */
-	public RealmToAuthChannelHandler(Timer timer,
+	public RealmToAuthChannelHandler(
 			NetworkChannelFactory channelFactory,
 			PacketHandlerFactory packetService,
 			ConnectHandler connectionHandler,
 			NettyPacketReceiver nettyPacketReceiver) {
-		super(timer, channelFactory, packetService, connectionHandler,
+		super(new HashedWheelTimer(), channelFactory, packetService, connectionHandler,
 				nettyPacketReceiver);
 
 		this.receiver = nettyPacketReceiver;

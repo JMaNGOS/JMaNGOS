@@ -50,8 +50,8 @@ public abstract class DBCStruct<T extends DBCStruct<T>> extends DBCBaseStruct
 				return param;
 			} else
 				return super.array(param);
-		}
-		else return null;
+		} else
+			return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -70,15 +70,18 @@ public abstract class DBCStruct<T extends DBCStruct<T>> extends DBCBaseStruct
 	public T clone() {
 		T re = null;
 		try {
-			re = (T) this.getClass().newInstance();
+			re = (T) getClass().newInstance();
+			if (re != null) {
+				re.setByteBuffer(getByteBuffer(), getByteBufferPosition());
+				re.setStringBufferPosition(stringBufPos);
+				return re;
+			}
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e1) {
 			e1.printStackTrace();
 		}
-		re.setByteBuffer(getByteBuffer(), getByteBufferPosition());
-		re.setStringBufferPosition(stringBufPos);
-		return re;
+		return (T) this;
 	}
 
 	public int getCount() {
@@ -123,8 +126,7 @@ public abstract class DBCStruct<T extends DBCStruct<T>> extends DBCBaseStruct
 		try {
 			String header = this.getClass().getSimpleName() + "List";
 			cacheFields(full);
-			out
-					.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
+			out.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
 			out.write("<" + header + ">\n");
 			toXML(out);
 			out.write("</" + header + ">");
@@ -136,7 +138,7 @@ public abstract class DBCStruct<T extends DBCStruct<T>> extends DBCBaseStruct
 		}
 	}
 
-	public void cacheFields( boolean mode) {
+	public void cacheFields(boolean mode) {
 		Field[] f = this.getClass().getFields();
 		List<String> TFiledsName = new ArrayList<String>();
 		for (int i = 0; i < f.length; i++) {
@@ -204,8 +206,8 @@ public abstract class DBCStruct<T extends DBCStruct<T>> extends DBCBaseStruct
 										.get(sd, j).toString(), out);
 							}
 						} else {
-							writeAttr((String) FiledsName[counter++], f[i].get(
-									this).toString(), out);
+							writeAttr((String) FiledsName[counter++],
+									f[i].get(this).toString(), out);
 						}
 
 					} catch (IllegalArgumentException e) {

@@ -17,20 +17,20 @@
 package org.jmangos.auth;
 
 import org.jmangos.auth.config.Config;
-import org.jmangos.auth.network.netty.packet.client.CMD_AUTH_LOGON_CHALLENGE;
-import org.jmangos.auth.service.AuthNetworkService;
+import org.jmangos.auth.module.HandlerDM;
 import org.jmangos.auth.service.BanIpService;
-import org.jmangos.auth.service.UpdateService;
-import org.jmangos.auth.service.WorldListService;
+import org.jmangos.auth.service.RealmListService;
+import org.jmangos.auth.service.jmx.JmxRealmList;
 import org.jmangos.auth.utils.ShutdownHook;
-import org.jmangos.commons.config.Compatiple;
 import org.jmangos.commons.database.DatabaseConfig;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.log4j.LoggingService;
+import org.jmangos.commons.network.netty.service.NetworkService;
 import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.commons.threadpool.ThreadPoolManager;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 /**
  * The Class AuthServer.
@@ -38,9 +38,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
  * @author MinimaJack
  */
 public class AuthServer {
-
-	private static Config config;
-
+	
 	/**
 	 * The main method.
 	 * 
@@ -49,29 +47,23 @@ public class AuthServer {
 	 * @throws Exception
 	 *             the exception
 	 */
-	public static void main(String[] args) throws Exception {;
-
-		ApplicationContext context = new FileSystemXmlApplicationContext(
-				"conf/context/auth-context.xml");
-		ServiceContent.setContext(context);
-
-		context.getBean(LoggingService.class).start();
-		config = context.getBean(Config.class);
-		context.getBean(DatabaseConfig.class); // not actual!
-		context.getBean(DatabaseFactory.class).start(); // not actual!
-		context.getBean(WorldListService.class).start();
-		if (config.COMPATIBLE != Compatiple.MANGOS) {
-			context.getBean(BanIpService.class).start();
-		}
-		context.getBean(ThreadPoolManager.class).start();
-		if (config.COMPATIBLE == Compatiple.MANGOS) {
-			context.getBean(UpdateService.class).start();
-		}
+	public static void main(String[] args) throws Exception {
+		Injector injector = Guice.createInjector(new HandlerDM());
+		ServiceContent.setInjector(injector);
+		injector.getInstance(LoggingService.class).start();
+		injector.getInstance(Config.class);
+		injector.getInstance(DatabaseConfig.class);
+		injector.getInstance(DatabaseFactory.class).start();
+		injector.getInstance(RealmListService.class).start();
+		injector.getInstance(BanIpService.class).start();
+		injector.getInstance(ThreadPoolManager.class).start();
+		
+		injector.getInstance(JmxRealmList.class).start();
+		
 		Runtime.getRuntime().addShutdownHook(
-				context.getBean(ShutdownHook.class));
+				injector.getInstance(ShutdownHook.class));
 		System.gc();
-		context.getBean(AuthNetworkService.class).start();
-		context.getBean(CMD_AUTH_LOGON_CHALLENGE.class);
-
+		
+		injector.getInstance(NetworkService.class).start();
 	}
 }

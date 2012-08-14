@@ -295,4 +295,19 @@ public class Realm {
 	public void setRealmbuilds(String realmbuilds) {
 		this.realmbuilds = realmbuilds;
 	}
+	@Override
+	public String toString() {
+		String s="[Realm]";
+		s+="\n\t"+this.id;
+		s+="\n\t"+this.name;
+		s+="\n\t"+this.address;
+		s+="\n\t"+this.port;
+		s+="\n\t"+this.icon;
+		s+="\n\t"+this.realmflags;
+		s+="\n\t"+this.timezone;
+		s+="\n\t"+this.allowedSecurityLevel;
+		s+="\n\t"+this.population;
+		s+="\n\t"+this.realmbuilds;
+		return s;
+	}
 }

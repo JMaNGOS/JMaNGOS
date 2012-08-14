@@ -25,30 +25,29 @@ import org.jmangos.auth.dao.RealmDAO;
 import org.jmangos.auth.model.Realm;
 import org.jmangos.commons.service.Service;
 
-public class WorldListService implements Service {
+public class RealmListService implements Service {
 	/**
 	 * Logger for this class.
 	 */
-	private static final Logger log = Logger.getLogger(WorldListService.class);
+	private static final Logger logger = Logger
+			.getLogger(RealmListService.class);
+
+	private static final long UPDATE_INTERVAL = 2000;
 
 	/**
 	 * Map with realms
 	 */
-	private FastMap<Integer, Realm> realms;
+	private FastMap<Integer, Realm> realms = new FastMap<Integer, Realm>()
+			.shared();
 
 	/** The byte size. */
-	private static int byteSize;
+	private int byteSize;
 
-	/** The WORL ddao. */
+	/** The realm dao. */
 	@Inject
-	private RealmDAO WORLDdao;
+	private RealmDAO realmDAO;
 
-	/**
-	 * Instantiates a new world list service.
-	 */
-	public WorldListService() {
-		realms = new FastMap<Integer, Realm>().shared();
-	}
+	private long nextUpdateTime = 0;
 
 	/**
 	 * Gets the worlds.
@@ -59,34 +58,44 @@ public class WorldListService implements Service {
 		return realms;
 	}
 
+	public void addFromConnected(Realm newRealm) {
+		if (realms.containsKey(newRealm.getId())) {
+			logger.debug("Server with this id already connected. Replaced data.");
+			realms.remove(newRealm.getId());
+			realms.put(newRealm.getId(), newRealm);
+		} else {
+			realms.put(newRealm.getId(), newRealm);
+			byteSize = calculateWorldsSize();
+		}
+	}
+
 	/**
 	 * Loads list of banned ip.
 	 */
 	public void start() {
 		update();
-		log.debug("WorldList loaded " + realms.size() + " realms.");
+		logger.debug("WorldList loaded " + realms.size() + " realms.");
 
 	}
 
 	/**
-	 * Loads account from DB and returns it, or returns null if account was not
-	 * loaded.
-	 * 
-	 * @return loaded account or null
+	 * Update if need
 	 */
-	public void reload() {
-		update();
-		log.debug("RealmList reloaded. Loaded " + realms.size() + " realms.");
-
-	}
-
-	/**
-	 * Update.
-	 */
-	private void update() {
-		realms = WORLDdao.getAllRealms();
+	synchronized public void update() {
+		if(nextUpdateTime > System.currentTimeMillis()){
+			return;
+		}
+		nextUpdateTime = System.currentTimeMillis() + UPDATE_INTERVAL;
+		FastMap<Integer, Realm> trealms = realmDAO.getAllRealms();
+		for (Realm realm : trealms.values()) {
+			if (realms.containsKey(realm.getId())) {
+				realms.get(realm.getId()).setPopulation(realm.getPopulation());
+			} else {
+				realms.put(realm.getId(), realm);
+			}
+		}
 		// update byte size all realms
-		setByteSize(calculateWorldsSize());
+		byteSize = calculateWorldsSize();
 	}
 
 	/**
@@ -99,21 +108,11 @@ public class WorldListService implements Service {
 	}
 
 	/**
-	 * Sets the byte size.
-	 * 
-	 * @param byteSyze
-	 *            the new byte size
-	 */
-	public static void setByteSize(int byteSyze) {
-		WorldListService.byteSize = byteSyze;
-	}
-
-	/**
 	 * Gets the size.
 	 * 
 	 * @return the size
 	 */
-	public int getSize() {
+	public int getRealmCount() {
 		return realms.size();
 	}
 
@@ -142,7 +141,14 @@ public class WorldListService implements Service {
 	}
 
 	private RealmDAO getWorldDAO() {
-		return WORLDdao;
+		return realmDAO;
+	}
+
+	/**
+	 * @return the realms
+	 */
+	public final FastMap<Integer, Realm> getRealms() {
+		return realms;
 	}
 
 	/**

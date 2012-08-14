@@ -33,12 +33,10 @@ import org.jmangos.auth.utils.AccountUtils;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.commons.utils.BigNumber;
-import org.springframework.stereotype.Component;
 
 /**
  * The Class <tt>CMD_AUTH_LOGON_PROOF</tt>.
  */
-@Component
 public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 
 	/** The Constant logger. */
@@ -73,8 +71,10 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 		byte[] m1 = readB(20);
 		/** byte[] crc = */
 		readB(20);
-		/**int numberofKey =  */readC();
-		/**int securityFlag =  */readC();
+		/** int numberofKey = */
+		readC();
+		/** int securityFlag = */
+		readC();
 
 		logger.debug("a length " + a.length);
 		logger.debug("a value "
@@ -99,8 +99,9 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 		BigNumber A = new BigNumber();
 		A.setBinary(a);
 		logger.debug("A:" + A.asHexStr());
-		BigNumber S = A.multiply((getAccount().getV_crypto().modPow(u, AccountUtils.N)))
-				.modPow(getAccount().getB(), AccountUtils.N);
+		BigNumber S = A.multiply(
+				(getAccount().getV_crypto().modPow(u, AccountUtils.N))).modPow(
+				getAccount().getB(), AccountUtils.N);
 
 		byte[] t = new byte[32];
 		byte[] t1 = new byte[16];

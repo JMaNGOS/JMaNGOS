@@ -18,6 +18,7 @@ public class TypeTransformer {
 	 * @param castTarget
 	 * @return casted object
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <E extends Object> E castFromString(String value,
 			Class<E> castTarget) {
 		try {
@@ -26,7 +27,7 @@ public class TypeTransformer {
 				if (parts.length != 2) {
 					throw new RuntimeException(
 							"Can't transform property, must be in format \"address:port\"");
-				} 
+				}
 				if ("*".equals(parts[0])) {
 					return (E) new InetSocketAddress(Integer.parseInt(parts[1]));
 				} else {
@@ -38,7 +39,7 @@ public class TypeTransformer {
 				return (E) Enum.valueOf((Class<? extends Enum>) castTarget,
 						value);
 			} else if (castTarget == Class.class) {
-				  return (E) Class.forName(value);
+				return (E) Class.forName(value);
 			} else {
 				Constructor<E> constructor = castTarget
 						.getConstructor(new Class[] { String.class });

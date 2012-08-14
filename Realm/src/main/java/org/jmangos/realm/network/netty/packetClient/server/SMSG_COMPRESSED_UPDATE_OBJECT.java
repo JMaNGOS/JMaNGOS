@@ -31,12 +31,6 @@ public class SMSG_COMPRESSED_UPDATE_OBJECT extends AbstractWoWServerPacket {
 	
 	/**
 	 * Instantiates a new sMS g_ compresse d_ updat e_ object.
-	 */
-	public SMSG_COMPRESSED_UPDATE_OBJECT(){
-	}
-	
-	/**
-	 * Instantiates a new sMS g_ compresse d_ updat e_ object.
 	 *
 	 * @param player the player
 	 */

@@ -14,28 +14,40 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.auth.network.netty.packet.server;
+package org.jmangos.realm.network.netty.packetAuth.server;
 
-import org.apache.log4j.Logger;
-import org.jmangos.auth.network.netty.packet.AbstractWoWServerPacket;
+import org.jmangos.realm.config.Config;
+import org.jmangos.realm.network.netty.packetAuth.AbstractRealmServerPacket;
 
 /**
- * The Class <tt>TCMD_AUTH_ENABLE_CRYPT</tt>.
+ * The Class <tt>CMD_REALM_DATA</tt>.
  */
-public class TCMD_AUTH_ENABLE_CRYPT extends AbstractWoWServerPacket {
+public class CMD_REALM_DATA extends AbstractRealmServerPacket {
 
-	/** The Constant log. */
-	@SuppressWarnings("unused")
-	private static final Logger log = Logger
-			.getLogger(TCMD_AUTH_ENABLE_CRYPT.class);
+	private Config configs;
+	private Float population;
+	public CMD_REALM_DATA() {
+	}
 
-	/**
+	public CMD_REALM_DATA(Config config, Float population) {
+		this.configs = config;
+		this.population = population;
+	}
+	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.jmangos.common.network.model.SendablePacket#writeImpl()
+	 * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
 	 */
 	@Override
 	protected void writeImpl() {
-
+		writeS(configs.REALM_NAME);
+		writeS(configs.REALM_ADDRESS);
+		writeD(configs.REALM_PORT);
+		writeC(configs.REALM_ICON); // icon
+		writeC(configs.REALM_FLAGS); // getRealmflags
+		writeC(configs.REALM_TIME_ZONE); // Timezone
+		writeC(configs.REALM_ALLOWED_SECURITY_LVL); // getAllowedSecurityLevel
+		writeF(population);// Population
+		writeS(configs.REALM_ALLOWED_CLIENT_BUILD);
 	}
 }

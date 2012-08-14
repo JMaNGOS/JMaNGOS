@@ -145,14 +145,14 @@ public class PlayerService {
 		sender.send(player.getChannel(), new SMSG_INSTANCE_DIFFICULTY());
 
 		sender.send(player.getChannel(), new SMSG_INITIAL_SPELLS());
-		sender.send(player.getChannel(), new SMSG_ACTION_BUTTONS());
+		sender.send(player.getChannel(), new SMSG_ACTION_BUTTONS(player));
 		sender.send(player.getChannel(), new SMSG_INITIALIZE_FACTIONS());
 
 		sender.send(player.getChannel(), new SMSG_INIT_WORLD_STATES(player));
 		sender.send(player.getChannel(), new SMSG_EQUIPMENT_SET_LIST());
 		sender.send(player.getChannel(), new SMSG_ALL_ACHIEVEMENT_DATA());
 		sender.send(player.getChannel(), new SMSG_LOGIN_SETTIMESPEED());
-		sender.send(player.getChannel(), new SMSG_COMPRESSED_UPDATE_OBJECT());
+		sender.send(player.getChannel(), new SMSG_COMPRESSED_UPDATE_OBJECT(player));
 		sender.send(player.getChannel(), new SMSG_INIT_WORLD_STATES(player));
 		sender.send(player.getChannel(), new SMSG_TIME_SYNC_REQ());
 		sender.send(player.getChannel(), new SMSG_SPELL_GO());

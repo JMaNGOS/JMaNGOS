@@ -14,33 +14,34 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.realm.network.netty.packetAuth.client;
+package org.jmangos.auth.network.netty.packet.client;
 
 import java.nio.BufferUnderflowException;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
-import org.jboss.netty.channel.ChannelPipeline;
+import org.apache.log4j.Logger;
+import org.jmangos.auth.model.Realm;
+import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
+import org.jmangos.auth.service.RealmListService;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
-import org.jmangos.realm.config.Config;
-import org.jmangos.realm.network.netty.decoder.AuthPacketFrameDecoder;
-import org.jmangos.realm.network.netty.decoder.AuthPacketFrameEncoder;
-import org.jmangos.realm.network.netty.handler.RealmToAuthChannelHandler;
-import org.jmangos.realm.network.netty.packetAuth.AbstractRealmClientPacket;
-import org.jmangos.realm.network.netty.packetAuth.server.CMD_REALM_DATA;
 
 /**
- * The Class <tt>CMD_AUTH_ENABLE_CRYPT</tt>.
+ * The Class <tt>CMD_REALM_DATA</tt>.
  */
-public class CMD_AUTH_ENABLE_CRYPT extends AbstractRealmClientPacket {
+public class CMD_REALM_DATA extends AbstractWoWClientPacket {
 
+	/** The logger. */
+	private static Logger logger = Logger.getLogger(CMD_REALM_DATA.class);
+	/** The sender. */
 	@Inject
-	@Named("RealmToAuth")
 	private AbstractPacketSender sender;
-	
 	@Inject
-	private Config config;
+	private RealmListService realmListService;
+
+	public CMD_REALM_DATA() {
+		super();
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -49,8 +50,20 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractRealmClientPacket {
 	 */
 	@Override
 	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		// read size of the packet before enable encryption
-		readC();
+		logger.debug("Receive realm info from realm account: "
+				+ getAccount().getName());
+		Realm realm = new Realm();
+		realm.setId(getAccount().getObjectId());
+		realm.setName(readS());
+		realm.setAddress(readS());
+		realm.setPort(readD());
+		realm.setIcon(readC());
+		realm.setRealmflags(readC());
+		realm.setTimezone(readC());
+		realm.setAllowedSecurityLevel(readC());
+		realm.setPopulation(readF());
+		realm.setRealmbuilds(readS());
+		realmListService.addFromConnected(realm);
 	}
 
 	/*
@@ -60,14 +73,6 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractRealmClientPacket {
 	 */
 	@Override
 	protected void runImpl() {
-		ChannelPipeline pipeline = getClient().getChannel().getPipeline();
-		pipeline.addFirst("framedecoder", new AuthPacketFrameDecoder());
-		pipeline.addFirst("encoder", new AuthPacketFrameEncoder());
-		RealmToAuthChannelHandler channelHandler = (RealmToAuthChannelHandler)pipeline.getLast();
-		channelHandler.getCrypt().init(channelHandler.getSeed());
-		
-		// read from Player service
-		Float popl = 0.4f;
-		sender.send(getClient(), new CMD_REALM_DATA(config,popl));
+
 	}
 }

@@ -36,14 +36,9 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
 	private static final Logger logger = Logger
 			.getLogger(CMSG_AUTH_SESSION.class);
 	
-	/**
-	 * Instantiates a new sMS g_ cha r_ enum.
-	 */
-	public SMSG_CHAR_ENUM() {
-	}
 
 	/**
-	 * Instantiates a new sMS g_ cha r_ enum.
+	 * Instantiates a new <tt>SMSG_CHAR_ENUM</tt> packet.
 	 *
 	 * @param charlist the charlist
 	 */

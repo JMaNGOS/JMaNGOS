@@ -30,12 +30,6 @@ public class SMSG_BINDPOINTUPDATE  extends AbstractWoWServerPacket {
 	
 	/**
 	 * Instantiates a new sMS g_ bindpointupdate.
-	 */
-	public SMSG_BINDPOINTUPDATE(){
-	}
-	
-	/**
-	 * Instantiates a new sMS g_ bindpointupdate.
 	 *
 	 * @param player the player
 	 */
