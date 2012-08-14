@@ -14,9 +14,9 @@ public enum UpdateType implements UpdateField {
     VALUES( 0x00 ),
     MOVEMENT( 0x01 ),
     CREATE_OBJECT( 0x02 ),
-    CREATE_OBJECT_2( 0x03 ),
+    CREATE_SELF( 0x03 ),
     OUT_OF_RANGE_OBJECTS( 0x04 ),
-    UPDATETYPE_NEAR_OBJECTS( 0x05 );
+    NEAR_OBJECTS( 0x05 );
 
     private int value;
     UpdateType( int value ) {

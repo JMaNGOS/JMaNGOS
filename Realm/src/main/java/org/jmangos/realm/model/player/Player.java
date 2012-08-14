@@ -238,6 +238,7 @@ public class Player extends Units implements ChanneledObject {
 	 * @param money the new money
 	 */
 	public void setMoney(int money) {
+        this.SetUInt32Value(PlayerFields.PLAYER_FIELD_COINAGE, money);
 		this.money = money;
 	}
 	
@@ -247,7 +248,7 @@ public class Player extends Units implements ChanneledObject {
 	 * @return the money
 	 */
 	public final int getMoney() {
-		return money;
+        return this.GetUInt32Value( PlayerFields.PLAYER_FIELD_COINAGE );
 	}
 
 	/**
@@ -323,7 +324,7 @@ public class Player extends Units implements ChanneledObject {
 
     public void create() {
         setCreateBits();
-        sender.send( getChannel(), new SMSG_UPDATE_OBJECT( this, UpdateType.CREATE_OBJECT_2 ) );
+        sender.send( getChannel(), new SMSG_UPDATE_OBJECT( this, UpdateType.CREATE_SELF ) );
     }
 
     @Override
