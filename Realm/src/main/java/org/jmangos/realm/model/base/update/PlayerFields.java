@@ -1444,12 +1444,12 @@ public enum PlayerFields implements UpdateField {
 	 * The PLAYER_PET_SPELL_POWER
 	 * Size: 1; Type: INT; Flags: PRIVATE
 	 */
-	PLAYER_PET_SPELL_POWER(UNIT_END + 0x0499),
+	PLAYER_PET_SPELL_POWER(UNIT_END + 0x0499);
 
     /**
      * The PLAYER_END.
      */
-    PLAYER_END(UNIT_END + 0x049A);
+    public static final int PLAYER_END = UNIT_END + 0x049A;
 
     private int value;
 
