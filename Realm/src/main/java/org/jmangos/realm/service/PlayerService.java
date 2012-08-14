@@ -221,18 +221,28 @@ public class PlayerService {
     public void savePlayer( Player player ) {
         Session session = databaseFactory.getWorldSessionFactory().openSession();
         CharacterData character = new CharacterData();
-        character.setAccount( 1 );
+
+        character.setAccount( player.getAccount().getId() );
         character.setGuid( new Long( player.getObjectGuid().getRawValue() ).intValue() );
         character.setPlayerBytes( player.GetUInt32Value( PlayerFields.PLAYER_BYTES ) );
-        character.setPlayerBytes2(player.GetUInt32Value(PlayerFields.PLAYER_BYTES_2));
+        character.setPlayerBytes2( player.GetUInt32Value(PlayerFields.PLAYER_BYTES_2 ) );
         character.setName( player.getName() );
-        character.setRace( Races.GNOME );
-        character.setClazz( Classes.CLASS_PRIEST );
+        character.setRace( player.getCharacterData().getRace() );
+        character.setClazz( player.getCharacterData().getClazz() );
 
         session.getTransaction().begin();
-        session.saveOrUpdate( character );
-        session.getTransaction().commit();
-        session.close();
+        try {
+            session.saveOrUpdate( character );
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            logger.fatal( String.format( "Cannot save/update character [name: %s, guid: %d]", character.getName(), character.getGuid() ) );
+        } finally {
+            if ( session.getTransaction().isActive() )
+                session.getTransaction().rollback();
+            session.close();
+        }
+
     }
 
 	/**
