@@ -1471,8 +1471,8 @@ public enum PlayerFields implements UpdateField {
         return this.value;
     }
 
-    public static PlayerFields get( int value ) {
-        for( PlayerFields pf : values() ) {
+    public static UpdateField get( int value ) {
+        for( UpdateField pf : values() ) {
             if ( pf.getValue() == value )
                 return pf;
         }
