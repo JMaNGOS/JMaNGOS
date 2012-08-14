@@ -64,4 +64,12 @@ public enum ObjectFields implements UpdateField {
     public int getValue() {
         return this.value;
     }
+
+    public static UpdateField get( int value ) {
+        for( UpdateField field : values() )
+            if (field.getValue() == value)
+                return field;
+
+        return null;
+    }
 }
