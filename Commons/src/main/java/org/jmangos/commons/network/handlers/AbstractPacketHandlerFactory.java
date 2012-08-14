@@ -29,7 +29,9 @@ import org.jmangos.commons.network.netty.model.PacketList;
 import org.jmangos.commons.network.netty.model.PacketTemplate;
 import org.jmangos.commons.service.ServiceContent;
 
+import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.google.inject.name.Named;
 
 /**
  * A factory for creating AbstractPacketHandler objects.
@@ -46,6 +48,14 @@ public abstract class AbstractPacketHandlerFactory extends XmlDataLoader
 	/** The s handler. */
 	ServerPacketHandler sHandler = new ServerPacketHandler();
 
+	@Inject
+	@Named("packetXSD")
+	protected String packetXSDLocation;
+	
+	@Inject
+	@Named("toClient")
+	protected String clientPacketPath;
+	
 	/**
 	 * Instantiates a new abstract packet handler factory.
 	 */

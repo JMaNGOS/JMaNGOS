@@ -19,17 +19,27 @@ package org.jmangos.realm.network.handler;
 import org.jmangos.commons.network.handlers.AbstractPacketHandlerFactory;
 import org.jmangos.commons.network.netty.model.PacketData;
 
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
+
 /**
  * A factory for creating R2LPacketHandler objects.
  */
-public class RealmToAuthPacketHandlerFactory extends AbstractPacketHandlerFactory {
+public class RealmToAuthPacketHandlerFactory extends
+		AbstractPacketHandlerFactory {
+	@Inject
+	@Named("toServer")
+	protected String serverPacketPath;
+
 	/*
 	 * (non-Javadoc)
-	 * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#loadPacket()
+	 * 
+	 * @see
+	 * org.jmangos.commons.network.handlers.PacketHandlerFactory#loadPacket()
 	 */
 	@Override
 	public void loadPacket() {
-		addList(loadStaticData(PacketData.class,"./conf/packetData/packets.xsd",
-				"./conf/packetData/rl-packets.xml"));		
+		addList(loadStaticData(PacketData.class, packetXSDLocation,
+				serverPacketPath));
 	}
 }

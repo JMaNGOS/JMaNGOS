@@ -19,15 +19,17 @@ package org.jmangos.realm.network.handler;
 import org.jmangos.commons.network.handlers.AbstractPacketHandlerFactory;
 import org.jmangos.commons.network.netty.model.PacketData;
 
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
+
 /**
  * A factory for creating RealmPacketHandler objects.
  */
 public class RealmToClientPacketHandlerFactory extends AbstractPacketHandlerFactory{
-
 	@Override
 	public void loadPacket() {
 		addList(loadStaticData(PacketData.class,
-				"./conf/packetData/packets.xsd",
-				"./conf/packetData/rc-packets.xml"));
+				packetXSDLocation,
+				clientPacketPath));
 	}
 }

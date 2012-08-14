@@ -18,6 +18,7 @@ package org.jmangos.realm.module;
 
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jmangos.commons.database.DatabaseFactory;
+import org.jmangos.commons.module.CommonModule;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
@@ -54,18 +55,26 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import com.google.inject.name.Names;
 
-
 /**
  * The Class Handler.
  */
 public class Handler extends AbstractModule {
-	
-	/** (non-Javadoc)
+
+	/**
+	 * (non-Javadoc)
+	 * 
 	 * @see com.google.inject.AbstractModule#configure()
 	 */
 	@Override
 	protected void configure() {
+		install(new CommonModule());
+		
+		bind(String.class).annotatedWith(Names.named("toClient")).toInstance(
+				"./conf/packetData/rc-packets.xml");
 
+		bind(String.class).annotatedWith(Names.named("toServer")).toInstance(
+				"./conf/packetData/rl-packets.xml");
+		
 		bind(NetworkService.class).to(RealmNetworkService.class).in(
 				Scopes.SINGLETON);
 
@@ -74,23 +83,29 @@ public class Handler extends AbstractModule {
 		bind(AbstractPacketSender.class).annotatedWith(Names.named("client"))
 				.to(NettyPacketSender.class).in(Scopes.SINGLETON);
 
-		bind(AbstractPacketSender.class).annotatedWith(Names.named("RealmToAuth")).to(
-				ServerPacketSender.class).in(Scopes.SINGLETON);
-		
-		bind(PacketHandlerFactory.class).annotatedWith(Names.named("AuthToClient")).to(
-				RealmToClientPacketHandlerFactory.class).in(Scopes.SINGLETON);
+		bind(AbstractPacketSender.class)
+				.annotatedWith(Names.named("RealmToAuth"))
+				.to(ServerPacketSender.class).in(Scopes.SINGLETON);
 
-		bind(PacketHandlerFactory.class).annotatedWith(Names.named("RealmToAuth")).to(
-				RealmToAuthPacketHandlerFactory.class).in(Scopes.SINGLETON);
+		bind(PacketHandlerFactory.class)
+				.annotatedWith(Names.named("AuthToClient"))
+				.to(RealmToClientPacketHandlerFactory.class)
+				.in(Scopes.SINGLETON);
 
-		bind(ChannelPipelineFactory.class).annotatedWith(Names.named("RealmToClient"))
+		bind(PacketHandlerFactory.class)
+				.annotatedWith(Names.named("RealmToAuth"))
+				.to(RealmToAuthPacketHandlerFactory.class).in(Scopes.SINGLETON);
+
+		bind(ChannelPipelineFactory.class)
+				.annotatedWith(Names.named("RealmToClient"))
 				.to(RealmToClientPipelineFactory.class).in(Scopes.SINGLETON);
-		bind(ChannelPipelineFactory.class).annotatedWith(Names.named("RealmToAuth"))
+		bind(ChannelPipelineFactory.class)
+				.annotatedWith(Names.named("RealmToAuth"))
 				.to(RealmToAuthPipelineFactory.class).in(Scopes.SINGLETON);
-		bind(ConnectHandler.class).annotatedWith(Names.named("RealmToClient")).to(
-				RealmToClientConnectHandler.class).in(Scopes.SINGLETON);
-		bind(ConnectHandler.class).annotatedWith(Names.named("RealmToAuth")).to(
-				RealmToAuthConnectHandler.class).in(Scopes.SINGLETON);
+		bind(ConnectHandler.class).annotatedWith(Names.named("RealmToClient"))
+				.to(RealmToClientConnectHandler.class).in(Scopes.SINGLETON);
+		bind(ConnectHandler.class).annotatedWith(Names.named("RealmToAuth"))
+				.to(RealmToAuthConnectHandler.class).in(Scopes.SINGLETON);
 
 		bind(AccountDAO.class).to(MySQL5AccountDAO.class).in(Scopes.SINGLETON);
 		bind(PlayerDAO.class).to(MySQL5PlayerDAO.class).in(Scopes.SINGLETON);

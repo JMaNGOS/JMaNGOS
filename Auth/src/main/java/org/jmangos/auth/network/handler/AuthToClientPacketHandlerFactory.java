@@ -34,8 +34,8 @@ public class AuthToClientPacketHandlerFactory extends
 	@Override
 	public void loadPacket() {
 		addList(loadStaticData(PacketData.class,
-				"./conf/packetData/packets.xsd",
-				"./conf/packetData/lc-packets.xml"));
+				packetXSDLocation,
+				clientPacketPath));
 
 	}
 }
