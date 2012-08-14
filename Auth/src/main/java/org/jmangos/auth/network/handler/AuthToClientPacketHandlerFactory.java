@@ -25,14 +25,6 @@ import org.jmangos.commons.network.netty.model.PacketData;
  */
 public class AuthToClientPacketHandlerFactory extends
 		AbstractPacketHandlerFactory {
-
-	/**
-	 * Instantiates a new auth to client packet handler factory.
-	 */
-	public AuthToClientPacketHandlerFactory() {
-
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 

@@ -37,12 +37,6 @@ public class TCMD_REALM_LIST extends AbstractWoWServerPacket {
 	private RealmListService worldlist;
 
 	/**
-	 * Instantiates a new <tt>TCMD_REALM_LIST</tt>.
-	 */
-	public TCMD_REALM_LIST() {
-	}
-
-	/**
 	 * Instantiates a new TCMD_REALM_LIST.
 	 * 
 	 * @param worldlist

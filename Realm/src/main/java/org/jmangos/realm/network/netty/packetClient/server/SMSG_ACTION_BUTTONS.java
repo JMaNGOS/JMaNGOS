@@ -31,12 +31,6 @@ public class SMSG_ACTION_BUTTONS extends AbstractWoWServerPacket {
 	
 	/**
 	 * Instantiates a new sMS g_ actio n_ buttons.
-	 */
-	public SMSG_ACTION_BUTTONS() {
-	}
-	
-	/**
-	 * Instantiates a new sMS g_ actio n_ buttons.
 	 *
 	 * @param player the player
 	 */
