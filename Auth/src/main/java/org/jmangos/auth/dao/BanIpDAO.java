@@ -30,7 +30,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.jmangos.auth.model.BanIp;
+import org.jmangos.commons.model.BanIp;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
 
@@ -88,6 +88,7 @@ public class BanIpDAO implements DAO {
             hibernateSession.save( bannedIp );
         } catch ( HibernateException e ) {
             log.warn( "This IP is already in the database." );
+            return null;
         } finally {
             if( hibernateSession.getTransaction().isActive() )
                 hibernateSession.getTransaction().rollback();

@@ -9,6 +9,6 @@
         <property name="current_session_context_class">thread</property>
         <mapping class="org.jmangos.commons.model.Account"/>
         <mapping class="org.jmangos.commons.model.Realm"/>
-        <mapping class="org.jmangos.auth.model.BanIp"/>
+        <mapping class="org.jmangos.commons.model.BanIp"/>
     </session-factory>
 </hibernate-configuration>

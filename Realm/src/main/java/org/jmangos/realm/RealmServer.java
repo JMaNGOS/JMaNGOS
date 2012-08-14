@@ -72,6 +72,6 @@ public class RealmServer {
         console = new Console();
         console.setVariable( "injector", injector );
         console.setVariable( "itemStorage", injector.getInstance( ItemStorages.class ) );
-        //console.run();
+        console.run();
     }
 }

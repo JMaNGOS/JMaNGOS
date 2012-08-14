@@ -26,22 +26,32 @@ import static org.jmangos.realm.model.base.update.ObjectFields.OBJECT_END;
  */
 public enum DynamicObjectFields implements UpdateField {
     
-    /** The DYNAMICOBJEC t_ caster. */
-    DYNAMICOBJECT_CASTER( OBJECT_END + 0x0000 ), 		 // Size: 2, Type: LONG, Flags: PUBLIC
+    /** The DYNAMICOBJECT_CASTER
+     *  Size: 2, Type: LONG, Flags: PUBLIC
+     */
+    DYNAMICOBJECT_CASTER( OBJECT_END + 0x0000 ),
     
-    /** The DYNAMICOBJEC t_ bytes. */
-    DYNAMICOBJECT_BYTES( OBJECT_END + 0x0002 ), 		 // Size: 1, Type: BYTES, Flags: PUBLIC
+    /** The DYNAMICOBJECT_BYTES
+     *  Size: 1, Type: BYTES, Flags: PUBLIC
+     */
+    DYNAMICOBJECT_BYTES( OBJECT_END + 0x0002 ),
     
-    /** The DYNAMICOBJEC t_ spellid. */
-    DYNAMICOBJECT_SPELLID( OBJECT_END + 0x0003 ), 		 // Size: 1, Type: INT, Flags: PUBLIC
+    /** The DYNAMICOBJECT_SPELLID
+     *  Size: 1, Type: INT, Flags: PUBLIC
+     */
+    DYNAMICOBJECT_SPELLID( OBJECT_END + 0x0003 ),
     
-    /** The DYNAMICOBJEC t_ radius. */
-    DYNAMICOBJECT_RADIUS( OBJECT_END + 0x0004 ), 		 // Size: 1, Type: FLOAT, Flags: PUBLIC
+    /** The DYNAMICOBJECT_RADIUS
+     *  Size: 1, Type: FLOAT, Flags: PUBLIC
+     */
+    DYNAMICOBJECT_RADIUS( OBJECT_END + 0x0004 ),
     
-    /** The DYNAMICOBJEC t_ casttime. */
-    DYNAMICOBJECT_CASTTIME( OBJECT_END + 0x0005 ); 		 // Size: 1, Type: INT, Flags: PUBLIC
+    /** The DYNAMICOBJECT_CASTTIME
+     *  Size: 1, Type: INT, Flags: PUBLIC
+     */
+    DYNAMICOBJECT_CASTTIME( OBJECT_END + 0x0005 );
     
-    /** The DYNAMICOBJEC t_ end. */
+    /** The DYNAMICOBJECT_END */
     public static int DYNAMICOBJECT_END = OBJECT_END + 0x0006;
 
     private int value;
