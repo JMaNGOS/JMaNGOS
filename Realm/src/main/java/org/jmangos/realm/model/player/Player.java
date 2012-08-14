@@ -316,14 +316,15 @@ public class Player extends Units implements ChanneledObject {
 		
 	}
 
+    @Deprecated
     public void setCreateBits() {
         int values[] = new int[]{5,6,33,40,41,42,46,48,100,101,108,109,158,160,161,162,163,164,166,168,169,193,194,198,200,220,232,233,234,238,240,244,245,255,256,257,296,328,360,361,362,363,364,365,368,375,409,410,412,416,418,419,421,422,423,424,449,456,457,458,462,464,513,574,576,577,578,579,580,582,584,585,609,610,614,616};
-        for ( int i : values )
+        for ( int i : values ) {
             SetUInt32Value( i, GetUInt32Value( i ) );
+        }
     }
 
     public void create() {
-        setCreateBits();
         sender.send( getChannel(), new SMSG_UPDATE_OBJECT( this, UpdateType.CREATE_SELF ) );
     }
 

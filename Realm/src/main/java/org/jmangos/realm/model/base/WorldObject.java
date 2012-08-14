@@ -263,9 +263,9 @@ public class WorldObject extends NamedObject {
 	    	rvalue &= ~(0xFF << (offset * 8));
 	    	rvalue |= (value << (offset * 8));
 	    }
-	    SetUInt32Value(index, rvalue);
-        bitSet.set(index);
-        bitTypes.put( index, UpdateFieldType.INT );
+	    SetUInt32Value( index, rvalue );
+        bitSet.set( index );
+        bitTypes.put( index, UpdateFieldType.BYTES );
 	}
 
     /**
@@ -277,6 +277,48 @@ public class WorldObject extends NamedObject {
      */
     public void SetByteValue( UpdateField updateField, int offset, byte value){
         SetByteValue( updateField.getValue(), offset, value );
+    }
+
+    /**
+     * Set m_ byte value
+     * @param index
+     *              int UpdateField index
+     * @param value
+     *              byte value
+     */
+    public void SetByteValue( int index, byte value ) {
+        m_uint32Values.setByte( index * 4, value );
+        bitSet.set( index );
+        bitTypes.put( index, UpdateFieldType.BYTES );
+    }
+
+    /**
+     *
+     * @param index
+     * @return
+     */
+    public byte GetByteValue( UpdateField index ) {
+        return GetByteValue( index );
+    }
+
+    /**
+     *
+     * @param index
+     * @return
+     */
+    public byte GetByteValue( int index ) {
+        return m_uint32Values.getByte( index * 4 );
+    }
+
+    /**
+     * Set m_ byte value
+     * @param updateField
+     *              UpdateField index
+     * @param value
+     *              byte value
+     */
+    public void SetByteValue( UpdateField updateField, byte value ) {
+        m_uint32Values.setByte( updateField.getValue(), value );
     }
 	
 	/**
