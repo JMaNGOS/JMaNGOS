@@ -34,6 +34,7 @@ import org.jmangos.realm.model.base.update.UnitField;
 import org.jmangos.realm.model.unit.*;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_UPDATE_OBJECT;
 
+import java.math.BigInteger;
 import java.util.BitSet;
 
 // TODO: Auto-generated Javadoc
@@ -108,7 +109,7 @@ public class Player extends Units implements ChanneledObject {
 	public Player(CharacterData cd) {
 		super(cd.getGuid());
 		setName(cd.getName());
-		valuesCount = PlayerFields.PLAYER_END.getValue();
+		valuesCount = PlayerFields.PLAYER_END;
         bitSet = new BitSet( valuesCount );
 		objectType.add(TypeMask.TYPEMASK_PLAYER);
 		objectTypeId = TypeId.TYPEID_PLAYER;
@@ -136,7 +137,7 @@ public class Player extends Units implements ChanneledObject {
 	 */
 	public Player(long guid) {
 		super(guid);
-		valuesCount = PlayerFields.PLAYER_END.getValue();
+		valuesCount = PlayerFields.PLAYER_END;
         bitSet = new BitSet( valuesCount );
 		objectType.add(TypeMask.TYPEMASK_PLAYER);
 		objectTypeId = TypeId.TYPEID_PLAYER;
@@ -331,5 +332,22 @@ public class Player extends Units implements ChanneledObject {
     @Override
     public void update() {
         sender.send( getChannel(), new SMSG_UPDATE_OBJECT( this, UpdateType.VALUES ) );
+    }
+
+    /**
+     * Send update packet with specified wowguid
+     * @deprecated Only for testing!
+     * @param wowguid the overrided guid
+     */
+    @Deprecated
+    public void update( BigInteger wowguid ) {
+        if ( getBitTypes().size() > 0 ) {
+            SMSG_UPDATE_OBJECT smsg_update_object = new SMSG_UPDATE_OBJECT( this, UpdateType.VALUES );
+            smsg_update_object.setGuid( wowguid );
+
+            sender.send( getChannel(), smsg_update_object );
+        } else {
+            logger.info( "There are no update needed on player: [ " + getName() + " ]. Skipping." );
+        }
     }
 }
