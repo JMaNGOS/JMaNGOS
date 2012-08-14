@@ -5,6 +5,7 @@ import org.jmangos.realm.model.UpdateType;
 import org.jmangos.realm.model.player.Player;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 
+import java.math.BigInteger;
 import java.util.BitSet;
 
 /**
@@ -18,12 +19,17 @@ public class SMSG_UPDATE_OBJECT extends AbstractWoWServerPacket {
     Logger log = Logger.getLogger(getClass());
 
     private Player player;
+    private BigInteger guid = null;
     private UpdateType updateType = UpdateType.VALUES;
 
     public SMSG_UPDATE_OBJECT() {};
 
     public SMSG_UPDATE_OBJECT( Player player, UpdateType updateType ) {
         this.player = player;
+    }
+
+    public void setGuid(BigInteger guid) {
+        this.guid = guid;
     }
 
     @Override
@@ -39,7 +45,11 @@ public class SMSG_UPDATE_OBJECT extends AbstractWoWServerPacket {
 
         writeC( bytes.length ); // Size
         writeC( updateType );
-        writePackedGuid( player.getCharacterData().getGuid() );
+        if ( guid != null )
+            writeB( guid.toByteArray() );
+        else
+            writePackedGuid( player.getCharacterData().getGuid() );
+
         writeB( bytes );
 
         for( int i = 0; i<bits.length(); i++ ) {
@@ -58,6 +68,9 @@ public class SMSG_UPDATE_OBJECT extends AbstractWoWServerPacket {
                     break;
                 case LONG:
                     writeQ( player.GetUInt64Value( i ) );
+                    break;
+                case BYTES:
+                    writeC( player.GetByteValue( i ) );
                     break;
                 default:
                     log.fatal( "UNKNOWN SIZE!!! AAAaaaaAAAaaaa index: " + i );
