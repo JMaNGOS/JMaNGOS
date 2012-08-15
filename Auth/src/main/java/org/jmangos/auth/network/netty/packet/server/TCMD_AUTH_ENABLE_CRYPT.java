@@ -30,12 +30,6 @@ public class TCMD_AUTH_ENABLE_CRYPT extends AbstractWoWServerPacket {
 			.getLogger(TCMD_AUTH_ENABLE_CRYPT.class);
 
 	/**
-	 * Instantiates a new <tt>TCMD_AUTH_ENABLE_CRYPT</tt>.
-	 */
-	public TCMD_AUTH_ENABLE_CRYPT() {
-	}
-
-	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see org.jmangos.common.network.model.SendablePacket#writeImpl()

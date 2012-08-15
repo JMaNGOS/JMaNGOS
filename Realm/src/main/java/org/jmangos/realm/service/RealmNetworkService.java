@@ -16,8 +16,7 @@
  *******************************************************************************/
 package org.jmangos.realm.service;
 
-import javax.inject.Named;
-
+import com.google.inject.Inject;
 import org.apache.commons.lang.NotImplementedException;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jmangos.commons.config.Compatiple;
@@ -25,13 +24,12 @@ import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.netty.service.AbstractNetworkService;
 import org.jmangos.realm.config.Config;
 
-import com.google.inject.Inject;
+import javax.inject.Named;
 
 /**
  * The Class RealmNetworkService.
  */
 public class RealmNetworkService extends AbstractNetworkService {
-
 	@Inject
 	private Config config;
 

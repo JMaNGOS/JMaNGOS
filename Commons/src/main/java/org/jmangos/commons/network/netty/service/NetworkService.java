@@ -16,6 +16,7 @@
  *******************************************************************************/
 package org.jmangos.commons.network.netty.service;
 
+import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.service.Service;
 
 /**
@@ -23,6 +24,11 @@ import org.jmangos.commons.service.Service;
  */
 public interface NetworkService extends Service {
 
+	/**
+	 * @param channel
+	 */
+	void registerClientChannel(NetworkChannel channel);
+	String getChannelsInfo();
 	/**
 	 * Current status of network.
 	 */

@@ -16,20 +16,18 @@
  *******************************************************************************/
 package org.jmangos.auth;
 
-import org.jmangos.auth.config.Config;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import org.jmangos.auth.module.HandlerDM;
 import org.jmangos.auth.service.BanIpService;
 import org.jmangos.auth.service.RealmListService;
+import org.jmangos.auth.service.jmx.JmxRealmList;
 import org.jmangos.auth.utils.ShutdownHook;
-import org.jmangos.commons.database.DatabaseConfig;
 import org.jmangos.commons.database.DatabaseFactory;
-import org.jmangos.commons.log4j.LoggingService;
+import org.jmangos.commons.network.jmx.JmxNetworkService;
 import org.jmangos.commons.network.netty.service.NetworkService;
 import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.commons.threadpool.ThreadPoolManager;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 
 /**
  * The Class AuthServer.
@@ -49,16 +47,18 @@ public class AuthServer {
 	public static void main(String[] args) throws Exception {
 		Injector injector = Guice.createInjector(new HandlerDM());
 		ServiceContent.setInjector(injector);
-		injector.getInstance(LoggingService.class).start();
-		injector.getInstance(Config.class);
-		injector.getInstance(DatabaseConfig.class);
 		injector.getInstance(DatabaseFactory.class).start();
 		injector.getInstance(RealmListService.class).start();
 		injector.getInstance(BanIpService.class).start();
 		injector.getInstance(ThreadPoolManager.class).start();
+		
+		injector.getInstance(JmxRealmList.class).start();
+		injector.getInstance(JmxNetworkService.class).start();
+		
 		Runtime.getRuntime().addShutdownHook(
 				injector.getInstance(ShutdownHook.class));
 		System.gc();
+		
 		injector.getInstance(NetworkService.class).start();
 	}
 }

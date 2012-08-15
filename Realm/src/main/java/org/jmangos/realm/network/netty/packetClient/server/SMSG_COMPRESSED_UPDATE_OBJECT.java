@@ -31,6 +31,7 @@ public class SMSG_COMPRESSED_UPDATE_OBJECT extends AbstractWoWServerPacket {
     private byte[] packet;
 	
 	/**
+<<<<<<< .merge_file_a01472
 	 * Instantiates a new SMSG_compressed_update_object.
 	 */
 	public SMSG_COMPRESSED_UPDATE_OBJECT(){
@@ -38,6 +39,9 @@ public class SMSG_COMPRESSED_UPDATE_OBJECT extends AbstractWoWServerPacket {
 	
 	/**
 	 * Instantiates a new SMSG_compressed_update_object.
+=======
+	 * Instantiates a new sMS g_ compresse d_ updat e_ object.
+>>>>>>> .merge_file_a04904
 	 *
 	 * @param player the player
 	 */

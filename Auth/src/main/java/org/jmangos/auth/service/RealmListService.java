@@ -16,14 +16,13 @@
  *******************************************************************************/
 package org.jmangos.auth.service;
 
-import javax.inject.Inject;
-
 import javolution.util.FastMap;
-
 import org.apache.log4j.Logger;
 import org.jmangos.auth.dao.RealmDAO;
 import org.jmangos.commons.model.Realm;
 import org.jmangos.commons.service.Service;
+
+import javax.inject.Inject;
 
 public class RealmListService implements Service {
 	/**
@@ -145,6 +144,13 @@ public class RealmListService implements Service {
 
 	private RealmDAO getWorldDAO() {
 		return realmDAO;
+	}
+
+	/**
+	 * @return the realms
+	 */
+	public final FastMap<Integer, Realm> getRealms() {
+		return realms;
 	}
 
 	/**

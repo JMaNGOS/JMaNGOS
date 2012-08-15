@@ -16,9 +16,6 @@
  *******************************************************************************/
 package org.jmangos.realm.network.netty.handler;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelHandler;
 import org.jmangos.commons.network.model.ConnectHandler;
@@ -26,6 +23,9 @@ import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.State;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_AUTH_CHALLENGE;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * The Class RealmToClientConnectHandler.

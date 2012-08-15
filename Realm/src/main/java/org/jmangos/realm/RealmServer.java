@@ -19,9 +19,9 @@ package org.jmangos.realm;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import groovy.ui.Console;
-import org.jmangos.commons.database.DatabaseConfig;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.log4j.LoggingService;
+import org.jmangos.commons.network.jmx.JmxNetworkService;
 import org.jmangos.commons.network.netty.service.NetworkService;
 import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.commons.threadpool.ThreadPoolManager;
@@ -59,6 +59,7 @@ public class RealmServer {
         injector.getInstance(ItemStorages.class).start();
         injector.getInstance(DBCStorage.class).start();
         injector.getInstance(UpdateService.class).start();
+        injector.getInstance(JmxNetworkService.class).start();
 
         // Initialize all session factory before allow clients to connect
         DatabaseFactory.getAccountsSessionFactory();
@@ -72,6 +73,6 @@ public class RealmServer {
         console = new Console();
         console.setVariable( "injector", injector );
         console.setVariable( "itemStorage", injector.getInstance( ItemStorages.class ) );
-        console.run();
+        //console.run();
     }
 }

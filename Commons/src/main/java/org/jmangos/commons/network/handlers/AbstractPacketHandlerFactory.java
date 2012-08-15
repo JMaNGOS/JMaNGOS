@@ -16,6 +16,11 @@
  *******************************************************************************/
 package org.jmangos.commons.network.handlers;
 
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.name.Named;
+import gnu.trove.procedure.TIntObjectProcedure;
+import org.apache.log4j.Logger;
 import org.jmangos.commons.dataholder.XmlDataLoader;
 import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.model.ReceivablePacket;
@@ -33,18 +38,102 @@ import org.jmangos.commons.service.ServiceContent;
  */
 public abstract class AbstractPacketHandlerFactory extends XmlDataLoader
 		implements PacketHandlerFactory {
-
+	private static final Logger logger = Logger
+			.getLogger(AbstractPacketHandlerFactory.class);
 	/** The c handler. */
 	ClientPacketHandler cHandler = new ClientPacketHandler();
 
 	/** The s handler. */
 	ServerPacketHandler sHandler = new ServerPacketHandler();
 
+	@Inject
+	@Named("packetXSD")
+	protected String packetXSDLocation;
+	
+	@Inject
+	@Named("toClient")
+	protected String clientPacketPath;
+	
 	/**
 	 * Instantiates a new abstract packet handler factory.
 	 */
 	public AbstractPacketHandlerFactory() {
 		super();
+	}
+
+	static abstract class AddPackets implements
+			TIntObjectProcedure<PacketTemplate> {
+		protected String upstreamPackageName;
+		protected ClassLoader classLoader;
+		protected AbstractPacketHandlerFactory packetHandlerFactory;
+
+		public AddPackets(AbstractPacketHandlerFactory phf, String pkdgName) {
+			super();
+			packetHandlerFactory = phf;
+			upstreamPackageName = pkdgName;
+			classLoader = AbstractPacketHandlerFactory.class.getClassLoader();
+		}
+	}
+
+	static final class AddUpstreamPackets extends AddPackets {
+		private static final Logger logger = Logger
+				.getLogger(AddUpstreamPackets.class);
+
+		public AddUpstreamPackets(AbstractPacketHandlerFactory phf,
+				String pkdgName) {
+			super(phf, pkdgName);
+		}
+
+		@Override
+		public boolean execute(int number, PacketTemplate template) {
+			String fullPath = upstreamPackageName + template.getName();
+			try {
+				packetHandlerFactory.addPacket(classLoader.loadClass(fullPath)
+						.asSubclass(SendablePacket.class), template
+						.getTemplateId());
+			} catch (ClassNotFoundException e) {
+				logger.warn("Class " + fullPath + " not found", e);
+			} catch (ClassCastException e) {
+				logger.warn("Class " + fullPath
+						+ " can't cast to SendablePacket.class", e);
+			}
+			return true;
+		}
+	}
+
+	static final class AddDownstreamPackets extends AddPackets {
+		private static final Injector injector = ServiceContent.getInjector();
+		private static final Logger logger = Logger
+				.getLogger(AddDownstreamPackets.class);
+
+		public AddDownstreamPackets(AbstractPacketHandlerFactory phf,
+				String pkdgName) {
+			super(phf, pkdgName);
+		}
+
+		@Override
+		public boolean execute(int number, PacketTemplate template) {
+			String fullPath = upstreamPackageName + template.getName();
+			try {
+				ReceivablePacket packet = classLoader.loadClass(fullPath)
+						.asSubclass(ReceivablePacket.class).newInstance();
+				packet.setOpCode(template.getTemplateId());
+				injector.injectMembers(packet);
+				packetHandlerFactory.addPacket(packet, template.getState());
+
+			} catch (ClassNotFoundException e) {
+				logger.warn("Class " + fullPath + " not found", e);
+			} catch (ClassCastException e) {
+				logger.warn("Class " + fullPath
+						+ " can't cast to ReceivablePacket.class", e);
+			} catch (InstantiationException e) {
+				logger.warn("Class " + fullPath
+						+ " don't have empty constructor for instantinate", e);
+			} catch (IllegalAccessException e) {
+				logger.warn("Can't get acces for class " + fullPath, e);
+			}
+			return true;
+		}
 	}
 
 	/**
@@ -54,39 +143,18 @@ public abstract class AbstractPacketHandlerFactory extends XmlDataLoader
 	 *            the pl
 	 */
 	public void addList(PacketData pl) {
-		ClassLoader cl = AbstractPacketHandlerFactory.class.getClassLoader();
 		for (PacketList plist : pl.templates) {
 			switch (plist.getDirection()) {
 			case DOWNSTREAM:
-				for (Object pt : plist.data.values()) {
-					try {
-						ReceivablePacket packet = (ReceivablePacket) cl
-								.loadClass(
-										plist.getPackageName()
-												+ ((PacketTemplate) pt)
-														.getName())
-								.newInstance();
-						packet.setOpCode(((PacketTemplate) pt).getTemplateId());
-						ServiceContent.getInjector().injectMembers(packet);
-						addPacket(packet, ((PacketTemplate) pt).getState());
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
+				plist.data.forEachEntry(new AddDownstreamPackets(this, plist
+						.getPackageName()));
 				break;
 			case UPSTREAM:
-				for (Object pt : plist.data.values()) {
-					try {
-						addPacket(((SendablePacket) (cl.loadClass((plist
-								.getPackageName() + ((PacketTemplate) pt)
-								.getName()))).newInstance()).getClass(),
-								((PacketTemplate) pt).getTemplateId());
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
+				plist.data.forEachEntry(new AddUpstreamPackets(this, plist
+						.getPackageName()));
 				break;
 			default:
+				logger.warn("Unknown packets derection in configuration files.");
 				break;
 			}
 		}
@@ -96,9 +164,9 @@ public abstract class AbstractPacketHandlerFactory extends XmlDataLoader
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.wowemu.common.network.handlers.PacketHandlerFactory#addPacket(org
-	 * .wowemu.common.network.model.ReceivablePacket,
-	 * org.wowemu.common.network.model.State[])
+	 * org.jmangos.commons.network.handlers.PacketHandlerFactory#addPacket(org
+	 * .jmangos.commons.network.model.ReceivablePacket,
+	 * org.jmangos.commons.network.model.State[])
 	 */
 	public void addPacket(ReceivablePacket packetPrototype, State... states) {
 		cHandler.addPacketOpcode(packetPrototype, states);
@@ -108,9 +176,8 @@ public abstract class AbstractPacketHandlerFactory extends XmlDataLoader
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.wowemu.common.network.handlers.PacketHandlerFactory#getServerPacketopCode
-	 * (org.wowemu.common.network.model.SendablePacket)
+	 * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#
+	 * getServerPacketopCode(org.jmangos.commons.network.model.SendablePacket)
 	 */
 	public int getServerPacketopCode(SendablePacket packetClass) {
 		return sHandler.getOpCode(packetClass);
@@ -120,8 +187,8 @@ public abstract class AbstractPacketHandlerFactory extends XmlDataLoader
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.wowemu.common.network.handlers.PacketHandlerFactory#handleClientPacket
-	 * (int, org.wowemu.common.network.model.NetworkChannel)
+	 * org.jmangos.commons.network.handlers.PacketHandlerFactory#handleClientPacket
+	 * (int, org.jmangos.commons.network.model.NetworkChannel)
 	 */
 	public ReceivablePacket handleClientPacket(int id, NetworkChannel ch) {
 		return cHandler.getPacket(id, ch);
@@ -131,7 +198,7 @@ public abstract class AbstractPacketHandlerFactory extends XmlDataLoader
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.wowemu.common.network.handlers.PacketHandlerFactory#addPacket(java
+	 * org.jmangos.commons.network.handlers.PacketHandlerFactory#addPacket(java
 	 * .lang.Class, int)
 	 */
 	public void addPacket(Class<? extends SendablePacket> packetPrototype,
@@ -139,5 +206,4 @@ public abstract class AbstractPacketHandlerFactory extends XmlDataLoader
 		sHandler.addPacketOpcode(packetPrototype, opcode);
 
 	}
-
 }

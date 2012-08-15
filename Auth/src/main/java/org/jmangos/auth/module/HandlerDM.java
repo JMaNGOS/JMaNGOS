@@ -16,6 +16,11 @@
  *******************************************************************************/
 package org.jmangos.auth.module;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
+import com.google.inject.Scopes;
+import com.google.inject.Singleton;
+import com.google.inject.name.Names;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jmangos.auth.dao.AccountDAO;
 import org.jmangos.auth.dao.BanIpDAO;
@@ -24,11 +29,13 @@ import org.jmangos.auth.network.handler.AuthToClientPacketHandlerFactory;
 import org.jmangos.auth.network.netty.factory.AuthToClientPipelineFactory;
 import org.jmangos.auth.network.netty.handler.AuthToClientConnectHandler;
 import org.jmangos.auth.service.AccountService;
-import org.jmangos.auth.service.BanIpService;
 import org.jmangos.auth.service.AuthNetworkService;
+import org.jmangos.auth.service.BanIpService;
 import org.jmangos.auth.service.RealmListService;
+import org.jmangos.auth.service.jmx.JmxRealmList;
 import org.jmangos.auth.utils.ShutdownHook;
 import org.jmangos.commons.database.DatabaseFactory;
+import org.jmangos.commons.module.CommonModule;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
@@ -36,10 +43,6 @@ import org.jmangos.commons.network.netty.sender.NettyPacketSender;
 import org.jmangos.commons.network.netty.service.NetworkService;
 import org.jmangos.commons.threadpool.CommonThreadPoolManager;
 import org.jmangos.commons.threadpool.ThreadPoolManager;
-
-import com.google.inject.AbstractModule;
-import com.google.inject.Scopes;
-import com.google.inject.name.Names;
 
 /**
  * The Class HandlerDM.
@@ -51,6 +54,11 @@ public class HandlerDM extends AbstractModule {
 	 */
 	@Override
 	protected void configure() {
+		install(new CommonModule());
+		
+		bind(String.class).annotatedWith(Names.named("toClient")).toInstance(
+				"./conf/packetData/lc-packets.xml");
+		
 		bind(NetworkService.class).to(AuthNetworkService.class).in(
 				Scopes.SINGLETON);
 		bind(ThreadPoolManager.class).to(CommonThreadPoolManager.class).in(
@@ -79,6 +87,19 @@ public class HandlerDM extends AbstractModule {
 		bind(DatabaseFactory.class).in(Scopes.SINGLETON);
 		bind(AccountService.class).in(Scopes.SINGLETON);
 		bind(ShutdownHook.class).in(Scopes.SINGLETON);
+		
+		bind(JmxRealmList.class).in(Scopes.SINGLETON);
 
+	}
+	@Provides
+	@Singleton
+	public Config provideConfig() {
+		return new Config();
+	}
+
+	@Provides
+	@Singleton
+	public DatabaseConfig provideDatabaseConfig() {
+		return new DatabaseConfig();
 	}
 }

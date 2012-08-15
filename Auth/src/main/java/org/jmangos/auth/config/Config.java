@@ -16,13 +16,12 @@
  *******************************************************************************/
 package org.jmangos.auth.config;
 
-import java.net.InetSocketAddress;
-
-import javax.inject.Singleton;
-
 import org.jmangos.commons.config.Compatiple;
 import org.jmangos.commons.configuration.AbstractConfig;
 import org.jmangos.commons.configuration.Property;
+
+import javax.inject.Singleton;
+import java.net.InetSocketAddress;
 
 /**
  * The Class Config.
@@ -51,7 +50,7 @@ public class Config extends AbstractConfig {
 	/**
 	 * Load configuration.
 	 */
-	protected Config() {
+	public Config() {
 		super(CONFIG_FILE);
 	}
 }

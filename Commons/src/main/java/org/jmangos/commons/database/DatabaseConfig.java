@@ -16,15 +16,9 @@
  *******************************************************************************/
 package org.jmangos.commons.database;
 
-import java.io.IOException;
-import java.util.Properties;
-
 import org.apache.log4j.Logger;
 import org.jmangos.commons.configuration.AbstractConfig;
 import org.jmangos.commons.configuration.Property;
-import org.jmangos.commons.utils.PropertiesUtils;
-
-import javax.swing.*;
 
 
 // TODO: Auto-generated Javadoc
@@ -32,6 +26,7 @@ import javax.swing.*;
  * This class holds all configuration of database.
  *
  */
+@Singleton
 public class DatabaseConfig extends AbstractConfig {
 	
 	/** Logger for database configuration. */

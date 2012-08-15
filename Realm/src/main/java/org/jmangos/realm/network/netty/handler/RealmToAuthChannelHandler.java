@@ -18,21 +18,20 @@ package org.jmangos.realm.network.netty.handler;
 
 import org.apache.log4j.Logger;
 import org.jboss.netty.buffer.ChannelBuffer;
-import java.net.InetSocketAddress;
-
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.handler.timeout.ReadTimeoutException;
 import org.jboss.netty.util.HashedWheelTimer;
-import org.jboss.netty.util.Timer;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.netty.factory.NetworkChannelFactory;
 import org.jmangos.commons.network.netty.receiver.NettyPacketReceiver;
 import org.jmangos.realm.network.crypt.Crypt;
+
+import java.net.InetSocketAddress;
 
 /**
  * The Class R2LChannelHandler.
