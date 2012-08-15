@@ -17,6 +17,7 @@
 package org.jmangos.auth.module;
 
 import org.jboss.netty.channel.ChannelPipelineFactory;
+import org.jmangos.auth.config.Config;
 import org.jmangos.auth.dao.AccountDAO;
 import org.jmangos.auth.dao.BanIpDAO;
 import org.jmangos.auth.dao.RealmDAO;
@@ -32,6 +33,7 @@ import org.jmangos.auth.service.AuthNetworkService;
 import org.jmangos.auth.service.RealmListService;
 import org.jmangos.auth.service.jmx.JmxRealmList;
 import org.jmangos.auth.utils.ShutdownHook;
+import org.jmangos.commons.database.DatabaseConfig;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.module.CommonModule;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
@@ -43,7 +45,9 @@ import org.jmangos.commons.threadpool.CommonThreadPoolManager;
 import org.jmangos.commons.threadpool.ThreadPoolManager;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
 import com.google.inject.Scopes;
+import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 
 /**
@@ -92,5 +96,16 @@ public class HandlerDM extends AbstractModule {
 		
 		bind(JmxRealmList.class).in(Scopes.SINGLETON);
 
+	}
+	@Provides
+	@Singleton
+	public Config provideConfig() {
+		return new Config();
+	}
+
+	@Provides
+	@Singleton
+	public DatabaseConfig provideDatabaseConfig() {
+		return new DatabaseConfig();
 	}
 }

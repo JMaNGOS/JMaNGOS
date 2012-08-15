@@ -51,7 +51,7 @@ public class Config extends AbstractConfig {
 	/**
 	 * Load configuration.
 	 */
-	protected Config() {
+	public Config() {
 		super(CONFIG_FILE);
 	}
 }

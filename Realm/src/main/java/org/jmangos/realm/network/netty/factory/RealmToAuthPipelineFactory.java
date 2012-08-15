@@ -21,10 +21,7 @@ package org.jmangos.realm.network.netty.factory;
 
 import static org.jboss.netty.channel.Channels.*;
 
-import java.util.concurrent.TimeUnit;
-
 import org.jboss.netty.channel.ChannelPipeline;
-import org.jboss.netty.util.HashedWheelTimer;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.netty.factory.BasicPipelineFactory;

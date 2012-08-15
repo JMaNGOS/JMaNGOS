@@ -17,6 +17,7 @@
 package org.jmangos.realm.module;
 
 import org.jboss.netty.channel.ChannelPipelineFactory;
+import org.jmangos.commons.database.DatabaseConfig;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.module.CommonModule;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
@@ -52,7 +53,9 @@ import org.jmangos.realm.service.SimpleStorages;
 import org.jmangos.realm.utils.ShutdownHook;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
 import com.google.inject.Scopes;
+import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 
 /**
@@ -68,13 +71,13 @@ public class Handler extends AbstractModule {
 	@Override
 	protected void configure() {
 		install(new CommonModule());
-		
+
 		bind(String.class).annotatedWith(Names.named("toClient")).toInstance(
 				"./conf/packetData/rc-packets.xml");
 
 		bind(String.class).annotatedWith(Names.named("toServer")).toInstance(
 				"./conf/packetData/rl-packets.xml");
-		
+
 		bind(NetworkService.class).to(RealmNetworkService.class).in(
 				Scopes.SINGLETON);
 
@@ -114,7 +117,6 @@ public class Handler extends AbstractModule {
 				Scopes.SINGLETON);
 		bind(ItemStorages.class).in(Scopes.SINGLETON);
 		bind(SimpleStorages.class).in(Scopes.SINGLETON);
-		bind(Config.class).in(Scopes.SINGLETON);
 
 		bind(PlayerClassLevelInfoStorages.class).in(Scopes.SINGLETON);
 		bind(PlayerLevelStorages.class).in(Scopes.SINGLETON);
@@ -122,6 +124,17 @@ public class Handler extends AbstractModule {
 		bind(AccountService.class).in(Scopes.SINGLETON);
 		bind(DatabaseFactory.class).in(Scopes.SINGLETON);
 		bind(ShutdownHook.class).in(Scopes.SINGLETON);
+	}
 
+	@Provides
+	@Singleton
+	public Config provideConfig() {
+		return new Config();
+	}
+
+	@Provides
+	@Singleton
+	public DatabaseConfig provideDatabaseConfig() {
+		return new DatabaseConfig();
 	}
 }

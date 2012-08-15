@@ -59,7 +59,7 @@ public class DatabaseConfig extends AbstractConfig {
 	/**
 	 * Loads database configuration.
 	 */
-	protected DatabaseConfig() {
+	public DatabaseConfig() {
 		super(CONFIG_FILE);
 	}
 }
