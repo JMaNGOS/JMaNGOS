@@ -1,9 +1,9 @@
 package org.jmangos.auth.service.jmx;
 
 import com.google.inject.Inject;
-import org.jmangos.auth.model.Realm;
 import org.jmangos.auth.service.RealmListService;
 import org.jmangos.commons.jmx.AbstractJmxBeanService;
+import org.jmangos.commons.model.Realm;
 
 import java.util.Map.Entry;
 

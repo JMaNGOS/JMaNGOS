@@ -183,7 +183,7 @@ public class DatabaseConfig extends AbstractConfig {
     @Property(key = "account.database.connections.max", defaultValue="10")
     public Integer 		ACCOUNT_DATABASE_CONNECTIONS_MAX;
 
-    DatabaseConfig() {
+    public DatabaseConfig() {
         super(CONFIG_FILE);
     }
 }

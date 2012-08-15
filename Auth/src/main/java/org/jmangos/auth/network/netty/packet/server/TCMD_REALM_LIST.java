@@ -17,9 +17,10 @@
 package org.jmangos.auth.network.netty.packet.server;
 
 import javolution.util.FastMap;
+
 import org.apache.log4j.Logger;
 import org.jmangos.auth.network.netty.packet.AbstractWoWServerPacket;
-import org.jmangos.auth.service.WorldListService;
+import org.jmangos.auth.service.RealmListService;
 import org.jmangos.commons.model.Account;
 import org.jmangos.commons.model.Realm;
 
@@ -33,7 +34,7 @@ public class TCMD_REALM_LIST extends AbstractWoWServerPacket {
 	private static final Logger log = Logger.getLogger(TCMD_REALM_LIST.class);
 
 	/** The worldlist. */
-	private WorldListService worldlist;
+	private RealmListService worldlist;
 
 	/**
 	 * Instantiates a new <tt>TCMD_REALM_LIST</tt>.
@@ -47,7 +48,7 @@ public class TCMD_REALM_LIST extends AbstractWoWServerPacket {
 	 * @param worldlist
 	 *            the worldlist
 	 */
-	public TCMD_REALM_LIST(WorldListService worldlist) {
+	public TCMD_REALM_LIST(RealmListService worldlist) {
 		this.worldlist = worldlist;
 	}
 
@@ -63,7 +64,7 @@ public class TCMD_REALM_LIST extends AbstractWoWServerPacket {
 						.getChanneledObject())).getObjectId());
 		writeH(worldlist.getByteSize());
 		writeD(0);
-		writeH(worldlist.getSize());
+		writeH(worldlist.getRealmCount());
 		for (Realm realm : worldlist.getWorlds().values()) {
 			writeC(realm.getIcon());
 			writeC((realm.getAllowedSecurityLevel() > ((Account) (getChannel()

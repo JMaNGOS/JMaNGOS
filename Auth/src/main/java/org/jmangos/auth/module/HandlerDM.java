@@ -22,6 +22,7 @@ import com.google.inject.Scopes;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import org.jboss.netty.channel.ChannelPipelineFactory;
+import org.jmangos.auth.config.Config;
 import org.jmangos.auth.dao.AccountDAO;
 import org.jmangos.auth.dao.BanIpDAO;
 import org.jmangos.auth.dao.RealmDAO;
@@ -34,6 +35,7 @@ import org.jmangos.auth.service.BanIpService;
 import org.jmangos.auth.service.RealmListService;
 import org.jmangos.auth.service.jmx.JmxRealmList;
 import org.jmangos.auth.utils.ShutdownHook;
+import org.jmangos.commons.database.DatabaseConfig;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.module.CommonModule;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
@@ -55,10 +57,10 @@ public class HandlerDM extends AbstractModule {
 	@Override
 	protected void configure() {
 		install(new CommonModule());
-		
+
 		bind(String.class).annotatedWith(Names.named("toClient")).toInstance(
 				"./conf/packetData/lc-packets.xml");
-		
+
 		bind(NetworkService.class).to(AuthNetworkService.class).in(
 				Scopes.SINGLETON);
 		bind(ThreadPoolManager.class).to(CommonThreadPoolManager.class).in(
@@ -79,7 +81,7 @@ public class HandlerDM extends AbstractModule {
 
 		bind(RealmDAO.class).in(Scopes.SINGLETON);
 		bind(BanIpDAO.class).in(Scopes.SINGLETON);
-        bind(AccountDAO.class).in(Scopes.SINGLETON);
+		bind(AccountDAO.class).in(Scopes.SINGLETON);
 
 		bind(RealmListService.class).in(Scopes.SINGLETON);
 		bind(BanIpService.class).in(Scopes.SINGLETON);
@@ -87,10 +89,11 @@ public class HandlerDM extends AbstractModule {
 		bind(DatabaseFactory.class).in(Scopes.SINGLETON);
 		bind(AccountService.class).in(Scopes.SINGLETON);
 		bind(ShutdownHook.class).in(Scopes.SINGLETON);
-		
+
 		bind(JmxRealmList.class).in(Scopes.SINGLETON);
 
 	}
+
 	@Provides
 	@Singleton
 	public Config provideConfig() {
