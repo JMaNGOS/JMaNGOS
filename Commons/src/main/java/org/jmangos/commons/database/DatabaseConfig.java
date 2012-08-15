@@ -20,8 +20,9 @@ import org.apache.log4j.Logger;
 import org.jmangos.commons.configuration.AbstractConfig;
 import org.jmangos.commons.configuration.Property;
 
+import javax.inject.Singleton;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * This class holds all configuration of database.
  *
