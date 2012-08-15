@@ -16,20 +16,14 @@
  *******************************************************************************/
 package org.jmangos.realm;
 
-import javax.inject.Inject;
-
 import org.jmangos.commons.database.DatabaseFactory;
-import org.jmangos.commons.log4j.LoggingService;
 import org.jmangos.commons.network.netty.service.NetworkService;
 import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.commons.threadpool.ThreadPoolManager;
-import org.jmangos.realm.config.Config;
 import org.jmangos.realm.module.Handler;
-import org.jmangos.realm.service.ItemStorages;
 import org.jmangos.realm.service.MapService;
 import org.jmangos.realm.service.PlayerClassLevelInfoStorages;
 import org.jmangos.realm.service.PlayerLevelStorages;
-import org.jmangos.realm.service.UpdateService;
 import org.jmangos.realm.utils.ShutdownHook;
 
 import com.google.inject.Guice;
@@ -38,7 +32,6 @@ import com.google.inject.Injector;
 /**
  * The Class RealmServer.
  */
-@SuppressWarnings("unused")
 public class RealmServer {
 	
 	/**
@@ -49,8 +42,6 @@ public class RealmServer {
 	public static void main(String[] args) {
 		Injector injector = Guice.createInjector(new Handler());
 		ServiceContent.setInjector(injector);
-		
-		injector.getInstance(LoggingService.class).start();
 		injector.getInstance(ThreadPoolManager.class).start();
 		injector.getInstance(DatabaseFactory.class).start();
 		Runtime.getRuntime().addShutdownHook(injector.getInstance(ShutdownHook.class));

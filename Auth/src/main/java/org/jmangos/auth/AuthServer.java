@@ -24,7 +24,6 @@ import org.jmangos.auth.service.jmx.JmxRealmList;
 import org.jmangos.auth.utils.ShutdownHook;
 import org.jmangos.commons.database.DatabaseConfig;
 import org.jmangos.commons.database.DatabaseFactory;
-import org.jmangos.commons.log4j.LoggingService;
 import org.jmangos.commons.network.netty.service.NetworkService;
 import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.commons.threadpool.ThreadPoolManager;
@@ -50,7 +49,6 @@ public class AuthServer {
 	public static void main(String[] args) throws Exception {
 		Injector injector = Guice.createInjector(new HandlerDM());
 		ServiceContent.setInjector(injector);
-		injector.getInstance(LoggingService.class).start();
 		injector.getInstance(Config.class);
 		injector.getInstance(DatabaseConfig.class);
 		injector.getInstance(DatabaseFactory.class).start();

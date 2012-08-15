@@ -31,11 +31,14 @@ import org.apache.log4j.xml.DOMConfigurator;
 import org.jmangos.commons.log4j.exception.Log4jInitializationError;
 import org.jmangos.commons.service.Service;
 
+import com.google.inject.Singleton;
+
 /**
  * The Class LoggingService.
  * 
  * @author MinimaJack
  */
+@Singleton
 public class LoggingService implements Service {
 	/**
 	 * Property that represents {@link org.apache.log4j.spi.LoggerFactory} class
