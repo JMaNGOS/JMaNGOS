@@ -21,10 +21,12 @@ import org.jboss.netty.channel.ChannelHandler;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.State;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class AuthToClientConnectHandler.
  */
+@Component
 public class AuthToClientConnectHandler implements ConnectHandler {
 
 	/** The Constant log. */

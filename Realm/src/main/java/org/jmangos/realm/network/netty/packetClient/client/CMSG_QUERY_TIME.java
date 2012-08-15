@@ -24,32 +24,37 @@ import javax.inject.Named;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_QUERY_TIME_RESPONSE;
+import org.springframework.stereotype.Component;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CMSG_QUERY_TIME.
  */
-public class CMSG_QUERY_TIME  extends AbstractWoWClientPacket {
-	
+@Component
+public class CMSG_QUERY_TIME extends AbstractWoWClientPacket {
+
 	/** The sender. */
 	@Inject
-	@Named("client")
+	@Named("nettyPacketSender")
 	private AbstractPacketSender sender;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
 	 */
 	@Override
 	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
 	 */
 	@Override
 	protected void runImpl() {
 		sender.send(getClient(), new SMSG_QUERY_TIME_RESPONSE());
-		
+
 	}
 }

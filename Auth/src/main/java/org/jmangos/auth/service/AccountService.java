@@ -26,12 +26,14 @@ import org.jmangos.auth.utils.AccountUtils;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.utils.BigNumber;
+import org.springframework.stereotype.Component;
 
 /**
  * This class is responsible for controlling all account actions.
  * 
  * @author MinimaJack
  */
+@Component
 public class AccountService {
 
 	/** The account dao. */

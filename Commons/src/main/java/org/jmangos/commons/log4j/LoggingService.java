@@ -25,17 +25,21 @@ import java.util.logging.Handler;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.log4j.Hierarchy;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.jmangos.commons.log4j.exception.Log4jInitializationError;
 import org.jmangos.commons.service.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class LoggingService.
  * 
  * @author MinimaJack
  */
+@Component
 public class LoggingService implements Service {
 	/**
 	 * Property that represents {@link org.apache.log4j.spi.LoggerFactory} class
@@ -55,6 +59,7 @@ public class LoggingService implements Service {
 	 * @throws Log4jInitializationError
 	 *             the log4j initialization error
 	 */
+	@PostConstruct
 	public void start() throws Log4jInitializationError {
 		File f = new File(LOGGER_CONFIG_FILE);
 

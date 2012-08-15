@@ -1,37 +1,31 @@
 /*******************************************************************************
- * Copyright (c) 2012 JMANGOS
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the GNU Public License v2.0
- * which accompanies this distribution, and is available at
- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
- * Contributors:
- *     JMANGOS - initial API and implementation
- ******************************************************************************/
-/*
- * Copyright (C) 2011 WoWEmu
- * 
- * This program is free software; you can redistribute it and/or modify it under the terms of the
- * GNU General Public License as published by the Free Software Foundation; either version 2 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with this program. If
- * not, see <http://www.gnu.org/licenses/>.
- */
+ * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ *******************************************************************************/
 package org.jmangos.realm.utils;
+
+import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 import org.jmangos.commons.database.DatabaseFactory;
-
-import com.google.inject.Inject;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class ShutdownHook.
  */
+@Component
 public class ShutdownHook extends Thread {
 
 	/** The DF. */
@@ -41,8 +35,7 @@ public class ShutdownHook extends Thread {
 	/** Logger for this class. */
 	private static final Logger log = Logger.getLogger(ShutdownHook.class);
 
-	/*
-	 * (non-Javadoc)
+	/**
 	 * 
 	 * @see java.lang.Thread#run()
 	 */

@@ -19,6 +19,7 @@ package org.jmangos.auth.service;
 import java.util.Iterator;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
@@ -27,12 +28,14 @@ import org.jmangos.auth.dao.BanIpDAO;
 import org.jmangos.auth.model.BanIp;
 import org.jmangos.commons.config.Compatiple;
 import org.jmangos.commons.service.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class BanIpService.
  * 
  * @author MinimaJack
  */
+@Component
 public class BanIpService implements Service {
 	/**
 	 * Logger for this class.
@@ -53,6 +56,7 @@ public class BanIpService implements Service {
 	 * 
 	 * @see org.wowemu.common.service.Service#start()
 	 */
+	@PostConstruct
 	@Override
 	public void start() {
 		update();

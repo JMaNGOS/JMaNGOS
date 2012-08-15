@@ -18,17 +18,20 @@ package org.jmangos.realm.service;
 
 import java.util.HashMap;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
 import org.apache.log4j.Logger;
 import org.jmangos.commons.dataholder.DataLoadService;
 import org.jmangos.realm.dao.SimpleDataDAO;
 import org.jmangos.realm.model.RaceClassLevel;
 import org.jmangos.realm.model.base.PlayerLevelInfo;
-
-import com.google.inject.Inject;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class PlayerLevelStorages.
  */
+@Component
 public class PlayerLevelStorages implements
 		DataLoadService<HashMap<RaceClassLevel, PlayerLevelInfo>> {
 
@@ -43,11 +46,11 @@ public class PlayerLevelStorages implements
 	/** The Player Race Class Level info. */
 	private HashMap<RaceClassLevel, PlayerLevelInfo> playerRCLI = new HashMap<RaceClassLevel, PlayerLevelInfo>();
 
-	/*
-	 * (non-Javadoc)
+	/**
 	 * 
 	 * @see org.jmangos.commons.service.Service#start()
 	 */
+	@PostConstruct
 	@Override
 	public void start() {
 		load();
@@ -55,8 +58,7 @@ public class PlayerLevelStorages implements
 
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
 	 * 
 	 * @see org.jmangos.commons.service.Service#stop()
 	 */
@@ -66,8 +68,7 @@ public class PlayerLevelStorages implements
 
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
 	 * 
 	 * @see org.jmangos.commons.dataholder.DataLoadService#load()
 	 */
@@ -77,8 +78,7 @@ public class PlayerLevelStorages implements
 		return playerRCLI = simpleDataDAO.getRaceClassLevelInfos();
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
 	 * 
 	 * @see org.jmangos.commons.dataholder.DataLoadService#reload()
 	 */
@@ -88,8 +88,7 @@ public class PlayerLevelStorages implements
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
 	 * 
 	 * @see org.jmangos.commons.dataholder.DataLoadService#save()
 	 */
@@ -99,8 +98,7 @@ public class PlayerLevelStorages implements
 
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
 	 * 
 	 * @see org.jmangos.commons.dataholder.DataLoadService#get()
 	 */

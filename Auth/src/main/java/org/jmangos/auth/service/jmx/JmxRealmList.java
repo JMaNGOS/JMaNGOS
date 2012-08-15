@@ -2,14 +2,17 @@ package org.jmangos.auth.service.jmx;
 
 import java.util.Map.Entry;
 
+import javax.inject.Inject;
+
 import org.jmangos.auth.model.Realm;
 import org.jmangos.auth.service.RealmListService;
 import org.jmangos.commons.jmx.AbstractJmxBeanService;
+import org.springframework.stereotype.Component;
 
-import com.google.inject.Inject;
-
+@Component
 public class JmxRealmList extends AbstractJmxBeanService implements
 		JmxRealmListMBean {
+
 	@Inject
 	private RealmListService realmListService;
 

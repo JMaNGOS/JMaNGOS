@@ -25,6 +25,7 @@ import org.jmangos.auth.model.Realm;
 import org.jmangos.commons.database.DB;
 import org.jmangos.commons.database.ParamReadStH;
 import org.jmangos.commons.database.ReadStH;
+import org.springframework.stereotype.Component;
 
 import javolution.util.FastMap;
 
@@ -35,6 +36,7 @@ import javolution.util.FastMap;
  * 
  * @desc Realm DAO implementation for MySQL5
  */
+@Component
 public class MySQL5RealmDAO extends RealmDAO {
 
 	/**

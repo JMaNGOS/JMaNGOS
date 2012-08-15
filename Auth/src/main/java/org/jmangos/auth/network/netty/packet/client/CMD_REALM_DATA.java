@@ -19,22 +19,26 @@ package org.jmangos.auth.network.netty.packet.client;
 import java.nio.BufferUnderflowException;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 import org.jmangos.auth.model.Realm;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
 import org.jmangos.auth.service.RealmListService;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class <tt>CMD_REALM_DATA</tt>.
  */
+@Component
 public class CMD_REALM_DATA extends AbstractWoWClientPacket {
 
 	/** The logger. */
 	private static Logger logger = Logger.getLogger(CMD_REALM_DATA.class);
 	/** The sender. */
 	@Inject
+	@Named("nettyPacketSender")
 	private AbstractPacketSender sender;
 	@Inject
 	private RealmListService realmListService;

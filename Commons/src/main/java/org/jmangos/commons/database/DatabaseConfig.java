@@ -16,15 +16,14 @@
  *******************************************************************************/
 package org.jmangos.commons.database;
 
-import javax.inject.Singleton;
-
 import org.jmangos.commons.configuration.AbstractConfig;
 import org.jmangos.commons.configuration.Property;
+import org.springframework.stereotype.Component;
 
 /**
  * This class holds all configuration of database.
  */
-@Singleton
+@Component
 public class DatabaseConfig extends AbstractConfig {
 	
 	/** Configuration file location. */

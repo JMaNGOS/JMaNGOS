@@ -18,6 +18,7 @@ package org.jmangos.realm.service;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
@@ -30,14 +31,15 @@ import org.jmangos.realm.model.base.item.InventoryType;
 import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.base.item.ItemPrototype;
 import org.jmangos.realm.model.base.update.ItemFields;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class ItemStorages.
  */
-public class ItemStorages
-		implements
-			DataLoadService<TIntObjectHashMap<ItemPrototype>> {
-	
+@Component
+public class ItemStorages implements
+		DataLoadService<TIntObjectHashMap<ItemPrototype>> {
+
 	/** The Constant logger. */
 	private static final Logger logger = Logger.getLogger(ItemStorages.class);
 
@@ -48,7 +50,9 @@ public class ItemStorages
 	/** The item prototypes. */
 	private TIntObjectHashMap<ItemPrototype> itemPrototypes = new TIntObjectHashMap<ItemPrototype>();
 
-	/** (non-Javadoc)
+	/**
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jmangos.commons.dataholder.DataLoadService#get()
 	 */
 	@Override
@@ -58,8 +62,9 @@ public class ItemStorages
 
 	/**
 	 * Gets the.
-	 *
-	 * @param guid the guid
+	 * 
+	 * @param guid
+	 *            the guid
 	 * @return the item prototype
 	 */
 	public ItemPrototype get(int guid) {
@@ -77,32 +82,37 @@ public class ItemStorages
 
 	/**
 	 * Load from db.
-	 *
-	 * @param itemplate the itemplate
-	 * @param proto the proto
+	 * 
+	 * @param itemplate
+	 *            the itemplate
+	 * @param proto
+	 *            the proto
 	 * @return the item
 	 */
 	public Item loadFromDB(InventoryTemplate itemplate, ItemPrototype proto) {
-		long guid = HighGuid.HIGHGUID_ITEM.getValue() << 48| itemplate.getItem_guid();
+		long guid = HighGuid.HIGHGUID_ITEM.getValue() << 48
+				| itemplate.getItem_guid();
 		Item item = null;
-		if(proto.getInventoryType() == InventoryType.INVTYPE_BAG){
+		if (proto.getInventoryType() == InventoryType.INVTYPE_BAG) {
 			item = new Bag(guid);
-		}
-		else{
+		} else {
 			item = new Item(guid);
 		}
 		item.initfields();
 		if (item.loadValues(itemplate.getData().split(" "))) {
-			logger.debug("Good items " + proto.getName() + " count " + item.GetUInt32Value(ItemFields.ITEM_FIELD_STACK_COUNT));
-			
+			logger.debug("Good items " + proto.getName() + " count "
+					+ item.GetUInt32Value(ItemFields.ITEM_FIELD_STACK_COUNT));
+
 			return item;
 		} else {
 			logger.debug("Bad items" + proto.getName());
 			return null;
 		}
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jmangos.commons.dataholder.DataLoadService#load()
 	 */
 	@Override
@@ -111,7 +121,9 @@ public class ItemStorages
 		return itemPrototypes;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jmangos.commons.dataholder.DataLoadService#reload()
 	 */
 	@Override
@@ -120,7 +132,9 @@ public class ItemStorages
 		return load();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jmangos.commons.dataholder.DataLoadService#save()
 	 */
 	@Override
@@ -129,16 +143,21 @@ public class ItemStorages
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jmangos.commons.service.Service#start()
 	 */
+	@PostConstruct
 	@Override
 	public void start() {
 		load();
 		logger.info("Loaded " + itemPrototypes.size() + " ItemPrototypes");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override

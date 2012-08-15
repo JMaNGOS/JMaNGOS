@@ -22,6 +22,7 @@
 
 package org.jmangos.realm.service;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.jmangos.commons.service.Service;
@@ -29,19 +30,21 @@ import org.jmangos.commons.task.TaskId;
 import org.jmangos.commons.task.TaskManager;
 import org.jmangos.commons.task.TaskPriority;
 import org.jmangos.commons.threadpool.ThreadPoolManager;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class UpdateService.
  */
+@Component
 public class UpdateService implements Service {
-	
+
 	/** The task manager. */
 	private TaskManager taskManager = new TaskManager();
-	
+
 	/** The thread pool manager. */
 	@Inject
 	private ThreadPoolManager threadPoolManager;
-	
+
 	/** The map service. */
 	@Inject
 	private MapService mapService;
@@ -50,11 +53,13 @@ public class UpdateService implements Service {
 	 * The Enum UpdateWorldTaskId.
 	 */
 	private static enum UpdateRealmTaskId implements TaskId {
-		
+
 		/** The L s_ worl d_ update. */
 		REALM_MAP_UPDATE;
 
-		/* (non-Javadoc)
+		/*
+		 * (non-Javadoc)
+		 * 
 		 * @see org.jmangos.commons.task.TaskId#getPriority()
 		 */
 		@Override
@@ -64,16 +69,22 @@ public class UpdateService implements Service {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jmangos.commons.service.Service#start()
 	 */
+	@PostConstruct
 	@Override
 	public void start() {
-		taskManager.addNewTask(UpdateRealmTaskId.REALM_MAP_UPDATE, threadPoolManager.scheduleAtFixedRate(
-				new RealmUpdateWorldList(), 100, 100));
+		taskManager.addNewTask(UpdateRealmTaskId.REALM_MAP_UPDATE,
+				threadPoolManager.scheduleAtFixedRate(
+						new RealmUpdateWorldList(), 100, 100));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override
@@ -85,8 +96,10 @@ public class UpdateService implements Service {
 	 * The Class LUpdateWorldList.
 	 */
 	private final class RealmUpdateWorldList implements Runnable {
-		
-		/* (non-Javadoc)
+
+		/*
+		 * (non-Javadoc)
+		 * 
 		 * @see java.lang.Runnable#run()
 		 */
 		@Override

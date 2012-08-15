@@ -19,6 +19,7 @@ package org.jmangos.auth.network.netty.packet.client;
 import java.nio.BufferUnderflowException;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
@@ -35,6 +36,7 @@ public class CMD_TEST_CRYPT extends AbstractWoWClientPacket {
 	private static Logger logger = Logger.getLogger(CMD_TEST_CRYPT.class);
 	/** The sender. */
 	@Inject
+	@Named("nettyPacketSender")
 	private AbstractPacketSender sender;
 
 	public CMD_TEST_CRYPT() {

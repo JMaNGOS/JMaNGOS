@@ -18,43 +18,47 @@ package org.jmangos.realm.service;
 
 import java.util.HashMap;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 import org.jmangos.commons.dataholder.DataLoadService;
 import org.jmangos.realm.dao.SimpleDataDAO;
 import org.jmangos.realm.model.ClassLevel;
 import org.jmangos.realm.model.base.PlayerClassLevelInfo;
-
-import com.google.inject.Inject;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class PlayerClassLevelInfoStorages.
  */
-public class PlayerClassLevelInfoStorages
-		implements
-			DataLoadService<HashMap<ClassLevel, PlayerClassLevelInfo>> {
-	
+@Component
+public class PlayerClassLevelInfoStorages implements
+		DataLoadService<HashMap<ClassLevel, PlayerClassLevelInfo>> {
+
 	/** The Constant log. */
 	private static final Logger log = Logger
 			.getLogger(PlayerClassLevelInfoStorages.class);
-	
+
 	/** The simple data dao. */
 	@Inject
 	SimpleDataDAO simpleDataDAO;
-	
+
 	/** The Player cli. */
 	private HashMap<ClassLevel, PlayerClassLevelInfo> playerCLI = new HashMap<ClassLevel, PlayerClassLevelInfo>();
 
-	/* (non-Javadoc)
+	/**
+	 * 
 	 * @see org.jmangos.commons.service.Service#start()
 	 */
+	@PostConstruct
 	@Override
 	public void start() {
 		load();
 		log.info("Loaded " + playerCLI.size() + " PlayerClassLevelInfos");
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * 
 	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override
@@ -63,7 +67,8 @@ public class PlayerClassLevelInfoStorages
 
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * 
 	 * @see org.jmangos.commons.dataholder.DataLoadService#load()
 	 */
 	@Override
@@ -71,7 +76,8 @@ public class PlayerClassLevelInfoStorages
 		return playerCLI = simpleDataDAO.getClassLevelInfos();
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * 
 	 * @see org.jmangos.commons.dataholder.DataLoadService#reload()
 	 */
 	@Override
@@ -80,7 +86,8 @@ public class PlayerClassLevelInfoStorages
 		return load();
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * 
 	 * @see org.jmangos.commons.dataholder.DataLoadService#save()
 	 */
 	@Override
@@ -91,9 +98,11 @@ public class PlayerClassLevelInfoStorages
 
 	/**
 	 * Gets the.
-	 *
-	 * @param clazz the clazz
-	 * @param level the level
+	 * 
+	 * @param clazz
+	 *            the clazz
+	 * @param level
+	 *            the level
 	 * @return the player class level info
 	 */
 	public PlayerClassLevelInfo get(byte clazz, byte level) {
@@ -106,7 +115,8 @@ public class PlayerClassLevelInfoStorages
 		}
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * 
 	 * @see org.jmangos.commons.dataholder.DataLoadService#get()
 	 */
 	@Override

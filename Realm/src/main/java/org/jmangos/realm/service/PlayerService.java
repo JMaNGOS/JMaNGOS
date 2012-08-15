@@ -62,57 +62,61 @@ import org.jmangos.realm.network.netty.packetClient.server.SMSG_POWER_UPDATE;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_SPELL_GO;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_TALENTS_INFO;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_TIME_SYNC_REQ;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class PlayerService.
  */
+@Component
 public class PlayerService {
-	
+
 	/** The Constant logger. */
 	private static final Logger logger = Logger.getLogger(PlayerService.class);
-	
+
 	/** The Constant PLAYER_EXPLORED_ZONES_SIZE. */
 	private static final int PLAYER_EXPLORED_ZONES_SIZE = 128;
-	
+
 	/** The Constant KNOWN_TITLES_SIZE. */
 	private static final int KNOWN_TITLES_SIZE = 3;
-	
+
 	/** The Constant CONFIG_UINT32_MAX_PLAYER_LEVEL. */
 	private static final int CONFIG_UINT32_MAX_PLAYER_LEVEL = 80;
-	
+
 	/** The sender. */
 	@Inject
-	@Named("client")
+	@Named("nettyPacketSender")
 	private AbstractPacketSender sender;
-	
+
 	/** The player dao. */
 	@Inject
 	private PlayerDAO playerDAO;
-	
+
 	/** The player class level info storages. */
 	@Inject
 	private PlayerClassLevelInfoStorages playerClassLevelInfoStorages;
-	
+
 	/** The player level storages. */
 	@Inject
 	private PlayerLevelStorages playerLevelStorages;
-	
+
 	/** The simple storages. */
 	@Inject
 	private SimpleStorages simpleStorages;
-	
+
 	/** The item storages. */
 	@Inject
 	private ItemStorages itemStorages;
 
 	/** The playerlist. */
 	private static TLongObjectHashMap<Player> playerlist = new TLongObjectHashMap<Player>();
-	
+
 	/**
 	 * Prepare player.
-	 *
-	 * @param chanel the chanel
-	 * @param guid the guid
+	 * 
+	 * @param chanel
+	 *            the chanel
+	 * @param guid
+	 *            the guid
 	 * @return the player
 	 */
 	public Player preparePlayer(NettyNetworkChannel chanel, long guid) {
@@ -125,8 +129,9 @@ public class PlayerService {
 
 	/**
 	 * Send inicial packets.
-	 *
-	 * @param player the player
+	 * 
+	 * @param player
+	 *            the player
 	 * @return the world object
 	 */
 	public WorldObject sendInicialPackets(Player player) {
@@ -137,8 +142,8 @@ public class PlayerService {
 				SMSG_ACCOUNT_DATA_TIMES.PER_CHARACTER_CACHE_MASK, player
 						.getAccount().getAccountData()));
 		sender.send(player.getChannel(), new SMSG_FEATURE_SYSTEM_STATUS());
-		sender.send(player.getChannel(), new SMSG_MOTD("Test MotD String@test"
-				.split("@")));
+		sender.send(player.getChannel(),
+				new SMSG_MOTD("Test MotD String@test".split("@")));
 		sender.send(player.getChannel(), new SMSG_LEARNED_DANCE_MOVES());
 		sender.send(player.getChannel(), new SMSG_BINDPOINTUPDATE(player));
 		sender.send(player.getChannel(), new SMSG_TALENTS_INFO());
@@ -152,7 +157,8 @@ public class PlayerService {
 		sender.send(player.getChannel(), new SMSG_EQUIPMENT_SET_LIST());
 		sender.send(player.getChannel(), new SMSG_ALL_ACHIEVEMENT_DATA());
 		sender.send(player.getChannel(), new SMSG_LOGIN_SETTIMESPEED());
-		sender.send(player.getChannel(), new SMSG_COMPRESSED_UPDATE_OBJECT(player));
+		sender.send(player.getChannel(), new SMSG_COMPRESSED_UPDATE_OBJECT(
+				player));
 		sender.send(player.getChannel(), new SMSG_INIT_WORLD_STATES(player));
 		sender.send(player.getChannel(), new SMSG_TIME_SYNC_REQ());
 		sender.send(player.getChannel(), new SMSG_SPELL_GO());
@@ -163,8 +169,9 @@ public class PlayerService {
 
 	/**
 	 * Load home bind.
-	 *
-	 * @param player the player
+	 * 
+	 * @param player
+	 *            the player
 	 * @return true, if successful
 	 */
 	public boolean LoadHomeBind(Player player) {
@@ -173,8 +180,9 @@ public class PlayerService {
 
 	/**
 	 * Load from db.
-	 *
-	 * @param player the player
+	 * 
+	 * @param player
+	 *            the player
 	 * @return true, if successful
 	 */
 	public boolean LoadFromDB(Player player) {
@@ -203,21 +211,19 @@ public class PlayerService {
 		player.setMoney(plchd.getMoney());
 
 		player.SetUInt32Value(PlayerFields.PLAYER_BYTES, ch.getPlayerBytes());
-		player
-				.SetUInt32Value(PlayerFields.PLAYER_BYTES_2, ch
-						.getPlayerBytes2());
+		player.SetUInt32Value(PlayerFields.PLAYER_BYTES_2, ch.getPlayerBytes2());
 		player.SetUInt32Value(PlayerFields.PLAYER_BYTES_3,
 				(plchd.getDrunk() & 0xFFFE) | ch.getGender());
 		player.SetUInt32Value(PlayerFields.PLAYER_FLAGS, ch.getPlayerFlags());
 		player.SetUInt32Value(PlayerFields.PLAYER_FIELD_WATCHED_FACTION_INDEX,
 				plchd.getWatchedFaction());
 
-		player.SetUInt64Value(PlayerFields.PLAYER_FIELD_KNOWN_CURRENCIES, plchd
-				.getKnownCurrencies());
+		player.SetUInt64Value(PlayerFields.PLAYER_FIELD_KNOWN_CURRENCIES,
+				plchd.getKnownCurrencies());
 
 		player.SetUInt32Value(PlayerFields.PLAYER_AMMO_ID, plchd.getAmmoId());
-		player.SetByteValue(PlayerFields.PLAYER_FIELD_BYTES, 2, plchd
-				.getActionBars());
+		player.SetByteValue(PlayerFields.PLAYER_FIELD_BYTES, 2,
+				plchd.getActionBars());
 		// FIXME load from dbc
 		int modelId = 0;
 		player.SetUInt32Value(PlayerFields.UNIT_FIELD_DISPLAYID, modelId);
@@ -231,36 +237,40 @@ public class PlayerService {
 		player.outDebugValue();
 		return false;
 	}
-	
+
 	/**
 	 * Load inventory.
-	 *
-	 * @param player the player
+	 * 
+	 * @param player
+	 *            the player
 	 */
 	public void LoadInventory(Player player) {
 		List<InventoryTemplate> inventoryTemplate = playerDAO
 				.loadInventory(player.getObjectId());
-		for (InventoryTemplate iT: inventoryTemplate) {
+		for (InventoryTemplate iT : inventoryTemplate) {
 			ItemPrototype proto = itemStorages.get(iT.getItem_id());
-			if(proto != null){
+			if (proto != null) {
 				logger.debug(proto.getName() + " - " + iT.getSlot());
-				Item item = itemStorages.loadFromDB(iT,proto);
-				if( Item.IsInventoryPos( Item.INVENTORY_SLOT_BAG_0, iT.getSlot() )){
-					logger.debug(proto.getName() + " - " +"in INVENTORY_SLOT_BAG_0");
+				Item item = itemStorages.loadFromDB(iT, proto);
+				if (Item.IsInventoryPos(Item.INVENTORY_SLOT_BAG_0, iT.getSlot())) {
+					logger.debug(proto.getName() + " - "
+							+ "in INVENTORY_SLOT_BAG_0");
 				}
-				if( Item.IsEquipmentPos( Item.INVENTORY_SLOT_BAG_0, iT.getSlot() )){
-					logger.debug(proto.getName() + " - " +"in INVENTORY_SLOT_BAG_0 and can equip");
+				if (Item.IsEquipmentPos(Item.INVENTORY_SLOT_BAG_0, iT.getSlot())) {
+					logger.debug(proto.getName() + " - "
+							+ "in INVENTORY_SLOT_BAG_0 and can equip");
 					player.equipItem(iT.getSlot(), item);
 				}
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * Inits the stats for level.
-	 *
-	 * @param player the player
+	 * 
+	 * @param player
+	 *            the player
 	 */
 	public void InitStatsForLevel(Player player) {
 		PlayerClassLevelInfo classInfo = playerClassLevelInfoStorages.get(
@@ -282,13 +292,13 @@ public class PlayerService {
 		for (Stats stat : Stats.values()) {
 			int val = info.getStats(stat);
 			player.setCreateStat(stat, val);
-			player.SetUInt32Value(PlayerFields.UNIT_FIELD_STAT0
-					+ stat.ordinal(), val);
+			player.SetUInt32Value(
+					PlayerFields.UNIT_FIELD_STAT0 + stat.ordinal(), val);
 		}
-		player.SetUInt32Value(PlayerFields.UNIT_FIELD_BASE_HEALTH, classInfo
-				.getBasehealth());
-		player.SetUInt32Value(PlayerFields.UNIT_FIELD_BASE_MANA, classInfo
-				.getBasemana());
+		player.SetUInt32Value(PlayerFields.UNIT_FIELD_BASE_HEALTH,
+				classInfo.getBasehealth());
+		player.SetUInt32Value(PlayerFields.UNIT_FIELD_BASE_MANA,
+				classInfo.getBasemana());
 		player.SetArmor(info.getStats(Stats.STAT_AGILITY) * 2);
 
 		// InitStatBuffMods();
@@ -340,20 +350,20 @@ public class PlayerService {
 		 * all mods.
 		 */
 		player.SetHealth(player.GetMaxHealth());
-		player.SetPower(Powers.POWER_MANA, player
-				.GetMaxPower(Powers.POWER_MANA));
-		player.SetPower(Powers.POWER_ENERGY, player
-				.GetMaxPower(Powers.POWER_ENERGY));
+		player.SetPower(Powers.POWER_MANA,
+				player.GetMaxPower(Powers.POWER_MANA));
+		player.SetPower(Powers.POWER_ENERGY,
+				player.GetMaxPower(Powers.POWER_ENERGY));
 		if (player.GetPower(Powers.POWER_RAGE) > player
 				.GetMaxPower(Powers.POWER_RAGE))
-			player.SetPower(Powers.POWER_RAGE, player
-					.GetMaxPower(Powers.POWER_RAGE));
+			player.SetPower(Powers.POWER_RAGE,
+					player.GetMaxPower(Powers.POWER_RAGE));
 
 	}
-	
+
 	/**
 	 * Gets the playerlist.
-	 *
+	 * 
 	 * @return the playerlist
 	 */
 	public static TLongObjectHashMap<Player> getPlayerlist() {
@@ -362,8 +372,9 @@ public class PlayerService {
 
 	/**
 	 * Sets the playerlist.
-	 *
-	 * @param playerlist the new playerlist
+	 * 
+	 * @param playerlist
+	 *            the new playerlist
 	 */
 	public static void setPlayerlist(TLongObjectHashMap<Player> playerlist) {
 		PlayerService.playerlist = playerlist;
@@ -371,8 +382,9 @@ public class PlayerService {
 
 	/**
 	 * Gets the player name.
-	 *
-	 * @param guid the guid
+	 * 
+	 * @param guid
+	 *            the guid
 	 * @return the player name
 	 */
 	public static String getPlayerName(long guid) {
@@ -384,8 +396,9 @@ public class PlayerService {
 
 	/**
 	 * Gets the player.
-	 *
-	 * @param guid the guid
+	 * 
+	 * @param guid
+	 *            the guid
 	 * @return the player
 	 */
 	public static Player getPlayer(long guid) {

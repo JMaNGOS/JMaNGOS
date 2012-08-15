@@ -16,6 +16,7 @@
  *******************************************************************************/
 package org.jmangos.auth.service;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import javolution.util.FastMap;
@@ -24,7 +25,9 @@ import org.apache.log4j.Logger;
 import org.jmangos.auth.dao.RealmDAO;
 import org.jmangos.auth.model.Realm;
 import org.jmangos.commons.service.Service;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RealmListService implements Service {
 	/**
 	 * Logger for this class.
@@ -72,6 +75,7 @@ public class RealmListService implements Service {
 	/**
 	 * Loads list of banned ip.
 	 */
+	@PostConstruct
 	public void start() {
 		update();
 		logger.debug("WorldList loaded " + realms.size() + " realms.");
@@ -82,7 +86,7 @@ public class RealmListService implements Service {
 	 * Update if need
 	 */
 	synchronized public void update() {
-		if(nextUpdateTime > System.currentTimeMillis()){
+		if (nextUpdateTime > System.currentTimeMillis()) {
 			return;
 		}
 		nextUpdateTime = System.currentTimeMillis() + UPDATE_INTERVAL;

@@ -30,12 +30,14 @@ import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.netty.factory.BasicPipelineFactory;
 import org.jmangos.commons.network.netty.receiver.NettyPacketReceiver;
+import org.springframework.stereotype.Component;
 
 /**
  * A factory for creating Auth-Client Pipeline objects.
  * 
  * @author MinimaJack
  */
+@Component
 public class AuthToClientPipelineFactory extends BasicPipelineFactory {
 
 	/** The connection handler. */

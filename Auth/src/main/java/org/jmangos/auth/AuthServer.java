@@ -16,21 +16,10 @@
  *******************************************************************************/
 package org.jmangos.auth;
 
-import org.jmangos.auth.config.Config;
-import org.jmangos.auth.module.HandlerDM;
-import org.jmangos.auth.service.BanIpService;
-import org.jmangos.auth.service.RealmListService;
-import org.jmangos.auth.service.jmx.JmxRealmList;
 import org.jmangos.auth.utils.ShutdownHook;
-import org.jmangos.commons.database.DatabaseConfig;
-import org.jmangos.commons.database.DatabaseFactory;
-import org.jmangos.commons.log4j.LoggingService;
 import org.jmangos.commons.network.netty.service.NetworkService;
 import org.jmangos.commons.service.ServiceContent;
-import org.jmangos.commons.threadpool.ThreadPoolManager;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * The Class AuthServer.
@@ -38,7 +27,7 @@ import com.google.inject.Injector;
  * @author MinimaJack
  */
 public class AuthServer {
-	
+
 	/**
 	 * The main method.
 	 * 
@@ -48,22 +37,16 @@ public class AuthServer {
 	 *             the exception
 	 */
 	public static void main(String[] args) throws Exception {
-		Injector injector = Guice.createInjector(new HandlerDM());
-		ServiceContent.setInjector(injector);
-		injector.getInstance(LoggingService.class).start();
-		injector.getInstance(Config.class);
-		injector.getInstance(DatabaseConfig.class);
-		injector.getInstance(DatabaseFactory.class).start();
-		injector.getInstance(RealmListService.class).start();
-		injector.getInstance(BanIpService.class).start();
-		injector.getInstance(ThreadPoolManager.class).start();
-		
-		injector.getInstance(JmxRealmList.class).start();
-		
+
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+		context.scan("org.jmangos.commons", "org.jmangos.auth");
+		context.refresh();
+		ServiceContent.setContext(context);
+
 		Runtime.getRuntime().addShutdownHook(
-				injector.getInstance(ShutdownHook.class));
+				context.getBean(ShutdownHook.class));
 		System.gc();
-		
-		injector.getInstance(NetworkService.class).start();
+
+		context.getBean(NetworkService.class).start();
 	}
 }

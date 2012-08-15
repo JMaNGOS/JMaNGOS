@@ -23,6 +23,7 @@ import org.jmangos.realm.dao.AccountDAO;
 import org.jmangos.realm.model.account.Account;
 import org.jmangos.realm.model.account.AccountData;
 import org.jmangos.realm.model.base.character.CharactersData;
+import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,7 +31,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+@Component
 public class MySQL5AccountDAO extends AccountDAO {
 
 	/** Logger. */

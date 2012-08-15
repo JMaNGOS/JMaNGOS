@@ -16,58 +16,33 @@
  *******************************************************************************/
 package org.jmangos.realm;
 
-import javax.inject.Inject;
-
-import org.jmangos.commons.database.DatabaseFactory;
-import org.jmangos.commons.log4j.LoggingService;
 import org.jmangos.commons.network.netty.service.NetworkService;
 import org.jmangos.commons.service.ServiceContent;
-import org.jmangos.commons.threadpool.ThreadPoolManager;
-import org.jmangos.realm.config.Config;
-import org.jmangos.realm.module.Handler;
-import org.jmangos.realm.service.ItemStorages;
-import org.jmangos.realm.service.MapService;
-import org.jmangos.realm.service.PlayerClassLevelInfoStorages;
-import org.jmangos.realm.service.PlayerLevelStorages;
-import org.jmangos.realm.service.UpdateService;
 import org.jmangos.realm.utils.ShutdownHook;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * The Class RealmServer.
  */
-@SuppressWarnings("unused")
 public class RealmServer {
-	
+
 	/**
 	 * The main method.
-	 *
-	 * @param args the arguments
+	 * 
+	 * @param args
+	 *            the arguments
 	 */
 	public static void main(String[] args) {
-		
-		ApplicationContext context = new FileSystemXmlApplicationContext(
-				"conf/context/realm-context.xml");
+
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+		context.scan("org.jmangos.commons", "org.jmangos.realm");
+		context.refresh();
 		ServiceContent.setContext(context);
-		
-		Injector injector = Guice.createInjector(new Handler());
-		ServiceContent.setInjector(injector);
-		
-		injector.getInstance(LoggingService.class).start();
-		injector.getInstance(ThreadPoolManager.class).start();
-		injector.getInstance(DatabaseFactory.class).start();
-		Runtime.getRuntime().addShutdownHook(injector.getInstance(ShutdownHook.class));
-		//injector.getInstance(ItemStorages.class).start();
-		injector.getInstance(MapService.class).start();
-		injector.getInstance(PlayerClassLevelInfoStorages.class).start();
-		injector.getInstance(PlayerLevelStorages.class).start();
-//		injector.getInstance(UpdateService.class).start();
-		
+
+		Runtime.getRuntime().addShutdownHook(
+				context.getBean(ShutdownHook.class));
+
 		System.gc();
-		injector.getInstance(NetworkService.class).start();
+		context.getBean(NetworkService.class).start();
 	}
 }

@@ -28,7 +28,9 @@ import org.jmangos.commons.database.DB;
 import org.jmangos.commons.database.IUStH;
 import org.jmangos.commons.database.ParamReadStH;
 import org.jmangos.commons.database.ReadStH;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MySQL5BannedIpDAO extends BanIpDAO {
 	/**
 	 * {@inheritDoc}

@@ -28,17 +28,19 @@ import org.jmangos.realm.dao.PlayerDAO;
 import org.jmangos.realm.model.InventoryTemplate;
 import org.jmangos.realm.model.player.PlayerCharacterData;
 import org.jmangos.realm.model.player.PlayerHomeBindData;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class MySQL5PlayerDAO.
  */
+@Component
 public class MySQL5PlayerDAO extends PlayerDAO {
-	
+
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(MySQL5PlayerDAO.class);
-	
-	/* (non-Javadoc)
+	private static final Logger log = Logger.getLogger(MySQL5PlayerDAO.class);
+
+	/**
+	 * 
 	 * @see org.jmangos.realm.dao.PlayerDAO#loadHomeBind(int)
 	 */
 	@Override
@@ -52,9 +54,9 @@ public class MySQL5PlayerDAO extends PlayerDAO {
 			ResultSet rs = st.executeQuery();
 
 			if (rs.next()) {
-				phbd = new PlayerHomeBindData(rs.getFloat("position_x"), rs
-						.getFloat("position_y"), rs.getFloat("position_z"), rs
-						.getInt("map"), rs.getShort("zone"));
+				phbd = new PlayerHomeBindData(rs.getFloat("position_x"),
+						rs.getFloat("position_y"), rs.getFloat("position_z"),
+						rs.getInt("map"), rs.getShort("zone"));
 			}
 		} catch (SQLException e) {
 			log.error("Can't load HomeBindData for player " + guid, e);
@@ -64,8 +66,9 @@ public class MySQL5PlayerDAO extends PlayerDAO {
 
 		return phbd;
 	}
-	
-	/* (non-Javadoc)
+
+	/**
+	 * 
 	 * @see org.jmangos.realm.dao.PlayerDAO#loadFromDB(int)
 	 */
 	@Override
@@ -83,25 +86,24 @@ public class MySQL5PlayerDAO extends PlayerDAO {
 			ResultSet rs = st.executeQuery();
 
 			if (rs.next()) {
-				phbd = new PlayerCharacterData(rs.getInt("xp"), rs
-						.getString("exploredZones"), rs
-						.getString("knownTitles"), rs.getInt("money"), rs
-						.getInt("drunk"), (int) rs.getLong("watchedFaction"),
+				phbd = new PlayerCharacterData(rs.getInt("xp"),
+						rs.getString("exploredZones"),
+						rs.getString("knownTitles"), rs.getInt("money"),
+						rs.getInt("drunk"), (int) rs.getLong("watchedFaction"),
 						rs.getLong("knownCurrencies"), rs.getInt("ammoId"),
 						(byte) rs.getInt("actionBars"));
 			}
 		} catch (SQLException e) {
-			log
-					.error("Can't load PlayerCharacterData for player " + guid,
-							e);
+			log.error("Can't load PlayerCharacterData for player " + guid, e);
 		} finally {
 			DB.close(st);
 		}
 
 		return phbd;
 	}
-	
-	/* (non-Javadoc)
+
+	/**
+	 * 
 	 * @see org.jmangos.realm.dao.PlayerDAO#loadInventory(int)
 	 */
 	@Override
@@ -114,8 +116,9 @@ public class MySQL5PlayerDAO extends PlayerDAO {
 			st.setInt(1, guid);
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
-				itl.add(new InventoryTemplate(rs.getString("data"), rs.getInt("bag"),
-						rs.getByte("slot"),rs.getInt("item"), rs.getInt("item_template")));
+				itl.add(new InventoryTemplate(rs.getString("data"), rs
+						.getInt("bag"), rs.getByte("slot"), rs.getInt("item"),
+						rs.getInt("item_template")));
 			}
 			rs.close();
 		} catch (Exception e) {

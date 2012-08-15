@@ -1,13 +1,15 @@
 package org.jmangos.commons.jmx;
 
-import org.jmangos.commons.service.Service;
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
-import com.google.inject.Inject;
+import org.jmangos.commons.service.Service;
 
 public abstract class AbstractJmxBeanService implements Service {
 	@Inject
 	private JMXService jmxService;
 
+	@PostConstruct
 	@Override
 	public void start() {
 		jmxService.start(this, getBeanName());

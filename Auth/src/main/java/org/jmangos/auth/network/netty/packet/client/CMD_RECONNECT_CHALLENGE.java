@@ -17,6 +17,7 @@
 package org.jmangos.auth.network.netty.packet.client;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
@@ -39,6 +40,7 @@ public class CMD_RECONNECT_CHALLENGE extends AbstractWoWClientPacket {
 
 	/** The sender. */
 	@Inject
+	@Named("nettyPacketSender")
 	private AbstractPacketSender sender;
 
 	/** The account service. */

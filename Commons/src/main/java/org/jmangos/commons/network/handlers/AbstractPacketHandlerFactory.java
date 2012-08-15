@@ -28,10 +28,7 @@ import org.jmangos.commons.network.netty.model.PacketData;
 import org.jmangos.commons.network.netty.model.PacketList;
 import org.jmangos.commons.network.netty.model.PacketTemplate;
 import org.jmangos.commons.service.ServiceContent;
-
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.name.Named;
+import org.springframework.context.ApplicationContext;
 
 /**
  * A factory for creating AbstractPacketHandler objects.
@@ -48,14 +45,10 @@ public abstract class AbstractPacketHandlerFactory extends XmlDataLoader
 	/** The s handler. */
 	ServerPacketHandler sHandler = new ServerPacketHandler();
 
-	@Inject
-	@Named("packetXSD")
-	protected String packetXSDLocation;
-	
-	@Inject
-	@Named("toClient")
-	protected String clientPacketPath;
-	
+	protected String packetXSDLocation = "./conf/packetData/packets.xsd";
+
+	protected String clientPacketPath = "./conf/packetData/lc-packets.xml";
+
 	/**
 	 * Instantiates a new abstract packet handler factory.
 	 */
@@ -104,7 +97,8 @@ public abstract class AbstractPacketHandlerFactory extends XmlDataLoader
 	}
 
 	static final class AddDownstreamPackets extends AddPackets {
-		private static final Injector injector = ServiceContent.getInjector();
+		private static final ApplicationContext context = ServiceContent
+				.getContext();
 		private static final Logger logger = Logger
 				.getLogger(AddDownstreamPackets.class);
 
@@ -117,22 +111,16 @@ public abstract class AbstractPacketHandlerFactory extends XmlDataLoader
 		public boolean execute(int number, PacketTemplate template) {
 			String fullPath = upstreamPackageName + template.getName();
 			try {
-				ReceivablePacket packet = classLoader.loadClass(fullPath)
-						.asSubclass(ReceivablePacket.class).newInstance();
+				Class<?> clazz = Class.forName(fullPath, false, classLoader);
+				ReceivablePacket packet = (ReceivablePacket) context
+						.getBean(clazz);
 				packet.setOpCode(template.getTemplateId());
-				injector.injectMembers(packet);
 				packetHandlerFactory.addPacket(packet, template.getState());
-
 			} catch (ClassNotFoundException e) {
 				logger.warn("Class " + fullPath + " not found", e);
 			} catch (ClassCastException e) {
 				logger.warn("Class " + fullPath
 						+ " can't cast to ReceivablePacket.class", e);
-			} catch (InstantiationException e) {
-				logger.warn("Class " + fullPath
-						+ " don't have empty constructor for instantinate", e);
-			} catch (IllegalAccessException e) {
-				logger.warn("Can't get acces for class " + fullPath, e);
 			}
 			return true;
 		}

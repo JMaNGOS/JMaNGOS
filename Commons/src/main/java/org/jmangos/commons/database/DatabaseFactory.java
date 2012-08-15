@@ -20,8 +20,8 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.ConnectionFactory;
@@ -30,7 +30,9 @@ import org.apache.commons.dbcp.PoolingDataSource;
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.apache.log4j.Logger;
 import org.jmangos.commons.service.Service;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DatabaseFactory implements Service {
 
 	/** Logger for this class. */
@@ -69,6 +71,7 @@ public class DatabaseFactory implements Service {
 	/**
 	 * Initializes DatabaseFactory.
 	 */
+	@PostConstruct
 	public synchronized void start() {
 		if (dataSource != null) {
 			return;

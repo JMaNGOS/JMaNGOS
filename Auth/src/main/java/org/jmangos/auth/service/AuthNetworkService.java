@@ -17,17 +17,18 @@
 package org.jmangos.auth.service;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.apache.commons.lang.NotImplementedException;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jmangos.auth.config.Config;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.netty.service.AbstractNetworkService;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class LoginNetworkService.
  */
+@Component
 public class AuthNetworkService extends AbstractNetworkService {
 
 	@Inject
@@ -39,14 +40,12 @@ public class AuthNetworkService extends AbstractNetworkService {
 
 	/** The packet service. */
 	@Inject
-	@Named("AuthToClient")
 	private PacketHandlerFactory packetService;
 
 	/**
 	 * 
 	 * @see org.jmangos.commons.service.Service#start()
 	 */
-	@Override
 	public void start() {
 		packetService.loadPacket();
 		createServerChannel(config.CLIENT_ADDRESS, authToClientPipelineFactory);

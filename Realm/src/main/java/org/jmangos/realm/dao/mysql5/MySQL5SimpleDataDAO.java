@@ -27,19 +27,22 @@ import org.jmangos.realm.model.ClassLevel;
 import org.jmangos.realm.model.RaceClassLevel;
 import org.jmangos.realm.model.base.PlayerClassLevelInfo;
 import org.jmangos.realm.model.base.PlayerLevelInfo;
+import org.springframework.stereotype.Component;
 
 /**
  * DAO that manages items.
  * 
  * @author MinimaJack
  */
+@Component
 public class MySQL5SimpleDataDAO extends SimpleDataDAO {
-	
+
 	/** The Constant log. */
 	private static final Logger log = Logger
 			.getLogger(MySQL5SimpleDataDAO.class);
-	
-	/* (non-Javadoc)
+
+	/**
+	 * 
 	 * @see org.jmangos.realm.dao.SimpleDataDAO#getClassLevelInfos()
 	 */
 	@Override
@@ -64,8 +67,9 @@ public class MySQL5SimpleDataDAO extends SimpleDataDAO {
 		}
 		return mps;
 	}
-	
-	/* (non-Javadoc)
+
+	/**
+	 * 
 	 * @see org.jmangos.realm.dao.SimpleDataDAO#getRaceClassLevelInfos()
 	 */
 	@Override
@@ -80,9 +84,9 @@ public class MySQL5SimpleDataDAO extends SimpleDataDAO {
 			while (rs.next()) {
 				mps.put(new RaceClassLevel(rs.getInt("race"), rs
 						.getInt("class"), rs.getInt("level")),
-						new PlayerLevelInfo(new int[]{rs.getInt("str"),
+						new PlayerLevelInfo(new int[] { rs.getInt("str"),
 								rs.getInt("agi"), rs.getInt("sta"),
-								rs.getInt("inte"), rs.getInt("spi")}));
+								rs.getInt("inte"), rs.getInt("spi") }));
 			}
 			rs.close();
 		} catch (Exception e) {

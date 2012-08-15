@@ -21,6 +21,7 @@ import org.jmangos.auth.dao.AccountDAO;
 import org.jmangos.auth.model.Account;
 import org.jmangos.commons.database.DB;
 import org.jmangos.commons.database.IUStH;
+import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,6 +33,7 @@ import java.sql.SQLException;
  * @author MinimaJack
  * 
  */
+@Component
 public class MySQL5AccountDAO extends AccountDAO {
 
 	/** Logger. */
