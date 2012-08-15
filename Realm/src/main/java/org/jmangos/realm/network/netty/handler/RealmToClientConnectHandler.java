@@ -25,6 +25,7 @@ import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.State;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
+import org.jmangos.commons.network.netty.service.NetworkService;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_AUTH_CHALLENGE;
 
 /**
@@ -40,6 +41,9 @@ public class RealmToClientConnectHandler implements ConnectHandler {
 	@Inject
 	@Named("client")
 	private AbstractPacketSender sender;
+	/** Network Service */
+	@Inject
+	private NetworkService networkService;
 
 	/**
 	 * (non-Javadoc)
@@ -51,6 +55,7 @@ public class RealmToClientConnectHandler implements ConnectHandler {
 	public void onConnect(NettyNetworkChannel networkChannel,
 			ChannelHandler handler) {
 		networkChannel.setChannelState(State.CONNECTED);
+		networkService.registerClientChannel(networkChannel);
 		log.info("Accepting connection from: " + networkChannel.getAddress());
 		sender.send(networkChannel, new SMSG_AUTH_CHALLENGE());
 	}

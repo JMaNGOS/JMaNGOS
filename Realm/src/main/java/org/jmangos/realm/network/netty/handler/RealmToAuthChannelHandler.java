@@ -26,7 +26,6 @@ import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.handler.timeout.ReadTimeoutException;
 import org.jboss.netty.util.HashedWheelTimer;
-import org.jboss.netty.util.Timer;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
@@ -35,7 +34,7 @@ import org.jmangos.commons.network.netty.receiver.NettyPacketReceiver;
 import org.jmangos.realm.network.crypt.Crypt;
 
 /**
- * The Class R2LChannelHandler.
+ * The Class RealmToAuthChannelHandler.
  * 
  * @author MinimaJack
  */

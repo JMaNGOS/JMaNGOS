@@ -53,7 +53,6 @@ public class RealmToAuthConnectHandler implements ConnectHandler {
 		networkChannel.setChannelState(State.CONNECTED);
 		log.info("Connection to: " + networkChannel.getAddress());
 		sender.send(networkChannel, new CMD_AUTH_LOGON_CHALLENGE());
-
 	}
 
 	/**

@@ -21,6 +21,9 @@ import org.jboss.netty.channel.ChannelHandler;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.State;
+import org.jmangos.commons.network.netty.service.NetworkService;
+
+import com.google.inject.Inject;
 
 /**
  * The Class AuthToClientConnectHandler.
@@ -30,6 +33,9 @@ public class AuthToClientConnectHandler implements ConnectHandler {
 	/** The Constant log. */
 	private static final Logger log = Logger
 			.getLogger(AuthToClientConnectHandler.class);
+	
+	@Inject
+	private NetworkService networkService;
 
 	/**
 	 * (non-Javadoc)
@@ -41,7 +47,7 @@ public class AuthToClientConnectHandler implements ConnectHandler {
 	public void onConnect(NettyNetworkChannel networkChannel,
 			ChannelHandler handler) {
 		networkChannel.setChannelState(State.CONNECTED);
-
+		networkService.registerClientChannel(networkChannel);
 		log.info("Accepting connection from: "
 				+ networkChannel.getAddress().getHostName());
 

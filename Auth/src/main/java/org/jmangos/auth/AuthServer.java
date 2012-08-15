@@ -22,6 +22,7 @@ import org.jmangos.auth.service.RealmListService;
 import org.jmangos.auth.service.jmx.JmxRealmList;
 import org.jmangos.auth.utils.ShutdownHook;
 import org.jmangos.commons.database.DatabaseFactory;
+import org.jmangos.commons.network.jmx.JmxNetworkService;
 import org.jmangos.commons.network.netty.service.NetworkService;
 import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.commons.threadpool.ThreadPoolManager;
@@ -53,6 +54,7 @@ public class AuthServer {
 		injector.getInstance(ThreadPoolManager.class).start();
 		
 		injector.getInstance(JmxRealmList.class).start();
+		injector.getInstance(JmxNetworkService.class).start();
 		
 		Runtime.getRuntime().addShutdownHook(
 				injector.getInstance(ShutdownHook.class));

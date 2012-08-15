@@ -46,32 +46,6 @@ public interface NetworkChannel {
 	 */
 	Channel getChannel();
 
-	/**
-	 * Gets the address.
-	 * 
-	 * @return the address
-	 */
-	// ChannelHandler getHandler();
-
-	/**
-	 * @param channeledObject
-	 */
-	// void setChanneledObject(ChanneledObject channeledObject);
-
-	/**
-	 * @return top-level channeled object that initiated connection
-	 */
-	// ChanneledObject getChanneledObject();
-
-	/**
-	 * @return in-game object that performs actions
-	 */
-	// ManagedObject getActingObject();
-
-	/**
-	 * @param actingObject
-	 */
-	// void setActingObject(ManagedObject actingObject);
 	public InetSocketAddress getAddress();
 
 	/**

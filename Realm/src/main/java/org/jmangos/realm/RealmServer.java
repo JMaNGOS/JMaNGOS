@@ -17,6 +17,7 @@
 package org.jmangos.realm;
 
 import org.jmangos.commons.database.DatabaseFactory;
+import org.jmangos.commons.network.jmx.JmxNetworkService;
 import org.jmangos.commons.network.netty.service.NetworkService;
 import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.commons.threadpool.ThreadPoolManager;
@@ -51,6 +52,7 @@ public class RealmServer {
 		injector.getInstance(PlayerLevelStorages.class).start();
 //		injector.getInstance(UpdateService.class).start();
 		
+		injector.getInstance(JmxNetworkService.class).start();
 		System.gc();
 		injector.getInstance(NetworkService.class).start();
 	}

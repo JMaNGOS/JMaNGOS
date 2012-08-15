@@ -31,7 +31,6 @@ import com.google.inject.Inject;
  * The Class RealmNetworkService.
  */
 public class RealmNetworkService extends AbstractNetworkService {
-
 	@Inject
 	private Config config;
 
