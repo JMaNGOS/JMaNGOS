@@ -26,61 +26,67 @@ import org.jmangos.realm.network.netty.handler.RealmToClientChannelHandler;
  * The Class AbstractWoWClientPacket.
  */
 public abstract class AbstractWoWClientPacket extends ReceivablePacket {
-
-	/**
-	 * Instantiates a new abstract wo w client packet.
-	 * 
-	 * @param opcode
-	 *            the opcode
-	 */
-	public AbstractWoWClientPacket(int opcode) {
-		super(opcode);
-
-	}
-
-	/**
-	 * Instantiates a new abstract wo w client packet.
-	 */
-	public AbstractWoWClientPacket() {
-		super();
-	}
-
-	/**
-	 * Gets the channel handler.
-	 * 
-	 * @return the Realm-Client channel handler
-	 */
-	protected RealmToClientChannelHandler GetChannelHandler() {
-		return (RealmToClientChannelHandler) getChannel().getPipeline()
-				.getLast();
-
-	}
-
-	/**
-	 * Gets the account.
-	 * 
-	 * @return the account
-	 */
-	public Account getAccount() {
-		return (Account) ((NettyNetworkChannel) _client).getChanneledObject();
-	}
-
-	/**
-	 * Gets the player.
-	 * 
-	 * @return the player
-	 */
-	public Player getPlayer() {
-		return (Player) ((NettyNetworkChannel) _client).getActiveObject();
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.model.ReceivablePacket#getClient()
-	 */
-	public NettyNetworkChannel getClient() {
-		return ((NettyNetworkChannel) _client);
-	}
-
+    
+    /**
+     * Instantiates a new abstract wo w client packet.
+     * 
+     * @param opcode
+     *            the opcode
+     */
+    public AbstractWoWClientPacket(final int opcode) {
+    
+        super(opcode);
+        
+    }
+    
+    /**
+     * Instantiates a new abstract wo w client packet.
+     */
+    public AbstractWoWClientPacket() {
+    
+        super();
+    }
+    
+    /**
+     * Gets the channel handler.
+     * 
+     * @return the Realm-Client channel handler
+     */
+    protected RealmToClientChannelHandler GetChannelHandler() {
+    
+        return (RealmToClientChannelHandler) getChannel().getPipeline().getLast();
+        
+    }
+    
+    /**
+     * Gets the account.
+     * 
+     * @return the account
+     */
+    public Account getAccount() {
+    
+        return (Account) ((NettyNetworkChannel) this._client).getChanneledObject();
+    }
+    
+    /**
+     * Gets the player.
+     * 
+     * @return the player
+     */
+    public Player getPlayer() {
+    
+        return (Player) ((NettyNetworkChannel) this._client).getActiveObject();
+    }
+    
+    /**
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.ReceivablePacket#getClient()
+     */
+    @Override
+    public NettyNetworkChannel getClient() {
+    
+        return ((NettyNetworkChannel) this._client);
+    }
+    
 }

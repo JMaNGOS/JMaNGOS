@@ -24,42 +24,46 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
  * The Class SMSG_COMPRESSED_UPDATE_OBJECT.
  */
 public class SMSG_COMPRESSED_UPDATE_OBJECT extends AbstractWoWServerPacket {
-	
-	/** The player. */
-	@SuppressWarnings("unused")
-	private Player player;
+    
+    /** The player. */
+    @SuppressWarnings("unused")
+    private Player player;
     private byte[] packet;
-	
-	/**
-<<<<<<< .merge_file_a01472
-	 * Instantiates a new SMSG_compressed_update_object.
-	 */
-	public SMSG_COMPRESSED_UPDATE_OBJECT(){
-	}
-	
-	/**
-	 * Instantiates a new SMSG_compressed_update_object.
-=======
-	 * Instantiates a new sMS g_ compresse d_ updat e_ object.
->>>>>>> .merge_file_a04904
-	 *
-	 * @param player the player
-	 */
-	public SMSG_COMPRESSED_UPDATE_OBJECT(Player player, byte[] packet ){
-		this.player = player;
+    
+    /**
+     * <<<<<<< .merge_file_a01472 Instantiates a new SMSG_compressed_update_object.
+     */
+    public SMSG_COMPRESSED_UPDATE_OBJECT() {
+    
+    }
+    
+    /**
+     * Instantiates a new SMSG_compressed_update_object. ======= Instantiates a new sMS g_ compresse
+     * d_ updat e_ object. >>>>>>> .merge_file_a04904
+     * 
+     * @param player
+     *            the player
+     */
+    public SMSG_COMPRESSED_UPDATE_OBJECT(final Player player, final byte[] packet) {
+    
+        this.player = player;
         this.packet = packet;
-	}
-
-    public void setPacket( byte[] bytes ) {
+    }
+    
+    public void setPacket(final byte[] bytes) {
+    
         this.packet = bytes;
     }
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	public void writeImpl() {
-		writeB( packet );
-	}
-
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    public void writeImpl() {
+    
+        writeB(this.packet);
+    }
+    
 }

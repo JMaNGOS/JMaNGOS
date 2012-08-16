@@ -21,14 +21,16 @@ package org.jmangos.realm.model.base.item;
  * The Class Bag.
  */
 public class Bag extends Item {
-
-	/**
-	 * Instantiates a new bag.
-	 *
-	 * @param objectId the object id
-	 */
-	public Bag(long objectId) {
-		super(objectId);
-	}
-
+    
+    /**
+     * Instantiates a new bag.
+     * 
+     * @param objectId
+     *            the object id
+     */
+    public Bag(final long objectId) {
+    
+        super(objectId);
+    }
+    
 }

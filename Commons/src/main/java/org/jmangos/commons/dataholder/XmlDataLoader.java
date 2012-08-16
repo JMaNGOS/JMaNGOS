@@ -32,61 +32,61 @@ import org.xml.sax.SAXException;
  * 
  */
 public class XmlDataLoader {
-
-	/**
-	 * Load static data.
-	 * 
-	 * @param <T>
-	 * @param clazz
-	 * @param Schema
-	 * @param XmlFile
-	 * @return
-	 */
-	public <T> T loadStaticData(Class<T> clazz, String Schema, String XmlFile) {
-		try {
-			JAXBContext jc = JAXBContext.newInstance(clazz);
-			Unmarshaller un = jc.createUnmarshaller();
-			un.setSchema(getSchema(Schema));
-			return clazz.cast(un.unmarshal(new File(XmlFile)));
-		} catch (JAXBException e) {
-			System.err.println("Error while loading xml data for class: "
-					+ clazz.getCanonicalName());
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	public <T> T loadStaticData(Class<T> clazz, String XmlFile) {
-		try {
-			JAXBContext jc = JAXBContext.newInstance(clazz);
-			Unmarshaller un = jc.createUnmarshaller();
-			return clazz.cast(un.unmarshal(new File(XmlFile)));
-		} catch (JAXBException e) {
-			System.err.println("Error while loading xml data for class: "
-					+ clazz.getCanonicalName());
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	/**
-	 * Gets the schema.
-	 * 
-	 * @param Schema
-	 *            the schema
-	 * @return the schema
-	 */
-	private static Schema getSchema(String Schema) {
-		SchemaFactory sf = SchemaFactory
-				.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-		Schema schema = null;
-		try {
-			schema = sf.newSchema(new File(Schema));
-		} catch (SAXException e) {
-			System.err.println("Error getting schema");
-			e.printStackTrace();
-		}
-
-		return schema;
-	}
+    
+    /**
+     * Load static data.
+     * 
+     * @param <T>
+     * @param clazz
+     * @param Schema
+     * @param XmlFile
+     * @return
+     */
+    public <T> T loadStaticData(final Class<T> clazz, final String Schema, final String XmlFile) {
+    
+        try {
+            final JAXBContext jc = JAXBContext.newInstance(clazz);
+            final Unmarshaller un = jc.createUnmarshaller();
+            un.setSchema(getSchema(Schema));
+            return clazz.cast(un.unmarshal(new File(XmlFile)));
+        } catch (final JAXBException e) {
+            System.err.println("Error while loading xml data for class: " + clazz.getCanonicalName());
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public <T> T loadStaticData(final Class<T> clazz, final String XmlFile) {
+    
+        try {
+            final JAXBContext jc = JAXBContext.newInstance(clazz);
+            final Unmarshaller un = jc.createUnmarshaller();
+            return clazz.cast(un.unmarshal(new File(XmlFile)));
+        } catch (final JAXBException e) {
+            System.err.println("Error while loading xml data for class: " + clazz.getCanonicalName());
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    /**
+     * Gets the schema.
+     * 
+     * @param Schema
+     *            the schema
+     * @return the schema
+     */
+    private static Schema getSchema(final String Schema) {
+    
+        final SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        Schema schema = null;
+        try {
+            schema = sf.newSchema(new File(Schema));
+        } catch (final SAXException e) {
+            System.err.println("Error getting schema");
+            e.printStackTrace();
+        }
+        
+        return schema;
+    }
 }

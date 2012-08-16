@@ -1,11 +1,8 @@
 package org.jmangos.commons;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Goofy
- * Date: 2012.08.08.
- * Time: 12:31
- * To change this template use File | Settings | File Templates.
+ * Created with IntelliJ IDEA. User: Goofy Date: 2012.08.08. Time: 12:31 To change this template use
+ * File | Settings | File Templates.
  */
 public enum NPCFlags {
     UNIT_NPC_FLAG_NONE(0),
@@ -33,10 +30,11 @@ public enum NPCFlags {
     UNIT_NPC_FLAG_GUILD_BANK(8388608),
     UNIT_NPC_FLAG_SPELLCLICK(16777216),
     UNIT_NPC_FLAG_PLAYER_VEHICLE(0x02000000);
-
+    
     private int opcode;
-
-    NPCFlags(int opcode) {
+    
+    NPCFlags(final int opcode) {
+    
         this.opcode = opcode;
     }
 }

@@ -26,54 +26,52 @@ import org.jmangos.commons.network.model.ReceivablePacket;
  * The Class NettyPacketReceiver.
  */
 public class NettyPacketReceiver {
-
-	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(NettyPacketReceiver.class);
-
-	/**
-	 * Receive packet.
-	 * 
-	 * @param packetHandler
-	 *            the packet handler
-	 * @param buffer
-	 *            the buffer
-	 * @param networkChannel
-	 *            the network channel
-	 */
-	public void receivePacket(PacketHandlerFactory packetHandler,
-			ChannelBuffer buffer, NetworkChannel networkChannel) {
-		int packetId = buffer.readUnsignedByte();
-		log.debug(String.format("[RESIVE PACKET] :  0x%02X", packetId));
-		readAndRunPacket(packetHandler, buffer, packetId, networkChannel);
-	}
-
-	/**
-	 * Read and run packet.
-	 * 
-	 * @param packetHandler
-	 *            the packet handler
-	 * @param buffer
-	 *            the buffer
-	 * @param packetId
-	 *            the packet id
-	 * @param networkChannel
-	 *            the network channel
-	 */
-	private void readAndRunPacket(PacketHandlerFactory packetHandler,
-			ChannelBuffer buffer, int packetId, NetworkChannel networkChannel) {
-		ReceivablePacket cp = packetHandler.handleClientPacket(packetId,
-				networkChannel);
-		if (cp != null) {
-			cp.setByteBuffer(buffer);
-			cp.setClient(networkChannel);
-			if (cp.getAvaliableBytes() < cp.getMinimumLength()) {
-				log.warn("BUFFER_UNDER_FLOW" + networkChannel + cp);
-			} else if (cp.read()) {
-
-			}
-		}else{
-			System.out.println("Handle of ReceivablePacket is null.");
-		}
-	}
+    
+    /** The Constant log. */
+    private static final Logger log = Logger.getLogger(NettyPacketReceiver.class);
+    
+    /**
+     * Receive packet.
+     * 
+     * @param packetHandler
+     *            the packet handler
+     * @param buffer
+     *            the buffer
+     * @param networkChannel
+     *            the network channel
+     */
+    public void receivePacket(final PacketHandlerFactory packetHandler, final ChannelBuffer buffer, final NetworkChannel networkChannel) {
+    
+        final int packetId = buffer.readUnsignedByte();
+        log.debug(String.format("[RESIVE PACKET] :  0x%02X", packetId));
+        readAndRunPacket(packetHandler, buffer, packetId, networkChannel);
+    }
+    
+    /**
+     * Read and run packet.
+     * 
+     * @param packetHandler
+     *            the packet handler
+     * @param buffer
+     *            the buffer
+     * @param packetId
+     *            the packet id
+     * @param networkChannel
+     *            the network channel
+     */
+    private void readAndRunPacket(final PacketHandlerFactory packetHandler, final ChannelBuffer buffer, final int packetId, final NetworkChannel networkChannel) {
+    
+        final ReceivablePacket cp = packetHandler.handleClientPacket(packetId, networkChannel);
+        if (cp != null) {
+            cp.setByteBuffer(buffer);
+            cp.setClient(networkChannel);
+            if (cp.getAvaliableBytes() < cp.getMinimumLength()) {
+                log.warn("BUFFER_UNDER_FLOW" + networkChannel + cp);
+            } else if (cp.read()) {
+                
+            }
+        } else {
+            System.out.println("Handle of ReceivablePacket is null.");
+        }
+    }
 }

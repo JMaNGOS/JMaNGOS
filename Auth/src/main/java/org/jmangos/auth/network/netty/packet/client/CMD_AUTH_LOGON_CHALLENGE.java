@@ -32,98 +32,100 @@ import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
  * The Class <tt>CMD_AUTH_LOGON_CHALLENGE</tt>.
  */
 public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
-
-	/** The Constant logger. */
-	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(CMD_AUTH_LOGON_CHALLENGE.class);
-
-	/** The sender. */
-	@Inject
-	private AbstractPacketSender sender;
-
-	/** The account service. */
-	@Inject
-	AccountService accountService;
-
-	/** The login. */
-	private String login;
-
-	/**
-	 * Constructs new instance of <tt>CMD_AUTH_LOGON_CHALLENGE</tt> packet.
-	 * 
-	 * @param opcode
-	 *            the opcode
-	 */
-
-	public CMD_AUTH_LOGON_CHALLENGE(int opcode) {
-		super(opcode);
-	}
-
-	/**
-	 * Instantiates a new CMD_AUTH_LOGON_CHALLENGE.
-	 */
-	public CMD_AUTH_LOGON_CHALLENGE() {
-		super();
-	}
-
-	/**
-	 * 
-	 * @see org.jmangos.commons.network.model.ReceivablePacket#getMinimumLength()
-	 */
-	public int getMinimumLength() {
-		return 0;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void readImpl() {
-		/** int error = */
-		readC();
-		/** int size = */
-		readH();
-		/** byte[] gamename = */
-		readB(4);
-		/** int version1 = */
-		readC();
-		/** int version2 = */
-		readC();
-		/** int version3 = */
-		readC();
-		/** int build = */
-		readH();
-		/** byte[] platform = */
-		readB(4);
-		/** byte[] os = */
-		readB(4);
-		/** byte[] country = */
-		readB(4);
-		/** int timezone_bias = */
-		readD();
-		/** int ip = */
-		readD();
-		int lenLogin = readC();
-		login = new String(readB(lenLogin), Charset.forName("UTF-8"));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void runImpl() {
-		WoWAuthResponse response = accountService.login(login,
-				(NettyNetworkChannel) getClient());
-		switch (response) {
-		case WOW_FAIL_BANNED:
-			sender.sendAndClose(this.getClient(),
-					new TCMD_AUTH_LOGON_CHALLENGE(response));
-			break;
-		default:
-			sender.send(this.getClient(), new TCMD_AUTH_LOGON_CHALLENGE(
-					response));
-			break;
-		}
-	}
+    
+    /** The Constant logger. */
+    @SuppressWarnings("unused")
+    private static final Logger  logger = Logger.getLogger(CMD_AUTH_LOGON_CHALLENGE.class);
+    
+    /** The sender. */
+    @Inject
+    private AbstractPacketSender sender;
+    
+    /** The account service. */
+    @Inject
+    AccountService               accountService;
+    
+    /** The login. */
+    private String               login;
+    
+    /**
+     * Constructs new instance of <tt>CMD_AUTH_LOGON_CHALLENGE</tt> packet.
+     * 
+     * @param opcode
+     *            the opcode
+     */
+    
+    public CMD_AUTH_LOGON_CHALLENGE(final int opcode) {
+    
+        super(opcode);
+    }
+    
+    /**
+     * Instantiates a new CMD_AUTH_LOGON_CHALLENGE.
+     */
+    public CMD_AUTH_LOGON_CHALLENGE() {
+    
+        super();
+    }
+    
+    /**
+     * 
+     * @see org.jmangos.commons.network.model.ReceivablePacket#getMinimumLength()
+     */
+    @Override
+    public int getMinimumLength() {
+    
+        return 0;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void readImpl() {
+    
+        /** int error = */
+        readC();
+        /** int size = */
+        readH();
+        /** byte[] gamename = */
+        readB(4);
+        /** int version1 = */
+        readC();
+        /** int version2 = */
+        readC();
+        /** int version3 = */
+        readC();
+        /** int build = */
+        readH();
+        /** byte[] platform = */
+        readB(4);
+        /** byte[] os = */
+        readB(4);
+        /** byte[] country = */
+        readB(4);
+        /** int timezone_bias = */
+        readD();
+        /** int ip = */
+        readD();
+        final int lenLogin = readC();
+        this.login = new String(readB(lenLogin), Charset.forName("UTF-8"));
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void runImpl() {
+    
+        final WoWAuthResponse response = this.accountService.login(this.login, (NettyNetworkChannel) getClient());
+        switch (response) {
+            case WOW_FAIL_BANNED:
+                this.sender.sendAndClose(getClient(), new TCMD_AUTH_LOGON_CHALLENGE(response));
+                break;
+            default:
+                this.sender.send(getClient(), new TCMD_AUTH_LOGON_CHALLENGE(response));
+                break;
+        }
+    }
 }

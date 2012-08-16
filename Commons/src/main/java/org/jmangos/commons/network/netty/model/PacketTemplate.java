@@ -29,70 +29,75 @@ import org.jmangos.commons.network.model.State;
 @XmlRootElement(name = "packet")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PacketTemplate {
-
-	/** The template id. */
-	@XmlAttribute(name = "id", required = true)
-	private String templateId;
-
-	/** The name. */
-	@XmlAttribute(name = "name")
-	private String name;
-
-	/** The module. */
-	@XmlAttribute(name = "module")
-	private String module;
-
-	/** The handler. */
-	@XmlAttribute(name = "handler")
-	private String handler;
-
-	/** The state. */
-	@XmlAttribute(name = "state")
-	private State state = State.CONNECTED;
-
-	/**
-	 * Gets the template id.
-	 * 
-	 * @return the template id
-	 */
-	public int getTemplateId() {
-		return Integer.parseInt(templateId, 16);
-	}
-
-	/**
-	 * Gets the name.
-	 * 
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Gets the module.
-	 * 
-	 * @return the module
-	 */
-	public String getModule() {
-		return module;
-	}
-
-	/**
-	 * Gets the handler.
-	 * 
-	 * @return the handler
-	 */
-	public String getHandler() {
-		return handler;
-	}
-
-	/**
-	 * Gets the state.
-	 * 
-	 * @return the state
-	 */
-	public State getState() {
-		return state;
-	}
-
+    
+    /** The template id. */
+    @XmlAttribute(name = "id", required = true)
+    private String      templateId;
+    
+    /** The name. */
+    @XmlAttribute(name = "name")
+    private String      name;
+    
+    /** The module. */
+    @XmlAttribute(name = "module")
+    private String      module;
+    
+    /** The handler. */
+    @XmlAttribute(name = "handler")
+    private String      handler;
+    
+    /** The state. */
+    @XmlAttribute(name = "state")
+    private final State state = State.CONNECTED;
+    
+    /**
+     * Gets the template id.
+     * 
+     * @return the template id
+     */
+    public int getTemplateId() {
+    
+        return Integer.parseInt(this.templateId, 16);
+    }
+    
+    /**
+     * Gets the name.
+     * 
+     * @return the name
+     */
+    public String getName() {
+    
+        return this.name;
+    }
+    
+    /**
+     * Gets the module.
+     * 
+     * @return the module
+     */
+    public String getModule() {
+    
+        return this.module;
+    }
+    
+    /**
+     * Gets the handler.
+     * 
+     * @return the handler
+     */
+    public String getHandler() {
+    
+        return this.handler;
+    }
+    
+    /**
+     * Gets the state.
+     * 
+     * @return the state
+     */
+    public State getState() {
+    
+        return this.state;
+    }
+    
 }

@@ -30,33 +30,39 @@ import org.jmangos.realm.network.netty.packetClient.server.SMSG_INIT_WORLD_STATE
  * The Class CMSG_ZONEUPDATE.
  */
 public class CMSG_ZONEUPDATE extends AbstractWoWClientPacket {
-
-	/** The new zone. */
-	@SuppressWarnings("unused")
-	private int newZone;
-	
-	/** The sender. */
-	@Inject
-	@Named("client")
-	private AbstractPacketSender sender;
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
-	 */
-	@Override
-	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		newZone = readD();
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
-	 */
-	@Override
-	protected void runImpl() {
-		// FIXME implement
-		sender.send(getClient(), new SMSG_INIT_WORLD_STATES(getPlayer())); 
-		
-	}
-
+    
+    /** The new zone. */
+    @SuppressWarnings("unused")
+    private int                  newZone;
+    
+    /** The sender. */
+    @Inject
+    @Named("client")
+    private AbstractPacketSender sender;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
+     */
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
+    
+        this.newZone = readD();
+        
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
+     */
+    @Override
+    protected void runImpl() {
+    
+        // FIXME implement
+        this.sender.send(getClient(), new SMSG_INIT_WORLD_STATES(getPlayer()));
+        
+    }
+    
 }

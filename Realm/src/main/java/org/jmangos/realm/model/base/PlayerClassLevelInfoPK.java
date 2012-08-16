@@ -1,52 +1,63 @@
 package org.jmangos.realm.model.base;
 
-import org.jmangos.realm.model.Classes;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Id;
-import java.io.Serializable;
+
+import org.jmangos.realm.model.Classes;
 
 /**
- * Created with IntelliJ IDEA.
- * User: paalgyula
- * Date: 2012.08.12.
- * To change this template use File | Settings | File Templates.
+ * Created with IntelliJ IDEA. User: paalgyula Date: 2012.08.12. To change this template use File |
+ * Settings | File Templates.
  */
 @Embeddable
 public class PlayerClassLevelInfoPK implements Serializable {
-
+    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1978496511121197159L;
+    
     @Column(name = "class", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
-    private int clazz;
-
+    private int               clazz;
+    
     @Column(name = "level", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
-    private int level;
-
-    public PlayerClassLevelInfoPK() {}
-    public PlayerClassLevelInfoPK( Classes clazz, int level ) {
+    private int               level;
+    
+    public PlayerClassLevelInfoPK() {
+    
+    }
+    
+    public PlayerClassLevelInfoPK(final Classes clazz, final int level) {
+    
         this.clazz = clazz.getValue();
         this.level = level;
     }
-
-    public PlayerClassLevelInfoPK( int clazz, int level ) {
+    
+    public PlayerClassLevelInfoPK(final int clazz, final int level) {
+    
         this.clazz = clazz;
         this.level = level;
     }
-
+    
     public int getClazz() {
-        return clazz;
+    
+        return this.clazz;
     }
-
-    public void setClazz(int clazz) {
+    
+    public void setClazz(final int clazz) {
+    
         this.clazz = clazz;
     }
-
+    
     public int getLevel() {
-        return level;
+    
+        return this.level;
     }
-
-    public void setLevel(int level) {
+    
+    public void setLevel(final int level) {
+    
         this.level = level;
     }
 }

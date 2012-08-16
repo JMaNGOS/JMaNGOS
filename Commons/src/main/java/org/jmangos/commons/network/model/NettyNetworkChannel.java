@@ -26,175 +26,188 @@ import org.jmangos.commons.model.ManagedObject;
  * The Class NettyNetworkChannel.
  */
 public class NettyNetworkChannel implements NetworkChannel {
-
-	/**
-	 * Gets the channeled object.
-	 * 
-	 * @return the channeled object
-	 */
-	public final ChanneledObject getChanneledObject() {
-		return channeledObject;
-	}
-
-	/**
-	 * Sets the channeled object.
-	 * 
-	 * @param channeledObject
-	 *            the new channeled object
-	 */
-	public final void setChanneledObject(ChanneledObject channeledObject) {
-		this.channeledObject = channeledObject;
-	}
-
-	/** The channel. */
-	private Channel channel;
-
-	/**
-	 * Channeled object of this context.<br>
-	 * During initial connection this object can be null.<br>
-	 * Example: Account
-	 */
-	private ChanneledObject channeledObject;
-
-	/** In-game object (example: Player). */
-	private ManagedObject activeObject;
-
-	/**
-	 * Gets the active object.
-	 * 
-	 * @return the active object
-	 */
-	public final ManagedObject getActiveObject() {
-		return activeObject;
-	}
-
-	/**
-	 * Sets the active object.
-	 * 
-	 * @param activeObject
-	 *            the new active object
-	 */
-	public final void setActiveObject(ManagedObject activeObject) {
-		this.activeObject = activeObject;
-	}
-
-	/** Channel handler. */
-	@SuppressWarnings("unused")
-	private ChannelHandler handler;
-
-	/** The state. */
-	private State state;
-
-	/** The address. */
-	private InetSocketAddress address;
-
-	/**
-	 * Channel state.
-	 * 
-	 * @param handler
-	 *            the handler
-	 * @param channel
-	 *            the channel
-	 */
-	// private ChannelState channelState;
-
-	/**
-	 * @param handler
-	 * @param channel
-	 */
-	public NettyNetworkChannel(ChannelHandler handler, Channel channel) {
-		this.handler = handler;
-		this.channel = channel;
-		this.address = (InetSocketAddress) channel.getRemoteAddress();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.wowemu.common.network.model.NetworkChannel#getAddress()
-	 */
-	public final InetSocketAddress getAddress() {
-		return address;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.wowemu.common.network.model.NetworkChannel#write(java.lang.Object)
-	 */
-	@Override
-	public void write(Object buffer) {
-		channel.write(buffer);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.wowemu.common.network.model.NetworkChannel#getChannelId()
-	 */
-	@Override
-	public final int getChannelId() {
-		return channel.getId();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.wowemu.common.network.model.NetworkChannel#getObjectId()
-	 */
-	@Override
-	public int getObjectId() {
-		return channeledObject != null ? channeledObject.getObjectId() : -1;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.wowemu.common.network.model.NetworkChannel#getChannel()
-	 */
-	@Override
-	public Channel getChannel() {
-		return channel;
-	}
-
-	/**
-	 * Close.
-	 */
-	public void close() {
-		this.channel.close();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.wowemu.common.network.model.NetworkChannel#isConnected()
-	 */
-	@Override
-	public boolean isConnected() {
-		return channel.isConnected();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.wowemu.common.network.model.NetworkChannel#setChannelState(org.wowemu
-	 * .common.network.model.State)
-	 */
-	@Override
-	public void setChannelState(State channelState) {
-		state = channelState;
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.wowemu.common.network.model.NetworkChannel#getChannelState()
-	 */
-	@Override
-	public State getChannelState() {
-		return state;
-	}
+    
+    /**
+     * Gets the channeled object.
+     * 
+     * @return the channeled object
+     */
+    public final ChanneledObject getChanneledObject() {
+    
+        return this.channeledObject;
+    }
+    
+    /**
+     * Sets the channeled object.
+     * 
+     * @param channeledObject
+     *            the new channeled object
+     */
+    public final void setChanneledObject(final ChanneledObject channeledObject) {
+    
+        this.channeledObject = channeledObject;
+    }
+    
+    /** The channel. */
+    private final Channel   channel;
+    
+    /**
+     * Channeled object of this context.<br>
+     * During initial connection this object can be null.<br>
+     * Example: Account
+     */
+    private ChanneledObject channeledObject;
+    
+    /** In-game object (example: Player). */
+    private ManagedObject   activeObject;
+    
+    /**
+     * Gets the active object.
+     * 
+     * @return the active object
+     */
+    public final ManagedObject getActiveObject() {
+    
+        return this.activeObject;
+    }
+    
+    /**
+     * Sets the active object.
+     * 
+     * @param activeObject
+     *            the new active object
+     */
+    public final void setActiveObject(final ManagedObject activeObject) {
+    
+        this.activeObject = activeObject;
+    }
+    
+    /** Channel handler. */
+    @SuppressWarnings("unused")
+    private final ChannelHandler    handler;
+    
+    /** The state. */
+    private State                   state;
+    
+    /** The address. */
+    private final InetSocketAddress address;
+    
+    /**
+     * Channel state.
+     * 
+     * @param handler
+     *            the handler
+     * @param channel
+     *            the channel
+     */
+    // private ChannelState channelState;
+    
+    /**
+     * @param handler
+     * @param channel
+     */
+    public NettyNetworkChannel(final ChannelHandler handler, final Channel channel) {
+    
+        this.handler = handler;
+        this.channel = channel;
+        this.address = (InetSocketAddress) channel.getRemoteAddress();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.NetworkChannel#getAddress()
+     */
+    @Override
+    public final InetSocketAddress getAddress() {
+    
+        return this.address;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.NetworkChannel#write(java.lang.Object)
+     */
+    @Override
+    public void write(final Object buffer) {
+    
+        this.channel.write(buffer);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.NetworkChannel#getChannelId()
+     */
+    @Override
+    public final int getChannelId() {
+    
+        return this.channel.getId();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.NetworkChannel#getObjectId()
+     */
+    @Override
+    public int getObjectId() {
+    
+        return this.channeledObject != null ? this.channeledObject.getObjectId() : -1;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.NetworkChannel#getChannel()
+     */
+    @Override
+    public Channel getChannel() {
+    
+        return this.channel;
+    }
+    
+    /**
+     * Close.
+     */
+    public void close() {
+    
+        this.channel.close();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.NetworkChannel#isConnected()
+     */
+    @Override
+    public boolean isConnected() {
+    
+        return this.channel.isConnected();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.NetworkChannel#setChannelState(org.wowemu
+     * .common.network.model.State)
+     */
+    @Override
+    public void setChannelState(final State channelState) {
+    
+        this.state = channelState;
+        
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.NetworkChannel#getChannelState()
+     */
+    @Override
+    public State getChannelState() {
+    
+        return this.state;
+    }
 }

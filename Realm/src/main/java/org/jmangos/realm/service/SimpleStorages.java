@@ -20,15 +20,17 @@ package org.jmangos.realm.service;
  * The Class SimpleStorages.
  */
 public class SimpleStorages {
-
-	/**
-	 * Gets the xp for level.
-	 *
-	 * @param level the level
-	 * @return the int
-	 */
-	public int GetXPForLevel(byte level) {
-		return 0;
-	}
-
+    
+    /**
+     * Gets the xp for level.
+     * 
+     * @param level
+     *            the level
+     * @return the int
+     */
+    public int GetXPForLevel(final byte level) {
+    
+        return 0;
+    }
+    
 }

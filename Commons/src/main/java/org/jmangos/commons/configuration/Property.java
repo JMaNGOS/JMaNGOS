@@ -29,18 +29,18 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Property {
-
-	/**
-	 * Property name in configuration.
-	 * 
-	 * @return name of the property that will be used
-	 */
-	public String key();
-
-	/**
-	 * Represents default value that will be parsed if key not found.
-	 * 
-	 * @return default value of the property
-	 */
-	public String defaultValue();
+    
+    /**
+     * Property name in configuration.
+     * 
+     * @return name of the property that will be used
+     */
+    public String key();
+    
+    /**
+     * Represents default value that will be parsed if key not found.
+     * 
+     * @return default value of the property
+     */
+    public String defaultValue();
 }

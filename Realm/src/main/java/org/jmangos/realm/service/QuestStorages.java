@@ -16,9 +16,9 @@
  *******************************************************************************/
 package org.jmangos.realm.service;
 
-import javax.inject.Inject;
-
 import gnu.trove.map.hash.TIntObjectHashMap;
+
+import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 import org.jmangos.commons.dataholder.DataLoadService;
@@ -29,76 +29,95 @@ import org.jmangos.realm.model.base.QuestPrototype;
  * The Class QuestStorages.
  */
 public class QuestStorages implements DataLoadService<TIntObjectHashMap<QuestPrototype>> {
-
-	/** The Constant logger. */
-	private static final Logger logger = Logger.getLogger(QuestStorages.class);
-
-	/** The player class level infos. */
-	private TIntObjectHashMap<QuestPrototype> questMap = new TIntObjectHashMap<QuestPrototype>();
-	
-	/** The quest dao. */
-	@Inject
-	private QuestDAO questDAO;
-
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.service.Service#start()
-	 */
-	@Override
-	public void start() {
-		load();
-		logger.info("Loaded " + questMap.size() + " questPrototypes");
-	}
-
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.service.Service#stop()
-	 */
-	@Override
-	public void stop() {
-		questMap.clear();
-	}
-
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.dataholder.DataLoadService#load()
-	 */
-	@Override
-	public TIntObjectHashMap<QuestPrototype> load() {
-		questMap = questDAO.loadQuestPrototypes();
-		return questMap;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.dataholder.DataLoadService#reload()
-	 */
-	public void reload() {
+    
+    /** The Constant logger. */
+    private static final Logger               logger   = Logger.getLogger(QuestStorages.class);
+    
+    /** The player class level infos. */
+    private TIntObjectHashMap<QuestPrototype> questMap = new TIntObjectHashMap<QuestPrototype>();
+    
+    /** The quest dao. */
+    @Inject
+    private QuestDAO                          questDAO;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.service.Service#start()
+     */
+    @Override
+    public void start() {
+    
+        load();
+        logger.info("Loaded " + this.questMap.size() + " questPrototypes");
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.service.Service#stop()
+     */
+    @Override
+    public void stop() {
+    
+        this.questMap.clear();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.dataholder.DataLoadService#load()
+     */
+    @Override
+    public TIntObjectHashMap<QuestPrototype> load() {
+    
+        this.questMap = this.questDAO.loadQuestPrototypes();
+        return this.questMap;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.dataholder.DataLoadService#reload()
+     */
+    @Override
+    public void reload() {
+    
         // Don't replace directly becouse the players can't query quest while it's loading!
-        logger.info( "Loading quest templates to temoary store." );
-        TIntObjectHashMap<QuestPrototype> tempQuestMap = questDAO.loadQuestPrototypes();
-        logger.info( "Loaded " + tempQuestMap.size() + " quests. Replacing new old Quests with newer" );
-        questMap = tempQuestMap;
+        logger.info("Loading quest templates to temoary store.");
+        TIntObjectHashMap<QuestPrototype> tempQuestMap = this.questDAO.loadQuestPrototypes();
+        logger.info("Loaded " + tempQuestMap.size() + " quests. Replacing new old Quests with newer");
+        this.questMap = tempQuestMap;
         tempQuestMap = null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.dataholder.DataLoadService#save()
-	 */
-	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.dataholder.DataLoadService#get()
-	 */
-	@Override
-	public TIntObjectHashMap<QuestPrototype> get() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.dataholder.DataLoadService#save()
+     */
+    @Override
+    public void save() {
+    
+        // TODO Auto-generated method stub
+        
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.dataholder.DataLoadService#get()
+     */
+    @Override
+    public TIntObjectHashMap<QuestPrototype> get() {
+    
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
     // Specific getters
-    public QuestPrototype getQuest( int questId ) {
-        return questMap.get( questId );
+    public QuestPrototype getQuest(final int questId) {
+    
+        return this.questMap.get(questId);
     }
 }

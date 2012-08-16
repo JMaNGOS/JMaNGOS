@@ -16,27 +16,28 @@
  *******************************************************************************/
 package org.jmangos.realm.dbc.struct;
 
-import javolution.io.Struct;
-import org.jmangos.realm.dbc.dataholder.DBCStruct;
-
 import javax.xml.bind.annotation.XmlAttribute;
 
+import javolution.io.Struct;
+
+import org.jmangos.realm.dbc.dataholder.DBCStruct;
 
 public class CharStartOutfitEntry extends DBCStruct<CharStartOutfitEntry> {
-	public static int MAX_OUTFIT_ITEMS = 24;
-	@XmlAttribute(name="id")
-    public final Struct.Unsigned32 id = new Struct.Unsigned32();
-	@XmlAttribute(name="race" ,required=true)
-    public final Struct.Unsigned8 race= new Struct.Unsigned8();
-	@XmlAttribute(name="class" ,required=true)
-    public final Struct.Unsigned8 clazz= new Struct.Unsigned8();
-	@XmlAttribute(name="gender" ,required=true)
-    public final Struct.Unsigned8 gender= new Struct.Unsigned8();
-    public final Struct.Unsigned8 pad= new Struct.Unsigned8();
-	@XmlAttribute(name="ItemId" ,required=true)
-    public final Struct.Signed32[] ItemId= array(new Struct.Signed32[MAX_OUTFIT_ITEMS]);
-	@XmlAttribute(name="ItemDisplayId")
-    public final Struct.Signed32[] ItemDisplayId= array(new Struct.Signed32[MAX_OUTFIT_ITEMS]);
-	@XmlAttribute(name="ItemInventorySlot")
-    public final Struct.Signed32[] ItemInventorySlot= array(new Struct.Signed32[MAX_OUTFIT_ITEMS]);
+    
+    public static int              MAX_OUTFIT_ITEMS  = 24;
+    @XmlAttribute(name = "id")
+    public final Struct.Unsigned32 id                = new Struct.Unsigned32();
+    @XmlAttribute(name = "race", required = true)
+    public final Struct.Unsigned8  race              = new Struct.Unsigned8();
+    @XmlAttribute(name = "class", required = true)
+    public final Struct.Unsigned8  clazz             = new Struct.Unsigned8();
+    @XmlAttribute(name = "gender", required = true)
+    public final Struct.Unsigned8  gender            = new Struct.Unsigned8();
+    public final Struct.Unsigned8  pad               = new Struct.Unsigned8();
+    @XmlAttribute(name = "ItemId", required = true)
+    public final Struct.Signed32[] ItemId            = array(new Struct.Signed32[MAX_OUTFIT_ITEMS]);
+    @XmlAttribute(name = "ItemDisplayId")
+    public final Struct.Signed32[] ItemDisplayId     = array(new Struct.Signed32[MAX_OUTFIT_ITEMS]);
+    @XmlAttribute(name = "ItemInventorySlot")
+    public final Struct.Signed32[] ItemInventorySlot = array(new Struct.Signed32[MAX_OUTFIT_ITEMS]);
 }

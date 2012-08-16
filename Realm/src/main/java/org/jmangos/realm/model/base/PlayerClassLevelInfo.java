@@ -18,7 +18,11 @@ package org.jmangos.realm.model.base;
 
 // TODO: Auto-generated Javadoc
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * The Class PlayerClassLevelInfo.
@@ -26,48 +30,54 @@ import javax.persistence.*;
 @Entity
 @Table(name = "player_classlevelstats")
 public class PlayerClassLevelInfo {
+    
     @EmbeddedId
     PlayerClassLevelInfoPK playerClassLevelInfoPK;
-
+    
     /** The base health. */
     @Basic
     @Column(name = "basehp", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
-    private int baseHealth;
-
+    private int            baseHealth;
+    
     /** The base mana. */
     @Basic
     @Column(name = "basemana", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
-	private int baseMana;
-
-	/**
-	 * Gets the basehealth.
-	 *
-	 * @return the basehealth
-	 */
-	public int getBasehealth() {
-		return baseHealth;
-	}
-
-	/**
-	 * Gets the basemana.
-	 *
-	 * @return the basemana
-	 */
-	public int getBasemana() {
-		return baseMana;
-	}
-
+    private int            baseMana;
+    
+    /**
+     * Gets the basehealth.
+     * 
+     * @return the basehealth
+     */
+    public int getBasehealth() {
+    
+        return this.baseHealth;
+    }
+    
+    /**
+     * Gets the basemana.
+     * 
+     * @return the basemana
+     */
+    public int getBasemana() {
+    
+        return this.baseMana;
+    }
+    
     /**
      * No-arg constructor for persistence content
      */
-	public PlayerClassLevelInfo() {
+    public PlayerClassLevelInfo() {
+    
     }
-
+    
     public PlayerClassLevelInfoPK getPlayerClassLevelInfoPK() {
-        return playerClassLevelInfoPK;
+    
+        return this.playerClassLevelInfoPK;
     }
-
-    public void setPlayerClassLevelInfoPK(PlayerClassLevelInfoPK playerClassLevelInfoPK) {
+    
+    public void setPlayerClassLevelInfoPK(final PlayerClassLevelInfoPK playerClassLevelInfoPK) {
+    
         this.playerClassLevelInfoPK = playerClassLevelInfoPK;
     }
 }

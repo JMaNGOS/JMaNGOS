@@ -30,31 +30,37 @@ import org.jmangos.realm.network.netty.packetClient.server.SMSG_PLAYED_TIME;
  * The Class CMSG_PLAYED_TIME.
  */
 public class CMSG_PLAYED_TIME extends AbstractWoWClientPacket {
-	
-	/** The sender. */
-	@Inject
-	@Named("client")
-	private AbstractPacketSender sender;
-	
-	/** The unk. */
-	byte unk;
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
-	 */
-	@Override
-	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		unk = (byte) readC();
-
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
-	 */
-	@Override
-	protected void runImpl() {
-		sender.send(getClient(), new SMSG_PLAYED_TIME(unk));
-
-	}
-
+    
+    /** The sender. */
+    @Inject
+    @Named("client")
+    private AbstractPacketSender sender;
+    
+    /** The unk. */
+    byte                         unk;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
+     */
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
+    
+        this.unk = (byte) readC();
+        
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
+     */
+    @Override
+    protected void runImpl() {
+    
+        this.sender.send(getClient(), new SMSG_PLAYED_TIME(this.unk));
+        
+    }
+    
 }

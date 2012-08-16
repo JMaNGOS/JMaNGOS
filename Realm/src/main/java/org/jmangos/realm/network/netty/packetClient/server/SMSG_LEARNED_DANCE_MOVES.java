@@ -22,15 +22,18 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 /**
  * The Class SMSG_LEARNED_DANCE_MOVES.
  */
-public class SMSG_LEARNED_DANCE_MOVES  extends AbstractWoWServerPacket {
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		writeD(0);
-		writeD(0);
-	}
-
+public class SMSG_LEARNED_DANCE_MOVES extends AbstractWoWServerPacket {
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writeD(0);
+        writeD(0);
+    }
+    
 }

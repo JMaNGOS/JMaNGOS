@@ -22,15 +22,18 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 /**
  * The Class SMSG_INSTANCE_DIFFICULTY.
  */
-public class SMSG_INSTANCE_DIFFICULTY  extends AbstractWoWServerPacket {
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		writeD(0);
-		writeD(0);
-	}
-
+public class SMSG_INSTANCE_DIFFICULTY extends AbstractWoWServerPacket {
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writeD(0);
+        writeD(0);
+    }
+    
 }

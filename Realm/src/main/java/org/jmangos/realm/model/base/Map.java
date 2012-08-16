@@ -16,69 +16,74 @@
  *******************************************************************************/
 package org.jmangos.realm.model.base;
 
-import org.jmangos.realm.model.unit.Units;
-
 import gnu.trove.map.hash.TLongObjectHashMap;
+
+import org.jmangos.realm.model.unit.Units;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class Map.
  */
 public class Map {
-	
-	/** The id. */
-	int id = 0; 
-	
-	/** The player list. */
-	TLongObjectHashMap<WorldObject> playerList = new TLongObjectHashMap<WorldObject>();
-	
-	/** The units. */
-	TLongObjectHashMap<WorldObject> units = new TLongObjectHashMap<WorldObject>();
-	
-	/**
-	 * Instantiates a new map.
-	 *
-	 * @param id the id
-	 */
-	public Map(int id) {
-		super();
-		this.id = id;
-	}
-	
-	/**
-	 * Adds the object.
-	 *
-	 * @param plObject the pl object
-	 */
-	public void AddObject(WorldObject plObject){
-		switch (plObject.getObjectTypeId()) {
-			case TYPEID_PLAYER :
-				playerList.put(plObject.getObjectGuid().getRawValue(), plObject);
-				break;
-			case TYPEID_UNIT :
-				units.put(plObject.getObjectGuid().getRawValue(), plObject);
-				break;
-			default :
-				break;
-		}
-		
-	}
-	
-	/**
-	 * Update.
-	 *
-	 * @return true, if successful
-	 */
-	public boolean update() {
-		for (Object pl : playerList.values()) {
-			System.out.println("Player name: " + ((Units)pl).getName());
-		};
-		for (Object pl : units.values()) {
-			System.out.println("Units name: " + ((Units)pl).getName());
-		};
-		System.out.println("Player on map " + playerList.size());
-		System.out.println("units on map " + units.size());
-		return true;
-	}
-
+    
+    /** The id. */
+    int                             id         = 0;
+    
+    /** The player list. */
+    TLongObjectHashMap<WorldObject> playerList = new TLongObjectHashMap<WorldObject>();
+    
+    /** The units. */
+    TLongObjectHashMap<WorldObject> units      = new TLongObjectHashMap<WorldObject>();
+    
+    /**
+     * Instantiates a new map.
+     * 
+     * @param id
+     *            the id
+     */
+    public Map(final int id) {
+    
+        super();
+        this.id = id;
+    }
+    
+    /**
+     * Adds the object.
+     * 
+     * @param plObject
+     *            the pl object
+     */
+    public void AddObject(final WorldObject plObject) {
+    
+        switch (plObject.getObjectTypeId()) {
+            case TYPEID_PLAYER:
+                this.playerList.put(plObject.getObjectGuid().getRawValue(), plObject);
+                break;
+            case TYPEID_UNIT:
+                this.units.put(plObject.getObjectGuid().getRawValue(), plObject);
+                break;
+            default:
+                break;
+        }
+        
+    }
+    
+    /**
+     * Update.
+     * 
+     * @return true, if successful
+     */
+    public boolean update() {
+    
+        for (final Object pl : this.playerList.values()) {
+            System.out.println("Player name: " + ((Units) pl).getName());
+        };
+        for (final Object pl : this.units.values()) {
+            System.out.println("Units name: " + ((Units) pl).getName());
+        };
+        System.out.println("Player on map " + this.playerList.size());
+        System.out.println("units on map " + this.units.size());
+        return true;
+    }
+    
 }

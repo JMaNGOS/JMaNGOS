@@ -20,26 +20,26 @@ package org.jmangos.commons.network.model;
  * The Interface ChanneledObject.
  */
 public interface ChanneledObject {
-
-	/**
-	 * Sets the channel.
-	 * 
-	 * @param channel
-	 *            context
-	 */
-	void setChannel(NetworkChannel channel);
-
-	/**
-	 * Gets the channel.
-	 * 
-	 * @return channel context
-	 */
-	NetworkChannel getChannel();
-
-	/**
-	 * Gets the object id.
-	 * 
-	 * @return the object id
-	 */
-	int getObjectId();
+    
+    /**
+     * Sets the channel.
+     * 
+     * @param channel
+     *            context
+     */
+    void setChannel(NetworkChannel channel);
+    
+    /**
+     * Gets the channel.
+     * 
+     * @return channel context
+     */
+    NetworkChannel getChannel();
+    
+    /**
+     * Gets the object id.
+     * 
+     * @return the object id
+     */
+    int getObjectId();
 }

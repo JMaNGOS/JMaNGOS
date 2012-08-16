@@ -23,14 +23,16 @@ import org.jmangos.commons.service.Service;
  * The Interface NetworkService.
  */
 public interface NetworkService extends Service {
-
-	/**
-	 * @param channel
-	 */
-	void registerClientChannel(NetworkChannel channel);
-	String getChannelsInfo();
-	/**
-	 * Current status of network.
-	 */
-	void status();
+    
+    /**
+     * @param channel
+     */
+    void registerClientChannel(NetworkChannel channel);
+    
+    String getChannelsInfo();
+    
+    /**
+     * Current status of network.
+     */
+    void status();
 }

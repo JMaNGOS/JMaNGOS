@@ -16,6 +16,9 @@
  *******************************************************************************/
 package org.jmangos.realm.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
@@ -23,50 +26,55 @@ import org.jmangos.realm.model.InventoryItem;
 import org.jmangos.realm.model.base.character.CharacterData;
 import org.jmangos.realm.model.player.PlayerHomeBindData;
 
-import java.util.ArrayList;
-import java.util.List;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class PlayerDAO.
  */
 public class PlayerDAO implements DAO {
-
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.database.dao.DAO#getClassName()
-	 */
-	@Override
-	public String getClassName() {
-		return PlayerDAO.class.getName();
-	}
-
-    public CharacterData getCharacter( long characterId ) {
-        Session session = DatabaseFactory.getCharactersSessionFactory().openSession();
-        CharacterData characterData = (CharacterData)session.get( CharacterData.class, characterId );
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.database.dao.DAO#getClassName()
+     */
+    @Override
+    public String getClassName() {
+    
+        return PlayerDAO.class.getName();
+    }
+    
+    public CharacterData getCharacter(final long characterId) {
+    
+        final Session session = DatabaseFactory.getCharactersSessionFactory().openSession();
+        final CharacterData characterData = (CharacterData) session.get(CharacterData.class, characterId);
         return characterData;
     }
-
-	/**
-	 * Load home bind.
-	 *
-	 * @param objectId the object id
-	 * @return the player home bind data
-	 */
-	public PlayerHomeBindData loadHomeBind(int objectId) {
-        Session session = DatabaseFactory.getCharactersSessionFactory().openSession();
-        CharacterData characterData = (CharacterData)session.get( CharacterData.class, objectId );
+    
+    /**
+     * Load home bind.
+     * 
+     * @param objectId
+     *            the object id
+     * @return the player home bind data
+     */
+    public PlayerHomeBindData loadHomeBind(final int objectId) {
+    
+        final Session session = DatabaseFactory.getCharactersSessionFactory().openSession();
+        final CharacterData characterData = (CharacterData) session.get(CharacterData.class, objectId);
         return characterData.getHomeBindData();
     }
-
-	/**
-	 * Load inventory.
-	 *
-	 * @param objectId the object id
-	 * @return the list
-	 */
-	public List<InventoryItem> loadInventory(int objectId) {
+    
+    /**
+     * Load inventory.
+     * 
+     * @param objectId
+     *            the object id
+     * @return the list
+     */
+    public List<InventoryItem> loadInventory(final int objectId) {
+    
         // TODO: implement
         return new ArrayList<InventoryItem>();
     }
-
+    
 }

@@ -29,33 +29,31 @@ import org.jmangos.realm.network.netty.packetAuth.AbstractRealmClientPacket;
  * The Class <tt>CMD_TEST_CRYPT</tt>.
  */
 public class CMD_TEST_CRYPT extends AbstractRealmClientPacket {
-
-	/** The logger. */
-	@SuppressWarnings("unused")
-	private static Logger logger = Logger
-			.getLogger(CMD_TEST_CRYPT.class);
-	@Inject
-	@Named("RealmToAuth")
-	private AbstractPacketSender sender;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
-	 */
-	@Override
-	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
-	 */
-	@Override
-	protected void runImpl() {
-		
-		
-	}
+    
+    /** The logger. */
+    @SuppressWarnings("unused")
+    private static Logger        logger = Logger.getLogger(CMD_TEST_CRYPT.class);
+    @Inject
+    @Named("RealmToAuth")
+    private AbstractPacketSender sender;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
+     */
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
+    
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
+     */
+    @Override
+    protected void runImpl() {
+    
+    }
 }

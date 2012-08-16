@@ -26,64 +26,75 @@ import org.jmangos.realm.model.base.Map;
  * The Class MapService.
  */
 public class MapService implements Service {
-	
-	/** The maps. */
-	TIntObjectHashMap<Map> maps = new TIntObjectHashMap<Map>();
-	
-	/** The map updater. */
-	private MapUpdater mapUpdater = new MapUpdater();
-	
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.service.Service#start()
-	 */
-	@Override
-	public void start() {
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.service.Service#stop()
-	 */
-	@Override
-	public void stop() {
-		maps.clear();
-
-	}
-
-	/**
-	 * Gets the map.
-	 *
-	 * @param guid the guid
-	 * @return the map
-	 */
-	public Map getMap(int guid) {
-		if (maps.contains(guid)) {
-			return maps.get(guid);
-		} else {
-			Map map = new Map(guid);
-			maps.put(guid, map);
-			return map;
-		}
-	}
-	
-	/**
-	 * Update.
-	 */
-	public void update() {
-		maps.forEachValue(mapUpdater);
-	}
-	
-	/**
-	 * The Class MapUpdater.
-	 */
-	class MapUpdater implements TObjectProcedure<Map> {
-		
-		/* (non-Javadoc)
-		 * @see gnu.trove.TObjectProcedure#execute(java.lang.Object)
-		 */
-		@Override
-		public boolean execute(Map map) {
-			return map.update();
-		}
-	}
+    
+    /** The maps. */
+    TIntObjectHashMap<Map>   maps       = new TIntObjectHashMap<Map>();
+    
+    /** The map updater. */
+    private final MapUpdater mapUpdater = new MapUpdater();
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.service.Service#start()
+     */
+    @Override
+    public void start() {
+    
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.service.Service#stop()
+     */
+    @Override
+    public void stop() {
+    
+        this.maps.clear();
+        
+    }
+    
+    /**
+     * Gets the map.
+     * 
+     * @param guid
+     *            the guid
+     * @return the map
+     */
+    public Map getMap(final int guid) {
+    
+        if (this.maps.contains(guid)) {
+            return this.maps.get(guid);
+        } else {
+            final Map map = new Map(guid);
+            this.maps.put(guid, map);
+            return map;
+        }
+    }
+    
+    /**
+     * Update.
+     */
+    public void update() {
+    
+        this.maps.forEachValue(this.mapUpdater);
+    }
+    
+    /**
+     * The Class MapUpdater.
+     */
+    class MapUpdater implements TObjectProcedure<Map> {
+        
+        /*
+         * (non-Javadoc)
+         * 
+         * @see gnu.trove.TObjectProcedure#execute(java.lang.Object)
+         */
+        @Override
+        public boolean execute(final Map map) {
+        
+            return map.update();
+        }
+    }
 }

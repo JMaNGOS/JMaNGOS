@@ -23,35 +23,41 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
  * The Class SMSG_MOTD.
  */
 public class SMSG_MOTD extends AbstractWoWServerPacket {
-
-	/** The motd. */
-	private String[] motd; 
-	
-	/**
-	 * Instantiates a new sMS g_ motd.
-	 */
-	public SMSG_MOTD() {
-	}
-
-	/**
-	 * Instantiates a new sMS g_ motd.
-	 *
-	 * @param motd the motd
-	 */
-	public SMSG_MOTD(String[] motd) {
-		this.motd  = motd;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		writeD(motd.length);
-		for (int i = 0; i < motd.length; i++) {
-			writeS(motd[i]);	
-		}
-		
-	}
-
+    
+    /** The motd. */
+    private String[] motd;
+    
+    /**
+     * Instantiates a new sMS g_ motd.
+     */
+    public SMSG_MOTD() {
+    
+    }
+    
+    /**
+     * Instantiates a new sMS g_ motd.
+     * 
+     * @param motd
+     *            the motd
+     */
+    public SMSG_MOTD(final String[] motd) {
+    
+        this.motd = motd;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writeD(this.motd.length);
+        for (final String element : this.motd) {
+            writeS(element);
+        }
+        
+    }
+    
 }

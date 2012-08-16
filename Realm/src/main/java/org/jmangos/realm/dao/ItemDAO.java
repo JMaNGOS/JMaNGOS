@@ -17,6 +17,9 @@
 package org.jmangos.realm.dao;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
+
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -24,57 +27,62 @@ import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
 import org.jmangos.realm.model.base.item.ItemPrototype;
 
-import java.util.List;
-
 /**
  * The Class ItemDAO.
  */
 public class ItemDAO implements DAO {
-    Logger log = Logger.getLogger( getClass() );
-
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.database.dao.DAO#getClassName()
-	 */
-	@Override
-	public String getClassName() {
-		return  ItemDAO.class.getName();
-	}
-
-	/**
-	 * Load item prototypes.
-	 *
-	 * @return the t int object hash map
-	 */
-	public TIntObjectHashMap<ItemPrototype> loadItemPrototypes() {
+    
+    Logger log = Logger.getLogger(getClass());
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.database.dao.DAO#getClassName()
+     */
+    @Override
+    public String getClassName() {
+    
+        return ItemDAO.class.getName();
+    }
+    
+    /**
+     * Load item prototypes.
+     * 
+     * @return the t int object hash map
+     */
+    public TIntObjectHashMap<ItemPrototype> loadItemPrototypes() {
+    
         Long eTime = System.currentTimeMillis();
-
-        Session session = DatabaseFactory.getWorldSessionFactory().openSession();
-        Query query = session.createQuery( "from ItemPrototype order by id" );
-
-        TIntObjectHashMap<ItemPrototype> map = new TIntObjectHashMap<ItemPrototype>();
+        
+        final Session session = DatabaseFactory.getWorldSessionFactory().openSession();
+        final Query query = session.createQuery("from ItemPrototype order by id");
+        
+        final TIntObjectHashMap<ItemPrototype> map = new TIntObjectHashMap<ItemPrototype>();
         @SuppressWarnings("unchecked")
-        List<ItemPrototype> itemPrototypeList = (List<ItemPrototype>)query.list();
-
+        final List<ItemPrototype> itemPrototypeList = query.list();
+        
         // Fill map
-        for ( ItemPrototype item : itemPrototypeList ) {
-            map.put( item.getEntry(), item );
+        for (final ItemPrototype item : itemPrototypeList) {
+            map.put(item.getEntry(), item);
         }
-
+        
         eTime = System.currentTimeMillis() - eTime;
-        log.info( String.format( "Loaded [%d] ItemPrototypes under %d ms", map.size(), eTime ) );
-
+        this.log.info(String.format("Loaded [%d] ItemPrototypes under %d ms", map.size(), eTime));
+        
         return map;
     }
-
-	/**
-	 * Load item prototype.
-	 *
-	 * @param guid the guid
-	 * @return the item prototype
-	 */
-	public ItemPrototype loadItemPrototype(int guid) {
-        log.info( "Loading single item from database with id: " + guid );
-        Session session = DatabaseFactory.getWorldSessionFactory().openSession();
-        return (ItemPrototype)session.get( ItemPrototype.class, guid );
+    
+    /**
+     * Load item prototype.
+     * 
+     * @param guid
+     *            the guid
+     * @return the item prototype
+     */
+    public ItemPrototype loadItemPrototype(final int guid) {
+    
+        this.log.info("Loading single item from database with id: " + guid);
+        final Session session = DatabaseFactory.getWorldSessionFactory().openSession();
+        return (ItemPrototype) session.get(ItemPrototype.class, guid);
     }
 }

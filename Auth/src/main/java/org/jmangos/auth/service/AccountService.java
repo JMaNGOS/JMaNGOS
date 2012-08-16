@@ -21,8 +21,8 @@ import java.util.HashMap;
 import javax.inject.Inject;
 
 import org.jmangos.auth.dao.AccountDAO;
-import org.jmangos.commons.model.Account;
 import org.jmangos.auth.utils.AccountUtils;
+import org.jmangos.commons.model.Account;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.utils.BigNumber;
@@ -33,114 +33,116 @@ import org.jmangos.commons.utils.BigNumber;
  * @author MinimaJack
  */
 public class AccountService {
-
-	/** The account dao. */
-	@Inject
-	private AccountDAO accountDAO;
-
-	/**
-	 * Load clean.
-	 * 
-	 * @param name
-	 *            the name
-	 * @param channelHandler
-	 *            the channel handler
-	 */
-	public void loadClean(String name, NettyNetworkChannel channelHandler) {
-		Account account = loadAccount(name);
-		channelHandler.setChanneledObject(account);
-	}
-
-	/**
-	 * Login.
-	 * 
-	 * @param name
-	 *            the name
-	 * @param channelHandler
-	 *            the channel handler
-	 * @return the wo w auth response
-	 */
-	public WoWAuthResponse login(String name, NettyNetworkChannel channelHandler) {
-		// if
-		// (BannedIpController.isBanned(channelHandler.getAddress().getAddress().getHostAddress()))
-		// {
-		// return WoWAuthResponse.WOW_FAIL_BANNED;
-		// }
-
-		Account account = loadAccount(name);
-		HashMap<String, BigNumber> variable; // calculateVSFields will create it.
-		BigNumber s = new BigNumber();
-		BigNumber v = new BigNumber();
-
-		if (account == null) {
-			return WoWAuthResponse.WOW_FAIL_UNKNOWN_ACCOUNT;
-		}
-		channelHandler.setChanneledObject(account);
-		if (account.getV().length() != 32 * 2
-				|| account.getS().length() != 32 * 2) {
-			variable = AccountUtils
-					.calculateVSFields(account.getPasswordHash());
-			s = variable.get("s");
-			v = variable.get("v");
-			updateSV(account);
-		} else {
-			s.setHexStr(account.getS());
-			v.setHexStr(account.getV());
-		}
-
-		BigNumber B = AccountUtils.getB(v, channelHandler);
-		account.setB_crypto(B);
-		account.sets(s);
-		account.setV_crypto(v);
-
-		accountDAO.updateLastIp(account.getObjectId(), channelHandler
-				.getAddress().getAddress().getHostAddress());
-
-		return WoWAuthResponse.WOW_SUCCESS;
-	}
-
-	/**
-	 * Update sv.
-	 * 
-	 * @param account
-	 *            the account
-	 */
-	public void updateSV(Account account) {
-		accountDAO.updateSecurityKey(account);
-	}
-
-	/**
-	 * Loads account from DB and returns it, or returns null if account was not
-	 * loaded.
-	 * 
-	 * @param name
-	 *            Account name
-	 * @return loaded account or null
-	 */
-	public Account loadAccount(String name) {
-		return accountDAO.getAccount(name);
-	}
-
-	/**
-	 * Update session key.
-	 * 
-	 * @param username
-	 *            the username
-	 * @param Key
-	 *            the key
-	 */
-	public void updateSessionKey(String username, String Key) {
-		accountDAO.updateSessionKey(username, Key);
-	}
-
-	/**
-	 * Gets the session key.
-	 * 
-	 * @param username
-	 *            the username
-	 * @return the session key
-	 */
-	public String getSessionKey(String username) {
-		return accountDAO.getSessionKey(username);
-	}
+    
+    /** The account dao. */
+    @Inject
+    private AccountDAO accountDAO;
+    
+    /**
+     * Load clean.
+     * 
+     * @param name
+     *            the name
+     * @param channelHandler
+     *            the channel handler
+     */
+    public void loadClean(final String name, final NettyNetworkChannel channelHandler) {
+    
+        final Account account = loadAccount(name);
+        channelHandler.setChanneledObject(account);
+    }
+    
+    /**
+     * Login.
+     * 
+     * @param name
+     *            the name
+     * @param channelHandler
+     *            the channel handler
+     * @return the wo w auth response
+     */
+    public WoWAuthResponse login(final String name, final NettyNetworkChannel channelHandler) {
+    
+        // if
+        // (BannedIpController.isBanned(channelHandler.getAddress().getAddress().getHostAddress()))
+        // {
+        // return WoWAuthResponse.WOW_FAIL_BANNED;
+        // }
+        
+        final Account account = loadAccount(name);
+        HashMap<String, BigNumber> variable; // calculateVSFields will create it.
+        BigNumber s = new BigNumber();
+        BigNumber v = new BigNumber();
+        
+        if (account == null) {
+            return WoWAuthResponse.WOW_FAIL_UNKNOWN_ACCOUNT;
+        }
+        channelHandler.setChanneledObject(account);
+        if ((account.getV().length() != (32 * 2)) || (account.getS().length() != (32 * 2))) {
+            variable = AccountUtils.calculateVSFields(account.getPasswordHash());
+            s = variable.get("s");
+            v = variable.get("v");
+            updateSV(account);
+        } else {
+            s.setHexStr(account.getS());
+            v.setHexStr(account.getV());
+        }
+        
+        final BigNumber B = AccountUtils.getB(v, channelHandler);
+        account.setB_crypto(B);
+        account.sets(s);
+        account.setV_crypto(v);
+        
+        this.accountDAO.updateLastIp(account.getObjectId(), channelHandler.getAddress().getAddress().getHostAddress());
+        
+        return WoWAuthResponse.WOW_SUCCESS;
+    }
+    
+    /**
+     * Update sv.
+     * 
+     * @param account
+     *            the account
+     */
+    public void updateSV(final Account account) {
+    
+        this.accountDAO.updateSecurityKey(account);
+    }
+    
+    /**
+     * Loads account from DB and returns it, or returns null if account was not loaded.
+     * 
+     * @param name
+     *            Account name
+     * @return loaded account or null
+     */
+    public Account loadAccount(final String name) {
+    
+        return this.accountDAO.getAccount(name);
+    }
+    
+    /**
+     * Update session key.
+     * 
+     * @param username
+     *            the username
+     * @param Key
+     *            the key
+     */
+    public void updateSessionKey(final String username, final String Key) {
+    
+        this.accountDAO.updateSessionKey(username, Key);
+    }
+    
+    /**
+     * Gets the session key.
+     * 
+     * @param username
+     *            the username
+     * @return the session key
+     */
+    public String getSessionKey(final String username) {
+    
+        return this.accountDAO.getSessionKey(username);
+    }
 }

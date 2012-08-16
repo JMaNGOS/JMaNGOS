@@ -46,21 +46,26 @@ public enum InventorySlots {
     INVENTORY_SLOT_ITEM_15(37),
     INVENTORY_SLOT_ITEM_16(38),
     INVENTORY_SLOT_ITEM_END(39);
-
+    
     private int value;
-
-    InventorySlots(int value) {
+    
+    InventorySlots(final int value) {
+    
         this.value = value;
     }
-
+    
     public int getValue() {
+    
         return this.value;
     }
-
-    public static InventorySlots get( int value ) {
-        for ( InventorySlots slot : values() )
-            if ( slot.getValue() == value )
+    
+    public static InventorySlots get(final int value) {
+    
+        for (final InventorySlots slot : values()) {
+            if (slot.getValue() == value) {
                 return slot;
+            }
+        }
         return null;
     }
 }

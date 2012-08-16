@@ -30,34 +30,36 @@ import org.jmangos.realm.network.netty.packetClient.server.SMSG_REALM_SPLIT;
  * The Class CMSG_REALM_SPLIT.
  */
 public class CMSG_REALM_SPLIT extends AbstractWoWClientPacket {
-
-	/** The sender. */
-	@Inject
-	@Named("client")
-	private AbstractPacketSender sender;
-
-	/** The unk. */
-	int unk;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
-	 */
-	@Override
-	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		unk = readD();
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
-	 */
-	@Override
-	protected void runImpl() {
-		sender.send(getClient(), new SMSG_REALM_SPLIT(unk));
-
-	}
+    
+    /** The sender. */
+    @Inject
+    @Named("client")
+    private AbstractPacketSender sender;
+    
+    /** The unk. */
+    int                          unk;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
+     */
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
+    
+        this.unk = readD();
+        
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
+     */
+    @Override
+    protected void runImpl() {
+    
+        this.sender.send(getClient(), new SMSG_REALM_SPLIT(this.unk));
+        
+    }
 }

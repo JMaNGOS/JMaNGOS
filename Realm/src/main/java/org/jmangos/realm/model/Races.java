@@ -1,10 +1,7 @@
 package org.jmangos.realm.model;
 
 /**
- * Created with IntelliJ IDEA.
- * User: paalgyula
- * Date: 2012.08.10.
- * Time: 4:24
+ * Created with IntelliJ IDEA. User: paalgyula Date: 2012.08.10. Time: 4:24
  */
 public enum Races {
     DRAENEI(0x11),
@@ -17,25 +14,32 @@ public enum Races {
     TAUREN(0x06),
     TROLL(0x08),
     UNDEAD(0x05);
-
+    
     private int value;
-    Races(int value) {
+    
+    Races(final int value) {
+    
         this.value = value;
     }
-
-    public void setValue(int value) {
+    
+    public void setValue(final int value) {
+    
         this.value = value;
     }
-
+    
     public int getValue() {
+    
         return this.value;
     }
-
-    public static Races get( int value ) {
-        for ( Races val : values() )
-            if ( val.getValue() == value )
+    
+    public static Races get(final int value) {
+    
+        for (final Races val : values()) {
+            if (val.getValue() == value) {
                 return val;
-
+            }
+        }
+        
         return null;
     }
 }

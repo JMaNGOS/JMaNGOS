@@ -19,18 +19,18 @@
  */
 package org.jmangos.auth.network.netty.factory;
 
-import static org.jboss.netty.channel.Channels.*;
+import static org.jboss.netty.channel.Channels.pipeline;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.jboss.netty.channel.ChannelPipeline;
-import org.jmangos.auth.network.netty.handler.EventLogHandler;
 import org.jmangos.auth.network.netty.handler.AuthToClientChannelHandler;
+import org.jmangos.auth.network.netty.handler.EventLogHandler;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.netty.factory.BasicPipelineFactory;
 import org.jmangos.commons.network.netty.receiver.NettyPacketReceiver;
-
-import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  * A factory for creating Auth-Client Pipeline objects.
@@ -38,32 +38,33 @@ import javax.inject.Named;
  * @author MinimaJack
  */
 public class AuthToClientPipelineFactory extends BasicPipelineFactory {
-
-	/** The connection handler. */
-	@Inject
-	@Named("AuthToClient")
-	private ConnectHandler connectionHandler;
-
-	/** The packet service. */
-	@Inject
-	@Named("AuthToClient")
-	private PacketHandlerFactory packetService;
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jboss.netty.channel.ChannelPipelineFactory#getPipeline()
-	 */
-	public ChannelPipeline getPipeline() throws Exception {
-		ChannelPipeline pipeline = pipeline();
-
-		pipeline.addLast("executor", getExecutorHandler());
-
-		pipeline.addLast("eventlog", new EventLogHandler());
-
-		pipeline.addLast("handler", new AuthToClientChannelHandler(
-				packetService, connectionHandler, new NettyPacketReceiver()));
-
-		return pipeline;
-	}
+    
+    /** The connection handler. */
+    @Inject
+    @Named("AuthToClient")
+    private ConnectHandler       connectionHandler;
+    
+    /** The packet service. */
+    @Inject
+    @Named("AuthToClient")
+    private PacketHandlerFactory packetService;
+    
+    /**
+     * (non-Javadoc)
+     * 
+     * @see org.jboss.netty.channel.ChannelPipelineFactory#getPipeline()
+     */
+    @Override
+    public ChannelPipeline getPipeline() throws Exception {
+    
+        final ChannelPipeline pipeline = pipeline();
+        
+        pipeline.addLast("executor", getExecutorHandler());
+        
+        pipeline.addLast("eventlog", new EventLogHandler());
+        
+        pipeline.addLast("handler", new AuthToClientChannelHandler(this.packetService, this.connectionHandler, new NettyPacketReceiver()));
+        
+        return pipeline;
+    }
 }

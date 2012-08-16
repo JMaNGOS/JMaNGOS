@@ -16,65 +16,65 @@
  *******************************************************************************/
 package org.jmangos.commons.network.model;
 
-import org.jboss.netty.channel.Channel;
-
 import java.net.InetSocketAddress;
+
+import org.jboss.netty.channel.Channel;
 
 /**
  * The Interface NetworkChannel.
  */
 public interface NetworkChannel {
-
-	/**
-	 * Gets the channel id.
-	 * 
-	 * @return unique ID for context's channel
-	 */
-	int getChannelId();
-
-	/**
-	 * Gets the object id.
-	 * 
-	 * @return ID of channeled object or -1
-	 */
-	int getObjectId();
-
-	/**
-	 * Gets the channel.
-	 * 
-	 * @return the channel
-	 */
-	Channel getChannel();
-
-	public InetSocketAddress getAddress();
-
-	/**
-	 * Gets the channel state.
-	 * 
-	 * @return channel state
-	 */
-	State getChannelState();
-
-	/**
-	 * Sets the channel state.
-	 * 
-	 * @param channelState
-	 *            the new channel state
-	 */
-	void setChannelState(State channelState);
-
-	/**
-	 * Checks if is connected.
-	 * 
-	 * @return true, if is connected
-	 */
-	boolean isConnected();
-
-	/**
-	 * Write.
-	 * 
-	 * @param buffer
-	 *            the buffer
-	 */
-	void write(Object buffer);
+    
+    /**
+     * Gets the channel id.
+     * 
+     * @return unique ID for context's channel
+     */
+    int getChannelId();
+    
+    /**
+     * Gets the object id.
+     * 
+     * @return ID of channeled object or -1
+     */
+    int getObjectId();
+    
+    /**
+     * Gets the channel.
+     * 
+     * @return the channel
+     */
+    Channel getChannel();
+    
+    public InetSocketAddress getAddress();
+    
+    /**
+     * Gets the channel state.
+     * 
+     * @return channel state
+     */
+    State getChannelState();
+    
+    /**
+     * Sets the channel state.
+     * 
+     * @param channelState
+     *            the new channel state
+     */
+    void setChannelState(State channelState);
+    
+    /**
+     * Checks if is connected.
+     * 
+     * @return true, if is connected
+     */
+    boolean isConnected();
+    
+    /**
+     * Write.
+     * 
+     * @param buffer
+     *            the buffer
+     */
+    void write(Object buffer);
 }

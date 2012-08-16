@@ -42,118 +42,120 @@ import org.jmangos.commons.service.Service;
  */
 
 public class LoggingService implements Service {
-	/**
-	 * Property that represents {@link org.apache.log4j.spi.LoggerFactory} class
-	 */
-	public static final String LOGGER_FACTORY_CLASS_PROPERTY = "log4j.loggerfactory";
-
-	/** Default log4j configuration file. */
-	public static final String LOGGER_CONFIG_FILE = "./config/log4j.xml";
-
-	/** Is Logging initialized or not?. */
-	private static boolean initialized;
-
-	/**
-	 * Initializes logging system with {@link #LOGGER_CONFIG_FILE default}
-	 * config file.
-	 * 
-	 * @throws Log4jInitializationError
-	 *             the log4j initialization error
-	 */
-	public void start() throws Log4jInitializationError {
-        InputStream is = LoggingService.class.getResourceAsStream("/logging.properties");
+    
+    /**
+     * Property that represents {@link org.apache.log4j.spi.LoggerFactory} class
+     */
+    public static final String LOGGER_FACTORY_CLASS_PROPERTY = "log4j.loggerfactory";
+    
+    /** Default log4j configuration file. */
+    public static final String LOGGER_CONFIG_FILE            = "./config/log4j.xml";
+    
+    /** Is Logging initialized or not?. */
+    private static boolean     initialized;
+    
+    /**
+     * Initializes logging system with {@link #LOGGER_CONFIG_FILE default} config file.
+     * 
+     * @throws Log4jInitializationError
+     *             the log4j initialization error
+     */
+    @Override
+    public void start() throws Log4jInitializationError {
+    
+        final InputStream is = LoggingService.class.getResourceAsStream("/logging.properties");
         try {
-            LogManager manager = LogManager.getLogManager();
+            final LogManager manager = LogManager.getLogManager();
             manager.readConfiguration(is);
-        } catch (IOException e) {
-            Logger.getLogger(getClass()).fatal( "logging.properties not found in the classpath! Please restore it!" );
+        } catch (final IOException e) {
+            Logger.getLogger(getClass()).fatal("logging.properties not found in the classpath! Please restore it!");
         } finally {
             // FindBugs warning fix...
-            if ( is != null )
+            if (is != null) {
                 try {
                     is.close();
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     // It will be never thrown
-                    Logger.getLogger(getClass()).fatal( "Can't close the logging.properties resource stream!" );
+                    Logger.getLogger(getClass()).fatal("Can't close the logging.properties resource stream!");
                 }
+            }
         }
-
-		File f = new File(LOGGER_CONFIG_FILE);
-
-		if (!f.exists()) {
-			throw new Log4jInitializationError("Missing file " + f.getPath());
-		}
-
-		try {
-			init(f.toURI().toURL());
-		} catch (MalformedURLException e) {
-			throw new Log4jInitializationError("Can't initalize logging", e);
-		}
-	}
-
-	/**
-	 * 
-	 * @param url
-	 *            the url
-	 * @throws Log4jInitializationError
-	 *             the log4j initialization error
-	 */
-	public static void init(URL url) throws Log4jInitializationError {
-		synchronized (LoggingService.class) {
-			if (initialized) {
-				return;
-			} else {
-				initialized = true;
-			}
-		}
-
-		try {
-			DOMConfigurator.configure(url);
-		} catch (Exception e) {
-			throw new Log4jInitializationError("Can't initialize logging", e);
-		}
-
-		overrideDefaultLoggerFactory();
-
-		/** JULI bridge configured via slf4j bridge */
-	}
-
-	/**
-	 * Override default logger factory.
-	 */
-	private static void overrideDefaultLoggerFactory() {
-		Hierarchy lr = (Hierarchy) org.apache.log4j.LogManager
-				.getLoggerRepository();
-		try {
-			Field field = lr.getClass().getDeclaredField("defaultFactory");
-			field.setAccessible(true);
-			String cn = System.getProperty(LOGGER_FACTORY_CLASS_PROPERTY,
-					ThrowableAsMessageAwareFactory.class.getName());
-			Class<?> c = Class.forName(cn);
-			field.set(lr, c.newInstance());
-			field.setAccessible(false);
-		} catch (NoSuchFieldException e) {
-			// never thrown
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// never thrown
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			throw new Log4jInitializationError(
-					"Can't found log4j logger factory class", e);
-		} catch (InstantiationException e) {
-			throw new Log4jInitializationError(
-					"Can't instantiate log4j logger factory", e);
-		}
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.service.Service#stop()
-	 */
-	@Override
-	public void stop() {
-		throw new NotImplementedException();
-	}
+        
+        final File f = new File(LOGGER_CONFIG_FILE);
+        
+        if (!f.exists()) {
+            throw new Log4jInitializationError("Missing file " + f.getPath());
+        }
+        
+        try {
+            init(f.toURI().toURL());
+        } catch (final MalformedURLException e) {
+            throw new Log4jInitializationError("Can't initalize logging", e);
+        }
+    }
+    
+    /**
+     * 
+     * @param url
+     *            the url
+     * @throws Log4jInitializationError
+     *             the log4j initialization error
+     */
+    public static void init(final URL url) throws Log4jInitializationError {
+    
+        synchronized (LoggingService.class) {
+            if (initialized) {
+                return;
+            } else {
+                initialized = true;
+            }
+        }
+        
+        try {
+            DOMConfigurator.configure(url);
+        } catch (final Exception e) {
+            throw new Log4jInitializationError("Can't initialize logging", e);
+        }
+        
+        overrideDefaultLoggerFactory();
+        
+        /** JULI bridge configured via slf4j bridge */
+    }
+    
+    /**
+     * Override default logger factory.
+     */
+    private static void overrideDefaultLoggerFactory() {
+    
+        final Hierarchy lr = (Hierarchy) org.apache.log4j.LogManager.getLoggerRepository();
+        try {
+            final Field field = lr.getClass().getDeclaredField("defaultFactory");
+            field.setAccessible(true);
+            final String cn = System.getProperty(LOGGER_FACTORY_CLASS_PROPERTY, ThrowableAsMessageAwareFactory.class.getName());
+            final Class<?> c = Class.forName(cn);
+            field.set(lr, c.newInstance());
+            field.setAccessible(false);
+        } catch (final NoSuchFieldException e) {
+            // never thrown
+            e.printStackTrace();
+        } catch (final IllegalAccessException e) {
+            // never thrown
+            e.printStackTrace();
+        } catch (final ClassNotFoundException e) {
+            throw new Log4jInitializationError("Can't found log4j logger factory class", e);
+        } catch (final InstantiationException e) {
+            throw new Log4jInitializationError("Can't instantiate log4j logger factory", e);
+        }
+    }
+    
+    /**
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.service.Service#stop()
+     */
+    @Override
+    public void stop() {
+    
+        throw new NotImplementedException();
+    }
 }

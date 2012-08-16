@@ -25,29 +25,34 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
  * The Class CMSG_SET_ACTIONBAR_TOGGLES.
  */
 public class CMSG_SET_ACTIONBAR_TOGGLES extends AbstractWoWClientPacket {
-	
-	/** The action bar. */
-	byte actionBar;
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
-	 */
-	@Override
-	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		actionBar = (byte) readC();
-	}
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
-	 */
-	@Override
-	protected void runImpl() {
-		//FIXME need complete stats
-		if(getPlayer() != null){
-		//	getPlayer().setByteValue()
-		}
-		
-	}
-	
-
+    
+    /** The action bar. */
+    byte actionBar;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
+     */
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
+    
+        this.actionBar = (byte) readC();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
+     */
+    @Override
+    protected void runImpl() {
+    
+        // FIXME need complete stats
+        if (getPlayer() != null) {
+            // getPlayer().setByteValue()
+        }
+        
+    }
+    
 }

@@ -20,32 +20,34 @@ package org.jmangos.commons.network.netty.model;
  * The Enum ChannelDirection.
  */
 public enum ChannelDirection {
-
-	/** The UPSTREAM. */
-	UPSTREAM(1),
-
-	/** The DOWNSTREAM. */
-	DOWNSTREAM(1 << 1);
-
-	/** The id. */
-	private int id;
-
-	/**
-	 * Instantiates a new channel direction.
-	 * 
-	 * @param id
-	 *            the id
-	 */
-	ChannelDirection(int id) {
-		this.id = id;
-	}
-
-	/**
-	 * Gets the id.
-	 * 
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
+    
+    /** The UPSTREAM. */
+    UPSTREAM(1),
+    
+    /** The DOWNSTREAM. */
+    DOWNSTREAM(1 << 1);
+    
+    /** The id. */
+    private int id;
+    
+    /**
+     * Instantiates a new channel direction.
+     * 
+     * @param id
+     *            the id
+     */
+    ChannelDirection(final int id) {
+    
+        this.id = id;
+    }
+    
+    /**
+     * Gets the id.
+     * 
+     * @return the id
+     */
+    public int getId() {
+    
+        return this.id;
+    }
 }

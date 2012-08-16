@@ -1,50 +1,55 @@
 package org.jmangos.realm.model.base;
 
-import org.jmangos.realm.model.Races;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
-import javax.persistence.Id;
-import java.io.Serializable;
 
 /**
- * Created with IntelliJ IDEA.
- * User: paalgyula
- * email: paalgyula@gmail.com
- * Date: 2012.08.11.
- * Time: 21:10
+ * Created with IntelliJ IDEA. User: paalgyula email: paalgyula@gmail.com Date: 2012.08.11. Time:
+ * 21:10
  */
 @Embeddable
 public class PlayercreateinfoPK implements Serializable {
-
+    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3488739986001429781L;
+    
     @Column(name = "race", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
-    private int race;
-
+    private int               race;
+    
     @Column(name = "class", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
-    private int clazz;
-
+    private int               clazz;
+    
     public PlayercreateinfoPK() {
+    
     }
-
-    public PlayercreateinfoPK(int race, int clazz) {
+    
+    public PlayercreateinfoPK(final int race, final int clazz) {
+    
         this.race = race;
         this.clazz = clazz;
     }
-
+    
     public int getRace() {
-        return race;
+    
+        return this.race;
     }
-
-    public void setRace(byte race) {
+    
+    public void setRace(final byte race) {
+    
         this.race = race;
     }
-
+    
     public int getClazz() {
-        return clazz;
+    
+        return this.clazz;
     }
-
-    public void setClazz(byte clazz) {
+    
+    public void setClazz(final byte clazz) {
+    
         this.clazz = clazz;
     }
 }

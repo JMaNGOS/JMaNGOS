@@ -29,65 +29,69 @@ import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
  * The Class <tt>CMD_RECONNECT_CHALLENGE</tt>.
  */
 public class CMD_RECONNECT_CHALLENGE extends AbstractWoWClientPacket {
-
-	/** The Constant logger. */
-	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(CMD_RECONNECT_CHALLENGE.class);
-
-	/** The sender. */
-	@Inject
-	private AbstractPacketSender sender;
-
-	/** The account service. */
-	@Inject
-	AccountService accountService;
-
-	/** The login. */
-	private String login;
-
-	/**
-	 * Instantiates a new CMD_RECONNECT_CHALLENGE.
-	 */
-	public CMD_RECONNECT_CHALLENGE() {
-		super();
-	}
-
-	/**
-	 * @see org.jmangos.commons.network.model.ReceivablePacket#getMinimumLength()
-	 */
-	public int getMinimumLength() {
-		return 0;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unused")
-	@Override
-	protected void readImpl() {
-		readC(); // error
-		readH(); // size
-		readB(4); // gamename
-		readC(); // version 3
-		readC(); // version 5
-		readC(); // version 5
-		readH(); // client buildNr
-		readB(4); // platform
-		readB(4); // OS
-		readB(4); // country (enUS)
-        /*int timezone_bias = */readD();
-		/*int ip = */readD();
-		int lenLogin = readC();
-		login = new String(readB(lenLogin), 0, lenLogin);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void runImpl() {
-		accountService.loadClean(login, (NettyNetworkChannel) getClient());
-		sender.send(this.getClient(), new TCMD_RECONNECT_CHALLENGE());
-	}
+    
+    /** The Constant logger. */
+    @SuppressWarnings("unused")
+    private static final Logger  logger = Logger.getLogger(CMD_RECONNECT_CHALLENGE.class);
+    
+    /** The sender. */
+    @Inject
+    private AbstractPacketSender sender;
+    
+    /** The account service. */
+    @Inject
+    AccountService               accountService;
+    
+    /** The login. */
+    private String               login;
+    
+    /**
+     * Instantiates a new CMD_RECONNECT_CHALLENGE.
+     */
+    public CMD_RECONNECT_CHALLENGE() {
+    
+        super();
+    }
+    
+    /**
+     * @see org.jmangos.commons.network.model.ReceivablePacket#getMinimumLength()
+     */
+    @Override
+    public int getMinimumLength() {
+    
+        return 0;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unused")
+    @Override
+    protected void readImpl() {
+    
+        readC(); // error
+        readH(); // size
+        readB(4); // gamename
+        readC(); // version 3
+        readC(); // version 5
+        readC(); // version 5
+        readH(); // client buildNr
+        readB(4); // platform
+        readB(4); // OS
+        readB(4); // country (enUS)
+        /* int timezone_bias = */readD();
+        /* int ip = */readD();
+        final int lenLogin = readC();
+        this.login = new String(readB(lenLogin), 0, lenLogin);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void runImpl() {
+    
+        this.accountService.loadClean(this.login, (NettyNetworkChannel) getClient());
+        this.sender.send(getClient(), new TCMD_RECONNECT_CHALLENGE());
+    }
 }

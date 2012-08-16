@@ -21,10 +21,10 @@ package org.jmangos.realm.model.base.item;
  * The Class InventoryPackSlots.
  */
 public class InventoryPackSlots {
-	
-	/** The INVENTOR y_ slo t_ ite m_ start. */
-	public static int INVENTORY_SLOT_ITEM_START  =23;
-	
-	/** The INVENTOR y_ slo t_ ite m_ end. */
-	public static int INVENTORY_SLOT_ITEM_END = 39;
+    
+    /** The INVENTOR y_ slo t_ ite m_ start. */
+    public static int INVENTORY_SLOT_ITEM_START = 23;
+    
+    /** The INVENTOR y_ slo t_ ite m_ end. */
+    public static int INVENTORY_SLOT_ITEM_END   = 39;
 }

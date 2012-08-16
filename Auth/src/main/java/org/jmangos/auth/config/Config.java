@@ -16,12 +16,13 @@
  *******************************************************************************/
 package org.jmangos.auth.config;
 
+import java.net.InetSocketAddress;
+
+import javax.inject.Singleton;
+
 import org.jmangos.commons.config.Compatiple;
 import org.jmangos.commons.configuration.AbstractConfig;
 import org.jmangos.commons.configuration.Property;
-
-import javax.inject.Singleton;
-import java.net.InetSocketAddress;
 
 /**
  * The Class Config.
@@ -31,26 +32,27 @@ import java.net.InetSocketAddress;
  */
 @Singleton
 public class Config extends AbstractConfig {
-
-	/** The Constant CONFIG_FILE. */
-	private static final String CONFIG_FILE = "conf/network/auth.network.properties";
-
-	/** Login Server address to client. */
-	@Property(key = "network.client.address", defaultValue = "*:3724")
-	public InetSocketAddress CLIENT_ADDRESS;
-
-	/** The UPDAT e_ interval. */
-	@Property(key = "network.service.updateRealmlistInterval", defaultValue = "60")
-	public Integer UPDATE_INTERVAL;
-
-	/** The COMPATIBLE. */
-	@Property(key = "network.compatible", defaultValue = "NONE")
-	public Compatiple COMPATIBLE;
-
-	/**
-	 * Load configuration.
-	 */
-	public Config() {
-		super(CONFIG_FILE);
-	}
+    
+    /** The Constant CONFIG_FILE. */
+    private static final String CONFIG_FILE = "conf/network/auth.network.properties";
+    
+    /** Login Server address to client. */
+    @Property(key = "network.client.address", defaultValue = "*:3724")
+    public InetSocketAddress    CLIENT_ADDRESS;
+    
+    /** The UPDAT e_ interval. */
+    @Property(key = "network.service.updateRealmlistInterval", defaultValue = "60")
+    public Integer              UPDATE_INTERVAL;
+    
+    /** The COMPATIBLE. */
+    @Property(key = "network.compatible", defaultValue = "NONE")
+    public Compatiple           COMPATIBLE;
+    
+    /**
+     * Load configuration.
+     */
+    public Config() {
+    
+        super(CONFIG_FILE);
+    }
 }

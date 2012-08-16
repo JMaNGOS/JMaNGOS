@@ -23,31 +23,36 @@ import org.jmangos.realm.network.netty.packetAuth.AbstractRealmServerPacket;
  * The Class <tt>CMD_REALM_DATA</tt>.
  */
 public class CMD_REALM_DATA extends AbstractRealmServerPacket {
-
-	private Config configs;
-	private Float population;
-	public CMD_REALM_DATA() {
-	}
-
-	public CMD_REALM_DATA(Config config, Float population) {
-		this.configs = config;
-		this.population = population;
-	}
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		writeS(configs.REALM_NAME);
-		writeS(configs.REALM_ADDRESS);
-		writeD(configs.REALM_PORT);
-		writeC(configs.REALM_ICON); // icon
-		writeC(configs.REALM_FLAGS); // getRealmflags
-		writeC(configs.REALM_TIME_ZONE); // Timezone
-		writeC(configs.REALM_ALLOWED_SECURITY_LVL); // getAllowedSecurityLevel
-		writeF(population);// Population
-		writeS(configs.REALM_ALLOWED_CLIENT_BUILD);
-	}
+    
+    private Config configs;
+    private Float  population;
+    
+    public CMD_REALM_DATA() {
+    
+    }
+    
+    public CMD_REALM_DATA(final Config config, final Float population) {
+    
+        this.configs = config;
+        this.population = population;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writeS(this.configs.REALM_NAME);
+        writeS(this.configs.REALM_ADDRESS);
+        writeD(this.configs.REALM_PORT);
+        writeC(this.configs.REALM_ICON); // icon
+        writeC(this.configs.REALM_FLAGS); // getRealmflags
+        writeC(this.configs.REALM_TIME_ZONE); // Timezone
+        writeC(this.configs.REALM_ALLOWED_SECURITY_LVL); // getAllowedSecurityLevel
+        writeF(this.population);// Population
+        writeS(this.configs.REALM_ALLOWED_CLIENT_BUILD);
+    }
 }

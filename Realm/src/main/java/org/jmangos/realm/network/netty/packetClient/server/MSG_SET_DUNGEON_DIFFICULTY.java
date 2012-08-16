@@ -22,17 +22,20 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 /**
  * The Class MSG_SET_DUNGEON_DIFFICULTY.
  */
-public class MSG_SET_DUNGEON_DIFFICULTY  extends AbstractWoWServerPacket {
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		writeD(0); // Difficult
-		writeC(1);
-		writeC(0);
-		writeC(0);
-		writeD(0); // FIXME group data
-	}
+public class MSG_SET_DUNGEON_DIFFICULTY extends AbstractWoWServerPacket {
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writeD(0); // Difficult
+        writeC(1);
+        writeC(0);
+        writeC(0);
+        writeD(0); // FIXME group data
+    }
 }

@@ -31,71 +31,67 @@ import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
  * A factory for creating ServerChannel objects.
  */
 public class ServerChannelFactory implements NetworkChannelFactory {
-
-	/** The channel factory. */
-	private ChannelFactory channelFactory;
-
-	/** The isa. */
-	private InetSocketAddress isa;
-
-	/** The bootstrap. */
-	private ServerBootstrap bootstrap;
-
-	/**
-	 * Instantiates a new server channel factory.
-	 * 
-	 * @param isa
-	 *            the isa
-	 */
-	public ServerChannelFactory(InetSocketAddress isa) {
-		this.channelFactory = new NioServerSocketChannelFactory(
-				Executors.newCachedThreadPool(),
-				Executors.newCachedThreadPool(), Runtime.getRuntime()
-						.availableProcessors() * 2 + 1);
-		this.isa = isa;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.wowemu.common.network.netty.factory.NetworkChannelFactory#connect()
-	 */
-	@Override
-	public Channel connect() {
-		return bootstrap.bind(this.isa);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.wowemu.common.network.netty.factory.NetworkChannelFactory#initialize
-	 * (org.jboss.netty.channel.ChannelPipelineFactory)
-	 */
-	@Override
-	public void initialize(ChannelPipelineFactory pipelineFactory) {
-		bootstrap = new ServerBootstrap(channelFactory);
-		bootstrap.setPipelineFactory(pipelineFactory);
-		bootstrap.setOption("child.bufferFactory",
-				HeapChannelBufferFactory.getInstance(ByteOrder.LITTLE_ENDIAN));
-		bootstrap.setOption("child.tcpNoDelay", true);
-		bootstrap.setOption("child.keepAlive", true);
-		bootstrap.setOption("child.reuseAddress", true);
-		bootstrap.setOption("child.connectTimeoutMillis", 100);
-		bootstrap.setOption("readWriteFair", true);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.wowemu.common.network.netty.factory.NetworkChannelFactory#getAddress
-	 * ()
-	 */
-	@Override
-	public InetSocketAddress getAddress() {
-		return isa;
-	}
-
+    
+    /** The channel factory. */
+    private final ChannelFactory    channelFactory;
+    
+    /** The isa. */
+    private final InetSocketAddress isa;
+    
+    /** The bootstrap. */
+    private ServerBootstrap         bootstrap;
+    
+    /**
+     * Instantiates a new server channel factory.
+     * 
+     * @param isa
+     *            the isa
+     */
+    public ServerChannelFactory(final InetSocketAddress isa) {
+    
+        this.channelFactory = new NioServerSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool(), (Runtime.getRuntime().availableProcessors() * 2) + 1);
+        this.isa = isa;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.netty.factory.NetworkChannelFactory#connect()
+     */
+    @Override
+    public Channel connect() {
+    
+        return this.bootstrap.bind(this.isa);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.netty.factory.NetworkChannelFactory#initialize
+     * (org.jboss.netty.channel.ChannelPipelineFactory)
+     */
+    @Override
+    public void initialize(final ChannelPipelineFactory pipelineFactory) {
+    
+        this.bootstrap = new ServerBootstrap(this.channelFactory);
+        this.bootstrap.setPipelineFactory(pipelineFactory);
+        this.bootstrap.setOption("child.bufferFactory", HeapChannelBufferFactory.getInstance(ByteOrder.LITTLE_ENDIAN));
+        this.bootstrap.setOption("child.tcpNoDelay", true);
+        this.bootstrap.setOption("child.keepAlive", true);
+        this.bootstrap.setOption("child.reuseAddress", true);
+        this.bootstrap.setOption("child.connectTimeoutMillis", 100);
+        this.bootstrap.setOption("readWriteFair", true);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.netty.factory.NetworkChannelFactory#getAddress ()
+     */
+    @Override
+    public InetSocketAddress getAddress() {
+    
+        return this.isa;
+    }
+    
 }

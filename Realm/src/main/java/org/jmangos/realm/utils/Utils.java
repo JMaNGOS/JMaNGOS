@@ -22,23 +22,24 @@ import java.util.Calendar;
  * The Class Utils.
  */
 public class Utils {
-	
-	/**
-	 * Time to bit fields.
-	 *
-	 * @param millisec the millisec
-	 * @return the int
-	 */
-	public static final int TimeToBitFields(Long millisec) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTimeInMillis(millisec);
-		int month = calendar.get(Calendar.MONTH);
-		int year = calendar.get(Calendar.YEAR);
-		int dow = calendar.get(Calendar.DAY_OF_WEEK);
-		int dom = calendar.get(Calendar.DAY_OF_MONTH);
-		int hour = calendar.get(Calendar.HOUR);
-		int min = calendar.get(Calendar.MINUTE);
-		return ((year - 2000) << 24) | (month << 20) | ((dom - 1) << 14)
-				| ((dow - 1) << 11) | (hour << 6) | min;
-	}
+    
+    /**
+     * Time to bit fields.
+     * 
+     * @param millisec
+     *            the millisec
+     * @return the int
+     */
+    public static final int TimeToBitFields(final Long millisec) {
+    
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(millisec);
+        final int month = calendar.get(Calendar.MONTH);
+        final int year = calendar.get(Calendar.YEAR);
+        final int dow = calendar.get(Calendar.DAY_OF_WEEK);
+        final int dom = calendar.get(Calendar.DAY_OF_MONTH);
+        final int hour = calendar.get(Calendar.HOUR);
+        final int min = calendar.get(Calendar.MINUTE);
+        return ((year - 2000) << 24) | (month << 20) | ((dom - 1) << 14) | ((dow - 1) << 11) | (hour << 6) | min;
+    }
 }

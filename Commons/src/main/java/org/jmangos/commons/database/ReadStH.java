@@ -20,15 +20,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public interface ReadStH {
-
-	/**
-	 * Allows coder to read data after query execution. Automatically recycles
-	 * connection and closes ResultSet.
-	 * 
-	 * @param rset
-	 *            the rset
-	 * @throws SQLException
-	 *             the sQL exception
-	 */
-	public void handleRead(ResultSet rset) throws SQLException;
+    
+    /**
+     * Allows coder to read data after query execution. Automatically recycles connection and closes
+     * ResultSet.
+     * 
+     * @param rset
+     *            the rset
+     * @throws SQLException
+     *             the sQL exception
+     */
+    public void handleRead(ResultSet rset) throws SQLException;
 }

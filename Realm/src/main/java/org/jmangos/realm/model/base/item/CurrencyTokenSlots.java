@@ -21,10 +21,10 @@ package org.jmangos.realm.model.base.item;
  * The Class CurrencyTokenSlots.
  */
 public class CurrencyTokenSlots {
-	 
- 	/** The CURRENCYTOKE n_ slo t_ start. */
- 	public static int CURRENCYTOKEN_SLOT_START    = 118;
-	 
- 	/** The CURRENCYTOKE n_ slo t_ end. */
- 	public static int CURRENCYTOKEN_SLOT_END      = 150;
+    
+    /** The CURRENCYTOKE n_ slo t_ start. */
+    public static int CURRENCYTOKEN_SLOT_START = 118;
+    
+    /** The CURRENCYTOKE n_ slo t_ end. */
+    public static int CURRENCYTOKEN_SLOT_END   = 150;
 }

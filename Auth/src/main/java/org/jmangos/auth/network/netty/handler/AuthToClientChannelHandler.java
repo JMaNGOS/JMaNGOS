@@ -16,10 +16,10 @@
  *******************************************************************************/
 package org.jmangos.auth.network.netty.handler;
 
-import org.apache.log4j.Logger;
-import org.jboss.netty.buffer.ChannelBuffer;
 import java.net.InetSocketAddress;
 
+import org.apache.log4j.Logger;
+import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
@@ -37,101 +37,103 @@ import org.jmangos.commons.network.netty.receiver.NettyPacketReceiver;
  * @author MinimaJack
  */
 public class AuthToClientChannelHandler extends SimpleChannelUpstreamHandler {
-
-	/** The receiver. */
-	private final NettyPacketReceiver receiver;
-
-	/** The network channel. */
-	private NettyNetworkChannel networkChannel;
-
-	/** The address. */
-	@SuppressWarnings("unused")
-	private InetSocketAddress address;
-
-	/** The packet service. */
-	private final PacketHandlerFactory packetService;
-
-	/** The connection handler. */
-	private ConnectHandler connectionHandler;
-
-	/** The Constant log. */
-	@SuppressWarnings("unused")
-	private static final Logger log = Logger
-			.getLogger(AuthToClientChannelHandler.class);
-
-	private Crypt crypt = new Crypt();
-
-	/**
-	 * Instantiates a new Auth to Client channel handler.
-	 * 
-	 * @param packetService
-	 *            the packet service
-	 * @param connectionHandler
-	 *            the connection handler
-	 * @param receiver
-	 *            the receiver
-	 */
-	public AuthToClientChannelHandler(PacketHandlerFactory packetService,
-			ConnectHandler connectionHandler, NettyPacketReceiver receiver) {
-		super();
-
-		this.receiver = receiver;
-		this.packetService = packetService;
-		this.connectionHandler = connectionHandler;
-	}
-
-	/**
-	 * 
-	 * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelConnected(org.jboss.netty.channel.ChannelHandlerContext,
-	 *      org.jboss.netty.channel.ChannelStateEvent)
-	 */
-	@Override
-	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e)
-			throws Exception {
-		address = (InetSocketAddress) e.getChannel().getRemoteAddress();
-		networkChannel = new NettyNetworkChannel(this, ctx.getChannel());
-		connectionHandler.onConnect(networkChannel, this);
-	}
-
-	/**
-	 * 
-	 * 
-	 * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#messageReceived(org.jboss.netty.channel.ChannelHandlerContext,
-	 *      org.jboss.netty.channel.MessageEvent)
-	 */
-	@Override
-	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) {
-		receiver.receivePacket(packetService, (ChannelBuffer) e.getMessage(),
-				networkChannel);
-	}
-
-	/**
-	 * 
-	 * 
-	 * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelDisconnected(org.jboss.netty.channel.ChannelHandlerContext,
-	 *      org.jboss.netty.channel.ChannelStateEvent)
-	 */
-	@Override
-	public void channelDisconnected(ChannelHandlerContext ctx,
-			ChannelStateEvent e) throws Exception {
-		connectionHandler.onDisconnect(networkChannel);
-	}
-
-	/**
-	 * 
-	 * 
-	 * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#exceptionCaught(org.jboss.netty.channel.ChannelHandlerContext,
-	 *      org.jboss.netty.channel.ExceptionEvent)
-	 */
-	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
-	}
-
-	public Crypt getCrypt() {
-		return crypt;
-	}
-
-	public void setCrypt(Crypt crypt) {
-		this.crypt = crypt;
-	}
+    
+    /** The receiver. */
+    private final NettyPacketReceiver  receiver;
+    
+    /** The network channel. */
+    private NettyNetworkChannel        networkChannel;
+    
+    /** The address. */
+    @SuppressWarnings("unused")
+    private InetSocketAddress          address;
+    
+    /** The packet service. */
+    private final PacketHandlerFactory packetService;
+    
+    /** The connection handler. */
+    private final ConnectHandler       connectionHandler;
+    
+    /** The Constant log. */
+    @SuppressWarnings("unused")
+    private static final Logger        log   = Logger.getLogger(AuthToClientChannelHandler.class);
+    
+    private Crypt                      crypt = new Crypt();
+    
+    /**
+     * Instantiates a new Auth to Client channel handler.
+     * 
+     * @param packetService
+     *            the packet service
+     * @param connectionHandler
+     *            the connection handler
+     * @param receiver
+     *            the receiver
+     */
+    public AuthToClientChannelHandler(final PacketHandlerFactory packetService, final ConnectHandler connectionHandler, final NettyPacketReceiver receiver) {
+    
+        super();
+        
+        this.receiver = receiver;
+        this.packetService = packetService;
+        this.connectionHandler = connectionHandler;
+    }
+    
+    /**
+     * 
+     * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelConnected(org.jboss.netty.channel.ChannelHandlerContext,
+     *      org.jboss.netty.channel.ChannelStateEvent)
+     */
+    @Override
+    public void channelConnected(final ChannelHandlerContext ctx, final ChannelStateEvent e) throws Exception {
+    
+        this.address = (InetSocketAddress) e.getChannel().getRemoteAddress();
+        this.networkChannel = new NettyNetworkChannel(this, ctx.getChannel());
+        this.connectionHandler.onConnect(this.networkChannel, this);
+    }
+    
+    /**
+     * 
+     * 
+     * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#messageReceived(org.jboss.netty.channel.ChannelHandlerContext,
+     *      org.jboss.netty.channel.MessageEvent)
+     */
+    @Override
+    public void messageReceived(final ChannelHandlerContext ctx, final MessageEvent e) {
+    
+        this.receiver.receivePacket(this.packetService, (ChannelBuffer) e.getMessage(), this.networkChannel);
+    }
+    
+    /**
+     * 
+     * 
+     * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelDisconnected(org.jboss.netty.channel.ChannelHandlerContext,
+     *      org.jboss.netty.channel.ChannelStateEvent)
+     */
+    @Override
+    public void channelDisconnected(final ChannelHandlerContext ctx, final ChannelStateEvent e) throws Exception {
+    
+        this.connectionHandler.onDisconnect(this.networkChannel);
+    }
+    
+    /**
+     * 
+     * 
+     * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#exceptionCaught(org.jboss.netty.channel.ChannelHandlerContext,
+     *      org.jboss.netty.channel.ExceptionEvent)
+     */
+    @Override
+    public void exceptionCaught(final ChannelHandlerContext ctx, final ExceptionEvent e) {
+    
+    }
+    
+    public Crypt getCrypt() {
+    
+        return this.crypt;
+    }
+    
+    public void setCrypt(final Crypt crypt) {
+    
+        this.crypt = crypt;
+    }
 }

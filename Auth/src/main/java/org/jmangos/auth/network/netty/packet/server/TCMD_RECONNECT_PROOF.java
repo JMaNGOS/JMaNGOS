@@ -24,14 +24,15 @@ import org.jmangos.commons.network.model.State;
  * 
  */
 public class TCMD_RECONNECT_PROOF extends AbstractWoWServerPacket {
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void writeImpl() {
-		writeC(0);
-		writeH(0);
-		getChannel().setChannelState(State.AUTHED);
-	}
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writeC(0);
+        writeH(0);
+        getChannel().setChannelState(State.AUTHED);
+    }
 }

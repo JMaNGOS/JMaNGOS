@@ -21,81 +21,94 @@ package org.jmangos.realm.model.base;
  * The Class AddonInfo.
  */
 public class AddonInfo {
-	
-	/** The Name. */
-	private String Name;
+    
+    /** The Name. */
+    private String Name;
     
     /** The Enabled. */
-    private byte Enabled;
+    private byte   Enabled;
     
     /** The CRC. */
-    private int CRC;
-	
-	/**
-	 * Instantiates a new addon info.
-	 *
-	 * @param name the name
-	 * @param enabled the enabled
-	 * @param crc the crc
-	 */
-	public AddonInfo(String name, byte enabled, int crc) {
-		super();
-		Name = name;
-		Enabled = enabled;
-		CRC = crc;
-	}
-	
-	/**
-	 * Gets the name.
-	 *
-	 * @return the name
-	 */
-	public final String getName() {
-		return Name;
-	}
-	
-	/**
-	 * Sets the name.
-	 *
-	 * @param name the name to set
-	 */
-	public final void setName(String name) {
-		Name = name;
-	}
-	
-	/**
-	 * Gets the enabled.
-	 *
-	 * @return the enabled
-	 */
-	public final byte getEnabled() {
-		return Enabled;
-	}
-	
-	/**
-	 * Sets the enabled.
-	 *
-	 * @param enabled the enabled to set
-	 */
-	public final void setEnabled(byte enabled) {
-		Enabled = enabled;
-	}
-	
-	/**
-	 * Gets the cRC.
-	 *
-	 * @return the cRC
-	 */
-	public final int getCRC() {
-		return CRC;
-	}
-	
-	/**
-	 * Sets the cRC.
-	 *
-	 * @param cRC the cRC to set
-	 */
-	public final void setCRC(int cRC) {
-		CRC = cRC;
-	}
+    private int    CRC;
+    
+    /**
+     * Instantiates a new addon info.
+     * 
+     * @param name
+     *            the name
+     * @param enabled
+     *            the enabled
+     * @param crc
+     *            the crc
+     */
+    public AddonInfo(final String name, final byte enabled, final int crc) {
+    
+        super();
+        this.Name = name;
+        this.Enabled = enabled;
+        this.CRC = crc;
+    }
+    
+    /**
+     * Gets the name.
+     * 
+     * @return the name
+     */
+    public final String getName() {
+    
+        return this.Name;
+    }
+    
+    /**
+     * Sets the name.
+     * 
+     * @param name
+     *            the name to set
+     */
+    public final void setName(final String name) {
+    
+        this.Name = name;
+    }
+    
+    /**
+     * Gets the enabled.
+     * 
+     * @return the enabled
+     */
+    public final byte getEnabled() {
+    
+        return this.Enabled;
+    }
+    
+    /**
+     * Sets the enabled.
+     * 
+     * @param enabled
+     *            the enabled to set
+     */
+    public final void setEnabled(final byte enabled) {
+    
+        this.Enabled = enabled;
+    }
+    
+    /**
+     * Gets the cRC.
+     * 
+     * @return the cRC
+     */
+    public final int getCRC() {
+    
+        return this.CRC;
+    }
+    
+    /**
+     * Sets the cRC.
+     * 
+     * @param cRC
+     *            the cRC to set
+     */
+    public final void setCRC(final int cRC) {
+    
+        this.CRC = cRC;
+    }
 }

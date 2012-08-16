@@ -52,160 +52,162 @@ import org.jmangos.realm.service.AccountService;
  * The Class CMSG_AUTH_SESSION.
  */
 public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
-	
-	/** The Constant logger. */
-	private static final Logger logger = Logger
-			.getLogger(CMSG_AUTH_SESSION.class);
-	
-	/** The account service. */
-	@Inject
-	private AccountService accountService;
-	
-	/** The sender. */
-	@Inject
-	@Named("client")
-	private AbstractPacketSender sender;
-	
-	/** The account name. */
-	private String accountName;
-	
-	/** The client seed. */
-	private byte[] clientSeed;
-	
-	/** The digest. */
-	private byte[] digest;
-	
-	/** The Client build. */
-	@SuppressWarnings("unused")
-	private int ClientBuild;
-	
-	/** The addon lists. */
-	private ArrayList<AddonInfo> addonLists;
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
-	 */
-	@Override
-	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		ClientBuild = readD();
-		skip(4);
-		accountName = readS();
-		skip(4);
-		clientSeed = readB(4);
-		skip(20);
-		digest = readB(20);
-
-		if (getAvaliableBytes() < 4) {
-			return;
-		}
-
-		int UncopressedSize = readD();
-		byte[] compressedData = readB(getAvaliableBytes());
-		Inflater decompressor = new Inflater();
-		decompressor.setInput(compressedData);
-
-		ByteArrayOutputStream bos = new ByteArrayOutputStream(
-				compressedData.length);
-
-		byte[] buf = new byte[1024];
-		while (!decompressor.finished()) {
-			try {
-				int count = decompressor.inflate(buf);
-				bos.write(buf, 0, count);
-			} catch (DataFormatException e) {
-			}
-		}
-		try {
-			bos.close();
-		} catch (IOException e) {
-		}
-
-		byte[] decompressedData = bos.toByteArray();
-		if (UncopressedSize != decompressedData.length) {
-			logger.warn("Somesing wrong with compressed addonInfo");
-			return;
-		}
-		ChannelBuffer addonInfo = ChannelBuffers.wrappedBuffer(
-				ByteOrder.LITTLE_ENDIAN, decompressedData);
-
-		int addonsCount = addonInfo.readInt();
-
-		addonLists = new ArrayList<AddonInfo>(addonsCount);
-		for (int i = 0; i < addonsCount; i++) {
-			TextBuilder tb = TextBuilder.newInstance();
-			for (byte c; (c = addonInfo.readByte()) != 0;)
-				tb.append((char) c);
-			String addonName = tb.toString(); 
-			TextBuilder.recycle(tb);
-			byte enabled = addonInfo.readByte();
-			int crc = addonInfo.readInt();
-			/* int unk1 = */addonInfo.readInt();
-			addonLists.add(new AddonInfo(addonName, enabled, crc));
-		}
-
+    
+    /** The Constant logger. */
+    private static final Logger  logger = Logger.getLogger(CMSG_AUTH_SESSION.class);
+    
+    /** The account service. */
+    @Inject
+    private AccountService       accountService;
+    
+    /** The sender. */
+    @Inject
+    @Named("client")
+    private AbstractPacketSender sender;
+    
+    /** The account name. */
+    private String               accountName;
+    
+    /** The client seed. */
+    private byte[]               clientSeed;
+    
+    /** The digest. */
+    private byte[]               digest;
+    
+    /** The Client build. */
+    @SuppressWarnings("unused")
+    private int                  ClientBuild;
+    
+    /** The addon lists. */
+    private ArrayList<AddonInfo> addonLists;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
+     */
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
+    
+        this.ClientBuild = readD();
+        skip(4);
+        this.accountName = readS();
+        skip(4);
+        this.clientSeed = readB(4);
+        skip(20);
+        this.digest = readB(20);
+        
+        if (getAvaliableBytes() < 4) {
+            return;
+        }
+        
+        final int UncopressedSize = readD();
+        final byte[] compressedData = readB(getAvaliableBytes());
+        final Inflater decompressor = new Inflater();
+        decompressor.setInput(compressedData);
+        
+        final ByteArrayOutputStream bos = new ByteArrayOutputStream(compressedData.length);
+        
+        final byte[] buf = new byte[1024];
+        while (!decompressor.finished()) {
+            try {
+                final int count = decompressor.inflate(buf);
+                bos.write(buf, 0, count);
+            } catch (final DataFormatException e) {
+            }
+        }
+        try {
+            bos.close();
+        } catch (final IOException e) {
+        }
+        
+        final byte[] decompressedData = bos.toByteArray();
+        if (UncopressedSize != decompressedData.length) {
+            logger.warn("Somesing wrong with compressed addonInfo");
+            return;
+        }
+        final ChannelBuffer addonInfo = ChannelBuffers.wrappedBuffer(ByteOrder.LITTLE_ENDIAN, decompressedData);
+        
+        final int addonsCount = addonInfo.readInt();
+        
+        this.addonLists = new ArrayList<AddonInfo>(addonsCount);
+        for (int i = 0; i < addonsCount; i++) {
+            final TextBuilder tb = TextBuilder.newInstance();
+            for (byte c; (c = addonInfo.readByte()) != 0;) {
+                tb.append((char) c);
+            }
+            final String addonName = tb.toString();
+            TextBuilder.recycle(tb);
+            final byte enabled = addonInfo.readByte();
+            final int crc = addonInfo.readInt();
+            /* int unk1 = */addonInfo.readInt();
+            this.addonLists.add(new AddonInfo(addonName, enabled, crc));
+        }
+        
         /* int unk2 = */addonInfo.readInt();
-	}
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
-	 */
-	@Override
-	protected void runImpl() {
-		Account account  = accountService
-				.createAndAttachAccount(accountName, getClient());
-
-		RealmToClientChannelHandler channelHandler = (RealmToClientChannelHandler) this.getClient()
-				.getChannel().getPipeline().getLast();
-		String SessionKey = accountService
-				.getSessionKeyFromDB(account.getName());
-		MessageDigest sha;
-		try {
-			sha = MessageDigest.getInstance("SHA-1");
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			return;
-		}
-		byte[] t = {0, 0, 0, 0};
-		sha.update(account.getName().getBytes());
-		sha.update(t);
-		sha.update(clientSeed);
-		sha.update(channelHandler.getSeed());
-		sha.update(convertMangosSessionKey(SessionKey));
-
-		if (!Arrays.equals(sha.digest(), digest)) {
-			getChannel().close();
-			return;
-		}
-
-		channelHandler.getCrypt().init(convertMangosSessionKey(SessionKey));
-		sender.send(getClient(), new SMSG_AUTH_RESPONSE());
-		getClient().setChannelState(State.AUTHED);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
+     */
+    @Override
+    protected void runImpl() {
+    
+        final Account account = this.accountService.createAndAttachAccount(this.accountName, getClient());
+        
+        final RealmToClientChannelHandler channelHandler = (RealmToClientChannelHandler) getClient().getChannel().getPipeline().getLast();
+        final String SessionKey = this.accountService.getSessionKeyFromDB(account.getName());
+        MessageDigest sha;
+        try {
+            sha = MessageDigest.getInstance("SHA-1");
+        } catch (final NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return;
+        }
+        final byte[] t = { 0, 0, 0, 0 };
+        sha.update(account.getName().getBytes());
+        sha.update(t);
+        sha.update(this.clientSeed);
+        sha.update(channelHandler.getSeed());
+        sha.update(convertMangosSessionKey(SessionKey));
+        
+        if (!Arrays.equals(sha.digest(), this.digest)) {
+            getChannel().close();
+            return;
+        }
+        
+        channelHandler.getCrypt().init(convertMangosSessionKey(SessionKey));
+        this.sender.send(getClient(), new SMSG_AUTH_RESPONSE());
+        getClient().setChannelState(State.AUTHED);
         // TODO: what is this?
-		/*account.setTutorials(
-				accountService.loadTutorialsDataFromDB(account.getObjectId()));*/
-        SMSG_ADDON_INFO addonInfoPacket = new SMSG_ADDON_INFO( addonLists );
-
-		sender.send(getClient(), addonInfoPacket );
-		sender.send(getClient(), new SMSG_CLIENTCACHE_VERSION());
-		sender.send(getClient(), new SMSG_TUTORIAL_FLAGS());
-
-	}
-
-	/**
-	 * Convert mangos session key.
-	 *
-	 * @param hexkey the hexkey
-	 * @return the byte[]
-	 */
-	private byte[] convertMangosSessionKey(String hexkey) {
-		int len = hexkey.length();
-		byte[] data = new byte[len / 2];
-		for (int i = 0; i < len; i += 2) {
-			data[(len - i) / 2 - 1] = (byte) ((Character.digit(
-					hexkey.charAt(i), 16) << 4) + Character.digit(hexkey
-					.charAt(i + 1), 16));
-		}
-		return data;
-
-	}
+        /*
+         * account.setTutorials( accountService.loadTutorialsDataFromDB(account.getObjectId()));
+         */
+        final SMSG_ADDON_INFO addonInfoPacket = new SMSG_ADDON_INFO(this.addonLists);
+        
+        this.sender.send(getClient(), addonInfoPacket);
+        this.sender.send(getClient(), new SMSG_CLIENTCACHE_VERSION());
+        this.sender.send(getClient(), new SMSG_TUTORIAL_FLAGS());
+        
+    }
+    
+    /**
+     * Convert mangos session key.
+     * 
+     * @param hexkey
+     *            the hexkey
+     * @return the byte[]
+     */
+    private byte[] convertMangosSessionKey(final String hexkey) {
+    
+        final int len = hexkey.length();
+        final byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[((len - i) / 2) - 1] = (byte) ((Character.digit(hexkey.charAt(i), 16) << 4) + Character.digit(hexkey.charAt(i + 1), 16));
+        }
+        return data;
+        
+    }
 }

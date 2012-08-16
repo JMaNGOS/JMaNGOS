@@ -22,11 +22,11 @@ import org.jmangos.commons.network.netty.model.PacketData;
 /**
  * A factory for creating RealmPacketHandler objects.
  */
-public class RealmToClientPacketHandlerFactory extends AbstractPacketHandlerFactory{
-	@Override
-	public void loadPacket() {
-		addList(loadStaticData(PacketData.class,
-				packetXSDLocation,
-				clientPacketPath));
-	}
+public class RealmToClientPacketHandlerFactory extends AbstractPacketHandlerFactory {
+    
+    @Override
+    public void loadPacket() {
+    
+        addList(loadStaticData(PacketData.class, this.packetXSDLocation, this.clientPacketPath));
+    }
 }

@@ -25,47 +25,50 @@ import org.jmangos.commons.network.model.State;
  * The Class <tt>TCMD_AUTH_LOGON_PROOF</tt>.
  */
 public class TCMD_AUTH_LOGON_PROOF extends AbstractWoWServerPacket {
-
-	/** The response. */
-	private WoWAuthResponse response;
-
-	/**
-	 * Instantiates a new <tt>TCMD_AUTH_LOGON_PROOF</tt>.
-	 */
-	public TCMD_AUTH_LOGON_PROOF() {
-	}
-
-	/**
-	 * Constructs new instance of <tt>TCMD_AUTH_LOGON_PROOF</tt> packet.
-	 * 
-	 * @param response
-	 *            the WoWAuthResponse
-	 */
-	public TCMD_AUTH_LOGON_PROOF(WoWAuthResponse response) {
-		this.response = response;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void writeImpl() {
-		writeC(response.getMessageId());
-		if (response == WoWAuthResponse.WOW_SUCCESS) {
-			getChannel().setChannelState(State.AUTHED);
-			writeB(((Account) (getChannel().getChanneledObject())).getM2());
-			writeC(0);
-			writeC(-128);
-			writeC(0);
-			writeC(0);
-			// surveyId
-			writeC(0);
-			writeC(0);
-			writeC(0);
-			writeC(0);
-			// unkFlags
-			writeC(0);
-			writeC(0);
-		}
-	}
+    
+    /** The response. */
+    private WoWAuthResponse response;
+    
+    /**
+     * Instantiates a new <tt>TCMD_AUTH_LOGON_PROOF</tt>.
+     */
+    public TCMD_AUTH_LOGON_PROOF() {
+    
+    }
+    
+    /**
+     * Constructs new instance of <tt>TCMD_AUTH_LOGON_PROOF</tt> packet.
+     * 
+     * @param response
+     *            the WoWAuthResponse
+     */
+    public TCMD_AUTH_LOGON_PROOF(final WoWAuthResponse response) {
+    
+        this.response = response;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writeC(this.response.getMessageId());
+        if (this.response == WoWAuthResponse.WOW_SUCCESS) {
+            getChannel().setChannelState(State.AUTHED);
+            writeB(((Account) (getChannel().getChanneledObject())).getM2());
+            writeC(0);
+            writeC(-128);
+            writeC(0);
+            writeC(0);
+            // surveyId
+            writeC(0);
+            writeC(0);
+            writeC(0);
+            writeC(0);
+            // unkFlags
+            writeC(0);
+            writeC(0);
+        }
+    }
 }

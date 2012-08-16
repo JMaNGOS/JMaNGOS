@@ -20,5 +20,5 @@ package org.jmangos.realm.model.base.character;
  * The Class EnchantData.
  */
 public class EnchantData {
-
+    
 }

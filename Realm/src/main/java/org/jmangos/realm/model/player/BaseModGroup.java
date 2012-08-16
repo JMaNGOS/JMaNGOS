@@ -24,15 +24,15 @@ package org.jmangos.realm.model.player;
  * The Enum BaseModGroup.
  */
 public enum BaseModGroup {
-	
-	/** The CRI t_ percentage. */
-	CRIT_PERCENTAGE, 
- /** The RANGE d_ cri t_ percentage. */
- RANGED_CRIT_PERCENTAGE, 
- /** The OFFHAN d_ cri t_ percentage. */
- OFFHAND_CRIT_PERCENTAGE, 
- /** The SHIEL d_ bloc k_ value. */
- SHIELD_BLOCK_VALUE, 
- /** The BASEMO d_ end. */
- BASEMOD_END
+    
+    /** The CRI t_ percentage. */
+    CRIT_PERCENTAGE,
+    /** The RANGE d_ cri t_ percentage. */
+    RANGED_CRIT_PERCENTAGE,
+    /** The OFFHAN d_ cri t_ percentage. */
+    OFFHAND_CRIT_PERCENTAGE,
+    /** The SHIEL d_ bloc k_ value. */
+    SHIELD_BLOCK_VALUE,
+    /** The BASEMO d_ end. */
+    BASEMOD_END
 }

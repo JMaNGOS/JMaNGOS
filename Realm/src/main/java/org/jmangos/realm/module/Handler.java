@@ -16,11 +16,6 @@
  *******************************************************************************/
 package org.jmangos.realm.module;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
-import com.google.inject.Scopes;
-import com.google.inject.Singleton;
-import com.google.inject.name.Names;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.module.CommonModule;
@@ -43,80 +38,77 @@ import org.jmangos.realm.network.netty.factory.RealmToAuthPipelineFactory;
 import org.jmangos.realm.network.netty.factory.RealmToClientPipelineFactory;
 import org.jmangos.realm.network.netty.handler.RealmToAuthConnectHandler;
 import org.jmangos.realm.network.netty.handler.RealmToClientConnectHandler;
-import org.jmangos.realm.service.*;
+import org.jmangos.realm.service.AccountService;
+import org.jmangos.realm.service.DBCStorage;
+import org.jmangos.realm.service.ItemStorages;
+import org.jmangos.realm.service.MapService;
+import org.jmangos.realm.service.PlayerClassLevelInfoStorages;
+import org.jmangos.realm.service.PlayerLevelStorages;
+import org.jmangos.realm.service.RealmNetworkService;
+import org.jmangos.realm.service.SimpleStorages;
 import org.jmangos.realm.utils.ShutdownHook;
+
+import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
+import com.google.inject.Scopes;
+import com.google.inject.Singleton;
+import com.google.inject.name.Names;
 
 /**
  * The Class Handler.
  */
 public class Handler extends AbstractModule {
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see com.google.inject.AbstractModule#configure()
-	 */
-	@Override
-	protected void configure() {
-		install(new CommonModule());
-
-		bind(String.class).annotatedWith(Names.named("toClient")).toInstance(
-				"./conf/packetData/rc-packets.xml");
-
-		bind(String.class).annotatedWith(Names.named("toServer")).toInstance(
-                "./conf/packetData/rl-packets.xml");
-
-		bind(NetworkService.class).to(RealmNetworkService.class).in(
-				Scopes.SINGLETON);
-
-		bind(ThreadPoolManager.class).to(CommonThreadPoolManager.class).in(
-				Scopes.SINGLETON);
-		bind(AbstractPacketSender.class).annotatedWith(Names.named("client"))
-				.to(NettyPacketSender.class).in(Scopes.SINGLETON);
-
-		bind(AbstractPacketSender.class)
-				.annotatedWith(Names.named("RealmToAuth"))
-				.to(ServerPacketSender.class).in(Scopes.SINGLETON);
-
-		bind(PacketHandlerFactory.class)
-				.annotatedWith(Names.named("AuthToClient"))
-				.to(RealmToClientPacketHandlerFactory.class)
-				.in(Scopes.SINGLETON);
-
-		bind(PacketHandlerFactory.class)
-				.annotatedWith(Names.named("RealmToAuth"))
-				.to(RealmToAuthPacketHandlerFactory.class).in(Scopes.SINGLETON);
-
-		bind(ChannelPipelineFactory.class)
-				.annotatedWith(Names.named("RealmToClient"))
-				.to(RealmToClientPipelineFactory.class).in(Scopes.SINGLETON);
-		bind(ChannelPipelineFactory.class)
-				.annotatedWith(Names.named("RealmToAuth"))
-				.to(RealmToAuthPipelineFactory.class).in(Scopes.SINGLETON);
-		bind(ConnectHandler.class).annotatedWith(Names.named("RealmToClient"))
-				.to(RealmToClientConnectHandler.class).in(Scopes.SINGLETON);
-		bind(ConnectHandler.class).annotatedWith(Names.named("RealmToAuth"))
-				.to(RealmToAuthConnectHandler.class).in(Scopes.SINGLETON);
-
+    
+    /**
+     * (non-Javadoc)
+     * 
+     * @see com.google.inject.AbstractModule#configure()
+     */
+    @Override
+    protected void configure() {
+    
+        install(new CommonModule());
+        
+        bind(String.class).annotatedWith(Names.named("toClient")).toInstance("./conf/packetData/rc-packets.xml");
+        
+        bind(String.class).annotatedWith(Names.named("toServer")).toInstance("./conf/packetData/rl-packets.xml");
+        
+        bind(NetworkService.class).to(RealmNetworkService.class).in(Scopes.SINGLETON);
+        
+        bind(ThreadPoolManager.class).to(CommonThreadPoolManager.class).in(Scopes.SINGLETON);
+        bind(AbstractPacketSender.class).annotatedWith(Names.named("client")).to(NettyPacketSender.class).in(Scopes.SINGLETON);
+        
+        bind(AbstractPacketSender.class).annotatedWith(Names.named("RealmToAuth")).to(ServerPacketSender.class).in(Scopes.SINGLETON);
+        
+        bind(PacketHandlerFactory.class).annotatedWith(Names.named("AuthToClient")).to(RealmToClientPacketHandlerFactory.class).in(Scopes.SINGLETON);
+        
+        bind(PacketHandlerFactory.class).annotatedWith(Names.named("RealmToAuth")).to(RealmToAuthPacketHandlerFactory.class).in(Scopes.SINGLETON);
+        
+        bind(ChannelPipelineFactory.class).annotatedWith(Names.named("RealmToClient")).to(RealmToClientPipelineFactory.class).in(Scopes.SINGLETON);
+        bind(ChannelPipelineFactory.class).annotatedWith(Names.named("RealmToAuth")).to(RealmToAuthPipelineFactory.class).in(Scopes.SINGLETON);
+        bind(ConnectHandler.class).annotatedWith(Names.named("RealmToClient")).to(RealmToClientConnectHandler.class).in(Scopes.SINGLETON);
+        bind(ConnectHandler.class).annotatedWith(Names.named("RealmToAuth")).to(RealmToAuthConnectHandler.class).in(Scopes.SINGLETON);
+        
         bind(AccountDAO.class).in(Scopes.SINGLETON);
-		bind(PlayerDAO.class).in(Scopes.SINGLETON);
-		bind(ItemDAO.class).in(Scopes.SINGLETON);
-		bind(SimpleDataDAO.class).in(Scopes.SINGLETON);
-		bind(ItemStorages.class).in(Scopes.SINGLETON);
+        bind(PlayerDAO.class).in(Scopes.SINGLETON);
+        bind(ItemDAO.class).in(Scopes.SINGLETON);
+        bind(SimpleDataDAO.class).in(Scopes.SINGLETON);
+        bind(ItemStorages.class).in(Scopes.SINGLETON);
         bind(DBCStorage.class).in(Scopes.SINGLETON);
-		bind(SimpleStorages.class).in(Scopes.SINGLETON);
-
-		bind(PlayerClassLevelInfoStorages.class).in(Scopes.SINGLETON);
-		bind(PlayerLevelStorages.class).in(Scopes.SINGLETON);
-		bind(MapService.class).in(Scopes.SINGLETON);
-		bind(AccountService.class).in(Scopes.SINGLETON);
-		bind(DatabaseFactory.class).in(Scopes.SINGLETON);
-		bind(ShutdownHook.class).in(Scopes.SINGLETON);
-	}
-
-	@Provides
-	@Singleton
-	public Config provideConfig() {
-		return new Config();
-	}
+        bind(SimpleStorages.class).in(Scopes.SINGLETON);
+        
+        bind(PlayerClassLevelInfoStorages.class).in(Scopes.SINGLETON);
+        bind(PlayerLevelStorages.class).in(Scopes.SINGLETON);
+        bind(MapService.class).in(Scopes.SINGLETON);
+        bind(AccountService.class).in(Scopes.SINGLETON);
+        bind(DatabaseFactory.class).in(Scopes.SINGLETON);
+        bind(ShutdownHook.class).in(Scopes.SINGLETON);
+    }
+    
+    @Provides
+    @Singleton
+    public Config provideConfig() {
+    
+        return new Config();
+    }
 }

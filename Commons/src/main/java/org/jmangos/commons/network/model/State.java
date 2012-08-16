@@ -20,9 +20,9 @@ package org.jmangos.commons.network.model;
  * The Enum State.
  */
 public enum State {
-
-	/** The CONNECTED. */
-	CONNECTED,
-	/** The AUTHED. */
-	AUTHED;
+    
+    /** The CONNECTED. */
+    CONNECTED,
+    /** The AUTHED. */
+    AUTHED;
 }

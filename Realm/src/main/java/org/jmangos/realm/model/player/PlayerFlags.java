@@ -20,5 +20,5 @@ package org.jmangos.realm.model.player;
  * The Enum PlayerFlags.
  */
 public enum PlayerFlags {
-
+    
 }

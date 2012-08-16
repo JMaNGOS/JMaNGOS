@@ -26,60 +26,67 @@ import org.jmangos.commons.network.model.UpdateFieldType;
  */
 public enum ObjectFields implements UpdateField {
     
-    /** The OBJECT_FIELD_GUID
-     *  Size: 2, Type: LONG, Flags: PUBLIC
+    /**
+     * The OBJECT_FIELD_GUID Size: 2, Type: LONG, Flags: PUBLIC
      */
-    OBJECT_FIELD_GUID( 0x0000 ),
+    OBJECT_FIELD_GUID(0x0000),
     
-    /** The OBJECT_FIELD_TYPE
-     *  Size: 1, Type: INT, Flags: PUBLIC
+    /**
+     * The OBJECT_FIELD_TYPE Size: 1, Type: INT, Flags: PUBLIC
      */
-    OBJECT_FIELD_TYPE( 0x0002 ),
+    OBJECT_FIELD_TYPE(0x0002),
     
-    /** The OBJECT_FIELD_ENTRY
-     *  Size: 1, Type: INT, Flags: PUBLIC
+    /**
+     * The OBJECT_FIELD_ENTRY Size: 1, Type: INT, Flags: PUBLIC
      */
-    OBJECT_FIELD_ENTRY( 0x0003 ),
+    OBJECT_FIELD_ENTRY(0x0003),
     
-    /** The OBJECT_FIELD_SCALE_X
-     *  Size: 1, Type: FLOAT, Flags: PUBLIC
+    /**
+     * The OBJECT_FIELD_SCALE_X Size: 1, Type: FLOAT, Flags: PUBLIC
      */
-    OBJECT_FIELD_SCALE_X( 0x0004 ),
+    OBJECT_FIELD_SCALE_X(0x0004),
     
-    /** The OBJECT_FIELD_PADDING
-     *  Size: 1, Type: INT, Flags: NONE
+    /**
+     * The OBJECT_FIELD_PADDING Size: 1, Type: INT, Flags: NONE
      */
-    OBJECT_FIELD_PADDING( 0x0005 );
+    OBJECT_FIELD_PADDING(0x0005);
     
     /** The OBJECT_END */
-    public static int OBJECT_END           = 0x0006;
-
-    int value;
-    private ObjectFields( int value ) {
+    public static int OBJECT_END = 0x0006;
+    
+    int               value;
+    
+    private ObjectFields(final int value) {
+    
         this.value = value;
     }
-
-
+    
     @Override
     public UpdateFieldType getType() {
+    
         return null;
     }
-
+    
     @Override
     public int getSize() {
+    
         return 0;
     }
-
+    
     @Override
     public int getValue() {
+    
         return this.value;
     }
-
-    public static UpdateField get( int value ) {
-        for( UpdateField field : values() )
-            if (field.getValue() == value)
+    
+    public static UpdateField get(final int value) {
+    
+        for (final UpdateField field : values()) {
+            if (field.getValue() == value) {
                 return field;
-
+            }
+        }
+        
         return null;
     }
 }

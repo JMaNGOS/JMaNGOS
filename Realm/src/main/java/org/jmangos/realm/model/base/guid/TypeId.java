@@ -21,21 +21,21 @@ package org.jmangos.realm.model.base.guid;
  * The Enum TypeId.
  */
 public enum TypeId {
-
-	/** The TYPEI d_ object. */
-	TYPEID_OBJECT,
-	/** The TYPEI d_ item. */
-	TYPEID_ITEM,
-	/** The TYPEI d_ container. */
-	TYPEID_CONTAINER,
-	/** The TYPEI d_ unit. */
-	TYPEID_UNIT,
-	/** The TYPEI d_ player. */
-	TYPEID_PLAYER,
-	/** The TYPEI d_ gameobject. */
-	TYPEID_GAMEOBJECT,
-	/** The TYPEI d_ dynamicobject. */
-	TYPEID_DYNAMICOBJECT,
-	/** The TYPEI d_ corpse. */
-	TYPEID_CORPSE;
+    
+    /** The TYPEI d_ object. */
+    TYPEID_OBJECT,
+    /** The TYPEI d_ item. */
+    TYPEID_ITEM,
+    /** The TYPEI d_ container. */
+    TYPEID_CONTAINER,
+    /** The TYPEI d_ unit. */
+    TYPEID_UNIT,
+    /** The TYPEI d_ player. */
+    TYPEID_PLAYER,
+    /** The TYPEI d_ gameobject. */
+    TYPEID_GAMEOBJECT,
+    /** The TYPEI d_ dynamicobject. */
+    TYPEID_DYNAMICOBJECT,
+    /** The TYPEI d_ corpse. */
+    TYPEID_CORPSE;
 }

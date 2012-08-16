@@ -39,50 +39,50 @@ import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.ReceivablePacket;
 import org.jmangos.realm.network.netty.handler.RealmToClientChannelHandler;
 
-
 /**
  * The Class AbstractRealmClientPacket.
- *
+ * 
  */
-public abstract class AbstractRealmClientPacket extends ReceivablePacket
-{
-	
-	/**
-	 * Instantiates a new abstract realm client packet.
-	 *
-	 * @param opcode the opcode
-	 */
-	public AbstractRealmClientPacket(int opcode)
-	{
-		super(opcode);
-		
-	}
-	
-	/**
-	 * Instantiates a new abstract realm client packet.
-	 */
-	public AbstractRealmClientPacket()
-	{
-		super();
-	}
-	
-	/**
-	 * Gets the channel handler.
-	 *
-	 * @return the r2 c channel handler
-	 */
-	protected RealmToClientChannelHandler GetChannelHandler(){
-		return (RealmToClientChannelHandler)getChannel().getPipeline().getLast(); 
-		
-	}
-	
-	/**
-	 * Gets the account.
-	 *
-	 * @return the account
-	 */
-	public Account getAccount(){
-		return (Account)((NettyNetworkChannel) _client).getChanneledObject();
-	}
+public abstract class AbstractRealmClientPacket extends ReceivablePacket {
+    
+    /**
+     * Instantiates a new abstract realm client packet.
+     * 
+     * @param opcode
+     *            the opcode
+     */
+    public AbstractRealmClientPacket(final int opcode) {
+    
+        super(opcode);
+        
+    }
+    
+    /**
+     * Instantiates a new abstract realm client packet.
+     */
+    public AbstractRealmClientPacket() {
+    
+        super();
+    }
+    
+    /**
+     * Gets the channel handler.
+     * 
+     * @return the r2 c channel handler
+     */
+    protected RealmToClientChannelHandler GetChannelHandler() {
+    
+        return (RealmToClientChannelHandler) getChannel().getPipeline().getLast();
+        
+    }
+    
+    /**
+     * Gets the account.
+     * 
+     * @return the account
+     */
+    public Account getAccount() {
+    
+        return (Account) ((NettyNetworkChannel) this._client).getChanneledObject();
+    }
 }
-

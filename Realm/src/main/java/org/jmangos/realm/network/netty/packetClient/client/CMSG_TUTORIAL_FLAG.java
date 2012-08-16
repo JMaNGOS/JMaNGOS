@@ -25,31 +25,36 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
  * The Class CMSG_TUTORIAL_FLAG.
  */
 public class CMSG_TUTORIAL_FLAG extends AbstractWoWClientPacket {
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
-	 */
-	@Override
-	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		int Flag = readD();
-		int wInt = (Flag / 32);
-		if (wInt >= 8) {
-			return;
-		}
-		int rInt = (Flag % 32);
-
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
+     */
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
+    
+        final int Flag = readD();
+        final int wInt = (Flag / 32);
+        if (wInt >= 8) {
+            return;
+        }
+        final int rInt = (Flag % 32);
+        
         // TODO:FIXME
-		int tutorials = 0;//getAccount().getTutorials(wInt); /* disabled by paalgyula */
-		tutorials |= (1 << rInt);
-		//getAccount().setTutorials(tutorials, wInt); /* disabled by paalgyula */
-
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
-	 */
-	@Override
-	protected void runImpl() {
-
-	}
+        int tutorials = 0;// getAccount().getTutorials(wInt); /* disabled by paalgyula */
+        tutorials |= (1 << rInt);
+        // getAccount().setTutorials(tutorials, wInt); /* disabled by paalgyula */
+        
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
+     */
+    @Override
+    protected void runImpl() {
+    
+    }
 }

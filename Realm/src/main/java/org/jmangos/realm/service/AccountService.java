@@ -17,7 +17,6 @@
 package org.jmangos.realm.service;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -27,94 +26,107 @@ import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.realm.dao.AccountDAO;
 import org.jmangos.realm.model.account.AccountData;
 import org.jmangos.realm.model.base.character.CharacterData;
-import org.jmangos.realm.model.base.item.ItemPrototype;
 
 /**
  * This class is responsible for controlling all account actions.
- *
+ * 
  * @author MinimaJack
  */
 public class AccountService {
-	
-	/** The account dao. */
-	@Inject
-	private AccountDAO accountDAO;
-	
-	/** The item storages. */
-	@Inject
-	private ItemStorages itemStorages;
-
-	/**
-	 * Creates the and attach account.
-	 *
-	 * @param name the name
-	 * @param channelHandler the channel handler
-	 * @return the account
-	 */
-	public Account createAndAttachAccount(String name, NettyNetworkChannel channelHandler) {
-		Account account = getAccountFromDB(name);
-		channelHandler.setChanneledObject(account);
-		return account;
-	}
-
-	/**
-	 * Loads account from DB and returns it, or returns null if account was not
-	 * loaded.
-	 *
-	 * @param accountName Account name
-	 * @return loaded account or null
-	 */
-	public Account getAccountFromDB(String accountName) {
-		return accountDAO.getAccount(accountName);
-	}
-
-	/**
-	 * Save session key.
-	 *
-	 * @param accountName the account name
-	 * @param Key the key
-	 */
-	public void saveSessionKey(String accountName, String Key) {
-		accountDAO.saveSessionKey(accountName, Key);
-	}
-
-	/**
-	 * Gets the account data.
-	 *
-	 * @param id the id
-	 * @return the account data
-	 */
-	public HashMap<Integer, AccountData> getAccountData(int id) {
-		return accountDAO.getAccountData(id);
-	}
-
-	/**
-	 * Gets the session key from db.
-	 *
-	 * @param username the username
-	 * @return the session key from db
-	 * Session Key from DB
-	 */
-	public String getSessionKeyFromDB(String username) {
-		return accountDAO.getSessionKey(username);
-	}
-
-	/**
-	 * Load tutorials data from db.
-	 *
-	 * @param guid - Account
-	 * @return the int[]
-	 * all tutorial Data saved in DB
-	 */
-	public int[] loadTutorialsDataFromDB(int guid) {
-		return accountDAO.getTutorialsData(guid);
-	}
-
+    
+    /** The account dao. */
+    @Inject
+    private AccountDAO   accountDAO;
+    
+    /** The item storages. */
+    @Inject
+    private ItemStorages itemStorages;
+    
+    /**
+     * Creates the and attach account.
+     * 
+     * @param name
+     *            the name
+     * @param channelHandler
+     *            the channel handler
+     * @return the account
+     */
+    public Account createAndAttachAccount(final String name, final NettyNetworkChannel channelHandler) {
+    
+        final Account account = getAccountFromDB(name);
+        channelHandler.setChanneledObject(account);
+        return account;
+    }
+    
+    /**
+     * Loads account from DB and returns it, or returns null if account was not loaded.
+     * 
+     * @param accountName
+     *            Account name
+     * @return loaded account or null
+     */
+    public Account getAccountFromDB(final String accountName) {
+    
+        return this.accountDAO.getAccount(accountName);
+    }
+    
+    /**
+     * Save session key.
+     * 
+     * @param accountName
+     *            the account name
+     * @param Key
+     *            the key
+     */
+    public void saveSessionKey(final String accountName, final String Key) {
+    
+        this.accountDAO.saveSessionKey(accountName, Key);
+    }
+    
+    /**
+     * Gets the account data.
+     * 
+     * @param id
+     *            the id
+     * @return the account data
+     */
+    public HashMap<Integer, AccountData> getAccountData(final int id) {
+    
+        return this.accountDAO.getAccountData(id);
+    }
+    
+    /**
+     * Gets the session key from db.
+     * 
+     * @param username
+     *            the username
+     * @return the session key from db Session Key from DB
+     */
+    public String getSessionKeyFromDB(final String username) {
+    
+        return this.accountDAO.getSessionKey(username);
+    }
+    
+    /**
+     * Load tutorials data from db.
+     * 
+     * @param guid
+     *            - Account
+     * @return the int[] all tutorial Data saved in DB
+     */
+    public int[] loadTutorialsDataFromDB(final int guid) {
+    
+        return this.accountDAO.getTutorialsData(guid);
+    }
+    
     /**
      * Search account's characters
-     * @param accountId account to query
+     * 
+     * @param accountId
+     *            account to query
      */
-    public List<CharacterData> getCharacters( int accountId ) {
-        return accountDAO.getCharacters( accountId );
+    public List<CharacterData> getCharacters(final int accountId) {
+    
+        return this.accountDAO.getCharacters(accountId);
     }
 }

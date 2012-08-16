@@ -21,80 +21,93 @@ package org.jmangos.realm.model.base.item;
  * The Class _Damage.
  */
 public final class _Damage {
-	
-	/** The Damage min. */
-	private float DamageMin;
-	
-	/** The Damage max. */
-	private float DamageMax;
-	
-	/** The Damage type. */
-	private byte DamageType;
-
-	/**
-	 * Instantiates a new _ damage.
-	 *
-	 * @param damageMin the damage min
-	 * @param damageMax the damage max
-	 * @param damageType the damage type
-	 */
-	public _Damage(float damageMin, float damageMax, byte damageType) {
-		DamageMin = damageMin;
-		DamageMax = damageMax;
-		DamageType = damageType;
-	}
-
-	/**
-	 * Gets the damage min.
-	 *
-	 * @return the damageMin
-	 */
-	public float getDamageMin() {
-		return DamageMin;
-	}
-
-	/**
-	 * Sets the damage min.
-	 *
-	 * @param damageMin the damageMin to set
-	 */
-	public void setDamageMin(float damageMin) {
-		DamageMin = damageMin;
-	}
-
-	/**
-	 * Gets the damage max.
-	 *
-	 * @return the damageMax
-	 */
-	public float getDamageMax() {
-		return DamageMax;
-	}
-
-	/**
-	 * Sets the damage max.
-	 *
-	 * @param damageMax the damageMax to set
-	 */
-	public void setDamageMax(float damageMax) {
-		DamageMax = damageMax;
-	}
-
-	/**
-	 * Gets the damage type.
-	 *
-	 * @return the damageType
-	 */
-	public byte getDamageType() {
-		return DamageType;
-	}
-
-	/**
-	 * Sets the damage type.
-	 *
-	 * @param damageType the damageType to set
-	 */
-	public void setDamageType(byte damageType) {
-		DamageType = damageType;
-	}
+    
+    /** The Damage min. */
+    private float DamageMin;
+    
+    /** The Damage max. */
+    private float DamageMax;
+    
+    /** The Damage type. */
+    private byte  DamageType;
+    
+    /**
+     * Instantiates a new _ damage.
+     * 
+     * @param damageMin
+     *            the damage min
+     * @param damageMax
+     *            the damage max
+     * @param damageType
+     *            the damage type
+     */
+    public _Damage(final float damageMin, final float damageMax, final byte damageType) {
+    
+        this.DamageMin = damageMin;
+        this.DamageMax = damageMax;
+        this.DamageType = damageType;
+    }
+    
+    /**
+     * Gets the damage min.
+     * 
+     * @return the damageMin
+     */
+    public float getDamageMin() {
+    
+        return this.DamageMin;
+    }
+    
+    /**
+     * Sets the damage min.
+     * 
+     * @param damageMin
+     *            the damageMin to set
+     */
+    public void setDamageMin(final float damageMin) {
+    
+        this.DamageMin = damageMin;
+    }
+    
+    /**
+     * Gets the damage max.
+     * 
+     * @return the damageMax
+     */
+    public float getDamageMax() {
+    
+        return this.DamageMax;
+    }
+    
+    /**
+     * Sets the damage max.
+     * 
+     * @param damageMax
+     *            the damageMax to set
+     */
+    public void setDamageMax(final float damageMax) {
+    
+        this.DamageMax = damageMax;
+    }
+    
+    /**
+     * Gets the damage type.
+     * 
+     * @return the damageType
+     */
+    public byte getDamageType() {
+    
+        return this.DamageType;
+    }
+    
+    /**
+     * Sets the damage type.
+     * 
+     * @param damageType
+     *            the damageType to set
+     */
+    public void setDamageType(final byte damageType) {
+    
+        this.DamageType = damageType;
+    }
 };

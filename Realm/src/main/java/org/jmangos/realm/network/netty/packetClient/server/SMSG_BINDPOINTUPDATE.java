@@ -23,29 +23,34 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 /**
  * The Class SMSG_BINDPOINTUPDATE.
  */
-public class SMSG_BINDPOINTUPDATE  extends AbstractWoWServerPacket {
-	
-	/** The player. */
-	private Player player;
-	
-	/**
-	 * Instantiates a new sMS g_ bindpointupdate.
-	 *
-	 * @param player the player
-	 */
-	public SMSG_BINDPOINTUPDATE(Player player){
-		this.player = player;
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	public void writeImpl() {
-		writeF(player.getHomeBind().getHomeBindPositionX());
-		writeF(player.getHomeBind().getHomeBindPositionY());
-		writeF(player.getHomeBind().getHomeBindPositionZ());
-		writeD(player.getHomeBind().getHomeBindMapId());
-		writeD(player.getHomeBind().getHomeBindAreaId());
-	}
+public class SMSG_BINDPOINTUPDATE extends AbstractWoWServerPacket {
+    
+    /** The player. */
+    private final Player player;
+    
+    /**
+     * Instantiates a new sMS g_ bindpointupdate.
+     * 
+     * @param player
+     *            the player
+     */
+    public SMSG_BINDPOINTUPDATE(final Player player) {
+    
+        this.player = player;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    public void writeImpl() {
+    
+        writeF(this.player.getHomeBind().getHomeBindPositionX());
+        writeF(this.player.getHomeBind().getHomeBindPositionY());
+        writeF(this.player.getHomeBind().getHomeBindPositionZ());
+        writeD(this.player.getHomeBind().getHomeBindMapId());
+        writeD(this.player.getHomeBind().getHomeBindAreaId());
+    }
 }

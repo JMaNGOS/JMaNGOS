@@ -21,10 +21,10 @@ package org.jmangos.realm.model.base.item;
  * The Class KeyRingSlots.
  */
 public class KeyRingSlots {
-	
-	/** The KEYRIN g_ slo t_ start. */
-	public static int KEYRING_SLOT_START = 86;
-	
-	/** The KEYRIN g_ slo t_ end. */
-	public static int KEYRING_SLOT_END = 118;
+    
+    /** The KEYRIN g_ slo t_ start. */
+    public static int KEYRING_SLOT_START = 86;
+    
+    /** The KEYRIN g_ slo t_ end. */
+    public static int KEYRING_SLOT_END   = 118;
 }
