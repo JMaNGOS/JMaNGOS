@@ -16,28 +16,55 @@
  *******************************************************************************/
 package org.jmangos.realm.model.player;
 
-// TODO: Auto-generated Javadoc
+import org.hibernate.annotations.ManyToAny;
+import org.jmangos.realm.model.base.character.CharacterData;
+
+import javax.persistence.*;
+
 /**
  * The Class PlayerHomeBindData.
  */
+@Entity
+@Table(name="character_homebind")
 public class PlayerHomeBindData {
-	
-	/** The home bind position x. */
-	private float homeBindPositionX;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="guid")
+    private int guid;
+
+    /** The home bind position x. */
+    @Basic
+    @Column(name="position_x")
+    private float homeBindPositionX;
 	
 	/** The home bind position y. */
-	private float homeBindPositionY;
+    @Basic
+    @Column(name="position_y")
+    private float homeBindPositionY;
 	
 	/** The home bind position z. */
+    @Basic
+    @Column(name="position_z")
 	private float homeBindPositionZ;
 	
 	/** The home bind map id. */
+    @Basic
+    @Column(name="map")
 	private int homeBindMapId;
 	
 	/** The home bind area id. */
+    @Basic
+    @Column(name="zone")
 	private int homeBindAreaId;
-	
-	/**
+
+    /**
+     * Null arg constructor for entity
+     */
+    public PlayerHomeBindData() {
+    }
+
+    /**
 	 * Instantiates a new player home bind data.
 	 *
 	 * @param homeBindPositionX the home bind position x

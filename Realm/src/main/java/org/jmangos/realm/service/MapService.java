@@ -16,39 +16,32 @@
  *******************************************************************************/
 package org.jmangos.realm.service;
 
-import javax.annotation.PostConstruct;
-
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.procedure.TObjectProcedure;
 
 import org.jmangos.commons.service.Service;
 import org.jmangos.realm.model.base.Map;
-import org.springframework.stereotype.Component;
 
 /**
  * The Class MapService.
  */
-@Component
 public class MapService implements Service {
-
+	
 	/** The maps. */
 	TIntObjectHashMap<Map> maps = new TIntObjectHashMap<Map>();
-
+	
 	/** The map updater. */
 	private MapUpdater mapUpdater = new MapUpdater();
-
-	/**
-	 * 
+	
+	/* (non-Javadoc)
 	 * @see org.jmangos.commons.service.Service#start()
 	 */
-	@PostConstruct
 	@Override
 	public void start() {
-
+		
 	}
 
-	/**
-	 * 
+	/* (non-Javadoc)
 	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override
@@ -59,9 +52,8 @@ public class MapService implements Service {
 
 	/**
 	 * Gets the map.
-	 * 
-	 * @param guid
-	 *            the guid
+	 *
+	 * @param guid the guid
 	 * @return the map
 	 */
 	public Map getMap(int guid) {
@@ -73,21 +65,20 @@ public class MapService implements Service {
 			return map;
 		}
 	}
-
+	
 	/**
 	 * Update.
 	 */
 	public void update() {
 		maps.forEachValue(mapUpdater);
 	}
-
+	
 	/**
 	 * The Class MapUpdater.
 	 */
 	class MapUpdater implements TObjectProcedure<Map> {
-
-		/**
-		 * 
+		
+		/* (non-Javadoc)
 		 * @see gnu.trove.TObjectProcedure#execute(java.lang.Object)
 		 */
 		@Override

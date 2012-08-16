@@ -24,25 +24,22 @@ import javax.inject.Named;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_PLAYED_TIME;
-import org.springframework.stereotype.Component;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CMSG_PLAYED_TIME.
  */
-@Component
 public class CMSG_PLAYED_TIME extends AbstractWoWClientPacket {
-
+	
 	/** The sender. */
 	@Inject
-	@Named("nettyPacketSender")
+	@Named("client")
 	private AbstractPacketSender sender;
-
+	
 	/** The unk. */
 	byte unk;
-
-	/*
-	 * (non-Javadoc)
-	 * 
+	
+	/* (non-Javadoc)
 	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
 	 */
 	@Override
@@ -50,10 +47,8 @@ public class CMSG_PLAYED_TIME extends AbstractWoWClientPacket {
 		unk = (byte) readC();
 
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
+	
+	/* (non-Javadoc)
 	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
 	 */
 	@Override

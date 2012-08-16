@@ -23,14 +23,18 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
  * The Class SMSG_TUTORIAL_FLAGS.
  */
 public class SMSG_TUTORIAL_FLAGS extends AbstractWoWServerPacket {
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		for (int i = 0; i < 8; i++) {
-			writeD(getAccount().getTutorials(i));
-		}
-	}
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        for (int i = 0; i < 8; i++) {
+            // TODO: reimplement tutorials
+            writeD(0x111111 /* getAccount().getTutorials(i) disabled by paalgyula */);
+        }
+    }
 }

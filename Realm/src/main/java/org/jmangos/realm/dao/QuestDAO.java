@@ -18,18 +18,36 @@ package org.jmangos.realm.dao;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.realm.model.base.PlayerClassLevelInfo;
+import org.jmangos.realm.model.base.QuestPrototype;
+
+import java.util.List;
 
 /**
  * The Class QuestDAO.
  */
-public abstract class QuestDAO {
+public class QuestDAO {
 
 	/**
 	 * Load quest prototypes.
-	 *
 	 * @return the t int object hash map
 	 */
-	public abstract TIntObjectHashMap<PlayerClassLevelInfo> loadQuestPrototypes();
+	public TIntObjectHashMap<QuestPrototype> loadQuestPrototypes() {
+        Session session = DatabaseFactory.getWorldSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(QuestPrototype.class);
+        List<QuestPrototype> questPrototypeList = criteria.list();
+
+        // Quest map by id
+        TIntObjectHashMap<QuestPrototype> map = new TIntObjectHashMap<QuestPrototype>();
+
+        for ( QuestPrototype quest : questPrototypeList ) {
+            map.put( quest.getEntry(), quest );
+        }
+
+        return map;
+    }
 
 }

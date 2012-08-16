@@ -16,43 +16,48 @@
  *******************************************************************************/
 package org.jmangos.commons.model;
 
+import java.util.Random;
+
 /**
  * The Class ManagedObject.
- * 
  */
 public class ManagedObject {
 
-	/** The object id. */
-	private final int objectId;
+    /**
+     * The object id.
+     */
+    private final Integer objectId;
 
-	/**
-	 * Instantiates a new managed object.
-	 * 
-	 * @param objectId
-	 *            the object id
-	 */
-	public ManagedObject(int objectId) {
-		this.objectId = objectId;
-	}
+    public ManagedObject() {
+        Random random = new Random();
+        objectId = random.nextInt();
+    }
 
-	/**
-	 * Gets the object id.
-	 * 
-	 * @return objectId
-	 */
-	public final int getObjectId() {
-		return objectId;
-	}
+    /**
+     * Instantiates a new managed object.
+     *
+     * @param objectId the object id
+     */
+    public ManagedObject(int objectId) {
+        this.objectId = objectId;
+    }
 
-	/**
-	 * Sets the object id.
-	 * 
-	 * @param objectId
-	 *            the object id
-	 * @return the int
-	 * @set objectId
-	 */
-	public final int setObjectId(int objectId) {
-		return objectId;
-	}
+    /**
+     * Gets the object id.
+     *
+     * @return objectId
+     */
+    public final int getObjectId() {
+        return objectId;
+    }
+
+    /**
+     * Sets the object id.
+     *
+     * @param objectId the object id
+     * @return the int
+     */
+    public final int setObjectId(int objectId) {
+        return objectId;
+    }
 }

@@ -19,17 +19,14 @@ package org.jmangos.realm.network.netty.packetClient.client;
 import java.nio.BufferUnderflowException;
 
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
-import org.springframework.stereotype.Component;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CMSG_VOICE_SESSION_ENABLE.
  */
-@Component
 public class CMSG_VOICE_SESSION_ENABLE extends AbstractWoWClientPacket {
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
 	 */
 	@Override
@@ -38,14 +35,12 @@ public class CMSG_VOICE_SESSION_ENABLE extends AbstractWoWClientPacket {
 		skipAll();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
 	 */
 	@Override
 	protected void runImpl() {
-
+		
 	}
 
 }

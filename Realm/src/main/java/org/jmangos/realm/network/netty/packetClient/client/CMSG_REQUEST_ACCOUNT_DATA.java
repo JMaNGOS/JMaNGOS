@@ -31,25 +31,21 @@ import org.jmangos.realm.model.account.AccountDataType;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 // TODO: Auto-generated Javadoc
 // FIXME implement opcode
-import org.springframework.stereotype.Component;
-
 /**
  * The Class CMSG_REQUEST_ACCOUNT_DATA.
  */
-@Component
 public class CMSG_REQUEST_ACCOUNT_DATA extends AbstractWoWClientPacket {
 
 	/** The sender. */
+	@SuppressWarnings("unused")
 	@Inject
-	@Named("nettyPacketSender")
+	@Named("client")
 	private AbstractPacketSender sender;
-
+	
 	/** The type. */
 	private int type;
-
-	/*
-	 * (non-Javadoc)
-	 * 
+	
+	/* (non-Javadoc)
 	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
 	 */
 	@Override
@@ -57,24 +53,21 @@ public class CMSG_REQUEST_ACCOUNT_DATA extends AbstractWoWClientPacket {
 		type = readD();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
 	 */
 	@Override
 	protected void runImpl() {
 		if (type > AccountDataType.NUM_ACCOUNT_DATA_TYPES.getValue())
 			return;
-		HashMap<Integer, AccountData> adata = getAccount().getAccountData();
+		HashMap<Integer, AccountData> adata = new HashMap<Integer, AccountData>(); //getAccount().getAccountData(); /* disabled by paalgyula */
 		if (adata.containsKey(type)) {
 			Deflater compressor = new Deflater();
 			byte[] dataToCompress = adata.get(type).getData().getBytes();
 
 			compressor.setInput(dataToCompress);
 			compressor.finish();
-			ByteArrayOutputStream bos = new ByteArrayOutputStream(
-					dataToCompress.length);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream(dataToCompress.length);
 
 			byte[] buf = new byte[1024];
 			while (!compressor.finished()) {
@@ -88,6 +81,8 @@ public class CMSG_REQUEST_ACCOUNT_DATA extends AbstractWoWClientPacket {
 			// FIXME NEED COMPLETE
 			@SuppressWarnings("unused")
 			byte[] compressedData = bos.toByteArray();
+			
+			
 
 		}
 	}

@@ -5,16 +5,19 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Properties;
 
+import javax.inject.Singleton;
+
 import org.apache.log4j.Logger;
 import org.jmangos.commons.utils.PropertiesUtils;
 
+@Singleton
 public abstract class AbstractConfig {
-
+	
 	/**
 	 * Logger.
 	 */
 	private static final Logger log = Logger.getLogger(AbstractConfig.class);
-
+	
 	protected AbstractConfig(String configFileName) {
 		Properties properties;
 		try {
@@ -24,11 +27,11 @@ public abstract class AbstractConfig {
 		}
 		process(this, properties);
 	}
-
-	private static void process(Object obj, Properties... properties) {
+	
+	protected static void process(Object obj, Properties... properties) {
 		for (Field field : obj.getClass().getDeclaredFields()) {
-			if (Modifier.isStatic(field.getModifiers())
-					|| Modifier.isFinal(field.getModifiers())) {
+			if (Modifier.isStatic(field.getModifiers()) ||
+					Modifier.isFinal(field.getModifiers())) {
 				continue;
 			}
 			if (field.isAnnotationPresent(Property.class)) {
@@ -36,9 +39,8 @@ public abstract class AbstractConfig {
 			}
 		}
 	}
-
-	private static void processField(Object obj, Field field,
-			Properties... properties) {
+	
+	private static void processField(Object obj, Field field, Properties... properties) {
 		Property property = field.getAnnotation(Property.class);
 		boolean isAccessible = field.isAccessible();
 		field.setAccessible(true);
@@ -47,8 +49,7 @@ public abstract class AbstractConfig {
 			value = property.defaultValue();
 		}
 		try {
-			field.set(obj,
-					TypeTransformer.castFromString(value, field.getType()));
+			field.set(obj, TypeTransformer.castFromString(value, field.getType()));
 		} catch (IllegalAccessException e) {
 			throw new RuntimeException(e);
 		}
@@ -58,9 +59,8 @@ public abstract class AbstractConfig {
 					+ field.getDeclaringClass().getName() + " is " + value);
 		}
 	}
-
-	private static String findPropertyByKey(String key,
-			Properties... properties) {
+	
+	private static String findPropertyByKey(String key, Properties... properties) {
 		for (Properties current : properties) {
 			if (current.containsKey(key)) {
 				return current.getProperty(key);

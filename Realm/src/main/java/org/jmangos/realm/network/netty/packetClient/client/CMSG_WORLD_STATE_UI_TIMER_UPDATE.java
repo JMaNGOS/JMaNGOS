@@ -24,38 +24,33 @@ import javax.inject.Named;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_WORLD_STATE_UI_TIMER_UPDATE;
-import org.springframework.stereotype.Component;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CMSG_WORLD_STATE_UI_TIMER_UPDATE.
  */
-@Component
 public class CMSG_WORLD_STATE_UI_TIMER_UPDATE extends AbstractWoWClientPacket {
-
+	
 	/** The sender. */
 	@Inject
-	@Named("nettyPacketSender")
+	@Named("client")
 	private AbstractPacketSender sender;
-
-	/*
-	 * (non-Javadoc)
-	 * 
+	
+	/* (non-Javadoc)
 	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
 	 */
 	@Override
 	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-
+		
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
 	 */
 	@Override
 	protected void runImpl() {
 		sender.send(getClient(), new SMSG_WORLD_STATE_UI_TIMER_UPDATE());
-
+		
 	}
 
 }
