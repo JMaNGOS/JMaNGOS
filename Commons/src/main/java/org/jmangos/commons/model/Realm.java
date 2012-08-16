@@ -27,7 +27,7 @@ import javax.persistence.Table;
  * The Class World.
  */
 @Entity
-@Table
+@Table(name = "realmlist")
 public class Realm {
     
     /** The id. */

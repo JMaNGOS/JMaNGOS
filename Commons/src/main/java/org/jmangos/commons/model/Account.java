@@ -45,7 +45,7 @@ public class Account extends NamedObject implements ChanneledObject {
     private String         username;
     
     /** Password hash. */
-    @Column(name = "sha_password_hash")
+    @Column(name = "sha_pass_hash")
     private String         passwordHash;
     
     /** Access level of account 0 = regular user, > 0 = GM. */
@@ -58,7 +58,7 @@ public class Account extends NamedObject implements ChanneledObject {
     
     /** last server visited by user -1 if none. */
     @Column(name = "last_server")
-    private byte           lastServer      = -1;
+    private Byte           lastServer      = -1;
     
     /** Last ip of user -1 if none. */
     @Column(name = "last_ip")
@@ -237,7 +237,7 @@ public class Account extends NamedObject implements ChanneledObject {
      * 
      * @return last server that player visited
      */
-    public byte getLastServer() {
+    public Byte getLastServer() {
     
         return this.lastServer;
     }
@@ -403,7 +403,7 @@ public class Account extends NamedObject implements ChanneledObject {
      * @param lastServer
      *            last server that player visited
      */
-    public void setLastServer(final byte lastServer) {
+    public void setLastServer(final Byte lastServer) {
     
         this.lastServer = lastServer;
     }

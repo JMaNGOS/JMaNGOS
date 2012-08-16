@@ -68,7 +68,7 @@ public class DatabaseConfig extends AbstractConfig {
     /**
      * World Database name
      */
-    @Property(key = "world.database.name", defaultValue = "mangos")
+    @Property(key = "world.database.name", defaultValue = "world")
     public String              WORLD_DATABASE_NAME;
     
     /**

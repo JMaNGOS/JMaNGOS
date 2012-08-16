@@ -105,7 +105,7 @@ public class DatabaseFactory implements Service {
      */
     public synchronized static SessionFactory getWorldSessionFactory() {
     
-        if (charactersSessionFactory == null) {
+        if (worldSessionFactory == null) {
             final AnnotationConfiguration config = new AnnotationConfiguration();
             config.setProperty("hibernate.connection.driver_class", databaseConfig.WORLD_DATABASE_DRIVER);
             config.setProperty("hibernate.connection.url", databaseConfig.WORLD_DATABASE_URL + databaseConfig.WORLD_DATABASE_NAME + "?autoReconnect=true");
@@ -114,7 +114,7 @@ public class DatabaseFactory implements Service {
             config.setProperty("hibernate.dialect", databaseConfig.WORLD_DATABASE_DIALECT);
             config.setProperty("hibernate.c3p0.min_size", databaseConfig.WORLD_DATABASE_CONNECTIONS_MIN.toString());
             config.setProperty("hibernate.c3p0.max_size", databaseConfig.WORLD_DATABASE_CONNECTIONS_MAX.toString());
-            config.configure("world.cfg.xml");
+            config.configure("/world.cfg.xml");
             worldSessionFactory = config.buildSessionFactory();
             worldSessionFactory.getStatistics().setStatisticsEnabled(true);
             
