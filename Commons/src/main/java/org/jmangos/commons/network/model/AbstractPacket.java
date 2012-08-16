@@ -43,7 +43,7 @@ abstract class AbstractPacket {
 	protected int opCode;
 
 	/** The buf. */
-	private ChannelBuffer buf;
+	private ChannelBuffer	buf;
 
 	/**
 	 * Instantiates a new abstract packet.

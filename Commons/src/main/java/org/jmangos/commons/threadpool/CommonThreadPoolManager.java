@@ -22,17 +22,13 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.PostConstruct;
-
 import org.jmangos.commons.threadpool.config.ThreadPoolConfig;
 import org.jmangos.commons.threadpool.model.PoolStats;
 import org.jmangos.commons.threadpool.model.ThreadPoolType;
-import org.springframework.stereotype.Component;
 
 /**
  * The Class CommonThreadPoolManager.
  */
-@Component
 public class CommonThreadPoolManager implements ThreadPoolManager {
 
 	/** The scheduled pool. */
@@ -45,11 +41,11 @@ public class CommonThreadPoolManager implements ThreadPoolManager {
 	private static final long MAX_DELAY = TimeUnit.NANOSECONDS
 			.toMillis(Long.MAX_VALUE - System.nanoTime()) / 2;
 
-	/**
+	/*
+	 * (non-Javadoc)
 	 * 
 	 * @see org.wowemu.common.service.Service#start()
 	 */
-	@PostConstruct
 	@Override
 	public void start() {
 		int scheduledPoolSize = ThreadPoolConfig.GENERAL_POOL;
@@ -62,7 +58,8 @@ public class CommonThreadPoolManager implements ThreadPoolManager {
 		instantPool.prestartAllCoreThreads();
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
 	 * 
 	 * @see org.wowemu.common.service.Service#stop()
 	 */

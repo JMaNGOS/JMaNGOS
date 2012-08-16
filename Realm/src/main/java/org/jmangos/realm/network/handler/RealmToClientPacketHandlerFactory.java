@@ -18,20 +18,15 @@ package org.jmangos.realm.network.handler;
 
 import org.jmangos.commons.network.handlers.AbstractPacketHandlerFactory;
 import org.jmangos.commons.network.netty.model.PacketData;
-import org.springframework.stereotype.Component;
 
 /**
  * A factory for creating RealmPacketHandler objects.
  */
-@Component("realmToClientPacketHandlerFactory")
-public class RealmToClientPacketHandlerFactory extends
-		AbstractPacketHandlerFactory {
-
-	protected String clientPacketPath = "./conf/packetData/rc-packets.xml";
-
+public class RealmToClientPacketHandlerFactory extends AbstractPacketHandlerFactory{
 	@Override
 	public void loadPacket() {
-		addList(loadStaticData(PacketData.class, packetXSDLocation,
+		addList(loadStaticData(PacketData.class,
+				packetXSDLocation,
 				clientPacketPath));
 	}
 }

@@ -34,26 +34,6 @@
 			<param name="ConversionPattern" value="%p [%d{dd MMM yyyy HH:mm:ss,SSS}] %c:%L %m%n" />
 		</layout>
 	</appender>
-	
-	<logger name="org.springframework.beans">
-		<level value="warn" />
-	</logger>
-
-	<logger name="org.springframework.jdbc">
-		<level value="warn" />
-	</logger>
-
-	<logger name="org.springframework.transaction">
-		<level value="warn" />
-	</logger>
-
-	<logger name="org.springframework.orm">
-		<level value="warn" />
-	</logger>
-
-	<logger name="org.springframework.web">
-		<level value="warn" />
-	</logger>
 
 	<root>
 		<priority value="info"></priority>

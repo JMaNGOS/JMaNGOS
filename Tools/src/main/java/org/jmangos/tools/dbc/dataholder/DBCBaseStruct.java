@@ -26,7 +26,7 @@ import javolution.io.Struct;
 
 public class DBCBaseStruct extends Struct {
 
-	public static final int HEADER_SIZE = 20;
+	public final static int HEADER_SIZE = 20;
 	protected int stringBufPos;
 	private int lang = -1;
 	

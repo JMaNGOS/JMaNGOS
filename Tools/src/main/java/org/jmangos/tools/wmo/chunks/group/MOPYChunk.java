@@ -19,76 +19,40 @@ package org.jmangos.tools.wmo.chunks.group;
 import java.nio.ByteBuffer;
 
 import org.jmangos.tools.chunk.BaseChunk;
-import org.jmangos.tools.chunk.Readable;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
-/**
- * Chunk <tt>MOPY</tt><br>
- * Materials for triangles.
- * 
- * @author MinimaJack
- * 
- */
-public class MOPYChunk extends WMOChunk implements Readable {
-	/**
-	 * Single entries of MOPY chunk
-	 * 
-	 */
-	public static class MOPYEntry extends WMOChunk {
-		/** some flags */
-		private Unsigned8 flags = new Unsigned8();
-		/** Index in the root WMO file MOMT chunk. */
-		private Unsigned8 materialId = new Unsigned8();
-
-		/**
-		 * @return the flags
-		 */
-		public final Unsigned8 getFlags() {
-			return flags;
-		}
-
-		/**
-		 * @return the materialId
-		 */
-		public final Unsigned8 getMaterialId() {
-			return materialId;
-		}
+public class MOPYChunk extends WMOChunk{
+	public class MOPYEntry extends WMOChunk{ 
+		public Unsigned8 	Flags = new Unsigned8();
+		public Unsigned8		Material  = new Unsigned8();
 	}
 
-	/** All MOPY entries */
-	private MOPYEntry[] aMOPYEntries;
-
+	public MOPYEntry[] MOPYEntries;
 	@Override
-	public final BaseChunk reads(final ByteBuffer bb, final int offset,
-			final int size) {
-		setMOPYEntries(new MOPYEntry[size / 2]);
-		for (int i = 0; i < (size / 2); i++) {
-			getMOPYEntries()[i] = new MOPYEntry();
-			getMOPYEntries()[i].setByteBuffer(bb, offset + 2 * i);
+	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
+		MOPYEntries = new MOPYEntry[(int) (size /2)];
+		for (int i = 0; i < (size /2); i++) {
+			MOPYEntries[i] = new MOPYEntry();
+			MOPYEntries[i].setByteBuffer(bb, offset + 2*i);
 		}
-		setGlobalOffset(offset + size + HEADERSIZE);
-		setByteBuffer(bb, offset);
-		return this;
+		setGlobalOffcet(offset + size + HEADERSIZE);
+		this.setByteBuffer(bb, offset);
+		return this;	
 	}
+	
+	@SuppressWarnings("unused")
+	private String getAllName(){
+		String tmp = "";
+		for (int i = 0; i < MOPYEntries.length; i++) {
+			tmp +="\n\tFlags:" + MOPYEntries[i].Flags.get()+
+			"\n\tMaterial:" + MOPYEntries[i].Material.get() + "\n";
 
-	/**
-	 * @return the mOPYEntries
-	 */
-	public final MOPYEntry[] getMOPYEntries() {
-		return aMOPYEntries;
+		}
+		return tmp;
 	}
-
-	/**
-	 * @param mOPYEntries
-	 *            the mOPYEntries to set
-	 */
-	public final void setMOPYEntries(final MOPYEntry[] mOPYEntries) {
-		aMOPYEntries = mOPYEntries;
-	}
-
-	@Override
-	public final String toString() {
-		return "[MOPYChunk]" + "\n\tMOPYEntries count: "
-				+ getMOPYEntries().length;
+	
+	public String toString(){
+		return "[MOPYChunk]" + 
+		"\n\tMOPYEntries count: " + MOPYEntries.length ;//+ getAllName(); 
 	}
 }

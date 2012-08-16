@@ -16,19 +16,15 @@
  *******************************************************************************/
 package org.jmangos.realm.service;
 
-import org.springframework.stereotype.Component;
-
 /**
  * The Class SimpleStorages.
  */
-@Component
 public class SimpleStorages {
 
 	/**
 	 * Gets the xp for level.
-	 * 
-	 * @param level
-	 *            the level
+	 *
+	 * @param level the level
 	 * @return the int
 	 */
 	public int GetXPForLevel(byte level) {

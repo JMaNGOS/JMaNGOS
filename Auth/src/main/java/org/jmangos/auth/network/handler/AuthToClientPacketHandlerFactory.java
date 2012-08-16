@@ -18,22 +18,23 @@ package org.jmangos.auth.network.handler;
 
 import org.jmangos.commons.network.handlers.AbstractPacketHandlerFactory;
 import org.jmangos.commons.network.netty.model.PacketData;
-import org.springframework.stereotype.Component;
 
 /**
  * 
  * @author MinimaJack
  */
-@Component
 public class AuthToClientPacketHandlerFactory extends
 		AbstractPacketHandlerFactory {
-	/**
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#loadPacket()
+	 * @see
+	 * org.jmangos.commons.network.handlers.PacketHandlerFactory#loadPacket()
 	 */
 	@Override
 	public void loadPacket() {
-		addList(loadStaticData(PacketData.class, packetXSDLocation,
+		addList(loadStaticData(PacketData.class,
+				packetXSDLocation,
 				clientPacketPath));
 
 	}

@@ -16,121 +16,64 @@
  *******************************************************************************/
 package org.jmangos.tools.wmo.chunks;
 
-/**
- * All available chunks for reading. Contains string representations in file.
- * 
- * @author MinimaJack
- * 
- */
 public enum ChunkedTypes {
-	/** MVERChunk */
 	MVER("REVM"),
-	/** MOHDChunk */
 	MOHD("DHOM"),
-	/** MOTXChunk */
 	MOTX("XTOM"),
-	/** MOMTChunk */
 	MOMT("TMOM"),
-	/** MOGNChunk */
 	MOGN("NGOM"),
-	/** MOGIChunk */
 	MOGI("IGOM"),
-	/** MOSBChunk */
 	MOSB("BSOM"),
-	/** MOPVChunk */
 	MOPV("VPOM"),
-	/** MOPTChunk */
 	MOPT("TPOM"),
-	/** MOPRChunk */
 	MOPR("RPOM"),
-	/** MOVVChunk */
 	MOVV("VVOM"),
-	/** MOVBChunk */
 	MOVB("BVOM"),
-	/** MOLTChunk */
 	MOLT("TLOM"),
-	/** MODSChunk */
 	MODS("SDOM"),
-	/** MODNChunk */
 	MODN("NDOM"),
-	/** MODDChunk */
 	MODD("DDOM"),
-	/** MFOGChunk */
 	MFOG("GOFM"),
-	/** MCVPChunk */
 	MCVP("PVCM"),
-	// group
-	/** MOGPChunk */
+	//group
 	MOGP("PGOM"),
-	/** MOPYChunk */
 	MOPY("YPOM"),
-	/** MOVIChunk */
 	MOVI("IVOM"),
-	/** MOVTChunk */
 	MOVT("TVOM"),
-	/** MONRChunk */
 	MONR("RNOM"),
-	/** MCVPChunk */
 	MOTV("VTOM"),
-	/** MOBAChunk */
 	MOBA("ABOM"),
-	/** MOLRChunk */
+	
 	MOLR("RLOM"),
-	/** MODRChunk */
 	MODR("RDOM"),
-	/** MOBNChunk */
 	MOBN("NBOM"),
-	/** MOBRChunk */
 	MOBR("RBOM"),
-	/** MPBVChunk */
 	MPBV("VBPM"),
-	/** MPBPChunk */
 	MPBP("PBPM"),
-	/** MPBIChunk */
 	MPBI("IBPM"),
-	/** MPBGChunk */
 	MPBG("GBPM"),
-	/** MOCVChunk */
 	MOCV("VCOM"),
-	/** MLIQChunk */
 	MLIQ("QILM"),
-	/** MORIChunk */
 	MORI("IROM"),
-	/** MORBChunk */
 	MORB("BROM");
 
-	/** String values of chunk. */
 	private String value;
-
-	/**
-	 * 
-	 * @param val
-	 *            - values of chunk
-	 */
-	ChunkedTypes(final String val) {
-		value = val;
+	ChunkedTypes(String val){
+		this.setValue(val);
 	}
-
-	/**
-	 * 
-	 * @return - string value in file
-	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 	public String getValue() {
 		return value;
 	}
-
-	/**
-	 * 
-	 * @param value
-	 *            - value from file
-	 * @return type of chunk if value exist in ChunkedTypes
-	 */
-	public static ChunkedTypes get(final String value) {
-		for (ChunkedTypes ch : ChunkedTypes.values()) {
-			if (value.equals(ch.getValue())) {
+	public static ChunkedTypes get(String value){
+		for(ChunkedTypes ch: ChunkedTypes.values()){
+			if (value.equals(ch.getValue())){
 				return ch;
 			}
 		}
 		return null;
+		
 	}
 }

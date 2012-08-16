@@ -19,58 +19,41 @@ package org.jmangos.tools.wmo.chunks.root;
 import java.nio.ByteBuffer;
 
 import org.jmangos.tools.chunk.BaseChunk;
-import org.jmangos.tools.chunk.Readable;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
-/**
- * Chunk <tt>MOGI</tt><br>
- * Group information for WMO groups.
- * 
- * @author MinimaJack
- * 
- */
-public class MOGIChunk extends WMOChunk implements Readable {
-	class MOGIEntry extends WMOChunk {
-		Unsigned32 flags = new Unsigned32();
-		Float32[] bbox1 = array(new Float32[3]);
-		Float32[] bbox2 = array(new Float32[3]);
-		/** Index of name in MOGN chunk */
-		Signed32 name = new Signed32();
+public class MOGIChunk extends WMOChunk{
+	class MOGIEntry extends WMOChunk{ 
+		Unsigned32 Flags = new Unsigned32();   		
+		Float32[] bbox1 = array(new Float32[3]); 		
+		Float32[] bbox2 = array(new Float32[3]); 		
+		Signed32 name  = new Signed32();
 	}
-
 	private MOGIEntry[] MOGIEntries;
-
 	@Override
-	public BaseChunk reads(ByteBuffer bb, int offset, int size) {
-		MOGIEntries = new MOGIEntry[(int) (size / 32)];
-		for (int i = 0; i < (size / 32); i++) {
+	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
+		MOGIEntries = new MOGIEntry[(int) (size /32)];
+		for (int i = 0; i < (size /32); i++) {
 			MOGIEntries[i] = new MOGIEntry();
-			MOGIEntries[i].setByteBuffer(bb, offset + 32 * i);
+			MOGIEntries[i].setByteBuffer(bb, offset + 32*i);
 		}
-		setGlobalOffset(offset + size + HEADERSIZE);
+		setGlobalOffcet(offset + size + HEADERSIZE);
 		this.setByteBuffer(bb, offset);
 		return this;
 	}
-
 	@SuppressWarnings("unused")
-	private String getAllName() {
+	private String getAllName(){
 		String tmp = "";
 		for (int i = 0; i < MOGIEntries.length; i++) {
-			tmp += "\n\tFlags:" + MOGIEntries[i].flags.get()
-					+ "\n\tBounding box 1:" + MOGIEntries[i].bbox1[0].get()
-					+ " " + MOGIEntries[i].bbox1[1].get() + " "
-					+ MOGIEntries[i].bbox1[2].get() + "\n\tBounding box 2:"
-					+ MOGIEntries[i].bbox2[0].get() + " "
-					+ MOGIEntries[i].bbox2[1].get() + " "
-					+ MOGIEntries[i].bbox2[2].get() + "\n\tname or index:"
-					+ MOGIEntries[i].name.get();
+			tmp +="\n\tFlags:" + MOGIEntries[i].Flags.get()+
+			"\n\tBounding box 1:" + MOGIEntries[i].bbox1[0].get()+ " " +MOGIEntries[i].bbox1[1].get()+ " " + MOGIEntries[i].bbox1[2].get()+
+			"\n\tBounding box 2:" + MOGIEntries[i].bbox2[0].get()+ " " +MOGIEntries[i].bbox2[1].get()+ " " + MOGIEntries[i].bbox2[2].get()+
+			"\n\tname or index:" + MOGIEntries[i].name.get();
 
 		}
 		return tmp;
 	}
-
-	public String toString() {
-		return "[MOGIChunk] \n\tMOGIEntries count: " + MOGIEntries.length;
-		// getAllName();
+	public String toString(){
+		return "[MOGIChunk] \n\tMOGIEntries count: " + MOGIEntries.length; 
+		//getAllName();
 	}
 }

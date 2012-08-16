@@ -23,51 +23,42 @@ import java.nio.charset.CharsetDecoder;
 import java.util.ArrayList;
 
 import org.jmangos.tools.chunk.BaseChunk;
-import org.jmangos.tools.chunk.Readable;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
-/**
- * Chunk <tt>MODN</tt><br>
- * List of filenames for M2 models.
- * 
- * @author MinimaJack
- * 
- */
-public class MODNChunk extends WMOChunk implements Readable {
-	ArrayList<String> modelFileNames = new ArrayList<String>();
+public class MODNChunk extends WMOChunk{
+	ArrayList<String> groupNames = new ArrayList<String>();
+
 
 	@Override
-	public BaseChunk reads(ByteBuffer bb, int offset, int size) {
+	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
 		byte[] tsring = new byte[2024];
 		CharsetDecoder decoder = Charset.forName("UTF-8").newDecoder();
-		setGlobalOffset(offset + size + HEADERSIZE);
+		setGlobalOffcet(offset + size + HEADERSIZE);
 		this.setByteBuffer(bb, offset);
 		int reading = 0;
 		int si = 0;
-		while ((size - reading) > 0) {
+		while( (size - reading) > 0){
 			int i = 0;
 			for (; (tsring[i] = getByteBuffer().get(
-					(int) (offset + HEADERSIZE + i + si))) != 0; i++) {
+					(int) (offset+ HEADERSIZE  + i + si))) != 0; i++) {
 				reading++;
 			}
-			if (i > 0)
-				try {
-					modelFileNames.add(decoder.decode(
-							ByteBuffer.wrap(tsring, 0, i)).toString());
-				} catch (CharacterCodingException e) {
-					e.printStackTrace();
-				}
+			if( i > 0)
+			try {
+				groupNames.add( decoder.decode(ByteBuffer.wrap(tsring, 0, i)).toString());
+			} catch (CharacterCodingException e) {
+				e.printStackTrace();
+			}
 			si = ++reading;
 		}
-		return this;
+		return this;	
 	}
-
-	public String toString() {
+	
+	public String toString(){
 		StringBuilder sb = new StringBuilder();
-		sb.append("[MODNChunk] model name size is:").append(
-				modelFileNames.size());
-		for (int i = 0; i < modelFileNames.size(); i++) {
-			sb.append("\n\t").append(modelFileNames.get(i));
+		sb.append("[MODNChunk] groupNames size is:").append(groupNames.size());
+		for (int i = 0; i < groupNames.size(); i++) {
+			sb.append("\n\t").append(groupNames.get(i)) ;
 		}
 		return sb.toString();
 	}

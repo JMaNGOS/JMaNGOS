@@ -54,25 +54,33 @@ public abstract class SendablePacket extends AbstractPacket {
 	 * @param value
 	 *            the value
 	 */
-	protected final void writeC(boolean value) {
-		getByteBuffer().writeByte((byte) (value ? 1 : 0));
+	protected final void writeC(boolean value)
+	{
+		getByteBuffer(). writeByte((byte) (value ? 1 : 0));
 	}
 
 	/**
 	 * Write c.
-	 * 
-	 * @param value
-	 *            the value
+	 *
+	 * @param value the value (uint8)
 	 */
 	protected final void writeC(int value) {
 		getByteBuffer().writeByte((byte) value);
 	}
 
+    /**
+     * Write c.
+     *
+     * @param value the value (uint8)
+     */
+    protected final void writeC(UpdateField value) {
+        writeC( value.getValue() );
+    }
+
 	/**
 	 * Write h.
-	 * 
-	 * @param value
-	 *            the value
+	 *
+	 * @param value the value (uint16)
 	 */
 	protected final void writeH(boolean value) {
 		getByteBuffer().writeMedium((short) (value ? 1 : 0));
@@ -80,9 +88,8 @@ public abstract class SendablePacket extends AbstractPacket {
 
 	/**
 	 * Write h.
-	 * 
-	 * @param value
-	 *            the value
+	 *
+	 * @param value the value (uint16)
 	 */
 	protected final void writeH(int value) {
 		getByteBuffer().writeShort((short) value);
@@ -90,9 +97,8 @@ public abstract class SendablePacket extends AbstractPacket {
 
 	/**
 	 * Write d.
-	 * 
-	 * @param value
-	 *            the value
+	 *
+	 * @param value the value (uint32)
 	 */
 	protected final void writeD(boolean value) {
 		getByteBuffer().writeInt(value ? 1 : 0);
@@ -100,9 +106,8 @@ public abstract class SendablePacket extends AbstractPacket {
 
 	/**
 	 * Write d.
-	 * 
-	 * @param value
-	 *            the value
+	 *
+	 * @param value the value (uint32)
 	 */
 	protected final void writeD(int value) {
 		getByteBuffer().writeInt(value);
@@ -110,9 +115,8 @@ public abstract class SendablePacket extends AbstractPacket {
 
 	/**
 	 * Write d.
-	 * 
-	 * @param value
-	 *            the value
+	 *
+	 * @param value the value (uint32)
 	 */
 	protected final void writeD(long value) {
 		getByteBuffer().writeInt(
@@ -121,9 +125,8 @@ public abstract class SendablePacket extends AbstractPacket {
 
 	/**
 	 * Write q.
-	 * 
-	 * @param value
-	 *            the value
+	 *
+	 * @param value the value (uint64)
 	 */
 	protected final void writeQ(boolean value) {
 		getByteBuffer().writeLong(value ? 1 : 0);
@@ -131,9 +134,8 @@ public abstract class SendablePacket extends AbstractPacket {
 
 	/**
 	 * Write q.
-	 * 
-	 * @param value
-	 *            the value
+	 *
+	 * @param value the value (uint64)
 	 */
 	protected final void writeQ(long value) {
 		getByteBuffer().writeLong(value);
@@ -145,15 +147,15 @@ public abstract class SendablePacket extends AbstractPacket {
 	 * @param value
 	 *            the value
 	 */
-	protected final void writeF(float value) {
+	protected final void writeF(float value)
+	{
 		getByteBuffer().writeFloat(value);
 	}
 
 	/**
 	 * Write f.
-	 * 
-	 * @param value
-	 *            the value
+	 *
+	 * @param value the value (float)
 	 */
 	protected final void writeF(int value) {
 		getByteBuffer().writeFloat(value);
@@ -168,12 +170,11 @@ public abstract class SendablePacket extends AbstractPacket {
 	protected final void writeB(byte[] data) {
 		getByteBuffer().writeBytes(data);
 	}
-
+	
 	/**
 	 * Write packed guid.
-	 * 
-	 * @param guid
-	 *            the guid
+	 *
+	 * @param guid the guid (uint64)
 	 */
 	protected final void writePackedGuid(long guid) {
 		long tguid = guid;
@@ -191,15 +192,12 @@ public abstract class SendablePacket extends AbstractPacket {
 		}
 		getByteBuffer().writeBytes(packGUID, 0, size);
 	}
-
+	
 	/**
-	 * Same as {@link SendablePacket#writeS(CharSequence)}, except that
-	 * <code>'\000'</code> won't be written automatically.<br>
-	 * So this way there is no need to concat multiple Strings into a single
-	 * one.
-	 * 
-	 * @param charSequence
-	 *            the char sequence
+	 * Same as {@link SendablePacket#writeS(String)}, except that <code>'\000'</code> won't be written automatically.<br>
+	 * So this way there is no need to concat multiple Strings into a single one.
+	 *
+	 * @param charSequence the char sequence
 	 * @return the sendable packet
 	 */
 	protected final SendablePacket append(String charSequence) {
@@ -214,9 +212,9 @@ public abstract class SendablePacket extends AbstractPacket {
 	 * @param charSequence
 	 *            the char sequence
 	 */
-	protected final void writeS(String charSequence) {
-		getByteBuffer().writeBytes(
-				charSequence.getBytes(Charset.forName("utf-8")));
+	protected final void writeS(String charSequence)
+	{
+		getByteBuffer().writeBytes(charSequence.getBytes(Charset.forName("utf-8")));
 		getByteBuffer().writeByte((byte) 0);
 	}
 
@@ -261,4 +259,24 @@ public abstract class SendablePacket extends AbstractPacket {
 		this.channel = channel;
 
 	}
+
+    /**
+     * Get packet opcode
+     * It's useful to send/implement packet from dynamic groovy
+     * @deprecated don't use int production mode yet!!
+     */
+    @Deprecated
+    public Integer getOpcode() {
+        return opCode;
+    }
+
+    /**
+     * Sets packet opcode if it's not in the config XML file.
+     * It's useful to send/implement packet from dynamic groovy
+     * @deprecated don't use int production mode yet!!
+     */
+    @Deprecated
+    public void setOpcode(int opcode) {
+        this.opCode = opcode;
+    }
 }

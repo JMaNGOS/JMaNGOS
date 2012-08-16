@@ -16,40 +16,43 @@
  *******************************************************************************/
 package org.jmangos.realm.service;
 
-import javax.inject.Inject;
-
+import com.google.inject.Inject;
 import org.apache.commons.lang.NotImplementedException;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jmangos.commons.config.Compatiple;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.netty.service.AbstractNetworkService;
 import org.jmangos.realm.config.Config;
-import org.springframework.stereotype.Component;
+
+import javax.inject.Named;
 
 /**
  * The Class RealmNetworkService.
  */
-@Component
 public class RealmNetworkService extends AbstractNetworkService {
-
 	@Inject
 	private Config config;
 
 	/** The RealmToClient pipeline factory. */
 	@Inject
+	@Named("RealmToClient")
 	private ChannelPipelineFactory realmToClientPipelineFactory;
 
 	/** The packet service. */
 	@Inject
+	@Named("AuthToClient")
 	private PacketHandlerFactory clientPacketService;
 	/** The packet service. */
 	@Inject
+	@Named("RealmToAuth")
 	private PacketHandlerFactory authPacketService;
 
 	@Inject
+	@Named("RealmToAuth")
 	private ChannelPipelineFactory realmToAuthPipelineFactory;
 
-	/**
+	/*
+	 * (non-Javadoc)
 	 * 
 	 * @see org.jmangos.commons.service.Service#start()
 	 */
@@ -64,7 +67,8 @@ public class RealmNetworkService extends AbstractNetworkService {
 		}
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
 	 * 
 	 * @see org.jmangos.commons.network.netty.service.NetworkService#status()
 	 */
@@ -73,7 +77,8 @@ public class RealmNetworkService extends AbstractNetworkService {
 		throw new NotImplementedException();
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
 	 * 
 	 * @see org.jmangos.commons.service.Service#stop()
 	 */

@@ -24,16 +24,14 @@
  */
 package org.jmangos.auth.utils;
 
-import javax.inject.Inject;
-
 import org.apache.log4j.Logger;
 import org.jmangos.commons.database.DatabaseFactory;
-import org.springframework.stereotype.Component;
+
+import com.google.inject.Inject;
 
 /**
  * The Class ShutdownHook.
  */
-@Component
 public class ShutdownHook extends Thread {
 
 	/** The DF. */

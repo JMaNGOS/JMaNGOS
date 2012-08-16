@@ -18,13 +18,13 @@ package org.jmangos.tools.chunk;
 
 import java.nio.ByteBuffer;
 
-public class UNKChunk extends BaseChunk implements Readable{
+public class UNKChunk extends BaseChunk{
 	private String ch;
 	private int soff;
 
 	@Override
-	public BaseChunk reads(ByteBuffer bb, int offset, int size) {
-		setGlobalOffset(offset + size + HEADERSIZE);
+	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
+		setGlobalOffcet(offset + size + HEADERSIZE);
 		this.soff = offset;
 		this.setByteBuffer(bb, offset);
 		return this;	

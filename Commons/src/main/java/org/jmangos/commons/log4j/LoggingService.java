@@ -17,29 +17,24 @@
 
 package org.jmangos.commons.log4j;
 
-import java.io.File;
-import java.lang.reflect.Field;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Handler;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
-
-import javax.annotation.PostConstruct;
-
+import com.google.inject.Singleton;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.log4j.Hierarchy;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.jmangos.commons.log4j.exception.Log4jInitializationError;
 import org.jmangos.commons.service.Service;
-import org.springframework.stereotype.Component;
+
+import java.io.File;
+import java.lang.reflect.Field;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * The Class LoggingService.
  * 
  * @author MinimaJack
  */
-@Component
+@Singleton
 public class LoggingService implements Service {
 	/**
 	 * Property that represents {@link org.apache.log4j.spi.LoggerFactory} class
@@ -59,7 +54,6 @@ public class LoggingService implements Service {
 	 * @throws Log4jInitializationError
 	 *             the log4j initialization error
 	 */
-	@PostConstruct
 	public void start() throws Log4jInitializationError {
 		File f = new File(LOGGER_CONFIG_FILE);
 
@@ -100,12 +94,7 @@ public class LoggingService implements Service {
 		overrideDefaultLoggerFactory();
 
 		// Initialize JULI to Log4J bridge
-		Logger logger = LogManager.getLogManager().getLogger("");
-		for (Handler h : logger.getHandlers()) {
-			logger.removeHandler(h);
-		}
-
-		logger.addHandler(new JuliToLog4JHandler());
+		/** configured via slf4j bridge */
 	}
 
 	/**

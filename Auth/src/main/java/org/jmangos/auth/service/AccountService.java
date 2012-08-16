@@ -21,19 +21,17 @@ import java.util.HashMap;
 import javax.inject.Inject;
 
 import org.jmangos.auth.dao.AccountDAO;
-import org.jmangos.auth.model.Account;
+import org.jmangos.commons.model.Account;
 import org.jmangos.auth.utils.AccountUtils;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.utils.BigNumber;
-import org.springframework.stereotype.Component;
 
 /**
  * This class is responsible for controlling all account actions.
  * 
  * @author MinimaJack
  */
-@Component
 public class AccountService {
 
 	/** The account dao. */
@@ -68,9 +66,9 @@ public class AccountService {
 		// {
 		// return WoWAuthResponse.WOW_FAIL_BANNED;
 		// }
-		;
+
 		Account account = loadAccount(name);
-		HashMap<String, BigNumber> variable = new HashMap<String, BigNumber>();
+		HashMap<String, BigNumber> variable; // calculateVSFields will create it.
 		BigNumber s = new BigNumber();
 		BigNumber v = new BigNumber();
 

@@ -23,7 +23,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
@@ -34,12 +33,10 @@ import org.jmangos.auth.utils.AccountUtils;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.commons.utils.BigNumber;
-import org.springframework.stereotype.Component;
 
 /**
  * The Class <tt>CMD_AUTH_LOGON_PROOF</tt>.
  */
-@Component
 public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 
 	/** The Constant logger. */
@@ -48,7 +45,6 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 
 	/** The sender. */
 	@Inject
-	@Named("nettyPacketSender")
 	private AbstractPacketSender sender;
 
 	/** The account service. */
@@ -107,17 +103,15 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 				(getAccount().getV_crypto().modPow(u, AccountUtils.N))).modPow(
 				getAccount().getB(), AccountUtils.N);
 
-		byte[] t = new byte[32];
 		byte[] t1 = new byte[16];
-		byte[] t2 = new byte[20];
 		byte[] vK = new byte[40];
 
-		t = S.asByteArray(32);
+		byte[] t = S.asByteArray(32);
 		for (int i = 0; i < 16; ++i) {
 			t1[i] = t[i * 2];
 		}
 		sha.update(t1);
-		t2 = sha.digest();
+        byte[] t2 = sha.digest();
 		for (int i = 0; i < 20; ++i) {
 			vK[i * 2] = t2[i];
 		}
@@ -136,9 +130,8 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
 		hash = sha.digest();
 		logger.debug("hash:"
 				+ new BigInteger(1, hash).toString(16).toUpperCase());
-		byte[] gH = new byte[20];
 		sha.update(AccountUtils.g.asByteArray(1));
-		gH = sha.digest();
+		byte[] gH = sha.digest();
 		for (int i = 0; i < 20; ++i) {
 			hash[i] ^= gH[i];
 		}

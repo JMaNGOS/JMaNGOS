@@ -26,12 +26,10 @@ import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.State;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetAuth.server.CMD_AUTH_LOGON_CHALLENGE;
-import org.springframework.stereotype.Component;
 
 /**
- * The Class RealmToAuthConnectHandler.
+ * The Class R2LConnectHandler.
  */
-@Component
 public class RealmToAuthConnectHandler implements ConnectHandler {
 
 	/** The Constant log. */
@@ -40,24 +38,24 @@ public class RealmToAuthConnectHandler implements ConnectHandler {
 
 	/** The sender. */
 	@Inject
-	@Named("serverPacketSender")
+	@Named("RealmToAuth")
 	private AbstractPacketSender sender;
 
 	/**
+	 * (non-Javadoc)
 	 * 
 	 * @see org.jmangos.common.network.model.ConnectHandler#onConnect(org.wowemu.common.network.model.NettyNetworkChannel,
 	 *      org.jboss.netty.channel.ChannelHandler)
 	 */
 	@Override
-	public void onConnect(NettyNetworkChannel networkChannel,
-			ChannelHandler handler) {
+	public void onConnect(NettyNetworkChannel networkChannel, ChannelHandler handler) {
 		networkChannel.setChannelState(State.CONNECTED);
 		log.info("Connection to: " + networkChannel.getAddress());
 		sender.send(networkChannel, new CMD_AUTH_LOGON_CHALLENGE());
-
 	}
 
 	/**
+	 * (non-Javadoc)
 	 * 
 	 * @see org.jmangos.common.network.model.ConnectHandler#onDisconnect(org.wowemu.common.network.model.NettyNetworkChannel)
 	 */

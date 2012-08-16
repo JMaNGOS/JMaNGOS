@@ -20,17 +20,17 @@
 package org.jmangos.auth.service;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.logging.Handler;
 import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.log4j.Hierarchy;
+import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
-import org.jmangos.commons.log4j.JuliToLog4JHandler;
 import org.jmangos.commons.log4j.ThrowableAsMessageAwareFactory;
 import org.jmangos.commons.log4j.exception.Log4jInitializationError;
 import org.jmangos.commons.service.Service;
@@ -40,6 +40,7 @@ import org.jmangos.commons.service.Service;
  * 
  * @author MinimaJack
  */
+
 public class LoggingService implements Service {
 	/**
 	 * Property that represents {@link org.apache.log4j.spi.LoggerFactory} class
@@ -60,6 +61,23 @@ public class LoggingService implements Service {
 	 *             the log4j initialization error
 	 */
 	public void start() throws Log4jInitializationError {
+        InputStream is = LoggingService.class.getResourceAsStream("/logging.properties");
+        try {
+            LogManager manager = LogManager.getLogManager();
+            manager.readConfiguration(is);
+        } catch (IOException e) {
+            Logger.getLogger(getClass()).fatal( "logging.properties not found in the classpath! Please restore it!" );
+        } finally {
+            // FindBugs warning fix...
+            if ( is != null )
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    // It will be never thrown
+                    Logger.getLogger(getClass()).fatal( "Can't close the logging.properties resource stream!" );
+                }
+        }
+
 		File f = new File(LOGGER_CONFIG_FILE);
 
 		if (!f.exists()) {
@@ -97,12 +115,7 @@ public class LoggingService implements Service {
 
 		overrideDefaultLoggerFactory();
 
-		Logger logger = LogManager.getLogManager().getLogger("");
-		for (Handler h : logger.getHandlers()) {
-			logger.removeHandler(h);
-		}
-
-		logger.addHandler(new JuliToLog4JHandler());
+		/** JULI bridge configured via slf4j bridge */
 	}
 
 	/**
@@ -137,7 +150,7 @@ public class LoggingService implements Service {
 	/**
 	 * (non-Javadoc)
 	 * 
-	 * @see org.wowemu.common.service.Service#stop()
+	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override
 	public void stop() {

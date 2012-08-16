@@ -16,13 +16,13 @@
  *******************************************************************************/
 package org.jmangos.auth.network.netty.packet.server;
 
+import javolution.util.FastMap;
+
 import org.apache.log4j.Logger;
-import org.jmangos.auth.model.Account;
-import org.jmangos.auth.model.Realm;
 import org.jmangos.auth.network.netty.packet.AbstractWoWServerPacket;
 import org.jmangos.auth.service.RealmListService;
-
-import javolution.util.FastMap;
+import org.jmangos.commons.model.Account;
+import org.jmangos.commons.model.Realm;
 
 /**
  * The Class <tt>TCMD_REALM_LIST</tt>.
@@ -35,6 +35,12 @@ public class TCMD_REALM_LIST extends AbstractWoWServerPacket {
 
 	/** The worldlist. */
 	private RealmListService worldlist;
+
+	/**
+	 * Instantiates a new <tt>TCMD_REALM_LIST</tt>.
+	 */
+	public TCMD_REALM_LIST() {
+	}
 
 	/**
 	 * Instantiates a new TCMD_REALM_LIST.

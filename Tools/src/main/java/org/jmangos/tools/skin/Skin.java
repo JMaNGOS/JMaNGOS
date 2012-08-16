@@ -30,7 +30,6 @@ public class Skin {
 	public _lengths lengths = new _lengths();
 	public Submeshes[] SubmeshesList;
 	public TextureUnit[] TextureUnits;
-
 	private Skin() {
 	}
 
@@ -65,9 +64,7 @@ public class Skin {
 			bb.rewind();
 			result = read(bb);
 		} finally {
-			if (fis != null) {
-				fis.close();
-			}
+			fis.close();
 		}
 		return result;
 	}

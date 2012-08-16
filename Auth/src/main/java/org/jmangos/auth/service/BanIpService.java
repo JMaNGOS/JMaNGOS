@@ -16,26 +16,24 @@
  *******************************************************************************/
 package org.jmangos.auth.service;
 
+import java.sql.Timestamp;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 import org.jmangos.auth.config.Config;
 import org.jmangos.auth.dao.BanIpDAO;
-import org.jmangos.auth.model.BanIp;
+import org.jmangos.commons.model.BanIp;
 import org.jmangos.commons.config.Compatiple;
 import org.jmangos.commons.service.Service;
-import org.springframework.stereotype.Component;
 
 /**
  * The Class BanIpService.
  * 
  * @author MinimaJack
  */
-@Component
 public class BanIpService implements Service {
 	/**
 	 * Logger for this class.
@@ -50,13 +48,12 @@ public class BanIpService implements Service {
 	private BanIpDAO banIpDAO;
 
 	/** List of banned ip addresses. */
-	private Set<BanIp> banList;
+	private List<BanIp> banList;
 
 	/**
 	 * 
-	 * @see org.wowemu.common.service.Service#start()
+	 * @see org.jmangos.commons.service.Service#start()
 	 */
-	@PostConstruct
 	@Override
 	public void start() {
 		update();
@@ -115,11 +112,11 @@ public class BanIpService implements Service {
 	 *            ban expiration time
 	 * @return was ip banned or not
 	 */
-	public boolean banIp(String ip, Long expireTime) {
+	public boolean banIp(String ip, Timestamp expireTime) {
 		BanIp ipBan = new BanIp();
 		ipBan.setIp(ip);
 		ipBan.setTimeEnd(expireTime);
-		if (banIpDAO.insert(ipBan)) {
+		if (banIpDAO.insert(ipBan) != null) {
 			banList.add(ipBan);
 			return true;
 		}
@@ -134,7 +131,7 @@ public class BanIpService implements Service {
 	 * @return was it updated or not
 	 */
 	public boolean addBan(BanIp ipBan) {
-		if (banIpDAO.insert(ipBan)) {
+		if (banIpDAO.insert(ipBan) != null) {
 			banList.add(ipBan);
 			return true;
 		} else
@@ -165,7 +162,7 @@ public class BanIpService implements Service {
 
 	/**
 	 * 
-	 * @see org.wowemu.common.service.Service#stop()
+	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override
 	public void stop() {

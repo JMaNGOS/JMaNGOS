@@ -29,12 +29,13 @@ import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
 import org.jmangos.auth.network.netty.handler.AuthToClientChannelHandler;
+import org.jmangos.commons.OpcodeTable;
 
 /**
  * The Class PacketFrameEncoder.
  */
 public class RealmPacketFrameEncoder extends OneToOneEncoder {
-
+	
 	/** The Constant log. */
 	private static final Logger log = Logger
 			.getLogger(RealmPacketFrameEncoder.class);
@@ -61,7 +62,7 @@ public class RealmPacketFrameEncoder extends OneToOneEncoder {
 				(size + 3));
 		frame.writeByte(opcode);
 		frame.writeShort(size);
-
+		
 		byte[] tmpa = new byte[message.readableBytes()];
 		message.readBytes(tmpa);
 		frame.writeBytes(channelHandler.getCrypt().encrypt(tmpa));
@@ -70,30 +71,25 @@ public class RealmPacketFrameEncoder extends OneToOneEncoder {
 		List<String> d = breakStringInChunks(
 				new BigInteger(1, tmpa).toString(16).toUpperCase(), 16);
 		for (Iterator<String> iterator = d.iterator(); iterator.hasNext();) {
-			String string = iterator.next();
+			String string =  iterator.next();
 			log.debug(string);
 		}
 		return frame;
 	}
-
+	
 	/**
-	 * 
-	 * @param text
-	 *            the text
-	 * @param chunkSize
-	 *            the chunk size
+	 *
+	 * @param text the text
+	 * @param chunkSize the chunk size
 	 * @return the list
 	 */
-	private static List<String> breakStringInChunks(final String text,
-			final int chunkSize) {
-		final int numChunks = 0 == (text.length() % chunkSize) ? text.length()
-				/ chunkSize : 1 + (text.length() / chunkSize);
-		final List<String> chunks = new ArrayList<String>(numChunks);
-		for (int startIndex = 0; startIndex < text.length(); startIndex += chunkSize) {
-			final int endIndex = Math
-					.min(text.length(), startIndex + chunkSize);
-			chunks.add(text.substring(startIndex, endIndex));
-		}
-		return chunks;
+	private static List<String> breakStringInChunks(final String text, final int chunkSize) {
+	    final int numChunks = 0 == (text.length() % chunkSize) ? text.length() / chunkSize : 1 + (text.length() / chunkSize);
+	    final List<String> chunks = new ArrayList<String>(numChunks);
+	    for (int startIndex = 0; startIndex < text.length(); startIndex += chunkSize) {
+	        final int endIndex = Math.min(text.length(), startIndex + chunkSize);
+	        chunks.add(text.substring(startIndex, endIndex));
+	    }
+	    return chunks;
 	}
 }

@@ -32,11 +32,11 @@ public class MTEXChunk extends ADTChunk{
 
 
 	@Override
-	public ADTChunk reads(ByteBuffer bb, int offset, int size) {
+	public ADTChunk reads(ByteBuffer bb, int offset, long size) {
 		byte[] tsring = new byte[2024];
 		ArrayList<String> tstr = new ArrayList<String>();
 		CharsetDecoder decoder = Charset.forName("UTF-8").newDecoder();
-		setGlobalOffset(offset + size + HEADERSIZE);
+		setGlobalOffcet(offset + size + HEADERSIZE);
 		this.setByteBuffer(bb, offset);
 		int reading = 0;
 		int si = 0;

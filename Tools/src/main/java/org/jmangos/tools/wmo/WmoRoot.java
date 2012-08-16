@@ -28,25 +28,10 @@ import javolution.util.FastTable;
 import org.jmangos.tools.chunk.BaseChunk;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
-/**
- * WmoRoot class for load chunks from given file
- * 
- * @author MinimaJack
- */
 public class WmoRoot {
-	/** Gathered chunks */
-	private FastTable<BaseChunk> chunks = new FastTable<BaseChunk>();
+	FastTable<BaseChunk> chunks = new FastTable<BaseChunk>();
 
-	/**
-	 * Gathering chunks from file.
-	 * 
-	 * @param f
-	 *            - wmo root file
-	 * @throws IOException
-	 *             if some I/O error occurs
-	 * @return WmoRoot object from given file
-	 * */
-	public static WmoRoot read(final File f) throws IOException {
+	public static WmoRoot read(File f) throws IOException {
 		FileInputStream fis = null;
 		ByteBuffer bb = ByteBuffer.allocate((int) f.length());
 		WmoRoot result = new WmoRoot();
@@ -65,17 +50,12 @@ public class WmoRoot {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} finally {
-			if (fis != null) {
-				fis.close();
-			}
+			fis.close();
 		}
 		return result;
 	}
 
-	/**
-	 * @return the chunks
-	 */
-	public final FastTable<BaseChunk> getChunks() {
+	public FastTable<BaseChunk> getChunks() {
 		return chunks;
 	}
 }

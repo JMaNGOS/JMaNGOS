@@ -19,55 +19,46 @@ package org.jmangos.tools.wmo.chunks.root;
 import java.nio.ByteBuffer;
 
 import org.jmangos.tools.chunk.BaseChunk;
-import org.jmangos.tools.chunk.Readable;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
-/**
- * Chunk <tt>MOHD</tt><br>
- * Header chunk for the map object.
- * 
- * @author MinimaJack
- * 
- */
-public class MOHDChunk extends WMOChunk implements Readable{
-	/** Number of materials. */
-	Unsigned32 nTextures = new Unsigned32();
-	/** Number of WMO groups. */
-	Unsigned32 nGroups = new Unsigned32();
-	/** Number of portals. */
-	Unsigned32 nPortals = new Unsigned32();
-	/** Number of lights. */
-	Unsigned32 nLights = new Unsigned32();
-	/** Number of M2 models. */
-	Unsigned32 nModels = new Unsigned32();
-	/** Number of doodads */
-	Unsigned32 nDoodads = new Unsigned32();
-	/** Number of doodad sets. */
-	Unsigned32 nDoodadSet = new Unsigned32();
-	/** Ambient color. */
-	Unsigned8[] col = array(new Unsigned8[4]);
-	/** Column 2 in WMOAreaTable.dbc */
-	Unsigned32 wmoId = new Unsigned32();
-	Float32[] bbox1 = array(new Float32[3]);
-	Float32[] bbox2 = array(new Float32[3]);
-	Unsigned32 liquidType = new Unsigned32();
+public class MOHDChunk extends WMOChunk{
+	Unsigned32 nTextures = new Unsigned32();		
+	Unsigned32 nGroups = new Unsigned32();		
+	Unsigned32 nPortals = new Unsigned32();		
+	Unsigned32 nLights = new Unsigned32();		
+	Unsigned32 nModels = new Unsigned32();		
+	Unsigned32 nDoodads = new Unsigned32();		
+	Unsigned32 nSets = new Unsigned32();		
+	Unsigned8 colR = new Unsigned8();				
+	Unsigned8 colG = new Unsigned8();			
+	Unsigned8 colB = new Unsigned8();				
+	Unsigned8 colX = new Unsigned8();					
+	Unsigned32 wmoID = new Unsigned32();
+	Float32[]  bbox1 = array(new Float32[3]);
+	Float32[]  bbox2 = array(new Float32[3]);		
+	Unsigned32 LiquidType = new Unsigned32();	
 
 	@Override
-	public BaseChunk reads(ByteBuffer bb, int offset, int size) {
-		setGlobalOffset(offset + size + HEADERSIZE);
+	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
+		setGlobalOffcet(offset + size + HEADERSIZE);
 		this.setByteBuffer(bb, offset);
-		return this;
+		return this;	
 	}
-
-	public String toString() {
-		return "[MOHDChunk] \n\tnTextures:" + nTextures.get() + "\n\tnGroups:"
-				+ nGroups.get() + "\n\tnPortals:" + nPortals.get()
-				+ "\n\tnLights:" + nLights.get() + "\n\tnModels:"
-				+ nModels.get() + "\n\tnDoodads:" + nDoodads.get()
-				+ "\n\tnSets:" + nDoodadSet.get() + "\n\twmoID:" + wmoId.get()
-				+ "\n\tBounding box 1:" + bbox1[0].get() + " " + bbox1[1].get()
-				+ " " + bbox1[2].get() + "\n\tBounding box 2:" + bbox2[0].get()
-				+ " " + bbox2[1].get() + " " + bbox2[2].get()
-				+ "\n\tLiquidType:" + liquidType.get();
+	public String toString(){
+		return "[MOHDChunk] \n\tnTextures:" + nTextures.get()+
+		"\n\tnGroups:" + nGroups.get()+
+		"\n\tnPortals:" + nPortals.get()+
+		"\n\tnLights:" + nLights.get()+
+		"\n\tnModels:" + nModels.get()+
+		"\n\tnDoodads:" + nDoodads.get()+
+		"\n\tnSets:" + nSets.get()+
+		"\n\tcolR:" + colR.get()+
+		"\n\tcolG:" + colG.get()+
+		"\n\tcolB:" + colB.get()+
+		"\n\tcolX:" + colX.get()+
+		"\n\twmoID:" + wmoID.get()+
+		"\n\tBounding box 1:" + bbox1[0].get()+ " " +bbox1[1].get()+ " " + bbox1[2].get()+
+		"\n\tBounding box 2:" + bbox2[0].get()+ " " +bbox2[1].get()+ " " + bbox2[2].get()+
+		"\n\tLiquidType:" + LiquidType.get();
 	}
 }

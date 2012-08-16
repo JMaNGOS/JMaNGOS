@@ -16,28 +16,21 @@
  *******************************************************************************/
 package org.jmangos.auth.service;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-
 import javolution.util.FastMap;
-
 import org.apache.log4j.Logger;
 import org.jmangos.auth.dao.RealmDAO;
-import org.jmangos.auth.model.Realm;
+import org.jmangos.commons.model.Realm;
 import org.jmangos.commons.service.Service;
-import org.springframework.stereotype.Component;
 
-@Component
+import javax.inject.Inject;
+
 public class RealmListService implements Service {
 	/**
 	 * Logger for this class.
 	 */
-	private static final Logger logger = Logger
-			.getLogger(RealmListService.class);
+	private final Logger log = Logger.getLogger(getClass());
 
-	private static final long UPDATE_INTERVAL = 2000;
-
-	/**
+    /**
 	 * Map with realms
 	 */
 	private FastMap<Integer, Realm> realms = new FastMap<Integer, Realm>()
@@ -57,13 +50,15 @@ public class RealmListService implements Service {
 	 * 
 	 * @return the worlds
 	 */
+    @SuppressWarnings("unused")
 	public FastMap<Integer, Realm> getWorlds() {
 		return realms;
 	}
 
+    @SuppressWarnings("unused")
 	public void addFromConnected(Realm newRealm) {
 		if (realms.containsKey(newRealm.getId())) {
-			logger.debug("Server with this id already connected. Replaced data.");
+			log.debug("Server with this id already connected. Replaced data.");
 			realms.remove(newRealm.getId());
 			realms.put(newRealm.getId(), newRealm);
 		} else {
@@ -75,10 +70,9 @@ public class RealmListService implements Service {
 	/**
 	 * Loads list of banned ip.
 	 */
-	@PostConstruct
 	public void start() {
 		update();
-		logger.debug("WorldList loaded " + realms.size() + " realms.");
+		log.debug("WorldList loaded " + realms.size() + " realms.");
 
 	}
 
@@ -86,10 +80,11 @@ public class RealmListService implements Service {
 	 * Update if need
 	 */
 	synchronized public void update() {
-		if (nextUpdateTime > System.currentTimeMillis()) {
+		if(nextUpdateTime > System.currentTimeMillis()){
 			return;
 		}
-		nextUpdateTime = System.currentTimeMillis() + UPDATE_INTERVAL;
+        long UPDATE_INTERVAL = 2000;
+        nextUpdateTime = System.currentTimeMillis() + UPDATE_INTERVAL;
 		FastMap<Integer, Realm> trealms = realmDAO.getAllRealms();
 		for (Realm realm : trealms.values()) {
 			if (realms.containsKey(realm.getId())) {
@@ -107,6 +102,7 @@ public class RealmListService implements Service {
 	 * 
 	 * @return the byteSize
 	 */
+    @SuppressWarnings("unused")
 	public int getByteSize() {
 		return byteSize;
 	}
@@ -116,6 +112,7 @@ public class RealmListService implements Service {
 	 * 
 	 * @return the size
 	 */
+    @SuppressWarnings("unused")
 	public int getRealmCount() {
 		return realms.size();
 	}
@@ -140,6 +137,7 @@ public class RealmListService implements Service {
 	 *            the id
 	 * @return the amount characters
 	 */
+    @SuppressWarnings("unused")
 	public FastMap<Integer, Integer> getAmountCharacters(Integer id) {
 		return getWorldDAO().getAmountCharacters(id);
 	}

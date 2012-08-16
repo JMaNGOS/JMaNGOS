@@ -22,7 +22,7 @@ import org.jmangos.tools.dbc.dataholder.DBCStruct;
 
 
 public class DurabilityCostsEntry extends DBCStruct<DurabilityCostsEntry> {
-	public static final int MAX_MULTIPLIER = 29;
+	public final static int MAX_MULTIPLIER = 29;
 	@XmlAttribute(name="Itemlvl", required=true)
     public final Unsigned32 Itemlvl= new Unsigned32(); 
 	@XmlAttribute(name="multiplier", required=true)

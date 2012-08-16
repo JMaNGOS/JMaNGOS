@@ -32,13 +32,13 @@ public class MDDFChunk extends ADTChunk{
 
 	private MDDFEntry[] MDDFEntries;
 	@Override
-	public ADTChunk reads(ByteBuffer bb, int offset, int size) {
+	public ADTChunk reads(ByteBuffer bb, int offset, long size) {
 		MDDFEntries = new MDDFEntry[(int) (size /36)];
 		for (int i = 0; i < (size /36); i++) {
 			MDDFEntries[i] = new MDDFEntry();
 			MDDFEntries[i].setByteBuffer(bb, offset + 36*i);
 		}
-		setGlobalOffset(offset + size + HEADERSIZE);
+		setGlobalOffcet(offset + size + HEADERSIZE);
 		this.setByteBuffer(bb, offset);
 		return this;	
 	}

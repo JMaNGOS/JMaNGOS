@@ -20,7 +20,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
-import org.jmangos.auth.model.Account;
+import org.jmangos.commons.model.Account;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.utils.BigNumber;
 

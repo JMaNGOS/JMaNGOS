@@ -19,7 +19,6 @@ package org.jmangos.auth.network.netty.packet.client;
 import java.nio.charset.Charset;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
@@ -28,12 +27,10 @@ import org.jmangos.auth.service.AccountService;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
-import org.springframework.stereotype.Component;
 
 /**
  * The Class <tt>CMD_AUTH_LOGON_CHALLENGE</tt>.
  */
-@Component
 public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
 
 	/** The Constant logger. */
@@ -43,7 +40,6 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
 
 	/** The sender. */
 	@Inject
-	@Named("nettyPacketSender")
 	private AbstractPacketSender sender;
 
 	/** The account service. */

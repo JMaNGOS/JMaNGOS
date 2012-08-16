@@ -16,9 +16,6 @@
  *******************************************************************************/
 package org.jmangos.realm.network.netty.handler;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelHandler;
 import org.jmangos.commons.network.model.ConnectHandler;
@@ -26,12 +23,13 @@ import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.State;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_AUTH_CHALLENGE;
-import org.springframework.stereotype.Component;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * The Class RealmToClientConnectHandler.
  */
-@Component("realmToClientConnectHandler")
 public class RealmToClientConnectHandler implements ConnectHandler {
 
 	/** The Constant log. */
@@ -40,10 +38,11 @@ public class RealmToClientConnectHandler implements ConnectHandler {
 
 	/** The sender. */
 	@Inject
-	@Named("nettyPacketSender")
+	@Named("client")
 	private AbstractPacketSender sender;
 
 	/**
+	 * (non-Javadoc)
 	 * 
 	 * @see org.jmangos.commons.network.model.ConnectHandler#onConnect(org.wowemu.common.network.model.NettyNetworkChannel,
 	 *      org.jboss.netty.channel.ChannelHandler)
@@ -57,6 +56,7 @@ public class RealmToClientConnectHandler implements ConnectHandler {
 	}
 
 	/**
+	 * (non-Javadoc)
 	 * 
 	 * @see org.jmangos.commons.network.model.ConnectHandler#onDisconnect(org.wowemu.common.network.model.NettyNetworkChannel)
 	 */
