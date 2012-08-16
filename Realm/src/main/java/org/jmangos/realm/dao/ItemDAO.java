@@ -17,20 +17,15 @@
 package org.jmangos.realm.dao;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
-import org.apache.log4j.Logger;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.jmangos.commons.database.DatabaseFactory;
+
 import org.jmangos.commons.database.dao.DAO;
 import org.jmangos.realm.model.base.item.ItemPrototype;
 
-import java.util.List;
-
+// TODO: Auto-generated Javadoc
 /**
  * The Class ItemDAO.
  */
-public class ItemDAO implements DAO {
-    Logger log = Logger.getLogger( getClass() );
+public abstract class ItemDAO implements DAO {
 
 	/* (non-Javadoc)
 	 * @see org.jmangos.commons.database.dao.DAO#getClassName()
@@ -45,26 +40,7 @@ public class ItemDAO implements DAO {
 	 *
 	 * @return the t int object hash map
 	 */
-	public TIntObjectHashMap<ItemPrototype> loadItemPrototypes() {
-        Long eTime = System.currentTimeMillis();
-
-        Session session = DatabaseFactory.getWorldSessionFactory().openSession();
-        Query query = session.createQuery( "from ItemPrototype order by id" );
-
-        TIntObjectHashMap<ItemPrototype> map = new TIntObjectHashMap<ItemPrototype>();
-        @SuppressWarnings("unchecked")
-        List<ItemPrototype> itemPrototypeList = (List<ItemPrototype>)query.list();
-
-        // Fill map
-        for ( ItemPrototype item : itemPrototypeList ) {
-            map.put( item.getEntry(), item );
-        }
-
-        eTime = System.currentTimeMillis() - eTime;
-        log.info( String.format( "Loaded [%d] ItemPrototypes under %d ms", map.size(), eTime ) );
-
-        return map;
-    }
+	public abstract TIntObjectHashMap<ItemPrototype> loadItemPrototypes();
 
 	/**
 	 * Load item prototype.
@@ -72,9 +48,5 @@ public class ItemDAO implements DAO {
 	 * @param guid the guid
 	 * @return the item prototype
 	 */
-	public ItemPrototype loadItemPrototype(int guid) {
-        log.info( "Loading single item from database with id: " + guid );
-        Session session = DatabaseFactory.getWorldSessionFactory().openSession();
-        return (ItemPrototype)session.get( ItemPrototype.class, guid );
-    }
+	public abstract ItemPrototype loadItemPrototype(int guid);
 }

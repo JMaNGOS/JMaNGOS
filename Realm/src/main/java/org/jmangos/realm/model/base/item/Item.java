@@ -79,7 +79,7 @@ public class Item extends WorldObject{
 	        return true;
 	    if( bag == INVENTORY_SLOT_BAG_0 && ( slot >= InventoryPackSlots.INVENTORY_SLOT_ITEM_START  && slot < InventoryPackSlots.INVENTORY_SLOT_ITEM_END ) )
 	        return true;
-	    if( bag >= InventorySlots.INVENTORY_SLOT_BAG_START.getValue() && bag < InventorySlots.INVENTORY_SLOT_BAG_END.getValue() )
+	    if( bag >= InventorySlots.INVENTORY_SLOT_BAG_START && bag < InventorySlots.INVENTORY_SLOT_BAG_END )
 	        return true;
 	    if( bag == INVENTORY_SLOT_BAG_0 && ( slot >= KeyRingSlots.KEYRING_SLOT_START && slot < CurrencyTokenSlots.CURRENCYTOKEN_SLOT_END ) )
 	        return true;
@@ -95,9 +95,9 @@ public class Item extends WorldObject{
 	 */
 	public static boolean IsEquipmentPos( int bag, int slot )
 	{
-	    if( bag == INVENTORY_SLOT_BAG_0 && ( slot < EquipmentSlots.EQUIPMENT_SLOT_END.getValue() ) )
+	    if( bag == INVENTORY_SLOT_BAG_0 && ( slot < EquipmentSlots.EQUIPMENT_SLOT_END ) )
 	        return true;
-	    if( bag == INVENTORY_SLOT_BAG_0 && ( slot >= InventorySlots.INVENTORY_SLOT_BAG_START.getValue() && slot < InventorySlots.INVENTORY_SLOT_BAG_END.getValue() ) )
+	    if( bag == INVENTORY_SLOT_BAG_0 && ( slot >= InventorySlots.INVENTORY_SLOT_BAG_START && slot < InventorySlots.INVENTORY_SLOT_BAG_END ) )
 	        return true;
 	    return false;
 	}

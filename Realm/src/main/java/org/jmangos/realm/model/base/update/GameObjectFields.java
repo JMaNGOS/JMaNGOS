@@ -16,78 +16,36 @@
  *******************************************************************************/
 package org.jmangos.realm.model.base.update;
 
-import org.jmangos.commons.network.model.UpdateField;
-import org.jmangos.commons.network.model.UpdateFieldType;
-
-import static org.jmangos.realm.model.base.update.ObjectFields.OBJECT_END;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class GameObjectFields.
  */
-public enum GameObjectFields implements UpdateField {
+public class GameObjectFields extends ObjectFields {
     
-    /** The OBJECT_FIELD_CREATED_BY
-     *  Size: 2, Type: LONG, Flags: PUBLIC
-     */
-    OBJECT_FIELD_CREATED_BY( OBJECT_END + 0x0000 ),
+    /** The OBJEC t_ fiel d_ create d_ by. */
+    public static int OBJECT_FIELD_CREATED_BY                   = OBJECT_END + 0x0000; // Size: 2, Type: LONG, Flags: PUBLIC
     
-    /** The GAMEOBJECT_DISPLAYID
-     *  Size: 1, Type: INT, Flags: PUBLIC
-     */
-    GAMEOBJECT_DISPLAYID( OBJECT_END + 0x0002 ),
+    /** The GAMEOBJEC t_ displayid. */
+    public static int GAMEOBJECT_DISPLAYID                      = OBJECT_END + 0x0002; // Size: 1, Type: INT, Flags: PUBLIC
     
-    /** The GAMEOBJECT_FLAGS
-     *  Size: 1, Type: INT, Flags: PUBLIC
-     */
-    GAMEOBJECT_FLAGS( OBJECT_END + 0x0003 ),
+    /** The GAMEOBJEC t_ flags. */
+    public static int GAMEOBJECT_FLAGS                          = OBJECT_END + 0x0003; // Size: 1, Type: INT, Flags: PUBLIC
     
-    /** The GAMEOBJECT_PARENTROTATION
-     *  Size: 4, Type: FLOAT, Flags: PUBLIC
-     */
-    GAMEOBJECT_PARENTROTATION( OBJECT_END + 0x0004 ),
+    /** The GAMEOBJEC t_ parentrotation. */
+    public static int GAMEOBJECT_PARENTROTATION                 = OBJECT_END + 0x0004; // Size: 4, Type: FLOAT, Flags: PUBLIC
     
-    /** The GAMEOBJECT_DYNAMIC
-     *  Size: 1, Type: TWO_SHORT, Flags: DYNAMIC
-     */
-    GAMEOBJECT_DYNAMIC( OBJECT_END + 0x0008 ),
+    /** The GAMEOBJEC t_ dynamic. */
+    public static int GAMEOBJECT_DYNAMIC                        = OBJECT_END + 0x0008; // Size: 1, Type: TWO_SHORT, Flags: DYNAMIC
     
-    /** The GAMEOBJECT_FACTION
-     *  Size: 1, Type: INT, Flags: PUBLIC
-     */
-    GAMEOBJECT_FACTION( OBJECT_END + 0x0009 ),
+    /** The GAMEOBJEC t_ faction. */
+    public static int GAMEOBJECT_FACTION                        = OBJECT_END + 0x0009; // Size: 1, Type: INT, Flags: PUBLIC
     
-    /** The GAMEOBJECT_LEVEL
-     *  Size: 1, Type: INT, Flags: PUBLIC
-     */
-    GAMEOBJECT_LEVEL( OBJECT_END + 0x000A ),
+    /** The GAMEOBJEC t_ level. */
+    public static int GAMEOBJECT_LEVEL                          = OBJECT_END + 0x000A; // Size: 1, Type: INT, Flags: PUBLIC
     
-    /** The GAMEOBJECT_BYTES_1
-     *  Size: 1, Type: BYTES, Flags: PUBLIC
-     */
-    GAMEOBJECT_BYTES_1( OBJECT_END + 0x000B );
+    /** The GAMEOBJEC t_ byte s_1. */
+    public static int GAMEOBJECT_BYTES_1                        = OBJECT_END + 0x000B; // Size: 1, Type: BYTES, Flags: PUBLIC
     
-    /** The GAMEOBJECT_END */
-    public static int GAMEOBJECT_END = OBJECT_END + 0x000C;
-
-
-    private int value;
-
-    GameObjectFields(int value) {
-        this.value = value;
-    }
-
-    @Override
-    public UpdateFieldType getType() {
-        return UpdateFieldType.INT;
-    }
-
-    @Override
-    public int getSize() {
-        return 0;
-    }
-
-    public int getValue( ) {
-        return this.value;
-    }
+    /** The GAMEOBJEC t_ end. */
+    public static int GAMEOBJECT_END                            = OBJECT_END + 0x000C;
 }

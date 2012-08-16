@@ -16,14 +16,10 @@
  *******************************************************************************/
 package org.jmangos.auth.dao;
 
-import javolution.util.FastMap;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.jmangos.commons.database.DatabaseFactory;
+import org.jmangos.auth.model.Realm;
 import org.jmangos.commons.database.dao.DAO;
-import org.jmangos.commons.model.Realm;
 
-import java.util.List;
+import javolution.util.FastMap;
 
 /**
  * The Class WorldDAO.
@@ -31,7 +27,7 @@ import java.util.List;
  * @author MinimaJack
  * 
  */
-public class RealmDAO implements DAO {
+public abstract class RealmDAO implements DAO {
 
 	/*
 	 * (non-Javadoc)
@@ -48,30 +44,16 @@ public class RealmDAO implements DAO {
 	 * 
 	 * @return the all worlds
 	 */
-	public FastMap<Integer, Realm> getAllRealms() {
-        Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Realm.class);
-        FastMap<Integer, Realm> realmFastMap = new FastMap<Integer, Realm>();
-        @SuppressWarnings("unchecked")
-        List<Realm> realmList = (List<Realm>)criteria.list();
-
-        for ( Realm realm : realmList )
-            realmFastMap.put( realm.getId(), realm );
-
-        session.close();
-        return realmFastMap;
-    }
+	public abstract FastMap<Integer, Realm> getAllRealms();
 
 	/**
 	 * Gets the amount characters.
 	 * 
 	 * @param id
-	 *            the realm id
+	 *            the id
 	 * @return the amount characters
 	 */
-	public FastMap<Integer, Integer> getAmountCharacters(final Integer id) {
-        // TODO:implement
-        return new FastMap<Integer, Integer>();
-    }
+	public abstract FastMap<Integer, Integer> getAmountCharacters(
+			final Integer id);
 
 }

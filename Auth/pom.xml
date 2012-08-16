@@ -65,7 +65,6 @@
 							<archive>
 								<manifest>
 									<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-									<mainClass>org.jmangos.auth.AuthServer</mainClass>
 								</manifest>
 								<manifestEntries>
 									<Implementation-Version>${project.version}.${jenkins.buildNumber}</Implementation-Version>

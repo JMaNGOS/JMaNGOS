@@ -16,50 +16,56 @@
  *******************************************************************************/
 package org.jmangos.realm.network.netty.packetClient.client;
 
-import org.apache.log4j.Logger;
+import java.nio.BufferUnderflowException;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_ITEM_QUERY_SINGLE_RESPONSE;
 import org.jmangos.realm.service.ItemStorages;
+import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import java.nio.BufferUnderflowException;
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class CMSG_ITEM_QUERY_SINGLE.
  */
+@Component
 public class CMSG_ITEM_QUERY_SINGLE extends AbstractWoWClientPacket {
 
 	/** The item. */
 	private int item;
-	
+
 	/** The sender. */
 	@Inject
-	@Named("client")
+	@Named("nettyPacketSender")
 	private AbstractPacketSender sender;
-	
+
 	/** The item storages. */
 	@Inject
 	private ItemStorages itemStorages;
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
 	 */
 	@Override
 	protected void readImpl() throws BufferUnderflowException, RuntimeException {
 		item = readD();
-		
+
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
 	 */
 	@Override
 	protected void runImpl() {
-        Logger.getLogger(getClass()).info("User item query for id: " + item );
-		sender.send(getClient(), new SMSG_ITEM_QUERY_SINGLE_RESPONSE(itemStorages.get(item)));
+		sender.send(getClient(), new SMSG_ITEM_QUERY_SINGLE_RESPONSE(
+				itemStorages.get(item)));
+
 	}
 
 }

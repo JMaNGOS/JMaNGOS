@@ -19,7 +19,12 @@
  */
 package org.jmangos.realm.network.netty.factory;
 
+import static org.jboss.netty.channel.Channels.*;
+
+import java.util.concurrent.TimeUnit;
+
 import org.jboss.netty.channel.ChannelPipeline;
+import org.jboss.netty.util.HashedWheelTimer;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.netty.factory.BasicPipelineFactory;
@@ -29,8 +34,6 @@ import org.jmangos.realm.network.netty.handler.RealmToAuthChannelHandler;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import static org.jboss.netty.channel.Channels.pipeline;
 
 /**
  * A factory for creating R2LPipeline objects.

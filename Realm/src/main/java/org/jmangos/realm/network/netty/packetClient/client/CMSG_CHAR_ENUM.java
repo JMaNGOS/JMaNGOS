@@ -16,35 +16,35 @@
  *******************************************************************************/
 package org.jmangos.realm.network.netty.packetClient.client;
 
+import java.nio.BufferUnderflowException;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_CHAR_ENUM;
 import org.jmangos.realm.service.AccountService;
-import org.jmangos.realm.service.ItemStorages;
+import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import java.nio.BufferUnderflowException;
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class CMSG_CHAR_ENUM.
  */
-public class CMSG_CHAR_ENUM  extends AbstractWoWClientPacket {
-	
+@Component
+public class CMSG_CHAR_ENUM extends AbstractWoWClientPacket {
+
 	/** The sender. */
 	@Inject
-	@Named("client")
+	@Named("nettyPacketSender")
 	private AbstractPacketSender sender;
-	
+
 	/** The account service. */
 	@Inject
 	private AccountService accountService;
 
-    @Inject
-    private ItemStorages itemStorages;
-	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
 	 */
 	@Override
@@ -52,12 +52,17 @@ public class CMSG_CHAR_ENUM  extends AbstractWoWClientPacket {
 		// nothing to read
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
 	 */
 	@Override
 	protected void runImpl() {
-		sender.send(getClient(), new SMSG_CHAR_ENUM( accountService.getCharacters( getAccount().getId() ) ));
+		getAccount().setCharactersData(
+				accountService.getCharactersData(getAccount().getObjectId()));
+		sender.send(getClient(), new SMSG_CHAR_ENUM(getAccount()
+				.getCharactersData()));
 	}
 
 }

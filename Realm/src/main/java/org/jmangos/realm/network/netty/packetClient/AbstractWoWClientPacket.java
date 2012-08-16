@@ -16,9 +16,9 @@
  *******************************************************************************/
 package org.jmangos.realm.network.netty.packetClient;
 
-import org.jmangos.commons.model.Account;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.ReceivablePacket;
+import org.jmangos.realm.model.account.Account;
 import org.jmangos.realm.model.player.Player;
 import org.jmangos.realm.network.netty.handler.RealmToClientChannelHandler;
 

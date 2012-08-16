@@ -16,51 +16,21 @@
  *******************************************************************************/
 package org.jmangos.realm.model.base.update;
 
-import org.jmangos.commons.network.model.UpdateField;
-import org.jmangos.commons.network.model.UpdateFieldType;
-
-import static org.jmangos.realm.model.base.update.ItemFields.ITEM_END;
-
+// TODO: Auto-generated Javadoc
 /**
  * The Class ContainerFields.
  */
-public enum ContainerFields implements UpdateField {
+public class ContainerFields extends ItemFields {
 	
-	/** The CONTAINER_FIELD_NUM_SLOTS
-     *  Size: 1, Type: INT, Flags: PUBLIC
-     */
-	CONTAINER_FIELD_NUM_SLOTS( ITEM_END + 0x0000 ),
+	/** The CONTAINE r_ fiel d_ nu m_ slots. */
+	protected static int CONTAINER_FIELD_NUM_SLOTS                 = ITEM_END + 0x0000; // Size: 1, Type: INT, Flags: PUBLIC
 	
-	/** The CONTAINER_ALIGN_PAD
-     *  Size: 1, Type: BYTES, Flags: NONE
-     */
-	CONTAINER_ALIGN_PAD( ITEM_END + 0x0001 ),
+	/** The CONTAINE r_ alig n_ pad. */
+	protected static int CONTAINER_ALIGN_PAD                       = ITEM_END + 0x0001; // Size: 1, Type: BYTES, Flags: NONE
 	
-	/** The CONTAINER_FIELD_SLOT_1
-     *  Size: 72, Type: LONG, Flags: PUBLIC
-     */
-	CONTAINER_FIELD_SLOT_1( ITEM_END + 0x0002 );
+	/** The CONTAINE r_ fiel d_ slo t_1. */
+	protected static int CONTAINER_FIELD_SLOT_1                    = ITEM_END + 0x0002; // Size: 72, Type: LONG, Flags: PUBLIC
 	
-	/** The CONTAINER_END */
-	public static int CONTAINER_END = ITEM_END + 0x004A;
-
-    private int value;
-
-    ContainerFields(int value) {
-        this.value = value;
-    }
-
-    @Override
-    public UpdateFieldType getType() {
-        return UpdateFieldType.INT;
-    }
-
-    @Override
-    public int getSize() {
-        return 0;
-    }
-
-    public int getValue( ) {
-        return this.value;
-    }
+	/** The CONTAINE r_ end. */
+	protected static int CONTAINER_END                             = ITEM_END + 0x004A;
 }

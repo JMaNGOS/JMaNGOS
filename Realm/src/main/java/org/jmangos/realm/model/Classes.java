@@ -74,12 +74,4 @@ public enum Classes {
 	public int getValue() {
 		return value;
 	}
-
-    public static Classes get( int value ) {
-        for ( Classes val : values() )
-            if ( val.getValue() == value )
-                return val;
-
-        return null;
-    }
 }

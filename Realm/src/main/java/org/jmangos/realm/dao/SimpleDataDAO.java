@@ -17,20 +17,17 @@
 package org.jmangos.realm.dao;
 
 import java.util.HashMap;
-import java.util.List;
 
-import org.hibernate.Session;
-import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
+import org.jmangos.realm.model.ClassLevel;
+import org.jmangos.realm.model.RaceClassLevel;
 import org.jmangos.realm.model.base.PlayerClassLevelInfo;
-import org.jmangos.realm.model.base.PlayerClassLevelInfoPK;
 import org.jmangos.realm.model.base.PlayerLevelInfo;
-import org.jmangos.realm.model.base.PlayerLevelInfoPK;
 
 /**
  * The Class SimpleDataDAO.
  */
-public class SimpleDataDAO implements DAO {
+public abstract class SimpleDataDAO implements DAO {
 
 	/* (non-Javadoc)
 	 * @see org.jmangos.commons.database.dao.DAO#getClassName()
@@ -45,31 +42,13 @@ public class SimpleDataDAO implements DAO {
 	 *
 	 * @return the class level infos
 	 */
-	public HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> getClassLevelInfos() {
-        HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> map = new HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo>();
-        Session session = DatabaseFactory.getWorldSessionFactory().openSession();
-        List<PlayerClassLevelInfo> infoList = (List<PlayerClassLevelInfo>)session.createQuery( "select pcli from PlayerClassLevelInfo pcli" ).list();
-        for( PlayerClassLevelInfo levelInfo : infoList ) {
-            map.put( levelInfo.getPlayerClassLevelInfoPK(), levelInfo );
-        }
-
-        return map;
-    }
+	public abstract HashMap<ClassLevel, PlayerClassLevelInfo> getClassLevelInfos();
 
 	/**
 	 * Gets the race class level infos.
 	 *
 	 * @return the race class level infos
 	 */
-	public HashMap<PlayerLevelInfoPK, PlayerLevelInfo> getRaceClassLevelInfos() {
-        HashMap<PlayerLevelInfoPK, PlayerLevelInfo> map = new HashMap<PlayerLevelInfoPK, PlayerLevelInfo>();
-        Session session = DatabaseFactory.getWorldSessionFactory().openSession();
-        List<PlayerLevelInfo> infoList = (List<PlayerLevelInfo>)session.createQuery( "select pli from PlayerLevelInfo pli" ).list();
-        for( PlayerLevelInfo levelInfo : infoList ) {
-            map.put( levelInfo.getPlayerLevelInfoPK(), levelInfo );
-        }
-
-        return map;
-    }
+	public abstract HashMap<RaceClassLevel, PlayerLevelInfo> getRaceClassLevelInfos();
 
 }

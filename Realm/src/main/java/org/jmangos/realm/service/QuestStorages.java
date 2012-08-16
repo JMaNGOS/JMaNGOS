@@ -23,18 +23,20 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 import org.apache.log4j.Logger;
 import org.jmangos.commons.dataholder.DataLoadService;
 import org.jmangos.realm.dao.QuestDAO;
-import org.jmangos.realm.model.base.QuestPrototype;
+import org.jmangos.realm.model.base.PlayerClassLevelInfo;
 
 /**
  * The Class QuestStorages.
  */
-public class QuestStorages implements DataLoadService<TIntObjectHashMap<QuestPrototype>> {
+public class QuestStorages
+		implements
+			DataLoadService<TIntObjectHashMap<PlayerClassLevelInfo>> {
 
 	/** The Constant logger. */
 	private static final Logger logger = Logger.getLogger(QuestStorages.class);
 
 	/** The player class level infos. */
-	private TIntObjectHashMap<QuestPrototype> questMap = new TIntObjectHashMap<QuestPrototype>();
+	private TIntObjectHashMap<PlayerClassLevelInfo> playerClassLevelInfos = new TIntObjectHashMap<PlayerClassLevelInfo>();
 	
 	/** The quest dao. */
 	@Inject
@@ -46,7 +48,8 @@ public class QuestStorages implements DataLoadService<TIntObjectHashMap<QuestPro
 	@Override
 	public void start() {
 		load();
-		logger.info("Loaded " + questMap.size() + " questPrototypes");
+		logger.info("Loaded " + playerClassLevelInfos.size() + " questPrototypes");
+
 	}
 
 	/* (non-Javadoc)
@@ -54,28 +57,26 @@ public class QuestStorages implements DataLoadService<TIntObjectHashMap<QuestPro
 	 */
 	@Override
 	public void stop() {
-		questMap.clear();
+		playerClassLevelInfos.clear();
+
 	}
 
 	/* (non-Javadoc)
 	 * @see org.jmangos.commons.dataholder.DataLoadService#load()
 	 */
 	@Override
-	public TIntObjectHashMap<QuestPrototype> load() {
-		questMap = questDAO.loadQuestPrototypes();
-		return questMap;
+	public TIntObjectHashMap<PlayerClassLevelInfo> load() {
+		playerClassLevelInfos = questDAO.loadQuestPrototypes();
+		return playerClassLevelInfos;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.jmangos.commons.dataholder.DataLoadService#reload()
 	 */
-	public void reload() {
-        // Don't replace directly becouse the players can't query quest while it's loading!
-        logger.info( "Loading quest templates to temoary store." );
-        TIntObjectHashMap<QuestPrototype> tempQuestMap = questDAO.loadQuestPrototypes();
-        logger.info( "Loaded " + tempQuestMap.size() + " quests. Replacing new old Quests with newer" );
-        questMap = tempQuestMap;
-        tempQuestMap = null;
+	@Override
+	public TIntObjectHashMap<PlayerClassLevelInfo> reload() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/* (non-Javadoc)
@@ -91,14 +92,9 @@ public class QuestStorages implements DataLoadService<TIntObjectHashMap<QuestPro
 	 * @see org.jmangos.commons.dataholder.DataLoadService#get()
 	 */
 	@Override
-	public TIntObjectHashMap<QuestPrototype> get() {
+	public TIntObjectHashMap<PlayerClassLevelInfo> get() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
-    // Specific getters
-    public QuestPrototype getQuest( int questId ) {
-        return questMap.get( questId );
-    }
 }

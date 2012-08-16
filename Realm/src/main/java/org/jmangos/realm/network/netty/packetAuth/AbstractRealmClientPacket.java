@@ -34,9 +34,9 @@
  */
 package org.jmangos.realm.network.netty.packetAuth;
 
-import org.jmangos.commons.model.Account;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.ReceivablePacket;
+import org.jmangos.realm.model.account.Account;
 import org.jmangos.realm.network.netty.handler.RealmToClientChannelHandler;
 
 
@@ -81,7 +81,7 @@ public abstract class AbstractRealmClientPacket extends ReceivablePacket
 	 *
 	 * @return the account
 	 */
-	public Account getAccount(){
+	public Account getAccount(){ 
 		return (Account)((NettyNetworkChannel) _client).getChanneledObject();
 	}
 }

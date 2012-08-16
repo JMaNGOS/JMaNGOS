@@ -17,26 +17,15 @@
 package org.jmangos.realm.model.base;
 
 // TODO: Auto-generated Javadoc
-
-import javax.persistence.*;
-
 /**
  * The Class PlayerClassLevelInfo.
  */
-@Entity
-@Table(name = "player_classlevelstats")
 public class PlayerClassLevelInfo {
-    @EmbeddedId
-    PlayerClassLevelInfoPK playerClassLevelInfoPK;
 
-    /** The base health. */
-    @Basic
-    @Column(name = "basehp", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
-    private int baseHealth;
-
-    /** The base mana. */
-    @Basic
-    @Column(name = "basemana", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
+	/** The base health. */
+	private int baseHealth;
+	
+	/** The base mana. */
 	private int baseMana;
 
 	/**
@@ -57,17 +46,15 @@ public class PlayerClassLevelInfo {
 		return baseMana;
 	}
 
-    /**
-     * No-arg constructor for persistence content
-     */
-	public PlayerClassLevelInfo() {
-    }
+	/**
+	 * Instantiates a new player class level info.
+	 *
+	 * @param baseHealth the base health
+	 * @param baseMana the base mana
+	 */
+	public PlayerClassLevelInfo(int baseHealth, int baseMana) {
+		this.baseHealth = baseHealth;
+		this.baseMana = baseMana;
+	}
 
-    public PlayerClassLevelInfoPK getPlayerClassLevelInfoPK() {
-        return playerClassLevelInfoPK;
-    }
-
-    public void setPlayerClassLevelInfoPK(PlayerClassLevelInfoPK playerClassLevelInfoPK) {
-        this.playerClassLevelInfoPK = playerClassLevelInfoPK;
-    }
 }

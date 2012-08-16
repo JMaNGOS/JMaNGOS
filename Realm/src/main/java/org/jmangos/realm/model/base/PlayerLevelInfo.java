@@ -16,46 +16,24 @@
  *******************************************************************************/
 package org.jmangos.realm.model.base;
 
-import org.apache.commons.lang.NotImplementedException;
 import org.jmangos.realm.model.unit.Stats;
-
-import javax.persistence.*;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PlayerLevelInfo.
  */
-@Entity
-@Table(name="player_levelstats")
 public class PlayerLevelInfo {
-
-    @EmbeddedId
-    PlayerLevelInfoPK playerLevelInfoPK;
-
-    @Basic
-    @Column(name = "str", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
-    private int strength;
-
-    @Basic
-    @Column(name = "agi", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
-    private int agility;
-
-    @Basic
-    @Column(name = "sta", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
-    private int stamina;
-
-    @Basic
-    @Column(name = "inte", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
-    private int intellect;
-
-    @Basic
-    @Column(name = "spi", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
-    private int spirit;
-
-    /**
-	 * Initialize Persistent entity
+	
+	/** The stats. */
+	int[] stats = new int[Stats.MAX_STATS];
+	
+	/**
+	 * Instantiates a new player level info.
+	 *
+	 * @param stats the stats
 	 */
-	public PlayerLevelInfo() {
+	public PlayerLevelInfo(int[] stats) {
+		this.stats = stats;
 	}
 	
 	/**
@@ -64,64 +42,8 @@ public class PlayerLevelInfo {
 	 * @param stat the stat
 	 * @return the stats
 	 */
-    @Transient
 	public int getStats(Stats stat) {
-		switch (stat) {
-            case AGILITY: return agility;
-            case INTELLECT: return intellect;
-            case SPIRIT: return spirit;
-            case STAMINA: return stamina;
-            case STRENGTH: return strength;
-            default:
-                throw new NotImplementedException( "The enum value: " + stat + " not implemented!" );
-        }
+		return this.stats[stat.ordinal()];
 	}
 
-    public PlayerLevelInfoPK getPlayerLevelInfoPK() {
-        return playerLevelInfoPK;
-    }
-
-    public void setPlayerLevelInfoPK(PlayerLevelInfoPK levelInfo) {
-        this.playerLevelInfoPK = levelInfo;
-    }
-
-    public int getStrength() {
-        return strength;
-    }
-
-    public void setStrength(int strength) {
-        this.strength = strength;
-    }
-
-    public int getAgility() {
-        return agility;
-    }
-
-    public void setAgility(int agility) {
-        this.agility = agility;
-    }
-
-    public int getStamina() {
-        return stamina;
-    }
-
-    public void setStamina(int stamina) {
-        this.stamina = stamina;
-    }
-
-    public int getIntellect() {
-        return intellect;
-    }
-
-    public void setIntellect(int intellect) {
-        this.intellect = intellect;
-    }
-
-    public int getSpirit() {
-        return spirit;
-    }
-
-    public void setSpirit(int spirit) {
-        this.spirit = spirit;
-    }
 }

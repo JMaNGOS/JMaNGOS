@@ -19,6 +19,7 @@ package org.jmangos.realm.network.netty.packetClient.server;
 import org.jmangos.realm.model.base.item.ItemPrototype;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class SMSG_ITEM_QUERY_SINGLE_RESPONSE.
  */
@@ -52,8 +53,8 @@ public class SMSG_ITEM_QUERY_SINGLE_RESPONSE extends AbstractWoWServerPacket {
 		writeD(itemPrototype.getClazz());
 		writeD(itemPrototype.getSubClass());
 		writeD(itemPrototype.getUnk0());
-        writeS( itemPrototype.getItemName() );
-        writeC(0);
+		writeS(itemPrototype.getName());
+		writeC(0);
 		writeC(0);
 		writeC(0);
 		writeD(itemPrototype.getDisplayInfoID());
@@ -80,23 +81,17 @@ public class SMSG_ITEM_QUERY_SINGLE_RESPONSE extends AbstractWoWServerPacket {
 		writeD(itemPrototype.getContainerSlots());
 		writeD(itemPrototype.getStatsCount());
 		for (int i = 0; i < itemPrototype.getStatsCount(); i++) {
-			//writeD(itemPrototype.getItemStat(i).getItemStatType());
-			//writeD(itemPrototype.getItemStat(i).getItemStatValue());
-            //TODO:reimplement to ItemPrototype
-            writeD( 0 );
-            writeD( 0 );
+			writeD(itemPrototype.getItemStat(i).getItemStatType());
+			writeD(itemPrototype.getItemStat(i).getItemStatValue());
 		}
 		writeD(itemPrototype.getScalingStatDistribution());
 		writeD(itemPrototype.getScalingStatValue());
 
 		for (int i = 0; i < ItemPrototype.MAX_ITEM_PROTO_DAMAGES; i++) {
-			//writeF(itemPrototype.getDamage(i).getDamageMin());
-			//writeF(itemPrototype.getDamage(i).getDamageMax());
-			//writeD(itemPrototype.getDamage(i).getDamageType());
-            //TODO:implement to ItemPrototype
-            writeF( 0.0f );
-            writeF( 0.0f );
-            writeD(0);
+
+			writeF(itemPrototype.getDamage(i).getDamageMin());
+			writeF(itemPrototype.getDamage(i).getDamageMax());
+			writeD(itemPrototype.getDamage(i).getDamageType());
 		}
 
 		writeD(itemPrototype.getArmor());

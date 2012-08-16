@@ -19,7 +19,7 @@ package org.jmangos.realm.model.unit;
 import org.jmangos.realm.model.base.WorldObject;
 import org.jmangos.realm.model.base.guid.TypeId;
 import org.jmangos.realm.model.base.guid.TypeMask;
-import org.jmangos.realm.model.base.update.UnitField;
+import org.jmangos.realm.model.base.update.UnitFields;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -70,7 +70,7 @@ public class Units extends WorldObject {
 	 */
 	public Units(long objectId) {
 		super(objectId);
-		valuesCount = UnitField.UNIT_END;
+		valuesCount = UnitFields.UNIT_END;
 		objectTypeId = TypeId.TYPEID_UNIT;
 		objectType.add(TypeMask.TYPEMASK_UNIT);
 	}
@@ -82,7 +82,8 @@ public class Units extends WorldObject {
 	 * @return the int
 	 */
 	public int GetMaxPower(Powers power) {
-		return GetUInt32Value(UnitField.UNIT_FIELD_MAXPOWER1.getValue() + power.getValue());
+		return GetUInt32Value(UnitFields.UNIT_FIELD_MAXPOWER1
+				+ power.getValue());
 	}
 
 	/**
@@ -92,7 +93,7 @@ public class Units extends WorldObject {
 	 * @return the float
 	 */
 	public float GetStat(Stats stat) {
-		return GetUInt32Value(UnitField.UNIT_FIELD_STAT0.getValue() + stat.ordinal());
+		return GetUInt32Value(UnitFields.UNIT_FIELD_STAT0 + stat.ordinal());
 	}
 	
 	/**
@@ -120,7 +121,8 @@ public class Units extends WorldObject {
 	 * @return the int
 	 */
 	public int GetResistance(SpellSchools school) {
-		return GetUInt32Value(UnitField.UNIT_FIELD_RESISTANCES.getValue() + school.ordinal());
+		return GetUInt32Value(UnitFields.UNIT_FIELD_RESISTANCES
+				+ school.ordinal());
 	}
 	
 	/**
@@ -130,7 +132,8 @@ public class Units extends WorldObject {
 	 * @param value the value
 	 */
 	public void SetResistance(SpellSchools school, int value) {
-		SetUInt32Value(UnitField.UNIT_FIELD_RESISTANCES.getValue() + school.ordinal(), value);
+		SetUInt32Value(UnitFields.UNIT_FIELD_RESISTANCES + school.ordinal(),
+				value);
 	}
 	
 	/**
@@ -149,7 +152,7 @@ public class Units extends WorldObject {
 	 * @return the int
 	 */
 	public int GetMaxHealth() {
-		return GetUInt32Value(UnitField.UNIT_FIELD_MAXHEALTH);
+		return GetUInt32Value(UnitFields.UNIT_FIELD_MAXHEALTH);
 	}
 	
 	/**
@@ -189,7 +192,7 @@ public class Units extends WorldObject {
 	 * @param value the value
 	 */
 	public void SetMaxPower(Powers power, int value) {
-		SetUInt32Value(UnitField.UNIT_FIELD_MAXPOWER1.getValue() + power.ordinal(), value);
+		SetUInt32Value(UnitFields.UNIT_FIELD_MAXPOWER1 + power.ordinal(), value);
 	}
 	
 	/**
@@ -201,7 +204,7 @@ public class Units extends WorldObject {
 		int maxHealth = GetMaxHealth();
 		if (maxHealth < val)
 			val = maxHealth;
-		SetUInt32Value(UnitField.UNIT_FIELD_HEALTH, val);
+		SetUInt32Value(UnitFields.UNIT_FIELD_HEALTH, val);
 	}
 
 	/**
@@ -210,7 +213,7 @@ public class Units extends WorldObject {
 	 * @param value the value
 	 */
 	public void SetMaxHealth(int value) {
-		SetUInt32Value(UnitField.UNIT_FIELD_MAXHEALTH, value);
+		SetUInt32Value(UnitFields.UNIT_FIELD_MAXHEALTH, value);
 	}
 
 	/**
@@ -224,7 +227,7 @@ public class Units extends WorldObject {
 		if (maxPower < val)
 			val = maxPower;
 
-		SetUInt32Value(UnitField.UNIT_FIELD_POWER1.getValue() + power.ordinal(), val);
+		SetUInt32Value(UnitFields.UNIT_FIELD_POWER1 + power.ordinal(), val);
 	}
 	
 	/**
@@ -234,7 +237,7 @@ public class Units extends WorldObject {
 	 * @return the int
 	 */
 	public int GetPower(Powers power) {
-		return GetUInt32Value(UnitField.UNIT_FIELD_POWER1.getValue() + power.ordinal());
+		return GetUInt32Value(UnitFields.UNIT_FIELD_POWER1 + power.ordinal());
 	}
 
 	/**
@@ -243,6 +246,6 @@ public class Units extends WorldObject {
 	 * @return the int
 	 */
 	public int GetCreateMana() {
-		return GetUInt32Value(UnitField.UNIT_FIELD_BASE_MANA);
+		return GetUInt32Value(UnitFields.UNIT_FIELD_BASE_MANA);
 	}
 }

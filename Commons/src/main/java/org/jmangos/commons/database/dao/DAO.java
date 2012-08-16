@@ -16,10 +16,7 @@
  *******************************************************************************/
 package org.jmangos.commons.database.dao;
 
-import org.apache.log4j.Logger;
-
 public interface DAO {
-    static final Logger log = Logger.getLogger( DAO.class );
 	/**
 	 * Unique identifier for DAO class, all subclasses must have same
 	 * identifiers. Must return {@link Class#getName()} of abstract class

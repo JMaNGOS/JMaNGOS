@@ -49,9 +49,9 @@ public class SMSG_LOGIN_VERIFY_WORLD extends AbstractWoWServerPacket{
 	@Override
 	public void writeImpl() {
 		writeD(player.GetMapId());
-	    writeF(player.getCharacterData().getPositionX());
-	    writeF(player.getCharacterData().getPositionY());
-	    writeF(player.getCharacterData().getPositionZ());
+	    writeF(player.getCharacterData().getPos_x());
+	    writeF(player.getCharacterData().getPos_y());
+	    writeF(player.getCharacterData().getPos_z());
 	    writeF(player.getCharacterData().getOrientation());
 	}
 

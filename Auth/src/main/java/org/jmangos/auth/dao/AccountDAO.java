@@ -16,11 +16,7 @@
  *******************************************************************************/
 package org.jmangos.auth.dao;
 
-import org.apache.log4j.Logger;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.jmangos.commons.model.Account;
-import org.jmangos.commons.database.DatabaseFactory;
+import org.jmangos.auth.model.Account;
 import org.jmangos.commons.database.dao.DAO;
 
 /**
@@ -29,21 +25,16 @@ import org.jmangos.commons.database.dao.DAO;
  * @author MinimaJack
  *
  */
-public class AccountDAO implements DAO
+public abstract class AccountDAO implements DAO
 {
-    Logger logger = Logger.getLogger( AccountDAO.class );
-
+	
 	/**
 	 * Returns account by name or null.
 	 *
 	 * @param name account name
 	 * @return account object or null
 	 */
-	public Account getAccount(String name) {
-        Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
-        Query query = session.createQuery("select a from Account a where a.username = :name").setString( "name", name );
-        return (Account)query.uniqueResult();
-    }
+	public abstract Account getAccount(String name);
 
 	/**
 	 * Retuns account id or -1 in case of error.
@@ -51,27 +42,14 @@ public class AccountDAO implements DAO
 	 * @param name name of account
 	 * @return id or -1 in case of error
 	 */
-	public int getAccountId(String name) {
-        Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
-        Query query = session.createQuery("select a from Account a where a.username = :name").setString( "name", name );
-        Account account = (Account)query.uniqueResult();
-        if ( account == null )
-            return -1;
-        session.close();
-        return account.getId();
-    }
+	public abstract int getAccountId(String name);
 
 	/**
 	 * Reruns account count If error occured - returns -1.
 	 *
 	 * @return account count
 	 */
-	public int getAccountCount() {
-        Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
-        Query query = session.createQuery("select a from Account a");
-        int accCount = query.list().size();
-        return accCount;
-    }
+	public abstract int getAccountCount();
 
 	/**
 	 * Update security key.
@@ -79,22 +57,7 @@ public class AccountDAO implements DAO
 	 * @param account the account
 	 * @return true, if successful
 	 */
-	public boolean updateSecurityKey(Account account) {
-        Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
-        session.getTransaction().begin();
-        boolean success = false;
-        try {
-            session.saveOrUpdate( account );
-            session.getTransaction().commit();
-            success = true;
-        } finally {
-            if( session.getTransaction().isActive() )
-                session.getTransaction().rollback();
-            session.close();
-        }
-
-        return success;
-    }
+	public abstract boolean updateSecurityKey(Account account);
 	
 	/**
 	 * Updates lastServer field of account.
@@ -103,32 +66,7 @@ public class AccountDAO implements DAO
 	 * @param lastServer last accessed server
 	 * @return was updated successful or not
 	 */
-	public boolean updateLastServer(int accountId, byte lastServer) {
-        Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
-        Query query = session.createQuery("select a from Account a where a.id = :id").setInteger( "id", accountId );
-        Account account = (Account)query.uniqueResult();
-
-        if ( account == null ) {
-            session.close();
-            logger.warn( "Account with id (" + accountId + ") not found!" );
-            return false;
-        }
-
-        account.setLastServer( lastServer );
-        session.getTransaction().begin();
-        boolean success = false;
-        try {
-            session.saveOrUpdate( account );
-            session.getTransaction().commit();
-            success = true;
-        } finally {
-            if( session.getTransaction().isActive() )
-                session.getTransaction().rollback();
-            session.close();
-        }
-
-        return success;
-    }
+	public abstract boolean updateLastServer(int accountId, byte lastServer);
 
 	/**
 	 * Updates last ip that was used to access an account.
@@ -137,33 +75,7 @@ public class AccountDAO implements DAO
 	 * @param ip ip address
 	 * @return was update successful or not
 	 */
-	public boolean updateLastIp(int accountId, String ip) {
-        Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
-        Query query = session.createQuery("select a from Account a where a.id = :id").setInteger( "id", accountId );
-        Account account = (Account)query.uniqueResult();
-
-        if ( account == null ) {
-            session.close();
-            logger.warn( "Account with id (" + accountId + ") not found!" );
-            return false;
-        }
-
-        account.setLastIp( ip );
-        session.getTransaction().begin();
-        boolean success = false;
-        try {
-            session.saveOrUpdate( account );
-            session.getTransaction().commit();
-            success = true;
-            logger.info( String.format( "Account (#%d) updated. New IP: %s.", accountId, ip ) );
-        } finally {
-            if( session.getTransaction().isActive() )
-                session.getTransaction().rollback();
-            session.close();
-        }
-
-        return success;
-    }
+	public abstract boolean updateLastIp(int accountId, String ip);
 
 	/**
 	 * Get last ip that was used to access an account.
@@ -171,21 +83,7 @@ public class AccountDAO implements DAO
 	 * @param accountId account id
 	 * @return ip address
 	 */
-	public String getLastIp(int accountId) {
-        Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
-        Query query = session.createQuery("select a from Account a where a.id = :accountid").setInteger("accountid", accountId);
-        Account account = (Account)query.uniqueResult();
-
-        if ( account == null ) {
-            session.close();
-            logger.warn( "Account with id (" + accountId + ") not found!" );
-            return "";
-        }
-
-        String lastIp = account.getLastIp();
-        session.close();
-        return lastIp;
-    }
+	public abstract String getLastIp(int accountId);
 
 	/**
 	 * Returns uniquire class name for all implementations.
@@ -193,7 +91,8 @@ public class AccountDAO implements DAO
 	 * @return uniquire class name for all implementations
 	 */
 	@Override
-	public final String getClassName()  {
+	public final String getClassName() 
+	{
 		return AccountDAO.class.getName();
 	}
 
@@ -204,33 +103,7 @@ public class AccountDAO implements DAO
 	 * @param key the key
 	 * @return true, if successful
 	 */
-	public boolean updateSessionKey(String username, String key) {
-        Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
-        Query query = session.createQuery("select a from Account a where a.username = :username").setString( "username", username );
-        Account account = (Account)query.uniqueResult();
-
-        if ( account == null ) {
-            session.close();
-            logger.warn( "Account with id (" + username + ") not found!" );
-            return false;
-        }
-
-        account.setSessionKey( key );
-        session.getTransaction().begin();
-        boolean success = false;
-        try {
-            session.saveOrUpdate( account );
-            session.getTransaction().commit();
-            success = true;
-            logger.info( String.format( "Account (%s) updated. New session key: %s.", username, key ) );
-        } finally {
-            if( session.getTransaction().isActive() )
-                session.getTransaction().rollback();
-            session.close();
-        }
-
-        return success;
-    }
+	public abstract boolean updateSessionKey(String username, String key);
 
 	/**
 	 * Gets the session key.
@@ -238,17 +111,5 @@ public class AccountDAO implements DAO
 	 * @param username the username
 	 * @return the session key
 	 */
-	public String getSessionKey(String username) {
-        Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
-        Query query = session.createQuery("select a from Account a where a.username = :username").setString( "username", username );
-        Account account = (Account)query.uniqueResult();
-
-        if ( account == null ) {
-            session.close();
-            logger.warn( "Account with id (" + username + ") not found!" );
-            return "";
-        }
-
-        return account.getMsessionKey();
-    }
+	public abstract String getSessionKey(String username);
 }

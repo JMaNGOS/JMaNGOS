@@ -16,24 +16,21 @@
  *******************************************************************************/
 package org.jmangos.realm.network.netty.packetClient.server;
 
-import org.apache.log4j.Logger;
-import org.jmangos.commons.service.ServiceContent;
-import org.jmangos.realm.model.InventoryItem;
-import org.jmangos.realm.model.base.character.CharacterData;
-import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
-import org.jmangos.realm.network.netty.packetClient.client.CMSG_AUTH_SESSION;
-import org.jmangos.realm.service.ItemStorages;
-
-import java.util.BitSet;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.jmangos.realm.model.base.character.CharactersData;
+import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
+import org.jmangos.realm.network.netty.packetClient.client.CMSG_AUTH_SESSION;
+
+// TODO: Auto-generated Javadoc
 /**
  * The Class SMSG_CHAR_ENUM.
  */
 public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
-
-    /** The charlist. */
-	private List<CharacterData> charlist;
+	
+	/** The charlist. */
+	private List<CharactersData> charlist;
 	
 	/** The Constant logger. */
 	private static final Logger logger = Logger
@@ -45,7 +42,7 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
 	 *
 	 * @param charlist the charlist
 	 */
-	public SMSG_CHAR_ENUM(List<CharacterData> charlist ) {
+	public SMSG_CHAR_ENUM(List<CharactersData> charlist) {
 		this.charlist = charlist;
 	}
 
@@ -56,12 +53,11 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
 	public void writeImpl() {
 		logger.info("CHARLIST SIZE "+charlist.size());
 		writeC(charlist.size());
-		for (CharacterData character : charlist) {
-			writeQ(character.getGuid());
-            //writePackedGuid( character.getGuid() );
+		for (CharactersData character : charlist) {
+			writeQ(character.getObjectId());
 			writeS(character.getName());
-			writeC((byte)character.getRace().getValue());
-			writeC((byte)character.getClazz().getValue());
+			writeC(character.getRace());
+			writeC(character.getClazz());
 			writeC(character.getGender());
 			int playerBytes = character.getPlayerBytes();
 			writeC(playerBytes & 0xFF);
@@ -72,55 +68,26 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
 			writeC(character.getLevel());
 			writeD(character.getZone());
 			writeD(character.getMap());
-			writeF(character.getPositionX());
-			writeF(character.getPositionY());
-			writeF(character.getPositionY());
-            // TODO: implement guild
-			writeD( -1 );
-            // Ban, dead, help, cloak, rename values. default: no flags
+			writeF(character.getPos_x());
+			writeF(character.getPos_y());
+			writeF(character.getPos_z());
+			writeD(character.getGuildId());
 			writeD(0);
 			writeD(character.getAtLoginFlags());
-
-            writeC(0); // FIXME check at login first
-            // TODO: implement Pet!
-			writeD( 0x00 /*character.getPetDisplayId()*/ );
-			writeD( 0x00 /*character.getPetLevel()*/ );
-			writeD( 0x00 /*character.getPetFamily()*/ );
-
-            List<InventoryItem> inventory = character.getInventory();
-
-            ItemStorages itemStorages = ServiceContent.getInjector().getInstance( ItemStorages.class );
-            if( itemStorages == null )
-                logger.fatal( "Cannot get ItemStorages instance!" );
-
-            for (int i = 0; i < 23; i++) {
-                InventoryItem invItem = character.findInventorySlot( i );
-                if ( invItem != null ) {
-                    int displayInfoID = 0x00;
-                    try {
-                        displayInfoID = itemStorages.get( invItem.getItem_guid() ).getDisplayInfoID();
-                    } catch (Exception e) {
-                        logger.fatal( "ID not found in the storage: " + invItem.getItem_guid(),  e );
-                    }
-
-                    writeD( displayInfoID );
-                    writeC( displayInfoID );
-                    writeD( 0x00 /* paalgyula: need some info about it character.getItems()[i].getEnchantAuraId()*/ );
-                } else {
-                    writeD( 0x00 );
-                    writeC( 0x00 );
-                    writeD( 0x00 );
-                }
+			writeC(0); // FIXME check at login first
+			writeD(character.getPetDisplayId());
+			writeD(character.getPetLevel());
+			writeD(character.getPetFamily());
+			for (int i = 0; i < character.getItems().length; i++) {
+				writeD(character.getItems()[i].getDisplayInfoID());
+				writeC(character.getItems()[i].getDisplayInfoID());
+				writeD(character.getItems()[i].getEnchantAuraId());
 			}
-
-            // TODO: implement bags
-            /*for (int i = 0; i < character.getBags().length; i++) {
-				writeD(0); // DisplayID
-				writeC(0); // InventoryType
-				writeD(0); // Enchantment
-			}*/
-
-            new BitSet();
+			for (int i = 0; i < character.getBags().length; i++) {
+				writeD(0);
+				writeC(0);
+				writeD(0);
+			}
 		}
 
 	}
