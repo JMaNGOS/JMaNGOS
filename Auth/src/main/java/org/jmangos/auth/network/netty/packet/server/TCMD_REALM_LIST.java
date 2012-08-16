@@ -28,56 +28,55 @@ import org.jmangos.commons.model.Realm;
  * The Class <tt>TCMD_REALM_LIST</tt>.
  */
 public class TCMD_REALM_LIST extends AbstractWoWServerPacket {
-
-	/** The Constant log. */
-	@SuppressWarnings("unused")
-	private static final Logger log = Logger.getLogger(TCMD_REALM_LIST.class);
-
-	/** The worldlist. */
-	private RealmListService worldlist;
-
-	/**
-	 * Instantiates a new <tt>TCMD_REALM_LIST</tt>.
-	 */
-	public TCMD_REALM_LIST() {
-	}
-
-	/**
-	 * Instantiates a new TCMD_REALM_LIST.
-	 * 
-	 * @param worldlist
-	 *            the worldlist
-	 */
-	public TCMD_REALM_LIST(RealmListService worldlist) {
-		this.worldlist = worldlist;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		FastMap<Integer, Integer> amountofCharacters = worldlist
-				.getAmountCharacters(((Account) (getChannel()
-						.getChanneledObject())).getObjectId());
-		writeH(worldlist.getByteSize());
-		writeD(0);
-		writeH(worldlist.getRealmCount());
-		for (Realm realm : worldlist.getWorlds().values()) {
-			writeC(realm.getIcon());
-			writeC((realm.getAllowedSecurityLevel() > ((Account) (getChannel()
-					.getChanneledObject())).getAccessLevel()) ? 1 : 0);
-			writeC(realm.getRealmflags());
-			writeS(realm.getName());
-			writeS(realm.getAddress());
-			writeF(realm.getPopulation());
-			writeC((amountofCharacters.containsKey(realm.getId())) ? amountofCharacters
-					.get(realm.getId()) : 0);
-			writeC(realm.getTimezone());
-			writeC(0x2C);
-		}
-		writeH(0x0010);
-	}
+    
+    /** The Constant log. */
+    @SuppressWarnings("unused")
+    private static final Logger log = Logger.getLogger(TCMD_REALM_LIST.class);
+    
+    /** The worldlist. */
+    private RealmListService    worldlist;
+    
+    /**
+     * Instantiates a new <tt>TCMD_REALM_LIST</tt>.
+     */
+    public TCMD_REALM_LIST() {
+    
+    }
+    
+    /**
+     * Instantiates a new TCMD_REALM_LIST.
+     * 
+     * @param worldlist
+     *            the worldlist
+     */
+    public TCMD_REALM_LIST(final RealmListService worldlist) {
+    
+        this.worldlist = worldlist;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        final FastMap<Integer, Integer> amountofCharacters = this.worldlist.getAmountCharacters(((Account) (getChannel().getChanneledObject())).getObjectId());
+        writeH(this.worldlist.getByteSize());
+        writeD(0);
+        writeH(this.worldlist.getRealmCount());
+        for (final Realm realm : this.worldlist.getWorlds().values()) {
+            writeC(realm.getIcon());
+            writeC((realm.getAllowedSecurityLevel() > ((Account) (getChannel().getChanneledObject())).getAccessLevel()) ? 1 : 0);
+            writeC(realm.getRealmflags());
+            writeS(realm.getName());
+            writeS(realm.getAddress());
+            writeF(realm.getPopulation());
+            writeC((amountofCharacters.containsKey(realm.getId())) ? amountofCharacters.get(realm.getId()) : 0);
+            writeC(realm.getTimezone());
+            writeC(0x2C);
+        }
+        writeH(0x0010);
+    }
 }

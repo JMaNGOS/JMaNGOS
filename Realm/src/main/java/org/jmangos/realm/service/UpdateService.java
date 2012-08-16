@@ -34,64 +34,75 @@ import org.jmangos.commons.threadpool.ThreadPoolManager;
  * The Class UpdateService.
  */
 public class UpdateService implements Service {
-	
-	/** The task manager. */
-	private TaskManager taskManager = new TaskManager();
-	
-	/** The thread pool manager. */
-	@Inject
-	private ThreadPoolManager threadPoolManager;
-	
-	/** The map service. */
-	@Inject
-	private MapService mapService;
-
-	/**
-	 * The Enum UpdateWorldTaskId.
-	 */
-	private static enum UpdateRealmTaskId implements TaskId {
-		
-		/** The L s_ worl d_ update. */
-		REALM_MAP_UPDATE;
-
-		/* (non-Javadoc)
-		 * @see org.jmangos.commons.task.TaskId#getPriority()
-		 */
-		@Override
-		public TaskPriority getPriority() {
-			return TaskPriority.NORMAL;
-		}
-
-	}
-
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.service.Service#start()
-	 */
-	@Override
-	public void start() {
-		taskManager.addNewTask(UpdateRealmTaskId.REALM_MAP_UPDATE, threadPoolManager.scheduleAtFixedRate(
-				new RealmUpdateWorldList(), 100, 100));
-	}
-
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.service.Service#stop()
-	 */
-	@Override
-	public void stop() {
-		taskManager.cancelAllTasks();
-	}
-
-	/**
-	 * The Class LUpdateWorldList.
-	 */
-	private final class RealmUpdateWorldList implements Runnable {
-		
-		/* (non-Javadoc)
-		 * @see java.lang.Runnable#run()
-		 */
-		@Override
-		public void run() {
-			mapService.update();
-		}
-	}
+    
+    /** The task manager. */
+    private final TaskManager taskManager = new TaskManager();
+    
+    /** The thread pool manager. */
+    @Inject
+    private ThreadPoolManager threadPoolManager;
+    
+    /** The map service. */
+    @Inject
+    private MapService        mapService;
+    
+    /**
+     * The Enum UpdateWorldTaskId.
+     */
+    private static enum UpdateRealmTaskId implements TaskId {
+        
+        /** The L s_ worl d_ update. */
+        REALM_MAP_UPDATE;
+        
+        /*
+         * (non-Javadoc)
+         * 
+         * @see org.jmangos.commons.task.TaskId#getPriority()
+         */
+        @Override
+        public TaskPriority getPriority() {
+        
+            return TaskPriority.NORMAL;
+        }
+        
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.service.Service#start()
+     */
+    @Override
+    public void start() {
+    
+        this.taskManager.addNewTask(UpdateRealmTaskId.REALM_MAP_UPDATE, this.threadPoolManager.scheduleAtFixedRate(new RealmUpdateWorldList(), 100, 100));
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.service.Service#stop()
+     */
+    @Override
+    public void stop() {
+    
+        this.taskManager.cancelAllTasks();
+    }
+    
+    /**
+     * The Class LUpdateWorldList.
+     */
+    private final class RealmUpdateWorldList implements Runnable {
+        
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.lang.Runnable#run()
+         */
+        @Override
+        public void run() {
+        
+            UpdateService.this.mapService.update();
+        }
+    }
 }

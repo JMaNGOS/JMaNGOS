@@ -27,46 +27,47 @@ import org.jmangos.commons.utils.BigNumber;
  * 
  */
 public class TCMD_AUTH_LOGON_CHALLENGE extends AbstractWoWServerPacket {
-
-	/** The response. */
-	private WoWAuthResponse response;
-
-	/**
-	 * Constructs new instance of <tt>TCMD_AUTH_LOGON_CHALLENGE</tt> packet.
+    
+    /** The response. */
+    private WoWAuthResponse response;
+    
+    /**
+     * Constructs new instance of <tt>TCMD_AUTH_LOGON_CHALLENGE</tt> packet.
+     * 
+     * @param response
+     *            auth response
+     */
+    public TCMD_AUTH_LOGON_CHALLENGE(final WoWAuthResponse response) {
+    
+        this.response = response;
+    }
+    
+    /**
 	 * 
-	 * @param response
-	 *            auth response
 	 */
-	public TCMD_AUTH_LOGON_CHALLENGE(WoWAuthResponse response) {
-		this.response = response;
-	}
-
-	/**
-	 * 
-	 */
-	public TCMD_AUTH_LOGON_CHALLENGE() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void writeImpl() {
-		writeC(0x00);
-		writeC(response.getMessageId());
-		if (response == WoWAuthResponse.WOW_SUCCESS) {
-			BigNumber unk3 = new BigNumber();
-			unk3.setRand(16);
-			writeB(((Account) (getChannel().getChanneledObject())).getcryptoB()
-					.asByteArray(32));
-			writeC(1);
-			writeB(AccountUtils.g.asByteArray(1));
-			writeC(32);
-			writeB(AccountUtils.N.asByteArray(32));
-			writeB(((Account) (getChannel().getChanneledObject()))
-					.getS_crypto().asByteArray(32));
-			writeB(unk3.asByteArray(16));
-			writeC(0);
-		}
-	}
+    public TCMD_AUTH_LOGON_CHALLENGE() {
+    
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writeC(0x00);
+        writeC(this.response.getMessageId());
+        if (this.response == WoWAuthResponse.WOW_SUCCESS) {
+            final BigNumber unk3 = new BigNumber();
+            unk3.setRand(16);
+            writeB(((Account) (getChannel().getChanneledObject())).getcryptoB().asByteArray(32));
+            writeC(1);
+            writeB(AccountUtils.g.asByteArray(1));
+            writeC(32);
+            writeB(AccountUtils.N.asByteArray(32));
+            writeB(((Account) (getChannel().getChanneledObject())).getS_crypto().asByteArray(32));
+            writeB(unk3.asByteArray(16));
+            writeC(0);
+        }
+    }
 }

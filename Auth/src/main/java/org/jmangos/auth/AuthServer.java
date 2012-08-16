@@ -16,8 +16,6 @@
  *******************************************************************************/
 package org.jmangos.auth;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import org.jmangos.auth.module.HandlerDM;
 import org.jmangos.auth.service.BanIpService;
 import org.jmangos.auth.service.RealmListService;
@@ -29,36 +27,39 @@ import org.jmangos.commons.network.netty.service.NetworkService;
 import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.commons.threadpool.ThreadPoolManager;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
 /**
  * The Class AuthServer.
  * 
  * @author MinimaJack
  */
 public class AuthServer {
-	
-	/**
-	 * The main method.
-	 * 
-	 * @param args
-	 *            the arguments
-	 * @throws Exception
-	 *             the exception
-	 */
-	public static void main(String[] args) throws Exception {
-		Injector injector = Guice.createInjector(new HandlerDM());
-		ServiceContent.setInjector(injector);
-		injector.getInstance(DatabaseFactory.class).start();
-		injector.getInstance(RealmListService.class).start();
-		injector.getInstance(BanIpService.class).start();
-		injector.getInstance(ThreadPoolManager.class).start();
-		
-		injector.getInstance(JmxRealmList.class).start();
-		injector.getInstance(JmxNetworkService.class).start();
-		
-		Runtime.getRuntime().addShutdownHook(
-				injector.getInstance(ShutdownHook.class));
-		System.gc();
-		
-		injector.getInstance(NetworkService.class).start();
-	}
+    
+    /**
+     * The main method.
+     * 
+     * @param args
+     *            the arguments
+     * @throws Exception
+     *             the exception
+     */
+    public static void main(final String[] args) throws Exception {
+    
+        final Injector injector = Guice.createInjector(new HandlerDM());
+        ServiceContent.setInjector(injector);
+        injector.getInstance(DatabaseFactory.class).start();
+        injector.getInstance(RealmListService.class).start();
+        injector.getInstance(BanIpService.class).start();
+        injector.getInstance(ThreadPoolManager.class).start();
+        
+        injector.getInstance(JmxRealmList.class).start();
+        injector.getInstance(JmxNetworkService.class).start();
+        
+        Runtime.getRuntime().addShutdownHook(injector.getInstance(ShutdownHook.class));
+        System.gc();
+        
+        injector.getInstance(NetworkService.class).start();
+    }
 }

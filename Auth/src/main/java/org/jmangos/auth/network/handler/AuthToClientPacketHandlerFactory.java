@@ -23,19 +23,17 @@ import org.jmangos.commons.network.netty.model.PacketData;
  * 
  * @author MinimaJack
  */
-public class AuthToClientPacketHandlerFactory extends
-		AbstractPacketHandlerFactory {
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.jmangos.commons.network.handlers.PacketHandlerFactory#loadPacket()
-	 */
-	@Override
-	public void loadPacket() {
-		addList(loadStaticData(PacketData.class,
-				packetXSDLocation,
-				clientPacketPath));
-
-	}
+public class AuthToClientPacketHandlerFactory extends AbstractPacketHandlerFactory {
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#loadPacket()
+     */
+    @Override
+    public void loadPacket() {
+    
+        addList(loadStaticData(PacketData.class, this.packetXSDLocation, this.clientPacketPath));
+        
+    }
 }

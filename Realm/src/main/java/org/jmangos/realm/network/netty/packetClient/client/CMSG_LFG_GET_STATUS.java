@@ -28,28 +28,33 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 /**
  * The Class CMSG_LFG_GET_STATUS.
  */
-public class CMSG_LFG_GET_STATUS  extends AbstractWoWClientPacket {
-	
-	/** The sender. */
-	@SuppressWarnings("unused")
-	@Inject
-	@Named("client")
-	private AbstractPacketSender sender;
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
-	 */
-	@Override
-	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
-	 */
-	@Override
-	protected void runImpl() {
-		// FIXME need implement
-		
-	}
+public class CMSG_LFG_GET_STATUS extends AbstractWoWClientPacket {
+    
+    /** The sender. */
+    @SuppressWarnings("unused")
+    @Inject
+    @Named("client")
+    private AbstractPacketSender sender;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
+     */
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
+    
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
+     */
+    @Override
+    protected void runImpl() {
+    
+        // FIXME need implement
+        
+    }
 }

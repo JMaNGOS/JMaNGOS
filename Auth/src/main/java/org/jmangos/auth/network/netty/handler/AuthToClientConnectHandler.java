@@ -29,39 +29,38 @@ import com.google.inject.Inject;
  * The Class AuthToClientConnectHandler.
  */
 public class AuthToClientConnectHandler implements ConnectHandler {
-
-	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(AuthToClientConnectHandler.class);
-	
-	@Inject
-	private NetworkService networkService;
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.model.ConnectHandler#onConnect(org.wowemu.common.network.model.NettyNetworkChannel,
-	 *      org.jboss.netty.channel.ChannelHandler)
-	 */
-	@Override
-	public void onConnect(NettyNetworkChannel networkChannel,
-			ChannelHandler handler) {
-		networkChannel.setChannelState(State.CONNECTED);
-		networkService.registerClientChannel(networkChannel);
-		log.info("Accepting connection from: "
-				+ networkChannel.getAddress().getHostName());
-
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.model.ConnectHandler#onDisconnect(org.wowemu.common.network.model.NettyNetworkChannel)
-	 */
-	@Override
-	public void onDisconnect(NettyNetworkChannel networkChannel) {
-		log.info("Disconnection : " + networkChannel.getAddress().getHostName());
-
-	}
-
+    
+    /** The Constant log. */
+    private static final Logger log = Logger.getLogger(AuthToClientConnectHandler.class);
+    
+    @Inject
+    private NetworkService      networkService;
+    
+    /**
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.ConnectHandler#onConnect(org.wowemu.common.network.model.NettyNetworkChannel,
+     *      org.jboss.netty.channel.ChannelHandler)
+     */
+    @Override
+    public void onConnect(final NettyNetworkChannel networkChannel, final ChannelHandler handler) {
+    
+        networkChannel.setChannelState(State.CONNECTED);
+        this.networkService.registerClientChannel(networkChannel);
+        log.info("Accepting connection from: " + networkChannel.getAddress().getHostName());
+        
+    }
+    
+    /**
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.ConnectHandler#onDisconnect(org.wowemu.common.network.model.NettyNetworkChannel)
+     */
+    @Override
+    public void onDisconnect(final NettyNetworkChannel networkChannel) {
+    
+        log.info("Disconnection : " + networkChannel.getAddress().getHostName());
+        
+    }
+    
 }

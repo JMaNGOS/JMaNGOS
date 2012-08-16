@@ -23,16 +23,19 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
  * The Class SMSG_AUTH_RESPONSE.
  */
 public class SMSG_AUTH_RESPONSE extends AbstractWoWServerPacket {
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		 writeC(0x0C);
-		 writeD(0);
-		 writeC(0);
-		 writeD(0);
-		 writeC(0);
-	}
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writeC(0x0C);
+        writeD(0);
+        writeC(0);
+        writeD(0);
+        writeC(0);
+    }
 }

@@ -16,11 +16,6 @@
  *******************************************************************************/
 package org.jmangos.auth.module;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
-import com.google.inject.Scopes;
-import com.google.inject.Singleton;
-import com.google.inject.name.Names;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jmangos.auth.config.Config;
 import org.jmangos.auth.dao.AccountDAO;
@@ -46,63 +41,62 @@ import org.jmangos.commons.network.netty.service.NetworkService;
 import org.jmangos.commons.threadpool.CommonThreadPoolManager;
 import org.jmangos.commons.threadpool.ThreadPoolManager;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
+import com.google.inject.Scopes;
+import com.google.inject.Singleton;
+import com.google.inject.name.Names;
+
 /**
  * The Class HandlerDM.
  */
 public class HandlerDM extends AbstractModule {
-
-	/**
-	 * @see com.google.inject.AbstractModule#configure()
-	 */
-	@Override
-	protected void configure() {
-		install(new CommonModule());
-
-		bind(String.class).annotatedWith(Names.named("toClient")).toInstance(
-				"./conf/packetData/lc-packets.xml");
-
-		bind(NetworkService.class).to(AuthNetworkService.class).in(
-				Scopes.SINGLETON);
-		bind(ThreadPoolManager.class).to(CommonThreadPoolManager.class).in(
-				Scopes.SINGLETON);
-
-		bind(PacketHandlerFactory.class)
-				.annotatedWith(Names.named("AuthToClient"))
-				.to(AuthToClientPacketHandlerFactory.class)
-				.in(Scopes.SINGLETON);
-		bind(ChannelPipelineFactory.class)
-				.annotatedWith(Names.named("AuthToClient"))
-				.to(AuthToClientPipelineFactory.class).in(Scopes.SINGLETON);
-
-		bind(ConnectHandler.class).annotatedWith(Names.named("AuthToClient"))
-				.to(AuthToClientConnectHandler.class).in(Scopes.SINGLETON);
-		bind(AbstractPacketSender.class).to(NettyPacketSender.class).in(
-				Scopes.SINGLETON);
-
-		bind(RealmDAO.class).in(Scopes.SINGLETON);
-		bind(BanIpDAO.class).in(Scopes.SINGLETON);
-		bind(AccountDAO.class).in(Scopes.SINGLETON);
-
-		bind(RealmListService.class).in(Scopes.SINGLETON);
-		bind(BanIpService.class).in(Scopes.SINGLETON);
-
-		bind(DatabaseFactory.class).in(Scopes.SINGLETON);
-		bind(AccountService.class).in(Scopes.SINGLETON);
-		bind(ShutdownHook.class).in(Scopes.SINGLETON);
-
-		bind(JmxRealmList.class).in(Scopes.SINGLETON);
-
-	}
-
-	@Provides
-	@Singleton
-	public Config provideConfig() {
-		return new Config();
-	}
-
-	@Provides
-	@Singleton
-	public DatabaseConfig provideDatabaseConfig() {
-		return new DatabaseConfig();
-	}
+    
+    /**
+     * @see com.google.inject.AbstractModule#configure()
+     */
+    @Override
+    protected void configure() {
+    
+        install(new CommonModule());
+        
+        bind(String.class).annotatedWith(Names.named("toClient")).toInstance("./conf/packetData/lc-packets.xml");
+        
+        bind(NetworkService.class).to(AuthNetworkService.class).in(Scopes.SINGLETON);
+        bind(ThreadPoolManager.class).to(CommonThreadPoolManager.class).in(Scopes.SINGLETON);
+        
+        bind(PacketHandlerFactory.class).annotatedWith(Names.named("AuthToClient")).to(AuthToClientPacketHandlerFactory.class).in(Scopes.SINGLETON);
+        bind(ChannelPipelineFactory.class).annotatedWith(Names.named("AuthToClient")).to(AuthToClientPipelineFactory.class).in(Scopes.SINGLETON);
+        
+        bind(ConnectHandler.class).annotatedWith(Names.named("AuthToClient")).to(AuthToClientConnectHandler.class).in(Scopes.SINGLETON);
+        bind(AbstractPacketSender.class).to(NettyPacketSender.class).in(Scopes.SINGLETON);
+        
+        bind(RealmDAO.class).in(Scopes.SINGLETON);
+        bind(BanIpDAO.class).in(Scopes.SINGLETON);
+        bind(AccountDAO.class).in(Scopes.SINGLETON);
+        
+        bind(RealmListService.class).in(Scopes.SINGLETON);
+        bind(BanIpService.class).in(Scopes.SINGLETON);
+        
+        bind(DatabaseFactory.class).in(Scopes.SINGLETON);
+        bind(AccountService.class).in(Scopes.SINGLETON);
+        bind(ShutdownHook.class).in(Scopes.SINGLETON);
+        
+        bind(JmxRealmList.class).in(Scopes.SINGLETON);
+        
+    }
+    
+    @Provides
+    @Singleton
+    public Config provideConfig() {
+    
+        return new Config();
+    }
+    
+    @Provides
+    @Singleton
+    public DatabaseConfig provideDatabaseConfig() {
+    
+        return new DatabaseConfig();
+    }
 }

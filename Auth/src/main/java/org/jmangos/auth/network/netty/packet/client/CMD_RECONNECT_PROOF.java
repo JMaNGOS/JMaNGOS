@@ -32,82 +32,83 @@ import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
  * The Class <tt>CMD_RECONNECT_PROOF</tt>.
  */
 public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
-
-	/** The Constant logger. */
-	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(CMD_RECONNECT_PROOF.class);
-
-	/** The sender. */
-	@Inject
-	private AbstractPacketSender sender;
-
-	/** The account service. */
-	@Inject
-	private AccountService accountService;
-
-	/**
-	 * Instantiates a new <tt>CMD_RECONNECT_PROOF</tt>.
-	 */
-	public CMD_RECONNECT_PROOF() {
-		super();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unused")
-	@Override
-	protected void readImpl() {
-		byte[] R1 = readB(16);
-		byte[] R2 = readB(20);
-		//byte[] R3 = readB(20); // Unused..
-		/*int numberofKey = */readC(); // unused
-
-		MessageDigest sha = null;
-		try {
-			sha = MessageDigest.getInstance("SHA-1");
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			return;
-		}
-		String SessionKey = accountService
-				.getSessionKey(getAccount().getName());
-
-		sha.update(getAccount().getName().getBytes());
-		sha.update(R1);
-		sha.update(getAccount().get_reconnectProof().asByteArray(16));
-		sha.update(convertMangosSessionKey(SessionKey));
-
-		if (Arrays.equals(sha.digest(), R2)) {
-			sender.send(this.getClient(), new TCMD_RECONNECT_PROOF());
-		} else
-			getChannel().close();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void runImpl() {
-	}
-
-	/**
-	 * Convert to mangos session key.
-	 * 
-	 * @param hexkey
-	 * 
-	 * @return the byte[]
-	 */
-	private byte[] convertMangosSessionKey(String hexkey) {
-		int len = hexkey.length();
-		byte[] data = new byte[len / 2];
-		for (int i = 0; i < len; i += 2) {
-			data[(len - i) / 2 - 1] = (byte) ((Character.digit(
-					hexkey.charAt(i), 16) << 4) + Character.digit(
-					hexkey.charAt(i + 1), 16));
-		}
-		return data;
-
-	}
+    
+    /** The Constant logger. */
+    @SuppressWarnings("unused")
+    private static final Logger  logger = Logger.getLogger(CMD_RECONNECT_PROOF.class);
+    
+    /** The sender. */
+    @Inject
+    private AbstractPacketSender sender;
+    
+    /** The account service. */
+    @Inject
+    private AccountService       accountService;
+    
+    /**
+     * Instantiates a new <tt>CMD_RECONNECT_PROOF</tt>.
+     */
+    public CMD_RECONNECT_PROOF() {
+    
+        super();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unused")
+    @Override
+    protected void readImpl() {
+    
+        final byte[] R1 = readB(16);
+        final byte[] R2 = readB(20);
+        // byte[] R3 = readB(20); // Unused..
+        /* int numberofKey = */readC(); // unused
+        
+        MessageDigest sha = null;
+        try {
+            sha = MessageDigest.getInstance("SHA-1");
+        } catch (final NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return;
+        }
+        final String SessionKey = this.accountService.getSessionKey(getAccount().getName());
+        
+        sha.update(getAccount().getName().getBytes());
+        sha.update(R1);
+        sha.update(getAccount().get_reconnectProof().asByteArray(16));
+        sha.update(convertMangosSessionKey(SessionKey));
+        
+        if (Arrays.equals(sha.digest(), R2)) {
+            this.sender.send(getClient(), new TCMD_RECONNECT_PROOF());
+        } else {
+            getChannel().close();
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void runImpl() {
+    
+    }
+    
+    /**
+     * Convert to mangos session key.
+     * 
+     * @param hexkey
+     * 
+     * @return the byte[]
+     */
+    private byte[] convertMangosSessionKey(final String hexkey) {
+    
+        final int len = hexkey.length();
+        final byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[((len - i) / 2) - 1] = (byte) ((Character.digit(hexkey.charAt(i), 16) << 4) + Character.digit(hexkey.charAt(i + 1), 16));
+        }
+        return data;
+        
+    }
 }

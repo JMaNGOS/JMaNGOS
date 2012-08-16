@@ -31,38 +31,39 @@ import org.jmangos.realm.network.netty.packetAuth.server.CMD_AUTH_LOGON_CHALLENG
  * The Class R2LConnectHandler.
  */
 public class RealmToAuthConnectHandler implements ConnectHandler {
-
-	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(RealmToAuthConnectHandler.class);
-
-	/** The sender. */
-	@Inject
-	@Named("RealmToAuth")
-	private AbstractPacketSender sender;
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.common.network.model.ConnectHandler#onConnect(org.wowemu.common.network.model.NettyNetworkChannel,
-	 *      org.jboss.netty.channel.ChannelHandler)
-	 */
-	@Override
-	public void onConnect(NettyNetworkChannel networkChannel, ChannelHandler handler) {
-		networkChannel.setChannelState(State.CONNECTED);
-		log.info("Connection to: " + networkChannel.getAddress());
-		sender.send(networkChannel, new CMD_AUTH_LOGON_CHALLENGE());
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.common.network.model.ConnectHandler#onDisconnect(org.wowemu.common.network.model.NettyNetworkChannel)
-	 */
-	@Override
-	public void onDisconnect(NettyNetworkChannel networkChannel) {
-		log.info("Disconnection : " + networkChannel.getAddress().getHostName());
-
-	}
-
+    
+    /** The Constant log. */
+    private static final Logger  log = Logger.getLogger(RealmToAuthConnectHandler.class);
+    
+    /** The sender. */
+    @Inject
+    @Named("RealmToAuth")
+    private AbstractPacketSender sender;
+    
+    /**
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.common.network.model.ConnectHandler#onConnect(org.wowemu.common.network.model.NettyNetworkChannel,
+     *      org.jboss.netty.channel.ChannelHandler)
+     */
+    @Override
+    public void onConnect(final NettyNetworkChannel networkChannel, final ChannelHandler handler) {
+    
+        networkChannel.setChannelState(State.CONNECTED);
+        log.info("Connection to: " + networkChannel.getAddress());
+        this.sender.send(networkChannel, new CMD_AUTH_LOGON_CHALLENGE());
+    }
+    
+    /**
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.common.network.model.ConnectHandler#onDisconnect(org.wowemu.common.network.model.NettyNetworkChannel)
+     */
+    @Override
+    public void onDisconnect(final NettyNetworkChannel networkChannel) {
+    
+        log.info("Disconnection : " + networkChannel.getAddress().getHostName());
+        
+    }
+    
 }

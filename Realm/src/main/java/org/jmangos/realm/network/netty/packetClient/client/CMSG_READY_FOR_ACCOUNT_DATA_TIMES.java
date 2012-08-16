@@ -24,7 +24,6 @@ import javax.inject.Named;
 import org.apache.log4j.Logger;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
-import org.jmangos.realm.network.netty.packetClient.server.SMSG_ACCOUNT_DATA_TIMES;
 import org.jmangos.realm.service.AccountService;
 
 // TODO: Auto-generated Javadoc
@@ -32,35 +31,41 @@ import org.jmangos.realm.service.AccountService;
  * The Class CMSG_READY_FOR_ACCOUNT_DATA_TIMES.
  */
 public class CMSG_READY_FOR_ACCOUNT_DATA_TIMES extends AbstractWoWClientPacket {
-
-	/** The sender. */
-	@Inject
-	@Named("client")
-	private AbstractPacketSender sender;
-	
-	/** The account servise. */
-	@Inject
-	AccountService accountServise;
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
-	 */
-	@Override
-	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-        Logger.getLogger( getClass() ).info( "CMSG_READY_FOR_ACCOUNT_DATA_TIMES received!" );
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
-	 */
-	@Override
-	protected void runImpl() {
+    
+    /** The sender. */
+    @Inject
+    @Named("client")
+    private AbstractPacketSender sender;
+    
+    /** The account servise. */
+    @Inject
+    AccountService               accountServise;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
+     */
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
+    
+        Logger.getLogger(getClass()).info("CMSG_READY_FOR_ACCOUNT_DATA_TIMES received!");
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
+     */
+    @Override
+    protected void runImpl() {
+    
         // TODO: reimplement account data save
-		/*getAccount().setAccountData(
-				accountServise.getAccountData(getAccount().getObjectId()));
-		sender.send(getClient(), new SMSG_ACCOUNT_DATA_TIMES(
-				SMSG_ACCOUNT_DATA_TIMES.GLOBAL_CACHE_MASK, getAccount()
-						.getAccountData()));*/
-
-	}
+        /*
+         * getAccount().setAccountData( accountServise.getAccountData(getAccount().getObjectId()));
+         * sender.send(getClient(), new SMSG_ACCOUNT_DATA_TIMES(
+         * SMSG_ACCOUNT_DATA_TIMES.GLOBAL_CACHE_MASK, getAccount() .getAccountData()));
+         */
+        
+    }
 }

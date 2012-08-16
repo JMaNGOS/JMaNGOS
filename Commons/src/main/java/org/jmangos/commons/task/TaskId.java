@@ -21,18 +21,18 @@ package org.jmangos.commons.task;
  * 
  */
 public interface TaskId {
-
-	/**
-	 * Name.
-	 * 
-	 * @return the string
-	 */
-	String name();
-
-	/**
-	 * Gets the priority.
-	 * 
-	 * @return priority of this task
-	 */
-	TaskPriority getPriority();
+    
+    /**
+     * Name.
+     * 
+     * @return the string
+     */
+    String name();
+    
+    /**
+     * Gets the priority.
+     * 
+     * @return priority of this task
+     */
+    TaskPriority getPriority();
 }

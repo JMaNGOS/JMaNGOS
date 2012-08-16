@@ -20,15 +20,15 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public interface IUStH {
-
-	/**
-	 * Enables coder to manually modify statement or batch. Must execute batch
-	 * or statement manually. Automatically recycles connection.
-	 * 
-	 * @param stmt
-	 *            the stmt
-	 * @throws SQLException
-	 *             the sQL exception
-	 */
-	void handleInsertUpdate(PreparedStatement stmt) throws SQLException;
+    
+    /**
+     * Enables coder to manually modify statement or batch. Must execute batch or statement
+     * manually. Automatically recycles connection.
+     * 
+     * @param stmt
+     *            the stmt
+     * @throws SQLException
+     *             the sQL exception
+     */
+    void handleInsertUpdate(PreparedStatement stmt) throws SQLException;
 }

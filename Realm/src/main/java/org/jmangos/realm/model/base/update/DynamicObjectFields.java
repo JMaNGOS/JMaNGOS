@@ -16,61 +16,67 @@
  *******************************************************************************/
 package org.jmangos.realm.model.base.update;
 
+import static org.jmangos.realm.model.base.update.ObjectFields.OBJECT_END;
+
 import org.jmangos.commons.network.model.UpdateField;
 import org.jmangos.commons.network.model.UpdateFieldType;
 
-import static org.jmangos.realm.model.base.update.ObjectFields.OBJECT_END;
 // TODO: Auto-generated Javadoc
 /**
  * The Class DynamicObjectFields.
  */
 public enum DynamicObjectFields implements UpdateField {
     
-    /** The DYNAMICOBJECT_CASTER
-     *  Size: 2, Type: LONG, Flags: PUBLIC
+    /**
+     * The DYNAMICOBJECT_CASTER Size: 2, Type: LONG, Flags: PUBLIC
      */
-    DYNAMICOBJECT_CASTER( OBJECT_END + 0x0000 ),
+    DYNAMICOBJECT_CASTER(OBJECT_END + 0x0000),
     
-    /** The DYNAMICOBJECT_BYTES
-     *  Size: 1, Type: BYTES, Flags: PUBLIC
+    /**
+     * The DYNAMICOBJECT_BYTES Size: 1, Type: BYTES, Flags: PUBLIC
      */
-    DYNAMICOBJECT_BYTES( OBJECT_END + 0x0002 ),
+    DYNAMICOBJECT_BYTES(OBJECT_END + 0x0002),
     
-    /** The DYNAMICOBJECT_SPELLID
-     *  Size: 1, Type: INT, Flags: PUBLIC
+    /**
+     * The DYNAMICOBJECT_SPELLID Size: 1, Type: INT, Flags: PUBLIC
      */
-    DYNAMICOBJECT_SPELLID( OBJECT_END + 0x0003 ),
+    DYNAMICOBJECT_SPELLID(OBJECT_END + 0x0003),
     
-    /** The DYNAMICOBJECT_RADIUS
-     *  Size: 1, Type: FLOAT, Flags: PUBLIC
+    /**
+     * The DYNAMICOBJECT_RADIUS Size: 1, Type: FLOAT, Flags: PUBLIC
      */
-    DYNAMICOBJECT_RADIUS( OBJECT_END + 0x0004 ),
+    DYNAMICOBJECT_RADIUS(OBJECT_END + 0x0004),
     
-    /** The DYNAMICOBJECT_CASTTIME
-     *  Size: 1, Type: INT, Flags: PUBLIC
+    /**
+     * The DYNAMICOBJECT_CASTTIME Size: 1, Type: INT, Flags: PUBLIC
      */
-    DYNAMICOBJECT_CASTTIME( OBJECT_END + 0x0005 );
+    DYNAMICOBJECT_CASTTIME(OBJECT_END + 0x0005);
     
     /** The DYNAMICOBJECT_END */
     public static int DYNAMICOBJECT_END = OBJECT_END + 0x0006;
-
-    private int value;
-
-    DynamicObjectFields(int value) {
+    
+    private int       value;
+    
+    DynamicObjectFields(final int value) {
+    
         this.value = value;
     }
-
+    
     @Override
     public UpdateFieldType getType() {
+    
         return UpdateFieldType.INT;
     }
-
+    
     @Override
     public int getSize() {
+    
         return 0;
     }
-
-    public int getValue( ) {
+    
+    @Override
+    public int getValue() {
+    
         return this.value;
     }
 }

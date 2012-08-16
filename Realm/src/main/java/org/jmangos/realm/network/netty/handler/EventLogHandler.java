@@ -30,71 +30,61 @@ import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
  * @author MinimaJack
  */
 public class EventLogHandler extends SimpleChannelUpstreamHandler {
-
-	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(EventLogHandler.class);
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.jboss.netty.channel.SimpleChannelUpstreamHandler#messageReceived(
-	 * org.jboss.netty.channel.ChannelHandlerContext,
-	 * org.jboss.netty.channel.MessageEvent)
-	 */
-	@Override
-	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)
-			throws Exception {
-		ctx.sendUpstream(e);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.jboss.netty.channel.SimpleChannelUpstreamHandler#exceptionCaught(
-	 * org.jboss.netty.channel.ChannelHandlerContext,
-	 * org.jboss.netty.channel.ExceptionEvent)
-	 */
-	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e)
-			throws Exception {
-		if (e instanceof DefaultExceptionEvent
-				&& e.getCause() != null
-				&& (e.getCause().getMessage().equals("connection timed out") || e
-						.getCause().getMessage().contains("Connection refused"))) {
-			log.warn("Connection timed out");
-		} else {
-			log.warn("Exception caught: ", e.getCause());
-		}
-		ctx.sendUpstream(e);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelConnected
-	 * (org.jboss.netty.channel.ChannelHandlerContext,
-	 * org.jboss.netty.channel.ChannelStateEvent)
-	 */
-	@Override
-	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e)
-			throws Exception {
-		ctx.sendUpstream(e);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelDisconnected
-	 * (org.jboss.netty.channel.ChannelHandlerContext,
-	 * org.jboss.netty.channel.ChannelStateEvent)
-	 */
-	@Override
-	public void channelDisconnected(ChannelHandlerContext ctx,
-			ChannelStateEvent e) throws Exception {
-		ctx.sendUpstream(e);
-	}
+    
+    /** The Constant log. */
+    private static final Logger log = Logger.getLogger(EventLogHandler.class);
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#messageReceived(
+     * org.jboss.netty.channel.ChannelHandlerContext, org.jboss.netty.channel.MessageEvent)
+     */
+    @Override
+    public void messageReceived(final ChannelHandlerContext ctx, final MessageEvent e) throws Exception {
+    
+        ctx.sendUpstream(e);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#exceptionCaught(
+     * org.jboss.netty.channel.ChannelHandlerContext, org.jboss.netty.channel.ExceptionEvent)
+     */
+    @Override
+    public void exceptionCaught(final ChannelHandlerContext ctx, final ExceptionEvent e) throws Exception {
+    
+        if ((e instanceof DefaultExceptionEvent) && (e.getCause() != null)
+                && (e.getCause().getMessage().equals("connection timed out") || e.getCause().getMessage().contains("Connection refused"))) {
+            log.warn("Connection timed out");
+        } else {
+            log.warn("Exception caught: ", e.getCause());
+        }
+        ctx.sendUpstream(e);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelConnected
+     * (org.jboss.netty.channel.ChannelHandlerContext, org.jboss.netty.channel.ChannelStateEvent)
+     */
+    @Override
+    public void channelConnected(final ChannelHandlerContext ctx, final ChannelStateEvent e) throws Exception {
+    
+        ctx.sendUpstream(e);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelDisconnected
+     * (org.jboss.netty.channel.ChannelHandlerContext, org.jboss.netty.channel.ChannelStateEvent)
+     */
+    @Override
+    public void channelDisconnected(final ChannelHandlerContext ctx, final ChannelStateEvent e) throws Exception {
+    
+        ctx.sendUpstream(e);
+    }
 }

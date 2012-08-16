@@ -23,36 +23,42 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 /**
  * The Class SMSG_LOGIN_VERIFY_WORLD.
  */
-public class SMSG_LOGIN_VERIFY_WORLD extends AbstractWoWServerPacket{
-	
-	/** The player. */
-	private Player player; 
-
-	/**
-	 * Instantiates a new sMS g_ logi n_ verif y_ world.
-	 */
-	public SMSG_LOGIN_VERIFY_WORLD() {
-	}
-
-	/**
-	 * Instantiates a new sMS g_ logi n_ verif y_ world.
-	 *
-	 * @param player the player
-	 */
-	public SMSG_LOGIN_VERIFY_WORLD(Player player) {
-		this.player  = player;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	public void writeImpl() {
-		writeD(player.GetMapId());
-	    writeF(player.getCharacterData().getPositionX());
-	    writeF(player.getCharacterData().getPositionY());
-	    writeF(player.getCharacterData().getPositionZ());
-	    writeF(player.getCharacterData().getOrientation());
-	}
-
+public class SMSG_LOGIN_VERIFY_WORLD extends AbstractWoWServerPacket {
+    
+    /** The player. */
+    private Player player;
+    
+    /**
+     * Instantiates a new sMS g_ logi n_ verif y_ world.
+     */
+    public SMSG_LOGIN_VERIFY_WORLD() {
+    
+    }
+    
+    /**
+     * Instantiates a new sMS g_ logi n_ verif y_ world.
+     * 
+     * @param player
+     *            the player
+     */
+    public SMSG_LOGIN_VERIFY_WORLD(final Player player) {
+    
+        this.player = player;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    public void writeImpl() {
+    
+        writeD(this.player.GetMapId());
+        writeF(this.player.getCharacterData().getPositionX());
+        writeF(this.player.getCharacterData().getPositionY());
+        writeF(this.player.getCharacterData().getPositionZ());
+        writeF(this.player.getCharacterData().getOrientation());
+    }
+    
 }

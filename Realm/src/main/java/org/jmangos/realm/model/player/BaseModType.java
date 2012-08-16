@@ -24,9 +24,9 @@ package org.jmangos.realm.model.player;
  * The Enum BaseModType.
  */
 public enum BaseModType {
-	
-	/** The FLA t_ mod. */
-	FLAT_MOD, 
- /** The PC t_ mod. */
- PCT_MOD;
+    
+    /** The FLA t_ mod. */
+    FLAT_MOD,
+    /** The PC t_ mod. */
+    PCT_MOD;
 }

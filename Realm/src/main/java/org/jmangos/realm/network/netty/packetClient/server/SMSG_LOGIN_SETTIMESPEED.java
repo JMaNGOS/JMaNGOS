@@ -24,15 +24,18 @@ import org.jmangos.realm.utils.Utils;
  * The Class SMSG_LOGIN_SETTIMESPEED.
  */
 public class SMSG_LOGIN_SETTIMESPEED extends AbstractWoWServerPacket {
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		writeD(Utils.TimeToBitFields(System.currentTimeMillis()));
-		writeF(0.01666667F);
-		writeD(0);
-	}
-
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writeD(Utils.TimeToBitFields(System.currentTimeMillis()));
+        writeF(0.01666667F);
+        writeD(0);
+    }
+    
 }

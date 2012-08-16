@@ -23,13 +23,14 @@ import org.jmangos.commons.network.model.SendablePacket;
  * The Class AbstractWoWServerPacket.
  */
 public abstract class AbstractWoWServerPacket extends SendablePacket {
-
-	/**
-	 * Gets the channel.
-	 * 
-	 * @return the channel
-	 */
-	public NettyNetworkChannel getChannel() {
-		return (NettyNetworkChannel) channel;
-	}
+    
+    /**
+     * Gets the channel.
+     * 
+     * @return the channel
+     */
+    public NettyNetworkChannel getChannel() {
+    
+        return (NettyNetworkChannel) this.channel;
+    }
 }

@@ -22,35 +22,36 @@ import org.apache.log4j.Logger;
  * The Class TaskExecutionWrapper.
  */
 public class TaskExecutionWrapper implements Runnable {
-
-	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(TaskExecutionWrapper.class);
-
-	/** The runnable. */
-	private Runnable runnable;
-
-	/**
-	 * Instantiates a new task execution wrapper.
-	 * 
-	 * @param runnable
-	 *            the runnable
-	 */
-	public TaskExecutionWrapper(Runnable runnable) {
-		this.runnable = runnable;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Runnable#run()
-	 */
-	@Override
-	public void run() {
-		try {
-			runnable.run();
-		} catch (Exception e) {
-			log.error("Exception during execution of the task", e);
-		}
-	}
+    
+    /** The Constant log. */
+    private static final Logger log = Logger.getLogger(TaskExecutionWrapper.class);
+    
+    /** The runnable. */
+    private final Runnable      runnable;
+    
+    /**
+     * Instantiates a new task execution wrapper.
+     * 
+     * @param runnable
+     *            the runnable
+     */
+    public TaskExecutionWrapper(final Runnable runnable) {
+    
+        this.runnable = runnable;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Runnable#run()
+     */
+    @Override
+    public void run() {
+    
+        try {
+            this.runnable.run();
+        } catch (final Exception e) {
+            log.error("Exception during execution of the task", e);
+        }
+    }
 }

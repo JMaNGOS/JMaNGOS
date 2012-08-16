@@ -16,7 +16,8 @@
  *******************************************************************************/
 package org.jmangos.realm.service;
 
-import com.google.inject.Inject;
+import javax.inject.Named;
+
 import org.apache.commons.lang.NotImplementedException;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jmangos.commons.config.Compatiple;
@@ -24,66 +25,70 @@ import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.netty.service.AbstractNetworkService;
 import org.jmangos.realm.config.Config;
 
-import javax.inject.Named;
+import com.google.inject.Inject;
 
 /**
  * The Class RealmNetworkService.
  */
 public class RealmNetworkService extends AbstractNetworkService {
-	@Inject
-	private Config config;
-
-	/** The RealmToClient pipeline factory. */
-	@Inject
-	@Named("RealmToClient")
-	private ChannelPipelineFactory realmToClientPipelineFactory;
-
-	/** The packet service. */
-	@Inject
-	@Named("AuthToClient")
-	private PacketHandlerFactory clientPacketService;
-	/** The packet service. */
-	@Inject
-	@Named("RealmToAuth")
-	private PacketHandlerFactory authPacketService;
-
-	@Inject
-	@Named("RealmToAuth")
-	private ChannelPipelineFactory realmToAuthPipelineFactory;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.service.Service#start()
-	 */
-	@Override
-	public void start() {
-		clientPacketService.loadPacket();
-		createServerChannel(config.CLIENT_ADDRESS, realmToClientPipelineFactory);
-		// Only run if auth server not from mangos team
-		if (!config.COMPATIBLE.equals(Compatiple.MANGOS)) {
-			authPacketService.loadPacket();
-			createClientChannel(config.AUTH_ADDRESS, realmToAuthPipelineFactory);
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.netty.service.NetworkService#status()
-	 */
-	@Override
-	public void status() {
-		throw new NotImplementedException();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.service.Service#stop()
-	 */
-	@Override
-	public void stop() {
-		throw new NotImplementedException();
-	}
+    
+    @Inject
+    private Config                 config;
+    
+    /** The RealmToClient pipeline factory. */
+    @Inject
+    @Named("RealmToClient")
+    private ChannelPipelineFactory realmToClientPipelineFactory;
+    
+    /** The packet service. */
+    @Inject
+    @Named("AuthToClient")
+    private PacketHandlerFactory   clientPacketService;
+    /** The packet service. */
+    @Inject
+    @Named("RealmToAuth")
+    private PacketHandlerFactory   authPacketService;
+    
+    @Inject
+    @Named("RealmToAuth")
+    private ChannelPipelineFactory realmToAuthPipelineFactory;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.service.Service#start()
+     */
+    @Override
+    public void start() {
+    
+        this.clientPacketService.loadPacket();
+        createServerChannel(this.config.CLIENT_ADDRESS, this.realmToClientPipelineFactory);
+        // Only run if auth server not from mangos team
+        if (!this.config.COMPATIBLE.equals(Compatiple.MANGOS)) {
+            this.authPacketService.loadPacket();
+            createClientChannel(this.config.AUTH_ADDRESS, this.realmToAuthPipelineFactory);
+        }
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.netty.service.NetworkService#status()
+     */
+    @Override
+    public void status() {
+    
+        throw new NotImplementedException();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.service.Service#stop()
+     */
+    @Override
+    public void stop() {
+    
+        throw new NotImplementedException();
+    }
 }

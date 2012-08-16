@@ -25,26 +25,26 @@ import org.jboss.netty.channel.ChannelPipelineFactory;
  * A factory for creating NetworkChannel objects.
  */
 public interface NetworkChannelFactory {
-
-	/**
-	 * Start listening on port or connect to remote address.
-	 * 
-	 * @return channel
-	 */
-	Channel connect();
-
-	/**
-	 * Initialize.
-	 * 
-	 * @param pipelineFactory
-	 *            the pipeline factory
-	 */
-	void initialize(ChannelPipelineFactory pipelineFactory);
-
-	/**
-	 * Gets the address.
-	 * 
-	 * @return address of channel connection
-	 */
-	InetSocketAddress getAddress();
+    
+    /**
+     * Start listening on port or connect to remote address.
+     * 
+     * @return channel
+     */
+    Channel connect();
+    
+    /**
+     * Initialize.
+     * 
+     * @param pipelineFactory
+     *            the pipeline factory
+     */
+    void initialize(ChannelPipelineFactory pipelineFactory);
+    
+    /**
+     * Gets the address.
+     * 
+     * @return address of channel connection
+     */
+    InetSocketAddress getAddress();
 }

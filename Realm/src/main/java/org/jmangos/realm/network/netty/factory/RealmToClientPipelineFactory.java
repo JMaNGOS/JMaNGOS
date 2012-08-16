@@ -19,8 +19,10 @@
  */
 package org.jmangos.realm.network.netty.factory;
 
-import static org.jboss.netty.channel.Channels.*;
+import static org.jboss.netty.channel.Channels.pipeline;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
@@ -32,44 +34,44 @@ import org.jmangos.realm.network.netty.decoder.PacketFrameEncoder;
 import org.jmangos.realm.network.netty.handler.EventLogHandler;
 import org.jmangos.realm.network.netty.handler.RealmToClientChannelHandler;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 // TODO: Auto-generated Javadoc
 /**
  * A factory for creating R2CPipeline objects.
- *
+ * 
  * @author MinimaJack
  */
 
 public class RealmToClientPipelineFactory extends BasicPipelineFactory {
-	
-	/** The connection handler. */
-	@Inject
-	@Named("RealmToClient")
-	private ConnectHandler connectionHandler;
-	
-	/** The packet service. */
-	@Inject
-	@Named("AuthToClient")
-	private PacketHandlerFactory packetService;
-	
-	/* (non-Javadoc)
-	 * @see org.jboss.netty.channel.ChannelPipelineFactory#getPipeline()
-	 */
-	public ChannelPipeline getPipeline() throws Exception {
-		ChannelPipeline pipeline = pipeline();
-		
-		pipeline.addLast("framedecoder", new PacketFrameDecoder());
-		 pipeline.addLast("encoder", new PacketFrameEncoder());
-		pipeline.addLast("executor", getExecutorHandler());
-
-		pipeline.addLast("eventlog", new EventLogHandler());
-
-		// and then business logic.
-		pipeline.addLast("handler", new RealmToClientChannelHandler(packetService, connectionHandler,
-				new Netty2PacketReceiver()));
-
-		return pipeline;
-	}
+    
+    /** The connection handler. */
+    @Inject
+    @Named("RealmToClient")
+    private ConnectHandler       connectionHandler;
+    
+    /** The packet service. */
+    @Inject
+    @Named("AuthToClient")
+    private PacketHandlerFactory packetService;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jboss.netty.channel.ChannelPipelineFactory#getPipeline()
+     */
+    @Override
+    public ChannelPipeline getPipeline() throws Exception {
+    
+        final ChannelPipeline pipeline = pipeline();
+        
+        pipeline.addLast("framedecoder", new PacketFrameDecoder());
+        pipeline.addLast("encoder", new PacketFrameEncoder());
+        pipeline.addLast("executor", getExecutorHandler());
+        
+        pipeline.addLast("eventlog", new EventLogHandler());
+        
+        // and then business logic.
+        pipeline.addLast("handler", new RealmToClientChannelHandler(this.packetService, this.connectionHandler, new Netty2PacketReceiver()));
+        
+        return pipeline;
+    }
 }

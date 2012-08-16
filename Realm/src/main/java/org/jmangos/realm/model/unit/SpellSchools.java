@@ -21,22 +21,22 @@ package org.jmangos.realm.model.unit;
  * The Enum SpellSchools.
  */
 public enum SpellSchools {
-	
-	/** The SPEL l_ schoo l_ normal. */
-	SPELL_SCHOOL_NORMAL, 
- /** The SPEL l_ schoo l_ holy. */
- SPELL_SCHOOL_HOLY, 
- /** The SPEL l_ schoo l_ fire. */
- SPELL_SCHOOL_FIRE, 
- /** The SPEL l_ schoo l_ nature. */
- SPELL_SCHOOL_NATURE, 
- /** The SPEL l_ schoo l_ frost. */
- SPELL_SCHOOL_FROST, 
- /** The SPEL l_ schoo l_ shadow. */
- SPELL_SCHOOL_SHADOW, 
- /** The SPEL l_ schoo l_ arcane. */
- SPELL_SCHOOL_ARCANE;
-	
-	/** The MA x_ spel l_ school. */
-	public static int MAX_SPELL_SCHOOL = 7;
+    
+    /** The SPEL l_ schoo l_ normal. */
+    SPELL_SCHOOL_NORMAL,
+    /** The SPEL l_ schoo l_ holy. */
+    SPELL_SCHOOL_HOLY,
+    /** The SPEL l_ schoo l_ fire. */
+    SPELL_SCHOOL_FIRE,
+    /** The SPEL l_ schoo l_ nature. */
+    SPELL_SCHOOL_NATURE,
+    /** The SPEL l_ schoo l_ frost. */
+    SPELL_SCHOOL_FROST,
+    /** The SPEL l_ schoo l_ shadow. */
+    SPELL_SCHOOL_SHADOW,
+    /** The SPEL l_ schoo l_ arcane. */
+    SPELL_SCHOOL_ARCANE;
+    
+    /** The MA x_ spel l_ school. */
+    public static int MAX_SPELL_SCHOOL = 7;
 }

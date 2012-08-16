@@ -18,15 +18,15 @@ package org.jmangos.commons.config;
 
 /**
  * The Enum Compatiple.
- *
+ * 
  * @author MinimaJack
  */
 public enum Compatiple {
-	
-	/** The NONE. */
-	NONE,
-	
-	/** The MANGOS. */
-	MANGOS;
-	
+    
+    /** The NONE. */
+    NONE,
+    
+    /** The MANGOS. */
+    MANGOS;
+    
 }

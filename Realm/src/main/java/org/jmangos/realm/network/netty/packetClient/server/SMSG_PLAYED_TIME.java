@@ -23,37 +23,41 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
  * The Class SMSG_PLAYED_TIME.
  */
 public class SMSG_PLAYED_TIME extends AbstractWoWServerPacket {
-
-	/** The unk. */
-	private byte unk; 
-	
-	/**
-	 * Instantiates a new sMS g_ playe d_ time.
-	 */
-	public SMSG_PLAYED_TIME() {
-	}
-
-	/**
-	 * Instantiates a new sMS g_ playe d_ time.
-	 *
-	 * @param unk the unk
-	 */
-	public SMSG_PLAYED_TIME( byte unk) {
-		this.unk  = unk;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		writeB(new byte[]{
-				0x44,0x05,0x00,0x00,0x47,0x02,0x00,0x00
-		});
-		/*
-		writeD(0);
-		writeD(0);*/
-		writeC(unk);
-	}
-
+    
+    /** The unk. */
+    private byte unk;
+    
+    /**
+     * Instantiates a new sMS g_ playe d_ time.
+     */
+    public SMSG_PLAYED_TIME() {
+    
+    }
+    
+    /**
+     * Instantiates a new sMS g_ playe d_ time.
+     * 
+     * @param unk
+     *            the unk
+     */
+    public SMSG_PLAYED_TIME(final byte unk) {
+    
+        this.unk = unk;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writeB(new byte[] { 0x44, 0x05, 0x00, 0x00, 0x47, 0x02, 0x00, 0x00 });
+        /*
+         * writeD(0); writeD(0);
+         */
+        writeC(this.unk);
+    }
+    
 }

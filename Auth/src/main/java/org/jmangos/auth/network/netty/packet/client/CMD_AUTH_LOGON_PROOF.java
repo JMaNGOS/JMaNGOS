@@ -38,138 +38,134 @@ import org.jmangos.commons.utils.BigNumber;
  * The Class <tt>CMD_AUTH_LOGON_PROOF</tt>.
  */
 public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
-
-	/** The Constant logger. */
-	private static final Logger logger = Logger
-			.getLogger(CMD_AUTH_LOGON_PROOF.class);
-
-	/** The sender. */
-	@Inject
-	private AbstractPacketSender sender;
-
-	/** The account service. */
-	@Inject
-	AccountService accountService;
-
-	/** The response. */
-	private WoWAuthResponse response;
-
-	/**
-	 * Instantiates a new CMD_AUTH_LOGON_PROOF.
-	 */
-	public CMD_AUTH_LOGON_PROOF() {
-		super();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unused")
-	@Override
-	protected void readImpl() {
-		byte[] a = readB(32);
-		byte[] m1 = readB(20);
-		/** byte[] crc = */
-		readB(20);
-		/** int numberofKey = */
-		readC();
-		/** int securityFlag = */
-		readC();
-
-		logger.debug("a length " + a.length);
-		logger.debug("a value "
-				+ new BigInteger(1, a).toString(16).toUpperCase());
-		logger.debug("m1 length " + m1.length);
-		logger.debug("m1 value "
-				+ new BigInteger(1, m1).toString(16).toUpperCase());
-		MessageDigest sha = null;
-		try {
-			sha = MessageDigest.getInstance("SHA-1");
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			return;
-		}
-		BigNumber B = getAccount().getcryptoB();
-		logger.debug("B value " + B.asHexStr());
-		sha.update(a);
-		sha.update(B.asByteArray(32));
-		BigNumber u = new BigNumber();
-		u.setBinary(sha.digest());
-		logger.debug("u value" + u.asHexStr());
-		BigNumber A = new BigNumber();
-		A.setBinary(a);
-		logger.debug("A:" + A.asHexStr());
-		BigNumber S = A.multiply(
-				(getAccount().getV_crypto().modPow(u, AccountUtils.N))).modPow(
-				getAccount().getB(), AccountUtils.N);
-
-		byte[] t1 = new byte[16];
-		byte[] vK = new byte[40];
-
-		byte[] t = S.asByteArray(32);
-		for (int i = 0; i < 16; ++i) {
-			t1[i] = t[i * 2];
-		}
-		sha.update(t1);
+    
+    /** The Constant logger. */
+    private static final Logger  logger = Logger.getLogger(CMD_AUTH_LOGON_PROOF.class);
+    
+    /** The sender. */
+    @Inject
+    private AbstractPacketSender sender;
+    
+    /** The account service. */
+    @Inject
+    AccountService               accountService;
+    
+    /** The response. */
+    private WoWAuthResponse      response;
+    
+    /**
+     * Instantiates a new CMD_AUTH_LOGON_PROOF.
+     */
+    public CMD_AUTH_LOGON_PROOF() {
+    
+        super();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unused")
+    @Override
+    protected void readImpl() {
+    
+        final byte[] a = readB(32);
+        final byte[] m1 = readB(20);
+        /** byte[] crc = */
+        readB(20);
+        /** int numberofKey = */
+        readC();
+        /** int securityFlag = */
+        readC();
+        
+        logger.debug("a length " + a.length);
+        logger.debug("a value " + new BigInteger(1, a).toString(16).toUpperCase());
+        logger.debug("m1 length " + m1.length);
+        logger.debug("m1 value " + new BigInteger(1, m1).toString(16).toUpperCase());
+        MessageDigest sha = null;
+        try {
+            sha = MessageDigest.getInstance("SHA-1");
+        } catch (final NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return;
+        }
+        final BigNumber B = getAccount().getcryptoB();
+        logger.debug("B value " + B.asHexStr());
+        sha.update(a);
+        sha.update(B.asByteArray(32));
+        final BigNumber u = new BigNumber();
+        u.setBinary(sha.digest());
+        logger.debug("u value" + u.asHexStr());
+        final BigNumber A = new BigNumber();
+        A.setBinary(a);
+        logger.debug("A:" + A.asHexStr());
+        final BigNumber S = A.multiply((getAccount().getV_crypto().modPow(u, AccountUtils.N))).modPow(getAccount().getB(), AccountUtils.N);
+        
+        final byte[] t1 = new byte[16];
+        final byte[] vK = new byte[40];
+        
+        final byte[] t = S.asByteArray(32);
+        for (int i = 0; i < 16; ++i) {
+            t1[i] = t[i * 2];
+        }
+        sha.update(t1);
         byte[] t2 = sha.digest();
-		for (int i = 0; i < 20; ++i) {
-			vK[i * 2] = t2[i];
-		}
-		for (int i = 0; i < 16; ++i) {
-			t1[i] = t[i * 2 + 1];
-		}
-		sha.update(t1);
-		t2 = sha.digest();
-		for (int i = 0; i < 20; ++i) {
-			vK[i * 2 + 1] = t2[i];
-		}
-
-		byte[] hash = new byte[20];
-		logger.debug("N:" + AccountUtils.N.asHexStr());
-		sha.update(AccountUtils.N.asByteArray(32));
-		hash = sha.digest();
-		logger.debug("hash:"
-				+ new BigInteger(1, hash).toString(16).toUpperCase());
-		sha.update(AccountUtils.g.asByteArray(1));
-		byte[] gH = sha.digest();
-		for (int i = 0; i < 20; ++i) {
-			hash[i] ^= gH[i];
-		}
-
-		byte[] t4 = new byte[20];
-		sha.update(getAccount().getName().getBytes(Charset.forName("UTF-8")));
-		t4 = sha.digest();
-
-		sha.update(hash);
-		sha.update(t4);
-		sha.update(getAccount().getS_crypto().asByteArray(32));
-		sha.update(A.asByteArray(32));
-		sha.update(B.asByteArray(32));
-		sha.update(vK);
-
-		byte[] sh = sha.digest();
-
-		if (Arrays.equals(sh, m1)) {
-			sha.update(A.asByteArray(32));
-			sha.update(sh);
-			sha.update(vK);
-
-			getAccount().setM2(sha.digest());
-			getAccount().setvK(vK);
-			ArrayUtils.reverse(vK);
-			accountService.updateSessionKey(getAccount().getName(),
-					new BigInteger(1, vK).toString(16).toUpperCase());
-			response = WoWAuthResponse.WOW_SUCCESS;
-		} else {
-			response = WoWAuthResponse.WOW_FAIL_INCORRECT_PASSWORD;
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void runImpl() {
-		sender.send(this.getClient(), new TCMD_AUTH_LOGON_PROOF(response));
-	}
+        for (int i = 0; i < 20; ++i) {
+            vK[i * 2] = t2[i];
+        }
+        for (int i = 0; i < 16; ++i) {
+            t1[i] = t[(i * 2) + 1];
+        }
+        sha.update(t1);
+        t2 = sha.digest();
+        for (int i = 0; i < 20; ++i) {
+            vK[(i * 2) + 1] = t2[i];
+        }
+        
+        byte[] hash = new byte[20];
+        logger.debug("N:" + AccountUtils.N.asHexStr());
+        sha.update(AccountUtils.N.asByteArray(32));
+        hash = sha.digest();
+        logger.debug("hash:" + new BigInteger(1, hash).toString(16).toUpperCase());
+        sha.update(AccountUtils.g.asByteArray(1));
+        final byte[] gH = sha.digest();
+        for (int i = 0; i < 20; ++i) {
+            hash[i] ^= gH[i];
+        }
+        
+        byte[] t4 = new byte[20];
+        sha.update(getAccount().getName().getBytes(Charset.forName("UTF-8")));
+        t4 = sha.digest();
+        
+        sha.update(hash);
+        sha.update(t4);
+        sha.update(getAccount().getS_crypto().asByteArray(32));
+        sha.update(A.asByteArray(32));
+        sha.update(B.asByteArray(32));
+        sha.update(vK);
+        
+        final byte[] sh = sha.digest();
+        
+        if (Arrays.equals(sh, m1)) {
+            sha.update(A.asByteArray(32));
+            sha.update(sh);
+            sha.update(vK);
+            
+            getAccount().setM2(sha.digest());
+            getAccount().setvK(vK);
+            ArrayUtils.reverse(vK);
+            this.accountService.updateSessionKey(getAccount().getName(), new BigInteger(1, vK).toString(16).toUpperCase());
+            this.response = WoWAuthResponse.WOW_SUCCESS;
+        } else {
+            this.response = WoWAuthResponse.WOW_FAIL_INCORRECT_PASSWORD;
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void runImpl() {
+    
+        this.sender.send(getClient(), new TCMD_AUTH_LOGON_PROOF(this.response));
+    }
 }

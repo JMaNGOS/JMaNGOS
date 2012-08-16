@@ -16,13 +16,13 @@
  *******************************************************************************/
 package org.jmangos.realm.network.netty.packetClient.client;
 
-import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
-import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
-import org.jmangos.realm.network.netty.packetClient.server.SMSG_PLAYED_TIME;
+import java.nio.BufferUnderflowException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.nio.BufferUnderflowException;
+
+import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
+import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 
 // TODO: Auto-generated Javadoc
 
@@ -30,26 +30,31 @@ import java.nio.BufferUnderflowException;
  * The Class CMSG_PLAYED_TIME.
  */
 public class CMSG_REQUEST_RAID_INFO extends AbstractWoWClientPacket {
-	
-	/** The sender. */
-	@Inject
-	@Named("client")
-	private AbstractPacketSender sender;
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
-	 */
-	@Override
-	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		skipAll();
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
-	 */
-	@Override
-	protected void runImpl() {
-
-	}
-
+    
+    /** The sender. */
+    @Inject
+    @Named("client")
+    private AbstractPacketSender sender;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
+     */
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
+    
+        skipAll();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
+     */
+    @Override
+    protected void runImpl() {
+    
+    }
+    
 }

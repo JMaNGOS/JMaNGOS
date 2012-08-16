@@ -19,6 +19,11 @@
  */
 package org.jmangos.realm.network.netty.factory;
 
+import static org.jboss.netty.channel.Channels.pipeline;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.ConnectHandler;
@@ -27,41 +32,38 @@ import org.jmangos.commons.network.netty.receiver.NettyPacketReceiver;
 import org.jmangos.realm.network.netty.handler.EventLogHandler;
 import org.jmangos.realm.network.netty.handler.RealmToAuthChannelHandler;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import static org.jboss.netty.channel.Channels.pipeline;
-
 /**
  * A factory for creating R2LPipeline objects.
- *
+ * 
  * @author MinimaJack
  */
 
 public class RealmToAuthPipelineFactory extends BasicPipelineFactory {
-	
-	/** The connection handler. */
-	@Inject
-	@Named("RealmToAuth")
-	private ConnectHandler connectionHandler;
-	
-	/** The packet service. */
-	@Inject
-	@Named("RealmToAuth")
-	private PacketHandlerFactory packetService;
-	
-	/* (non-Javadoc)
-	 * @see org.jboss.netty.channel.ChannelPipelineFactory#getPipeline()
-	 */
-	public ChannelPipeline getPipeline() throws Exception {
-		ChannelPipeline pipeline = pipeline();
-		pipeline.addLast("executor", getExecutorHandler());
-		pipeline.addLast("eventlog", new EventLogHandler());
-		// and then business logic.
-		pipeline.addLast("handler", new RealmToAuthChannelHandler(
-				channelFactory, packetService, connectionHandler,
-				new NettyPacketReceiver()));
-
-		return pipeline;
-	}
+    
+    /** The connection handler. */
+    @Inject
+    @Named("RealmToAuth")
+    private ConnectHandler       connectionHandler;
+    
+    /** The packet service. */
+    @Inject
+    @Named("RealmToAuth")
+    private PacketHandlerFactory packetService;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jboss.netty.channel.ChannelPipelineFactory#getPipeline()
+     */
+    @Override
+    public ChannelPipeline getPipeline() throws Exception {
+    
+        final ChannelPipeline pipeline = pipeline();
+        pipeline.addLast("executor", getExecutorHandler());
+        pipeline.addLast("eventlog", new EventLogHandler());
+        // and then business logic.
+        pipeline.addLast("handler", new RealmToAuthChannelHandler(this.channelFactory, this.packetService, this.connectionHandler, new NettyPacketReceiver()));
+        
+        return pipeline;
+    }
 }

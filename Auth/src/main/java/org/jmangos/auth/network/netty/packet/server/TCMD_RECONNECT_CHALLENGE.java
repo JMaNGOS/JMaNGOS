@@ -16,27 +16,28 @@
  *******************************************************************************/
 package org.jmangos.auth.network.netty.packet.server;
 
-import org.jmangos.commons.model.Account;
 import org.jmangos.auth.network.netty.packet.AbstractWoWServerPacket;
+import org.jmangos.commons.model.Account;
 import org.jmangos.commons.utils.BigNumber;
 
 /**
  * The Class <tt>TCMD_RECONNECT_CHALLENGE</tt>.
  */
 public class TCMD_RECONNECT_CHALLENGE extends AbstractWoWServerPacket {
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void writeImpl() {
-		writeC(0x00);
-		BigNumber s = new BigNumber();
-		s.setRand(16);
-		((Account) (getChannel().getChanneledObject())).set_reconnectProof(s);
-
-		writeB(s.asByteArray(16));
-		writeQ(0L);
-		writeQ(0L);
-	}
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writeC(0x00);
+        final BigNumber s = new BigNumber();
+        s.setRand(16);
+        ((Account) (getChannel().getChanneledObject())).set_reconnectProof(s);
+        
+        writeB(s.asByteArray(16));
+        writeQ(0L);
+        writeQ(0L);
+    }
 }

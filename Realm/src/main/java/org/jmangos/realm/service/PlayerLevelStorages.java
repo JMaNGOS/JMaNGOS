@@ -22,122 +22,104 @@ import org.apache.log4j.Logger;
 import org.jmangos.commons.dataholder.DataLoadService;
 import org.jmangos.realm.dao.SimpleDataDAO;
 import org.jmangos.realm.model.Classes;
-import org.jmangos.realm.model.RaceClassLevel;
 import org.jmangos.realm.model.Races;
 import org.jmangos.realm.model.base.PlayerLevelInfo;
+import org.jmangos.realm.model.base.PlayerLevelInfoPK;
 
 import com.google.inject.Inject;
-import org.jmangos.realm.model.base.PlayerLevelInfoPK;
 
 /**
  * The Class PlayerLevelStorages.
  */
-public class PlayerLevelStorages implements
-		DataLoadService<HashMap<PlayerLevelInfoPK, PlayerLevelInfo>> {
-
-	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(PlayerLevelStorages.class);
-
-	/** The simple data dao. */
-	@Inject
-	SimpleDataDAO simpleDataDAO;
-
-	/** The Player Race Class Level info. */
-	private HashMap<PlayerLevelInfoPK, PlayerLevelInfo> playerRCLI = new HashMap<PlayerLevelInfoPK, PlayerLevelInfo>();
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.service.Service#start()
-	 */
-	@Override
-	public void start() {
-		load();
-		log.info("Loaded " + playerRCLI.size() + " PlayerLevelInfos");
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.service.Service#stop()
-	 */
-	@Override
-	public void stop() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.dataholder.DataLoadService#load()
-	 */
-	@Override
-	public HashMap<PlayerLevelInfoPK, PlayerLevelInfo> load() {
-		// TODO Auto-generated method stub
-		return playerRCLI = simpleDataDAO.getRaceClassLevelInfos();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.dataholder.DataLoadService#reload()
-	 */
-	@Override
-	public void reload() {
-        HashMap<PlayerLevelInfoPK, PlayerLevelInfo> playerRCLITemp = simpleDataDAO.getRaceClassLevelInfos();
-        playerRCLI = playerRCLITemp;
+public class PlayerLevelStorages implements DataLoadService<HashMap<PlayerLevelInfoPK, PlayerLevelInfo>> {
+    
+    /** The Constant log. */
+    private static final Logger                         log        = Logger.getLogger(PlayerLevelStorages.class);
+    
+    /** The simple data dao. */
+    @Inject
+    SimpleDataDAO                                       simpleDataDAO;
+    
+    /** The Player Race Class Level info. */
+    private HashMap<PlayerLevelInfoPK, PlayerLevelInfo> playerRCLI = new HashMap<PlayerLevelInfoPK, PlayerLevelInfo>();
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.service.Service#start()
+     */
+    @Override
+    public void start() {
+    
+        load();
+        log.info("Loaded " + this.playerRCLI.size() + " PlayerLevelInfos");
+        
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.service.Service#stop()
+     */
+    @Override
+    public void stop() {
+    
+        // TODO Auto-generated method stub
+        
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.dataholder.DataLoadService#load()
+     */
+    @Override
+    public HashMap<PlayerLevelInfoPK, PlayerLevelInfo> load() {
+    
+        // TODO Auto-generated method stub
+        return this.playerRCLI = this.simpleDataDAO.getRaceClassLevelInfos();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.dataholder.DataLoadService#reload()
+     */
+    @Override
+    public void reload() {
+    
+        HashMap<PlayerLevelInfoPK, PlayerLevelInfo> playerRCLITemp = this.simpleDataDAO.getRaceClassLevelInfos();
+        this.playerRCLI = playerRCLITemp;
         playerRCLITemp = null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.dataholder.DataLoadService#save()
-	 */
-	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.dataholder.DataLoadService#get()
-	 */
-	@Override
-	public HashMap<PlayerLevelInfoPK, PlayerLevelInfo> get() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * Gets the.
-	 * 
-	 * @param race
-	 *            the race
-	 * @param clazz
-	 *            the clazz
-	 * @param level
-	 *            the level
-	 * @return the player level info
-	 */
-	public PlayerLevelInfo get(int race, int clazz, int level) {
-        PlayerLevelInfoPK cl = new PlayerLevelInfoPK(race, clazz, level);
-		if (playerRCLI.containsKey(cl)) {
-			return playerRCLI.get(cl);
-		} else {
-			log.warn("can't find proper PlayerClassLevelInfo PCLI size: " + playerRCLI.size());
-			return null;
-		}
-	}
-
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.dataholder.DataLoadService#save()
+     */
+    @Override
+    public void save() {
+    
+        // TODO Auto-generated method stub
+        
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.dataholder.DataLoadService#get()
+     */
+    @Override
+    public HashMap<PlayerLevelInfoPK, PlayerLevelInfo> get() {
+    
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
     /**
      * Gets the.
-     *
+     * 
      * @param race
      *            the race
      * @param clazz
@@ -146,8 +128,31 @@ public class PlayerLevelStorages implements
      *            the level
      * @return the player level info
      */
-    public PlayerLevelInfo get(Races race, Classes clazz, int level) {
-        return get( race.getValue(), clazz.getValue(), level );
+    public PlayerLevelInfo get(final int race, final int clazz, final int level) {
+    
+        final PlayerLevelInfoPK cl = new PlayerLevelInfoPK(race, clazz, level);
+        if (this.playerRCLI.containsKey(cl)) {
+            return this.playerRCLI.get(cl);
+        } else {
+            log.warn("can't find proper PlayerClassLevelInfo PCLI size: " + this.playerRCLI.size());
+            return null;
+        }
     }
-
+    
+    /**
+     * Gets the.
+     * 
+     * @param race
+     *            the race
+     * @param clazz
+     *            the clazz
+     * @param level
+     *            the level
+     * @return the player level info
+     */
+    public PlayerLevelInfo get(final Races race, final Classes clazz, final int level) {
+    
+        return get(race.getValue(), clazz.getValue(), level);
+    }
+    
 }

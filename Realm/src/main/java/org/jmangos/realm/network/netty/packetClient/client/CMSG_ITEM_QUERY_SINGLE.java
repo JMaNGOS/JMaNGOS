@@ -16,50 +16,57 @@
  *******************************************************************************/
 package org.jmangos.realm.network.netty.packetClient.client;
 
+import java.nio.BufferUnderflowException;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.apache.log4j.Logger;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_ITEM_QUERY_SINGLE_RESPONSE;
 import org.jmangos.realm.service.ItemStorages;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import java.nio.BufferUnderflowException;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class CMSG_ITEM_QUERY_SINGLE.
  */
 public class CMSG_ITEM_QUERY_SINGLE extends AbstractWoWClientPacket {
-
-	/** The item. */
-	private int item;
-	
-	/** The sender. */
-	@Inject
-	@Named("client")
-	private AbstractPacketSender sender;
-	
-	/** The item storages. */
-	@Inject
-	private ItemStorages itemStorages;
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
-	 */
-	@Override
-	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		item = readD();
-		
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
-	 */
-	@Override
-	protected void runImpl() {
-        Logger.getLogger(getClass()).info("User item query for id: " + item );
-		sender.send(getClient(), new SMSG_ITEM_QUERY_SINGLE_RESPONSE(itemStorages.get(item)));
-	}
-
+    
+    /** The item. */
+    private int                  item;
+    
+    /** The sender. */
+    @Inject
+    @Named("client")
+    private AbstractPacketSender sender;
+    
+    /** The item storages. */
+    @Inject
+    private ItemStorages         itemStorages;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
+     */
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
+    
+        this.item = readD();
+        
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
+     */
+    @Override
+    protected void runImpl() {
+    
+        Logger.getLogger(getClass()).info("User item query for id: " + this.item);
+        this.sender.send(getClient(), new SMSG_ITEM_QUERY_SINGLE_RESPONSE(this.itemStorages.get(this.item)));
+    }
+    
 }

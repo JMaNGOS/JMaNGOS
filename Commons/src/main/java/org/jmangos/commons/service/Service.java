@@ -20,13 +20,14 @@ package org.jmangos.commons.service;
  * The Interface Service.
  */
 public interface Service {
-	/**
-	 * Starts the service. Method returns only after service completely started.
-	 */
-	void start();
-
-	/**
-	 * Stops the service. Method returns only after service completely stopped.
-	 */
-	void stop();
+    
+    /**
+     * Starts the service. Method returns only after service completely started.
+     */
+    void start();
+    
+    /**
+     * Stops the service. Method returns only after service completely stopped.
+     */
+    void stop();
 }

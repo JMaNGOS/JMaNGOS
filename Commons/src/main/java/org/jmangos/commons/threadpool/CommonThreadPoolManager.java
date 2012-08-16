@@ -30,141 +30,137 @@ import org.jmangos.commons.threadpool.model.ThreadPoolType;
  * The Class CommonThreadPoolManager.
  */
 public class CommonThreadPoolManager implements ThreadPoolManager {
-
-	/** The scheduled pool. */
-	private ScheduledThreadPoolExecutor scheduledPool;
-
-	/** The instant pool. */
-	private ThreadPoolExecutor instantPool;
-
-	/** The Constant MAX_DELAY. */
-	private static final long MAX_DELAY = TimeUnit.NANOSECONDS
-			.toMillis(Long.MAX_VALUE - System.nanoTime()) / 2;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.wowemu.common.service.Service#start()
-	 */
-	@Override
-	public void start() {
-		int scheduledPoolSize = ThreadPoolConfig.GENERAL_POOL;
-		scheduledPool = new ScheduledThreadPoolExecutor(scheduledPoolSize);
-		scheduledPool.prestartAllCoreThreads();
-
-		int instantPoolSize = ThreadPoolConfig.GENERAL_POOL;
-		instantPool = new ThreadPoolExecutor(instantPoolSize, instantPoolSize,
-				0, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(100000));
-		instantPool.prestartAllCoreThreads();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.wowemu.common.service.Service#stop()
-	 */
-	@Override
-	public void stop() {
-		instantPool.shutdownNow();
-		scheduledPool.shutdownNow();
-		/*
-		 * try { scheduledPool.awaitTermination(MAX_DELAY,
-		 * TimeUnit.NANOSECONDS); instantPool.awaitTermination(MAX_DELAY,
-		 * TimeUnit.NANOSECONDS); } catch (InterruptedException e) {
-		 * e.printStackTrace(); }
-		 */
-	}
-
-	/**
-	 * Validate.
-	 * 
-	 * @param delay
-	 *            the delay
-	 * @return the long
-	 */
-	private final long validate(long delay) {
-		return Math.max(0, Math.min(MAX_DELAY, delay));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.wowemu.common.threadpool.ThreadPoolManager#schedule(java.lang.Runnable
-	 * , long)
-	 */
-	@Override
-	public final ScheduledFuture<?> schedule(Runnable r, long delay) {
-		return scheduledPool.schedule(new TaskExecutionWrapper(r),
-				validate(delay), TimeUnit.MILLISECONDS);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.wowemu.common.threadpool.ThreadPoolManager#scheduleAtFixedRate(java
-	 * .lang.Runnable, long, long)
-	 */
-	@Override
-	public final ScheduledFuture<?> scheduleAtFixedRate(Runnable r, long delay,
-			long period) {
-		return scheduledPool.scheduleAtFixedRate(new TaskExecutionWrapper(r),
-				validate(delay), validate(period), TimeUnit.MILLISECONDS);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.wowemu.common.threadpool.ThreadPoolManager#executeInstant(java.lang
-	 * .Runnable)
-	 */
-	@Override
-	public final void executeInstant(Runnable r) {
-		instantPool.execute(new TaskExecutionWrapper(r));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.wowemu.common.threadpool.ThreadPoolManager#purge()
-	 */
-	@Override
-	public void purge() {
-		scheduledPool.purge();
-		instantPool.purge();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.wowemu.common.threadpool.ThreadPoolManager#fillPoolStats(org.wowemu
-	 * .common.threadpool.model.ThreadPoolType)
-	 */
-	@Override
-	public PoolStats fillPoolStats(ThreadPoolType poolType) {
-		ThreadPoolExecutor executor = null;
-		switch (poolType) {
-		case INSTANT:
-			executor = instantPool;
-			break;
-		case SCHEDULED:
-		default:
-			executor = scheduledPool;
-			break;
-		}
-		PoolStats stats = new PoolStats(poolType);
-		stats.setActiveCount(executor.getActiveCount());
-		stats.setCompletedTaskCount(executor.getCompletedTaskCount());
-		stats.setCorePoolSize(executor.getCorePoolSize());
-		stats.setLargestPoolSize(executor.getLargestPoolSize());
-		stats.setMaximumPoolSize(executor.getMaximumPoolSize());
-		stats.setPoolSize(executor.getPoolSize());
-		stats.setQueueSize(executor.getQueue().size());
-		stats.setTaskCount(executor.getTaskCount());
-		return stats;
-	}
-
+    
+    /** The scheduled pool. */
+    private ScheduledThreadPoolExecutor scheduledPool;
+    
+    /** The instant pool. */
+    private ThreadPoolExecutor          instantPool;
+    
+    /** The Constant MAX_DELAY. */
+    private static final long           MAX_DELAY = TimeUnit.NANOSECONDS.toMillis(Long.MAX_VALUE - System.nanoTime()) / 2;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.service.Service#start()
+     */
+    @Override
+    public void start() {
+    
+        final int scheduledPoolSize = ThreadPoolConfig.GENERAL_POOL;
+        this.scheduledPool = new ScheduledThreadPoolExecutor(scheduledPoolSize);
+        this.scheduledPool.prestartAllCoreThreads();
+        
+        final int instantPoolSize = ThreadPoolConfig.GENERAL_POOL;
+        this.instantPool = new ThreadPoolExecutor(instantPoolSize, instantPoolSize, 0, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(100000));
+        this.instantPool.prestartAllCoreThreads();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.service.Service#stop()
+     */
+    @Override
+    public void stop() {
+    
+        this.instantPool.shutdownNow();
+        this.scheduledPool.shutdownNow();
+        /*
+         * try { scheduledPool.awaitTermination(MAX_DELAY, TimeUnit.NANOSECONDS);
+         * instantPool.awaitTermination(MAX_DELAY, TimeUnit.NANOSECONDS); } catch
+         * (InterruptedException e) { e.printStackTrace(); }
+         */
+    }
+    
+    /**
+     * Validate.
+     * 
+     * @param delay
+     *            the delay
+     * @return the long
+     */
+    private final long validate(final long delay) {
+    
+        return Math.max(0, Math.min(MAX_DELAY, delay));
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.threadpool.ThreadPoolManager#schedule(java.lang.Runnable , long)
+     */
+    @Override
+    public final ScheduledFuture<?> schedule(final Runnable r, final long delay) {
+    
+        return this.scheduledPool.schedule(new TaskExecutionWrapper(r), validate(delay), TimeUnit.MILLISECONDS);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.threadpool.ThreadPoolManager#scheduleAtFixedRate(java .lang.Runnable,
+     * long, long)
+     */
+    @Override
+    public final ScheduledFuture<?> scheduleAtFixedRate(final Runnable r, final long delay, final long period) {
+    
+        return this.scheduledPool.scheduleAtFixedRate(new TaskExecutionWrapper(r), validate(delay), validate(period), TimeUnit.MILLISECONDS);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.threadpool.ThreadPoolManager#executeInstant(java.lang .Runnable)
+     */
+    @Override
+    public final void executeInstant(final Runnable r) {
+    
+        this.instantPool.execute(new TaskExecutionWrapper(r));
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.threadpool.ThreadPoolManager#purge()
+     */
+    @Override
+    public void purge() {
+    
+        this.scheduledPool.purge();
+        this.instantPool.purge();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.threadpool.ThreadPoolManager#fillPoolStats(org.wowemu
+     * .common.threadpool.model.ThreadPoolType)
+     */
+    @Override
+    public PoolStats fillPoolStats(final ThreadPoolType poolType) {
+    
+        ThreadPoolExecutor executor = null;
+        switch (poolType) {
+            case INSTANT:
+                executor = this.instantPool;
+                break;
+            case SCHEDULED:
+            default:
+                executor = this.scheduledPool;
+                break;
+        }
+        final PoolStats stats = new PoolStats(poolType);
+        stats.setActiveCount(executor.getActiveCount());
+        stats.setCompletedTaskCount(executor.getCompletedTaskCount());
+        stats.setCorePoolSize(executor.getCorePoolSize());
+        stats.setLargestPoolSize(executor.getLargestPoolSize());
+        stats.setMaximumPoolSize(executor.getMaximumPoolSize());
+        stats.setPoolSize(executor.getPoolSize());
+        stats.setQueueSize(executor.getQueue().size());
+        stats.setTaskCount(executor.getTaskCount());
+        return stats;
+    }
+    
 }

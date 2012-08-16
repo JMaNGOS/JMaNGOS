@@ -21,51 +21,62 @@ package org.jmangos.realm.model;
  * The Class ClassLevel.
  */
 public class ClassLevel {
-	
-	/** The clazz. */
-	int clazz;
-	
-	/** The level. */
-	int level;
-	
-	/** The hash code. */
-	int hashCode = 0;
-
-	/**
-	 * Instantiates a new class level.
-	 *
-	 * @param clazz the clazz
-	 * @param level the level
-	 */
-	public ClassLevel(int clazz, int level) {
-		this.clazz = clazz;
-		this.level = level;
-		this.hashCode = level*100+clazz;
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		if ((((ClassLevel) obj).clazz == this.clazz)
-				&& (((ClassLevel) obj).level == this.level)) {
-			return true;
-		}
-		return false;
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-	    return hashCode;
-	}
+    
+    /** The clazz. */
+    int clazz;
+    
+    /** The level. */
+    int level;
+    
+    /** The hash code. */
+    int hashCode = 0;
+    
+    /**
+     * Instantiates a new class level.
+     * 
+     * @param clazz
+     *            the clazz
+     * @param level
+     *            the level
+     */
+    public ClassLevel(final int clazz, final int level) {
+    
+        this.clazz = clazz;
+        this.level = level;
+        this.hashCode = (level * 100) + clazz;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(final Object obj) {
+    
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        if ((((ClassLevel) obj).clazz == this.clazz) && (((ClassLevel) obj).level == this.level)) {
+            return true;
+        }
+        return false;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+    
+        return this.hashCode;
+    }
 }

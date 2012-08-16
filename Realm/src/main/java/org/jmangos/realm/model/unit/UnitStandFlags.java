@@ -21,43 +21,46 @@ package org.jmangos.realm.model.unit;
  * The Enum UnitStandFlags.
  */
 public enum UnitStandFlags {
-	 	
-	 	/** The UNI t_ stan d_ flag s_ un k1. */
-	 	UNIT_STAND_FLAGS_UNK1         ( 1 << 0 ),
-	    
-    	/** The UNI t_ stan d_ flag s_ creep. */
-    	UNIT_STAND_FLAGS_CREEP        ( 1 << 1 ),
-	    
-    	/** The UNI t_ stan d_ flag s_ un k3. */
-    	UNIT_STAND_FLAGS_UNK3         ( 1 << 2 ),
-	    
-    	/** The UNI t_ stan d_ flag s_ un k4. */
-    	UNIT_STAND_FLAGS_UNK4         ( 1 << 3 ),
-	    
-    	/** The UNI t_ stan d_ flag s_ un k5. */
-    	UNIT_STAND_FLAGS_UNK5         ( 1 << 4 ),
-	    
-    	/** The UNI t_ stan d_ flag s_ all. */
-    	UNIT_STAND_FLAGS_ALL          (0xFF);
-	 	
-	 	/** The flag. */
-	 	private int flag;
-
-		/**
-		 * Instantiates a new unit stand flags.
-		 *
-		 * @param flag the flag
-		 */
-		UnitStandFlags(int flag){
-	 		this.flag = flag;
-	 	}
-		
-		/**
-		 * Gets the value.
-		 *
-		 * @return the value
-		 */
-		public int getValue(){
-			return flag;
-		}
+    
+    /** The UNI t_ stan d_ flag s_ un k1. */
+    UNIT_STAND_FLAGS_UNK1(1 << 0),
+    
+    /** The UNI t_ stan d_ flag s_ creep. */
+    UNIT_STAND_FLAGS_CREEP(1 << 1),
+    
+    /** The UNI t_ stan d_ flag s_ un k3. */
+    UNIT_STAND_FLAGS_UNK3(1 << 2),
+    
+    /** The UNI t_ stan d_ flag s_ un k4. */
+    UNIT_STAND_FLAGS_UNK4(1 << 3),
+    
+    /** The UNI t_ stan d_ flag s_ un k5. */
+    UNIT_STAND_FLAGS_UNK5(1 << 4),
+    
+    /** The UNI t_ stan d_ flag s_ all. */
+    UNIT_STAND_FLAGS_ALL(0xFF);
+    
+    /** The flag. */
+    private int flag;
+    
+    /**
+     * Instantiates a new unit stand flags.
+     * 
+     * @param flag
+     *            the flag
+     */
+    UnitStandFlags(final int flag) {
+    
+        this.flag = flag;
+    }
+    
+    /**
+     * Gets the value.
+     * 
+     * @return the value
+     */
+    public int getValue() {
+    
+        return this.flag;
+    }
 }

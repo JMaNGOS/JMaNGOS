@@ -21,59 +21,67 @@ package org.jmangos.realm.model.base.item;
  * The Class _Socket.
  */
 public final class _Socket {
-	
-	/** The Color. */
-	private byte Color;
-	
-	/** The Content. */
-	private int Content;
-
-	/**
-	 * Instantiates a new _ socket.
-	 *
-	 * @param color the color
-	 * @param content the content
-	 */
-	public _Socket(byte color, int content) {
-		Color = color;
-		Content = content;
-	}
-
-	/**
-	 * Gets the color.
-	 *
-	 * @return the color
-	 */
-	public byte getColor() {
-		return Color;
-	}
-
-	/**
-	 * Sets the color.
-	 *
-	 * @param color the color to set
-	 */
-	public void setColor(byte color) {
-		Color = color;
-	}
-
-	/**
-	 * Gets the content.
-	 *
-	 * @return the content
-	 */
-	public int getContent() {
-		return Content;
-	}
-
-	/**
-	 * Sets the content.
-	 *
-	 * @param content the content to set
-	 */
-	public void setContent(int content) {
-		Content = content;
-	}
-
+    
+    /** The Color. */
+    private byte Color;
+    
+    /** The Content. */
+    private int  Content;
+    
+    /**
+     * Instantiates a new _ socket.
+     * 
+     * @param color
+     *            the color
+     * @param content
+     *            the content
+     */
+    public _Socket(final byte color, final int content) {
+    
+        this.Color = color;
+        this.Content = content;
+    }
+    
+    /**
+     * Gets the color.
+     * 
+     * @return the color
+     */
+    public byte getColor() {
+    
+        return this.Color;
+    }
+    
+    /**
+     * Sets the color.
+     * 
+     * @param color
+     *            the color to set
+     */
+    public void setColor(final byte color) {
+    
+        this.Color = color;
+    }
+    
+    /**
+     * Gets the content.
+     * 
+     * @return the content
+     */
+    public int getContent() {
+    
+        return this.Content;
+    }
+    
+    /**
+     * Sets the content.
+     * 
+     * @param content
+     *            the content to set
+     */
+    public void setContent(final int content) {
+    
+        this.Content = content;
+    }
+    
 }
-

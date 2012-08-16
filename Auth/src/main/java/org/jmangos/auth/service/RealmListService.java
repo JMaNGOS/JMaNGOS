@@ -16,151 +16,164 @@
  *******************************************************************************/
 package org.jmangos.auth.service;
 
+import javax.inject.Inject;
+
 import javolution.util.FastMap;
+
 import org.apache.log4j.Logger;
 import org.jmangos.auth.dao.RealmDAO;
 import org.jmangos.commons.model.Realm;
 import org.jmangos.commons.service.Service;
 
-import javax.inject.Inject;
-
 public class RealmListService implements Service {
-	/**
-	 * Logger for this class.
-	 */
-	private final Logger log = Logger.getLogger(getClass());
-
+    
     /**
-	 * Map with realms
-	 */
-	private FastMap<Integer, Realm> realms = new FastMap<Integer, Realm>()
-			.shared();
-
-	/** The byte size. */
-	private int byteSize;
-
-	/** The realm dao. */
-	@Inject
-	private RealmDAO realmDAO;
-
-	private long nextUpdateTime = 0;
-
-	/**
-	 * Gets the worlds.
-	 * 
-	 * @return the worlds
-	 */
+     * Logger for this class.
+     */
+    private final Logger                  log            = Logger.getLogger(getClass());
+    
+    /**
+     * Map with realms
+     */
+    private final FastMap<Integer, Realm> realms         = new FastMap<Integer, Realm>().shared();
+    
+    /** The byte size. */
+    private int                           byteSize;
+    
+    /** The realm dao. */
+    @Inject
+    private RealmDAO                      realmDAO;
+    
+    private long                          nextUpdateTime = 0;
+    
+    /**
+     * Gets the worlds.
+     * 
+     * @return the worlds
+     */
     @SuppressWarnings("unused")
-	public FastMap<Integer, Realm> getWorlds() {
-		return realms;
-	}
-
+    public FastMap<Integer, Realm> getWorlds() {
+    
+        return this.realms;
+    }
+    
     @SuppressWarnings("unused")
-	public void addFromConnected(Realm newRealm) {
-		if (realms.containsKey(newRealm.getId())) {
-			log.debug("Server with this id already connected. Replaced data.");
-			realms.remove(newRealm.getId());
-			realms.put(newRealm.getId(), newRealm);
-		} else {
-			realms.put(newRealm.getId(), newRealm);
-			byteSize = calculateWorldsSize();
-		}
-	}
-
-	/**
-	 * Loads list of banned ip.
-	 */
-	public void start() {
-		update();
-		log.debug("WorldList loaded " + realms.size() + " realms.");
-
-	}
-
-	/**
-	 * Update if need
-	 */
-	synchronized public void update() {
-		if(nextUpdateTime > System.currentTimeMillis()){
-			return;
-		}
-        long UPDATE_INTERVAL = 2000;
-        nextUpdateTime = System.currentTimeMillis() + UPDATE_INTERVAL;
-		FastMap<Integer, Realm> trealms = realmDAO.getAllRealms();
-		for (Realm realm : trealms.values()) {
-			if (realms.containsKey(realm.getId())) {
-				realms.get(realm.getId()).setPopulation(realm.getPopulation());
-			} else {
-				realms.put(realm.getId(), realm);
-			}
-		}
-		// update byte size all realms
-		byteSize = calculateWorldsSize();
-	}
-
-	/**
-	 * Gets the byte size.
-	 * 
-	 * @return the byteSize
-	 */
+    public void addFromConnected(final Realm newRealm) {
+    
+        if (this.realms.containsKey(newRealm.getId())) {
+            this.log.debug("Server with this id already connected. Replaced data.");
+            this.realms.remove(newRealm.getId());
+            this.realms.put(newRealm.getId(), newRealm);
+        } else {
+            this.realms.put(newRealm.getId(), newRealm);
+            this.byteSize = calculateWorldsSize();
+        }
+    }
+    
+    /**
+     * Loads list of banned ip.
+     */
+    @Override
+    public void start() {
+    
+        update();
+        this.log.debug("WorldList loaded " + this.realms.size() + " realms.");
+        
+    }
+    
+    /**
+     * Update if need
+     */
+    synchronized public void update() {
+    
+        if (this.nextUpdateTime > System.currentTimeMillis()) {
+            return;
+        }
+        final long UPDATE_INTERVAL = 2000;
+        this.nextUpdateTime = System.currentTimeMillis() + UPDATE_INTERVAL;
+        final FastMap<Integer, Realm> trealms = this.realmDAO.getAllRealms();
+        for (final Realm realm : trealms.values()) {
+            if (this.realms.containsKey(realm.getId())) {
+                this.realms.get(realm.getId()).setPopulation(realm.getPopulation());
+            } else {
+                this.realms.put(realm.getId(), realm);
+            }
+        }
+        // update byte size all realms
+        this.byteSize = calculateWorldsSize();
+    }
+    
+    /**
+     * Gets the byte size.
+     * 
+     * @return the byteSize
+     */
     @SuppressWarnings("unused")
-	public int getByteSize() {
-		return byteSize;
-	}
-
-	/**
-	 * Gets the size.
-	 * 
-	 * @return the size
-	 */
+    public int getByteSize() {
+    
+        return this.byteSize;
+    }
+    
+    /**
+     * Gets the size.
+     * 
+     * @return the size
+     */
     @SuppressWarnings("unused")
-	public int getRealmCount() {
-		return realms.size();
-	}
-
-	/**
-	 * Calculate worlds size.
-	 * 
-	 * @return the int
-	 */
-	public int calculateWorldsSize() {
-		int value = 8;
-		for (Realm realm : realms.values()) {
-			value += realm.getSize();
-		}
-		return value;
-	}
-
-	/**
-	 * Gets the amount characters.
-	 * 
-	 * @param id
-	 *            the id
-	 * @return the amount characters
-	 */
+    public int getRealmCount() {
+    
+        return this.realms.size();
+    }
+    
+    /**
+     * Calculate worlds size.
+     * 
+     * @return the int
+     */
+    public int calculateWorldsSize() {
+    
+        int value = 8;
+        for (final Realm realm : this.realms.values()) {
+            value += realm.getSize();
+        }
+        return value;
+    }
+    
+    /**
+     * Gets the amount characters.
+     * 
+     * @param id
+     *            the id
+     * @return the amount characters
+     */
     @SuppressWarnings("unused")
-	public FastMap<Integer, Integer> getAmountCharacters(Integer id) {
-		return getWorldDAO().getAmountCharacters(id);
-	}
-
-	private RealmDAO getWorldDAO() {
-		return realmDAO;
-	}
-
-	/**
-	 * @return the realms
-	 */
-	public final FastMap<Integer, Realm> getRealms() {
-		return realms;
-	}
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.service.Service#stop()
-	 */
-	@Override
-	public void stop() {
-		realms.clear();
-	}
-
+    public FastMap<Integer, Integer> getAmountCharacters(final Integer id) {
+    
+        return getWorldDAO().getAmountCharacters(id);
+    }
+    
+    private RealmDAO getWorldDAO() {
+    
+        return this.realmDAO;
+    }
+    
+    /**
+     * @return the realms
+     */
+    public final FastMap<Integer, Realm> getRealms() {
+    
+        return this.realms;
+    }
+    
+    /**
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.service.Service#stop()
+     */
+    @Override
+    public void stop() {
+    
+        this.realms.clear();
+    }
+    
 }

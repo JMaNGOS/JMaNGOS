@@ -23,12 +23,15 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
  * The Class SMSG_CLIENTCACHE_VERSION.
  */
 public class SMSG_CLIENTCACHE_VERSION extends AbstractWoWServerPacket {
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		writeD(0);
-	}
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writeD(0);
+    }
 }

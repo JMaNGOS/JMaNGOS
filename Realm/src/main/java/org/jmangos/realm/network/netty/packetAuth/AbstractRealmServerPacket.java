@@ -23,23 +23,26 @@ import org.jmangos.commons.network.model.SendablePacket;
  * The Class AbstractRealmServerPacket.
  */
 public abstract class AbstractRealmServerPacket extends SendablePacket {
-
-	/**
-	 * Gets the channel.
-	 * 
-	 * @return the channel
-	 */
-	public NettyNetworkChannel getChannel() {
-		return (NettyNetworkChannel) channel;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.model.SendablePacket#write()
-	 */
-	public void write() throws RuntimeException {
-		writeC(this.opCode);
-		writeImpl();
-	}
+    
+    /**
+     * Gets the channel.
+     * 
+     * @return the channel
+     */
+    public NettyNetworkChannel getChannel() {
+    
+        return (NettyNetworkChannel) this.channel;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.SendablePacket#write()
+     */
+    @Override
+    public void write() throws RuntimeException {
+    
+        writeC(this.opCode);
+        writeImpl();
+    }
 }

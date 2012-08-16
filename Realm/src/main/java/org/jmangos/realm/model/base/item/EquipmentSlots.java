@@ -1,16 +1,13 @@
 package org.jmangos.realm.model.base.item;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Adrian
- * Date: 2012.08.11.
- * Time: 23:09
- * To change this template use File | Settings | File Templates.
+ * Created with IntelliJ IDEA. User: Adrian Date: 2012.08.11. Time: 23:09 To change this template
+ * use File | Settings | File Templates.
  */
 public enum EquipmentSlots {
     EQUIPMENT_SLOT_START(0),
-    EQUIPMENT_SLOT_HEAD	(0),
-    EQUIPMENT_SLOT_NECK	(1),
+    EQUIPMENT_SLOT_HEAD(0),
+    EQUIPMENT_SLOT_NECK(1),
     EQUIPMENT_SLOT_SHOULDERS(2),
     EQUIPMENT_SLOT_BODY(3),
     EQUIPMENT_SLOT_CHEST(4),
@@ -29,13 +26,16 @@ public enum EquipmentSlots {
     EQUIPMENT_SLOT_RANGED(17),
     EQUIPMENT_SLOT_TABARD(18),
     EQUIPMENT_SLOT_END(19);
-
+    
     private int value;
-    private EquipmentSlots(int value) {
+    
+    private EquipmentSlots(final int value) {
+    
         this.value = value;
     }
-
+    
     public int getValue() {
+    
         return this.value;
     }
 }

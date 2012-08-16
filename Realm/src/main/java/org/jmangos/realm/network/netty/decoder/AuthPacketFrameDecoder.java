@@ -32,52 +32,49 @@ import org.jmangos.realm.network.netty.handler.RealmToClientChannelHandler;
  * The Class PacketFrameDecoder.
  */
 public class AuthPacketFrameDecoder extends FrameDecoder {
-	
-	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(AuthPacketFrameDecoder.class);
-
-	/* (non-Javadoc)
-	 * @see org.jboss.netty.handler.codec.frame.FrameDecoder#decode(org.jboss.netty.channel.ChannelHandlerContext, org.jboss.netty.channel.Channel, org.jboss.netty.buffer.ChannelBuffer)
-	 */
-	@Override
-	protected Object decode(ChannelHandlerContext ctx, Channel channel,
-			ChannelBuffer msg) throws Exception {
-		ChannelBuffer message = (ChannelBuffer) msg;
-		if (message.readableBytes() < 3) {
-			return null;
-		}
-		message.markReaderIndex();
-		RealmToClientChannelHandler channelHandler = (RealmToClientChannelHandler) ctx
-				.getPipeline().getLast();
-		Crypt crypt = channelHandler.getCrypt();
-		
-		byte[] header = new byte[3];
-		message.readBytes(header);
-		ChannelBuffer clientHeader = ChannelBuffers.wrappedBuffer(
-				ByteOrder.LITTLE_ENDIAN, header);
-		byte opcode = clientHeader.readByte();
-		int size = clientHeader.readShort();
-		if ((size < 0) || (size > 10240) || (opcode > 10240)) {
-			log
-					.error("PacketFrameDecoder::decode: realm sent malformed packet size = "
-							+ size + " , opcode = " + opcode);
-			 channel.close();
-			 return null;
-		}
-		
-		if (message.readableBytes() < size) {
-			message.resetReaderIndex();
-			return null;
-		}
-
-		byte[] tmpa = new byte[message.readableBytes()];
-		message.readBytes(tmpa);
-		tmpa = crypt.decrypt(tmpa);
-		ChannelBuffer frame = ChannelBuffers.buffer(ByteOrder.LITTLE_ENDIAN,
-				(size + 1));
-		frame.writeByte((int) opcode);
-		frame.writeBytes(tmpa);
-		return frame;
-	}
+    
+    /** The Constant log. */
+    private static final Logger log = Logger.getLogger(AuthPacketFrameDecoder.class);
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jboss.netty.handler.codec.frame.FrameDecoder#decode(org.jboss.netty.channel.
+     * ChannelHandlerContext, org.jboss.netty.channel.Channel, org.jboss.netty.buffer.ChannelBuffer)
+     */
+    @Override
+    protected Object decode(final ChannelHandlerContext ctx, final Channel channel, final ChannelBuffer msg) throws Exception {
+    
+        final ChannelBuffer message = msg;
+        if (message.readableBytes() < 3) {
+            return null;
+        }
+        message.markReaderIndex();
+        final RealmToClientChannelHandler channelHandler = (RealmToClientChannelHandler) ctx.getPipeline().getLast();
+        final Crypt crypt = channelHandler.getCrypt();
+        
+        final byte[] header = new byte[3];
+        message.readBytes(header);
+        final ChannelBuffer clientHeader = ChannelBuffers.wrappedBuffer(ByteOrder.LITTLE_ENDIAN, header);
+        final byte opcode = clientHeader.readByte();
+        final int size = clientHeader.readShort();
+        if ((size < 0) || (size > 10240) || (opcode > 10240)) {
+            log.error("PacketFrameDecoder::decode: realm sent malformed packet size = " + size + " , opcode = " + opcode);
+            channel.close();
+            return null;
+        }
+        
+        if (message.readableBytes() < size) {
+            message.resetReaderIndex();
+            return null;
+        }
+        
+        byte[] tmpa = new byte[message.readableBytes()];
+        message.readBytes(tmpa);
+        tmpa = crypt.decrypt(tmpa);
+        final ChannelBuffer frame = ChannelBuffers.buffer(ByteOrder.LITTLE_ENDIAN, (size + 1));
+        frame.writeByte(opcode);
+        frame.writeBytes(tmpa);
+        return frame;
+    }
 }

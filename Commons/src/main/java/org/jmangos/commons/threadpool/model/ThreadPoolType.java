@@ -21,10 +21,10 @@ package org.jmangos.commons.threadpool.model;
  * 
  */
 public enum ThreadPoolType {
-
-	/** The SCHEDULED. */
-	SCHEDULED,
-
-	/** The INSTANT. */
-	INSTANT
+    
+    /** The SCHEDULED. */
+    SCHEDULED,
+    
+    /** The INSTANT. */
+    INSTANT
 }

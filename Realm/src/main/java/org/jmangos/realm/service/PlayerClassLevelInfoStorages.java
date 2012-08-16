@@ -18,114 +18,134 @@ package org.jmangos.realm.service;
 
 import java.util.HashMap;
 
-
 import org.apache.log4j.Logger;
 import org.jmangos.commons.dataholder.DataLoadService;
 import org.jmangos.realm.dao.SimpleDataDAO;
-import org.jmangos.realm.model.ClassLevel;
 import org.jmangos.realm.model.Classes;
 import org.jmangos.realm.model.base.PlayerClassLevelInfo;
+import org.jmangos.realm.model.base.PlayerClassLevelInfoPK;
 
 import com.google.inject.Inject;
-import org.jmangos.realm.model.base.PlayerClassLevelInfoPK;
 
 /**
  * The Class PlayerClassLevelInfoStorages.
  */
-public class PlayerClassLevelInfoStorages
-		implements
-			DataLoadService<HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo>> {
-	
-	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(PlayerClassLevelInfoStorages.class);
-	
-	/** The simple data dao. */
-	@Inject
-	SimpleDataDAO simpleDataDAO;
-	
-	/** The Player cli. */
-	private HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> playerCLI = new HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo>();
-
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.service.Service#start()
-	 */
-	@Override
-	public void start() {
-		load();
-		log.info("Loaded " + playerCLI.size() + " PlayerClassLevelInfos");
-	}
-
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.service.Service#stop()
-	 */
-	@Override
-	public void stop() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.dataholder.DataLoadService#load()
-	 */
-	@Override
-	public HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> load() {
-		return playerCLI = simpleDataDAO.getClassLevelInfos();
-	}
-
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.dataholder.DataLoadService#reload()
-	 */
-	@Override
-	public void reload() {
-		HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> tempPlayerCLI = load();
-        playerCLI = tempPlayerCLI;
+public class PlayerClassLevelInfoStorages implements DataLoadService<HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo>> {
+    
+    /** The Constant log. */
+    private static final Logger                                   log       = Logger.getLogger(PlayerClassLevelInfoStorages.class);
+    
+    /** The simple data dao. */
+    @Inject
+    SimpleDataDAO                                                 simpleDataDAO;
+    
+    /** The Player cli. */
+    private HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> playerCLI = new HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo>();
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.service.Service#start()
+     */
+    @Override
+    public void start() {
+    
+        load();
+        log.info("Loaded " + this.playerCLI.size() + " PlayerClassLevelInfos");
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.service.Service#stop()
+     */
+    @Override
+    public void stop() {
+    
+        // TODO Auto-generated method stub
+        
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.dataholder.DataLoadService#load()
+     */
+    @Override
+    public HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> load() {
+    
+        return this.playerCLI = this.simpleDataDAO.getClassLevelInfos();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.dataholder.DataLoadService#reload()
+     */
+    @Override
+    public void reload() {
+    
+        HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> tempPlayerCLI = load();
+        this.playerCLI = tempPlayerCLI;
         tempPlayerCLI = null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.dataholder.DataLoadService#save()
-	 */
-	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-
-	}
-
-    /**
-	 * Gets the.
-	 *
-	 * @param clazz the clazz
-	 * @param level the level
-	 * @return the player class level info
-	 */
-	public PlayerClassLevelInfo get(int clazz, int level) {
-        PlayerClassLevelInfoPK cl = new PlayerClassLevelInfoPK(clazz, level);
-		if (playerCLI.containsKey(cl)) {
-			return playerCLI.get(cl);
-		} else {
-			log.warn("can't find proper PlayerClassLevelInfo");
-			return null;
-		}
-	}
-
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.dataholder.DataLoadService#save()
+     */
+    @Override
+    public void save() {
+    
+        // TODO Auto-generated method stub
+        
+    }
+    
     /**
      * Gets the.
-     * @param clazz the clazz
-     * @param level the level
+     * 
+     * @param clazz
+     *            the clazz
+     * @param level
+     *            the level
      * @return the player class level info
      */
-    public PlayerClassLevelInfo get(Classes clazz, int level) {
-        return get( clazz.getValue(), level );
+    public PlayerClassLevelInfo get(final int clazz, final int level) {
+    
+        final PlayerClassLevelInfoPK cl = new PlayerClassLevelInfoPK(clazz, level);
+        if (this.playerCLI.containsKey(cl)) {
+            return this.playerCLI.get(cl);
+        } else {
+            log.warn("can't find proper PlayerClassLevelInfo");
+            return null;
+        }
     }
-
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.dataholder.DataLoadService#get()
-	 */
-	@Override
-	public HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> get() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+    
+    /**
+     * Gets the.
+     * 
+     * @param clazz
+     *            the clazz
+     * @param level
+     *            the level
+     * @return the player class level info
+     */
+    public PlayerClassLevelInfo get(final Classes clazz, final int level) {
+    
+        return get(clazz.getValue(), level);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.dataholder.DataLoadService#get()
+     */
+    @Override
+    public HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> get() {
+    
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
 }

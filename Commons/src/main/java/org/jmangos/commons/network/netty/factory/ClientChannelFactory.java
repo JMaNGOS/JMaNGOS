@@ -32,72 +32,69 @@ import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
  * A factory for creating ClientChannel objects.
  */
 public class ClientChannelFactory implements NetworkChannelFactory {
-
-	/** The channel factory. */
-	private ChannelFactory channelFactory;
-
-	/** The isa. */
-	private InetSocketAddress isa;
-
-	/** The bootstrap. */
-	private ClientBootstrap bootstrap;
-
-	/**
-	 * Instantiates a new client channel factory.
-	 * 
-	 * @param isa
-	 *            the isa
-	 */
-	public ClientChannelFactory(InetSocketAddress isa) {
-		this.channelFactory = new NioClientSocketChannelFactory(
-				Executors.newCachedThreadPool(),
-				Executors.newCachedThreadPool());
-		this.isa = isa;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.wowemu.common.network.netty.factory.NetworkChannelFactory#connect()
-	 */
-	@Override
-	public Channel connect() {
-		ChannelFuture channelFuture = bootstrap.connect(this.isa);
-		return channelFuture.awaitUninterruptibly().getChannel();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.wowemu.common.network.netty.factory.NetworkChannelFactory#initialize
-	 * (org.jboss.netty.channel.ChannelPipelineFactory)
-	 */
-	@Override
-	public void initialize(ChannelPipelineFactory pipelineFactory) {
-		bootstrap = new ClientBootstrap(channelFactory);
-		bootstrap.setPipelineFactory(pipelineFactory);
-		bootstrap.setOption("bufferFactory",
-				HeapChannelBufferFactory.getInstance(ByteOrder.LITTLE_ENDIAN));
-		bootstrap.setOption("tcpNoDelay", true);
-		bootstrap.setOption("keepAlive", true);
-		bootstrap.setOption("reuseAddress", true);
-		bootstrap.setOption("connectTimeoutMillis", 10);
-		bootstrap.setOption("readWriteFair", true);
-		bootstrap.setOption("remoteAddress", isa);
-		((BasicPipelineFactory) pipelineFactory).setChannelFactory(this);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.wowemu.common.network.netty.factory.NetworkChannelFactory#getAddress
-	 * ()
-	 */
-	@Override
-	public InetSocketAddress getAddress() {
-		return isa;
-	}
+    
+    /** The channel factory. */
+    private final ChannelFactory    channelFactory;
+    
+    /** The isa. */
+    private final InetSocketAddress isa;
+    
+    /** The bootstrap. */
+    private ClientBootstrap         bootstrap;
+    
+    /**
+     * Instantiates a new client channel factory.
+     * 
+     * @param isa
+     *            the isa
+     */
+    public ClientChannelFactory(final InetSocketAddress isa) {
+    
+        this.channelFactory = new NioClientSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool());
+        this.isa = isa;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.netty.factory.NetworkChannelFactory#connect()
+     */
+    @Override
+    public Channel connect() {
+    
+        final ChannelFuture channelFuture = this.bootstrap.connect(this.isa);
+        return channelFuture.awaitUninterruptibly().getChannel();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.netty.factory.NetworkChannelFactory#initialize
+     * (org.jboss.netty.channel.ChannelPipelineFactory)
+     */
+    @Override
+    public void initialize(final ChannelPipelineFactory pipelineFactory) {
+    
+        this.bootstrap = new ClientBootstrap(this.channelFactory);
+        this.bootstrap.setPipelineFactory(pipelineFactory);
+        this.bootstrap.setOption("bufferFactory", HeapChannelBufferFactory.getInstance(ByteOrder.LITTLE_ENDIAN));
+        this.bootstrap.setOption("tcpNoDelay", true);
+        this.bootstrap.setOption("keepAlive", true);
+        this.bootstrap.setOption("reuseAddress", true);
+        this.bootstrap.setOption("connectTimeoutMillis", 10);
+        this.bootstrap.setOption("readWriteFair", true);
+        this.bootstrap.setOption("remoteAddress", this.isa);
+        ((BasicPipelineFactory) pipelineFactory).setChannelFactory(this);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.netty.factory.NetworkChannelFactory#getAddress ()
+     */
+    @Override
+    public InetSocketAddress getAddress() {
+    
+        return this.isa;
+    }
 }

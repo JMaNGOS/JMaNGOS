@@ -20,7 +20,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFutureListener;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.NetworkChannel;
@@ -31,103 +30,107 @@ import org.jmangos.commons.network.utils.NetworkUtil;
  * The Class ServerPacketSender.
  */
 public class ServerPacketSender implements AbstractPacketSender {
-	/*
-	 * @Inject private Network network;
-	 */
-	/** The packet service. */
-	@Inject
-	@Named("RealmToAuth")
-	private PacketHandlerFactory packetService;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.wowemu.common.network.netty.sender.AbstractPacketSender#send(org.
-	 * wowemu.common.network.model.NetworkChannel,
-	 * org.wowemu.common.network.model.SendablePacket)
-	 */
-	public void send(NetworkChannel channel, SendablePacket packet) {
-		packet.setChannel(channel);
-		ChannelBuffer buffer = sendImpl(packet);
-		writeToChannel(channel, buffer);
-	}
-
-	/**
-	 * Send impl.
-	 * 
-	 * @param packet
-	 *            the packet
-	 * @return the channel buffer
-	 */
-	protected ChannelBuffer sendImpl(SendablePacket packet) {
-		final ChannelBuffer buffer = getBuffer();
-		packet.setByteBuffer(buffer);
-		packet.setOpCode(packetService.getServerPacketopCode(packet));
-		packet.write();
-		return packet.getByteBuffer();
-	}
-
-	/**
-	 * Write to channel.
-	 * 
-	 * @param channel
-	 *            the channel
-	 * @param buffer
-	 *            the buffer
-	 */
-	protected void writeToChannel(NetworkChannel channel, Object buffer) {
-		writePacket(channel, buffer);
-	}
-
-	/**
-	 * Write to channel and close.
-	 * 
-	 * @param channel
-	 *            the channel
-	 * @param buffer
-	 *            the buffer
-	 */
-	protected void writeToChannelAndClose(NetworkChannel channel, Object buffer) {
-		((Channel) channel.getChannel()).write(buffer).addListener(
-				ChannelFutureListener.CLOSE);
-	}
-
-	/**
-	 * Gets the buffer.
-	 * 
-	 * @return the buffer
-	 */
-	protected ChannelBuffer getBuffer() {
-		ChannelBuffer buffer = NetworkUtil.newDinamicChannelBuffer(65536);
-		return buffer;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.wowemu.common.network.netty.sender.AbstractPacketSender#sendAndClose
-	 * (org.wowemu.common.network.model.NetworkChannel,
-	 * org.wowemu.common.network.model.SendablePacket)
-	 */
-	@Override
-	public void sendAndClose(NetworkChannel channel,
-			SendablePacket networkPacket) {
-		Object buffer = sendImpl(networkPacket);
-		writePacket(channel, buffer);
-		channel.getChannel().close();
-	}
-
-	/**
-	 * Write packet.
-	 * 
-	 * @param channel
-	 *            the channel
-	 * @param buffer
-	 *            the buffer
-	 */
-	private void writePacket(NetworkChannel channel, Object buffer) {
-		channel.write(buffer);
-	}
+    
+    /*
+     * @Inject private Network network;
+     */
+    /** The packet service. */
+    @Inject
+    @Named("RealmToAuth")
+    private PacketHandlerFactory packetService;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.netty.sender.AbstractPacketSender#send(org.
+     * wowemu.common.network.model.NetworkChannel, org.wowemu.common.network.model.SendablePacket)
+     */
+    @Override
+    public void send(final NetworkChannel channel, final SendablePacket packet) {
+    
+        packet.setChannel(channel);
+        final ChannelBuffer buffer = sendImpl(packet);
+        writeToChannel(channel, buffer);
+    }
+    
+    /**
+     * Send impl.
+     * 
+     * @param packet
+     *            the packet
+     * @return the channel buffer
+     */
+    protected ChannelBuffer sendImpl(final SendablePacket packet) {
+    
+        final ChannelBuffer buffer = getBuffer();
+        packet.setByteBuffer(buffer);
+        packet.setOpCode(this.packetService.getServerPacketopCode(packet));
+        packet.write();
+        return packet.getByteBuffer();
+    }
+    
+    /**
+     * Write to channel.
+     * 
+     * @param channel
+     *            the channel
+     * @param buffer
+     *            the buffer
+     */
+    protected void writeToChannel(final NetworkChannel channel, final Object buffer) {
+    
+        writePacket(channel, buffer);
+    }
+    
+    /**
+     * Write to channel and close.
+     * 
+     * @param channel
+     *            the channel
+     * @param buffer
+     *            the buffer
+     */
+    protected void writeToChannelAndClose(final NetworkChannel channel, final Object buffer) {
+    
+        channel.getChannel().write(buffer).addListener(ChannelFutureListener.CLOSE);
+    }
+    
+    /**
+     * Gets the buffer.
+     * 
+     * @return the buffer
+     */
+    protected ChannelBuffer getBuffer() {
+    
+        final ChannelBuffer buffer = NetworkUtil.newDinamicChannelBuffer(65536);
+        return buffer;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.netty.sender.AbstractPacketSender#sendAndClose
+     * (org.wowemu.common.network.model.NetworkChannel,
+     * org.wowemu.common.network.model.SendablePacket)
+     */
+    @Override
+    public void sendAndClose(final NetworkChannel channel, final SendablePacket networkPacket) {
+    
+        final Object buffer = sendImpl(networkPacket);
+        writePacket(channel, buffer);
+        channel.getChannel().close();
+    }
+    
+    /**
+     * Write packet.
+     * 
+     * @param channel
+     *            the channel
+     * @param buffer
+     *            the buffer
+     */
+    private void writePacket(final NetworkChannel channel, final Object buffer) {
+    
+        channel.write(buffer);
+    }
 }

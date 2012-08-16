@@ -22,42 +22,48 @@ import java.util.Random;
  * The Class ManagedObject.
  */
 public class ManagedObject {
-
+    
     /**
      * The object id.
      */
     private final Integer objectId;
-
+    
     public ManagedObject() {
-        Random random = new Random();
-        objectId = random.nextInt();
+    
+        final Random random = new Random();
+        this.objectId = random.nextInt();
     }
-
+    
     /**
      * Instantiates a new managed object.
-     *
-     * @param objectId the object id
+     * 
+     * @param objectId
+     *            the object id
      */
-    public ManagedObject(int objectId) {
+    public ManagedObject(final int objectId) {
+    
         this.objectId = objectId;
     }
-
+    
     /**
      * Gets the object id.
-     *
+     * 
      * @return objectId
      */
     public final int getObjectId() {
-        return objectId;
+    
+        return this.objectId;
     }
-
+    
     /**
      * Sets the object id.
-     *
-     * @param objectId the object id
+     * 
+     * @param objectId
+     *            the object id
      * @return the int
      */
-    public final int setObjectId(int objectId) {
+    public final int setObjectId(final int objectId) {
+    
         return objectId;
     }
 }

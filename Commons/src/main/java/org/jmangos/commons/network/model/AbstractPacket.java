@@ -38,64 +38,70 @@ import org.jboss.netty.buffer.ChannelBuffer;
  * @author KenM
  */
 abstract class AbstractPacket {
-
-	/** The op code. */
-	protected int opCode;
-
-	/** The buf. */
-	private ChannelBuffer	buf;
-
-	/**
-	 * Instantiates a new abstract packet.
-	 */
-	public AbstractPacket() {
-	}
-
-	/**
-	 * Instantiates a new abstract packet.
-	 * 
-	 * @param opCode
-	 *            the op code
-	 */
-	public AbstractPacket(int opCode) {
-		this.opCode = opCode;
-	}
-
-	/**
-	 * Sets the byte buffer.
-	 * 
-	 * @param buffer
-	 *            the new byte buffer
-	 */
-	public final void setByteBuffer(ChannelBuffer buffer) {
-		this.buf = buffer;
-	}
-
-	/**
-	 * Gets the byte buffer.
-	 * 
-	 * @return the byte buffer
-	 */
-	public final ChannelBuffer getByteBuffer() {
-		return buf;
-	}
-
-	/**
-	 * Gets the op code.
-	 * 
-	 * @return the op code
-	 */
-	public int getOpCode() {
-		return opCode;
-	}
-
-	/**
-	 * Sets the op code.
-	 * 
-	 * @param opCode
-	 *            the new op code
-	 */
-	public void setOpCode(int opCode) {
-		this.opCode = opCode;
-	}
+    
+    /** The op code. */
+    protected int         opCode;
+    
+    /** The buf. */
+    private ChannelBuffer buf;
+    
+    /**
+     * Instantiates a new abstract packet.
+     */
+    public AbstractPacket() {
+    
+    }
+    
+    /**
+     * Instantiates a new abstract packet.
+     * 
+     * @param opCode
+     *            the op code
+     */
+    public AbstractPacket(final int opCode) {
+    
+        this.opCode = opCode;
+    }
+    
+    /**
+     * Sets the byte buffer.
+     * 
+     * @param buffer
+     *            the new byte buffer
+     */
+    public final void setByteBuffer(final ChannelBuffer buffer) {
+    
+        this.buf = buffer;
+    }
+    
+    /**
+     * Gets the byte buffer.
+     * 
+     * @return the byte buffer
+     */
+    public final ChannelBuffer getByteBuffer() {
+    
+        return this.buf;
+    }
+    
+    /**
+     * Gets the op code.
+     * 
+     * @return the op code
+     */
+    public int getOpCode() {
+    
+        return this.opCode;
+    }
+    
+    /**
+     * Sets the op code.
+     * 
+     * @param opCode
+     *            the new op code
+     */
+    public void setOpCode(final int opCode) {
+    
+        this.opCode = opCode;
+    }
 }

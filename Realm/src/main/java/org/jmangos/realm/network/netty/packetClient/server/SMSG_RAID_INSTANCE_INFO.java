@@ -25,19 +25,21 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
  * The Class SMSG_ADDON_INFO.
  */
 public class SMSG_RAID_INSTANCE_INFO extends AbstractWoWServerPacket {
-	
-	/** The logger. */
-	@SuppressWarnings("unused")
-	private static Logger logger = Logger.getLogger(SMSG_RAID_INSTANCE_INFO.class);
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		byte[] instanceInfo = new byte[200];
+    
+    /** The logger. */
+    @SuppressWarnings("unused")
+    private static Logger logger = Logger.getLogger(SMSG_RAID_INSTANCE_INFO.class);
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        final byte[] instanceInfo = new byte[200];
         instanceInfo[0] = 0; // Instance count :)
-        writeB( instanceInfo );
-	}
+        writeB(instanceInfo);
+    }
 }
-

@@ -16,112 +16,137 @@
  *******************************************************************************/
 package org.jmangos.realm.model.base;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.apache.commons.lang.NotImplementedException;
 import org.jmangos.realm.model.unit.Stats;
-
-import javax.persistence.*;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PlayerLevelInfo.
  */
 @Entity
-@Table(name="player_levelstats")
+@Table(name = "player_levelstats")
 public class PlayerLevelInfo {
-
+    
     @EmbeddedId
     PlayerLevelInfoPK playerLevelInfoPK;
-
+    
     @Basic
     @Column(name = "str", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
-    private int strength;
-
+    private int       strength;
+    
     @Basic
     @Column(name = "agi", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
-    private int agility;
-
+    private int       agility;
+    
     @Basic
     @Column(name = "sta", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
-    private int stamina;
-
+    private int       stamina;
+    
     @Basic
     @Column(name = "inte", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
-    private int intellect;
-
+    private int       intellect;
+    
     @Basic
     @Column(name = "spi", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
-    private int spirit;
-
+    private int       spirit;
+    
     /**
-	 * Initialize Persistent entity
-	 */
-	public PlayerLevelInfo() {
-	}
-	
-	/**
-	 * Gets the stats.
-	 *
-	 * @param stat the stat
-	 * @return the stats
-	 */
-    @Transient
-	public int getStats(Stats stat) {
-		switch (stat) {
-            case AGILITY: return agility;
-            case INTELLECT: return intellect;
-            case SPIRIT: return spirit;
-            case STAMINA: return stamina;
-            case STRENGTH: return strength;
-            default:
-                throw new NotImplementedException( "The enum value: " + stat + " not implemented!" );
-        }
-	}
-
-    public PlayerLevelInfoPK getPlayerLevelInfoPK() {
-        return playerLevelInfoPK;
+     * Initialize Persistent entity
+     */
+    public PlayerLevelInfo() {
+    
     }
-
-    public void setPlayerLevelInfoPK(PlayerLevelInfoPK levelInfo) {
+    
+    /**
+     * Gets the stats.
+     * 
+     * @param stat
+     *            the stat
+     * @return the stats
+     */
+    @Transient
+    public int getStats(final Stats stat) {
+    
+        switch (stat) {
+            case AGILITY:
+                return this.agility;
+            case INTELLECT:
+                return this.intellect;
+            case SPIRIT:
+                return this.spirit;
+            case STAMINA:
+                return this.stamina;
+            case STRENGTH:
+                return this.strength;
+            default:
+                throw new NotImplementedException("The enum value: " + stat + " not implemented!");
+        }
+    }
+    
+    public PlayerLevelInfoPK getPlayerLevelInfoPK() {
+    
+        return this.playerLevelInfoPK;
+    }
+    
+    public void setPlayerLevelInfoPK(final PlayerLevelInfoPK levelInfo) {
+    
         this.playerLevelInfoPK = levelInfo;
     }
-
+    
     public int getStrength() {
-        return strength;
+    
+        return this.strength;
     }
-
-    public void setStrength(int strength) {
+    
+    public void setStrength(final int strength) {
+    
         this.strength = strength;
     }
-
+    
     public int getAgility() {
-        return agility;
+    
+        return this.agility;
     }
-
-    public void setAgility(int agility) {
+    
+    public void setAgility(final int agility) {
+    
         this.agility = agility;
     }
-
+    
     public int getStamina() {
-        return stamina;
+    
+        return this.stamina;
     }
-
-    public void setStamina(int stamina) {
+    
+    public void setStamina(final int stamina) {
+    
         this.stamina = stamina;
     }
-
+    
     public int getIntellect() {
-        return intellect;
+    
+        return this.intellect;
     }
-
-    public void setIntellect(int intellect) {
+    
+    public void setIntellect(final int intellect) {
+    
         this.intellect = intellect;
     }
-
+    
     public int getSpirit() {
-        return spirit;
+    
+        return this.spirit;
     }
-
-    public void setSpirit(int spirit) {
+    
+    public void setSpirit(final int spirit) {
+    
         this.spirit = spirit;
     }
 }

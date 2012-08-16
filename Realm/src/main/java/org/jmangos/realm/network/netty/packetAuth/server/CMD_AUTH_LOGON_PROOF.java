@@ -16,47 +16,52 @@
  *******************************************************************************/
 package org.jmangos.realm.network.netty.packetAuth.server;
 
-
 import org.jmangos.realm.network.netty.packetAuth.AbstractRealmServerPacket;
 
 /**
  * The Class <tt>CMD_AUTH_LOGON_PROOF</tt>.
  */
-public class CMD_AUTH_LOGON_PROOF  extends AbstractRealmServerPacket {
-	
-	/** The m1. */
-	private byte[] m1;
-	
-	/** The a. */
-	private byte[] a; 
-	
-	/**
-	 * Instantiates a new jmangos.
-	 */
-	public CMD_AUTH_LOGON_PROOF() {
-	}
-	
-	/**
-	 * Instantiates a new jmangos.
-	 *
-	 * @param a the a
-	 * @param m1 the m1
-	 */
-	public CMD_AUTH_LOGON_PROOF(byte[] a, byte[] m1) {
-		this.a = a;
-		this.m1 = m1;
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		byte[] crc = new byte[20];
-		writeB(a);
-		writeB(m1); 
-		writeB(crc);
-		writeH(0);
-	}
+public class CMD_AUTH_LOGON_PROOF extends AbstractRealmServerPacket {
+    
+    /** The m1. */
+    private byte[] m1;
+    
+    /** The a. */
+    private byte[] a;
+    
+    /**
+     * Instantiates a new jmangos.
+     */
+    public CMD_AUTH_LOGON_PROOF() {
+    
+    }
+    
+    /**
+     * Instantiates a new jmangos.
+     * 
+     * @param a
+     *            the a
+     * @param m1
+     *            the m1
+     */
+    public CMD_AUTH_LOGON_PROOF(final byte[] a, final byte[] m1) {
+    
+        this.a = a;
+        this.m1 = m1;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        final byte[] crc = new byte[20];
+        writeB(this.a);
+        writeB(this.m1);
+        writeB(crc);
+        writeH(0);
+    }
 }
-

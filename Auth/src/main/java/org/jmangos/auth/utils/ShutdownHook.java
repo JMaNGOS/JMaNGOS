@@ -33,26 +33,27 @@ import com.google.inject.Inject;
  * The Class ShutdownHook.
  */
 public class ShutdownHook extends Thread {
-
-	/** The DF. */
-	@Inject
-	private DatabaseFactory DF;
-
-	/** Logger for this class. */
-	private static final Logger log = Logger.getLogger(ShutdownHook.class);
-
-	/**
-	 * 
-	 * @see java.lang.Thread#run()
-	 */
-	@Override
-	public void run() {
-		try {
-			log.info("Shutdown DatabaseFactory");
-			DF.stop();
-		} catch (Throwable t) {
-			log.error("Can't shutdown DatabaseFactory", t);
-		}
-
-	}
+    
+    /** The DF. */
+    @Inject
+    private DatabaseFactory     DF;
+    
+    /** Logger for this class. */
+    private static final Logger log = Logger.getLogger(ShutdownHook.class);
+    
+    /**
+     * 
+     * @see java.lang.Thread#run()
+     */
+    @Override
+    public void run() {
+    
+        try {
+            log.info("Shutdown DatabaseFactory");
+            this.DF.stop();
+        } catch (final Throwable t) {
+            log.error("Can't shutdown DatabaseFactory", t);
+        }
+        
+    }
 }

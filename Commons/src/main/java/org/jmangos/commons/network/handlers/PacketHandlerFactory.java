@@ -16,57 +16,59 @@
  *******************************************************************************/
 package org.jmangos.commons.network.handlers;
 
-import org.jmangos.commons.network.model.*;
+import org.jmangos.commons.network.model.NetworkChannel;
+import org.jmangos.commons.network.model.ReceivablePacket;
+import org.jmangos.commons.network.model.SendablePacket;
+import org.jmangos.commons.network.model.State;
 
 /**
  * A factory for creating PacketHandler objects.
  */
 public interface PacketHandlerFactory {
-
-	/**
-	 * Adds the packet.
-	 * 
-	 * @param packetPrototype
-	 *            the packet prototype
-	 * @param states
-	 *            the states
-	 */
-	public void addPacket(ReceivablePacket packetPrototype, State... states);
-
-	/**
-	 * Adds the packet.
-	 * 
-	 * @param packetPrototype
-	 *            the packet prototype
-	 * @param opcode
-	 *            the opcode
-	 */
-	public void addPacket(Class<? extends SendablePacket> packetPrototype,
-			int opcode);
-
-	/**
-	 * Gets the server packetop code.
-	 * 
-	 * @param packetClass
-	 *            the packet class
-	 * @return the server packetop code
-	 */
-	public int getServerPacketopCode(SendablePacket packetClass);
-
-	/**
-	 * Handle client packet.
-	 * 
-	 * @param id
-	 *            the id
-	 * @param ch
-	 *            the ch
-	 * @return the receivable packet
-	 */
-	public ReceivablePacket handleClientPacket(int id, NetworkChannel ch);
-	
-	/**
-	 * Load packet.
-	 * 
-	 */
-	public void loadPacket();
+    
+    /**
+     * Adds the packet.
+     * 
+     * @param packetPrototype
+     *            the packet prototype
+     * @param states
+     *            the states
+     */
+    public void addPacket(ReceivablePacket packetPrototype, State... states);
+    
+    /**
+     * Adds the packet.
+     * 
+     * @param packetPrototype
+     *            the packet prototype
+     * @param opcode
+     *            the opcode
+     */
+    public void addPacket(Class<? extends SendablePacket> packetPrototype, int opcode);
+    
+    /**
+     * Gets the server packetop code.
+     * 
+     * @param packetClass
+     *            the packet class
+     * @return the server packetop code
+     */
+    public int getServerPacketopCode(SendablePacket packetClass);
+    
+    /**
+     * Handle client packet.
+     * 
+     * @param id
+     *            the id
+     * @param ch
+     *            the ch
+     * @return the receivable packet
+     */
+    public ReceivablePacket handleClientPacket(int id, NetworkChannel ch);
+    
+    /**
+     * Load packet.
+     * 
+     */
+    public void loadPacket();
 }

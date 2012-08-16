@@ -29,54 +29,57 @@ import com.google.inject.Inject;
  * The Class <tt>CMD_REALM_LIST</tt>.
  */
 public class CMD_REALM_LIST extends AbstractWoWClientPacket {
-
-	/** The sender. */
-	@Inject
-	private AbstractPacketSender sender;
-
-	/** The worldlist. */
-	@Inject
-	private RealmListService worldlist;
-
-	/** The worldlist. */
-	@Inject
-	private Config config;
-	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.jmangos.commons.network.model.ReceivablePacket#getMinimumLength()
-	 */
-	@Override
-	public int getMinimumLength() {
-		return 4;
-	}
-
-	/**
-	 * Instantiates a new CMD_REALM_LIST.
-	 */
-	public CMD_REALM_LIST() {
-		super();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void readImpl() {
-		readB(getAvaliableBytes());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void runImpl() {
-		// must be reloaded from db
-		if( config.COMPATIBLE.equals(Compatiple.MANGOS)){
-			worldlist.update();
-		}
-		sender.send(getClient(), new TCMD_REALM_LIST(worldlist));
-	}
+    
+    /** The sender. */
+    @Inject
+    private AbstractPacketSender sender;
+    
+    /** The worldlist. */
+    @Inject
+    private RealmListService     worldlist;
+    
+    /** The worldlist. */
+    @Inject
+    private Config               config;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.ReceivablePacket#getMinimumLength()
+     */
+    @Override
+    public int getMinimumLength() {
+    
+        return 4;
+    }
+    
+    /**
+     * Instantiates a new CMD_REALM_LIST.
+     */
+    public CMD_REALM_LIST() {
+    
+        super();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void readImpl() {
+    
+        readB(getAvaliableBytes());
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void runImpl() {
+    
+        // must be reloaded from db
+        if (this.config.COMPATIBLE.equals(Compatiple.MANGOS)) {
+            this.worldlist.update();
+        }
+        this.sender.send(getClient(), new TCMD_REALM_LIST(this.worldlist));
+    }
 }

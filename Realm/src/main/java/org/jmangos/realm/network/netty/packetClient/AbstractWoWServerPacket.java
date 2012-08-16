@@ -24,41 +24,47 @@ import org.jmangos.realm.model.player.Player;
 /**
  * The Class AbstractWoWServerPacket.
  */
-public abstract class AbstractWoWServerPacket extends SendablePacket
-{
-	
-	/**
-	 * Gets the channel.
-	 *
-	 * @return the channel
-	 */
-	public NettyNetworkChannel getChannel(){ 
-		return (NettyNetworkChannel) channel;
-	}
-	
-	/** (non-Javadoc)
-	 * @see org.jmangos.commons.network.model.SendablePacket#write()
-	 */
-	public void write() throws RuntimeException {
-		writeH(this.opCode);
-		writeImpl();
-	}
-	
-	/**
-	 * Gets the account.
-	 *
-	 * @return the account
-	 */
-	public Account getAccount(){
-		return (Account)(getChannel().getChanneledObject());
-	}
-	
-	/**
-	 * Gets the player.
-	 *
-	 * @return the player
-	 */
-	public Player getPlayer(){ 
-		return (Player)(getChannel().getActiveObject());
-	}
+public abstract class AbstractWoWServerPacket extends SendablePacket {
+    
+    /**
+     * Gets the channel.
+     * 
+     * @return the channel
+     */
+    public NettyNetworkChannel getChannel() {
+    
+        return (NettyNetworkChannel) this.channel;
+    }
+    
+    /**
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.SendablePacket#write()
+     */
+    @Override
+    public void write() throws RuntimeException {
+    
+        writeH(this.opCode);
+        writeImpl();
+    }
+    
+    /**
+     * Gets the account.
+     * 
+     * @return the account
+     */
+    public Account getAccount() {
+    
+        return (Account) (getChannel().getChanneledObject());
+    }
+    
+    /**
+     * Gets the player.
+     * 
+     * @return the player
+     */
+    public Player getPlayer() {
+    
+        return (Player) (getChannel().getActiveObject());
+    }
 }

@@ -30,37 +30,43 @@ import org.jmangos.realm.service.PlayerService;
 /**
  * The Class CMSG_PLAYER_LOGIN.
  */
-public class CMSG_PLAYER_LOGIN  extends AbstractWoWClientPacket {
-	
-	/** The sender. */
-	@SuppressWarnings("unused")
-	@Inject
-	@Named("client")
-	private AbstractPacketSender sender;
-	
-	/** The player service. */
-	@Inject
-	private PlayerService playerService;
-	
-	/** The guid. */
-	private long guid;
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
-	 */
-	@Override
-	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		guid = readQ(); 
-	}
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
-	 */
-	@Override
-	protected void runImpl() {
-		Player player = playerService.preparePlayer(getClient(), guid);
-		playerService.LoadFromDB(player);
-		playerService.sendInicialPackets(player);
-	}
-
+public class CMSG_PLAYER_LOGIN extends AbstractWoWClientPacket {
+    
+    /** The sender. */
+    @SuppressWarnings("unused")
+    @Inject
+    @Named("client")
+    private AbstractPacketSender sender;
+    
+    /** The player service. */
+    @Inject
+    private PlayerService        playerService;
+    
+    /** The guid. */
+    private long                 guid;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
+     */
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
+    
+        this.guid = readQ();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
+     */
+    @Override
+    protected void runImpl() {
+    
+        final Player player = this.playerService.preparePlayer(getClient(), this.guid);
+        this.playerService.LoadFromDB(player);
+        this.playerService.sendInicialPackets(player);
+    }
+    
 }

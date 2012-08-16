@@ -26,20 +26,22 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
  * The Class SMSG_AUTH_CHALLENGE.
  */
 public class SMSG_AUTH_CHALLENGE extends AbstractWoWServerPacket {
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		RealmToClientChannelHandler channelHandler = (RealmToClientChannelHandler) this
-				.getChannel().getChannel().getPipeline().getLast();
-		SecureRandom random = new SecureRandom();
-		byte[] seed = random.generateSeed(4);
-		channelHandler.setSeed(seed);
-		writeD(1);
-		writeB(seed);
-		writeB(random.generateSeed(16));
-		writeB(random.generateSeed(16));
-	}
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        final RealmToClientChannelHandler channelHandler = (RealmToClientChannelHandler) getChannel().getChannel().getPipeline().getLast();
+        final SecureRandom random = new SecureRandom();
+        final byte[] seed = random.generateSeed(4);
+        channelHandler.setSeed(seed);
+        writeD(1);
+        writeB(seed);
+        writeB(random.generateSeed(16));
+        writeB(random.generateSeed(16));
+    }
 }

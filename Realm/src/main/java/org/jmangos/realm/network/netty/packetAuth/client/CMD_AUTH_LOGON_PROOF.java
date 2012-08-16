@@ -31,33 +31,35 @@ import org.jmangos.realm.network.netty.packetAuth.server.CMD_AUTH_ENABLE_CRYPT;
  * The Class <tt>CMD_AUTH_LOGON_PROOF</tt>.
  */
 public class CMD_AUTH_LOGON_PROOF extends AbstractRealmClientPacket {
-
-	/** The logger. */
-	private static Logger logger = Logger.getLogger(CMD_AUTH_LOGON_PROOF.class);
-	@Inject
-	@Named("RealmToAuth")
-	private AbstractPacketSender sender;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
-	 */
-	@Override
-	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		if (readC() == WoWAuthResponse.WOW_SUCCESS.getMessageId()) {
-			logger.debug ("CMD_AUTH_LOGON_PROOF succes");
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
-	 */
-	@Override
-	protected void runImpl() {
-		sender.send(getClient(), new CMD_AUTH_ENABLE_CRYPT());
-
-	}
+    
+    /** The logger. */
+    private static Logger        logger = Logger.getLogger(CMD_AUTH_LOGON_PROOF.class);
+    @Inject
+    @Named("RealmToAuth")
+    private AbstractPacketSender sender;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
+     */
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
+    
+        if (readC() == WoWAuthResponse.WOW_SUCCESS.getMessageId()) {
+            logger.debug("CMD_AUTH_LOGON_PROOF succes");
+        }
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
+     */
+    @Override
+    protected void runImpl() {
+    
+        this.sender.send(getClient(), new CMD_AUTH_ENABLE_CRYPT());
+        
+    }
 }

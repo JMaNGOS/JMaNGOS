@@ -21,13 +21,13 @@ package org.jmangos.realm.model.unit;
  * The Enum WeaponAttackType.
  */
 public enum WeaponAttackType {
-	
-	/** The BAS e_ attack. */
-	BASE_ATTACK, 
- /** The OF f_ attack. */
- OFF_ATTACK, 
- /** The RANGE d_ attack. */
- RANGED_ATTACK, 
- /** The MA x_ attack. */
- MAX_ATTACK;
+    
+    /** The BAS e_ attack. */
+    BASE_ATTACK,
+    /** The OF f_ attack. */
+    OFF_ATTACK,
+    /** The RANGE d_ attack. */
+    RANGED_ATTACK,
+    /** The MA x_ attack. */
+    MAX_ATTACK;
 }

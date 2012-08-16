@@ -26,32 +26,33 @@ import org.jmangos.realm.network.netty.packetAuth.AbstractRealmServerPacket;
  * The Class <tt>CMD_AUTH_LOGON_CHALLENGE</tt>.
  */
 public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmServerPacket {
-
-	@Inject
-	private Config config;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		config = ServiceContent.getInjector().getInstance(Config.class);
-		byte[] empt = { 0, 0, 0, 0 };
-		writeC(0);
-		writeH(0);
-		writeB(empt);
-		writeC(0);
-		writeC(0);
-		writeC(0);
-		writeH(12340);
-		writeB(empt);
-		writeB(empt);
-		writeB(empt);
-		writeD(0);
-		writeD(0);
-		writeC(config.AUTH_LOGIN.length());
-		writeB(config.AUTH_LOGIN.toUpperCase().getBytes());
-	}
+    
+    @Inject
+    private Config config;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        this.config = ServiceContent.getInjector().getInstance(Config.class);
+        final byte[] empt = { 0, 0, 0, 0 };
+        writeC(0);
+        writeH(0);
+        writeB(empt);
+        writeC(0);
+        writeC(0);
+        writeC(0);
+        writeH(12340);
+        writeB(empt);
+        writeB(empt);
+        writeB(empt);
+        writeD(0);
+        writeD(0);
+        writeC(this.config.AUTH_LOGIN.length());
+        writeB(this.config.AUTH_LOGIN.toUpperCase().getBytes());
+    }
 }

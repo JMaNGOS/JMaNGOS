@@ -27,47 +27,48 @@ import org.jmangos.commons.model.Realm;
  * The Class <tt>CMD_REALM_DATA</tt>.
  */
 public class CMD_REALM_DATA extends AbstractWoWClientPacket {
-
-	/** The logger. */
-	private static Logger logger = Logger.getLogger(CMD_REALM_DATA.class);
-
-	@Inject
-	private RealmListService realmListService;
-
-	public CMD_REALM_DATA() {
-		super();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
-	 */
-	@Override
-	protected void readImpl() throws RuntimeException {
-		logger.debug("Receive realm info from realm account: "
-				+ getAccount().getName());
-		Realm realm = new Realm();
-		realm.setId(getAccount().getObjectId());
-		realm.setName(readS());
-		realm.setAddress(readS());
-		realm.setPort(readD());
-		realm.setIcon(readC());
-		realm.setRealmflags(readC());
-		realm.setTimezone(readC());
-		realm.setAllowedSecurityLevel(readC());
-		realm.setPopulation(readF());
-		realm.setRealmbuilds(readS());
-		realmListService.addFromConnected(realm);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
-	 */
-	@Override
-	protected void runImpl() {
-
-	}
+    
+    /** The logger. */
+    private static Logger    logger = Logger.getLogger(CMD_REALM_DATA.class);
+    
+    @Inject
+    private RealmListService realmListService;
+    
+    public CMD_REALM_DATA() {
+    
+        super();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
+     */
+    @Override
+    protected void readImpl() throws RuntimeException {
+    
+        logger.debug("Receive realm info from realm account: " + getAccount().getName());
+        final Realm realm = new Realm();
+        realm.setId(getAccount().getObjectId());
+        realm.setName(readS());
+        realm.setAddress(readS());
+        realm.setPort(readD());
+        realm.setIcon(readC());
+        realm.setRealmflags(readC());
+        realm.setTimezone(readC());
+        realm.setAllowedSecurityLevel(readC());
+        realm.setPopulation(readF());
+        realm.setRealmbuilds(readS());
+        this.realmListService.addFromConnected(realm);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
+     */
+    @Override
+    protected void runImpl() {
+    
+    }
 }

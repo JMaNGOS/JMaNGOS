@@ -25,97 +25,103 @@ import javolution.util.FastMap;
  * 
  */
 public class TaskManager {
-
-	/** all tasks. */
-	private FastMap<TaskId, Future<?>> tasks = new FastMap<TaskId, Future<?>>()
-			.shared();
-
-	/**
-	 * Gets the task.
-	 * 
-	 * @param taskId
-	 *            the task id
-	 * @return the task
-	 */
-	public Future<?> getTask(TaskId taskId) {
-		return tasks.get(taskId);
-	}
-
-	/**
-	 * Checks for task.
-	 * 
-	 * @param taskId
-	 *            the task id
-	 * @return true, if successful
-	 */
-	public boolean hasTask(TaskId taskId) {
-		return tasks.containsKey(taskId);
-	}
-
-	/**
-	 * Cancel task.
-	 * 
-	 * @param taskId
-	 *            the task id
-	 */
-	public void cancelTask(TaskId taskId) {
-		Future<?> task = tasks.remove(taskId);
-		if (task != null) {
-			task.cancel(false);
-		}
-	}
-
-	/**
-	 * If task already exist - it will be canceled.
-	 * 
-	 * @param taskId
-	 *            the task id
-	 * @param task
-	 *            the task
-	 */
-	public void addTask(TaskId taskId, Future<?> task) {
-		cancelTask(taskId);
-		tasks.put(taskId, task);
-	}
-
-	/**
-	 * If task already exist - it will not be replaced.
-	 * 
-	 * @param taskId
-	 *            the task id
-	 * @param task
-	 *            the task
-	 */
-	public void addNewTask(TaskId taskId, Future<?> task) {
-		tasks.putIfAbsent(taskId, task);
-	}
-
-	/**
-	 * Cancel all tasks and remove from map.
-	 */
-	public void cancelAllTasks() {
-		for (TaskId taskId : tasks.keySet()) {
-			Future<?> task = tasks.remove(taskId);
-			if (task != null) {
-				task.cancel(true);
-			}
-		}
-	}
-
-	/**
-	 * Cancel all tasks and remove from map based on task's priority.
-	 * 
-	 * @param priority
-	 *            the priority
-	 */
-	public void cancelAllTasks(TaskPriority priority) {
-		for (TaskId taskId : tasks.keySet()) {
-			if (taskId.getPriority().ordinal() >= priority.ordinal()) {
-				Future<?> task = tasks.remove(taskId);
-				if (task != null) {
-					task.cancel(true);
-				}
-			}
-		}
-	}
+    
+    /** all tasks. */
+    private final FastMap<TaskId, Future<?>> tasks = new FastMap<TaskId, Future<?>>().shared();
+    
+    /**
+     * Gets the task.
+     * 
+     * @param taskId
+     *            the task id
+     * @return the task
+     */
+    public Future<?> getTask(final TaskId taskId) {
+    
+        return this.tasks.get(taskId);
+    }
+    
+    /**
+     * Checks for task.
+     * 
+     * @param taskId
+     *            the task id
+     * @return true, if successful
+     */
+    public boolean hasTask(final TaskId taskId) {
+    
+        return this.tasks.containsKey(taskId);
+    }
+    
+    /**
+     * Cancel task.
+     * 
+     * @param taskId
+     *            the task id
+     */
+    public void cancelTask(final TaskId taskId) {
+    
+        final Future<?> task = this.tasks.remove(taskId);
+        if (task != null) {
+            task.cancel(false);
+        }
+    }
+    
+    /**
+     * If task already exist - it will be canceled.
+     * 
+     * @param taskId
+     *            the task id
+     * @param task
+     *            the task
+     */
+    public void addTask(final TaskId taskId, final Future<?> task) {
+    
+        cancelTask(taskId);
+        this.tasks.put(taskId, task);
+    }
+    
+    /**
+     * If task already exist - it will not be replaced.
+     * 
+     * @param taskId
+     *            the task id
+     * @param task
+     *            the task
+     */
+    public void addNewTask(final TaskId taskId, final Future<?> task) {
+    
+        this.tasks.putIfAbsent(taskId, task);
+    }
+    
+    /**
+     * Cancel all tasks and remove from map.
+     */
+    public void cancelAllTasks() {
+    
+        for (final TaskId taskId : this.tasks.keySet()) {
+            final Future<?> task = this.tasks.remove(taskId);
+            if (task != null) {
+                task.cancel(true);
+            }
+        }
+    }
+    
+    /**
+     * Cancel all tasks and remove from map based on task's priority.
+     * 
+     * @param priority
+     *            the priority
+     */
+    public void cancelAllTasks(final TaskPriority priority) {
+    
+        for (final TaskId taskId : this.tasks.keySet()) {
+            if (taskId.getPriority().ordinal() >= priority.ordinal()) {
+                final Future<?> task = this.tasks.remove(taskId);
+                if (task != null) {
+                    task.cancel(true);
+                }
+            }
+        }
+    }
 }

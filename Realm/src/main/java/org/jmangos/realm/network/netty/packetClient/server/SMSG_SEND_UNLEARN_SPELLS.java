@@ -23,12 +23,15 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
  * The Class SMSG_SEND_UNLEARN_SPELLS.
  */
 public class SMSG_SEND_UNLEARN_SPELLS extends AbstractWoWServerPacket {
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		writeD(0);
-	}
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writeD(0);
+    }
 }

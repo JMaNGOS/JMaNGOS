@@ -33,45 +33,46 @@ import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
  * The Class <tt>CMD_AUTH_ENABLE_CRYPT</tt>.
  */
 public class CMD_AUTH_ENABLE_CRYPT extends AbstractWoWClientPacket {
-
-	/** The logger. */
-	private static Logger logger = Logger
-			.getLogger(CMD_AUTH_ENABLE_CRYPT.class);
-	/** The sender. */
-	@Inject
-	private AbstractPacketSender sender;
-
-	public CMD_AUTH_ENABLE_CRYPT() {
-		super();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
-	 */
-	@Override
-	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		// TODO 5 - magic number send to config like realm acces
-		if (getAccount().getAccessLevel() == 5) {
-			logger.info("Realm " + getAccount().getName() + " started crypt");
-			ChannelPipeline pipeline = getClient().getChannel().getPipeline();
-			pipeline.addFirst("framedecoder", new RealmPacketFrameDecoder());
-			pipeline.addFirst("encoder", new RealmPacketFrameEncoder());
-			AuthToClientChannelHandler channelHandler = (AuthToClientChannelHandler) pipeline
-					.getLast();
-			channelHandler.getCrypt().init(getAccount().getvK());
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
-	 */
-	@Override
-	protected void runImpl() {
-		sender.send(this.getClient(), new TCMD_AUTH_ENABLE_CRYPT());
-
-	}
+    
+    /** The logger. */
+    private static Logger        logger = Logger.getLogger(CMD_AUTH_ENABLE_CRYPT.class);
+    /** The sender. */
+    @Inject
+    private AbstractPacketSender sender;
+    
+    public CMD_AUTH_ENABLE_CRYPT() {
+    
+        super();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
+     */
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
+    
+        // TODO 5 - magic number send to config like realm acces
+        if (getAccount().getAccessLevel() == 5) {
+            logger.info("Realm " + getAccount().getName() + " started crypt");
+            final ChannelPipeline pipeline = getClient().getChannel().getPipeline();
+            pipeline.addFirst("framedecoder", new RealmPacketFrameDecoder());
+            pipeline.addFirst("encoder", new RealmPacketFrameEncoder());
+            final AuthToClientChannelHandler channelHandler = (AuthToClientChannelHandler) pipeline.getLast();
+            channelHandler.getCrypt().init(getAccount().getvK());
+        }
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
+     */
+    @Override
+    protected void runImpl() {
+    
+        this.sender.send(getClient(), new TCMD_AUTH_ENABLE_CRYPT());
+        
+    }
 }

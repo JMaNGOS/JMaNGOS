@@ -23,12 +23,15 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
  * The Class SMSG_TIME_SYNC_REQ.
  */
 public class SMSG_TIME_SYNC_REQ extends AbstractWoWServerPacket {
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		writeD(getPlayer().getUpdateTimeSyncCounter());
-	}
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writeD(getPlayer().getUpdateTimeSyncCounter());
+    }
 }

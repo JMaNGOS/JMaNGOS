@@ -25,22 +25,26 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
  * The Class CMSG_SET_ACTIVE_VOICE_CHANNEL.
  */
 public class CMSG_SET_ACTIVE_VOICE_CHANNEL extends AbstractWoWClientPacket {
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
-	 */
-	@Override
-	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		readD();
-		readS();
-	}
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
-	 */
-	@Override
-	protected void runImpl() {
-		
-	}
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
+     */
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
+    
+        readD();
+        readS();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
+     */
+    @Override
+    protected void runImpl() {
+    
+    }
 }
-

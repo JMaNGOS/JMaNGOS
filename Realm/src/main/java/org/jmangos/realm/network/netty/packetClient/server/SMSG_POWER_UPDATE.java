@@ -23,14 +23,17 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
  * The Class SMSG_POWER_UPDATE.
  */
 public class SMSG_POWER_UPDATE extends AbstractWoWServerPacket {
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	public void writeImpl() {
-		writeB(new byte[]{0x01,0x01,0x03,0x64,0x00,0x00,0x00});
-		
-	}
-
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    public void writeImpl() {
+    
+        writeB(new byte[] { 0x01, 0x01, 0x03, 0x64, 0x00, 0x00, 0x00 });
+        
+    }
+    
 }

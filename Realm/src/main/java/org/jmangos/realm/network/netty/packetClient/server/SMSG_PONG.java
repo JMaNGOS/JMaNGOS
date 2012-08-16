@@ -23,31 +23,37 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
  * The Class SMSG_PONG.
  */
 public class SMSG_PONG extends AbstractWoWServerPacket {
-
-	/** The ping. */
-	private int ping; 
-	
-	/**
-	 * Instantiates a new sMS g_ pong.
-	 */
-	public SMSG_PONG() {
-	}
-
-	/**
-	 * Instantiates a new sMS g_ pong.
-	 *
-	 * @param ping the ping
-	 */
-	public SMSG_PONG(int ping) {
-		this.ping  = ping;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		writeD(ping);
-	}
-
+    
+    /** The ping. */
+    private int ping;
+    
+    /**
+     * Instantiates a new sMS g_ pong.
+     */
+    public SMSG_PONG() {
+    
+    }
+    
+    /**
+     * Instantiates a new sMS g_ pong.
+     * 
+     * @param ping
+     *            the ping
+     */
+    public SMSG_PONG(final int ping) {
+    
+        this.ping = ping;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writeD(this.ping);
+    }
+    
 }

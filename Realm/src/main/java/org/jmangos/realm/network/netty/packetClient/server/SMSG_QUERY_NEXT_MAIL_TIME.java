@@ -23,14 +23,17 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
  * The Class SMSG_QUERY_NEXT_MAIL_TIME.
  */
 public class SMSG_QUERY_NEXT_MAIL_TIME extends AbstractWoWServerPacket {
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	public void writeImpl() {
-		writeD(0xC7A8C000);
-		writeD(0);
-	}
-
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    public void writeImpl() {
+    
+        writeD(0xC7A8C000);
+        writeD(0);
+    }
+    
 }

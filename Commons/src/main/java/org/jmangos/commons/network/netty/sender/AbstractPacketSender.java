@@ -23,24 +23,24 @@ import org.jmangos.commons.network.model.SendablePacket;
  * The Interface AbstractPacketSender.
  */
 public interface AbstractPacketSender {
-
-	/**
-	 * Send.
-	 * 
-	 * @param channel
-	 *            the channel
-	 * @param packet
-	 *            the packet
-	 */
-	public void send(NetworkChannel channel, SendablePacket packet);
-
-	/**
-	 * Send and close.
-	 * 
-	 * @param channel
-	 *            the channel
-	 * @param networkPacket
-	 *            the network packet
-	 */
-	void sendAndClose(NetworkChannel channel, SendablePacket networkPacket);
+    
+    /**
+     * Send.
+     * 
+     * @param channel
+     *            the channel
+     * @param packet
+     *            the packet
+     */
+    public void send(NetworkChannel channel, SendablePacket packet);
+    
+    /**
+     * Send and close.
+     * 
+     * @param channel
+     *            the channel
+     * @param networkPacket
+     *            the network packet
+     */
+    void sendAndClose(NetworkChannel channel, SendablePacket networkPacket);
 }

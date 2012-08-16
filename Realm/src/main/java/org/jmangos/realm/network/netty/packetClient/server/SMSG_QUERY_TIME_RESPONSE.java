@@ -23,16 +23,18 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
  * The Class SMSG_QUERY_TIME_RESPONSE.
  */
 public class SMSG_QUERY_TIME_RESPONSE extends AbstractWoWServerPacket {
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		
-		writeD(System.currentTimeMillis()/1000);
-		writeD(500); // FIXME DailyQuestsResetTime
-		
-	}
-
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writeD(System.currentTimeMillis() / 1000);
+        writeD(500); // FIXME DailyQuestsResetTime
+        
+    }
+    
 }

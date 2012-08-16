@@ -28,38 +28,40 @@ import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
  * The Class <tt>CMD_TEST_CRYPT</tt>.
  */
 public class CMD_TEST_CRYPT extends AbstractWoWClientPacket {
-
-	/** The logger. */
-	private static Logger logger = Logger.getLogger(CMD_TEST_CRYPT.class);
-	/** The sender. */
-	@Inject
-	private AbstractPacketSender sender;
-
-	public CMD_TEST_CRYPT() {
-		super();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
-	 */
-	@Override
-	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		logger.debug((char) readC());
-		logger.debug((char) readC());
-		logger.debug((char) readC());
-		logger.debug((char) readC());
-		logger.debug((char) readC());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
-	 */
-	@Override
-	protected void runImpl() {
-
-	}
+    
+    /** The logger. */
+    private static Logger        logger = Logger.getLogger(CMD_TEST_CRYPT.class);
+    /** The sender. */
+    @Inject
+    private AbstractPacketSender sender;
+    
+    public CMD_TEST_CRYPT() {
+    
+        super();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
+     */
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
+    
+        logger.debug((char) readC());
+        logger.debug((char) readC());
+        logger.debug((char) readC());
+        logger.debug((char) readC());
+        logger.debug((char) readC());
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
+     */
+    @Override
+    protected void runImpl() {
+    
+    }
 }

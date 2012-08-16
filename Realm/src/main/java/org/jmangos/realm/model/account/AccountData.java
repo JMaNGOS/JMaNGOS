@@ -21,47 +21,53 @@ package org.jmangos.realm.model.account;
  * The Class AccountData.
  */
 public class AccountData {
-	
-	/** The Time. */
-	int Time;
-	
-	/** The Data. */
-	String Data;
-
-	/**
-	 * Gets the time.
-	 *
-	 * @return the time
-	 */
-	public final int getTime() {
-		return Time;
-	}
-
-	/**
-	 * Sets the time.
-	 *
-	 * @param time the new time
-	 */
-	public final void setTime(int time) {
-		Time = time;
-	}
-
-	/**
-	 * Gets the data.
-	 *
-	 * @return the data
-	 */
-	public final String getData() {
-		return Data;
-	}
-
-	/**
-	 * Sets the data.
-	 *
-	 * @param data the new data
-	 */
-	public final void setData(String data) {
-		Data = data;
-	}
-
+    
+    /** The Time. */
+    int    Time;
+    
+    /** The Data. */
+    String Data;
+    
+    /**
+     * Gets the time.
+     * 
+     * @return the time
+     */
+    public final int getTime() {
+    
+        return this.Time;
+    }
+    
+    /**
+     * Sets the time.
+     * 
+     * @param time
+     *            the new time
+     */
+    public final void setTime(final int time) {
+    
+        this.Time = time;
+    }
+    
+    /**
+     * Gets the data.
+     * 
+     * @return the data
+     */
+    public final String getData() {
+    
+        return this.Data;
+    }
+    
+    /**
+     * Sets the data.
+     * 
+     * @param data
+     *            the new data
+     */
+    public final void setData(final String data) {
+    
+        this.Data = data;
+    }
+    
 }

@@ -21,16 +21,16 @@ package org.jmangos.commons.task;
  * 
  */
 public enum TaskPriority {
-
-	/** The CRITICAL. */
-	CRITICAL,
-
-	/** The HIGH. */
-	HIGH,
-
-	/** The NORMAL. */
-	NORMAL,
-
-	/** The LOW. */
-	LOW
+    
+    /** The CRITICAL. */
+    CRITICAL,
+    
+    /** The HIGH. */
+    HIGH,
+    
+    /** The NORMAL. */
+    NORMAL,
+    
+    /** The LOW. */
+    LOW
 }

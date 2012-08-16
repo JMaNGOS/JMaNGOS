@@ -16,27 +16,29 @@
  *******************************************************************************/
 package org.jmangos.realm.network.netty.packetAuth.server;
 
-
 import org.jmangos.realm.network.netty.packetAuth.AbstractRealmServerPacket;
 
 /**
  * The Class <tt>CMD_TEST_CRYPT</tt>.
  */
-public class CMD_TEST_CRYPT  extends AbstractRealmServerPacket {
-	
-	public CMD_TEST_CRYPT() {
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		writeC('C');
-		writeC('R');
-		writeC('Y');
-		writeC('P');
-		writeC('T');
-	}
+public class CMD_TEST_CRYPT extends AbstractRealmServerPacket {
+    
+    public CMD_TEST_CRYPT() {
+    
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writeC('C');
+        writeC('R');
+        writeC('Y');
+        writeC('P');
+        writeC('T');
+    }
 }
-

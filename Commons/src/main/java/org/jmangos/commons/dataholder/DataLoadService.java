@@ -20,33 +20,34 @@ import org.jmangos.commons.service.Service;
 
 /**
  * The Interface DataLoadService.
- *
- * @param <T> the generic type
+ * 
+ * @param <T>
+ *            the generic type
  */
-public interface DataLoadService<T> extends Service{
-
-  /**
-   * Initial loading of data (on startup).
-   *
-   * @return the t
-   */
-  public T load();
-
-  /**
-   * Reloading of data (after <method>load()</method> was executed).
-   * it's not load! no return, just represent the store
-   */
-  public void reload();
-
-  /**
-   * Save of modified data.
-   */
-  public void save();
-
-  /**
-   * Retrieves already loaded data or null.
-   *
-   * @return the t
-   */
-  public T get();
+public interface DataLoadService<T> extends Service {
+    
+    /**
+     * Initial loading of data (on startup).
+     * 
+     * @return the t
+     */
+    public T load();
+    
+    /**
+     * Reloading of data (after <method>load()</method> was executed). it's not load! no return,
+     * just represent the store
+     */
+    public void reload();
+    
+    /**
+     * Save of modified data.
+     */
+    public void save();
+    
+    /**
+     * Retrieves already loaded data or null.
+     * 
+     * @return the t
+     */
+    public T get();
 }

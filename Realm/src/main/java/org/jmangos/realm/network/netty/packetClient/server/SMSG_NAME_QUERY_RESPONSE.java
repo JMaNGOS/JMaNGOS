@@ -23,40 +23,45 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 /**
  * The Class SMSG_NAME_QUERY_RESPONSE.
  */
-public class SMSG_NAME_QUERY_RESPONSE extends AbstractWoWServerPacket{
-	
-	/** The player. */
-	private Player player; 
-
-	/**
-	 * Instantiates a new sMS g_ nam e_ quer y_ response.
-	 */
-	public SMSG_NAME_QUERY_RESPONSE() {
-	}
-
-	/**
-	 * Instantiates a new sMS g_ nam e_ quer y_ response.
-	 *
-	 * @param player the player
-	 */
-	public SMSG_NAME_QUERY_RESPONSE(Player player) {
-		this.player  = player;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		writePackedGuid(player.getObjectId());
-		writeC(0);
-		writeS(player.getName());
-		writeC(0);
-		writeC(player.getCharacterData().getRace().getValue());
-		writeC(player.getCharacterData().getGender());
-		writeC(player.getCharacterData().getClazz().getValue());
-		writeC(0);
-	}
-
-
+public class SMSG_NAME_QUERY_RESPONSE extends AbstractWoWServerPacket {
+    
+    /** The player. */
+    private Player player;
+    
+    /**
+     * Instantiates a new sMS g_ nam e_ quer y_ response.
+     */
+    public SMSG_NAME_QUERY_RESPONSE() {
+    
+    }
+    
+    /**
+     * Instantiates a new sMS g_ nam e_ quer y_ response.
+     * 
+     * @param player
+     *            the player
+     */
+    public SMSG_NAME_QUERY_RESPONSE(final Player player) {
+    
+        this.player = player;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writePackedGuid(this.player.getObjectId());
+        writeC(0);
+        writeS(this.player.getName());
+        writeC(0);
+        writeC(this.player.getCharacterData().getRace().getValue());
+        writeC(this.player.getCharacterData().getGender());
+        writeC(this.player.getCharacterData().getClazz().getValue());
+        writeC(0);
+    }
+    
 }

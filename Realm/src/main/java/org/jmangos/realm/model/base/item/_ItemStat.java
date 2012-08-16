@@ -21,57 +21,66 @@ package org.jmangos.realm.model.base.item;
  * The Class _ItemStat.
  */
 public final class _ItemStat {
-	
-	/** The Item stat type. */
-	private byte ItemStatType;
-	
-	/** The Item stat value. */
-	private int ItemStatValue;
-
-	/**
-	 * Instantiates a new _ item stat.
-	 *
-	 * @param itemStatType the item stat type
-	 * @param itemStatValue the item stat value
-	 */
-	public _ItemStat(byte itemStatType, int itemStatValue) {
-		ItemStatType = itemStatType;
-		ItemStatValue = itemStatValue;
-	}
-
-	/**
-	 * Gets the item stat type.
-	 *
-	 * @return the itemStatType
-	 */
-	public byte getItemStatType() {
-		return ItemStatType;
-	}
-
-	/**
-	 * Sets the item stat type.
-	 *
-	 * @param itemStatType the itemStatType to set
-	 */
-	public void setItemStatType(byte itemStatType) {
-		ItemStatType = itemStatType;
-	}
-
-	/**
-	 * Gets the item stat value.
-	 *
-	 * @return the itemStatValue
-	 */
-	public int getItemStatValue() {
-		return ItemStatValue;
-	}
-
-	/**
-	 * Sets the item stat value.
-	 *
-	 * @param itemStatValue the itemStatValue to set
-	 */
-	public void setItemStatValue(int itemStatValue) {
-		ItemStatValue = itemStatValue;
-	}
+    
+    /** The Item stat type. */
+    private byte ItemStatType;
+    
+    /** The Item stat value. */
+    private int  ItemStatValue;
+    
+    /**
+     * Instantiates a new _ item stat.
+     * 
+     * @param itemStatType
+     *            the item stat type
+     * @param itemStatValue
+     *            the item stat value
+     */
+    public _ItemStat(final byte itemStatType, final int itemStatValue) {
+    
+        this.ItemStatType = itemStatType;
+        this.ItemStatValue = itemStatValue;
+    }
+    
+    /**
+     * Gets the item stat type.
+     * 
+     * @return the itemStatType
+     */
+    public byte getItemStatType() {
+    
+        return this.ItemStatType;
+    }
+    
+    /**
+     * Sets the item stat type.
+     * 
+     * @param itemStatType
+     *            the itemStatType to set
+     */
+    public void setItemStatType(final byte itemStatType) {
+    
+        this.ItemStatType = itemStatType;
+    }
+    
+    /**
+     * Gets the item stat value.
+     * 
+     * @return the itemStatValue
+     */
+    public int getItemStatValue() {
+    
+        return this.ItemStatValue;
+    }
+    
+    /**
+     * Sets the item stat value.
+     * 
+     * @param itemStatValue
+     *            the itemStatValue to set
+     */
+    public void setItemStatValue(final int itemStatValue) {
+    
+        this.ItemStatValue = itemStatValue;
+    }
 }

@@ -16,14 +16,15 @@
  *******************************************************************************/
 package org.jmangos.auth.dao;
 
+import java.util.List;
+
 import javolution.util.FastMap;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
 import org.jmangos.commons.model.Realm;
-
-import java.util.List;
 
 /**
  * The Class WorldDAO.
@@ -32,46 +33,50 @@ import java.util.List;
  * 
  */
 public class RealmDAO implements DAO {
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.wowemu.common.database.dao.DAO#getClassName()
-	 */
-	@Override
-	public String getClassName() {
-		return RealmDAO.class.getName();
-	}
-
-	/**
-	 * Gets the all worlds.
-	 * 
-	 * @return the all worlds
-	 */
-	public FastMap<Integer, Realm> getAllRealms() {
-        Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Realm.class);
-        FastMap<Integer, Realm> realmFastMap = new FastMap<Integer, Realm>();
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.database.dao.DAO#getClassName()
+     */
+    @Override
+    public String getClassName() {
+    
+        return RealmDAO.class.getName();
+    }
+    
+    /**
+     * Gets the all worlds.
+     * 
+     * @return the all worlds
+     */
+    public FastMap<Integer, Realm> getAllRealms() {
+    
+        final Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
+        final Criteria criteria = session.createCriteria(Realm.class);
+        final FastMap<Integer, Realm> realmFastMap = new FastMap<Integer, Realm>();
         @SuppressWarnings("unchecked")
-        List<Realm> realmList = (List<Realm>)criteria.list();
-
-        for ( Realm realm : realmList )
-            realmFastMap.put( realm.getId(), realm );
-
+        final List<Realm> realmList = criteria.list();
+        
+        for (final Realm realm : realmList) {
+            realmFastMap.put(realm.getId(), realm);
+        }
+        
         session.close();
         return realmFastMap;
     }
-
-	/**
-	 * Gets the amount characters.
-	 * 
-	 * @param id
-	 *            the realm id
-	 * @return the amount characters
-	 */
-	public FastMap<Integer, Integer> getAmountCharacters(final Integer id) {
+    
+    /**
+     * Gets the amount characters.
+     * 
+     * @param id
+     *            the realm id
+     * @return the amount characters
+     */
+    public FastMap<Integer, Integer> getAmountCharacters(final Integer id) {
+    
         // TODO:implement
         return new FastMap<Integer, Integer>();
     }
-
+    
 }

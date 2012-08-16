@@ -1,11 +1,8 @@
 package org.jmangos.realm.model;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Goofy
- * Date: 2012.08.08.
- * Time: 18:54
- * To change this template use File | Settings | File Templates.
+ * Created with IntelliJ IDEA. User: Goofy Date: 2012.08.08. Time: 18:54 To change this template use
+ * File | Settings | File Templates.
  */
 public enum ChatType {
     CHAT_MSG_ADDON(0xFFFFFFFF),
@@ -61,10 +58,11 @@ public enum ChatType {
     CHAT_MSG_GUILD_ACHIEVEMENT(0x31),
     CHAT_MSG_ARENA_POINTS(0x32),
     CHAT_MSG_PARTY_LEADER(0x33);
-
+    
     private int opcode;
-
-    ChatType(int opcode) {
+    
+    ChatType(final int opcode) {
+    
         this.opcode = opcode;
     }
 }

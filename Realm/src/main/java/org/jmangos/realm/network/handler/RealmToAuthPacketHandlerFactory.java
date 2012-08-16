@@ -25,21 +25,20 @@ import com.google.inject.name.Named;
 /**
  * A factory for creating R2LPacketHandler objects.
  */
-public class RealmToAuthPacketHandlerFactory extends
-		AbstractPacketHandlerFactory {
-	@Inject
-	@Named("toServer")
-	protected String serverPacketPath;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.jmangos.commons.network.handlers.PacketHandlerFactory#loadPacket()
-	 */
-	@Override
-	public void loadPacket() {
-		addList(loadStaticData(PacketData.class, packetXSDLocation,
-				serverPacketPath));
-	}
+public class RealmToAuthPacketHandlerFactory extends AbstractPacketHandlerFactory {
+    
+    @Inject
+    @Named("toServer")
+    protected String serverPacketPath;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#loadPacket()
+     */
+    @Override
+    public void loadPacket() {
+    
+        addList(loadStaticData(PacketData.class, this.packetXSDLocation, this.serverPacketPath));
+    }
 }

@@ -34,40 +34,42 @@ import org.jmangos.realm.network.netty.packetAuth.server.CMD_REALM_DATA;
  * The Class <tt>CMD_AUTH_ENABLE_CRYPT</tt>.
  */
 public class CMD_AUTH_ENABLE_CRYPT extends AbstractRealmClientPacket {
-
-	@Inject
-	@Named("RealmToAuth")
-	private AbstractPacketSender sender;
-	
-	@Inject
-	private Config config;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
-	 */
-	@Override
-	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		// read size of the packet before enable encryption
-		readC();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
-	 */
-	@Override
-	protected void runImpl() {
-		ChannelPipeline pipeline = getClient().getChannel().getPipeline();
-		pipeline.addFirst("framedecoder", new AuthPacketFrameDecoder());
-		pipeline.addFirst("encoder", new AuthPacketFrameEncoder());
-		RealmToAuthChannelHandler channelHandler = (RealmToAuthChannelHandler)pipeline.getLast();
-		channelHandler.getCrypt().init(channelHandler.getSeed());
-		
-		// read from Player service
-		Float popl = 0.4f;
-		sender.send(getClient(), new CMD_REALM_DATA(config,popl));
-	}
+    
+    @Inject
+    @Named("RealmToAuth")
+    private AbstractPacketSender sender;
+    
+    @Inject
+    private Config               config;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
+     */
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
+    
+        // read size of the packet before enable encryption
+        readC();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
+     */
+    @Override
+    protected void runImpl() {
+    
+        final ChannelPipeline pipeline = getClient().getChannel().getPipeline();
+        pipeline.addFirst("framedecoder", new AuthPacketFrameDecoder());
+        pipeline.addFirst("encoder", new AuthPacketFrameEncoder());
+        final RealmToAuthChannelHandler channelHandler = (RealmToAuthChannelHandler) pipeline.getLast();
+        channelHandler.getCrypt().init(channelHandler.getSeed());
+        
+        // read from Player service
+        final Float popl = 0.4f;
+        this.sender.send(getClient(), new CMD_REALM_DATA(this.config, popl));
+    }
 }

@@ -29,27 +29,32 @@ import org.jmangos.realm.network.netty.packetClient.server.SMSG_QUERY_NEXT_MAIL_
 /**
  * The Class CMSG_QUERY_NEXT_MAIL_TIME.
  */
-public class CMSG_QUERY_NEXT_MAIL_TIME  extends AbstractWoWClientPacket {
-	
-	/** The sender. */
-	@Inject
-	@Named("client")
-	private AbstractPacketSender sender;
-	
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
-	 */
-	@Override
-	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
-	 */
-	@Override
-	protected void runImpl() {
-		sender.send(getClient(), new SMSG_QUERY_NEXT_MAIL_TIME());
-		
-	}
+public class CMSG_QUERY_NEXT_MAIL_TIME extends AbstractWoWClientPacket {
+    
+    /** The sender. */
+    @Inject
+    @Named("client")
+    private AbstractPacketSender sender;
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
+     */
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
+    
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
+     */
+    @Override
+    protected void runImpl() {
+    
+        this.sender.send(getClient(), new SMSG_QUERY_NEXT_MAIL_TIME());
+        
+    }
 }

@@ -20,42 +20,47 @@ package org.jmangos.commons.model;
  * The Class NamedObject.
  */
 public class NamedObject extends ManagedObject {
-
+    
     /**
      * Default constructor for persistence content
      */
-    public NamedObject() {}
-
-	/**
-	 * Instantiates a new named object.
-	 * 
-	 * @param objectId
-	 *            the object id
-	 */
-	public NamedObject(int objectId) {
-		super(objectId);
-	}
-
-	/** The name. */
-	private String name;
-
-	/**
-	 * Gets the name.
-	 * 
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Sets the name.
-	 * 
-	 * @param name
-	 *            the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
+    public NamedObject() {
+    
+    }
+    
+    /**
+     * Instantiates a new named object.
+     * 
+     * @param objectId
+     *            the object id
+     */
+    public NamedObject(final int objectId) {
+    
+        super(objectId);
+    }
+    
+    /** The name. */
+    private String name;
+    
+    /**
+     * Gets the name.
+     * 
+     * @return the name
+     */
+    public String getName() {
+    
+        return this.name;
+    }
+    
+    /**
+     * Sets the name.
+     * 
+     * @param name
+     *            the name to set
+     */
+    public void setName(final String name) {
+    
+        this.name = name;
+    }
+    
 }
