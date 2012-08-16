@@ -37,7 +37,7 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmServerPacket {
 	 */
 	@Override
 	protected void writeImpl() {
-		config = ServiceContent.getContext().getBean(Config.class);
+		config = ServiceContent.getInjector().getInstance(Config.class);
 		byte[] empt = { 0, 0, 0, 0 };
 		writeC(0);
 		writeH(0);

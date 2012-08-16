@@ -18,11 +18,15 @@ package org.jmangos.realm.model.base.item;
 
 import org.jmangos.commons.model.NamedObject;
 
+import javax.persistence.*;
+
 /**
  * The Class ItemPrototype.
  *
  * @author minimajack
  */
+@Entity
+@Table(name="item_template")
 public class ItemPrototype extends NamedObject {
 	
 	/** The Constant MAX_ITEM_PROTO_STATS. */
@@ -37,125 +41,224 @@ public class ItemPrototype extends NamedObject {
 	/** The Constant MAX_ITEM_PROTO_SPELLS. */
 	final public static int MAX_ITEM_PROTO_SPELLS = 5;
 
-	/** The Class. */
-	private int Class;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "entry", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
+    private int entry;
+
+    /** The Class. */
+    @Basic
+    @Column(name = "class", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private int Class;
 	
 	/** The Sub class. */
-	private int SubClass; // id from ItemSubClass.dbc
+    @Basic
+    @Column(name = "subclass", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private int SubClass; // id from ItemSubClass.dbc
 	
 	/** The Unk0. */
-	private int Unk0;
-	
+    @Basic
+    @Column(name = "unk0", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    private int Unk0;
+
+    @Basic
+    @Column(name="name", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
+    private String itemName;
+
 	/** The Display info id. */
-	private int DisplayInfoID; // id from ItemDisplayInfo.dbc
+    @Basic
+    @Column(name = "displayid", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
+    private int displayId; // id from ItemDisplayInfo.dbc
 	
 	/** The Quality. */
-	private int Quality;
+    @Basic
+    @Column(name = "Quality", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private int Quality;
 	
 	/** The Flags. */
-	private long Flags;
+    @Basic
+    @Column(name = "Flags", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    private long Flags;
 	
 	/** The Flags2. */
-	private int Flags2;
+    @Basic
+    @Column(name = "Flags2", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    private int Flags2;
 	
 	/** The Buy count. */
-	private byte BuyCount;
+    @Basic
+    @Column(name = "BuyCount", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private int BuyCount;
 	
 	/** The Buy price. */
-	private int BuyPrice;
+    @Basic
+    @Column(name = "BuyPrice", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    private int BuyPrice;
 	
 	/** The Sell price. */
-	private int SellPrice;
+    @Basic
+    @Column(name = "SellPrice", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    private int SellPrice;
 	
 	/** The inventory type. */
-	private InventoryType inventoryType;
+    @Basic
+    @Column(name = "InventoryType", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private InventoryType inventoryType;
 	
 	/** The Allowable class. */
-	private int AllowableClass;
+    @Column(name = "AllowableClass", nullable = false, insertable = true, updatable = true, length = 7, precision = 0)
+    private int AllowableClass;
 	
 	/** The Allowable race. */
-	private int AllowableRace;
+    @Basic
+    @Column(name = "AllowableRace", nullable = false, insertable = true, updatable = true, length = 7, precision = 0)
+    private int AllowableRace;
 	
 	/** The Item level. */
-	private int ItemLevel;
+    @Basic
+    @Column(name = "ItemLevel", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
+    private int ItemLevel;
 	
 	/** The Required level. */
-	private byte RequiredLevel;
+    @Basic
+    @Column(name = "RequiredLevel", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private byte RequiredLevel;
 	
 	/** The Required skill. */
-	private int RequiredSkill; // id from SkillLine.dbc
+    @Basic
+    @Column(name = "RequiredSkill", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
+    private int RequiredSkill; // id from SkillLine.dbc
 	
 	/** The Required skill rank. */
-	private int RequiredSkillRank;
+    @Basic
+    @Column(name = "RequiredSkillRank", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
+    private int RequiredSkillRank;
 	
 	/** The Required spell. */
-	private int RequiredSpell; // id from Spell.dbc
+    @Basic
+    @Column(name = "requiredspell", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
+    private int RequiredSpell; // id from Spell.dbc
 	
 	/** The Required honor rank. */
-	private int RequiredHonorRank;
+    @Basic
+    @Column(name = "requiredhonorrank", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
+    private int RequiredHonorRank;
 	
 	/** The Required city rank. */
-	private int RequiredCityRank;
+    @Basic
+    @Column(name = "RequiredCityRank", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
+    private int RequiredCityRank;
 	
 	/** The Required reputation faction. */
-	private int RequiredReputationFaction; // id from Faction.dbc
+    @Basic
+    @Column(name = "RequiredReputationFaction", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
+    private int RequiredReputationFaction; // id from Faction.dbc
 	
 	/** The Required reputation rank. */
-	private int RequiredReputationRank;
+    @Basic
+    @Column(name = "RequiredReputationRank", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
+    private int RequiredReputationRank;
 	
 	/** The Max count. */
-	private int MaxCount; // <=0: no limit
+    @Basic
+    @Column(name = "maxcount", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
+    private int MaxCount; // <=0: no limit
 	
 	/** The Stackable. */
-	private int Stackable; // 0: not allowed, -1: put in player coin info tab
+    @Basic
+    @Column(name = "stackable", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
+    private int Stackable; // 0: not allowed, -1: put in player coin info tab
 	// and don't limit stacking (so 1 slot)
-	/** The Container slots. */
-	private byte ContainerSlots;
+
+    /** The Container slots. */
+    @Basic
+    @Column(name = "ContainerSlots", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private byte ContainerSlots;
 	
 	/** The Stats count. */
-	private int StatsCount;
-	
-	/** item stats. */
-	private Object[] ItemStat;
+    @Basic
+    @Column(name = "StatsCount", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private int statsCount;
+
+    //TODO: item bytes implement
+    //@Basic
+    //@Column(name = "stat_type1", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    /** item stats. */
+    @Transient
+	private Object[] itemStat;
 
 	/** The Scaling stat distribution. */
-	private int ScalingStatDistribution; // id from ScalingStatDistribution.dbc
+    @Basic
+    @Column(name="scalingStatDistribution", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
+    private int ScalingStatDistribution; // id from ScalingStatDistribution.dbc
 	
 	/** The Scaling stat value. */
-	private int ScalingStatValue; // mask for selecting column in
+    @Basic
+    @Column(name="scalingStatValue", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    private int ScalingStatValue; // mask for selecting column in
 	// ScalingStatValues.dbc
+
 	/** damages. */
-	private _Damage[] Damage = new _Damage[MAX_ITEM_PROTO_DAMAGES];
+    /*
+    @Columns(columns = {
+            @Column(name = "dmg_min1", nullable = false, insertable = true, updatable = true, length = 12, precision = 0),
+            @Column(name = "dmg_max1", nullable = false, insertable = true, updatable = true, length = 12, precision = 0),
+            @Column(name = "dmg_type1", nullable = false, insertable = true, updatable = true, length = 3, precision = 0),
+            @Column(name = "dmg_min2", nullable = false, insertable = true, updatable = true, length = 12, precision = 0),
+            @Column(name = "dmg_max2", nullable = false, insertable = true, updatable = true, length = 12, precision = 0),
+            @Column(name = "dmg_type2", nullable = false, insertable = true, updatable = true, length = 3, precision = 0),
+    })*/
+    @Transient
+    private _Damage[] Damage = new _Damage[MAX_ITEM_PROTO_DAMAGES];
 
 	/** The Armor. */
-	private int Armor;
+    @Basic
+    @Column(name = "armor", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
+    private int Armor;
 	
 	/** The Holy res. */
-	private byte HolyRes;
+    @Basic
+    @Column(name = "holy_res", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private byte HolyRes;
 	
 	/** The Fire res. */
-	private byte FireRes;
+    @Basic
+    @Column(name="fire_res", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private byte FireRes;
 	
 	/** The Nature res. */
-	private byte NatureRes;
+    @Basic
+    @Column(name = "nature_res", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private byte NatureRes;
 	
 	/** The Frost res. */
-	private byte FrostRes;
+    @Basic
+    @Column(name = "frost_res", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private byte FrostRes;
 	
 	/** The Shadow res. */
-	private byte ShadowRes;
+    @Basic
+    @Column(name = "shadow_res", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private byte ShadowRes;
 	
 	/** The Arcane res. */
-	private byte ArcaneRes;
+    @Basic
+    @Column(name = "arcane_res", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private byte ArcaneRes;
 	
 	/** The Delay. */
-	private int Delay;
+    @Basic
+    @Column(name = "delay", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
+    private int Delay;
 	
 	/** The Ammo type. */
-	private int AmmoType;
+    @Basic
+    @Column(name = "ammo_type", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private int AmmoType;
 	
 	/** The Ranged mod range. */
-	float RangedModRange;
+    @Column(name = "RangedModRange", nullable = false, insertable = true, updatable = true, length = 12, precision = 0)
+    float RangedModRange;
 
 	/*
 	 * private int[] SpellId = new int[MAX_ITEM_PROTO_SPELLS]; private byte[]
@@ -168,271 +271,168 @@ public class ItemPrototype extends NamedObject {
 	 */
 
 	/** The Bonding. */
-	private byte Bonding;
+    @Basic
+    @Column(name = "bonding", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private byte Bonding;
 	
 	/** The Description. */
-	private String Description;
+    @Basic
+    @Column(name = "description", nullable = false, insertable = true, updatable = true, length = 255, precision = 0)
+    private String Description;
 	
 	/** The Page text. */
-	private int PageText;
+    @Basic
+    @Column(name = "PageText", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
+    private int PageText;
 	
 	/** The Language id. */
-	private byte LanguageID;
+    @Basic
+    @Column(name = "LanguageID", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private byte LanguageID;
 	
 	/** The Page material. */
-	private byte PageMaterial;
+    @Basic
+    @Column(name = "PageMaterial", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private byte PageMaterial;
 	
 	/** The Start quest. */
-	private int StartQuest; // id from QuestCache.wdb
+    @Basic
+    @Column(name = "startquest", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
+    private int StartQuest; // id from QuestCache.wdb
 	
 	/** The Lock id. */
-	private int LockID;
+    @Basic
+    @Column(name = "lockid", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
+    private int LockID;
 	
 	/** The Material. */
-	private int Material; // id from Material.dbc
+    @Basic
+    @Column(name = "Material", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private int Material; // id from Material.dbc
 	
 	/** The Sheath. */
-	private byte Sheath;
+    @Basic
+    @Column(name = "sheath", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private byte Sheath;
 	
 	/** The Random property. */
-	private int RandomProperty; // id from ItemRandomProperties.dbc
+    @Basic
+    @Column(name = "RandomProperty", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
+    private int RandomProperty; // id from ItemRandomProperties.dbc
 	
 	/** The Random suffix. */
-	private int RandomSuffix; // id from ItemRandomSuffix.dbc
+    @Basic
+    @Column(name = "RandomSuffix", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
+    private int RandomSuffix; // id from ItemRandomSuffix.dbc
 	
 	/** The Block. */
-	private int Block;
+    @Basic
+    @Column(name = "block", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
+    private int Block;
 	
 	/** The Item set. */
-	private int ItemSet; // id from ItemSet.dbc
+    @Basic
+    @Column(name = "itemset", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
+    private int ItemSet; // id from ItemSet.dbc
 	
 	/** The Max durability. */
-	private int MaxDurability;
+    @Basic
+    @Column(name = "MaxDurability", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
+    private int MaxDurability;
 	
 	/** The Area. */
-	private int Area; // id from AreaTable.dbc
+    @Basic
+    @Column(name = "area", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
+    private int Area; // id from AreaTable.dbc
 	
 	/** The Map. */
-	private int Map; // id from Map.dbc
+    @Basic
+    @Column(name = "Map", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
+    private int Map; // id from Map.dbc
 	
 	/** The Bag family. */
-	private int BagFamily; // bit mask (1 << id from ItemBagFamily.dbc)
+    @Basic
+    @Column(name = "BagFamily", nullable = false, insertable = true, updatable = true, length = 7, precision = 0)
+    private int BagFamily; // bit mask (1 << id from ItemBagFamily.dbc)
 	
 	/** The Totem category. */
-	private int TotemCategory; // id from TotemCategory.dbc
+    @Basic
+    @Column(name = "TotemCategory", nullable = false, insertable = true, updatable = true, length = 7, precision = 0)
+    private int TotemCategory; // id from TotemCategory.dbc
 	
 	/** socket data. */
-	private Object[] Socket;
+    // TODO: implement socket
+    // @Column(name = "socketColor_1", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    // @Column(name = "socketContent_1", nullable = false, insertable = true, updatable = true, length = 7, precision = 0)
+    @Transient
+    private Object[] Socket;
 
 	/** The socket bonus. */
-	private int socketBonus; // id from SpellItemEnchantment.dbc
+    @Basic
+    @Column(name = "socketBonus", nullable = false, insertable = true, updatable = true, length = 7, precision = 0)
+    private int socketBonus; // id from SpellItemEnchantment.dbc
 	
 	/** The Gem properties. */
-	private int GemProperties; // id from GemProperties.dbc
+    @Basic
+    @Column(name = "GemProperties", nullable = false, insertable = true, updatable = true, length = 7, precision = 0)
+    private int GemProperties; // id from GemProperties.dbc
 	
 	/** The Required disenchant skill. */
-	private int RequiredDisenchantSkill;
+    @Basic
+    @Column(name = "RequiredDisenchantSkill", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
+    private int RequiredDisenchantSkill;
 	
 	/** The Armor damage modifier. */
-	private float ArmorDamageModifier;
+    @Basic
+    @Column(name = "ArmorDamageModifier", nullable = false, insertable = true, updatable = true, length = 12, precision = 0)
+    private float ArmorDamageModifier;
 	
 	/** The Duration. */
-	private int Duration; // negative = realtime, positive = ingame time
+    @Basic
+    @Column(name = "Duration", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    private int Duration; // negative = realtime, positive = ingame time
 	
 	/** The Item limit category. */
-	private int ItemLimitCategory; // id from ItemLimitCategory.dbc
+    @Basic
+    @Column(name = "ItemLimitCategory", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
+    private int ItemLimitCategory; // id from ItemLimitCategory.dbc
 	
 	/** The Holiday id. */
-	private int HolidayId; // id from Holidays.dbc
+    @Basic
+    @Column(name = "HolidayId", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    private int HolidayId; // id from Holidays.dbc
 	
-	/** The Script id. */
-	private int ScriptId;
+	/** The Script name. */
+    @Basic
+    @Column(name = "ScriptName", nullable = false, insertable = true, updatable = true, length = 64, precision = 0)
+    private String ScriptName;
 	
 	/** The Disenchant id. */
-	private int DisenchantID;
+    @Basic
+    @Column(name = "DisenchantID", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
+    int DisenchantID;
 	
 	/** The Food type. */
-	private byte FoodType;
+    @Basic
+    @Column(name = "FoodType", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
+    private byte FoodType;
 	
 	/** The Min money loot. */
-	private int MinMoneyLoot;
+    @Basic
+    @Column(name = "minMoneyLoot", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    private int MinMoneyLoot;
 	
 	/** The Max money loot. */
-	private int MaxMoneyLoot;
+    @Basic
+    @Column(name = "maxMoneyLoot", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    private int MaxMoneyLoot;
 	
 	/** The Extra flags. */
-	private byte ExtraFlags;
+    @Basic
+    @Column(name = "ExtraFlags", nullable = false, insertable = true, updatable = true, length = 0, precision = 0)
+    private byte ExtraFlags;
 
-	/**
-	 * This class is Item Template.
-	 *
-	 * @param guid the guid
-	 * @param clazz the clazz
-	 * @param subClass the sub class
-	 * @param unk0 the unk0
-	 * @param displayInfoID the display info id
-	 * @param quality the quality
-	 * @param flags the flags
-	 * @param flags2 the flags2
-	 * @param buyCount the buy count
-	 * @param buyPrice the buy price
-	 * @param sellPrice the sell price
-	 * @param inventoryType the inventory type
-	 * @param allowableClass the allowable class
-	 * @param allowableRace the allowable race
-	 * @param itemLevel the item level
-	 * @param requiredLevel the required level
-	 * @param requiredSkill the required skill
-	 * @param requiredSkillRank the required skill rank
-	 * @param requiredSpell the required spell
-	 * @param requiredHonorRank the required honor rank
-	 * @param requiredCityRank the required city rank
-	 * @param requiredReputationFaction the required reputation faction
-	 * @param requiredReputationRank the required reputation rank
-	 * @param maxCount the max count
-	 * @param stackable the stackable
-	 * @param containerSlots the container slots
-	 * @param statsCount the stats count
-	 * @param scalingStatDistribution the scaling stat distribution
-	 * @param scalingStatValue the scaling stat value
-	 * @param armor the armor
-	 * @param holyRes the holy res
-	 * @param fireRes the fire res
-	 * @param natureRes the nature res
-	 * @param frostRes the frost res
-	 * @param shadowRes the shadow res
-	 * @param arcaneRes the arcane res
-	 * @param delay the delay
-	 * @param ammoType the ammo type
-	 * @param rangedModRange the ranged mod range
-	 * @param bonding the bonding
-	 * @param description the description
-	 * @param pageText the page text
-	 * @param languageID the language id
-	 * @param pageMaterial the page material
-	 * @param startQuest the start quest
-	 * @param lockID the lock id
-	 * @param material the material
-	 * @param sheath the sheath
-	 * @param randomProperty the random property
-	 * @param randomSuffix the random suffix
-	 * @param block the block
-	 * @param itemSet the item set
-	 * @param maxDurability the max durability
-	 * @param area the area
-	 * @param map the map
-	 * @param bagFamily the bag family
-	 * @param totemCategory the totem category
-	 * @param _socketBonus the _socket bonus
-	 * @param gemProperties the gem properties
-	 * @param requiredDisenchantSkill the required disenchant skill
-	 * @param armorDamageModifier the armor damage modifier
-	 * @param duration the duration
-	 * @param itemLimitCategory the item limit category
-	 * @param holidayId the holiday id
-	 * @param scriptId the script id
-	 * @param disenchantID the disenchant id
-	 * @param foodType the food type
-	 * @param minMoneyLoot the min money loot
-	 * @param maxMoneyLoot the max money loot
-	 * @param extraFlags the extra flags
-	 */
-	public ItemPrototype(int guid, int clazz, int subClass, int unk0,
-			int displayInfoID, int quality, long flags, int flags2,
-			byte buyCount, int buyPrice, int sellPrice, byte inventoryType,
-			int allowableClass, int allowableRace, int itemLevel,
-			byte requiredLevel, int requiredSkill, int requiredSkillRank,
-			int requiredSpell, int requiredHonorRank, int requiredCityRank,
-			int requiredReputationFaction, int requiredReputationRank,
-			int maxCount, int stackable, byte containerSlots, int statsCount,
-			int scalingStatDistribution, int scalingStatValue, int armor,
-			byte holyRes, byte fireRes, byte natureRes, byte frostRes,
-			byte shadowRes, byte arcaneRes, int delay, int ammoType,
-			float rangedModRange, byte bonding, String description,
-			int pageText, byte languageID, byte pageMaterial, int startQuest,
-			int lockID, int material, byte sheath, int randomProperty,
-			int randomSuffix, int block, int itemSet, int maxDurability,
-			int area, int map, int bagFamily, int totemCategory,
-			int _socketBonus, int gemProperties, int requiredDisenchantSkill,
-			float armorDamageModifier, int duration, int itemLimitCategory,
-			int holidayId, int scriptId, int disenchantID, byte foodType,
-			int minMoneyLoot, int maxMoneyLoot, byte extraFlags) {
-		super(guid);
-		Class = clazz;
-		SubClass = subClass;
-		Unk0 = unk0;
-		DisplayInfoID = displayInfoID;
-		Quality = quality;
-		Flags = flags;
-		Flags2 = flags2;
-		BuyCount = buyCount;
-		BuyPrice = buyPrice;
-		SellPrice = sellPrice;
-		for (InventoryType inv : InventoryType.values()) {
-			if(inventoryType == inv.ordinal()){
-				this.inventoryType = inv;
-			}
-		}
-		//InventoryType = (inventoryType);
-		AllowableClass = allowableClass;
-		AllowableRace = allowableRace;
-		ItemLevel = itemLevel;
-		RequiredLevel = requiredLevel;
-		RequiredSkill = requiredSkill;
-		RequiredSkillRank = requiredSkillRank;
-		RequiredSpell = requiredSpell;
-		RequiredHonorRank = requiredHonorRank;
-		RequiredCityRank = requiredCityRank;
-		RequiredReputationFaction = requiredReputationFaction;
-		RequiredReputationRank = requiredReputationRank;
-		MaxCount = maxCount;
-		Stackable = stackable;
-		ContainerSlots = containerSlots;
-		StatsCount = statsCount;
-		ScalingStatDistribution = scalingStatDistribution;
-		ScalingStatValue = scalingStatValue;
-		Armor = armor;
-		HolyRes = holyRes;
-		FireRes = fireRes;
-		NatureRes = natureRes;
-		FrostRes = frostRes;
-		ShadowRes = shadowRes;
-		ArcaneRes = arcaneRes;
-		Delay = delay;
-		AmmoType = ammoType;
-		RangedModRange = rangedModRange;
-		Bonding = bonding;
-		Description = description;
-		PageText = pageText;
-		LanguageID = languageID;
-		PageMaterial = pageMaterial;
-		StartQuest = startQuest;
-		LockID = lockID;
-		Material = material;
-		Sheath = sheath;
-		RandomProperty = randomProperty;
-		RandomSuffix = randomSuffix;
-		Block = block;
-		ItemSet = itemSet;
-		MaxDurability = maxDurability;
-		Area = area;
-		Map = map;
-		BagFamily = bagFamily;
-		TotemCategory = totemCategory;
-		socketBonus = _socketBonus;
-		GemProperties = gemProperties;
-		RequiredDisenchantSkill = requiredDisenchantSkill;
-		ArmorDamageModifier = armorDamageModifier;
-		Duration = duration;
-		ItemLimitCategory = itemLimitCategory;
-		HolidayId = holidayId;
-		ScriptId = scriptId;
-		DisenchantID = disenchantID;
-		FoodType = foodType;
-		MinMoneyLoot = minMoneyLoot;
-		MaxMoneyLoot = maxMoneyLoot;
-		ExtraFlags = extraFlags;
-	}
+    public ItemPrototype() {}
 
 	/**
 	 * Gets the clazz.
@@ -494,7 +494,7 @@ public class ItemPrototype extends NamedObject {
 	 * @return the displayInfoID
 	 */
 	public int getDisplayInfoID() {
-		return DisplayInfoID;
+		return displayId;
 	}
 
 	/**
@@ -503,7 +503,7 @@ public class ItemPrototype extends NamedObject {
 	 * @param displayInfoID the displayInfoID to set
 	 */
 	public void setDisplayInfoID(int displayInfoID) {
-		DisplayInfoID = displayInfoID;
+		displayId = displayInfoID;
 	}
 
 	/**
@@ -556,7 +556,7 @@ public class ItemPrototype extends NamedObject {
 	 *
 	 * @param buyCount the buyCount to set
 	 */
-	public void setBuyCount(byte buyCount) {
+	public void setBuyCount(int buyCount) {
 		BuyCount = buyCount;
 	}
 
@@ -872,7 +872,7 @@ public class ItemPrototype extends NamedObject {
 	 * @return the statsCount
 	 */
 	public int getStatsCount() {
-		return StatsCount;
+		return statsCount;
 	}
 
 	/**
@@ -881,7 +881,7 @@ public class ItemPrototype extends NamedObject {
 	 * @param statsCount the statsCount to set
 	 */
 	public void setStatsCount(int statsCount) {
-		StatsCount = statsCount;
+		this.statsCount = statsCount;
 	}
 
 	/**
@@ -891,7 +891,7 @@ public class ItemPrototype extends NamedObject {
 	 * @return the _ItemStat
 	 */
 	public _ItemStat getItemStat(int i) {
-		return (_ItemStat) ItemStat[i];
+		return (_ItemStat) itemStat[i];
 	}
 
 	/**
@@ -900,7 +900,7 @@ public class ItemPrototype extends NamedObject {
 	 * @param is the new item stat
 	 */
 	public void setItemStat(Object[] is) {
-		ItemStat = is;
+		itemStat = is;
 	}
 
 	/**
@@ -1639,17 +1639,17 @@ public class ItemPrototype extends NamedObject {
 	 *
 	 * @return the scriptId
 	 */
-	public int getScriptId() {
-		return ScriptId;
+	public String getScriptId() {
+		return ScriptName;
 	}
 
 	/**
 	 * Sets the script id.
 	 *
-	 * @param scriptId the scriptId to set
+	 * @param scriptName the scriptId to set
 	 */
-	public void setScriptId(int scriptId) {
-		ScriptId = scriptId;
+	public void setScriptId(String scriptName) {
+		ScriptName = scriptName;
 	}
 
 	/**
@@ -1760,4 +1760,19 @@ public class ItemPrototype extends NamedObject {
 		Flags2 = flags2;
 	}
 
+    public int getEntry() {
+        return entry;
+    }
+
+    public void setEntry(int entry) {
+        this.entry = entry;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
 }

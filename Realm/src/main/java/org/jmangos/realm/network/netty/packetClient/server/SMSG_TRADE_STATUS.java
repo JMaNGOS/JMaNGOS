@@ -24,31 +24,37 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
  * The Class SMSG_TRADE_STATUS.
  */
 public class SMSG_TRADE_STATUS extends AbstractWoWServerPacket {
-
-	/** The trade status. */
-	TradeStatus tradeStatus;
-	
-	/**
-	 * Instantiates a new sMS g_ trad e_ status.
-	 */
-	public SMSG_TRADE_STATUS() {
-	}
-
-	/**
-	 * Instantiates a new sMS g_ trad e_ status.
-	 *
-	 * @param _status the _status
-	 */
-	public SMSG_TRADE_STATUS(TradeStatus _status) {
-		tradeStatus = _status;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
-	 */
-	@Override
-	protected void writeImpl() {
-		 writeD(tradeStatus.getStatus());
-	}
-
+    
+    /** The trade status. */
+    TradeStatus tradeStatus;
+    
+    /**
+     * Instantiates a new sMS g_ trad e_ status.
+     */
+    public SMSG_TRADE_STATUS() {
+    
+    }
+    
+    /**
+     * Instantiates a new sMS g_ trad e_ status.
+     * 
+     * @param _status
+     *            the _status
+     */
+    public SMSG_TRADE_STATUS(final TradeStatus _status) {
+    
+        this.tradeStatus = _status;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
+    
+        writeD(this.tradeStatus.getStatus());
+    }
+    
 }

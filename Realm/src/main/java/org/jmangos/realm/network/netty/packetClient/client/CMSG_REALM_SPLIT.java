@@ -24,17 +24,16 @@ import javax.inject.Named;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_REALM_SPLIT;
-import org.springframework.stereotype.Component;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CMSG_REALM_SPLIT.
  */
-@Component
 public class CMSG_REALM_SPLIT extends AbstractWoWClientPacket {
 
 	/** The sender. */
 	@Inject
-	@Named("nettyPacketSender")
+	@Named("client")
 	private AbstractPacketSender sender;
 
 	/** The unk. */

@@ -35,9 +35,9 @@ import javolution.text.TextBuilder;
 import org.apache.log4j.Logger;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+import org.jmangos.commons.model.Account;
 import org.jmangos.commons.network.model.State;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
-import org.jmangos.realm.model.account.Account;
 import org.jmangos.realm.model.base.AddonInfo;
 import org.jmangos.realm.network.netty.handler.RealmToClientChannelHandler;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
@@ -46,45 +46,44 @@ import org.jmangos.realm.network.netty.packetClient.server.SMSG_AUTH_RESPONSE;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_CLIENTCACHE_VERSION;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_TUTORIAL_FLAGS;
 import org.jmangos.realm.service.AccountService;
-import org.springframework.stereotype.Component;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CMSG_AUTH_SESSION.
  */
-@Component
 public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
-
+	
 	/** The Constant logger. */
 	private static final Logger logger = Logger
 			.getLogger(CMSG_AUTH_SESSION.class);
-
+	
 	/** The account service. */
 	@Inject
 	private AccountService accountService;
-
+	
 	/** The sender. */
 	@Inject
-	@Named("nettyPacketSender")
+	@Named("client")
 	private AbstractPacketSender sender;
-
+	
 	/** The account name. */
 	private String accountName;
-
+	
 	/** The client seed. */
 	private byte[] clientSeed;
-
+	
 	/** The digest. */
 	private byte[] digest;
-
+	
 	/** The Client build. */
 	@SuppressWarnings("unused")
 	private int ClientBuild;
-
+	
 	/** The addon lists. */
 	private ArrayList<AddonInfo> addonLists;
 
-	/**
-	 * @see org.jmangos.realm.network.model.ReceivablePacket#readImpl()
+	/* (non-Javadoc)
+	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
 	 */
 	@Override
 	protected void readImpl() throws BufferUnderflowException, RuntimeException {
@@ -136,29 +135,29 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
 			TextBuilder tb = TextBuilder.newInstance();
 			for (byte c; (c = addonInfo.readByte()) != 0;)
 				tb.append((char) c);
-			String addonName = tb.toString();
+			String addonName = tb.toString(); 
 			TextBuilder.recycle(tb);
 			byte enabled = addonInfo.readByte();
 			int crc = addonInfo.readInt();
 			/* int unk1 = */addonInfo.readInt();
 			addonLists.add(new AddonInfo(addonName, enabled, crc));
 		}
-		/* int unk2 = */addonInfo.readInt();
+
+        /* int unk2 = */addonInfo.readInt();
 	}
 
-	/**
-	 * 
+	/* (non-Javadoc)
 	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
 	 */
 	@Override
 	protected void runImpl() {
-		Account account = accountService.createAndAttachAccount(accountName,
-				getClient());
+		Account account  = accountService
+				.createAndAttachAccount(accountName, getClient());
 
-		RealmToClientChannelHandler channelHandler = (RealmToClientChannelHandler) this
-				.getClient().getChannel().getPipeline().getLast();
-		String SessionKey = accountService.getSessionKeyFromDB(account
-				.getName());
+		RealmToClientChannelHandler channelHandler = (RealmToClientChannelHandler) this.getClient()
+				.getChannel().getPipeline().getLast();
+		String SessionKey = accountService
+				.getSessionKeyFromDB(account.getName());
 		MessageDigest sha;
 		try {
 			sha = MessageDigest.getInstance("SHA-1");
@@ -166,7 +165,7 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
 			e.printStackTrace();
 			return;
 		}
-		byte[] t = { 0, 0, 0, 0 };
+		byte[] t = {0, 0, 0, 0};
 		sha.update(account.getName().getBytes());
 		sha.update(t);
 		sha.update(clientSeed);
@@ -181,9 +180,12 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
 		channelHandler.getCrypt().init(convertMangosSessionKey(SessionKey));
 		sender.send(getClient(), new SMSG_AUTH_RESPONSE());
 		getClient().setChannelState(State.AUTHED);
-		account.setTutorials(accountService.loadTutorialsDataFromDB(account
-				.getObjectId()));
-		sender.send(getClient(), new SMSG_ADDON_INFO());
+        // TODO: what is this?
+		/*account.setTutorials(
+				accountService.loadTutorialsDataFromDB(account.getObjectId()));*/
+        SMSG_ADDON_INFO addonInfoPacket = new SMSG_ADDON_INFO( addonLists );
+
+		sender.send(getClient(), addonInfoPacket );
 		sender.send(getClient(), new SMSG_CLIENTCACHE_VERSION());
 		sender.send(getClient(), new SMSG_TUTORIAL_FLAGS());
 
@@ -191,9 +193,8 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
 
 	/**
 	 * Convert mangos session key.
-	 * 
-	 * @param hexkey
-	 *            the hexkey
+	 *
+	 * @param hexkey the hexkey
 	 * @return the byte[]
 	 */
 	private byte[] convertMangosSessionKey(String hexkey) {
@@ -201,8 +202,8 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
 		byte[] data = new byte[len / 2];
 		for (int i = 0; i < len; i += 2) {
 			data[(len - i) / 2 - 1] = (byte) ((Character.digit(
-					hexkey.charAt(i), 16) << 4) + Character.digit(
-					hexkey.charAt(i + 1), 16));
+					hexkey.charAt(i), 16) << 4) + Character.digit(hexkey
+					.charAt(i + 1), 16));
 		}
 		return data;
 

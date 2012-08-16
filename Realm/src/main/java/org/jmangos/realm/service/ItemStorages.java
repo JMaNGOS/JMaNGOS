@@ -17,29 +17,26 @@
 package org.jmangos.realm.service;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-
 import org.apache.log4j.Logger;
 import org.jmangos.commons.dataholder.DataLoadService;
 import org.jmangos.realm.dao.ItemDAO;
-import org.jmangos.realm.model.InventoryTemplate;
+import org.jmangos.realm.model.InventoryItem;
 import org.jmangos.realm.model.base.guid.HighGuid;
 import org.jmangos.realm.model.base.item.Bag;
 import org.jmangos.realm.model.base.item.InventoryType;
 import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.base.item.ItemPrototype;
 import org.jmangos.realm.model.base.update.ItemFields;
-import org.springframework.stereotype.Component;
+
+import javax.inject.Inject;
 
 /**
  * The Class ItemStorages.
  */
-@Component
-public class ItemStorages implements
-		DataLoadService<TIntObjectHashMap<ItemPrototype>> {
-
+public class ItemStorages
+		implements
+			DataLoadService<TIntObjectHashMap<ItemPrototype>> {
+	
 	/** The Constant logger. */
 	private static final Logger logger = Logger.getLogger(ItemStorages.class);
 
@@ -50,9 +47,7 @@ public class ItemStorages implements
 	/** The item prototypes. */
 	private TIntObjectHashMap<ItemPrototype> itemPrototypes = new TIntObjectHashMap<ItemPrototype>();
 
-	/**
-	 * (non-Javadoc)
-	 * 
+	/** (non-Javadoc)
 	 * @see org.jmangos.commons.dataholder.DataLoadService#get()
 	 */
 	@Override
@@ -62,15 +57,16 @@ public class ItemStorages implements
 
 	/**
 	 * Gets the.
-	 * 
-	 * @param guid
-	 *            the guid
+	 *
+	 * @param guid the guid
 	 * @return the item prototype
 	 */
 	public ItemPrototype get(int guid) {
-		if (itemPrototypes.contains(guid)) {
-			return itemPrototypes.get(guid);
+		if (itemPrototypes.containsKey(guid)) {
+            logger.debug(String.format("The specified id: %d hit in the storage! DisplayInfoID: %d", guid, itemPrototypes.get(guid).getDisplayInfoID()));
+            return itemPrototypes.get(guid);
 		} else {
+            logger.debug(String.format("The specified id: %d not in the store. Trying to load directly from the database!", guid));
 			ItemPrototype ip = itemDAO.loadItemPrototype(guid);
 			if (ip != null) {
 				itemPrototypes.put(ip.getObjectId(), ip);
@@ -82,26 +78,23 @@ public class ItemStorages implements
 
 	/**
 	 * Load from db.
-	 * 
-	 * @param itemplate
-	 *            the itemplate
-	 * @param proto
-	 *            the proto
+	 *
+	 * @param itemplate the itemplate
+	 * @param proto the proto
 	 * @return the item
 	 */
-	public Item loadFromDB(InventoryTemplate itemplate, ItemPrototype proto) {
-		long guid = HighGuid.HIGHGUID_ITEM.getValue() << 48
-				| itemplate.getItem_guid();
+	public Item loadFromDB(InventoryItem itemplate, ItemPrototype proto) {
+		long guid = HighGuid.HIGHGUID_ITEM.getValue() << 48| itemplate.getItem_guid();
 		Item item = null;
-		if (proto.getInventoryType() == InventoryType.INVTYPE_BAG) {
+		if(proto.getInventoryType() == InventoryType.INVTYPE_BAG){
 			item = new Bag(guid);
-		} else {
+		}
+		else{
 			item = new Item(guid);
 		}
 		item.initfields();
 		if (item.loadValues(itemplate.getData().split(" "))) {
-			logger.debug("Good items " + proto.getName() + " count "
-					+ item.GetUInt32Value(ItemFields.ITEM_FIELD_STACK_COUNT));
+			logger.debug("Good items " + proto.getName() + " count " + item.GetUInt32Value(ItemFields.ITEM_FIELD_STACK_COUNT));
 
 			return item;
 		} else {
@@ -109,10 +102,8 @@ public class ItemStorages implements
 			return null;
 		}
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
+	
+	/* (non-Javadoc)
 	 * @see org.jmangos.commons.dataholder.DataLoadService#load()
 	 */
 	@Override
@@ -121,20 +112,16 @@ public class ItemStorages implements
 		return itemPrototypes;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see org.jmangos.commons.dataholder.DataLoadService#reload()
 	 */
 	@Override
-	public TIntObjectHashMap<ItemPrototype> reload() {
-		itemPrototypes.clear();
-		return load();
+	public void reload() {
+        TIntObjectHashMap<ItemPrototype> itemProrotypesTemp = itemDAO.loadItemPrototypes();
+		itemPrototypes = itemProrotypesTemp;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see org.jmangos.commons.dataholder.DataLoadService#save()
 	 */
 	@Override
@@ -143,21 +130,15 @@ public class ItemStorages implements
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see org.jmangos.commons.service.Service#start()
 	 */
-	@PostConstruct
 	@Override
 	public void start() {
 		load();
-		logger.info("Loaded " + itemPrototypes.size() + " ItemPrototypes");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see org.jmangos.commons.service.Service#stop()
 	 */
 	@Override

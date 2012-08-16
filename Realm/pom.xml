@@ -1,17 +1,18 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jmangos.jmangos</groupId>
 	<artifactId>realm</artifactId>
 	<packaging>jar</packaging>
 	<name>JMaNGOS-Realm</name>
-	
+
 	<parent>
 		<groupId>org.jmangos</groupId>
 		<artifactId>jmangos</artifactId>
 		<version>0.0.001-SNAPSHOT</version>
 	</parent>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.jmangos.jmangos</groupId>
@@ -21,8 +22,18 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.jcraft</groupId>
+			<artifactId>jzlib</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy</artifactId>
+			<version>1.8.0</version>
+		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -33,9 +44,54 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>compile</id>
+						<phase>compile</phase>
+						<configuration>
+							<tasks>
+								<mkdir dir="${basedir}/src/main/groovy" />
+								<taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc">
+									<classpath refid="maven.compile.classpath" />
+								</taskdef>
+								<mkdir dir="${project.build.outputDirectory}" />
+								<groovyc destdir="${project.build.outputDirectory}"
+									srcdir="${basedir}/src/main/java/" listfiles="true">
+									<classpath refid="maven.compile.classpath" />
+								</groovyc>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>test-compile</id>
+						<phase>test-compile</phase>
+						<configuration>
+							<tasks>
+								<mkdir dir="${basedir}/src/test/java" />
+								<taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc">
+									<classpath refid="maven.test.classpath" />
+								</taskdef>
+								<mkdir dir="${project.build.testOutputDirectory}" />
+								<groovyc destdir="${project.build.testOutputDirectory}"
+									srcdir="${basedir}/src/test/java/" listfiles="true">
+									<classpath refid="maven.test.classpath" />
+								</groovyc>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
-	
+
 	<profiles>
 		<profile>
 			<id>dist</id>
@@ -64,6 +120,7 @@
 							<archive>
 								<manifest>
 									<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+									<mainClass>org.jmangos.realm.RealmServer</mainClass>
 								</manifest>
 								<manifestEntries>
 									<Implementation-Version>${project.version}.${jenkins.buildNumber}</Implementation-Version>

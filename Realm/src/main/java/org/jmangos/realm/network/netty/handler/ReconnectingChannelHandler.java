@@ -32,6 +32,8 @@ import org.jmangos.commons.network.netty.receiver.NettyPacketReceiver;
 import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.realm.config.Config;
 
+import com.google.inject.Inject;
+
 /**
  * The Class ReconnectingChannelHandler.
  */
@@ -49,7 +51,6 @@ public class ReconnectingChannelHandler extends SimpleChannelUpstreamHandler {
 
 	/** Config */
 	Config config;
-
 	/**
 	 * Instantiates a new reconnecting channel handler.
 	 * 
@@ -69,7 +70,7 @@ public class ReconnectingChannelHandler extends SimpleChannelUpstreamHandler {
 			PacketHandlerFactory packetService,
 			ConnectHandler connectionHandler,
 			NettyPacketReceiver nettyPacketReceiver) {
-		config = ServiceContent.getContext().getBean(Config.class);
+		config = ServiceContent.getInjector().getInstance(Config.class);
 		this.timer = timer;
 		this.channelFactory = channelFactory;
 	}

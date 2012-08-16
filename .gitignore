@@ -1,4 +1,10 @@
 *.project
 *.settings/
 *.classpath
+*.iml
+*.ipr
+*.ids
+*.iws
 *target/
+.idea
+Realm/dbc/*.dbc

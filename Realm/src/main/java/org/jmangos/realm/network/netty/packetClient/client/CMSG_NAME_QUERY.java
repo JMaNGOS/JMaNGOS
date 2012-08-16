@@ -25,25 +25,22 @@ import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_NAME_QUERY_RESPONSE;
 import org.jmangos.realm.service.PlayerService;
-import org.springframework.stereotype.Component;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CMSG_NAME_QUERY.
  */
-@Component
 public class CMSG_NAME_QUERY extends AbstractWoWClientPacket {
-
+	
 	/** The sender. */
 	@Inject
-	@Named("nettyPacketSender")
+	@Named("client")
 	private AbstractPacketSender sender;
-
+	
 	/** The guid. */
 	private long guid;
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
 	 */
 	@Override
@@ -51,20 +48,19 @@ public class CMSG_NAME_QUERY extends AbstractWoWClientPacket {
 		guid = readQ();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
 	 */
 	@Override
 	protected void runImpl() {
 		/**
-		 * FIXME send from database information too need cache
+		 *  FIXME send from database information too
+		 *  need cache
 		 */
-
+		
 		if (PlayerService.getPlayer(guid) != null) {
-			sender.send(getClient(),
-					new SMSG_NAME_QUERY_RESPONSE(PlayerService.getPlayer(guid)));
+			sender.send(getClient(), new SMSG_NAME_QUERY_RESPONSE(PlayerService
+					.getPlayer(guid)));
 		}
 
 	}

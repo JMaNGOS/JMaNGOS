@@ -17,28 +17,34 @@
 package org.jmangos.realm.model.player;
 
 import org.apache.log4j.Logger;
+import org.jmangos.commons.model.Account;
 import org.jmangos.commons.network.model.ChanneledObject;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.NetworkChannel;
-import org.jmangos.realm.model.account.Account;
-import org.jmangos.realm.model.base.character.CharactersData;
+import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
+import org.jmangos.commons.network.netty.sender.NettyPacketSender;
+import org.jmangos.commons.service.ServiceContent;
+import org.jmangos.realm.model.UpdateType;
+import org.jmangos.realm.model.base.character.CharacterData;
 import org.jmangos.realm.model.base.guid.TypeId;
 import org.jmangos.realm.model.base.guid.TypeMask;
 import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.base.update.PlayerFields;
-import org.jmangos.realm.model.unit.Powers;
-import org.jmangos.realm.model.unit.SpellSchools;
-import org.jmangos.realm.model.unit.Stats;
-import org.jmangos.realm.model.unit.UnitMoveType;
-import org.jmangos.realm.model.unit.Units;
-import org.jmangos.realm.model.unit.WeaponAttackType;
+import org.jmangos.realm.model.base.update.UnitField;
+import org.jmangos.realm.model.unit.*;
+import org.jmangos.realm.network.netty.packetClient.server.SMSG_UPDATE_OBJECT;
+
+import java.math.BigInteger;
+import java.util.BitSet;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class Player.
  */
 public class Player extends Units implements ChanneledObject {
-	
+
+    AbstractPacketSender sender;
+
 	/** The Constant logger. */
 	private static final Logger logger = Logger.getLogger(Player.class);
 	
@@ -49,14 +55,11 @@ public class Player extends Units implements ChanneledObject {
 	final static int TRADE_SLOT_COUNT = 7;
 
 	/** The character data. */
-	private CharactersData characterData;
+	private CharacterData characterData;
 	
 	/** The channel. */
 	private NetworkChannel channel;
 	
-	/** The home bind. */
-	private PlayerHomeBindData homeBind;
-
 	/** The Weapon proficiency. */
 	int WeaponProficiency = 0;
 	
@@ -103,16 +106,18 @@ public class Player extends Units implements ChanneledObject {
 	 *
 	 * @param cd the cd
 	 */
-	public Player(CharactersData cd) {
-		super(cd.getObjectId());
+	public Player(CharacterData cd) {
+		super(cd.getGuid());
 		setName(cd.getName());
 		valuesCount = PlayerFields.PLAYER_END;
+        bitSet = new BitSet( valuesCount );
 		objectType.add(TypeMask.TYPEMASK_PLAYER);
 		objectTypeId = TypeId.TYPEID_PLAYER;
 		characterData = cd;
 		for (int i = 0; i < BaseModGroup.BASEMOD_END.ordinal(); ++i) {
 			auraBaseMod[i][BaseModType.PCT_MOD.ordinal()] = 1.0f;
 		}
+        sender = ServiceContent.getInjector().getInstance( NettyPacketSender.class );
 	}
 
 	/**
@@ -120,7 +125,7 @@ public class Player extends Units implements ChanneledObject {
 	 *
 	 * @param characterData the characterData to set
 	 */
-	public final void setCharacterData(CharactersData characterData) {
+	public final void setCharacterData(CharacterData characterData) {
 		this.characterData = characterData;
 		setName(characterData.getName());
 	}
@@ -133,11 +138,13 @@ public class Player extends Units implements ChanneledObject {
 	public Player(long guid) {
 		super(guid);
 		valuesCount = PlayerFields.PLAYER_END;
+        bitSet = new BitSet( valuesCount );
 		objectType.add(TypeMask.TYPEMASK_PLAYER);
 		objectTypeId = TypeId.TYPEID_PLAYER;
 		for (int i = 0; i < BaseModGroup.BASEMOD_END.ordinal(); ++i) {
 			auraBaseMod[i][BaseModType.PCT_MOD.ordinal()] = 1.0f;
 		}
+        sender = ServiceContent.getInjector().getInstance( NettyPacketSender.class );
 	}
 
 	/**
@@ -146,7 +153,7 @@ public class Player extends Units implements ChanneledObject {
 	 * @return the home bind
 	 */
 	public final PlayerHomeBindData getHomeBind() {
-		return homeBind;
+		return characterData.getHomeBindData();
 	}
 
 	/**
@@ -163,7 +170,7 @@ public class Player extends Units implements ChanneledObject {
 	 *
 	 * @return the characterData
 	 */
-	public CharactersData getCharacterData() {
+	public CharacterData getCharacterData() {
 		return characterData;
 	}
 
@@ -190,19 +197,18 @@ public class Player extends Units implements ChanneledObject {
 	 * @return the account
 	 */
 	public Account getAccount() {
-		return (Account) ((NettyNetworkChannel) getChannel())
-				.getChanneledObject();
+		return (Account)((NettyNetworkChannel) getChannel()).getChanneledObject();
 	}
 
 	/**
 	 * Sets the home bind.
 	 *
-	 * @param HomeBind the home bind
+	 * @param homeBind the home bind
 	 * @return true, if successful
 	 */
-	public boolean setHomeBind(PlayerHomeBindData HomeBind) {
-		if (HomeBind != null) {
-			this.homeBind = HomeBind;
+	public boolean setHomeBind(PlayerHomeBindData homeBind) {
+		if (homeBind != null) {
+			characterData.setHomeBindData( homeBind );
 			return true;
 		} else {
 			return false;
@@ -233,6 +239,7 @@ public class Player extends Units implements ChanneledObject {
 	 * @param money the new money
 	 */
 	public void setMoney(int money) {
+        this.SetUInt32Value(PlayerFields.PLAYER_FIELD_COINAGE, money);
 		this.money = money;
 	}
 	
@@ -242,7 +249,7 @@ public class Player extends Units implements ChanneledObject {
 	 * @return the money
 	 */
 	public final int getMoney() {
-		return money;
+        return this.GetUInt32Value( PlayerFields.PLAYER_FIELD_COINAGE );
 	}
 
 	/**
@@ -252,11 +259,11 @@ public class Player extends Units implements ChanneledObject {
 		logger.debug(String.format("HP is: \t\t\t%d\t\tMP is: \t\t\t%d",
 				GetMaxHealth(), GetMaxPower(Powers.POWER_MANA)));
 		logger.debug(String.format("AGILITY is: \t\t%f\tSTRENGTH is: \t\t%f",
-				GetStat(Stats.STAT_AGILITY), GetStat(Stats.STAT_STRENGTH)));
+				GetStat(Stats.AGILITY), GetStat(Stats.STRENGTH)));
 		logger.debug(String.format("INTELLECT is: \t\t%f\tSPIRIT is: \t\t%f",
-				GetStat(Stats.STAT_INTELLECT), GetStat(Stats.STAT_SPIRIT)));
+				GetStat(Stats.INTELLECT), GetStat(Stats.SPIRIT)));
 		logger.debug(String.format("STAMINA is: \t\t%f",
-				GetStat(Stats.STAT_STAMINA)));
+				GetStat(Stats.STAMINA)));
 		logger.debug(String
 				.format("Armor is: \t\t\t%d\t\tBlock is: \t\t%f", GetArmor(),
 						GetFloatValue(PlayerFields.PLAYER_BLOCK_PERCENTAGE)));
@@ -272,17 +279,17 @@ public class Player extends Units implements ChanneledObject {
 				GetResistance(SpellSchools.SPELL_SCHOOL_SHADOW),
 				GetResistance(SpellSchools.SPELL_SCHOOL_ARCANE)));
 		logger.debug(String.format(
-				"MIN_DAMAGE is: \t\t%f\tMAX_DAMAGE is: \t\t%f",
-				GetFloatValue(PlayerFields.UNIT_FIELD_MINDAMAGE),
-				GetFloatValue(PlayerFields.UNIT_FIELD_MAXDAMAGE)));
+                "MIN_DAMAGE is: \t\t%f\tMAX_DAMAGE is: \t\t%f",
+                GetFloatValue(UnitField.UNIT_FIELD_MINDAMAGE),
+                GetFloatValue(UnitField.UNIT_FIELD_MAXDAMAGE)));
 		logger.debug(String.format(
 				"MIN_OFFHAND_DAMAGE is: \t%f\tMAX_OFFHAND_DAMAGE is: \t%f",
-				GetFloatValue(PlayerFields.UNIT_FIELD_MINOFFHANDDAMAGE),
-				GetFloatValue(PlayerFields.UNIT_FIELD_MAXOFFHANDDAMAGE)));
+				GetFloatValue(UnitField.UNIT_FIELD_MINOFFHANDDAMAGE),
+				GetFloatValue(UnitField.UNIT_FIELD_MAXOFFHANDDAMAGE)));
 		logger.debug(String.format(
 				"MIN_RANGED_DAMAGE is: \t%f\tMAX_RANGED_DAMAGE is: \t%f",
-				GetFloatValue(PlayerFields.UNIT_FIELD_MINRANGEDDAMAGE),
-				GetFloatValue(PlayerFields.UNIT_FIELD_MAXRANGEDDAMAGE)));
+				GetFloatValue(UnitField.UNIT_FIELD_MINRANGEDDAMAGE),
+				GetFloatValue(UnitField.UNIT_FIELD_MAXRANGEDDAMAGE)));
 		logger.debug(String.format(
 				"ATTACK_TIME is: \t\t%d\t\tRANGE_ATTACK_TIME is: \t%d",
 				GetAttackTime(WeaponAttackType.BASE_ATTACK), GetAttackTime(WeaponAttackType.RANGED_ATTACK)));
@@ -309,4 +316,38 @@ public class Player extends Units implements ChanneledObject {
 		 items[slot] = item;
 		
 	}
+
+    @Deprecated
+    public void setCreateBits() {
+        int values[] = new int[]{5,6,33,40,41,42,46,48,100,101,108,109,158,160,161,162,163,164,166,168,169,193,194,198,200,220,232,233,234,238,240,244,245,255,256,257,296,328,360,361,362,363,364,365,368,375,409,410,412,416,418,419,421,422,423,424,449,456,457,458,462,464,513,574,576,577,578,579,580,582,584,585,609,610,614,616};
+        for ( int i : values ) {
+            SetUInt32Value( i, GetUInt32Value( i ) );
+        }
+    }
+
+    public void create() {
+        sender.send( getChannel(), new SMSG_UPDATE_OBJECT( this, UpdateType.CREATE_SELF ) );
+    }
+
+    @Override
+    public void update() {
+        sender.send( getChannel(), new SMSG_UPDATE_OBJECT( this, UpdateType.VALUES ) );
+    }
+
+    /**
+     * Send update packet with specified wowguid
+     * @deprecated Only for testing!
+     * @param wowguid the overrided guid
+     */
+    @Deprecated
+    public void update( BigInteger wowguid ) {
+        if ( getBitTypes().size() > 0 ) {
+            SMSG_UPDATE_OBJECT smsg_update_object = new SMSG_UPDATE_OBJECT( this, UpdateType.VALUES );
+            smsg_update_object.setGuid( wowguid );
+
+            sender.send( getChannel(), smsg_update_object );
+        } else {
+            logger.info( "There are no update needed on player: [ " + getName() + " ]. Skipping." );
+        }
+    }
 }

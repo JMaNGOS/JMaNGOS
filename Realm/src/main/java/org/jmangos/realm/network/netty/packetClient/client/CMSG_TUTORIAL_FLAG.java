@@ -19,17 +19,14 @@ package org.jmangos.realm.network.netty.packetClient.client;
 import java.nio.BufferUnderflowException;
 
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
-import org.springframework.stereotype.Component;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CMSG_TUTORIAL_FLAG.
  */
-@Component
 public class CMSG_TUTORIAL_FLAG extends AbstractWoWClientPacket {
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
 	 */
 	@Override
@@ -41,15 +38,14 @@ public class CMSG_TUTORIAL_FLAG extends AbstractWoWClientPacket {
 		}
 		int rInt = (Flag % 32);
 
-		int tutorials = getAccount().getTutorials(wInt);
+        // TODO:FIXME
+		int tutorials = 0;//getAccount().getTutorials(wInt); /* disabled by paalgyula */
 		tutorials |= (1 << rInt);
-		getAccount().setTutorials(tutorials, wInt);
+		//getAccount().setTutorials(tutorials, wInt); /* disabled by paalgyula */
 
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
+	
+	/* (non-Javadoc)
 	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
 	 */
 	@Override

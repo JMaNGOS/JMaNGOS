@@ -16,17 +16,21 @@
  *******************************************************************************/
 package org.jmangos.realm.model.base;
 
-import java.nio.ByteOrder;
-import java.util.EnumSet;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jmangos.commons.model.NamedObject;
+import org.jmangos.commons.network.model.UpdateField;
+import org.jmangos.commons.network.model.UpdateFieldType;
 import org.jmangos.realm.model.base.guid.ObjectGuid;
 import org.jmangos.realm.model.base.guid.TypeId;
 import org.jmangos.realm.model.base.guid.TypeMask;
 
-// TODO: Auto-generated Javadoc
+import java.nio.ByteOrder;
+import java.util.BitSet;
+import java.util.EnumSet;
+import java.util.HashMap;
+
+
 /**
  * The Class WorldObject.
  */
@@ -49,6 +53,12 @@ public class WorldObject extends NamedObject {
 	
 	/** The values count. */
 	protected int valuesCount = 0;
+
+    /** BitSet for update packet */
+    protected BitSet bitSet = new BitSet();
+
+    /** Mapping filed value types */
+    protected HashMap<Integer, UpdateFieldType> bitTypes = new HashMap<Integer, UpdateFieldType>();
 
 	/**
 	 * Instantiates a new world object.
@@ -109,7 +119,7 @@ public class WorldObject extends NamedObject {
 	 * Update.
 	 */
 	public void update() {
-		System.out.println(m_uint32Values.capacity());
+        System.out.println(m_uint32Values.capacity());
 	}
 
 	/**
@@ -128,8 +138,20 @@ public class WorldObject extends NamedObject {
 	 */
 	public void SetUInt32Value(int i, int value) {
 		m_uint32Values.setInt(i*4, value);
+        bitSet.set( i );
+        bitTypes.put( i, UpdateFieldType.INT );
 	}
-	
+
+    /**
+     * Sets the u int32 value.
+     *
+     * @param updateField the PlayerFields enum
+     * @param value the value
+     */
+    public void SetUInt32Value( UpdateField updateField, int value) {
+        SetUInt32Value( updateField.getValue(), value );
+    }
+
 	/**
 	 * Gets the u int32 value.
 	 *
@@ -139,7 +161,17 @@ public class WorldObject extends NamedObject {
 	public int GetUInt32Value(int i) {
 		return m_uint32Values.getInt(i*4);
 	}
-	
+
+    /**
+     * Gets the u int32 value.
+     *
+     * @param updateField the PlayerField
+     * @return the int
+     */
+    public int GetUInt32Value( UpdateField updateField) {
+        return m_uint32Values.getInt( updateField.getValue() * 4 );
+    }
+
 	/**
 	 * Sets the u int64 value.
 	 *
@@ -148,18 +180,39 @@ public class WorldObject extends NamedObject {
 	 */
 	public void SetUInt64Value(int i, long value) {
 		m_uint32Values.setLong(i*4, value);
+        bitSet.set(i);
+        bitTypes.put( i, UpdateFieldType.LONG );
 	}
+
+    /**
+     * Sets the u int64 value.
+     *
+     * @param updateField the i
+     * @param value the value
+     */
+    public void SetUInt64Value( UpdateField updateField, long value) {
+        SetUInt64Value( updateField.getValue(), value );
+    }
 	
 	/**
-	 * Gets the u int64 value.
-	 *
-	 * @param i the i
-	 * @param value the value
-	 * @return the long
-	 */
-	public long GetUInt64Value(int i, long value) {
-		return m_uint32Values.getLong(i*4);
-	}
+     * Gets the u int64 value.
+     *
+     * @param i the i
+     * @return the long
+     */
+    public long GetUInt64Value(int i) {
+        return m_uint32Values.getLong(i*4);
+    }
+
+    /**
+     * Gets the u int64 value.
+     *
+     * @param updateField the i
+     * @return the long
+     */
+    public long GetUInt64Value( UpdateField updateField ) {
+        return m_uint32Values.getLong( updateField.getValue() * 4 );
+    }
 	
 	/**
 	 * _ load into data field.
@@ -170,7 +223,11 @@ public class WorldObject extends NamedObject {
 	 */
 	public void _LoadIntoDataField(String[] strings, int from, int count) {
 		for (int i = 0; i < strings.length; i++) {
-			SetUInt32Value(from + i, Integer.decode(strings[i]));
+            try {
+			    SetUInt32Value(from + i, Integer.decode(strings[i]));
+            } catch (NumberFormatException e) {
+                // Hmmmm... Manual DB Edit? N00B!
+            }
 		}
 	}
 	
@@ -206,8 +263,63 @@ public class WorldObject extends NamedObject {
 	    	rvalue &= ~(0xFF << (offset * 8));
 	    	rvalue |= (value << (offset * 8));
 	    }
-	    SetUInt32Value(index, rvalue);
+	    SetUInt32Value( index, rvalue );
+        bitSet.set( index );
+        bitTypes.put( index, UpdateFieldType.BYTES );
 	}
+
+    /**
+     * Sets the byte value.
+     *
+     * @param updateField the PlayerFields index
+     * @param offset the offset
+     * @param value the value
+     */
+    public void SetByteValue( UpdateField updateField, int offset, byte value){
+        SetByteValue( updateField.getValue(), offset, value );
+    }
+
+    /**
+     * Set m_ byte value
+     * @param index
+     *              int UpdateField index
+     * @param value
+     *              byte value
+     */
+    public void SetByteValue( int index, byte value ) {
+        m_uint32Values.setByte( index * 4, value );
+        bitSet.set( index );
+        bitTypes.put( index, UpdateFieldType.BYTES );
+    }
+
+    /**
+     *
+     * @param index
+     * @return
+     */
+    public byte GetByteValue( UpdateField index ) {
+        return GetByteValue( index );
+    }
+
+    /**
+     *
+     * @param index
+     * @return
+     */
+    public byte GetByteValue( int index ) {
+        return m_uint32Values.getByte( index * 4 );
+    }
+
+    /**
+     * Set m_ byte value
+     * @param updateField
+     *              UpdateField index
+     * @param value
+     *              byte value
+     */
+    public void SetByteValue( UpdateField updateField, byte value ) {
+        m_uint32Values.setByte( updateField.getValue(), value );
+    }
 	
 	/**
 	 * Sets the float value.
@@ -217,15 +329,53 @@ public class WorldObject extends NamedObject {
 	 */
 	public void SetFloatValue(int i, float value) {
 		m_uint32Values.setFloat(i*4, value);
+        bitSet.set(i);
+        bitTypes.put( i, UpdateFieldType.FLOAT );
 	}
+
+    /**
+     * Sets the float value.
+     *
+     * @param field the field
+     * @param value the value
+     */
+    public void SetFloatValue( UpdateField field, float value ) {
+        SetFloatValue( field.getValue(), value );
+    }
 	
 	/**
-	 * Gets the float value.
-	 *
-	 * @param i the i
-	 * @return the float
-	 */
-	public float GetFloatValue(int i) {
-		return m_uint32Values.getFloat(i*4);
-	}
+     * Gets the float value.
+     *
+     * @param i the i
+     * @return the float
+     */
+    public float GetFloatValue(int i) {
+        return m_uint32Values.getFloat(i * 4);
+    }
+
+    /**
+     * Gets the float value.
+     *
+     * @param updateField the i
+     * @return the float
+     */
+    public float GetFloatValue( UpdateField updateField ) {
+        return GetFloatValue(updateField.getValue());
+    }
+
+    /** Updatemask */
+    public BitSet getBitSet() {
+        return bitSet;
+    }
+
+    /** Updatemask index-type map */
+    public HashMap<Integer, UpdateFieldType> getBitTypes() {
+        return bitTypes;
+    }
+
+    // For clear any pending display changes
+    public void clearBits() {
+        bitTypes.clear();
+        bitSet.clear();
+    }
 }

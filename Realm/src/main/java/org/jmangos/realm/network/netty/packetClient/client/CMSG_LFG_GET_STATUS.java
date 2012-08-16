@@ -23,38 +23,33 @@ import javax.inject.Named;
 
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
-import org.springframework.stereotype.Component;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CMSG_LFG_GET_STATUS.
  */
-@Component
-public class CMSG_LFG_GET_STATUS extends AbstractWoWClientPacket {
-
+public class CMSG_LFG_GET_STATUS  extends AbstractWoWClientPacket {
+	
 	/** The sender. */
 	@SuppressWarnings("unused")
 	@Inject
-	@Named("nettyPacketSender")
+	@Named("client")
 	private AbstractPacketSender sender;
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
 	 */
 	@Override
 	protected void readImpl() throws BufferUnderflowException, RuntimeException {
-
+		
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
 	 */
 	@Override
 	protected void runImpl() {
 		// FIXME need implement
-
+		
 	}
 }

@@ -21,6 +21,11 @@ package org.jmangos.commons.model;
  */
 public class NamedObject extends ManagedObject {
 
+    /**
+     * Default constructor for persistence content
+     */
+    public NamedObject() {}
+
 	/**
 	 * Instantiates a new named object.
 	 * 

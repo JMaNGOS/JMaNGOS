@@ -24,9 +24,14 @@
  */
 package org.jmangos.auth.dao;
 
-import java.util.Set;
+import java.sql.Timestamp;
+import java.util.List;
 
-import org.jmangos.auth.model.BanIp;
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.jmangos.commons.model.BanIp;
+import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
 
 /**
@@ -35,7 +40,7 @@ import org.jmangos.commons.database.dao.DAO;
  * @author MinimaJack
  * 
  */
-public abstract class BanIpDAO implements DAO {
+public class BanIpDAO implements DAO {
 	/**
 	 * Inserts ip mask to database, returns BannedIP object that represents
 	 * inserted mask or null if error.<br>
@@ -45,7 +50,9 @@ public abstract class BanIpDAO implements DAO {
 	 *            ip mask to ban
 	 * @return BannedIP object represetns mask or null if error happened
 	 */
-	public abstract BanIp insert(String mask);
+	public BanIp insert(String mask) {
+        return insert( mask, null );
+    }
 
 	/**
 	 * Inserts ip mask to database with given expireTime.<br>
@@ -58,7 +65,10 @@ public abstract class BanIpDAO implements DAO {
 	 *            expiration time of ban
 	 * @return object that represetns added ban or null in case of error
 	 */
-	public abstract BanIp insert(String mask, Long expireTime);
+	public BanIp insert(String mask, Timestamp expireTime) {
+        BanIp banIp = new BanIp( mask, expireTime );
+        return insert( banIp );
+    }
 
 	/**
 	 * Inserts BannedIP object to database.<br>
@@ -71,7 +81,21 @@ public abstract class BanIpDAO implements DAO {
 	 *            record to add to db
 	 * @return true in case of success or false
 	 */
-	public abstract boolean insert(BanIp bannedIp);
+	public BanIp insert(BanIp bannedIp) {
+        Session hibernateSession = DatabaseFactory.getAccountsSessionFactory().openSession();
+        hibernateSession.getTransaction();
+        try {
+            hibernateSession.save( bannedIp );
+        } catch ( HibernateException e ) {
+            log.warn( "This IP is already in the database." );
+            return null;
+        } finally {
+            if( hibernateSession.getTransaction().isActive() )
+                hibernateSession.getTransaction().rollback();
+        }
+
+        return bannedIp;
+    }
 
 	/**
 	 * Updates BannedIP object.<br>
@@ -83,7 +107,20 @@ public abstract class BanIpDAO implements DAO {
 	 *            record to update
 	 * @return true in case of success or false in other case
 	 */
-	public abstract boolean update(BanIp bannedIp);
+	public boolean update(BanIp bannedIp) {
+        Session hibernateSession = DatabaseFactory.getAccountsSessionFactory().openSession();
+        hibernateSession.getTransaction();
+        try {
+            hibernateSession.update(bannedIp);
+            return true;
+        } catch ( HibernateException e ) {
+            log.warn( "Update not persisted IP? Try save instead!" );
+            return false;
+        } finally {
+            if( hibernateSession.getTransaction().isActive() )
+                hibernateSession.getTransaction().rollback();
+        }
+    }
 
 	/**
 	 * Removes ban by mask.<br>
@@ -93,7 +130,20 @@ public abstract class BanIpDAO implements DAO {
 	 *            the ip
 	 * @return true in case of success, false in other case
 	 */
-	public abstract boolean remove(String ip);
+	public boolean remove(String ip) {
+        Session hibernateSession = DatabaseFactory.getAccountsSessionFactory().openSession();
+        hibernateSession.getTransaction();
+        try {
+            hibernateSession.delete(BanIp.class.getSimpleName(), ip);
+            return true;
+        } catch ( HibernateException e ) {
+            log.warn( "This BanIP entry not found with this IP: " + ip );
+            return false;
+        } finally {
+            if( hibernateSession.getTransaction().isActive() )
+                hibernateSession.getTransaction().rollback();
+        }
+    }
 
 	/**
 	 * Removes BannedIP record by ID. Id must not be null.<br>
@@ -103,14 +153,31 @@ public abstract class BanIpDAO implements DAO {
 	 *            record to unban
 	 * @return true if removeas wass successfull, false in case of error
 	 */
-	public abstract boolean remove(BanIp bannedIp);
+	public boolean remove(BanIp bannedIp) {
+        Session hibernateSession = DatabaseFactory.getAccountsSessionFactory().openSession();
+        hibernateSession.getTransaction();
+        try {
+            hibernateSession.delete(bannedIp);
+            return true;
+        } catch ( HibernateException e ) {
+            log.warn( "This BanIP entry not found with this IP: " + bannedIp.getIp() );
+            return false;
+        } finally {
+            if( hibernateSession.getTransaction().isActive() )
+                hibernateSession.getTransaction().rollback();
+        }
+    }
 
 	/**
 	 * Returns all bans from database.
 	 * 
 	 * @return all bans from database.
 	 */
-	public abstract Set<BanIp> getAllBans();
+	public List<BanIp> getAllBans() {
+        Session hibernateSession = DatabaseFactory.getAccountsSessionFactory().openSession();
+        Criteria crit = hibernateSession.createCriteria( BanIp.class );
+        return (List<BanIp>)crit.list();
+    }
 
 	/**
 	 * Gets the ban.
@@ -119,7 +186,10 @@ public abstract class BanIpDAO implements DAO {
 	 *            the ip
 	 * @return the ban
 	 */
-	public abstract BanIp getBan(String ip);
+	public BanIp getBan(String ip) {
+        Session hibernateSession = DatabaseFactory.getAccountsSessionFactory().openSession();
+        return (BanIp)hibernateSession.get( BanIp.class, ip );
+    }
 
 	/**
 	 * Returns class name that will be uses as unique identifier for all DAO
