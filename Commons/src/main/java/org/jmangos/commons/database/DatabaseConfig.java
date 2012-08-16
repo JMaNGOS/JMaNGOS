@@ -45,7 +45,7 @@ public class DatabaseConfig extends AbstractConfig {
      * World database uri !!!with trailing slash!!!
      */
     @Property(key = "world.database.url", defaultValue = "jdbc:mysql://localhost:3306/")
-    public String              WORLD_DATABASE_URL   = "jdbc:mysql://localhost:3306/";
+    public String              WORLD_DATABASE_URL;
     
     /**
      * World Database Hibernate dialect (see http://hibernate.org)
@@ -94,7 +94,7 @@ public class DatabaseConfig extends AbstractConfig {
      * Characters database uri !!!with trailing slash!!!
      */
     @Property(key = "chars.database.url", defaultValue = "jdbc:mysql://localhost:3306/")
-    public String              CHARS_DATABASE_URL   = "jdbc:mysql://localhost:3306/";
+    public String              CHARS_DATABASE_URL;
     
     /**
      * Characters Database Hibernate dialect (see http://hibernate.org)
@@ -143,7 +143,7 @@ public class DatabaseConfig extends AbstractConfig {
      * Account database uri !!!with trailing slash!!!
      */
     @Property(key = "account.database.url", defaultValue = "jdbc:mysql://localhost:3306/")
-    public String              ACCOUNT_DATABASE_URL = "jdbc:mysql://localhost:3306/";
+    public String              ACCOUNT_DATABASE_URL;
     
     /**
      * Characters Database Hibernate dialect (see http://hibernate.org)
