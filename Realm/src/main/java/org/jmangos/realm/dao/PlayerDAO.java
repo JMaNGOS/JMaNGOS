@@ -19,21 +19,26 @@ package org.jmangos.realm.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
 import org.jmangos.realm.model.InventoryItem;
 import org.jmangos.realm.model.base.character.CharacterData;
 import org.jmangos.realm.model.player.PlayerHomeBindData;
+import org.springframework.stereotype.Component;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class PlayerDAO.
  */
+@Component
 public class PlayerDAO implements DAO {
     
-    /*
-     * (non-Javadoc)
+    @Inject
+    private DatabaseFactory databaseFactory;
+    
+    /**
      * 
      * @see org.jmangos.commons.database.dao.DAO#getClassName()
      */
@@ -45,7 +50,7 @@ public class PlayerDAO implements DAO {
     
     public CharacterData getCharacter(final long characterId) {
     
-        final Session session = DatabaseFactory.getCharactersSessionFactory().openSession();
+        final Session session = this.databaseFactory.getCharactersSessionFactory().openSession();
         final CharacterData characterData = (CharacterData) session.get(CharacterData.class, characterId);
         return characterData;
     }
@@ -59,7 +64,7 @@ public class PlayerDAO implements DAO {
      */
     public PlayerHomeBindData loadHomeBind(final int objectId) {
     
-        final Session session = DatabaseFactory.getCharactersSessionFactory().openSession();
+        final Session session = this.databaseFactory.getCharactersSessionFactory().openSession();
         final CharacterData characterData = (CharacterData) session.get(CharacterData.class, objectId);
         return characterData.getHomeBindData();
     }

@@ -14,28 +14,25 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.realm.network.netty.packetClient.client;
+package org.jmangos.auth.network.handler;
 
-import java.nio.BufferUnderflowException;
-
-import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
+import org.jmangos.commons.network.handlers.AbstractPacketHandlerFactory;
+import org.jmangos.commons.network.netty.model.PacketData;
 import org.springframework.stereotype.Component;
 
 /**
- * The Class CMSG_SET_ACTIVE_VOICE_CHANNEL.
+ * 
+ * @author MinimaJack
  */
-@Component
-public class CMSG_SET_ACTIVE_VOICE_CHANNEL extends AbstractWoWClientPacket {
+@Component("realmToAuthPacketHandlerFactory")
+public class AuthToRealmPacketHandlerFactory extends AbstractPacketHandlerFactory {
     
+    /**
+     * 
+     * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#loadPacket()
+     */
     @Override
-    protected void readImpl() throws BufferUnderflowException, RuntimeException {
-    
-        readD();
-        readS();
-    }
-    
-    @Override
-    protected void runImpl() {
+    public void loadPacket() {
     
     }
 }

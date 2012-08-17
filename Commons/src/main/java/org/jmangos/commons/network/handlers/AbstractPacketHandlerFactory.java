@@ -28,32 +28,25 @@ import org.jmangos.commons.network.netty.model.PacketData;
 import org.jmangos.commons.network.netty.model.PacketList;
 import org.jmangos.commons.network.netty.model.PacketTemplate;
 import org.jmangos.commons.service.ServiceContent;
-
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.name.Named;
+import org.springframework.context.ApplicationContext;
 
 /**
  * A factory for creating AbstractPacketHandler objects.
  * 
- * @author minimajack
+ * @author MinimaJack
  */
 public abstract class AbstractPacketHandlerFactory extends XmlDataLoader implements PacketHandlerFactory {
     
-    private static final Logger logger   = Logger.getLogger(AbstractPacketHandlerFactory.class);
+    private static final Logger logger            = Logger.getLogger(AbstractPacketHandlerFactory.class);
     /** The c handler. */
-    ClientPacketHandler         cHandler = new ClientPacketHandler();
+    ClientPacketHandler         cHandler          = new ClientPacketHandler();
     
     /** The s handler. */
-    ServerPacketHandler         sHandler = new ServerPacketHandler();
+    ServerPacketHandler         sHandler          = new ServerPacketHandler();
     
-    @Inject
-    @Named("packetXSD")
-    protected String            packetXSDLocation;
+    protected String            packetXSDLocation = "./conf/packetData/packets.xsd";
     
-    @Inject
-    @Named("toClient")
-    protected String            clientPacketPath;
+    protected String            clientPacketPath  = "./conf/packetData/lc-packets.xml";
     
     /**
      * Instantiates a new abstract packet handler factory.
@@ -104,8 +97,8 @@ public abstract class AbstractPacketHandlerFactory extends XmlDataLoader impleme
     
     static final class AddDownstreamPackets extends AddPackets {
         
-        private static final Injector injector = ServiceContent.getInjector();
-        private static final Logger   logger   = Logger.getLogger(AddDownstreamPackets.class);
+        private static final ApplicationContext context = ServiceContent.getContext();
+        private static final Logger             logger  = Logger.getLogger(AddDownstreamPackets.class);
         
         public AddDownstreamPackets(final AbstractPacketHandlerFactory phf, final String pkdgName) {
         
@@ -117,19 +110,17 @@ public abstract class AbstractPacketHandlerFactory extends XmlDataLoader impleme
         
             final String fullPath = this.upstreamPackageName + template.getName();
             try {
-                final ReceivablePacket packet = this.classLoader.loadClass(fullPath).asSubclass(ReceivablePacket.class).newInstance();
+                
+                final Class<?> clazz = Class.forName(fullPath, false, this.classLoader);
+                final ReceivablePacket packet = (ReceivablePacket) context.getBean(clazz);
+                
                 packet.setOpCode(template.getTemplateId());
-                injector.injectMembers(packet);
                 this.packetHandlerFactory.addPacket(packet, template.getState());
                 
             } catch (final ClassNotFoundException e) {
                 logger.warn("Class " + fullPath + " not found", e);
             } catch (final ClassCastException e) {
                 logger.warn("Class " + fullPath + " can't cast to ReceivablePacket.class", e);
-            } catch (final InstantiationException e) {
-                logger.warn("Class " + fullPath + " don't have empty constructor for instantinate", e);
-            } catch (final IllegalAccessException e) {
-                logger.warn("Can't get acces for class " + fullPath, e);
             }
             return true;
         }
@@ -158,11 +149,9 @@ public abstract class AbstractPacketHandlerFactory extends XmlDataLoader impleme
         }
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#addPacket(org
-     * .jmangos.commons.network.model.ReceivablePacket, org.jmangos.commons.network.model.State[])
+    /**
+     * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#addPacket(org.jmangos.commons.network.model.ReceivablePacket,
+     *      org.jmangos.commons.network.model.State[])
      */
     @Override
     public void addPacket(final ReceivablePacket packetPrototype, final State... states) {
@@ -171,11 +160,8 @@ public abstract class AbstractPacketHandlerFactory extends XmlDataLoader impleme
         
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#
-     * getServerPacketopCode(org.jmangos.commons.network.model.SendablePacket)
+    /**
+     * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#getServerPacketopCode(org.jmangos.commons.network.model.SendablePacket)
      */
     @Override
     public int getServerPacketopCode(final SendablePacket packetClass) {
@@ -183,11 +169,9 @@ public abstract class AbstractPacketHandlerFactory extends XmlDataLoader impleme
         return this.sHandler.getOpCode(packetClass);
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#handleClientPacket (int,
-     * org.jmangos.commons.network.model.NetworkChannel)
+    /**
+     * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#handleClientPacket(int,
+     *      org.jmangos.commons.network.model.NetworkChannel)
      */
     @Override
     public ReceivablePacket handleClientPacket(final int id, final NetworkChannel ch) {
@@ -195,11 +179,9 @@ public abstract class AbstractPacketHandlerFactory extends XmlDataLoader impleme
         return this.cHandler.getPacket(id, ch);
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#addPacket(java .lang.Class,
-     * int)
+    /**
+     * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#addPacket(java.lang.Class,
+     *      int)
      */
     @Override
     public void addPacket(final Class<? extends SendablePacket> packetPrototype, final int opcode) {

@@ -29,39 +29,30 @@ import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.model.account.AccountData;
 import org.jmangos.realm.model.account.AccountDataType;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
-// TODO: Auto-generated Javadoc
+import org.springframework.stereotype.Component;
+
 // FIXME implement opcode
 
 /**
  * The Class CMSG_REQUEST_ACCOUNT_DATA.
  */
+@Component
 public class CMSG_REQUEST_ACCOUNT_DATA extends AbstractWoWClientPacket {
     
     /** The sender. */
-    @SuppressWarnings("unused")
     @Inject
-    @Named("client")
+    @Named("nettyPacketSender")
     private AbstractPacketSender sender;
     
     /** The type. */
     private int                  type;
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
-     */
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
         this.type = readD();
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
-     */
     @Override
     protected void runImpl() {
     

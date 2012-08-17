@@ -31,27 +31,27 @@ import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.netty.factory.BasicPipelineFactory;
 import org.jmangos.commons.network.netty.receiver.NettyPacketReceiver;
+import org.springframework.stereotype.Component;
 
 /**
  * A factory for creating Auth-Client Pipeline objects.
  * 
  * @author MinimaJack
  */
+@Component("authToClientPipelineFactory")
 public class AuthToClientPipelineFactory extends BasicPipelineFactory {
     
     /** The connection handler. */
     @Inject
-    @Named("AuthToClient")
+    @Named("authToClientConnectHandler")
     private ConnectHandler       connectionHandler;
     
     /** The packet service. */
     @Inject
-    @Named("AuthToClient")
+    @Named("authToClientPacketHandlerFactory")
     private PacketHandlerFactory packetService;
     
     /**
-     * (non-Javadoc)
-     * 
      * @see org.jboss.netty.channel.ChannelPipelineFactory#getPipeline()
      */
     @Override

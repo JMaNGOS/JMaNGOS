@@ -1,9 +1,9 @@
 package org.jmangos.commons.network.jmx;
 
+import javax.inject.Inject;
+
 import org.jmangos.commons.jmx.AbstractJmxBeanService;
 import org.jmangos.commons.network.netty.service.NetworkService;
-
-import com.google.inject.Inject;
 
 public class JmxNetworkService extends AbstractJmxBeanService implements JmxNetworkServiceMBean {
     

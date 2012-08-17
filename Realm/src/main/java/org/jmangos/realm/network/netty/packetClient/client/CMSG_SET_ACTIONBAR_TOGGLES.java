@@ -19,32 +19,23 @@ package org.jmangos.realm.network.netty.packetClient.client;
 import java.nio.BufferUnderflowException;
 
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
+import org.springframework.stereotype.Component;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CMSG_SET_ACTIONBAR_TOGGLES.
  */
+@Component
 public class CMSG_SET_ACTIONBAR_TOGGLES extends AbstractWoWClientPacket {
     
     /** The action bar. */
     byte actionBar;
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
-     */
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
         this.actionBar = (byte) readC();
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
-     */
     @Override
     protected void runImpl() {
     

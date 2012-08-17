@@ -25,33 +25,24 @@ import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.model.base.TradeStatus;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_TRADE_STATUS;
+import org.springframework.stereotype.Component;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CMSG_CANCEL_TRADE.
  */
+@Component
 public class CMSG_CANCEL_TRADE extends AbstractWoWClientPacket {
     
     /** The sender. */
     @Inject
-    @Named("client")
+    @Named("nettyPacketSender")
     private AbstractPacketSender sender;
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
-     */
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
-     */
     @Override
     protected void runImpl() {
     

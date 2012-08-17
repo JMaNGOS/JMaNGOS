@@ -22,10 +22,12 @@ import org.apache.log4j.Logger;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
 import org.jmangos.auth.service.RealmListService;
 import org.jmangos.commons.model.Realm;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class <tt>CMD_REALM_DATA</tt>.
  */
+@Component
 public class CMD_REALM_DATA extends AbstractWoWClientPacket {
     
     /** The logger. */
@@ -39,11 +41,6 @@ public class CMD_REALM_DATA extends AbstractWoWClientPacket {
         super();
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
-     */
     @Override
     protected void readImpl() throws RuntimeException {
     
@@ -62,11 +59,6 @@ public class CMD_REALM_DATA extends AbstractWoWClientPacket {
         this.realmListService.addFromConnected(realm);
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
-     */
     @Override
     protected void runImpl() {
     

@@ -4,11 +4,13 @@ import java.nio.BufferUnderflowException;
 import java.util.logging.Logger;
 
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
+import org.springframework.stereotype.Component;
 
 /**
  * Created with IntelliJ IDEA. User: Goofy Date: 2012.08.08. Time: 2:44 To change this template use
  * File | Settings | File Templates.
  */
+@Component
 public class MSG_MOVE_FALL_LAND extends AbstractWoWClientPacket {
     
     Logger  log = Logger.getLogger(MSG_MOVE_FALL_LAND.class.getSimpleName());

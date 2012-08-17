@@ -31,27 +31,27 @@ import org.jmangos.commons.network.netty.factory.BasicPipelineFactory;
 import org.jmangos.commons.network.netty.receiver.NettyPacketReceiver;
 import org.jmangos.realm.network.netty.handler.EventLogHandler;
 import org.jmangos.realm.network.netty.handler.RealmToAuthChannelHandler;
+import org.springframework.stereotype.Component;
 
 /**
  * A factory for creating R2LPipeline objects.
  * 
  * @author MinimaJack
  */
-
+@Component("realmToAuthPipelineFactory")
 public class RealmToAuthPipelineFactory extends BasicPipelineFactory {
     
     /** The connection handler. */
     @Inject
-    @Named("RealmToAuth")
+    @Named("realmToAuthConnectHandler")
     private ConnectHandler       connectionHandler;
     
     /** The packet service. */
     @Inject
-    @Named("RealmToAuth")
+    @Named("realmToAuthPacketHandlerFactory")
     private PacketHandlerFactory packetService;
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jboss.netty.channel.ChannelPipelineFactory#getPipeline()
      */

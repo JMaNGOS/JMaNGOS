@@ -20,22 +20,28 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
 import org.jmangos.realm.model.base.item.ItemPrototype;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class ItemDAO.
  */
+@Component
 public class ItemDAO implements DAO {
     
-    Logger log = Logger.getLogger(getClass());
+    Logger                  log = Logger.getLogger(getClass());
     
-    /*
-     * (non-Javadoc)
+    @Inject
+    private DatabaseFactory databaseFactory;
+    
+    /**
      * 
      * @see org.jmangos.commons.database.dao.DAO#getClassName()
      */
@@ -54,7 +60,7 @@ public class ItemDAO implements DAO {
     
         Long eTime = System.currentTimeMillis();
         
-        final Session session = DatabaseFactory.getWorldSessionFactory().openSession();
+        final Session session = this.databaseFactory.getWorldSessionFactory().openSession();
         final Query query = session.createQuery("from ItemPrototype order by id");
         
         final TIntObjectHashMap<ItemPrototype> map = new TIntObjectHashMap<ItemPrototype>();
@@ -82,7 +88,7 @@ public class ItemDAO implements DAO {
     public ItemPrototype loadItemPrototype(final int guid) {
     
         this.log.info("Loading single item from database with id: " + guid);
-        final Session session = DatabaseFactory.getWorldSessionFactory().openSession();
+        final Session session = this.databaseFactory.getWorldSessionFactory().openSession();
         return (ItemPrototype) session.get(ItemPrototype.class, guid);
     }
 }

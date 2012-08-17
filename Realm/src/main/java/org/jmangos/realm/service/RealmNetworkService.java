@@ -16,6 +16,7 @@
  *******************************************************************************/
 package org.jmangos.realm.service;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.lang.NotImplementedException;
@@ -24,12 +25,12 @@ import org.jmangos.commons.config.Compatiple;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.netty.service.AbstractNetworkService;
 import org.jmangos.realm.config.Config;
-
-import com.google.inject.Inject;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class RealmNetworkService.
  */
+@Component
 public class RealmNetworkService extends AbstractNetworkService {
     
     @Inject
@@ -37,24 +38,23 @@ public class RealmNetworkService extends AbstractNetworkService {
     
     /** The RealmToClient pipeline factory. */
     @Inject
-    @Named("RealmToClient")
+    @Named("realmToClientPipelineFactory")
     private ChannelPipelineFactory realmToClientPipelineFactory;
     
     /** The packet service. */
     @Inject
-    @Named("AuthToClient")
+    @Named("authToClientPacketHandlerFactory")
     private PacketHandlerFactory   clientPacketService;
     /** The packet service. */
     @Inject
-    @Named("RealmToAuth")
+    @Named("realmToAuthPacketHandlerFactory")
     private PacketHandlerFactory   authPacketService;
     
     @Inject
-    @Named("RealmToAuth")
+    @Named("realmToAuthPipelineFactory")
     private ChannelPipelineFactory realmToAuthPipelineFactory;
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.service.Service#start()
      */
@@ -70,8 +70,7 @@ public class RealmNetworkService extends AbstractNetworkService {
         }
     }
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.network.netty.service.NetworkService#status()
      */
@@ -81,8 +80,7 @@ public class RealmNetworkService extends AbstractNetworkService {
         throw new NotImplementedException();
     }
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.service.Service#stop()
      */

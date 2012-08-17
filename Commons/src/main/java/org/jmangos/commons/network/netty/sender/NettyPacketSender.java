@@ -25,25 +25,22 @@ import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.model.SendablePacket;
 import org.jmangos.commons.network.utils.NetworkUtil;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class NettyPacketSender.
  */
+@Component("nettyPacketSender")
 public class NettyPacketSender implements AbstractPacketSender {
     
-    /*
-     * @Inject private Network network;
-     */
     /** The packet service. */
     @Inject
-    @Named("AuthToClient")
+    @Named("authToClientPacketHandlerFactory")
     private PacketHandlerFactory packetService;
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.network.netty.sender.AbstractPacketSender#send(org.
-     * wowemu.common.network.model.NetworkChannel, org.wowemu.common.network.model.SendablePacket)
+    /**
+     * @see org.jmangos.commons.network.netty.sender.AbstractPacketSender#send(org.jmangos.commons.network.model.NetworkChannel,
+     *      org.jmangos.commons.network.model.SendablePacket)
      */
     @Override
     public void send(final NetworkChannel channel, final SendablePacket packet) {
@@ -106,12 +103,9 @@ public class NettyPacketSender implements AbstractPacketSender {
         return buffer;
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.network.netty.sender.AbstractPacketSender#sendAndClose
-     * (org.wowemu.common.network.model.NetworkChannel,
-     * org.wowemu.common.network.model.SendablePacket)
+    /**
+     * @see org.jmangos.commons.network.netty.sender.AbstractPacketSender#sendAndClose(org.jmangos.commons.network.model.NetworkChannel,
+     *      org.jmangos.commons.network.model.SendablePacket)
      */
     @Override
     public void sendAndClose(final NetworkChannel channel, final SendablePacket networkPacket) {

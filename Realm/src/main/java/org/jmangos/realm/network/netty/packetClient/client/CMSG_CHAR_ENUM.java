@@ -26,16 +26,17 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_CHAR_ENUM;
 import org.jmangos.realm.service.AccountService;
 import org.jmangos.realm.service.ItemStorages;
+import org.springframework.stereotype.Component;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CMSG_CHAR_ENUM.
  */
+@Component
 public class CMSG_CHAR_ENUM extends AbstractWoWClientPacket {
     
     /** The sender. */
     @Inject
-    @Named("client")
+    @Named("nettyPacketSender")
     private AbstractPacketSender sender;
     
     /** The account service. */
@@ -45,22 +46,12 @@ public class CMSG_CHAR_ENUM extends AbstractWoWClientPacket {
     @Inject
     private ItemStorages         itemStorages;
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
-     */
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
         // nothing to read
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
-     */
     @Override
     protected void runImpl() {
     

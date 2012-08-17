@@ -18,6 +18,7 @@ package org.jmangos.realm.service;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
@@ -30,10 +31,12 @@ import org.jmangos.realm.model.base.item.InventoryType;
 import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.base.item.ItemPrototype;
 import org.jmangos.realm.model.base.update.ItemFields;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class ItemStorages.
  */
+@Component
 public class ItemStorages implements DataLoadService<TIntObjectHashMap<ItemPrototype>> {
     
     /** The Constant logger. */
@@ -47,7 +50,6 @@ public class ItemStorages implements DataLoadService<TIntObjectHashMap<ItemProto
     private TIntObjectHashMap<ItemPrototype> itemPrototypes = new TIntObjectHashMap<ItemPrototype>();
     
     /**
-     * (non-Javadoc)
      * 
      * @see org.jmangos.commons.dataholder.DataLoadService#get()
      */
@@ -109,8 +111,7 @@ public class ItemStorages implements DataLoadService<TIntObjectHashMap<ItemProto
         }
     }
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.dataholder.DataLoadService#load()
      */
@@ -121,8 +122,7 @@ public class ItemStorages implements DataLoadService<TIntObjectHashMap<ItemProto
         return this.itemPrototypes;
     }
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.dataholder.DataLoadService#reload()
      */
@@ -133,8 +133,7 @@ public class ItemStorages implements DataLoadService<TIntObjectHashMap<ItemProto
         this.itemPrototypes = itemProrotypesTemp;
     }
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.dataholder.DataLoadService#save()
      */
@@ -145,19 +144,18 @@ public class ItemStorages implements DataLoadService<TIntObjectHashMap<ItemProto
         
     }
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.service.Service#start()
      */
+    @PostConstruct
     @Override
     public void start() {
     
         load();
     }
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.service.Service#stop()
      */

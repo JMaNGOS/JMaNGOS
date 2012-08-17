@@ -27,12 +27,15 @@ package org.jmangos.auth.dao;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
 import org.jmangos.commons.model.BanIp;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class BanIpDAO.
@@ -40,7 +43,11 @@ import org.jmangos.commons.model.BanIp;
  * @author MinimaJack
  * 
  */
+@Component
 public class BanIpDAO implements DAO {
+    
+    @Inject
+    private DatabaseFactory databaseFactory;
     
     /**
      * Inserts ip mask to database, returns BannedIP object that represents inserted mask or null if
@@ -85,7 +92,7 @@ public class BanIpDAO implements DAO {
      */
     public BanIp insert(final BanIp bannedIp) {
     
-        final Session hibernateSession = DatabaseFactory.getAccountsSessionFactory().openSession();
+        final Session hibernateSession = databaseFactory.getAccountsSessionFactory().openSession();
         hibernateSession.getTransaction();
         try {
             hibernateSession.save(bannedIp);
@@ -113,7 +120,7 @@ public class BanIpDAO implements DAO {
      */
     public boolean update(final BanIp bannedIp) {
     
-        final Session hibernateSession = DatabaseFactory.getAccountsSessionFactory().openSession();
+        final Session hibernateSession = databaseFactory.getAccountsSessionFactory().openSession();
         hibernateSession.getTransaction();
         try {
             hibernateSession.update(bannedIp);
@@ -138,7 +145,7 @@ public class BanIpDAO implements DAO {
      */
     public boolean remove(final String ip) {
     
-        final Session hibernateSession = DatabaseFactory.getAccountsSessionFactory().openSession();
+        final Session hibernateSession = databaseFactory.getAccountsSessionFactory().openSession();
         hibernateSession.getTransaction();
         try {
             hibernateSession.delete(BanIp.class.getSimpleName(), ip);
@@ -163,7 +170,7 @@ public class BanIpDAO implements DAO {
      */
     public boolean remove(final BanIp bannedIp) {
     
-        final Session hibernateSession = DatabaseFactory.getAccountsSessionFactory().openSession();
+        final Session hibernateSession = databaseFactory.getAccountsSessionFactory().openSession();
         hibernateSession.getTransaction();
         try {
             hibernateSession.delete(bannedIp);
@@ -183,9 +190,10 @@ public class BanIpDAO implements DAO {
      * 
      * @return all bans from database.
      */
+    @SuppressWarnings("unchecked")
     public List<BanIp> getAllBans() {
     
-        final Session hibernateSession = DatabaseFactory.getAccountsSessionFactory().openSession();
+        final Session hibernateSession = databaseFactory.getAccountsSessionFactory().openSession();
         final Criteria crit = hibernateSession.createCriteria(BanIp.class);
         return crit.list();
     }
@@ -199,7 +207,7 @@ public class BanIpDAO implements DAO {
      */
     public BanIp getBan(final String ip) {
     
-        final Session hibernateSession = DatabaseFactory.getAccountsSessionFactory().openSession();
+        final Session hibernateSession = databaseFactory.getAccountsSessionFactory().openSession();
         return (BanIp) hibernateSession.get(BanIp.class, ip);
     }
     

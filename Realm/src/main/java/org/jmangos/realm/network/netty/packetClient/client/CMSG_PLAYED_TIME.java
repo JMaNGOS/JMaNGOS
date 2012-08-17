@@ -24,16 +24,17 @@ import javax.inject.Named;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_PLAYED_TIME;
+import org.springframework.stereotype.Component;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CMSG_PLAYED_TIME.
  */
+@Component
 public class CMSG_PLAYED_TIME extends AbstractWoWClientPacket {
     
     /** The sender. */
     @Inject
-    @Named("client")
+    @Named("nettyPacketSender")
     private AbstractPacketSender sender;
     
     /** The unk. */

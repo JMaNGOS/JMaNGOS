@@ -33,28 +33,27 @@ import org.jmangos.realm.network.netty.decoder.PacketFrameDecoder;
 import org.jmangos.realm.network.netty.decoder.PacketFrameEncoder;
 import org.jmangos.realm.network.netty.handler.EventLogHandler;
 import org.jmangos.realm.network.netty.handler.RealmToClientChannelHandler;
+import org.springframework.stereotype.Component;
 
-// TODO: Auto-generated Javadoc
 /**
  * A factory for creating R2CPipeline objects.
  * 
  * @author MinimaJack
  */
-
+@Component("realmToClientPipelineFactory")
 public class RealmToClientPipelineFactory extends BasicPipelineFactory {
     
     /** The connection handler. */
     @Inject
-    @Named("RealmToClient")
+    @Named("realmToClientConnectHandler")
     private ConnectHandler       connectionHandler;
     
     /** The packet service. */
     @Inject
-    @Named("AuthToClient")
+    @Named("authToClientPacketHandlerFactory")
     private PacketHandlerFactory packetService;
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jboss.netty.channel.ChannelPipelineFactory#getPipeline()
      */

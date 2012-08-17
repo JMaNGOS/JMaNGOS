@@ -18,29 +18,15 @@ package org.jmangos.realm;
 
 import groovy.ui.Console;
 
-import org.jmangos.commons.database.DatabaseFactory;
-import org.jmangos.commons.log4j.LoggingService;
-import org.jmangos.commons.network.jmx.JmxNetworkService;
 import org.jmangos.commons.network.netty.service.NetworkService;
 import org.jmangos.commons.service.ServiceContent;
-import org.jmangos.commons.threadpool.ThreadPoolManager;
-import org.jmangos.realm.config.Config;
-import org.jmangos.realm.module.Handler;
-import org.jmangos.realm.service.DBCStorage;
 import org.jmangos.realm.service.ItemStorages;
-import org.jmangos.realm.service.MapService;
-import org.jmangos.realm.service.PlayerClassLevelInfoStorages;
-import org.jmangos.realm.service.PlayerLevelStorages;
-import org.jmangos.realm.service.UpdateService;
 import org.jmangos.realm.utils.ShutdownHook;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * The Class RealmServer.
  */
-@SuppressWarnings("unused")
 public class RealmServer {
     
     public static Console console;
@@ -53,36 +39,19 @@ public class RealmServer {
      */
     public static void main(final String[] args) {
     
-        final Injector injector = Guice.createInjector(new Handler());
-        ServiceContent.setInjector(injector);
+        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.scan("org.jmangos.commons", "org.jmangos.realm");
+        context.refresh();
+        ServiceContent.setContext(context);
         
-        // Config loaders
-        injector.getInstance(Config.class);
-        
-        injector.getInstance(LoggingService.class).start();
-        injector.getInstance(ThreadPoolManager.class).start();
-        injector.getInstance(DatabaseFactory.class).start();
-        Runtime.getRuntime().addShutdownHook(injector.getInstance(ShutdownHook.class));
-        injector.getInstance(MapService.class).start();
-        injector.getInstance(PlayerClassLevelInfoStorages.class).start();
-        injector.getInstance(PlayerLevelStorages.class).start();
-        injector.getInstance(ItemStorages.class).start();
-        injector.getInstance(DBCStorage.class).start();
-        injector.getInstance(UpdateService.class).start();
-        injector.getInstance(JmxNetworkService.class).start();
-        
-        // Initialize all session factory before allow clients to connect
-        DatabaseFactory.getAccountsSessionFactory();
-        DatabaseFactory.getCharactersSessionFactory();
-        DatabaseFactory.getWorldSessionFactory();
-        
+        Runtime.getRuntime().addShutdownHook(context.getBean(ShutdownHook.class));
         System.gc();
         
-        injector.getInstance(NetworkService.class).start();
+        context.getBean(NetworkService.class).start();
         
         console = new Console();
-        console.setVariable("injector", injector);
-        console.setVariable("itemStorage", injector.getInstance(ItemStorages.class));
+        console.setVariable("applicationContext", context);
+        console.setVariable("itemStorage", context.getBean(ItemStorages.class));
         // console.run();
     }
 }

@@ -22,6 +22,7 @@
 
 package org.jmangos.realm.service;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.jmangos.commons.service.Service;
@@ -54,8 +55,7 @@ public class UpdateService implements Service {
         /** The L s_ worl d_ update. */
         REALM_MAP_UPDATE;
         
-        /*
-         * (non-Javadoc)
+        /**
          * 
          * @see org.jmangos.commons.task.TaskId#getPriority()
          */
@@ -67,19 +67,18 @@ public class UpdateService implements Service {
         
     }
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.service.Service#start()
      */
+    @PostConstruct
     @Override
     public void start() {
     
         this.taskManager.addNewTask(UpdateRealmTaskId.REALM_MAP_UPDATE, this.threadPoolManager.scheduleAtFixedRate(new RealmUpdateWorldList(), 100, 100));
     }
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.service.Service#stop()
      */
@@ -94,8 +93,7 @@ public class UpdateService implements Service {
      */
     private final class RealmUpdateWorldList implements Runnable {
         
-        /*
-         * (non-Javadoc)
+        /**
          * 
          * @see java.lang.Runnable#run()
          */

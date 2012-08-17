@@ -21,16 +21,19 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
 import org.jmangos.auth.network.netty.packet.server.TCMD_RECONNECT_PROOF;
 import org.jmangos.auth.service.AccountService;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class <tt>CMD_RECONNECT_PROOF</tt>.
  */
+@Component
 public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
     
     /** The Constant logger. */
@@ -39,6 +42,7 @@ public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
     
     /** The sender. */
     @Inject
+    @Named("nettyPacketSender")
     private AbstractPacketSender sender;
     
     /** The account service. */

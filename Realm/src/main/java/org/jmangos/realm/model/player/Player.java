@@ -42,7 +42,6 @@ import org.jmangos.realm.model.unit.Units;
 import org.jmangos.realm.model.unit.WeaponAttackType;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_UPDATE_OBJECT;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Player.
  */
@@ -123,7 +122,7 @@ public class Player extends Units implements ChanneledObject {
         for (int i = 0; i < BaseModGroup.BASEMOD_END.ordinal(); ++i) {
             this.auraBaseMod[i][BaseModType.PCT_MOD.ordinal()] = 1.0f;
         }
-        this.sender = ServiceContent.getInjector().getInstance(NettyPacketSender.class);
+        this.sender = ServiceContent.getContext().getBean(NettyPacketSender.class);
     }
     
     /**
@@ -154,7 +153,7 @@ public class Player extends Units implements ChanneledObject {
         for (int i = 0; i < BaseModGroup.BASEMOD_END.ordinal(); ++i) {
             this.auraBaseMod[i][BaseModType.PCT_MOD.ordinal()] = 1.0f;
         }
-        this.sender = ServiceContent.getInjector().getInstance(NettyPacketSender.class);
+        this.sender = ServiceContent.getContext().getBean(NettyPacketSender.class);
     }
     
     /**

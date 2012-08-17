@@ -26,12 +26,14 @@ import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.realm.dao.AccountDAO;
 import org.jmangos.realm.model.account.AccountData;
 import org.jmangos.realm.model.base.character.CharacterData;
+import org.springframework.stereotype.Component;
 
 /**
  * This class is responsible for controlling all account actions.
  * 
  * @author MinimaJack
  */
+@Component
 public class AccountService {
     
     /** The account dao. */

@@ -20,6 +20,8 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
@@ -30,6 +32,9 @@ import org.jmangos.realm.model.base.QuestPrototype;
  */
 public class QuestDAO {
     
+    @Inject
+    private DatabaseFactory databaseFactory;
+    
     /**
      * Load quest prototypes.
      * 
@@ -37,8 +42,9 @@ public class QuestDAO {
      */
     public TIntObjectHashMap<QuestPrototype> loadQuestPrototypes() {
     
-        final Session session = DatabaseFactory.getWorldSessionFactory().openSession();
+        final Session session = this.databaseFactory.getWorldSessionFactory().openSession();
         final Criteria criteria = session.createCriteria(QuestPrototype.class);
+        @SuppressWarnings("unchecked")
         final List<QuestPrototype> questPrototypeList = criteria.list();
         
         // Quest map by id

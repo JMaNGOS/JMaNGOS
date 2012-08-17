@@ -18,11 +18,10 @@ package org.jmangos.auth.config;
 
 import java.net.InetSocketAddress;
 
-import javax.inject.Singleton;
-
 import org.jmangos.commons.config.Compatiple;
 import org.jmangos.commons.configuration.AbstractConfig;
 import org.jmangos.commons.configuration.Property;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class Config.
@@ -30,7 +29,7 @@ import org.jmangos.commons.configuration.Property;
  * @author MinimaJack
  * 
  */
-@Singleton
+@Component
 public class Config extends AbstractConfig {
     
     /** The Constant CONFIG_FILE. */

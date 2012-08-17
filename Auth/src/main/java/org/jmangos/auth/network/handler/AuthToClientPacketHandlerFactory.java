@@ -18,15 +18,16 @@ package org.jmangos.auth.network.handler;
 
 import org.jmangos.commons.network.handlers.AbstractPacketHandlerFactory;
 import org.jmangos.commons.network.netty.model.PacketData;
+import org.springframework.stereotype.Component;
 
 /**
  * 
  * @author MinimaJack
  */
+@Component("authToClientPacketHandlerFactory")
 public class AuthToClientPacketHandlerFactory extends AbstractPacketHandlerFactory {
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#loadPacket()
      */

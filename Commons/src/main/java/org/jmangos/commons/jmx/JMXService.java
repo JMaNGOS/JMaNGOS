@@ -1,18 +1,19 @@
 package org.jmangos.commons.jmx;
 
+import javax.inject.Inject;
 import javax.management.JMException;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
 import org.apache.log4j.Logger;
-
-import com.google.inject.Inject;
+import org.springframework.stereotype.Component;
 
 /**
  * 
  * @author MinimaJack
  * 
  */
+@Component
 public class JMXService {
     
     private static final Logger log = Logger.getLogger(JMXService.class);

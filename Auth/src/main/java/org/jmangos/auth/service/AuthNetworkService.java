@@ -16,6 +16,7 @@
  *******************************************************************************/
 package org.jmangos.auth.service;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.lang.NotImplementedException;
@@ -23,12 +24,12 @@ import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jmangos.auth.config.Config;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.netty.service.AbstractNetworkService;
-
-import com.google.inject.Inject;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class LoginNetworkService.
  */
+@Component
 public class AuthNetworkService extends AbstractNetworkService {
     
     @Inject
@@ -36,12 +37,12 @@ public class AuthNetworkService extends AbstractNetworkService {
     
     /** The auth to client pipeline factory. */
     @Inject
-    @Named("AuthToClient")
+    @Named("authToClientPipelineFactory")
     private ChannelPipelineFactory authToClientPipelineFactory;
     
     /** The packet service. */
     @Inject
-    @Named("AuthToClient")
+    @Named("authToClientPacketHandlerFactory")
     private PacketHandlerFactory   packetService;
     
     /**

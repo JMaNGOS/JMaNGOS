@@ -18,21 +18,17 @@ package org.jmangos.realm.network.handler;
 
 import org.jmangos.commons.network.handlers.AbstractPacketHandlerFactory;
 import org.jmangos.commons.network.netty.model.PacketData;
-
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
+import org.springframework.stereotype.Component;
 
 /**
  * A factory for creating R2LPacketHandler objects.
  */
+@Component("realmToAuthPacketHandlerFactory")
 public class RealmToAuthPacketHandlerFactory extends AbstractPacketHandlerFactory {
     
-    @Inject
-    @Named("toServer")
-    protected String serverPacketPath;
+    protected String serverPacketPath = "./conf/packetData/rl-packets.xml";
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#loadPacket()
      */

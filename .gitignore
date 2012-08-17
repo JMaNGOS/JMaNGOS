@@ -8,3 +8,4 @@
 *target/
 .idea
 Realm/dbc/*.dbc
+Realm/dbc/*.txt

@@ -30,15 +30,14 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmServerPacket {
     @Inject
     private Config config;
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
      */
     @Override
     protected void writeImpl() {
     
-        this.config = ServiceContent.getInjector().getInstance(Config.class);
+        this.config = ServiceContent.getContext().getBean(Config.class);
         final byte[] empt = { 0, 0, 0, 0 };
         writeC(0);
         writeH(0);

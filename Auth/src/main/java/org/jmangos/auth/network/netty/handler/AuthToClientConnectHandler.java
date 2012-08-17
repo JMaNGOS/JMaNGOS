@@ -16,18 +16,20 @@
  *******************************************************************************/
 package org.jmangos.auth.network.netty.handler;
 
+import javax.inject.Inject;
+
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelHandler;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.State;
 import org.jmangos.commons.network.netty.service.NetworkService;
-
-import com.google.inject.Inject;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class AuthToClientConnectHandler.
  */
+@Component("authToClientConnectHandler")
 public class AuthToClientConnectHandler implements ConnectHandler {
     
     /** The Constant log. */
@@ -37,9 +39,7 @@ public class AuthToClientConnectHandler implements ConnectHandler {
     private NetworkService      networkService;
     
     /**
-     * (non-Javadoc)
-     * 
-     * @see org.jmangos.commons.network.model.ConnectHandler#onConnect(org.wowemu.common.network.model.NettyNetworkChannel,
+     * @see org.jmangos.commons.network.model.ConnectHandler#onConnect(org.jmangos.commons.network.model.NettyNetworkChannel,
      *      org.jboss.netty.channel.ChannelHandler)
      */
     @Override
@@ -52,9 +52,7 @@ public class AuthToClientConnectHandler implements ConnectHandler {
     }
     
     /**
-     * (non-Javadoc)
-     * 
-     * @see org.jmangos.commons.network.model.ConnectHandler#onDisconnect(org.wowemu.common.network.model.NettyNetworkChannel)
+     * @see org.jmangos.commons.network.model.ConnectHandler#onDisconnect(org.jmangos.commons.network.model.NettyNetworkChannel)
      */
     @Override
     public void onDisconnect(final NettyNetworkChannel networkChannel) {

@@ -19,14 +19,18 @@ package org.jmangos.realm.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.jmangos.commons.database.DatabaseConfig;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
 import org.jmangos.commons.model.Account;
 import org.jmangos.realm.model.account.AccountData;
 import org.jmangos.realm.model.base.character.CharacterData;
+import org.springframework.stereotype.Component;
 
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
@@ -51,9 +55,13 @@ import org.jmangos.realm.model.base.character.CharacterData;
  * @author MinimaJack
  * 
  */
+@Component
 public class AccountDAO implements DAO {
     
     Logger logger = Logger.getLogger(AccountDAO.class);
+    
+    @Inject
+    private DatabaseFactory        databaseFactory;
     
     /**
      * Returns account by name or null.
@@ -64,7 +72,7 @@ public class AccountDAO implements DAO {
      */
     public Account getAccount(final String name) {
     
-        final Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
+        final Session session = databaseFactory.getAccountsSessionFactory().openSession();
         final Query query = session.createQuery("select a from Account a where a.username = :name").setString("name", name);
         return (Account) query.uniqueResult();
     }
@@ -78,7 +86,7 @@ public class AccountDAO implements DAO {
      */
     public int getAccountId(final String name) {
     
-        final Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
+        final Session session = databaseFactory.getAccountsSessionFactory().openSession();
         final Query query = session.createQuery("select a from Account a where a.username = :name").setString("name", name);
         final Account account = (Account) query.uniqueResult();
         if (account == null) {
@@ -95,7 +103,7 @@ public class AccountDAO implements DAO {
      */
     public int getAccountCount() {
     
-        final Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
+        final Session session = databaseFactory.getAccountsSessionFactory().openSession();
         final Query query = session.createQuery("select a from Account a");
         final int accCount = query.list().size();
         return accCount;
@@ -110,7 +118,7 @@ public class AccountDAO implements DAO {
      */
     public boolean updateSecurityKey(final Account account) {
     
-        final Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
+        final Session session = databaseFactory.getAccountsSessionFactory().openSession();
         session.getTransaction().begin();
         boolean success = false;
         try {
@@ -138,7 +146,7 @@ public class AccountDAO implements DAO {
      */
     public boolean updateLastServer(final int accountId, final byte lastServer) {
     
-        final Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
+        final Session session = databaseFactory.getAccountsSessionFactory().openSession();
         final Query query = session.createQuery("select a from Account a where a.id = :id").setInteger("id", accountId);
         final Account account = (Account) query.uniqueResult();
         
@@ -176,7 +184,7 @@ public class AccountDAO implements DAO {
      */
     public boolean updateLastIp(final int accountId, final String ip) {
     
-        final Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
+        final Session session = databaseFactory.getAccountsSessionFactory().openSession();
         final Query query = session.createQuery("select a from Account a where a.id = :id").setInteger("id", accountId);
         final Account account = (Account) query.uniqueResult();
         
@@ -213,7 +221,7 @@ public class AccountDAO implements DAO {
      */
     public String getLastIp(final int accountId) {
     
-        final Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
+        final Session session = databaseFactory.getAccountsSessionFactory().openSession();
         final Query query = session.createQuery("select a from Account a where a.id = :accountid").setInteger("accountid", accountId);
         final Account account = (Account) query.uniqueResult();
         
@@ -250,7 +258,7 @@ public class AccountDAO implements DAO {
      */
     public boolean updateSessionKey(final String username, final String key) {
     
-        final Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
+        final Session session = databaseFactory.getAccountsSessionFactory().openSession();
         final Query query = session.createQuery("select a from Account a where a.username = :username").setString("username", username);
         final Account account = (Account) query.uniqueResult();
         
@@ -287,7 +295,7 @@ public class AccountDAO implements DAO {
      */
     public String getSessionKey(final String username) {
     
-        final Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
+        final Session session = databaseFactory.getAccountsSessionFactory().openSession();
         final Query query = session.createQuery("select a from Account a where a.username = :username").setString("username", username);
         final Account account = (Account) query.uniqueResult();
         
@@ -307,9 +315,10 @@ public class AccountDAO implements DAO {
      *            account to query
      * @return List&lt;CharacterData&gt; caracters
      */
+    @SuppressWarnings("unchecked")
     public List<CharacterData> getCharacters(final int accountId) {
     
-        final Session session = DatabaseFactory.getCharactersSessionFactory().openSession();
+        final Session session = databaseFactory.getCharactersSessionFactory().openSession();
         final Query query = session.createQuery("from CharacterData where account = :accountid").setInteger("accountid", accountId);
         return query.list();
     }

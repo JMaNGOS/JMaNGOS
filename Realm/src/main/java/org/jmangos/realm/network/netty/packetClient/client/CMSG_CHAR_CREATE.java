@@ -22,17 +22,22 @@ import org.jmangos.realm.model.player.PlayerHomeBindData;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_CHAR_CREATE;
 import org.jmangos.realm.service.DBCStorage;
+import org.springframework.stereotype.Component;
 
 /**
  * Created with IntelliJ IDEA. User: Goofy Date: 2012.08.07. Time: 23:26 To change this template use
  * File | Settings | File Templates.
  */
+@Component
 public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
     
     Logger                       log = Logger.getLogger(getClass());
     
     @Inject
-    @Named("client")
+    private DatabaseFactory      databaseFactory;
+    
+    @Inject
+    @Named("nettyPacketSender")
     private AbstractPacketSender sender;
     
     @Inject
@@ -65,7 +70,7 @@ public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
-        final Session session = DatabaseFactory.getCharactersSessionFactory().openSession();
+        final Session session = this.databaseFactory.getCharactersSessionFactory().openSession();
         
         final Query query = session.createQuery("from CharacterData where name = :name").setString("name", this.charName);
         if (query.list().size() != 0) {
@@ -74,7 +79,7 @@ public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
             return;
         }
         
-        final Session worldSession = DatabaseFactory.getWorldSessionFactory().openSession();
+        final Session worldSession = this.databaseFactory.getWorldSessionFactory().openSession();
         final Playercreateinfo info = (Playercreateinfo) worldSession.get(Playercreateinfo.class, new PlayercreateinfoPK(this.charClass, this.charRace));
         
         if (info == null) {

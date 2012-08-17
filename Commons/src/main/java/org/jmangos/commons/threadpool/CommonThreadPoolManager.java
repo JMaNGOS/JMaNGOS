@@ -22,13 +22,17 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.PostConstruct;
+
 import org.jmangos.commons.threadpool.config.ThreadPoolConfig;
 import org.jmangos.commons.threadpool.model.PoolStats;
 import org.jmangos.commons.threadpool.model.ThreadPoolType;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class CommonThreadPoolManager.
  */
+@Component
 public class CommonThreadPoolManager implements ThreadPoolManager {
     
     /** The scheduled pool. */
@@ -40,11 +44,10 @@ public class CommonThreadPoolManager implements ThreadPoolManager {
     /** The Constant MAX_DELAY. */
     private static final long           MAX_DELAY = TimeUnit.NANOSECONDS.toMillis(Long.MAX_VALUE - System.nanoTime()) / 2;
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.service.Service#start()
+    /**
+     * @see org.jmangos.commons.service.Service#start()
      */
+    @PostConstruct
     @Override
     public void start() {
     
@@ -57,10 +60,8 @@ public class CommonThreadPoolManager implements ThreadPoolManager {
         this.instantPool.prestartAllCoreThreads();
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.service.Service#stop()
+    /**
+     * @see org.jmangos.commons.service.Service#stop()
      */
     @Override
     public void stop() {
@@ -86,10 +87,8 @@ public class CommonThreadPoolManager implements ThreadPoolManager {
         return Math.max(0, Math.min(MAX_DELAY, delay));
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.threadpool.ThreadPoolManager#schedule(java.lang.Runnable , long)
+    /**
+     * @see org.jmangos.commons.threadpool.ThreadPoolManager#schedule(java.lang.Runnable, long)
      */
     @Override
     public final ScheduledFuture<?> schedule(final Runnable r, final long delay) {
@@ -97,11 +96,9 @@ public class CommonThreadPoolManager implements ThreadPoolManager {
         return this.scheduledPool.schedule(new TaskExecutionWrapper(r), validate(delay), TimeUnit.MILLISECONDS);
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.threadpool.ThreadPoolManager#scheduleAtFixedRate(java .lang.Runnable,
-     * long, long)
+    /**
+     * @see org.jmangos.commons.threadpool.ThreadPoolManager#scheduleAtFixedRate(java.lang.Runnable,
+     *      long, long)
      */
     @Override
     public final ScheduledFuture<?> scheduleAtFixedRate(final Runnable r, final long delay, final long period) {
@@ -109,10 +106,8 @@ public class CommonThreadPoolManager implements ThreadPoolManager {
         return this.scheduledPool.scheduleAtFixedRate(new TaskExecutionWrapper(r), validate(delay), validate(period), TimeUnit.MILLISECONDS);
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.threadpool.ThreadPoolManager#executeInstant(java.lang .Runnable)
+    /**
+     * @see org.jmangos.commons.threadpool.ThreadPoolManager#executeInstant(java.lang.Runnable)
      */
     @Override
     public final void executeInstant(final Runnable r) {
@@ -120,10 +115,8 @@ public class CommonThreadPoolManager implements ThreadPoolManager {
         this.instantPool.execute(new TaskExecutionWrapper(r));
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.threadpool.ThreadPoolManager#purge()
+    /**
+     * @see org.jmangos.commons.threadpool.ThreadPoolManager#purge()
      */
     @Override
     public void purge() {
@@ -132,11 +125,8 @@ public class CommonThreadPoolManager implements ThreadPoolManager {
         this.instantPool.purge();
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.threadpool.ThreadPoolManager#fillPoolStats(org.wowemu
-     * .common.threadpool.model.ThreadPoolType)
+    /**
+     * @see org.jmangos.commons.threadpool.ThreadPoolManager#fillPoolStats(org.jmangos.commons.threadpool.model.ThreadPoolType)
      */
     @Override
     public PoolStats fillPoolStats(final ThreadPoolType poolType) {

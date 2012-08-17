@@ -9,11 +9,13 @@ import org.apache.log4j.Logger;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.MSG_MOVE_TIME_SKIPPED;
+import org.springframework.stereotype.Component;
 
 /**
  * Created with IntelliJ IDEA. User: Goofy Date: 2012.08.08. Time: 4:16 To change this template use
  * File | Settings | File Templates.
  */
+@Component
 public class CMSG_MOVE_TIME_SKIPPED extends AbstractWoWClientPacket {
     
     Logger                       log = Logger.getLogger(getClass().getSimpleName());
@@ -21,8 +23,9 @@ public class CMSG_MOVE_TIME_SKIPPED extends AbstractWoWClientPacket {
     private long                 guid;
     private int                  time_dif;
     
+    /** The sender. */
     @Inject
-    @Named("client")
+    @Named("nettyPacketSender")
     private AbstractPacketSender sender;
     
     @Override

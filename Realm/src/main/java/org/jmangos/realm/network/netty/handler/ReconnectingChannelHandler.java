@@ -66,7 +66,7 @@ public class ReconnectingChannelHandler extends SimpleChannelUpstreamHandler {
     public ReconnectingChannelHandler(final Timer timer, final NetworkChannelFactory channelFactory, final PacketHandlerFactory packetService,
             final ConnectHandler connectionHandler, final NettyPacketReceiver nettyPacketReceiver) {
     
-        this.config = ServiceContent.getInjector().getInstance(Config.class);
+        this.config = ServiceContent.getContext().getBean(Config.class);
         this.timer = timer;
         this.channelFactory = channelFactory;
     }

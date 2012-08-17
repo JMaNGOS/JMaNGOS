@@ -40,6 +40,7 @@ import org.jmangos.realm.model.unit.Powers;
 import org.jmangos.realm.model.unit.SpellSchools;
 import org.jmangos.realm.model.unit.Stats;
 import org.jmangos.realm.network.netty.packetClient.server.*;
+import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -48,6 +49,7 @@ import java.util.List;
 /**
 * The Class PlayerService.
 */
+@Component
 public class PlayerService {
 
 /** The Constant logger. */
@@ -64,7 +66,7 @@ private static final int CONFIG_UINT32_MAX_PLAYER_LEVEL = 80;
 
 /** The sender. */
 @Inject
-@Named("client")
+@Named("nettyPacketSender")
 private AbstractPacketSender sender;
 
 @Inject

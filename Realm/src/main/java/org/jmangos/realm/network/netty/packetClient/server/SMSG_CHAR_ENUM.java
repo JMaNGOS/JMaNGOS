@@ -49,10 +49,8 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
         this.charlist = charlist;
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+    /**
+     * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
      */
     @Override
     public void writeImpl() {
@@ -92,7 +90,7 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
             
             final List<InventoryItem> inventory = character.getInventory();
             
-            final ItemStorages itemStorages = ServiceContent.getInjector().getInstance(ItemStorages.class);
+            final ItemStorages itemStorages =  ServiceContent.getContext().getBean(ItemStorages.class);
             if (itemStorages == null) {
                 logger.fatal("Cannot get ItemStorages instance!");
             }

@@ -46,11 +46,12 @@ import org.jmangos.realm.network.netty.packetClient.server.SMSG_AUTH_RESPONSE;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_CLIENTCACHE_VERSION;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_TUTORIAL_FLAGS;
 import org.jmangos.realm.service.AccountService;
+import org.springframework.stereotype.Component;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CMSG_AUTH_SESSION.
  */
+@Component
 public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
     
     /** The Constant logger. */
@@ -62,7 +63,7 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
     
     /** The sender. */
     @Inject
-    @Named("client")
+    @Named("nettyPacketSender")
     private AbstractPacketSender sender;
     
     /** The account name. */
@@ -81,11 +82,6 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
     /** The addon lists. */
     private ArrayList<AddonInfo> addonLists;
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.network.model.ReceivablePacket#readImpl()
-     */
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
@@ -147,11 +143,6 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
         /* int unk2 = */addonInfo.readInt();
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.network.model.ReceivablePacket#runImpl()
-     */
     @Override
     protected void runImpl() {
     

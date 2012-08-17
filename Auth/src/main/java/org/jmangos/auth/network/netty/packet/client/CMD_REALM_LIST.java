@@ -16,22 +16,26 @@
  *******************************************************************************/
 package org.jmangos.auth.network.netty.packet.client;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.jmangos.auth.config.Config;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
 import org.jmangos.auth.network.netty.packet.server.TCMD_REALM_LIST;
 import org.jmangos.auth.service.RealmListService;
 import org.jmangos.commons.config.Compatiple;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
-
-import com.google.inject.Inject;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class <tt>CMD_REALM_LIST</tt>.
  */
+@Component
 public class CMD_REALM_LIST extends AbstractWoWClientPacket {
     
     /** The sender. */
     @Inject
+    @Named("nettyPacketSender")
     private AbstractPacketSender sender;
     
     /** The worldlist. */

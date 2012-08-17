@@ -19,6 +19,8 @@ package org.jmangos.realm.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
@@ -26,14 +28,18 @@ import org.jmangos.realm.model.base.PlayerClassLevelInfo;
 import org.jmangos.realm.model.base.PlayerClassLevelInfoPK;
 import org.jmangos.realm.model.base.PlayerLevelInfo;
 import org.jmangos.realm.model.base.PlayerLevelInfoPK;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class SimpleDataDAO.
  */
+@Component
 public class SimpleDataDAO implements DAO {
     
-    /*
-     * (non-Javadoc)
+    @Inject
+    private DatabaseFactory databaseFactory;
+    
+    /**
      * 
      * @see org.jmangos.commons.database.dao.DAO#getClassName()
      */
@@ -51,7 +57,8 @@ public class SimpleDataDAO implements DAO {
     public HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> getClassLevelInfos() {
     
         final HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> map = new HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo>();
-        final Session session = DatabaseFactory.getWorldSessionFactory().openSession();
+        final Session session = this.databaseFactory.getWorldSessionFactory().openSession();
+        @SuppressWarnings("unchecked")
         final List<PlayerClassLevelInfo> infoList = session.createQuery("select pcli from PlayerClassLevelInfo pcli").list();
         for (final PlayerClassLevelInfo levelInfo : infoList) {
             map.put(levelInfo.getPlayerClassLevelInfoPK(), levelInfo);
@@ -68,7 +75,8 @@ public class SimpleDataDAO implements DAO {
     public HashMap<PlayerLevelInfoPK, PlayerLevelInfo> getRaceClassLevelInfos() {
     
         final HashMap<PlayerLevelInfoPK, PlayerLevelInfo> map = new HashMap<PlayerLevelInfoPK, PlayerLevelInfo>();
-        final Session session = DatabaseFactory.getWorldSessionFactory().openSession();
+        final Session session = this.databaseFactory.getWorldSessionFactory().openSession();
+        @SuppressWarnings("unchecked")
         final List<PlayerLevelInfo> infoList = session.createQuery("select pli from PlayerLevelInfo pli").list();
         for (final PlayerLevelInfo levelInfo : infoList) {
             map.put(levelInfo.getPlayerLevelInfoPK(), levelInfo);

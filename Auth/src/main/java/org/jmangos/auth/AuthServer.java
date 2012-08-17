@@ -16,19 +16,10 @@
  *******************************************************************************/
 package org.jmangos.auth;
 
-import org.jmangos.auth.module.HandlerDM;
-import org.jmangos.auth.service.BanIpService;
-import org.jmangos.auth.service.RealmListService;
-import org.jmangos.auth.service.jmx.JmxRealmList;
 import org.jmangos.auth.utils.ShutdownHook;
-import org.jmangos.commons.database.DatabaseFactory;
-import org.jmangos.commons.network.jmx.JmxNetworkService;
 import org.jmangos.commons.network.netty.service.NetworkService;
 import org.jmangos.commons.service.ServiceContent;
-import org.jmangos.commons.threadpool.ThreadPoolManager;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * The Class AuthServer.
@@ -47,19 +38,13 @@ public class AuthServer {
      */
     public static void main(final String[] args) throws Exception {
     
-        final Injector injector = Guice.createInjector(new HandlerDM());
-        ServiceContent.setInjector(injector);
-        injector.getInstance(DatabaseFactory.class).start();
-        injector.getInstance(RealmListService.class).start();
-        injector.getInstance(BanIpService.class).start();
-        injector.getInstance(ThreadPoolManager.class).start();
+        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.scan("org.jmangos.commons", "org.jmangos.auth");
+        context.refresh();
+        ServiceContent.setContext(context);
         
-        injector.getInstance(JmxRealmList.class).start();
-        injector.getInstance(JmxNetworkService.class).start();
-        
-        Runtime.getRuntime().addShutdownHook(injector.getInstance(ShutdownHook.class));
+        Runtime.getRuntime().addShutdownHook(context.getBean(ShutdownHook.class));
         System.gc();
-        
-        injector.getInstance(NetworkService.class).start();
+        context.getBean(NetworkService.class).start();
     }
 }

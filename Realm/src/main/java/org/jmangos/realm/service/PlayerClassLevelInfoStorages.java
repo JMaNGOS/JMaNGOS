@@ -18,18 +18,21 @@ package org.jmangos.realm.service;
 
 import java.util.HashMap;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
 import org.apache.log4j.Logger;
 import org.jmangos.commons.dataholder.DataLoadService;
 import org.jmangos.realm.dao.SimpleDataDAO;
 import org.jmangos.realm.model.Classes;
 import org.jmangos.realm.model.base.PlayerClassLevelInfo;
 import org.jmangos.realm.model.base.PlayerClassLevelInfoPK;
-
-import com.google.inject.Inject;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class PlayerClassLevelInfoStorages.
  */
+@Component
 public class PlayerClassLevelInfoStorages implements DataLoadService<HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo>> {
     
     /** The Constant log. */
@@ -42,11 +45,11 @@ public class PlayerClassLevelInfoStorages implements DataLoadService<HashMap<Pla
     /** The Player cli. */
     private HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> playerCLI = new HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo>();
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.service.Service#start()
      */
+    @PostConstruct
     @Override
     public void start() {
     
@@ -54,8 +57,7 @@ public class PlayerClassLevelInfoStorages implements DataLoadService<HashMap<Pla
         log.info("Loaded " + this.playerCLI.size() + " PlayerClassLevelInfos");
     }
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.service.Service#stop()
      */
@@ -66,8 +68,7 @@ public class PlayerClassLevelInfoStorages implements DataLoadService<HashMap<Pla
         
     }
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.dataholder.DataLoadService#load()
      */
@@ -77,8 +78,7 @@ public class PlayerClassLevelInfoStorages implements DataLoadService<HashMap<Pla
         return this.playerCLI = this.simpleDataDAO.getClassLevelInfos();
     }
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.dataholder.DataLoadService#reload()
      */
@@ -90,8 +90,7 @@ public class PlayerClassLevelInfoStorages implements DataLoadService<HashMap<Pla
         tempPlayerCLI = null;
     }
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.dataholder.DataLoadService#save()
      */
@@ -136,8 +135,7 @@ public class PlayerClassLevelInfoStorages implements DataLoadService<HashMap<Pla
         return get(clazz.getValue(), level);
     }
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.dataholder.DataLoadService#get()
      */

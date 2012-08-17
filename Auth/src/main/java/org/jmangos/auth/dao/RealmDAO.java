@@ -18,6 +18,8 @@ package org.jmangos.auth.dao;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import javolution.util.FastMap;
 
 import org.hibernate.Criteria;
@@ -25,6 +27,7 @@ import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
 import org.jmangos.commons.model.Realm;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class WorldDAO.
@@ -32,12 +35,14 @@ import org.jmangos.commons.model.Realm;
  * @author MinimaJack
  * 
  */
+@Component
 public class RealmDAO implements DAO {
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.database.dao.DAO#getClassName()
+    @Inject
+    private DatabaseFactory databaseFactory;
+    
+    /**
+     * @see org.jmangos.commons.database.dao.DAO#getClassName()
      */
     @Override
     public String getClassName() {
@@ -52,7 +57,7 @@ public class RealmDAO implements DAO {
      */
     public FastMap<Integer, Realm> getAllRealms() {
     
-        final Session session = DatabaseFactory.getAccountsSessionFactory().openSession();
+        final Session session = this.databaseFactory.getAccountsSessionFactory().openSession();
         final Criteria criteria = session.createCriteria(Realm.class);
         final FastMap<Integer, Realm> realmFastMap = new FastMap<Integer, Realm>();
         @SuppressWarnings("unchecked")

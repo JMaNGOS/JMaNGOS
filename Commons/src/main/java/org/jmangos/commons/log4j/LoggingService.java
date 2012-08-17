@@ -22,20 +22,21 @@ import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.log4j.Hierarchy;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.jmangos.commons.log4j.exception.Log4jInitializationError;
 import org.jmangos.commons.service.Service;
-
-import com.google.inject.Singleton;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class LoggingService.
  * 
  * @author MinimaJack
  */
-@Singleton
+@Component
 public class LoggingService implements Service {
     
     /**
@@ -55,6 +56,7 @@ public class LoggingService implements Service {
      * @throws Log4jInitializationError
      *             the log4j initialization error
      */
+    @PostConstruct
     @Override
     public void start() throws Log4jInitializationError {
     

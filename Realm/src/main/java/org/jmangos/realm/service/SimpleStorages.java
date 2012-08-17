@@ -16,9 +16,12 @@
  *******************************************************************************/
 package org.jmangos.realm.service;
 
+import org.springframework.stereotype.Component;
+
 /**
  * The Class SimpleStorages.
  */
+@Component
 public class SimpleStorages {
     
     /**

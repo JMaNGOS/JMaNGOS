@@ -16,6 +16,7 @@
  *******************************************************************************/
 package org.jmangos.auth.service;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import javolution.util.FastMap;
@@ -24,7 +25,9 @@ import org.apache.log4j.Logger;
 import org.jmangos.auth.dao.RealmDAO;
 import org.jmangos.commons.model.Realm;
 import org.jmangos.commons.service.Service;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RealmListService implements Service {
     
     /**
@@ -51,13 +54,11 @@ public class RealmListService implements Service {
      * 
      * @return the worlds
      */
-    @SuppressWarnings("unused")
     public FastMap<Integer, Realm> getWorlds() {
     
         return this.realms;
     }
     
-    @SuppressWarnings("unused")
     public void addFromConnected(final Realm newRealm) {
     
         if (this.realms.containsKey(newRealm.getId())) {
@@ -73,6 +74,7 @@ public class RealmListService implements Service {
     /**
      * Loads list of banned ip.
      */
+    @PostConstruct
     @Override
     public void start() {
     
@@ -108,7 +110,6 @@ public class RealmListService implements Service {
      * 
      * @return the byteSize
      */
-    @SuppressWarnings("unused")
     public int getByteSize() {
     
         return this.byteSize;
@@ -119,7 +120,6 @@ public class RealmListService implements Service {
      * 
      * @return the size
      */
-    @SuppressWarnings("unused")
     public int getRealmCount() {
     
         return this.realms.size();
@@ -146,7 +146,6 @@ public class RealmListService implements Service {
      *            the id
      * @return the amount characters
      */
-    @SuppressWarnings("unused")
     public FastMap<Integer, Integer> getAmountCharacters(final Integer id) {
     
         return getWorldDAO().getAmountCharacters(id);
@@ -166,8 +165,6 @@ public class RealmListService implements Service {
     }
     
     /**
-     * (non-Javadoc)
-     * 
      * @see org.jmangos.commons.service.Service#stop()
      */
     @Override

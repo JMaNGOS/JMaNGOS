@@ -5,12 +5,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Properties;
 
-import javax.inject.Singleton;
-
 import org.apache.log4j.Logger;
 import org.jmangos.commons.utils.PropertiesUtils;
 
-@Singleton
 public abstract class AbstractConfig {
     
     /**
