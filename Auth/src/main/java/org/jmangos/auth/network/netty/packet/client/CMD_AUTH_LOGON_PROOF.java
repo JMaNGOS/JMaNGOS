@@ -133,7 +133,7 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
         }
         
         byte[] t4 = new byte[20];
-        sha.update(getAccount().getName().getBytes(Charset.forName("UTF-8")));
+        sha.update(getAccount().getName().toUpperCase().getBytes(Charset.forName("UTF-8")));
         t4 = sha.digest();
         
         sha.update(hash);
