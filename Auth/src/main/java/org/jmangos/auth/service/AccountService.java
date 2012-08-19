@@ -20,7 +20,7 @@ import java.util.HashMap;
 
 import javax.inject.Inject;
 
-import org.jmangos.auth.dao.AccountDAO;
+import org.jmangos.auth.dao.AccountDAOold;
 import org.jmangos.auth.utils.AccountUtils;
 import org.jmangos.commons.model.Account;
 import org.jmangos.commons.model.WoWAuthResponse;
@@ -38,7 +38,7 @@ public class AccountService {
     
     /** The account dao. */
     @Inject
-    private AccountDAO accountDAO;
+    private AccountDAOold accountDAO;
     
     /**
      * Load clean.

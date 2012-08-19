@@ -33,9 +33,9 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class AccountDAO implements DAO {
+public class AccountDAOold implements DAO {
     
-    Logger                  logger = Logger.getLogger(AccountDAO.class);
+    Logger                  logger = Logger.getLogger(AccountDAOold.class);
     
     @Inject
     private DatabaseFactory databaseFactory;
@@ -221,7 +221,7 @@ public class AccountDAO implements DAO {
     @Override
     public final String getClassName() {
     
-        return AccountDAO.class.getName();
+        return AccountDAOold.class.getName();
     }
     
     /**

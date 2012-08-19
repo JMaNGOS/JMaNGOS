@@ -23,9 +23,7 @@
 
     <persistence-unit name="persistenceUnit">
 
-        <class>org.jmangos.commons.model.Account</class>
-        <class>org.jmangos.commons.model.BanIp</class>
-        <class>org.jmangos.commons.model.Realm</class>
+        <class>org.jmangos.auth.entities.AccountEntity</class>
 
         <exclude-unlisted-classes/>
 

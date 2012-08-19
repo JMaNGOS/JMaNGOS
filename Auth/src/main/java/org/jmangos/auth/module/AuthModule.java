@@ -1,9 +1,10 @@
 package org.jmangos.auth.module;
 
+import java.beans.PropertyVetoException;
+
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp.BasicDataSource;
 import org.jmangos.commons.database.DatabaseConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,8 @@ import org.springframework.transaction.annotation.AnnotationTransactionAttribute
 import org.springframework.transaction.interceptor.TransactionAttributeSource;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
 @Configuration
 public class AuthModule {
     
@@ -26,11 +29,19 @@ public class AuthModule {
     @Bean
     public DataSource dataSource() {
     
-        final BasicDataSource ds = new BasicDataSource();
-        ds.setDriverClassName(this.databaseConfig.ACCOUNT_DATABASE_DRIVER);
-        ds.setUrl(this.databaseConfig.ACCOUNT_DATABASE_URL + this.databaseConfig.ACCOUNT_DATABASE_NAME + "?autoReconnect=true");
-        ds.setUsername(this.databaseConfig.ACCOUNT_DATABASE_USER);
-        ds.setPassword(this.databaseConfig.ACCOUNT_DATABASE_PASSWORD);
+        final ComboPooledDataSource ds = new ComboPooledDataSource();
+        try {
+            ds.setDriverClass(this.databaseConfig.ACCOUNT_DATABASE_DRIVER);
+            ds.setJdbcUrl(this.databaseConfig.ACCOUNT_DATABASE_URL + this.databaseConfig.ACCOUNT_DATABASE_NAME + "?autoReconnect=true");
+            ds.setUser(this.databaseConfig.ACCOUNT_DATABASE_USER);
+            ds.setPassword(this.databaseConfig.ACCOUNT_DATABASE_PASSWORD);
+            
+            ds.setMinPoolSize(this.databaseConfig.WORLD_DATABASE_CONNECTIONS_MIN);
+            ds.setMaxPoolSize(this.databaseConfig.WORLD_DATABASE_CONNECTIONS_MAX);
+        } catch (final PropertyVetoException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return ds;
     }
     
