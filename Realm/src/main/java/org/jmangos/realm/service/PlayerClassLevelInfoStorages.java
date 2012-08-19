@@ -21,12 +21,13 @@ import java.util.HashMap;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
 import org.jmangos.commons.dataholder.DataLoadService;
 import org.jmangos.realm.dao.SimpleDataDAO;
 import org.jmangos.realm.model.Classes;
 import org.jmangos.realm.model.base.PlayerClassLevelInfo;
 import org.jmangos.realm.model.base.PlayerClassLevelInfoPK;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,7 +37,7 @@ import org.springframework.stereotype.Component;
 public class PlayerClassLevelInfoStorages implements DataLoadService<HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo>> {
     
     /** The Constant log. */
-    private static final Logger                                   log       = Logger.getLogger(PlayerClassLevelInfoStorages.class);
+    private static final Logger                                   log       = LoggerFactory.getLogger(PlayerClassLevelInfoStorages.class);
     
     /** The simple data dao. */
     @Inject
