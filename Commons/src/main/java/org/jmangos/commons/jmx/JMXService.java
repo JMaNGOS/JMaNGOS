@@ -5,7 +5,8 @@ import javax.management.JMException;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class JMXService {
     
-    private static final Logger log = Logger.getLogger(JMXService.class);
+    private static final Logger log = LoggerFactory.getLogger(JMXService.class);
     
     @Inject
     private MBeanServer         server;

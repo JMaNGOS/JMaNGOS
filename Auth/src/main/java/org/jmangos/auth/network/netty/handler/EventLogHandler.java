@@ -16,13 +16,14 @@
  *******************************************************************************/
 package org.jmangos.auth.network.netty.handler;
 
-import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 import org.jboss.netty.handler.timeout.ReadTimeoutException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Class EventLogHandler.
@@ -32,7 +33,7 @@ import org.jboss.netty.handler.timeout.ReadTimeoutException;
 public class EventLogHandler extends SimpleChannelUpstreamHandler {
     
     /** The Constant log. */
-    private static final Logger log = Logger.getLogger(EventLogHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(EventLogHandler.class);
     
     /**
      * (non-Javadoc)

@@ -26,10 +26,12 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.realm.model.base.QuestPrototype;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class QuestDAO.
  */
+@Component
 public class QuestDAO {
     
     @Inject

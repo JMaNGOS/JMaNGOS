@@ -21,7 +21,6 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
 import org.jmangos.commons.dataholder.DataLoadService;
 import org.jmangos.realm.dao.ItemDAO;
 import org.jmangos.realm.model.InventoryItem;
@@ -31,6 +30,8 @@ import org.jmangos.realm.model.base.item.InventoryType;
 import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.base.item.ItemPrototype;
 import org.jmangos.realm.model.base.update.ItemFields;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -40,7 +41,7 @@ import org.springframework.stereotype.Component;
 public class ItemStorages implements DataLoadService<TIntObjectHashMap<ItemPrototype>> {
     
     /** The Constant logger. */
-    private static final Logger              logger         = Logger.getLogger(ItemStorages.class);
+    private static final Logger              logger         = LoggerFactory.getLogger(ItemStorages.class);
     
     /** The item dao. */
     @Inject

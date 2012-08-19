@@ -18,7 +18,6 @@ package org.jmangos.auth.network.netty.decoder;
 
 import java.nio.ByteOrder;
 
-import org.apache.log4j.Logger;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
@@ -26,6 +25,8 @@ import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.frame.FrameDecoder;
 import org.jmangos.auth.network.crypt.Crypt;
 import org.jmangos.auth.network.netty.handler.AuthToClientChannelHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Class PacketFrameDecoder.
@@ -33,7 +34,7 @@ import org.jmangos.auth.network.netty.handler.AuthToClientChannelHandler;
 public class RealmPacketFrameDecoder extends FrameDecoder {
     
     /** The Constant log. */
-    private static final Logger log = Logger.getLogger(RealmPacketFrameDecoder.class);
+    private static final Logger log = LoggerFactory.getLogger(RealmPacketFrameDecoder.class);
     
     /*
      * (non-Javadoc)

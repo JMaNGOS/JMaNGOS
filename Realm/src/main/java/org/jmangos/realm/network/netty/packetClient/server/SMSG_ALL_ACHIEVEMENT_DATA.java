@@ -16,10 +16,10 @@
  *******************************************************************************/
 package org.jmangos.realm.network.netty.packetClient.server;
 
-import org.apache.log4j.Logger;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SMSG_ALL_ACHIEVEMENT_DATA.
  */
@@ -27,7 +27,7 @@ public class SMSG_ALL_ACHIEVEMENT_DATA extends AbstractWoWServerPacket {
     
     /** The logger. */
     @SuppressWarnings("unused")
-    private static Logger logger = Logger.getLogger(SMSG_ALL_ACHIEVEMENT_DATA.class);
+    private static Logger logger = LoggerFactory.getLogger(SMSG_ALL_ACHIEVEMENT_DATA.class);
     
     /*
      * (non-Javadoc)

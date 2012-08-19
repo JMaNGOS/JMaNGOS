@@ -26,7 +26,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
@@ -35,6 +34,8 @@ import org.jmangos.realm.network.netty.handler.RealmToAuthChannelHandler;
 import org.jmangos.realm.network.netty.packetAuth.AbstractRealmClientPacket;
 import org.jmangos.realm.network.netty.packetAuth.server.CMD_AUTH_LOGON_PROOF;
 import org.jmangos.realm.utils.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Class <tt>CMD_AUTH_LOGON_CHALLENGE</tt>.
@@ -42,7 +43,7 @@ import org.jmangos.realm.utils.StringUtils;
 public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmClientPacket {
     
     /** The logger. */
-    private static Logger        logger = Logger.getLogger(CMD_AUTH_LOGON_CHALLENGE.class);
+    private static Logger        logger = LoggerFactory.getLogger(CMD_AUTH_LOGON_CHALLENGE.class);
     
     @Inject
     private Config               config;

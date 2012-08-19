@@ -26,7 +26,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.log4j.Logger;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
 import org.jmangos.auth.network.netty.packet.server.TCMD_AUTH_LOGON_PROOF;
 import org.jmangos.auth.service.AccountService;
@@ -34,6 +33,8 @@ import org.jmangos.auth.utils.AccountUtils;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.commons.utils.BigNumber;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -43,7 +44,7 @@ import org.springframework.stereotype.Component;
 public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
     
     /** The Constant logger. */
-    private static final Logger  logger = Logger.getLogger(CMD_AUTH_LOGON_PROOF.class);
+    private static final Logger  logger = LoggerFactory.getLogger(CMD_AUTH_LOGON_PROOF.class);
     
     /** The sender. */
     @Inject
@@ -68,7 +69,6 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unused")
     @Override
     protected void readImpl() {
     

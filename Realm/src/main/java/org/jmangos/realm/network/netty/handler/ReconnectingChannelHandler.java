@@ -18,7 +18,6 @@ package org.jmangos.realm.network.netty.handler;
 
 import java.util.concurrent.TimeUnit;
 
-import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
@@ -31,6 +30,8 @@ import org.jmangos.commons.network.netty.factory.NetworkChannelFactory;
 import org.jmangos.commons.network.netty.receiver.NettyPacketReceiver;
 import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.realm.config.Config;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Class ReconnectingChannelHandler.
@@ -38,7 +39,7 @@ import org.jmangos.realm.config.Config;
 public class ReconnectingChannelHandler extends SimpleChannelUpstreamHandler {
     
     /** The Constant log. */
-    private static final Logger         log = Logger.getLogger(ReconnectingChannelHandler.class);
+    private static final Logger         log = LoggerFactory.getLogger(ReconnectingChannelHandler.class);
     
     /** The timer. */
     private final Timer                 timer;

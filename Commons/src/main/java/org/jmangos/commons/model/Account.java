@@ -32,7 +32,7 @@ import org.jmangos.commons.utils.BigNumber;
  * The Class Account.
  */
 @Entity
-@Table
+@Table(name="account")
 public class Account extends NamedObject implements ChanneledObject {
     
     @Id

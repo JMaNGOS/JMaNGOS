@@ -1,5 +1,5 @@
-/*******************************************************************************
- * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
+/******************************************************************************
+ * Copyright (C) 2012 JMaNG <http://jmangos.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -21,9 +21,10 @@ import java.nio.BufferUnderflowException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,7 +34,7 @@ import org.springframework.stereotype.Component;
 public class CMD_TEST_CRYPT extends AbstractWoWClientPacket {
     
     /** The logger. */
-    private static Logger        logger = Logger.getLogger(CMD_TEST_CRYPT.class);
+    private static Logger        logger = LoggerFactory.getLogger(CMD_TEST_CRYPT.class);
     /** The sender. */
     @Inject
     @Named("nettyPacketSender")
@@ -52,11 +53,8 @@ public class CMD_TEST_CRYPT extends AbstractWoWClientPacket {
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
-        logger.debug((char) readC());
-        logger.debug((char) readC());
-        logger.debug((char) readC());
-        logger.debug((char) readC());
-        logger.debug((char) readC());
+        final byte[] crypt = readB(5);
+        logger.debug("{}", crypt);
     }
     
     /*

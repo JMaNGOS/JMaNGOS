@@ -18,7 +18,6 @@ package org.jmangos.realm.network.netty.handler;
 
 import java.net.InetSocketAddress;
 
-import org.apache.log4j.Logger;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
@@ -32,6 +31,8 @@ import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.netty.factory.NetworkChannelFactory;
 import org.jmangos.commons.network.netty.receiver.NettyPacketReceiver;
 import org.jmangos.realm.network.crypt.Crypt;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Class R2LChannelHandler.
@@ -132,7 +133,7 @@ public class RealmToAuthChannelHandler extends ReconnectingChannelHandler {
     private final ConnectHandler connectionHandler;
     
     /** The Constant log. */
-    private static final Logger  log = Logger.getLogger(RealmToAuthChannelHandler.class);
+    private static final Logger  log = LoggerFactory.getLogger(RealmToAuthChannelHandler.class);
     
     /**
      * (non-Javadoc)

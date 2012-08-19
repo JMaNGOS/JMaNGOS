@@ -19,12 +19,13 @@ package org.jmangos.auth.network.netty.packet.client;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
 import org.jmangos.auth.network.netty.packet.server.TCMD_RECONNECT_CHALLENGE;
 import org.jmangos.auth.service.AccountService;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,7 +36,7 @@ public class CMD_RECONNECT_CHALLENGE extends AbstractWoWClientPacket {
     
     /** The Constant logger. */
     @SuppressWarnings("unused")
-    private static final Logger  logger = Logger.getLogger(CMD_RECONNECT_CHALLENGE.class);
+    private static final Logger  logger = LoggerFactory.getLogger(CMD_RECONNECT_CHALLENGE.class);
     
     /** The sender. */
     @Inject

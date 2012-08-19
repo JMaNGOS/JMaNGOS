@@ -21,10 +21,11 @@ import java.nio.BufferUnderflowException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.service.AccountService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,6 +34,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class CMSG_READY_FOR_ACCOUNT_DATA_TIMES extends AbstractWoWClientPacket {
     
+    /** The logger. */
+    private static Logger        logger = LoggerFactory.getLogger(CMSG_READY_FOR_ACCOUNT_DATA_TIMES.class);
     /** The sender. */
     @Inject
     @Named("nettyPacketSender")
@@ -45,7 +48,7 @@ public class CMSG_READY_FOR_ACCOUNT_DATA_TIMES extends AbstractWoWClientPacket {
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
-        Logger.getLogger(getClass()).info("CMSG_READY_FOR_ACCOUNT_DATA_TIMES received!");
+        logger.info("CMSG_READY_FOR_ACCOUNT_DATA_TIMES received!");
     }
     
     @Override

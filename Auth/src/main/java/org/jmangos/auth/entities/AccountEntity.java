@@ -29,7 +29,7 @@ import javax.persistence.Table;
  * The Class Account.
  */
 @Entity
-@Table(name = "ACCOUNT")
+@Table(name = "account")
 public class AccountEntity {
     
     @Id

@@ -21,7 +21,8 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
@@ -35,7 +36,7 @@ import org.jmangos.auth.network.netty.handler.AuthToClientChannelHandler;
 public class RealmPacketFrameEncoder extends OneToOneEncoder {
     
     /** The Constant log. */
-    private static final Logger log = Logger.getLogger(RealmPacketFrameEncoder.class);
+    private static final Logger log = LoggerFactory.getLogger(RealmPacketFrameEncoder.class);
     
     /*
      * (non-Javadoc)

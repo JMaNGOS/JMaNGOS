@@ -23,7 +23,8 @@ import java.util.Arrays;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
 import org.jmangos.auth.network.netty.packet.server.TCMD_RECONNECT_PROOF;
 import org.jmangos.auth.service.AccountService;
@@ -38,7 +39,7 @@ public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
     
     /** The Constant logger. */
     @SuppressWarnings("unused")
-    private static final Logger  logger = Logger.getLogger(CMD_RECONNECT_PROOF.class);
+    private static final Logger  logger = LoggerFactory.getLogger(CMD_RECONNECT_PROOF.class);
     
     /** The sender. */
     @Inject

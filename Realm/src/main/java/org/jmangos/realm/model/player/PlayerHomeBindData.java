@@ -23,6 +23,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 /**
  * The Class PlayerHomeBindData.
@@ -32,7 +33,8 @@ import javax.persistence.Table;
 public class PlayerHomeBindData {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @TableGenerator(table = "sequences", allocationSize = 1, name = "character_homebind")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "character_homebind")
     @Column(name = "guid")
     private int   guid;
     

@@ -16,7 +16,8 @@
  *******************************************************************************/
 package org.jmangos.commons.threadpool;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Class TaskExecutionWrapper.
@@ -24,7 +25,7 @@ import org.apache.log4j.Logger;
 public class TaskExecutionWrapper implements Runnable {
     
     /** The Constant log. */
-    private static final Logger log = Logger.getLogger(TaskExecutionWrapper.class);
+    private static final Logger log = LoggerFactory.getLogger(TaskExecutionWrapper.class);
     
     /** The runnable. */
     private final Runnable      runnable;

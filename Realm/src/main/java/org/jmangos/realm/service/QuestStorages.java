@@ -20,10 +20,11 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
 import org.jmangos.commons.dataholder.DataLoadService;
 import org.jmangos.realm.dao.QuestDAO;
 import org.jmangos.realm.model.base.QuestPrototype;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,7 +34,7 @@ import org.springframework.stereotype.Component;
 public class QuestStorages implements DataLoadService<TIntObjectHashMap<QuestPrototype>> {
     
     /** The Constant logger. */
-    private static final Logger               logger   = Logger.getLogger(QuestStorages.class);
+    private static final Logger               logger   = LoggerFactory.getLogger(QuestStorages.class);
     
     /** The player class level infos. */
     private TIntObjectHashMap<QuestPrototype> questMap = new TIntObjectHashMap<QuestPrototype>();

@@ -19,7 +19,6 @@ package org.jmangos.realm.model.player;
 import java.math.BigInteger;
 import java.util.BitSet;
 
-import org.apache.log4j.Logger;
 import org.jmangos.commons.model.Account;
 import org.jmangos.commons.network.model.ChanneledObject;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
@@ -41,6 +40,8 @@ import org.jmangos.realm.model.unit.UnitMoveType;
 import org.jmangos.realm.model.unit.Units;
 import org.jmangos.realm.model.unit.WeaponAttackType;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_UPDATE_OBJECT;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Class Player.
@@ -50,7 +51,7 @@ public class Player extends Units implements ChanneledObject {
     AbstractPacketSender        sender;
     
     /** The Constant logger. */
-    private static final Logger logger               = Logger.getLogger(Player.class);
+    private static final Logger logger               = LoggerFactory.getLogger(Player.class);
     
     /** The Constant PLAYER_SLOTS_COUNT. */
     final static int            PLAYER_SLOTS_COUNT   = 150;

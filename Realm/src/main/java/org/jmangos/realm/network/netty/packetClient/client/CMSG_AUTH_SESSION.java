@@ -32,7 +32,6 @@ import javax.inject.Named;
 
 import javolution.text.TextBuilder;
 
-import org.apache.log4j.Logger;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jmangos.commons.model.Account;
@@ -46,6 +45,8 @@ import org.jmangos.realm.network.netty.packetClient.server.SMSG_AUTH_RESPONSE;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_CLIENTCACHE_VERSION;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_TUTORIAL_FLAGS;
 import org.jmangos.realm.service.AccountService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -55,7 +56,7 @@ import org.springframework.stereotype.Component;
 public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
     
     /** The Constant logger. */
-    private static final Logger  logger = Logger.getLogger(CMSG_AUTH_SESSION.class);
+    private static final Logger  logger = LoggerFactory.getLogger(CMSG_AUTH_SESSION.class);
     
     /** The account service. */
     @Inject

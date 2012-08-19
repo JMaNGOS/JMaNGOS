@@ -21,7 +21,8 @@ import java.nio.BufferUnderflowException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jmangos.auth.network.netty.decoder.RealmPacketFrameDecoder;
 import org.jmangos.auth.network.netty.decoder.RealmPacketFrameEncoder;
@@ -38,7 +39,7 @@ import org.springframework.stereotype.Component;
 public class CMD_AUTH_ENABLE_CRYPT extends AbstractWoWClientPacket {
     
     /** The logger. */
-    private static Logger        logger = Logger.getLogger(CMD_AUTH_ENABLE_CRYPT.class);
+    private static Logger        logger = LoggerFactory.getLogger(CMD_AUTH_ENABLE_CRYPT.class);
     /** The sender. */
     @Inject
     @Named("nettyPacketSender")

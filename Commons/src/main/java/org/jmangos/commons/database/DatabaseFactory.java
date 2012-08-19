@@ -19,7 +19,8 @@ package org.jmangos.commons.database;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.jmangos.commons.service.Service;
@@ -29,7 +30,7 @@ import org.springframework.stereotype.Component;
 public class DatabaseFactory implements Service {
     
     /** Logger for this class. */
-    private static final Logger   log = Logger.getLogger(DatabaseFactory.class);
+    private static final Logger   log = LoggerFactory.getLogger(DatabaseFactory.class);
     
     /** Database config */
     @Inject

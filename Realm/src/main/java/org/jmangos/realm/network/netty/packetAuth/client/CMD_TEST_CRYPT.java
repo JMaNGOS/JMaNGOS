@@ -21,18 +21,13 @@ import java.nio.BufferUnderflowException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetAuth.AbstractRealmClientPacket;
-
 /**
  * The Class <tt>CMD_TEST_CRYPT</tt>.
  */
 public class CMD_TEST_CRYPT extends AbstractRealmClientPacket {
     
-    /** The logger. */
-    @SuppressWarnings("unused")
-    private static Logger        logger = Logger.getLogger(CMD_TEST_CRYPT.class);
     @Inject
     @Named("RealmToAuth")
     private AbstractPacketSender sender;

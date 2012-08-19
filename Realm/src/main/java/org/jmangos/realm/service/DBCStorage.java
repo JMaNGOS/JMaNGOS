@@ -5,11 +5,12 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.log4j.Logger;
 import org.jmangos.commons.service.Service;
 import org.jmangos.realm.dbc.dataholder.DBCDataLoader;
 import org.jmangos.realm.dbc.struct.CharStartOutfitEntry;
 import org.jmangos.realm.model.player.CharacterStartOutfit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,9 +20,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class DBCStorage implements Service {
     
-    Logger                     log           = Logger.getLogger(getClass());
+    /** The Constant logger. */
+    private static final Logger log           = LoggerFactory.getLogger(DBCStorage.class);
     
-    List<CharacterStartOutfit> outfitEntries = new ArrayList<CharacterStartOutfit>();
+    List<CharacterStartOutfit>  outfitEntries = new ArrayList<CharacterStartOutfit>();
     
     @PostConstruct
     @Override
@@ -33,7 +35,7 @@ public class DBCStorage implements Service {
             this.outfitEntries.add(new CharacterStartOutfit(entry));
         } while ((entry = entry.next()) != null);
         
-        this.log.info(String.format("Loaded DBC: Charstartoutfit.dbc with [%d] entries.", this.outfitEntries.size()));
+        log.info("Loaded DBC: Charstartoutfit.dbc with {} entries.", this.outfitEntries.size());
     }
     
     @Override

@@ -27,7 +27,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Class PacketList.
@@ -37,7 +38,7 @@ import org.apache.log4j.Logger;
 public class PacketList {
     
     /** The Constant log. */
-    private static final Logger              log  = Logger.getLogger(PacketList.class);
+    private static final Logger              log  = LoggerFactory.getLogger(PacketList.class);
     
     /** The data. */
     public TIntObjectHashMap<PacketTemplate> data = new TIntObjectHashMap<PacketTemplate>();

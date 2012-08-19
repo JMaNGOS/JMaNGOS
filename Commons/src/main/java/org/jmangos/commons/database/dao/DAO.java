@@ -16,11 +16,12 @@
  *******************************************************************************/
 package org.jmangos.commons.database.dao;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public interface DAO {
     
-    static final Logger log = Logger.getLogger(DAO.class);
+    static final Logger log = LoggerFactory.getLogger(DAO.class);
     
     /**
      * Unique identifier for DAO class, all subclasses must have same identifiers. Must return

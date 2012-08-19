@@ -16,13 +16,14 @@
  *******************************************************************************/
 package org.jmangos.realm.network.netty.handler;
 
-import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.DefaultExceptionEvent;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Class EventLogHandler.
@@ -32,7 +33,7 @@ import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 public class EventLogHandler extends SimpleChannelUpstreamHandler {
     
     /** The Constant log. */
-    private static final Logger log = Logger.getLogger(EventLogHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(EventLogHandler.class);
     
     /*
      * (non-Javadoc)
@@ -55,7 +56,7 @@ public class EventLogHandler extends SimpleChannelUpstreamHandler {
     @Override
     public void exceptionCaught(final ChannelHandlerContext ctx, final ExceptionEvent e) throws Exception {
     
-        if ((e instanceof DefaultExceptionEvent) && (e.getCause() != null)
+        if ((e instanceof DefaultExceptionEvent) && (e.getCause() != null) && (e.getCause().getMessage() != null)
                 && (e.getCause().getMessage().equals("connection timed out") || e.getCause().getMessage().contains("Connection refused"))) {
             log.warn("Connection timed out");
         } else {

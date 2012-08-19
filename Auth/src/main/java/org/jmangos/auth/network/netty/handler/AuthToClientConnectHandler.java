@@ -18,7 +18,8 @@ package org.jmangos.auth.network.netty.handler;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jboss.netty.channel.ChannelHandler;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
@@ -33,7 +34,7 @@ import org.springframework.stereotype.Component;
 public class AuthToClientConnectHandler implements ConnectHandler {
     
     /** The Constant log. */
-    private static final Logger log = Logger.getLogger(AuthToClientConnectHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(AuthToClientConnectHandler.class);
     
     @Inject
     private NetworkService      networkService;

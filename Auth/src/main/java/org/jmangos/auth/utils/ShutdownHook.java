@@ -26,8 +26,9 @@ package org.jmangos.auth.utils;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
 import org.jmangos.commons.database.DatabaseFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -41,7 +42,7 @@ public class ShutdownHook extends Thread {
     private DatabaseFactory     DF;
     
     /** Logger for this class. */
-    private static final Logger log = Logger.getLogger(ShutdownHook.class);
+    private static final Logger log = LoggerFactory.getLogger(ShutdownHook.class);
     
     /**
      * 

@@ -47,7 +47,7 @@ public class SMSG_CHAR_CREATE extends AbstractWoWServerPacket {
         
             return this.value;
         }
-    }
+    };
     
     public SMSG_CHAR_CREATE() {
     

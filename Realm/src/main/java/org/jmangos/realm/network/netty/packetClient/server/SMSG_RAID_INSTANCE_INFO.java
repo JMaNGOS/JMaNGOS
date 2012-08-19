@@ -16,24 +16,17 @@
  *******************************************************************************/
 package org.jmangos.realm.network.netty.packetClient.server;
 
-import org.apache.log4j.Logger;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
-
-// TODO: Auto-generated Javadoc
 
 /**
  * The Class SMSG_ADDON_INFO.
  */
 public class SMSG_RAID_INSTANCE_INFO extends AbstractWoWServerPacket {
     
-    /** The logger. */
-    @SuppressWarnings("unused")
-    private static Logger logger = Logger.getLogger(SMSG_RAID_INSTANCE_INFO.class);
-    
     /*
-     * (non-Javadoc)
+     * @Override(non-Javadoc)
      * 
-     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
      */
     @Override
     protected void writeImpl() {

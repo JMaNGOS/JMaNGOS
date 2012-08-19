@@ -21,13 +21,14 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
 import org.jmangos.realm.network.netty.handler.RealmToAuthChannelHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Class PacketFrameEncoder.
@@ -35,7 +36,7 @@ import org.jmangos.realm.network.netty.handler.RealmToAuthChannelHandler;
 public class AuthPacketFrameEncoder extends OneToOneEncoder {
     
     /** The Constant log. */
-    private static final Logger log = Logger.getLogger(AuthPacketFrameEncoder.class);
+    private static final Logger log = LoggerFactory.getLogger(AuthPacketFrameEncoder.class);
     
     /*
      * (non-Javadoc)

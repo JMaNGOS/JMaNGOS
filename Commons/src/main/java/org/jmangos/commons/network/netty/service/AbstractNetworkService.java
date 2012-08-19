@@ -22,7 +22,8 @@ import java.util.Map.Entry;
 
 import javolution.util.FastMap;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelFutureListener;
@@ -37,7 +38,7 @@ import org.jmangos.commons.network.netty.factory.ServerChannelFactory;
 public abstract class AbstractNetworkService implements NetworkService {
     
     /** The Constant log. */
-    private static final Logger                log                   = Logger.getLogger(AbstractNetworkService.class);
+    private static final Logger                log                   = LoggerFactory.getLogger(AbstractNetworkService.class);
     
     private final Map<Integer, NetworkChannel> channels              = new FastMap<Integer, NetworkChannel>().shared();
     private final ChannelFutureListener        channelfutureListener = new ChannelCloseListener();

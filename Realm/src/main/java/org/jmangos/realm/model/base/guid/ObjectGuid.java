@@ -311,4 +311,27 @@ public class ObjectGuid extends NamedObject {
     
         return (HighGuid.HIGHGUID_UNIT.getValue() << 48) | _guid;
     }
+    
+    public boolean hasEntry() {
+        switch (high)
+        {
+            case HIGHGUID_ITEM:
+            case HIGHGUID_PLAYER:
+            case HIGHGUID_DYNAMICOBJECT:
+            case HIGHGUID_CORPSE:
+            case HIGHGUID_MO_TRANSPORT:
+                return false;
+            case HIGHGUID_GAMEOBJECT:
+            case HIGHGUID_TRANSPORT:
+            case HIGHGUID_UNIT:
+            case HIGHGUID_PET:
+            case HIGHGUID_VEHICLE:
+            default:
+                return true;
+        }
+    }
+    
+    public long getCounter() {
+        return hasEntry() ? (guid & 0xFFFFFF ) : (guid & 0xFFFFFFFF) ;
+    }
 }

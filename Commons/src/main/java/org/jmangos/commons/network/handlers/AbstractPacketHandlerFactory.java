@@ -18,7 +18,8 @@ package org.jmangos.commons.network.handlers;
 
 import gnu.trove.procedure.TIntObjectProcedure;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jmangos.commons.dataholder.XmlDataLoader;
 import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.model.ReceivablePacket;
@@ -37,7 +38,7 @@ import org.springframework.context.ApplicationContext;
  */
 public abstract class AbstractPacketHandlerFactory extends XmlDataLoader implements PacketHandlerFactory {
     
-    private static final Logger logger            = Logger.getLogger(AbstractPacketHandlerFactory.class);
+    private static final Logger logger            = LoggerFactory.getLogger(AbstractPacketHandlerFactory.class);
     /** The c handler. */
     ClientPacketHandler         cHandler          = new ClientPacketHandler();
     
@@ -73,7 +74,7 @@ public abstract class AbstractPacketHandlerFactory extends XmlDataLoader impleme
     
     static final class AddUpstreamPackets extends AddPackets {
         
-        private static final Logger logger = Logger.getLogger(AddUpstreamPackets.class);
+        private static final Logger logger = LoggerFactory.getLogger(AddUpstreamPackets.class);
         
         public AddUpstreamPackets(final AbstractPacketHandlerFactory phf, final String pkdgName) {
         
@@ -98,7 +99,7 @@ public abstract class AbstractPacketHandlerFactory extends XmlDataLoader impleme
     static final class AddDownstreamPackets extends AddPackets {
         
         private static final ApplicationContext context = ServiceContent.getContext();
-        private static final Logger             logger  = Logger.getLogger(AddDownstreamPackets.class);
+        private static final Logger             logger  = LoggerFactory.getLogger(AddDownstreamPackets.class);
         
         public AddDownstreamPackets(final AbstractPacketHandlerFactory phf, final String pkdgName) {
         

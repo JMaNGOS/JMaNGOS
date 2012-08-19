@@ -19,13 +19,14 @@ package org.jmangos.realm.network.netty.packetClient.server;
 import java.util.BitSet;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.realm.model.InventoryItem;
 import org.jmangos.realm.model.base.character.CharacterData;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 import org.jmangos.realm.network.netty.packetClient.client.CMSG_AUTH_SESSION;
 import org.jmangos.realm.service.ItemStorages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Class SMSG_CHAR_ENUM.
@@ -36,7 +37,7 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
     private final List<CharacterData> charlist;
     
     /** The Constant logger. */
-    private static final Logger       logger = Logger.getLogger(CMSG_AUTH_SESSION.class);
+    private static final Logger       logger = LoggerFactory.getLogger(CMSG_AUTH_SESSION.class);
     
     /**
      * Instantiates a new <tt>SMSG_CHAR_ENUM</tt> packet.
@@ -88,11 +89,11 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
             writeD(0x00 /* character.getPetLevel() */);
             writeD(0x00 /* character.getPetFamily() */);
             
-            final List<InventoryItem> inventory = character.getInventory();
+           // final List<InventoryItem> inventory = character.getInventory();
             
-            final ItemStorages itemStorages =  ServiceContent.getContext().getBean(ItemStorages.class);
+            final ItemStorages itemStorages = ServiceContent.getContext().getBean(ItemStorages.class);
             if (itemStorages == null) {
-                logger.fatal("Cannot get ItemStorages instance!");
+                logger.error("Cannot get ItemStorages instance!");
             }
             
             for (int i = 0; i < 23; i++) {
@@ -102,7 +103,7 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
                     try {
                         displayInfoID = itemStorages.get(invItem.getItem_guid()).getDisplayInfoID();
                     } catch (final Exception e) {
-                        logger.fatal("ID not found in the storage: " + invItem.getItem_guid(), e);
+                        logger.error("ID not found in the storage: " + invItem.getItem_guid(), e);
                     }
                     
                     writeD(displayInfoID);

@@ -18,7 +18,8 @@ package org.jmangos.auth.network.netty.handler;
 
 import java.net.InetSocketAddress;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
@@ -56,7 +57,7 @@ public class AuthToClientChannelHandler extends SimpleChannelUpstreamHandler {
     
     /** The Constant log. */
     @SuppressWarnings("unused")
-    private static final Logger        log   = Logger.getLogger(AuthToClientChannelHandler.class);
+    private static final Logger        log   = LoggerFactory.getLogger(AuthToClientChannelHandler.class);
     
     private Crypt                      crypt = new Crypt();
     

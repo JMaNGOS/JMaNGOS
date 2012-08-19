@@ -18,10 +18,11 @@ package org.jmangos.auth.network.netty.packet.client;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
 import org.jmangos.auth.service.RealmListService;
 import org.jmangos.commons.model.Realm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,7 +32,7 @@ import org.springframework.stereotype.Component;
 public class CMD_REALM_DATA extends AbstractWoWClientPacket {
     
     /** The logger. */
-    private static Logger    logger = Logger.getLogger(CMD_REALM_DATA.class);
+    private static Logger    logger = LoggerFactory.getLogger(CMD_REALM_DATA.class);
     
     @Inject
     private RealmListService realmListService;

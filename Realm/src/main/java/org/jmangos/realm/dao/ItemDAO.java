@@ -22,12 +22,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
 import org.jmangos.realm.model.base.item.ItemPrototype;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,7 +37,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ItemDAO implements DAO {
     
-    Logger                  log = Logger.getLogger(getClass());
+    Logger                  log = LoggerFactory.getLogger(getClass());
     
     @Inject
     private DatabaseFactory databaseFactory;

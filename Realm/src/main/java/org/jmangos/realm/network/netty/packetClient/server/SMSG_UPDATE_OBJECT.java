@@ -3,8 +3,8 @@ package org.jmangos.realm.network.netty.packetClient.server;
 import java.math.BigInteger;
 import java.util.BitSet;
 
-import org.apache.log4j.Logger;
-import org.jmangos.realm.model.UpdateType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;import org.jmangos.realm.model.UpdateType;
 import org.jmangos.realm.model.base.update.UpdateFieldUtils;
 import org.jmangos.realm.model.player.Player;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
@@ -15,15 +15,12 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
  */
 public class SMSG_UPDATE_OBJECT extends AbstractWoWServerPacket {
     
-    Logger                   log        = Logger.getLogger(getClass());
+    /** The logger. */
+    private static Logger        log        = LoggerFactory.getLogger(SMSG_UPDATE_OBJECT.class);
     
     private Player           player;
     private BigInteger       guid       = null;
     private final UpdateType updateType = UpdateType.VALUES;
-    
-    public SMSG_UPDATE_OBJECT() {
-    
-    };
     
     public SMSG_UPDATE_OBJECT(final Player player, final UpdateType updateType) {
     
@@ -41,7 +38,7 @@ public class SMSG_UPDATE_OBJECT extends AbstractWoWServerPacket {
         final BitSet bits = this.player.getBitSet();
         
         final byte[] bytes = bits.toByteArray();
-        this.log.info("Bytes size: " + bytes.length);
+        log.info("Bytes size: " + bytes.length);
         
         // C or D?
         writeC(bytes.length); // Size
@@ -59,10 +56,10 @@ public class SMSG_UPDATE_OBJECT extends AbstractWoWServerPacket {
                 continue;
             }
             
-            this.log.info("Updating object: " + UpdateFieldUtils.getField(i) + " Type: " + this.player.getBitTypes().get(i));
+            log.info("Updating object: " + UpdateFieldUtils.getField(i) + " Type: " + this.player.getBitTypes().get(i));
             
             if (!this.player.getBitTypes().containsKey(i)) {
-                this.log.fatal("Key not found: " + i);
+                log.error("Key not found: " + i);
             }
             
             switch (this.player.getBitTypes().get(i)) {
@@ -79,7 +76,7 @@ public class SMSG_UPDATE_OBJECT extends AbstractWoWServerPacket {
                     writeC(this.player.GetByteValue(i));
                     break;
                 default:
-                    this.log.fatal("UNKNOWN SIZE!!! AAAaaaaAAAaaaa index: " + i);
+                    log.error("UNKNOWN SIZE!!! AAAaaaaAAAaaaa index: " + i);
                     // throw new Exception( "Fatal error at update packet!" );
             }
         }

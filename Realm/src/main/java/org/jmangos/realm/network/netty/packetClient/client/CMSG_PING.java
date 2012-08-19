@@ -21,7 +21,6 @@ import java.nio.BufferUnderflowException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_PONG;
@@ -32,9 +31,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CMSG_PING extends AbstractWoWClientPacket {
-    
-    /** The Constant logger. */
-    private static final Logger  logger = Logger.getLogger(CMSG_PING.class);
     
     /** The ping. */
     private int                  ping;
@@ -51,7 +47,7 @@ public class CMSG_PING extends AbstractWoWClientPacket {
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
         this.ping = readD();
-        this.latency = readD();
+        this.setLatency(readD());
         
         if (GetChannelHandler().getLastPingTime() < 0) {
             GetChannelHandler().setLastPingTime(System.currentTimeMillis());
@@ -65,6 +61,16 @@ public class CMSG_PING extends AbstractWoWClientPacket {
     
         this.sender.send(getClient(), new SMSG_PONG(this.ping));
         
+    }
+
+    public int getLatency() {
+    
+        return latency;
+    }
+
+    public void setLatency(int latency) {
+    
+        this.latency = latency;
     }
     
 }

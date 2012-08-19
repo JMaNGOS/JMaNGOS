@@ -19,13 +19,14 @@ package org.jmangos.realm.network.netty.handler;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelHandler;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.State;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_AUTH_CHALLENGE;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,7 +36,7 @@ import org.springframework.stereotype.Component;
 public class RealmToClientConnectHandler implements ConnectHandler {
     
     /** The Constant log. */
-    private static final Logger  log = Logger.getLogger(RealmToClientConnectHandler.class);
+    private static final Logger  log = LoggerFactory.getLogger(RealmToClientConnectHandler.class);
     
     /** The sender. */
     @Inject

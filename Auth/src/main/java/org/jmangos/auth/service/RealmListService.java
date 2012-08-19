@@ -21,7 +21,8 @@ import javax.inject.Inject;
 
 import javolution.util.FastMap;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jmangos.auth.dao.RealmDAO;
 import org.jmangos.commons.model.Realm;
 import org.jmangos.commons.service.Service;
@@ -33,7 +34,7 @@ public class RealmListService implements Service {
     /**
      * Logger for this class.
      */
-    private final Logger                  log            = Logger.getLogger(getClass());
+    private final Logger                  log            = LoggerFactory.getLogger(getClass());
     
     /**
      * Map with realms
@@ -79,7 +80,7 @@ public class RealmListService implements Service {
     public void start() {
     
         update();
-        this.log.debug("WorldList loaded " + this.realms.size() + " realms.");
+        this.log.debug("WorldList loaded {} realms.", this.realms.size());
         
     }
     

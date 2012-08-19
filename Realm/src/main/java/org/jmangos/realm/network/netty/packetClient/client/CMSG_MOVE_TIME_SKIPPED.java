@@ -5,10 +5,11 @@ import java.nio.BufferUnderflowException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.MSG_MOVE_TIME_SKIPPED;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CMSG_MOVE_TIME_SKIPPED extends AbstractWoWClientPacket {
     
-    Logger                       log = Logger.getLogger(getClass().getSimpleName());
+    private static Logger        log = LoggerFactory.getLogger(CMSG_MOVE_TIME_SKIPPED.class);
     
     private long                 guid;
     private int                  time_dif;
@@ -31,14 +32,14 @@ public class CMSG_MOVE_TIME_SKIPPED extends AbstractWoWClientPacket {
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
-        this.log.warn("CMSG_MOVE_TIME_SKIPPED packet size: " + getAvaliableBytes());
-        this.log.warn("CMSG_MOVE_TIME_SKIPPED wow guid: " + getPlayer().getObjectGuid().getRawValue());
+        log.warn("CMSG_MOVE_TIME_SKIPPED packet size: " + getAvaliableBytes());
+        log.warn("CMSG_MOVE_TIME_SKIPPED wow guid: " + getPlayer().getObjectGuid().getRawValue());
         
         try {
             this.guid = readQ();
             this.time_dif = readD();
         } catch (final Exception e) {
-            this.log.fatal("CMSG_MOVE_TIME_SKIPPED - Wrong Packet length");
+            log.error("CMSG_MOVE_TIME_SKIPPED - Wrong Packet length");
         }
     }
     

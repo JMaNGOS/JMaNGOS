@@ -4,12 +4,14 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Created with IntelliJ IDEA. User: paalgyula email: paalgyula@gmail.com Date: 2012.08.11. Time:
  * 21:10
  */
 @Entity
+@Table(name = "playercreateinfo")
 public class Playercreateinfo {
     
     @EmbeddedId
@@ -111,5 +113,20 @@ public class Playercreateinfo {
     public void setOrientation(final float orientation) {
     
         this.orientation = orientation;
+    }
+    
+    @Override
+    public boolean equals(Object object) {
+    
+        if (this == object) {
+            return true;
+        }
+        if (!(object instanceof Playercreateinfo)) {
+            return false;
+        }
+        if (playercreateinfoPK.equals(((Playercreateinfo) object).getPlayercreateinfoPK())) {
+            return true;
+        }
+        return false;
     }
 }

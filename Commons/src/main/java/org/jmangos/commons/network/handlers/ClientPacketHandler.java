@@ -18,11 +18,12 @@ package org.jmangos.commons.network.handlers;
 
 import javolution.util.FastMap;
 
-import org.apache.log4j.Logger;
 import org.jmangos.commons.OpcodeTable;
 import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.model.ReceivablePacket;
 import org.jmangos.commons.network.model.State;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -31,7 +32,7 @@ import org.jmangos.commons.network.model.State;
 public class ClientPacketHandler {
     
     /** The Constant log. */
-    private static final Logger                                      log               = Logger.getLogger(ClientPacketHandler.class);
+    private static final Logger                                      log               = LoggerFactory.getLogger(ClientPacketHandler.class);
     
     /** The packets prototypes. */
     private final FastMap<State, FastMap<Integer, ReceivablePacket>> packetsPrototypes = new FastMap<State, FastMap<Integer, ReceivablePacket>>();

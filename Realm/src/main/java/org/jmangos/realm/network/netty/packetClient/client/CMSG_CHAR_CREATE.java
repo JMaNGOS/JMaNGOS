@@ -6,7 +6,6 @@ import java.util.Iterator;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
@@ -22,6 +21,8 @@ import org.jmangos.realm.model.player.PlayerHomeBindData;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_CHAR_CREATE;
 import org.jmangos.realm.service.DBCStorage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,7 +32,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
     
-    Logger                       log = Logger.getLogger(getClass());
+    Logger                       log = LoggerFactory.getLogger(getClass());
     
     @Inject
     private DatabaseFactory      databaseFactory;
@@ -83,7 +84,7 @@ public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
         final Playercreateinfo info = (Playercreateinfo) worldSession.get(Playercreateinfo.class, new PlayercreateinfoPK(this.charClass, this.charRace));
         
         if (info == null) {
-            this.log.fatal("Player create template not found for: " + Classes.get(this.charClass) + " " + Races.get(this.charRace));
+            this.log.error("Player create template not found for: " + Classes.get(this.charClass) + " " + Races.get(this.charRace));
             this.sender.send(getClient(), new SMSG_CHAR_CREATE(SMSG_CHAR_CREATE.CharCreateCodes.ERROR));
             return;
         }
@@ -162,7 +163,7 @@ public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
             session.getTransaction().commit();
         } catch (final Exception e) {
             session.getTransaction().rollback();
-            this.log.fatal("Error while creating character: " + Classes.get(this.charClass) + " " + Races.get(this.charRace), e);
+            this.log.error("Error while creating character: " + Classes.get(this.charClass) + " " + Races.get(this.charRace), e);
             this.sender.send(getClient(), new SMSG_CHAR_CREATE(SMSG_CHAR_CREATE.CharCreateCodes.ERROR));
             return;
         }

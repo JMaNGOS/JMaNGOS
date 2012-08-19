@@ -23,12 +23,13 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
 import org.jmangos.auth.config.Config;
 import org.jmangos.auth.dao.BanIpDAO;
 import org.jmangos.commons.config.Compatiple;
 import org.jmangos.commons.model.BanIp;
 import org.jmangos.commons.service.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -42,7 +43,7 @@ public class BanIpService implements Service {
     /**
      * Logger for this class.
      */
-    private static final Logger log = Logger.getLogger(BanIpService.class);
+    private static final Logger log = LoggerFactory.getLogger(BanIpService.class);
     
     @Inject
     private Config              config;
@@ -63,7 +64,7 @@ public class BanIpService implements Service {
     public void start() {
     
         update();
-        log.debug(String.format("BannedIpService loaded %d IP bans.", this.banList.size()));
+        log.debug("BannedIpService loaded {} IP bans.", this.banList.size());
     }
     
     /**

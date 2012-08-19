@@ -18,12 +18,13 @@ package org.jmangos.auth.dao;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
 import org.jmangos.commons.model.Account;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,7 +36,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AccountDAOold implements DAO {
     
-    Logger                  logger = Logger.getLogger(AccountDAOold.class);
+    Logger                  logger = LoggerFactory.getLogger(AccountDAOold.class);
     
     @Inject
     private DatabaseFactory databaseFactory;

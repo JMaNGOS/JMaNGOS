@@ -16,17 +16,12 @@
  *******************************************************************************/
 package org.jmangos.auth.network.netty.packet.server;
 
-import org.apache.log4j.Logger;
 import org.jmangos.auth.network.netty.packet.AbstractWoWServerPacket;
 
 /**
  * The Class <tt>TCMD_AUTH_ENABLE_CRYPT</tt>.
  */
 public class TCMD_AUTH_ENABLE_CRYPT extends AbstractWoWServerPacket {
-    
-    /** The Constant log. */
-    @SuppressWarnings("unused")
-    private static final Logger log = Logger.getLogger(TCMD_AUTH_ENABLE_CRYPT.class);
     
     /**
      * (non-Javadoc)

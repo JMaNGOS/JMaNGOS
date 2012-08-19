@@ -1736,7 +1736,8 @@ public class ItemPrototype extends NamedObject {
      */
     public _Socket getSocket(final int i) {
     
-        return (_Socket) this.Socket[i];
+        // TODO implement socket
+        return new _Socket((byte) 0, 0);
     }
     
     /**

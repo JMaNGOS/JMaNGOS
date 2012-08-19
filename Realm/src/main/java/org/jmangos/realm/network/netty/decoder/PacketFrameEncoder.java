@@ -21,7 +21,6 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
@@ -29,6 +28,8 @@ import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
 import org.jmangos.commons.OpcodeTable;
 import org.jmangos.realm.network.netty.handler.RealmToClientChannelHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Class PacketFrameEncoder.
@@ -36,7 +37,7 @@ import org.jmangos.realm.network.netty.handler.RealmToClientChannelHandler;
 public class PacketFrameEncoder extends OneToOneEncoder {
     
     /** The Constant log. */
-    private static final Logger log = Logger.getLogger(PacketFrameEncoder.class);
+    private static final Logger log = LoggerFactory.getLogger(PacketFrameEncoder.class);
     
     /*
      * (non-Javadoc)

@@ -16,7 +16,8 @@
  *******************************************************************************/
 package org.jmangos.commons.network.netty.receiver;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.NetworkChannel;
@@ -28,7 +29,7 @@ import org.jmangos.commons.network.model.ReceivablePacket;
 public class Netty2PacketReceiver {
     
     /** The Constant log. */
-    private static final Logger log = Logger.getLogger(Netty2PacketReceiver.class);
+    private static final Logger log = LoggerFactory.getLogger(Netty2PacketReceiver.class);
     
     /**
      * Receive packet.
