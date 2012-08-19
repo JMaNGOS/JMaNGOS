@@ -60,4 +60,22 @@ public class PlayerClassLevelInfoPK implements Serializable {
     
         this.level = level;
     }
+    
+    @Override
+    public boolean equals(final Object object) {
+    
+        if (this == object) {
+            return true;
+        }
+        if (!(object instanceof PlayerClassLevelInfoPK)) {
+            return false;
+        }
+        return (getClazz() == ((PlayerClassLevelInfoPK) object).getClazz()) && (getLevel() == ((PlayerClassLevelInfoPK) object).getLevel());
+    }
+    
+    @Override
+    public int hashCode() {
+    
+        return (getClazz() << 8) | getLevel();
+    }
 }

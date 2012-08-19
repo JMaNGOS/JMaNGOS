@@ -10,6 +10,7 @@ import org.jmangos.realm.network.netty.packetClient.server.SMSG_QUEST_QUERY_RESP
 import javax.inject.Named
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender
 import org.jmangos.realm.service.QuestStorages
+import org.springframework.stereotype.Component;
 import org.apache.log4j.Logger
 
 /**
@@ -19,11 +20,12 @@ import org.apache.log4j.Logger
  * Time: 14:41
  * To change this template use File | Settings | File Templates.
  */
+@Component
 public class CMSG_QUEST_QUERY extends AbstractWoWClientPacket {
     Logger log = Logger.getLogger( CMSG_QUEST_QUERY.class );
 
     @Inject
-    @Named("client")
+    @Named("nettyPacketSender")
     private AbstractPacketSender sender;
 
     @Inject
@@ -40,7 +42,7 @@ public class CMSG_QUEST_QUERY extends AbstractWoWClientPacket {
         log.info("Quest query received (#" + questId + ")");
         skipAll();
 
-        questProrotype = questStorages.getQuest( );
+        questProrotype = questStorages.getQuest( questId );
     }
 
     @Override

@@ -24,10 +24,12 @@ import org.apache.log4j.Logger;
 import org.jmangos.commons.dataholder.DataLoadService;
 import org.jmangos.realm.dao.QuestDAO;
 import org.jmangos.realm.model.base.QuestPrototype;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class QuestStorages.
  */
+@Component
 public class QuestStorages implements DataLoadService<TIntObjectHashMap<QuestPrototype>> {
     
     /** The Constant logger. */

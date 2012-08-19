@@ -52,4 +52,22 @@ public class PlayercreateinfoPK implements Serializable {
     
         this.clazz = clazz;
     }
+    
+    @Override
+    public boolean equals(final Object object) {
+    
+        if (this == object) {
+            return true;
+        }
+        if (!(object instanceof PlayercreateinfoPK)) {
+            return false;
+        }
+        return (getClazz() == ((PlayercreateinfoPK) object).getClazz()) && (getRace() == ((PlayercreateinfoPK) object).getRace());
+    }
+    
+    @Override
+    public int hashCode() {
+    
+        return (getClazz() << 8) | getRace();
+    }
 }
