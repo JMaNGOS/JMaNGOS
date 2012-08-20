@@ -29,6 +29,8 @@ import org.jmangos.auth.dao.AccountDao;
 import org.jmangos.auth.entities.AccountEntity;
 import org.jmangos.auth.model.AccountDto;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository("accountDao")
 public class AccountDaoImpl implements AccountDao {
@@ -59,7 +61,7 @@ public class AccountDaoImpl implements AccountDao {
     private List<AccountEntity> getAccountList(final Criterion... criterions) {
     
         final Criteria criteria = CriteriaUtils.createCriteria(this.entityManager, AccountEntity.class);
-        for(Criterion criterion :criterions){
+        for (Criterion criterion : criterions) {
             criteria.add(criterion);
         }
         final List<AccountEntity> accountList = criteria.getResultList();
@@ -77,11 +79,11 @@ public class AccountDaoImpl implements AccountDao {
         accountDto.setV(accountEntity.getV());
         accountDto.setS(accountEntity.getS());
         accountDto.setEmail(accountEntity.getEmail());
-        //accountDto.setJoindate(accountEntity.getJoindate());
+        // accountDto.setJoindate(accountEntity.getJoindate());
         accountDto.setLastIp(accountEntity.getLastIp());
         accountDto.setFailedLogins(accountEntity.getFailedLogins());
         accountDto.setLocked(accountEntity.getLocked());
-        //accountDto.setLastLogin(accountEntity.getLastLogin());
+        // accountDto.setLastLogin(accountEntity.getLastLogin());
         accountDto.setActiveRealmId(accountEntity.getActiveRealmId());
         accountDto.setExpansion(accountEntity.getExpansion());
         accountDto.setMutetime(accountEntity.getMutetime());
@@ -101,11 +103,11 @@ public class AccountDaoImpl implements AccountDao {
         accountEntity.setV(accountDto.getV());
         accountEntity.setS(accountDto.getS());
         accountEntity.setEmail(accountDto.getEmail());
-        //accountEntity.setJoindate(accountDto.getJoindate());
+        // accountEntity.setJoindate(accountDto.getJoindate());
         accountEntity.setLastIp(accountDto.getLastIp());
         accountEntity.setFailedLogins(accountDto.getFailedLogins());
         accountEntity.setLocked(accountDto.getLocked());
-       // accountEntity.setLastLogin(accountDto.getLastLogin());
+        // accountEntity.setLastLogin(accountDto.getLastLogin());
         accountEntity.setActiveRealmId(accountDto.getActiveRealmId());
         accountEntity.setExpansion(accountDto.getExpansion());
         accountEntity.setMutetime(accountDto.getMutetime());
@@ -122,6 +124,7 @@ public class AccountDaoImpl implements AccountDao {
         return this.entityManager.find(AccountEntity.class, id);
     }
     
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public Long createOrUpdateAccount(final AccountDto accountDto) {
     

@@ -28,13 +28,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service("accountService2")
-@Transactional(readOnly = true)
 public class AccountServiceImpl implements AccountService {
     
     @Autowired
     private AccountDao accountDao;
     
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     @Override
     public AccountDto readAccount(final Long id) {
     

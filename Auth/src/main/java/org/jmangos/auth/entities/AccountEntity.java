@@ -34,7 +34,7 @@ public class AccountEntity {
     
     @Id
     @Column(nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long   id;
     
     /** The user name. */

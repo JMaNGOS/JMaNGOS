@@ -12,14 +12,17 @@ import org.springframework.jmx.export.annotation.AnnotationMBeanExporter;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.AnnotationTransactionAttributeSource;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.interceptor.TransactionAttributeSource;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 @Configuration
+@EnableTransactionManagement
 public class AuthModule {
     
     /** Database config */
@@ -50,7 +53,7 @@ public class AuthModule {
     
         final HibernateJpaVendorAdapter hjva = new HibernateJpaVendorAdapter();
         hjva.setShowSql(true);
-        hjva.setGenerateDdl(false);
+        hjva.setGenerateDdl(true);
         hjva.setDatabasePlatform(this.databaseConfig.ACCOUNT_DATABASE_DIALECT);
         return hjva;
     }
@@ -61,6 +64,7 @@ public class AuthModule {
         final LocalContainerEntityManagerFactoryBean lcemfb = new LocalContainerEntityManagerFactoryBean();
         lcemfb.setDataSource(dataSource());
         lcemfb.setJpaVendorAdapter(jpaVendorAdapter());
+        lcemfb.setJpaDialect(new HibernateJpaDialect());
         return lcemfb;
     }
     

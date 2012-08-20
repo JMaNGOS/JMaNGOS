@@ -211,7 +211,7 @@ public class AccountDto implements Cloneable {
     public String toString() {
     
         final StringBuilder sb = new StringBuilder(super.toString());
-        sb.append("\nid = ").append(this.id);
+        sb.append("\nid = ").append(this.id).append("\nusername = ").append(this.username).append("\n");
         return sb.toString();
     }
     

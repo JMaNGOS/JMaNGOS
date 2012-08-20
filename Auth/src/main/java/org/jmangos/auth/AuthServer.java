@@ -16,13 +16,6 @@
  *******************************************************************************/
 package org.jmangos.auth;
 
-import java.util.List;
-
-import org.criteria4jpa.criterion.Criterion;
-import org.criteria4jpa.criterion.Restrictions;
-import org.jmangos.auth.model.AccountDto;
-import org.jmangos.auth.services.AccountService;
-import org.jmangos.auth.services.impl.AccountServiceImpl;
 import org.jmangos.auth.utils.ShutdownHook;
 import org.jmangos.commons.network.netty.service.NetworkService;
 import org.jmangos.commons.service.ServiceContent;
@@ -53,13 +46,5 @@ public class AuthServer {
         Runtime.getRuntime().addShutdownHook(context.getBean(ShutdownHook.class));
         System.gc();
         context.getBean(NetworkService.class).start();
-        final Criterion c = Restrictions.eq("username", new String("PLAYER"));
-        System.out.println();
-        final AccountService accountService = context.getBean("accountService2", AccountServiceImpl.class);
-        System.out.println();
-        final AccountDto accountDto = accountService.readAccount((long) 2);
-        System.out.println();
-        final List<AccountDto> accountDtos = accountService.readAccounts(c);
-        System.out.println();
     }
 }

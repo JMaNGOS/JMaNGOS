@@ -23,6 +23,7 @@ import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.jmangos.auth.controller.AccountController;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
 import org.jmangos.auth.network.netty.packet.server.TCMD_AUTH_LOGON_CHALLENGE;
 import org.jmangos.auth.service.AccountService;
@@ -48,7 +49,7 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
     
     /** The account service. */
     @Inject
-    AccountService               accountService;
+    AccountController            accountController;
     
     /** The login. */
     private String               login;
@@ -123,7 +124,7 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
-        final WoWAuthResponse response = this.accountService.login(this.login, (NettyNetworkChannel) getClient());
+        final WoWAuthResponse response = this.accountController.loadLogin(this.login, (NettyNetworkChannel) getClient());
         switch (response) {
             case WOW_FAIL_BANNED:
                 this.sender.sendAndClose(getClient(), new TCMD_AUTH_LOGON_CHALLENGE(response));
