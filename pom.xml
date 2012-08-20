@@ -109,6 +109,13 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-orm</artifactId>
 				<version>3.1.2.RELEASE</version>
+				<exclusions>
+					<!-- Using SLF4J -->
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>javax.inject</groupId>
@@ -178,6 +185,12 @@
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
+				<version>1.6.6</version>
+			</dependency>
+			<dependency>
+				<!-- the bridge for Spring -->
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
 				<version>1.6.6</version>
 			</dependency>
 			<dependency>
@@ -339,7 +352,8 @@
 						<configuration>
 							<autoVersionSubmodules>true</autoVersionSubmodules>
 							<goals>deploy</goals>
-							<arguments>-Ddist=${dist} -Djenkins.buildNumber=${jenkins.buildNumber}</arguments>
+							<arguments>-Ddist=${dist}
+								-Djenkins.buildNumber=${jenkins.buildNumber}</arguments>
 						</configuration>
 					</plugin>
 				</plugins>
