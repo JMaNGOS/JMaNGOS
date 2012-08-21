@@ -16,10 +16,9 @@
  *******************************************************************************/
 package org.jmangos.realm.network.netty.packetClient.server;
 
-import org.jmangos.realm.model.base.TradeStatus;
+import org.jmangos.realm.model.enums.TradeStatus;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SMSG_TRADE_STATUS.
  */

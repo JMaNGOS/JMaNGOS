@@ -17,27 +17,32 @@
 package org.jmangos.realm.model.unit;
 
 import org.jmangos.realm.model.base.WorldObject;
-import org.jmangos.realm.model.base.guid.TypeId;
-import org.jmangos.realm.model.base.guid.TypeMask;
 import org.jmangos.realm.model.base.update.UnitField;
+import org.jmangos.realm.model.enums.CombatRating;
+import org.jmangos.realm.model.enums.Powers;
+import org.jmangos.realm.model.enums.SpellSchools;
+import org.jmangos.realm.model.enums.Stats;
+import org.jmangos.realm.model.enums.TypeID;
+import org.jmangos.realm.model.enums.TypeMask;
+import org.jmangos.realm.model.enums.UnitMoveType;
+import org.jmangos.realm.model.enums.WeaponAttackType;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Units.
  */
 public class Units extends WorldObject {
     
     /** The base move speed. */
-    float[]         baseMoveSpeed   = new float[UnitMoveType.MAX_MOVE_TYPE];
+    float[]         baseMoveSpeed   = new float[UnitMoveType.MAX_TYPE];
     
     /** The m_speed_rate. */
-    float[]         m_speed_rate    = new float[UnitMoveType.MAX_MOVE_TYPE];
+    float[]         m_speed_rate    = new float[UnitMoveType.MAX_TYPE];
     
     /** The base rating value. */
     int[]           baseRatingValue = new int[CombatRating.MAX_COMBAT_RATING.ordinal()];
     
     /** The m_attack timer. */
-    protected int[] m_attackTimer   = new int[WeaponAttackType.MAX_ATTACK.ordinal()];
+    protected int[] m_attackTimer   = new int[WeaponAttackType.MAX.ordinal()];
     
     /** The create stats. */
     float[]         createStats     = new float[Stats.MAX_STATS];
@@ -77,8 +82,8 @@ public class Units extends WorldObject {
     
         super(objectId);
         this.valuesCount = UnitField.UNIT_END;
-        this.objectTypeId = TypeId.TYPEID_UNIT;
-        this.objectType.add(TypeMask.TYPEMASK_UNIT);
+        this.objectTypeId = TypeID.UNIT;
+        this.objectType.add(TypeMask.UNIT);
     }
     
     /**
@@ -112,7 +117,7 @@ public class Units extends WorldObject {
      */
     public int GetArmor() {
     
-        return GetResistance(SpellSchools.SPELL_SCHOOL_NORMAL);
+        return GetResistance(SpellSchools.NORMAL);
     }
     
     /**
@@ -123,7 +128,7 @@ public class Units extends WorldObject {
      */
     public void SetArmor(final int value) {
     
-        SetResistance(SpellSchools.SPELL_SCHOOL_NORMAL, value);
+        SetResistance(SpellSchools.NORMAL, value);
     }
     
     /**
@@ -184,21 +189,21 @@ public class Units extends WorldObject {
     
         // POWER_FOCUS and POWER_HAPPINESS only have hunter pet
         switch (power) {
-            case POWER_MANA:
+            case MANA:
                 return GetCreateMana();
-            case POWER_RAGE:
+            case RAGE:
                 return 1000;
-            case POWER_FOCUS:
-                return (getObjectTypeId() == TypeId.TYPEID_PLAYER ? 0 : 100);
-            case POWER_ENERGY:
+            case FOCUS:
+                return (getObjectTypeId() == TypeID.PLAYER ? 0 : 100);
+            case ENERGY:
                 return 100;
-            case POWER_HAPPINESS:
-                return (getObjectTypeId() == TypeId.TYPEID_PLAYER ? 0 : 1050000);
-            case POWER_RUNIC_POWER:
+            case HAPPINESS:
+                return (getObjectTypeId() == TypeID.PLAYER ? 0 : 1050000);
+            case RUNIC_POWER:
                 return 1000;
-            case POWER_RUNE:
+            case RUNE:
                 return 0;
-            case POWER_HEALTH:
+            case HEALTH:
                 return 0;
         }
         

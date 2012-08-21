@@ -23,13 +23,13 @@ import javax.inject.Inject;
 
 import org.jmangos.commons.dataholder.DataLoadService;
 import org.jmangos.realm.dao.ItemDAO;
-import org.jmangos.realm.model.InventoryItem;
-import org.jmangos.realm.model.base.guid.HighGuid;
+import org.jmangos.realm.domain.InventoryItem;
+import org.jmangos.realm.domain.ItemPrototype;
 import org.jmangos.realm.model.base.item.Bag;
-import org.jmangos.realm.model.base.item.InventoryType;
 import org.jmangos.realm.model.base.item.Item;
-import org.jmangos.realm.model.base.item.ItemPrototype;
 import org.jmangos.realm.model.base.update.ItemFields;
+import org.jmangos.realm.model.enums.HighGuid;
+import org.jmangos.realm.model.enums.InventoryType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -94,9 +94,9 @@ public class ItemStorages implements DataLoadService<TIntObjectHashMap<ItemProto
      */
     public Item loadFromDB(final InventoryItem itemplate, final ItemPrototype proto) {
     
-        final long guid = (HighGuid.HIGHGUID_ITEM.getValue() << 48) | itemplate.getItem_guid();
+        final long guid = (HighGuid.ITEM.getValue() << 48) | itemplate.getItem_guid();
         Item item = null;
-        if (proto.getInventoryType() == InventoryType.INVTYPE_BAG) {
+        if (proto.getInventoryType() == InventoryType.BAG) {
             item = new Bag(guid);
         } else {
             item = new Item(guid);

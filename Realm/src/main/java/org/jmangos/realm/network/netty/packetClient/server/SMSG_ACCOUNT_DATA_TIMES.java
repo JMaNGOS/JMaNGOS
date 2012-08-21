@@ -19,10 +19,9 @@ package org.jmangos.realm.network.netty.packetClient.server;
 import java.util.HashMap;
 
 import org.jmangos.realm.model.account.AccountData;
-import org.jmangos.realm.model.account.AccountDataType;
+import org.jmangos.realm.model.enums.AccountDataType;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SMSG_ACCOUNT_DATA_TIMES.
  */

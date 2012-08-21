@@ -27,7 +27,7 @@ import javax.inject.Named;
 
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.model.account.AccountData;
-import org.jmangos.realm.model.account.AccountDataType;
+import org.jmangos.realm.model.enums.AccountDataType;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.springframework.stereotype.Component;
 

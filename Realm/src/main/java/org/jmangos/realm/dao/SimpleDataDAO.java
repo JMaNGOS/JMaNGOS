@@ -24,10 +24,10 @@ import javax.inject.Inject;
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
-import org.jmangos.realm.model.base.PlayerClassLevelInfo;
-import org.jmangos.realm.model.base.PlayerClassLevelInfoPK;
-import org.jmangos.realm.model.base.PlayerLevelInfo;
-import org.jmangos.realm.model.base.PlayerLevelInfoPK;
+import org.jmangos.realm.domain.PlayerClassLevelInfo;
+import org.jmangos.realm.domain.PlayerClassLevelInfoPK;
+import org.jmangos.realm.domain.PlayerLevelInfo;
+import org.jmangos.realm.domain.PlayerLevelInfoPK;
 import org.springframework.stereotype.Component;
 
 /**

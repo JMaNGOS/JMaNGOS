@@ -17,8 +17,9 @@
 package org.jmangos.realm.model.base.guid;
 
 import org.jmangos.commons.model.NamedObject;
+import org.jmangos.realm.model.enums.HighGuid;
+import org.jmangos.realm.model.enums.TypeID;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ObjectGuid.
  */
@@ -49,7 +50,7 @@ public class ObjectGuid extends NamedObject {
     
         super(_guid);
         this.guid = _guid;
-        this.high = HighGuid.HIGHGUID_PLAYER;
+        this.high = HighGuid.PLAYER;
     }
     
     /**
@@ -134,7 +135,7 @@ public class ObjectGuid extends NamedObject {
      */
     boolean IsCreature() {
     
-        return getHigh() == HighGuid.HIGHGUID_UNIT;
+        return getHigh() == HighGuid.UNIT;
     }
     
     /**
@@ -144,7 +145,7 @@ public class ObjectGuid extends NamedObject {
      */
     boolean IsPet() {
     
-        return getHigh() == HighGuid.HIGHGUID_PET;
+        return getHigh() == HighGuid.PET;
     }
     
     /**
@@ -154,7 +155,7 @@ public class ObjectGuid extends NamedObject {
      */
     boolean IsVehicle() {
     
-        return getHigh() == HighGuid.HIGHGUID_VEHICLE;
+        return getHigh() == HighGuid.VEHICLE;
     }
     
     /**
@@ -184,7 +185,7 @@ public class ObjectGuid extends NamedObject {
      */
     boolean IsPlayer() {
     
-        return !IsEmpty() && (getHigh() == HighGuid.HIGHGUID_PLAYER);
+        return !IsEmpty() && (getHigh() == HighGuid.PLAYER);
     }
     
     /**
@@ -204,7 +205,7 @@ public class ObjectGuid extends NamedObject {
      */
     boolean IsItem() {
     
-        return getHigh() == HighGuid.HIGHGUID_ITEM;
+        return getHigh() == HighGuid.ITEM;
     }
     
     /**
@@ -214,7 +215,7 @@ public class ObjectGuid extends NamedObject {
      */
     boolean IsGameobject() {
     
-        return getHigh() == HighGuid.HIGHGUID_GAMEOBJECT;
+        return getHigh() == HighGuid.GAMEOBJECT;
     }
     
     /**
@@ -224,7 +225,7 @@ public class ObjectGuid extends NamedObject {
      */
     boolean IsDynamicObject() {
     
-        return getHigh() == HighGuid.HIGHGUID_DYNAMICOBJECT;
+        return getHigh() == HighGuid.DYNAMICOBJECT;
     }
     
     /**
@@ -234,7 +235,7 @@ public class ObjectGuid extends NamedObject {
      */
     boolean IsCorpse() {
     
-        return getHigh() == HighGuid.HIGHGUID_CORPSE;
+        return getHigh() == HighGuid.CORPSE;
     }
     
     /**
@@ -244,7 +245,7 @@ public class ObjectGuid extends NamedObject {
      */
     boolean IsTransport() {
     
-        return getHigh() == HighGuid.HIGHGUID_TRANSPORT;
+        return getHigh() == HighGuid.TRANSPORT;
     }
     
     /**
@@ -254,7 +255,7 @@ public class ObjectGuid extends NamedObject {
      */
     boolean IsMOTransport() {
     
-        return getHigh() == HighGuid.HIGHGUID_MO_TRANSPORT;
+        return getHigh() == HighGuid.MO_TRANSPORT;
     }
     
     /**
@@ -264,29 +265,29 @@ public class ObjectGuid extends NamedObject {
      *            the high
      * @return the type id
      */
-    public static TypeId getTypeId(final HighGuid high) {
+    public static TypeID getTypeID(final HighGuid high) {
     
         switch (high) {
-            case HIGHGUID_ITEM:
-                return TypeId.TYPEID_ITEM;
-            case HIGHGUID_UNIT:
-                return TypeId.TYPEID_UNIT;
-            case HIGHGUID_PET:
-                return TypeId.TYPEID_UNIT;
-            case HIGHGUID_PLAYER:
-                return TypeId.TYPEID_PLAYER;
-            case HIGHGUID_GAMEOBJECT:
-                return TypeId.TYPEID_GAMEOBJECT;
-            case HIGHGUID_DYNAMICOBJECT:
-                return TypeId.TYPEID_DYNAMICOBJECT;
-            case HIGHGUID_CORPSE:
-                return TypeId.TYPEID_CORPSE;
-            case HIGHGUID_MO_TRANSPORT:
-                return TypeId.TYPEID_GAMEOBJECT;
-            case HIGHGUID_VEHICLE:
-                return TypeId.TYPEID_UNIT;
+            case ITEM:
+                return TypeID.ITEM;
+            case UNIT:
+                return TypeID.UNIT;
+            case PET:
+                return TypeID.UNIT;
+            case PLAYER:
+                return TypeID.PLAYER;
+            case GAMEOBJECT:
+                return TypeID.GAMEOBJECT;
+            case DYNAMICOBJECT:
+                return TypeID.DYNAMICOBJECT;
+            case CORPSE:
+                return TypeID.CORPSE;
+            case MO_TRANSPORT:
+                return TypeID.GAMEOBJECT;
+            case VEHICLE:
+                return TypeID.UNIT;
             default:
-                return TypeId.TYPEID_OBJECT;
+                return TypeID.OBJECT;
         }
     }
     
@@ -295,9 +296,9 @@ public class ObjectGuid extends NamedObject {
      * 
      * @return the type id
      */
-    public TypeId GetTypeId() {
+    public TypeID GetTypeID() {
     
-        return ObjectGuid.getTypeId(getHigh());
+        return ObjectGuid.getTypeID(getHigh());
     }
     
     /**
@@ -309,23 +310,23 @@ public class ObjectGuid extends NamedObject {
      */
     public static long MakeUnitGuid(final long _guid) {
     
-        return (HighGuid.HIGHGUID_UNIT.getValue() << 48) | _guid;
+        return (HighGuid.UNIT.getValue() << 48) | _guid;
     }
     
     public boolean hasEntry() {
         switch (high)
         {
-            case HIGHGUID_ITEM:
-            case HIGHGUID_PLAYER:
-            case HIGHGUID_DYNAMICOBJECT:
-            case HIGHGUID_CORPSE:
-            case HIGHGUID_MO_TRANSPORT:
+            case ITEM:
+            case PLAYER:
+            case DYNAMICOBJECT:
+            case CORPSE:
+            case MO_TRANSPORT:
                 return false;
-            case HIGHGUID_GAMEOBJECT:
-            case HIGHGUID_TRANSPORT:
-            case HIGHGUID_UNIT:
-            case HIGHGUID_PET:
-            case HIGHGUID_VEHICLE:
+            case GAMEOBJECT:
+            case TRANSPORT:
+            case UNIT:
+            case PET:
+            case VEHICLE:
             default:
                 return true;
         }

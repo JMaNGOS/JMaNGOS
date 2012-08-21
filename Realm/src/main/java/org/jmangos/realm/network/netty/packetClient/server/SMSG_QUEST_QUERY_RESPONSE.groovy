@@ -1,7 +1,7 @@
 package org.jmangos.realm.network.netty.packetClient.server
 
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket
-import org.jmangos.realm.model.base.QuestPrototype
+import org.jmangos.realm.domain.QuestPrototype
 
 /**
  * Created with IntelliJ IDEA.

@@ -26,19 +26,22 @@ import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.commons.network.netty.sender.NettyPacketSender;
 import org.jmangos.commons.service.ServiceContent;
-import org.jmangos.realm.model.UpdateType;
-import org.jmangos.realm.model.base.character.CharacterData;
-import org.jmangos.realm.model.base.guid.TypeId;
-import org.jmangos.realm.model.base.guid.TypeMask;
+import org.jmangos.realm.domain.CharacterData;
+import org.jmangos.realm.domain.PlayerHomeBindData;
 import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.base.update.PlayerFields;
 import org.jmangos.realm.model.base.update.UnitField;
-import org.jmangos.realm.model.unit.Powers;
-import org.jmangos.realm.model.unit.SpellSchools;
-import org.jmangos.realm.model.unit.Stats;
-import org.jmangos.realm.model.unit.UnitMoveType;
+import org.jmangos.realm.model.enums.BaseModGroup;
+import org.jmangos.realm.model.enums.BaseModType;
+import org.jmangos.realm.model.enums.Powers;
+import org.jmangos.realm.model.enums.SpellSchools;
+import org.jmangos.realm.model.enums.Stats;
+import org.jmangos.realm.model.enums.TypeID;
+import org.jmangos.realm.model.enums.TypeMask;
+import org.jmangos.realm.model.enums.UnitMoveType;
+import org.jmangos.realm.model.enums.UpdateType;
+import org.jmangos.realm.model.enums.WeaponAttackType;
 import org.jmangos.realm.model.unit.Units;
-import org.jmangos.realm.model.unit.WeaponAttackType;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_UPDATE_OBJECT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,7 +100,7 @@ public class Player extends Units implements ChanneledObject {
     private final int[]         tradeItems           = new int[TRADE_SLOT_COUNT];
     
     /** The forced_speed_changes. */
-    byte[]                      forced_speed_changes = new byte[UnitMoveType.MAX_MOVE_TYPE];
+    byte[]                      forced_speed_changes = new byte[UnitMoveType.MAX_TYPE];
     
     /** The money. */
     private int                 money                = 0;
@@ -117,11 +120,11 @@ public class Player extends Units implements ChanneledObject {
         setName(cd.getName());
         this.valuesCount = PlayerFields.PLAYER_END;
         this.bitSet = new BitSet(this.valuesCount);
-        this.objectType.add(TypeMask.TYPEMASK_PLAYER);
-        this.objectTypeId = TypeId.TYPEID_PLAYER;
+        this.objectType.add(TypeMask.PLAYER);
+        this.objectTypeId = TypeID.PLAYER;
         this.characterData = cd;
         for (int i = 0; i < BaseModGroup.BASEMOD_END.ordinal(); ++i) {
-            this.auraBaseMod[i][BaseModType.PCT_MOD.ordinal()] = 1.0f;
+            this.auraBaseMod[i][BaseModType.PCT.ordinal()] = 1.0f;
         }
         this.sender = ServiceContent.getContext().getBean(NettyPacketSender.class);
     }
@@ -149,10 +152,10 @@ public class Player extends Units implements ChanneledObject {
         super(guid);
         this.valuesCount = PlayerFields.PLAYER_END;
         this.bitSet = new BitSet(this.valuesCount);
-        this.objectType.add(TypeMask.TYPEMASK_PLAYER);
-        this.objectTypeId = TypeId.TYPEID_PLAYER;
+        this.objectType.add(TypeMask.PLAYER);
+        this.objectTypeId = TypeID.PLAYER;
         for (int i = 0; i < BaseModGroup.BASEMOD_END.ordinal(); ++i) {
-            this.auraBaseMod[i][BaseModType.PCT_MOD.ordinal()] = 1.0f;
+            this.auraBaseMod[i][BaseModType.PCT.ordinal()] = 1.0f;
         }
         this.sender = ServiceContent.getContext().getBean(NettyPacketSender.class);
     }
@@ -287,18 +290,18 @@ public class Player extends Units implements ChanneledObject {
      */
     public void outDebugValue() {
     
-        logger.debug(String.format("HP is: \t\t\t%d\t\tMP is: \t\t\t%d", GetMaxHealth(), GetMaxPower(Powers.POWER_MANA)));
+        logger.debug(String.format("HP is: \t\t\t%d\t\tMP is: \t\t\t%d", GetMaxHealth(), GetMaxPower(Powers.MANA)));
         logger.debug(String.format("AGILITY is: \t\t%f\tSTRENGTH is: \t\t%f", GetStat(Stats.AGILITY), GetStat(Stats.STRENGTH)));
         logger.debug(String.format("INTELLECT is: \t\t%f\tSPIRIT is: \t\t%f", GetStat(Stats.INTELLECT), GetStat(Stats.SPIRIT)));
         logger.debug(String.format("STAMINA is: \t\t%f", GetStat(Stats.STAMINA)));
         logger.debug(String.format("Armor is: \t\t\t%d\t\tBlock is: \t\t%f", GetArmor(), GetFloatValue(PlayerFields.PLAYER_BLOCK_PERCENTAGE)));
-        logger.debug(String.format("HolyRes is: \t\t%d\t\tFireRes is: \t\t%d", GetResistance(SpellSchools.SPELL_SCHOOL_HOLY), GetResistance(SpellSchools.SPELL_SCHOOL_FIRE)));
-        logger.debug(String.format("NatureRes is: \t\t%d\t\tFrostRes is: \t\t%d", GetResistance(SpellSchools.SPELL_SCHOOL_NATURE), GetResistance(SpellSchools.SPELL_SCHOOL_FROST)));
-        logger.debug(String.format("ShadowRes is: \t\t%d\t\tArcaneRes is: \t\t%d", GetResistance(SpellSchools.SPELL_SCHOOL_SHADOW), GetResistance(SpellSchools.SPELL_SCHOOL_ARCANE)));
+        logger.debug(String.format("HolyRes is: \t\t%d\t\tFireRes is: \t\t%d", GetResistance(SpellSchools.HOLY), GetResistance(SpellSchools.FIRE)));
+        logger.debug(String.format("NatureRes is: \t\t%d\t\tFrostRes is: \t\t%d", GetResistance(SpellSchools.NATURE), GetResistance(SpellSchools.FROST)));
+        logger.debug(String.format("ShadowRes is: \t\t%d\t\tArcaneRes is: \t\t%d", GetResistance(SpellSchools.SHADOW), GetResistance(SpellSchools.ARCANE)));
         logger.debug(String.format("MIN_DAMAGE is: \t\t%f\tMAX_DAMAGE is: \t\t%f", GetFloatValue(UnitField.UNIT_FIELD_MINDAMAGE), GetFloatValue(UnitField.UNIT_FIELD_MAXDAMAGE)));
         logger.debug(String.format("MIN_OFFHAND_DAMAGE is: \t%f\tMAX_OFFHAND_DAMAGE is: \t%f", GetFloatValue(UnitField.UNIT_FIELD_MINOFFHANDDAMAGE), GetFloatValue(UnitField.UNIT_FIELD_MAXOFFHANDDAMAGE)));
         logger.debug(String.format("MIN_RANGED_DAMAGE is: \t%f\tMAX_RANGED_DAMAGE is: \t%f", GetFloatValue(UnitField.UNIT_FIELD_MINRANGEDDAMAGE), GetFloatValue(UnitField.UNIT_FIELD_MAXRANGEDDAMAGE)));
-        logger.debug(String.format("ATTACK_TIME is: \t\t%d\t\tRANGE_ATTACK_TIME is: \t%d", GetAttackTime(WeaponAttackType.BASE_ATTACK), GetAttackTime(WeaponAttackType.RANGED_ATTACK)));
+        logger.debug(String.format("ATTACK_TIME is: \t\t%d\t\tRANGE_ATTACK_TIME is: \t%d", GetAttackTime(WeaponAttackType.BASE), GetAttackTime(WeaponAttackType.RANGED)));
         System.out.println();
     }
     
@@ -340,7 +343,7 @@ public class Player extends Units implements ChanneledObject {
     
     public void create() {
     
-        this.sender.send(getChannel(), new SMSG_UPDATE_OBJECT(this, UpdateType.CREATE_SELF));
+        this.sender.send(getChannel(), new SMSG_UPDATE_OBJECT(this, UpdateType.CREATE_OBJECT2));
     }
     
     @Override

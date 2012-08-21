@@ -24,9 +24,9 @@ import javax.inject.Inject;
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
-import org.jmangos.realm.model.InventoryItem;
-import org.jmangos.realm.model.base.character.CharacterData;
-import org.jmangos.realm.model.player.PlayerHomeBindData;
+import org.jmangos.realm.domain.InventoryItem;
+import org.jmangos.realm.domain.PlayerHomeBindData;
+import org.jmangos.realm.domain.CharacterData;
 import org.springframework.stereotype.Component;
 
 /**

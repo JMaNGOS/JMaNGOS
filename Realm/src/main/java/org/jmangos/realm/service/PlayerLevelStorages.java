@@ -23,10 +23,10 @@ import javax.inject.Inject;
 
 import org.jmangos.commons.dataholder.DataLoadService;
 import org.jmangos.realm.dao.SimpleDataDAO;
-import org.jmangos.realm.model.Classes;
-import org.jmangos.realm.model.Races;
-import org.jmangos.realm.model.base.PlayerLevelInfo;
-import org.jmangos.realm.model.base.PlayerLevelInfoPK;
+import org.jmangos.realm.domain.PlayerLevelInfo;
+import org.jmangos.realm.domain.PlayerLevelInfoPK;
+import org.jmangos.realm.model.enums.Classes;
+import org.jmangos.realm.model.enums.Races;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

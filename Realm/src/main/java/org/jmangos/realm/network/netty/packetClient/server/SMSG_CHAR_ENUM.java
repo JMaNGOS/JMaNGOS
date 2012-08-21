@@ -20,8 +20,8 @@ import java.util.BitSet;
 import java.util.List;
 
 import org.jmangos.commons.service.ServiceContent;
-import org.jmangos.realm.model.InventoryItem;
-import org.jmangos.realm.model.base.character.CharacterData;
+import org.jmangos.realm.domain.CharacterData;
+import org.jmangos.realm.domain.InventoryItem;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 import org.jmangos.realm.network.netty.packetClient.client.CMSG_AUTH_SESSION;
 import org.jmangos.realm.service.ItemStorages;

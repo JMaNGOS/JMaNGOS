@@ -16,7 +16,6 @@
  *******************************************************************************/
 package org.jmangos.realm.model.account;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class AccountData.
  */

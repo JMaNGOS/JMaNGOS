@@ -4,8 +4,9 @@ import java.math.BigInteger;
 import java.util.BitSet;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;import org.jmangos.realm.model.UpdateType;
+import org.slf4j.LoggerFactory;
 import org.jmangos.realm.model.base.update.UpdateFieldUtils;
+import org.jmangos.realm.model.enums.UpdateType;
 import org.jmangos.realm.model.player.Player;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 
@@ -16,7 +17,7 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 public class SMSG_UPDATE_OBJECT extends AbstractWoWServerPacket {
     
     /** The logger. */
-    private static Logger        log        = LoggerFactory.getLogger(SMSG_UPDATE_OBJECT.class);
+    private static Logger    log        = LoggerFactory.getLogger(SMSG_UPDATE_OBJECT.class);
     
     private Player           player;
     private BigInteger       guid       = null;

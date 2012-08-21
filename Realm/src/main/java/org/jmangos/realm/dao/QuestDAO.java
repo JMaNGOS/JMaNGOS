@@ -25,7 +25,7 @@ import javax.inject.Inject;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
-import org.jmangos.realm.model.base.QuestPrototype;
+import org.jmangos.realm.domain.QuestPrototype;
 import org.springframework.stereotype.Component;
 
 /**

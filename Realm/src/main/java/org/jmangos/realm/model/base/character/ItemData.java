@@ -16,7 +16,7 @@
  *******************************************************************************/
 package org.jmangos.realm.model.base.character;
 
-import org.jmangos.realm.model.base.item.InventoryType;
+import org.jmangos.realm.model.enums.InventoryType;
 
 // TODO: Auto-generated Javadoc
 /**

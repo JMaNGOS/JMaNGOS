@@ -22,7 +22,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
-import org.jmangos.realm.model.base.TradeStatus;
+import org.jmangos.realm.model.enums.TradeStatus;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_TRADE_STATUS;
 import org.springframework.stereotype.Component;
@@ -46,7 +46,7 @@ public class CMSG_CANCEL_TRADE extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
-        this.sender.send(getClient(), new SMSG_TRADE_STATUS(TradeStatus.TRADE_STATUS_TRADE_CANCELED));
+        this.sender.send(getClient(), new SMSG_TRADE_STATUS(TradeStatus.TRADE_CANCELED));
         
     }
 }

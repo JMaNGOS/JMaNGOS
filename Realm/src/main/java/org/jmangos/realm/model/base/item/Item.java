@@ -17,24 +17,43 @@
 package org.jmangos.realm.model.base.item;
 
 import org.jmangos.realm.model.base.WorldObject;
-import org.jmangos.realm.model.base.guid.TypeId;
-import org.jmangos.realm.model.base.guid.TypeMask;
 import org.jmangos.realm.model.base.update.ItemFields;
+import org.jmangos.realm.model.enums.EquipmentSlots;
+import org.jmangos.realm.model.enums.InventorySlots;
+import org.jmangos.realm.model.enums.TypeID;
+import org.jmangos.realm.model.enums.TypeMask;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Item.
  */
 public class Item extends WorldObject {
     
     /** The Constant INVENTORY_SLOT_BAG_0. */
-    public static final int  INVENTORY_SLOT_BAG_0 = 255;
+    public static final int  INVENTORY_SLOT_BAG_0      = 255;
     
     /** The Constant NULL_SLOT. */
-    private static final int NULL_SLOT            = 255;
+    private static final int NULL_SLOT                 = 255;
+    
+    /** The Constant INVENTORY_SLOT_ITEM_START. */
+    public static final int  INVENTORY_SLOT_ITEM_START = 23;
+    
+    /** The Constant INVENTORY_SLOT_ITEM_END. */
+    public static final int  INVENTORY_SLOT_ITEM_END   = 39;
+    
+    /** The Constant KEYRING_SLOT_START. */
+    public static final int  KEYRING_SLOT_START        = 86;
+    
+    /** The Constant KEYRING_SLOT_END. */
+    public static final int  KEYRING_SLOT_END          = 118;
+    
+    /** The Constant CURRENCYTOKEN_SLOT_START. */
+    public static final int  CURRENCYTOKEN_SLOT_START  = 118;
+    
+    /** The Constant CURRENCYTOKEN_SLOT_END. */
+    public static final int  CURRENCYTOKEN_SLOT_END    = 150;
     
     /** The slot. */
-    private int              slot                 = 0;
+    private int              slot                      = 0;
     
     /**
      * Instantiates a new item.
@@ -46,8 +65,8 @@ public class Item extends WorldObject {
     
         super(objectId);
         this.valuesCount = ItemFields.ITEM_END;
-        this.objectType.add(TypeMask.TYPEMASK_ITEM);
-        this.objectTypeId = TypeId.TYPEID_ITEM;
+        this.objectType.add(TypeMask.ITEM);
+        this.objectTypeId = TypeID.ITEM;
     }
     
     /**
@@ -85,13 +104,13 @@ public class Item extends WorldObject {
         if ((bag == INVENTORY_SLOT_BAG_0) && (slot == NULL_SLOT)) {
             return true;
         }
-        if ((bag == INVENTORY_SLOT_BAG_0) && ((slot >= InventoryPackSlots.INVENTORY_SLOT_ITEM_START) && (slot < InventoryPackSlots.INVENTORY_SLOT_ITEM_END))) {
+        if ((bag == INVENTORY_SLOT_BAG_0) && ((slot >= INVENTORY_SLOT_ITEM_START) && (slot < INVENTORY_SLOT_ITEM_END))) {
             return true;
         }
-        if ((bag >= InventorySlots.INVENTORY_SLOT_BAG_START.getValue()) && (bag < InventorySlots.INVENTORY_SLOT_BAG_END.getValue())) {
+        if ((bag >= InventorySlots.BAG_START.getValue()) && (bag < InventorySlots.BAG_END.getValue())) {
             return true;
         }
-        if ((bag == INVENTORY_SLOT_BAG_0) && ((slot >= KeyRingSlots.KEYRING_SLOT_START) && (slot < CurrencyTokenSlots.CURRENCYTOKEN_SLOT_END))) {
+        if ((bag == INVENTORY_SLOT_BAG_0) && ((slot >= KEYRING_SLOT_START) && (slot < CURRENCYTOKEN_SLOT_END))) {
             return true;
         }
         return false;
@@ -108,11 +127,10 @@ public class Item extends WorldObject {
      */
     public static boolean IsEquipmentPos(final int bag, final int slot) {
     
-        if ((bag == INVENTORY_SLOT_BAG_0) && (slot < EquipmentSlots.EQUIPMENT_SLOT_END.getValue())) {
+        if ((bag == INVENTORY_SLOT_BAG_0) && (slot < EquipmentSlots.END.getValue())) {
             return true;
         }
-        if ((bag == INVENTORY_SLOT_BAG_0)
-                && ((slot >= InventorySlots.INVENTORY_SLOT_BAG_START.getValue()) && (slot < InventorySlots.INVENTORY_SLOT_BAG_END.getValue()))) {
+        if ((bag == INVENTORY_SLOT_BAG_0) && ((slot >= InventorySlots.BAG_START.getValue()) && (slot < InventorySlots.BAG_END.getValue()))) {
             return true;
         }
         return false;

@@ -1,7 +1,7 @@
 package org.jmangos.realm.network.netty.packetClient.server;
 
-import org.jmangos.realm.model.ChatLanguage;
-import org.jmangos.realm.model.ChatType;
+import org.jmangos.realm.model.enums.ChatLanguage;
+import org.jmangos.realm.model.enums.ChatMsg;
 import org.jmangos.realm.model.player.Player;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 
@@ -12,8 +12,8 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 public class SMSG_MESSAGE_CHAT extends AbstractWoWServerPacket {
     
     private String       message;
-    private ChatType     chatType     = ChatType.CHAT_MSG_SYSTEM;
-    private ChatLanguage chatLanguage = ChatLanguage.LANG_UNIVERSAL;
+    private ChatMsg     chatMsg     = ChatMsg.SYSTEM;
+    private ChatLanguage chatLanguage = ChatLanguage.UNIVERSAL;
     private Player       speaker      = null;
     
     public SMSG_MESSAGE_CHAT() {
@@ -25,16 +25,16 @@ public class SMSG_MESSAGE_CHAT extends AbstractWoWServerPacket {
         this.message = message;
     }
     
-    public SMSG_MESSAGE_CHAT(final String message, final ChatType chatType) {
+    public SMSG_MESSAGE_CHAT(final String message, final ChatMsg chatMsg) {
     
         this.message = message;
-        this.chatType = chatType;
+        this.chatMsg = chatMsg;
     }
     
-    public SMSG_MESSAGE_CHAT(final String message, final ChatType chatType, final ChatLanguage chatLanguage) {
+    public SMSG_MESSAGE_CHAT(final String message, final ChatMsg chatMsg, final ChatLanguage chatLanguage) {
     
         this.message = message;
-        this.chatType = chatType;
+        this.chatMsg = chatMsg;
         this.chatLanguage = chatLanguage;
     }
     
@@ -46,7 +46,7 @@ public class SMSG_MESSAGE_CHAT extends AbstractWoWServerPacket {
     @Override
     protected void writeImpl() {
     
-        writeC(this.chatType.ordinal()); // 8 CHAT_MSG_SYSTEM
+        writeC(this.chatMsg.ordinal()); // 8 CHAT_MSG_SYSTEM
         writeD(this.chatLanguage.ordinal()); // 32 LANG_UNIVERSAL
         
         if (this.speaker != null) {

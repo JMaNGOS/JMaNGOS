@@ -26,7 +26,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
-import org.jmangos.realm.model.base.item.ItemPrototype;
+import org.jmangos.realm.domain.ItemPrototype;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

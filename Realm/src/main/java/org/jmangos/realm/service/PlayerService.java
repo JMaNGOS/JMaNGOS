@@ -29,20 +29,20 @@ import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.RealmServer;
 import org.jmangos.realm.dao.PlayerDAO;
-import org.jmangos.realm.model.InventoryItem;
-import org.jmangos.realm.model.base.PlayerClassLevelInfo;
-import org.jmangos.realm.model.base.PlayerLevelInfo;
+import org.jmangos.realm.domain.InventoryItem;
+import org.jmangos.realm.domain.ItemPrototype;
+import org.jmangos.realm.domain.PlayerClassLevelInfo;
+import org.jmangos.realm.domain.PlayerLevelInfo;
+import org.jmangos.realm.domain.CharacterData;
 import org.jmangos.realm.model.base.WorldObject;
-import org.jmangos.realm.model.base.character.CharacterData;
 import org.jmangos.realm.model.base.item.Item;
-import org.jmangos.realm.model.base.item.ItemPrototype;
 import org.jmangos.realm.model.base.update.ObjectFields;
 import org.jmangos.realm.model.base.update.PlayerFields;
 import org.jmangos.realm.model.base.update.UnitField;
+import org.jmangos.realm.model.enums.Powers;
+import org.jmangos.realm.model.enums.SpellSchools;
+import org.jmangos.realm.model.enums.Stats;
 import org.jmangos.realm.model.player.Player;
-import org.jmangos.realm.model.unit.Powers;
-import org.jmangos.realm.model.unit.SpellSchools;
-import org.jmangos.realm.model.unit.Stats;
 import org.jmangos.realm.network.netty.packetClient.server.MSG_SET_DUNGEON_DIFFICULTY;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_ACTION_BUTTONS;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_ALL_ACHIEVEMENT_DATA;
@@ -464,10 +464,10 @@ public class PlayerService {
          * // set current level health and mana/energy to maximum after applying all mods.
          */
         player.SetHealth(player.GetMaxHealth());
-        player.SetPower(Powers.POWER_MANA, player.GetMaxPower(Powers.POWER_MANA));
-        player.SetPower(Powers.POWER_ENERGY, player.GetMaxPower(Powers.POWER_ENERGY));
-        if (player.GetPower(Powers.POWER_RAGE) > player.GetMaxPower(Powers.POWER_RAGE)) {
-            player.SetPower(Powers.POWER_RAGE, player.GetMaxPower(Powers.POWER_RAGE));
+        player.SetPower(Powers.MANA, player.GetMaxPower(Powers.MANA));
+        player.SetPower(Powers.ENERGY, player.GetMaxPower(Powers.ENERGY));
+        if (player.GetPower(Powers.RAGE) > player.GetMaxPower(Powers.RAGE)) {
+            player.SetPower(Powers.RAGE, player.GetMaxPower(Powers.RAGE));
         }
         
     }

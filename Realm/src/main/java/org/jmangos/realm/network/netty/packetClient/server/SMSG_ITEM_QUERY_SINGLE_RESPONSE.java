@@ -16,7 +16,7 @@
  *******************************************************************************/
 package org.jmangos.realm.network.netty.packetClient.server;
 
-import org.jmangos.realm.model.base.item.ItemPrototype;
+import org.jmangos.realm.domain.ItemPrototype;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 
 /**
@@ -25,14 +25,7 @@ import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
 public class SMSG_ITEM_QUERY_SINGLE_RESPONSE extends AbstractWoWServerPacket {
     
     /** The item prototype. */
-    private ItemPrototype itemPrototype;
-    
-    /**
-     * Instantiates a new sMS g_ ite m_ quer y_ singl e_ response.
-     */
-    public SMSG_ITEM_QUERY_SINGLE_RESPONSE() {
-    
-    }
+    private final ItemPrototype itemPrototype;
     
     /**
      * Instantiates a new sMS g_ ite m_ quer y_ singl e_ response.

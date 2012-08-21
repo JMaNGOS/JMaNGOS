@@ -27,8 +27,8 @@ import org.jmangos.commons.model.NamedObject;
 import org.jmangos.commons.network.model.UpdateField;
 import org.jmangos.commons.network.model.UpdateFieldType;
 import org.jmangos.realm.model.base.guid.ObjectGuid;
-import org.jmangos.realm.model.base.guid.TypeId;
-import org.jmangos.realm.model.base.guid.TypeMask;
+import org.jmangos.realm.model.enums.TypeID;
+import org.jmangos.realm.model.enums.TypeMask;
 
 /**
  * The Class WorldObject.
@@ -42,7 +42,7 @@ public class WorldObject extends NamedObject {
     protected EnumSet<TypeMask>                 objectType  = EnumSet.noneOf(TypeMask.class);
     
     /** The object type id. */
-    protected TypeId                            objectTypeId;
+    protected TypeID                            objectTypeId;
     
     /** The m_uint32 values. */
     protected ChannelBuffer                     m_uint32Values;
@@ -107,7 +107,7 @@ public class WorldObject extends NamedObject {
      * 
      * @return the m_objectTypeId
      */
-    public TypeId getObjectTypeId() {
+    public TypeID getObjectTypeId() {
     
         return this.objectTypeId;
     }
@@ -118,7 +118,7 @@ public class WorldObject extends NamedObject {
      * @param ObjectTypeId
      *            the objectTypeId to set
      */
-    public void setObjectTypeId(final TypeId ObjectTypeId) {
+    public void setObjectTypeId(final TypeID ObjectTypeId) {
     
         this.objectTypeId = ObjectTypeId;
     }

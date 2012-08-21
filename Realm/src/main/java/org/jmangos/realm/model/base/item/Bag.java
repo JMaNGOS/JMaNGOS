@@ -16,7 +16,6 @@
  *******************************************************************************/
 package org.jmangos.realm.model.base.item;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Bag.
  */

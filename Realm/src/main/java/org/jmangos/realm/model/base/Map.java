@@ -20,7 +20,6 @@ import gnu.trove.map.hash.TLongObjectHashMap;
 
 import org.jmangos.realm.model.unit.Units;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Map.
  */
@@ -56,10 +55,10 @@ public class Map {
     public void AddObject(final WorldObject plObject) {
     
         switch (plObject.getObjectTypeId()) {
-            case TYPEID_PLAYER:
+            case PLAYER:
                 this.playerList.put(plObject.getObjectGuid().getRawValue(), plObject);
                 break;
-            case TYPEID_UNIT:
+            case UNIT:
                 this.units.put(plObject.getObjectGuid().getRawValue(), plObject);
                 break;
             default:

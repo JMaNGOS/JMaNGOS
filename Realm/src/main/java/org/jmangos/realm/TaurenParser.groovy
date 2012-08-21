@@ -3,8 +3,8 @@ package org.jmangos.realm
 import org.jmangos.realm.model.base.update.UpdateFieldUtils
 import org.jmangos.realm.model.base.update.ObjectFields
 import org.jmangos.realm.model.base.update.PlayerFields
-import org.jmangos.realm.model.base.item.InventorySlots
-import org.jmangos.realm.model.UpdateType
+import org.jmangos.realm.model.enums.InventorySlots
+import org.jmangos.realm.model.enums.UpdateType
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
