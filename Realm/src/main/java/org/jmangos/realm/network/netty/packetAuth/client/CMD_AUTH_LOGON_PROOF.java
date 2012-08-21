@@ -27,16 +27,18 @@ import org.jmangos.realm.network.netty.packetAuth.AbstractRealmClientPacket;
 import org.jmangos.realm.network.netty.packetAuth.server.CMD_AUTH_ENABLE_CRYPT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class <tt>CMD_AUTH_LOGON_PROOF</tt>.
  */
+@Component
 public class CMD_AUTH_LOGON_PROOF extends AbstractRealmClientPacket {
     
     /** The logger. */
     private static Logger        logger = LoggerFactory.getLogger(CMD_AUTH_LOGON_PROOF.class);
     @Inject
-    @Named("RealmToAuth")
+    @Named("serverPacketSender")
     private AbstractPacketSender sender;
     
     /*

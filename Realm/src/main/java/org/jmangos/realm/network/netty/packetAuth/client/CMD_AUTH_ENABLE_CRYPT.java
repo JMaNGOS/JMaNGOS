@@ -29,14 +29,16 @@ import org.jmangos.realm.network.netty.decoder.AuthPacketFrameEncoder;
 import org.jmangos.realm.network.netty.handler.RealmToAuthChannelHandler;
 import org.jmangos.realm.network.netty.packetAuth.AbstractRealmClientPacket;
 import org.jmangos.realm.network.netty.packetAuth.server.CMD_REALM_DATA;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class <tt>CMD_AUTH_ENABLE_CRYPT</tt>.
  */
+@Component
 public class CMD_AUTH_ENABLE_CRYPT extends AbstractRealmClientPacket {
     
     @Inject
-    @Named("RealmToAuth")
+    @Named("serverPacketSender")
     private AbstractPacketSender sender;
     
     @Inject

@@ -23,7 +23,6 @@ import javax.inject.Named;
 
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
-import org.jmangos.realm.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -40,10 +39,6 @@ public class CMSG_READY_FOR_ACCOUNT_DATA_TIMES extends AbstractWoWClientPacket {
     @Inject
     @Named("nettyPacketSender")
     private AbstractPacketSender sender;
-    
-    /** The account servise. */
-    @Inject
-    AccountService               accountServise;
     
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {

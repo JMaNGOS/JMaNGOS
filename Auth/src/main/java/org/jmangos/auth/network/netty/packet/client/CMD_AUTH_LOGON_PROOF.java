@@ -39,7 +39,7 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
     
     /** The account controller. */
     @Inject
-    AccountController            accountController;
+    private AccountController    accountController;
     
     private byte[]               a;
     private byte[]               m1;

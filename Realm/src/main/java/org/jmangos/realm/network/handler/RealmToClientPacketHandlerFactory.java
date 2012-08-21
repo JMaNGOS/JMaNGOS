@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 /**
  * A factory for creating RealmPacketHandler objects.
  */
-@Component("authToClientPacketHandlerFactory")
+@Component("realmToClientPacketHandlerFactory")
 public class RealmToClientPacketHandlerFactory extends AbstractPacketHandlerFactory {
     
     protected String clientPacketPath = "./conf/packetData/rc-packets.xml";

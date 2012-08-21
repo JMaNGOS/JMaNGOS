@@ -19,13 +19,11 @@ package org.jmangos.auth.network.netty.packet.client;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.jmangos.auth.controller.AccountController;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
 import org.jmangos.auth.network.netty.packet.server.TCMD_RECONNECT_CHALLENGE;
-import org.jmangos.auth.service.AccountService;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,18 +32,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class CMD_RECONNECT_CHALLENGE extends AbstractWoWClientPacket {
     
-    /** The Constant logger. */
-    @SuppressWarnings("unused")
-    private static final Logger  logger = LoggerFactory.getLogger(CMD_RECONNECT_CHALLENGE.class);
-    
     /** The sender. */
     @Inject
     @Named("nettyPacketSender")
     private AbstractPacketSender sender;
     
-    /** The account service. */
+    /** The account controller. */
     @Inject
-    AccountService               accountService;
+    private AccountController    accountController;
     
     /** The login. */
     private String               login;
@@ -95,7 +89,7 @@ public class CMD_RECONNECT_CHALLENGE extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
-        this.accountService.loadClean(this.login, (NettyNetworkChannel) getClient());
+        this.accountController.loadClean(this.login, (NettyNetworkChannel) getClient());
         this.sender.send(getClient(), new TCMD_RECONNECT_CHALLENGE());
     }
 }

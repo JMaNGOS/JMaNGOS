@@ -36,10 +36,12 @@ import org.jmangos.realm.network.netty.packetAuth.server.CMD_AUTH_LOGON_PROOF;
 import org.jmangos.realm.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class <tt>CMD_AUTH_LOGON_CHALLENGE</tt>.
  */
+@Component
 public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmClientPacket {
     
     /** The logger. */
@@ -50,7 +52,7 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmClientPacket {
     
     /** The sender. */
     @Inject
-    @Named("RealmToAuth")
+    @Named("serverPacketSender")
     private AbstractPacketSender sender;
     
     /** The m1. */

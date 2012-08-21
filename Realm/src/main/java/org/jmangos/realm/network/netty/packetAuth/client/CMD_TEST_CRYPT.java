@@ -23,13 +23,16 @@ import javax.inject.Named;
 
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetAuth.AbstractRealmClientPacket;
+import org.springframework.stereotype.Component;
+
 /**
  * The Class <tt>CMD_TEST_CRYPT</tt>.
  */
+@Component
 public class CMD_TEST_CRYPT extends AbstractRealmClientPacket {
     
     @Inject
-    @Named("RealmToAuth")
+    @Named("serverPacketSender")
     private AbstractPacketSender sender;
     
     /*

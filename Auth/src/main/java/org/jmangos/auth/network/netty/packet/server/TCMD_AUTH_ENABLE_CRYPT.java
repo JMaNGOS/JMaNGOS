@@ -24,7 +24,6 @@ import org.jmangos.auth.network.netty.packet.AbstractWoWServerPacket;
 public class TCMD_AUTH_ENABLE_CRYPT extends AbstractWoWServerPacket {
     
     /**
-     * (non-Javadoc)
      * 
      * @see org.jmangos.common.network.model.SendablePacket#writeImpl()
      */

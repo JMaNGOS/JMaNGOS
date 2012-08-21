@@ -49,8 +49,7 @@ public class TCMD_REALM_LIST extends AbstractWoWServerPacket {
         this.worldlist = worldlist;
     }
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
      */

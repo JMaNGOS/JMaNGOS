@@ -7,6 +7,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -28,10 +29,12 @@ import org.springframework.stereotype.Component;
 public class AccountController {
     
     /** The Constant logger. */
-    private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
+    private static final Logger        logger   = LoggerFactory.getLogger(AccountController.class);
     
     @Inject
-    AccountServiceImpl          accountService;
+    private AccountServiceImpl         accountService;
+    
+    private final Map<String, Account> accounts = new HashMap<String, Account>();
     
     /**
      * Login.
@@ -61,6 +64,7 @@ public class AccountController {
             BigNumber s = new BigNumber();
             BigNumber v = new BigNumber();
             
+            accounts.put(name, account);
             channelHandler.setChanneledObject(account);
             if ((accountDto.getV().length() != (32 * 2)) || (accountDto.getS().length() != (32 * 2))) {
                 variable = AccountUtils.calculateVSFields(accountDto.getShaPasswordHash());
@@ -230,6 +234,20 @@ public class AccountController {
             data[((len - i) / 2) - 1] = (byte) ((Character.digit(hexkey.charAt(i), 16) << 4) + Character.digit(hexkey.charAt(i + 1), 16));
         }
         return data;
+    }
+    
+    /**
+     * Load clean.
+     * 
+     * @param name
+     *            the name
+     * @param channelHandler
+     *            the channel handler
+     */
+    public void loadClean(final String name, final NettyNetworkChannel channelHandler) {
+    
+        final Account account = accounts.get(name);
+        channelHandler.setChanneledObject(account);
     }
     
 }

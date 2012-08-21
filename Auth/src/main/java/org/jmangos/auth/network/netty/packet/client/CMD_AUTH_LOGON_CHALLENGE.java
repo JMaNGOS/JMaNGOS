@@ -42,7 +42,7 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
     
     /** The account controller. */
     @Inject
-    AccountController            accountController;
+    private AccountController    accountController;
     
     private int                  lenLogin;
     private String               login;

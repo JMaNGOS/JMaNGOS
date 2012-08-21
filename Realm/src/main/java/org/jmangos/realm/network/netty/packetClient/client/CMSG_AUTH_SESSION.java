@@ -35,6 +35,7 @@ import javolution.text.TextBuilder;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jmangos.commons.model.Account;
+import org.jmangos.commons.model.Char;
 import org.jmangos.commons.network.model.State;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.model.base.AddonInfo;
@@ -44,7 +45,6 @@ import org.jmangos.realm.network.netty.packetClient.server.SMSG_ADDON_INFO;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_AUTH_RESPONSE;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_CLIENTCACHE_VERSION;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_TUTORIAL_FLAGS;
-import org.jmangos.realm.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -57,10 +57,6 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
     
     /** The Constant logger. */
     private static final Logger  logger = LoggerFactory.getLogger(CMSG_AUTH_SESSION.class);
-    
-    /** The account service. */
-    @Inject
-    private AccountService       accountService;
     
     /** The sender. */
     @Inject
@@ -147,10 +143,15 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
-        final Account account = this.accountService.createAndAttachAccount(this.accountName, getClient());
+        final Char chars = new Char(); // get id and session keY
+        chars.setId(2);
+        chars.setName("as");
+        chars.setSessionKey("dsf");
+        getClient().setChanneledObject(chars);
+        // final String SessionKey = this.accountService.getSessionKeyFromDB(account.getName());
         
         final RealmToClientChannelHandler channelHandler = (RealmToClientChannelHandler) getClient().getChannel().getPipeline().getLast();
-        final String SessionKey = this.accountService.getSessionKeyFromDB(account.getName());
+        
         MessageDigest sha;
         try {
             sha = MessageDigest.getInstance("SHA-1");
@@ -159,18 +160,18 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
             return;
         }
         final byte[] t = { 0, 0, 0, 0 };
-        sha.update(account.getName().getBytes());
+        sha.update(chars.getName().getBytes());
         sha.update(t);
         sha.update(this.clientSeed);
         sha.update(channelHandler.getSeed());
-        sha.update(convertMangosSessionKey(SessionKey));
+        sha.update(convertSessionKey(chars.getSessionKey()));
         
         if (!Arrays.equals(sha.digest(), this.digest)) {
             getChannel().close();
             return;
         }
         
-        channelHandler.getCrypt().init(convertMangosSessionKey(SessionKey));
+        channelHandler.getCrypt().init(convertSessionKey(chars.getSessionKey()));
         this.sender.send(getClient(), new SMSG_AUTH_RESPONSE());
         getClient().setChannelState(State.AUTHED);
         // TODO: what is this?
@@ -192,7 +193,7 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
      *            the hexkey
      * @return the byte[]
      */
-    private byte[] convertMangosSessionKey(final String hexkey) {
+    private byte[] convertSessionKey(final String hexkey) {
     
         final int len = hexkey.length();
         final byte[] data = new byte[len / 2];

@@ -17,14 +17,12 @@
 package org.jmangos.realm.network.netty.packetClient.client;
 
 import java.nio.BufferUnderflowException;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.realm.network.netty.packetClient.AbstractWoWClientPacket;
 import org.jmangos.realm.network.netty.packetClient.server.SMSG_CHAR_ENUM;
-import org.jmangos.realm.service.AccountService;
 import org.jmangos.realm.service.ItemStorages;
 import org.springframework.stereotype.Component;
 
@@ -39,10 +37,6 @@ public class CMSG_CHAR_ENUM extends AbstractWoWClientPacket {
     @Named("nettyPacketSender")
     private AbstractPacketSender sender;
     
-    /** The account service. */
-    @Inject
-    private AccountService       accountService;
-    
     @Inject
     private ItemStorages         itemStorages;
     
@@ -55,7 +49,8 @@ public class CMSG_CHAR_ENUM extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
-        this.sender.send(getClient(), new SMSG_CHAR_ENUM(this.accountService.getCharacters(getAccount().getId())));
+        // TODO FIX ME!!!
+        this.sender.send(getClient(), new SMSG_CHAR_ENUM(null));
     }
     
 }

@@ -44,7 +44,7 @@ public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
     
     /** The account controller. */
     @Inject
-    AccountController            accountController;
+    private AccountController    accountController;
     
     private byte[]               R1;
     private byte[]               R2;
