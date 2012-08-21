@@ -47,7 +47,7 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
     @Named("nettyPacketSender")
     private AbstractPacketSender sender;
     
-    /** The account service. */
+    /** The account controller. */
     @Inject
     AccountController            accountController;
     

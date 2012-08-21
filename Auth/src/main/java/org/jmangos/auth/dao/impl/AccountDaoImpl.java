@@ -29,7 +29,6 @@ import org.jmangos.auth.dao.AccountDao;
 import org.jmangos.auth.entities.AccountEntity;
 import org.jmangos.auth.model.AccountDto;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository("accountDao")
@@ -124,7 +123,7 @@ public class AccountDaoImpl implements AccountDao {
         return this.entityManager.find(AccountEntity.class, id);
     }
     
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     @Override
     public Long createOrUpdateAccount(final AccountDto accountDto) {
     
@@ -140,6 +139,7 @@ public class AccountDaoImpl implements AccountDao {
         return accountId;
     }
     
+    @Transactional
     @Override
     public void deleteAccount(final AccountDto accountDto) {
     

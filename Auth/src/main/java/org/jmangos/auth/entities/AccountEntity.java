@@ -50,7 +50,7 @@ public class AccountEntity {
     private Byte   gmlevel;
     
     /** The session key. */
-    @Column(name = "SESSION_KEY")
+    @Column(name = "SESSIONKEY")
     private String sessionKey;
     
     /** The v. */

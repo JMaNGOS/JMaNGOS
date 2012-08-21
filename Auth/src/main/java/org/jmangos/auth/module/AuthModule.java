@@ -41,6 +41,7 @@ public class AuthModule {
             
             ds.setMinPoolSize(this.databaseConfig.WORLD_DATABASE_CONNECTIONS_MIN);
             ds.setMaxPoolSize(this.databaseConfig.WORLD_DATABASE_CONNECTIONS_MAX);
+            ds.setAutoCommitOnClose(false);
         } catch (final PropertyVetoException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
