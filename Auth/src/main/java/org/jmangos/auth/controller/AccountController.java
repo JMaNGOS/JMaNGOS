@@ -14,7 +14,6 @@ import org.apache.commons.lang.ArrayUtils;
 import org.criteria4jpa.criterion.Criterion;
 import org.criteria4jpa.criterion.Restrictions;
 import org.jmangos.auth.model.AccountDto;
-import org.jmangos.auth.network.netty.packet.server.TCMD_RECONNECT_PROOF;
 import org.jmangos.auth.services.impl.AccountServiceImpl;
 import org.jmangos.auth.utils.AccountUtils;
 import org.jmangos.commons.model.Account;

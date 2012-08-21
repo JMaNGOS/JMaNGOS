@@ -54,7 +54,7 @@ public class CMD_TEST_CRYPT extends AbstractWoWClientPacket {
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
-        crypt = readB(5);
+        this.crypt = readB(5);
     }
     
     /**
@@ -64,6 +64,6 @@ public class CMD_TEST_CRYPT extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
-        logger.debug("{}", crypt);
+        logger.debug("{}", this.crypt);
     }
 }

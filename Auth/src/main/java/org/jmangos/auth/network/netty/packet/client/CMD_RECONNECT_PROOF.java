@@ -16,23 +16,15 @@
  *******************************************************************************/
 package org.jmangos.auth.network.netty.packet.client;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jmangos.auth.controller.AccountController;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
-import org.jmangos.auth.network.netty.packet.server.TCMD_AUTH_LOGON_CHALLENGE;
 import org.jmangos.auth.network.netty.packet.server.TCMD_RECONNECT_PROOF;
-import org.jmangos.auth.service.AccountService;
-import org.jmangos.commons.model.WoWAuthResponse;
-import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -71,8 +63,8 @@ public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
     @Override
     protected void readImpl() {
     
-        R1 = readB(16);
-        R2 = readB(20);
+        this.R1 = readB(16);
+        this.R2 = readB(20);
         // byte[] R3 = readB(20); // Unused..
         /* int numberofKey = */readC(); // unused
     }
@@ -83,7 +75,7 @@ public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
-        final boolean response = this.accountController.checkSessionKey(getAccount(), R1, R2);
+        final boolean response = this.accountController.checkSessionKey(getAccount(), this.R1, this.R2);
         if (response) {
             this.sender.send(getClient(), new TCMD_RECONNECT_PROOF());
         } else {
