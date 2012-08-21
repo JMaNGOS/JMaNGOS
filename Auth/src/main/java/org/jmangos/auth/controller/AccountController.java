@@ -82,7 +82,7 @@ public class AccountController {
             account.setB_crypto(B);
             account.sets(s);
             account.setV_crypto(v);
-            
+            account.setAccessLevel(accountDto.getGmlevel());
             accountDto.setLastIp(channelHandler.getAddress().getAddress().getHostAddress());
             
             this.accountService.createOrUpdateAccount(accountDto);
