@@ -16,26 +16,14 @@
  *******************************************************************************/
 package org.jmangos.auth.network.netty.packet.client;
 
-import java.math.BigInteger;
-import java.nio.charset.Charset;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.jmangos.auth.controller.AccountController;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
 import org.jmangos.auth.network.netty.packet.server.TCMD_AUTH_LOGON_PROOF;
-import org.jmangos.auth.service.AccountService;
-import org.jmangos.auth.utils.AccountUtils;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
-import org.jmangos.commons.utils.BigNumber;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -43,9 +31,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
-    
-    /** The Constant logger. */
-    private static final Logger  logger = LoggerFactory.getLogger(CMD_AUTH_LOGON_PROOF.class);
     
     /** The sender. */
     @Inject
@@ -73,8 +58,8 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
     @Override
     protected void readImpl() {
     
-        a = readB(32);
-        m1 = readB(20);
+        this.a = readB(32);
+        this.m1 = readB(20);
         /** byte[] crc = */
         readB(20);
         /** int numberofKey = */
@@ -89,7 +74,7 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
-        final WoWAuthResponse response = this.accountController.checkPassword(getAccount(), a, m1);
+        final WoWAuthResponse response = this.accountController.checkPassword(getAccount(), this.a, this.m1);
         this.sender.send(getClient(), new TCMD_AUTH_LOGON_PROOF(response));
     }
 }

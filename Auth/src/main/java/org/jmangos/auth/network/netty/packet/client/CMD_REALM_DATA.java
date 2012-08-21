@@ -37,6 +37,8 @@ public class CMD_REALM_DATA extends AbstractWoWClientPacket {
     @Inject
     private RealmListService realmListService;
     
+    private Realm            realm;
+    
     public CMD_REALM_DATA() {
     
         super();
@@ -46,22 +48,22 @@ public class CMD_REALM_DATA extends AbstractWoWClientPacket {
     protected void readImpl() throws RuntimeException {
     
         logger.debug("Receive realm info from realm account: " + getAccount().getName());
-        final Realm realm = new Realm();
-        realm.setId(getAccount().getObjectId());
-        realm.setName(readS());
-        realm.setAddress(readS());
-        realm.setPort(readD());
-        realm.setIcon(readC());
-        realm.setRealmflags(readC());
-        realm.setTimezone(readC());
-        realm.setAllowedSecurityLevel(readC());
-        realm.setPopulation(readF());
-        realm.setRealmbuilds(readS());
-        this.realmListService.addFromConnected(realm);
+        this.realm = new Realm();
+        this.realm.setId(getAccount().getObjectId());
+        this.realm.setName(readS());
+        this.realm.setAddress(readS());
+        this.realm.setPort(readD());
+        this.realm.setIcon(readC());
+        this.realm.setRealmflags(readC());
+        this.realm.setTimezone(readC());
+        this.realm.setAllowedSecurityLevel(readC());
+        this.realm.setPopulation(readF());
+        this.realm.setRealmbuilds(readS());
     }
     
     @Override
     protected void runImpl() {
     
+        this.realmListService.addFromConnected(this.realm);
     }
 }

@@ -21,12 +21,9 @@ import java.nio.charset.Charset;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jmangos.auth.controller.AccountController;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
 import org.jmangos.auth.network.netty.packet.server.TCMD_AUTH_LOGON_CHALLENGE;
-import org.jmangos.auth.service.AccountService;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
@@ -38,10 +35,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
     
-    /** The Constant logger. */
-    @SuppressWarnings("unused")
-    private static final Logger  logger = LoggerFactory.getLogger(CMD_AUTH_LOGON_CHALLENGE.class);
-    
     /** The sender. */
     @Inject
     @Named("nettyPacketSender")
@@ -51,7 +44,7 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
     @Inject
     AccountController            accountController;
     
-    /** The login. */
+    private int                  lenLogin;
     private String               login;
     
     /**
@@ -114,8 +107,8 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
         readD();
         /** int ip = */
         readD();
-        final int lenLogin = readC();
-        this.login = new String(readB(lenLogin), Charset.forName("UTF-8"));
+        this.lenLogin = readC();
+        this.login = new String(readB(this.lenLogin), Charset.forName("UTF-8"));
     }
     
     /**

@@ -25,9 +25,13 @@ import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.jmangos.auth.controller.AccountController;
 import org.jmangos.auth.network.netty.packet.AbstractWoWClientPacket;
+import org.jmangos.auth.network.netty.packet.server.TCMD_AUTH_LOGON_CHALLENGE;
 import org.jmangos.auth.network.netty.packet.server.TCMD_RECONNECT_PROOF;
 import org.jmangos.auth.service.AccountService;
+import org.jmangos.commons.model.WoWAuthResponse;
+import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.springframework.stereotype.Component;
 
@@ -46,9 +50,12 @@ public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
     @Named("nettyPacketSender")
     private AbstractPacketSender sender;
     
-    /** The account service. */
+    /** The account controller. */
     @Inject
-    private AccountService       accountService;
+    AccountController            accountController;
+    
+    private byte[]               R1;
+    private byte[]               R2;
     
     /**
      * Instantiates a new <tt>CMD_RECONNECT_PROOF</tt>.
@@ -61,34 +68,13 @@ public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unused")
     @Override
     protected void readImpl() {
     
-        final byte[] R1 = readB(16);
-        final byte[] R2 = readB(20);
+        R1 = readB(16);
+        R2 = readB(20);
         // byte[] R3 = readB(20); // Unused..
         /* int numberofKey = */readC(); // unused
-        
-        MessageDigest sha = null;
-        try {
-            sha = MessageDigest.getInstance("SHA-1");
-        } catch (final NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return;
-        }
-        final String SessionKey = this.accountService.getSessionKey(getAccount().getName());
-        
-        sha.update(getAccount().getName().getBytes());
-        sha.update(R1);
-        sha.update(getAccount().get_reconnectProof().asByteArray(16));
-        sha.update(convertMangosSessionKey(SessionKey));
-        
-        if (Arrays.equals(sha.digest(), R2)) {
-            this.sender.send(getClient(), new TCMD_RECONNECT_PROOF());
-        } else {
-            getChannel().close();
-        }
     }
     
     /**
@@ -97,23 +83,13 @@ public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
-    }
-    
-    /**
-     * Convert to mangos session key.
-     * 
-     * @param hexkey
-     * 
-     * @return the byte[]
-     */
-    private byte[] convertMangosSessionKey(final String hexkey) {
-    
-        final int len = hexkey.length();
-        final byte[] data = new byte[len / 2];
-        for (int i = 0; i < len; i += 2) {
-            data[((len - i) / 2) - 1] = (byte) ((Character.digit(hexkey.charAt(i), 16) << 4) + Character.digit(hexkey.charAt(i + 1), 16));
+        final boolean response = this.accountController.checkSessionKey(getAccount(), R1, R2);
+        if (response) {
+            this.sender.send(getClient(), new TCMD_RECONNECT_PROOF());
+        } else {
+            getChannel().close();
         }
-        return data;
         
     }
+    
 }

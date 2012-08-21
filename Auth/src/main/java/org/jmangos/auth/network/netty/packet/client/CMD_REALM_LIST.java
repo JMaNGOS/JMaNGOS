@@ -46,8 +46,7 @@ public class CMD_REALM_LIST extends AbstractWoWClientPacket {
     @Inject
     private Config               config;
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.network.model.ReceivablePacket#getMinimumLength()
      */

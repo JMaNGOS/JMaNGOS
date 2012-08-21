@@ -50,8 +50,7 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractWoWClientPacket {
         super();
     }
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
      */
@@ -69,8 +68,7 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractWoWClientPacket {
         }
     }
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
      */
@@ -78,6 +76,5 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractWoWClientPacket {
     protected void runImpl() {
     
         this.sender.send(getClient(), new TCMD_AUTH_ENABLE_CRYPT());
-        
     }
 }

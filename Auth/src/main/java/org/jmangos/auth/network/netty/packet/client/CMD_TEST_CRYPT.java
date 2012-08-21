@@ -40,30 +40,30 @@ public class CMD_TEST_CRYPT extends AbstractWoWClientPacket {
     @Named("nettyPacketSender")
     private AbstractPacketSender sender;
     
+    private byte[]               crypt;
+    
     public CMD_TEST_CRYPT() {
     
         super();
     }
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
      */
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
-        final byte[] crypt = readB(5);
-        logger.debug("{}", crypt);
+        crypt = readB(5);
     }
     
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
      */
     @Override
     protected void runImpl() {
     
+        logger.debug("{}", crypt);
     }
 }

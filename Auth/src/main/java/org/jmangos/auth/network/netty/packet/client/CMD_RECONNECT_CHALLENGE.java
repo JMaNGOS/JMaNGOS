@@ -70,7 +70,6 @@ public class CMD_RECONNECT_CHALLENGE extends AbstractWoWClientPacket {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unused")
     @Override
     protected void readImpl() {
     

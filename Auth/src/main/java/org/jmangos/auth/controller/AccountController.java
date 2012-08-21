@@ -14,7 +14,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.criteria4jpa.criterion.Criterion;
 import org.criteria4jpa.criterion.Restrictions;
 import org.jmangos.auth.model.AccountDto;
-import org.jmangos.auth.network.netty.packet.client.CMD_AUTH_LOGON_PROOF;
+import org.jmangos.auth.network.netty.packet.server.TCMD_RECONNECT_PROOF;
 import org.jmangos.auth.services.impl.AccountServiceImpl;
 import org.jmangos.auth.utils.AccountUtils;
 import org.jmangos.commons.model.Account;
@@ -51,12 +51,12 @@ public class AccountController {
         // return WoWAuthResponse.WOW_FAIL_BANNED;
         // }
         
-        Account account = new Account();
+        final Account account = new Account();
         
         final Criterion criterion = Restrictions.eq("username", name);
-        final List<AccountDto> accountList = accountService.readAccounts(criterion);
-        if (accountList != null && !accountList.isEmpty()) {
-            AccountDto accountDto = accountList.get(0);
+        final List<AccountDto> accountList = this.accountService.readAccounts(criterion);
+        if ((accountList != null) && !accountList.isEmpty()) {
+            final AccountDto accountDto = accountList.get(0);
             
             HashMap<String, BigNumber> variable; // calculateVSFields will create it.
             BigNumber s = new BigNumber();
@@ -170,10 +170,10 @@ public class AccountController {
             ArrayUtils.reverse(vK);
             
             final Criterion criterion = Restrictions.eq("username", account.getName());
-            final List<AccountDto> accountList = accountService.readAccounts(criterion);
-            if (accountList != null && !accountList.isEmpty()) {
-                AccountDto accountDto = accountList.get(0);
-                String sessionKey = new BigInteger(1, vK).toString(16).toUpperCase();
+            final List<AccountDto> accountList = this.accountService.readAccounts(criterion);
+            if ((accountList != null) && !accountList.isEmpty()) {
+                final AccountDto accountDto = accountList.get(0);
+                final String sessionKey = new BigInteger(1, vK).toString(16).toUpperCase();
                 accountDto.setSessionKey(sessionKey);
                 this.accountService.createOrUpdateAccount(accountDto);
             } else {
@@ -183,6 +183,54 @@ public class AccountController {
         } else {
             return WoWAuthResponse.WOW_FAIL_INCORRECT_PASSWORD;
         }
+    }
+    
+    public boolean checkSessionKey(final Account account, final byte[] R1, final byte[] R2) {
+    
+        MessageDigest sha = null;
+        try {
+            sha = MessageDigest.getInstance("SHA-1");
+        } catch (final NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return false;
+        }
+        
+        final Criterion criterion = Restrictions.eq("username", account.getName());
+        final List<AccountDto> accountList = this.accountService.readAccounts(criterion);
+        if ((accountList != null) && !accountList.isEmpty()) {
+            final AccountDto accountDto = accountList.get(0);
+            final String sessionKey = accountDto.getSessionKey();
+            
+            sha.update(account.getName().getBytes());
+            sha.update(R1);
+            sha.update(account.get_reconnectProof().asByteArray(16));
+            sha.update(convertSessionKey(sessionKey));
+        } else {
+            return false;
+        }
+        
+        if (Arrays.equals(sha.digest(), R2)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    /**
+     * Convert to session key.
+     * 
+     * @param hexkey
+     * 
+     * @return the byte[]
+     */
+    private byte[] convertSessionKey(final String hexkey) {
+    
+        final int len = hexkey.length();
+        final byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[((len - i) / 2) - 1] = (byte) ((Character.digit(hexkey.charAt(i), 16) << 4) + Character.digit(hexkey.charAt(i + 1), 16));
+        }
+        return data;
     }
     
 }
