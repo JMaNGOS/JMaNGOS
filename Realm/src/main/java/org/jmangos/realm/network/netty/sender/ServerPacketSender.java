@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.commons.network.netty.sender;
+package org.jmangos.realm.network.netty.sender;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,6 +24,7 @@ import org.jboss.netty.channel.ChannelFutureListener;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.model.SendablePacket;
+import org.jmangos.commons.network.netty.sender.AbstractPacketSender;
 import org.jmangos.commons.network.utils.NetworkUtil;
 import org.springframework.stereotype.Component;
 
