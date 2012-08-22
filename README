@@ -34,4 +34,4 @@ the Wiki website at https://github.com/JMaNGOS/JMaNGOS/wiki
 
 SQL files to create the database can be found in the Sql directory. Files
 to update your database from an older revision/version can be found in the
-Sql/updates directory.
+Install/sql/update directory.
