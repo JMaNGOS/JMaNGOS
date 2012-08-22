@@ -50,7 +50,7 @@ public class RealmToClientPipelineFactory extends BasicPipelineFactory {
     
     /** The packet service. */
     @Inject
-    @Named("realmToClientPacketHandlerFactory")
+    @Named("сlientPacketHandlerFactory")
     private PacketHandlerFactory packetService;
     
     /**

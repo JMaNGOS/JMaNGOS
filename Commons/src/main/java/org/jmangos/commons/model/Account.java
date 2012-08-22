@@ -25,7 +25,7 @@ import org.jmangos.commons.utils.BigNumber;
  */
 public class Account extends NamedObject implements ChanneledObject {
     
-    private int            id;
+    private long           id;
     
     /** The user name. */
     private String         username;
@@ -56,6 +56,8 @@ public class Account extends NamedObject implements ChanneledObject {
     
     private byte[]         vK;
     
+    private String         sessionKey;
+    
     public Account() {
     
     }
@@ -65,9 +67,14 @@ public class Account extends NamedObject implements ChanneledObject {
      * 
      * @return int account id
      */
-    public int getId() {
+    public long getId() {
     
         return this.id;
+    }
+    
+    public long setId(final long id) {
+    
+        return this.id = id;
     }
     
     /**
@@ -277,4 +284,15 @@ public class Account extends NamedObject implements ChanneledObject {
         // need clone
         this.vK = vK.clone();
     }
+    
+    public String getSessionKey() {
+    
+        return this.sessionKey;
+    }
+    
+    public void setSessionKey(final String sessionKey) {
+    
+        this.sessionKey = sessionKey;
+    }
+    
 }

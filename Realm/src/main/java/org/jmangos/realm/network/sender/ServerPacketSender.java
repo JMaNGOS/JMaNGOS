@@ -36,7 +36,7 @@ public class ServerPacketSender implements AbstractPacketSender {
     
     /** The packet service. */
     @Inject
-    @Named("authToClientPacketHandlerFactory")
+    @Named("realmToAuthPacketHandlerFactory")
     private PacketHandlerFactory packetService;
     
     /**

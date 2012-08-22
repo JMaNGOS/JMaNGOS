@@ -17,10 +17,14 @@
 package org.jmangos.realm.network.packet.wow.client;
 
 import java.nio.BufferUnderflowException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.jmangos.commons.network.sender.AbstractPacketSender;
+import org.jmangos.realm.domain.CharacterData;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_ENUM;
 import org.jmangos.realm.service.ItemStorages;
@@ -50,7 +54,8 @@ public class CMSG_CHAR_ENUM extends AbstractWoWClientPacket {
     protected void runImpl() {
     
         // TODO FIX ME!!!
-        this.sender.send(getClient(), new SMSG_CHAR_ENUM(null));
+        List<CharacterData> charlist = new ArrayList<CharacterData>();
+        this.sender.send(getClient(), new SMSG_CHAR_ENUM(charlist));
     }
     
 }

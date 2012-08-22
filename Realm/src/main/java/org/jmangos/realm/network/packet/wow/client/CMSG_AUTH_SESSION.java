@@ -35,9 +35,9 @@ import javolution.text.TextBuilder;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jmangos.commons.model.Account;
-import org.jmangos.commons.model.Char;
 import org.jmangos.commons.network.model.State;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
+import org.jmangos.realm.controller.RealmController;
 import org.jmangos.realm.model.base.AddonInfo;
 import org.jmangos.realm.network.handler.RealmToClientChannelHandler;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
@@ -62,6 +62,9 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
     @Inject
     @Named("nettyPacketSender")
     private AbstractPacketSender sender;
+    
+    @Inject
+    private RealmController      realmController;
     
     /** The account name. */
     private String               accountName;
@@ -143,11 +146,9 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
-        final Char chars = new Char(); // get id and session keY
-        chars.setId(2);
-        chars.setName("as");
-        chars.setSessionKey("dsf");
-        getClient().setChanneledObject(chars);
+        Account account = realmController.getAccount(this.accountName);
+        
+        getClient().setChanneledObject(account);
         // final String SessionKey = this.accountService.getSessionKeyFromDB(account.getName());
         
         final RealmToClientChannelHandler channelHandler = (RealmToClientChannelHandler) getClient().getChannel().getPipeline().getLast();
@@ -160,18 +161,18 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
             return;
         }
         final byte[] t = { 0, 0, 0, 0 };
-        sha.update(chars.getName().getBytes());
+        sha.update(account.getName().getBytes());
         sha.update(t);
         sha.update(this.clientSeed);
         sha.update(channelHandler.getSeed());
-        sha.update(convertSessionKey(chars.getSessionKey()));
+        sha.update(convertSessionKey(account.getSessionKey()));
         
         if (!Arrays.equals(sha.digest(), this.digest)) {
             getChannel().close();
             return;
         }
         
-        channelHandler.getCrypt().init(convertSessionKey(chars.getSessionKey()));
+        channelHandler.getCrypt().init(convertSessionKey(account.getSessionKey()));
         this.sender.send(getClient(), new SMSG_AUTH_RESPONSE());
         getClient().setChannelState(State.AUTHED);
         // TODO: what is this?

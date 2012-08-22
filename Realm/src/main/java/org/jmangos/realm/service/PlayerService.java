@@ -29,11 +29,11 @@ import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.RealmServer;
 import org.jmangos.realm.dao.PlayerDAO;
+import org.jmangos.realm.domain.CharacterData;
 import org.jmangos.realm.domain.InventoryItem;
 import org.jmangos.realm.domain.ItemPrototype;
 import org.jmangos.realm.domain.PlayerClassLevelInfo;
 import org.jmangos.realm.domain.PlayerLevelInfo;
-import org.jmangos.realm.domain.CharacterData;
 import org.jmangos.realm.model.base.WorldObject;
 import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.base.update.ObjectFields;
@@ -268,7 +268,7 @@ public class PlayerService {
         final Session session = this.databaseFactory.getWorldSessionFactory().openSession();
         final CharacterData character = new CharacterData();
         
-        character.setAccount(player.getAccount().getId());
+        character.setAccount((int) player.getAccount().getId());
         character.setGuid(new Long(player.getObjectGuid().getRawValue()).intValue());
         character.setPlayerBytes(player.GetUInt32Value(PlayerFields.PLAYER_BYTES));
         character.setPlayerBytes2(player.GetUInt32Value(PlayerFields.PLAYER_BYTES_2));

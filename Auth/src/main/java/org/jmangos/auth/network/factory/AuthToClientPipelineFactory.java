@@ -48,7 +48,7 @@ public class AuthToClientPipelineFactory extends BasicPipelineFactory {
     
     /** The packet service. */
     @Inject
-    @Named("authToClientPacketHandlerFactory")
+    @Named("сlientPacketHandlerFactory")
     private PacketHandlerFactory packetService;
     
     /**

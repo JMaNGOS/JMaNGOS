@@ -64,7 +64,7 @@ public class AccountController {
             BigNumber s = new BigNumber();
             BigNumber v = new BigNumber();
             
-            accounts.put(name, account);
+            this.accounts.put(name, account);
             channelHandler.setChanneledObject(account);
             if ((accountDto.getV().length() != (32 * 2)) || (accountDto.getS().length() != (32 * 2))) {
                 variable = AccountUtils.calculateVSFields(accountDto.getShaPasswordHash());
@@ -219,6 +219,21 @@ public class AccountController {
         }
     }
     
+    public Account getAccount(final String login) {
+    
+        final Criterion criterion = Restrictions.eq("username", login);
+        final List<AccountDto> accountList = this.accountService.readAccounts(criterion);
+        if ((accountList != null) && !accountList.isEmpty()) {
+            final AccountDto accountDto = accountList.get(0);
+            Account account = new Account();
+            account.setId(accountDto.getId());
+            account.setName(accountDto.getUsername());
+            account.setSessionKey(accountDto.getSessionKey());
+            return account;
+        }
+        return null;
+    }
+    
     /**
      * Convert to session key.
      * 
@@ -246,7 +261,7 @@ public class AccountController {
      */
     public void loadClean(final String name, final NettyNetworkChannel channelHandler) {
     
-        final Account account = accounts.get(name);
+        final Account account = this.accounts.get(name);
         channelHandler.setChanneledObject(account);
     }
     

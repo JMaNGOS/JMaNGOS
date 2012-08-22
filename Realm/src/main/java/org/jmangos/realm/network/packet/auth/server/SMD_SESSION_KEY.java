@@ -14,26 +14,28 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.realm.network.handler;
+package org.jmangos.realm.network.packet.auth.server;
 
-import org.jmangos.commons.network.handlers.AbstractPacketHandlerFactory;
-import org.jmangos.commons.network.model.PacketData;
-import org.springframework.stereotype.Component;
+import org.jmangos.realm.network.packet.auth.AbstractRealmServerPacket;
 
 /**
- * A factory for creating RealmPacketHandler objects.
+ * The Class <tt>SMD_SESSION_KEY</tt>.
  */
-@Component("сlientPacketHandlerFactory")
-public class RealmToClientPacketHandlerFactory extends AbstractPacketHandlerFactory {
+public class SMD_SESSION_KEY extends AbstractRealmServerPacket {
     
-    protected String clientPacketPath = "./conf/packetData/rc-packets.xml";
+    private final String account;
+    
+    public SMD_SESSION_KEY(final String account) {
+    
+        this.account = account;
+    }
     
     /**
-     * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#loadPacket()
+     * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
      */
     @Override
-    public void loadPacket() {
+    protected void writeImpl() {
     
-        addList(loadStaticData(PacketData.class, this.packetXSDLocation, this.clientPacketPath));
+        writeS(this.account);
     }
 }

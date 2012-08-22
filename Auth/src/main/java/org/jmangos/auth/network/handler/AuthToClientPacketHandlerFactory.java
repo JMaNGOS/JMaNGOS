@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
  * 
  * @author MinimaJack
  */
-@Component("authToClientPacketHandlerFactory")
+@Component("сlientPacketHandlerFactory")
 public class AuthToClientPacketHandlerFactory extends AbstractPacketHandlerFactory {
     
     /**

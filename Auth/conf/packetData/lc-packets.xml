@@ -27,6 +27,7 @@
 		<packet id="50" name="CMD_AUTH_ENABLE_CRYPT" state="AUTHED" />
 		<packet id="51" name="CMD_TEST_CRYPT" state="AUTHED" />
 		<packet id="52" name="CMD_REALM_DATA" state="AUTHED" />
+		<packet id="53" name="CMD_SESSION_KEY" state="AUTHED" />
 	</opcodelist>
 	<opcodelist direction="UPSTREAM"
 		package="org.jmangos.auth.network.packet.wow.server.">
@@ -36,5 +37,6 @@
 		<packet id="03" name="SMD_RECONNECT_PROOF" />
 		<packet id="10" name="SMD_REALM_LIST" />
 		<packet id="50" name="SMD_AUTH_ENABLE_CRYPT" />
+		<packet id="53" name="SMD_SESSION_KEY" />
 	</opcodelist>
 </opcodes>

@@ -43,11 +43,11 @@ public class RealmNetworkService extends AbstractNetworkService {
     
     /** The packet service. */
     @Inject
-    @Named("realmToClientPacketHandlerFactory")
+    @Named("сlientPacketHandlerFactory")
     private PacketHandlerFactory   clientPacketService;
     /** The packet service. */
     @Inject
-    @Named("authToClientPacketHandlerFactory")
+    @Named("realmToAuthPacketHandlerFactory")
     private PacketHandlerFactory   authPacketService;
     
     @Inject

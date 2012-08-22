@@ -24,6 +24,7 @@ import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.frame.FrameDecoder;
 import org.jmangos.realm.network.crypt.Crypt;
+import org.jmangos.realm.network.handler.RealmToAuthChannelHandler;
 import org.jmangos.realm.network.handler.RealmToClientChannelHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +52,7 @@ public class AuthPacketFrameDecoder extends FrameDecoder {
             return null;
         }
         message.markReaderIndex();
-        final RealmToClientChannelHandler channelHandler = (RealmToClientChannelHandler) ctx.getPipeline().getLast();
+        final RealmToAuthChannelHandler channelHandler = (RealmToAuthChannelHandler) ctx.getPipeline().getLast();
         final Crypt crypt = channelHandler.getCrypt();
         
         final byte[] header = new byte[3];

@@ -23,6 +23,7 @@
 		<packet name="CMD_AUTH_LOGON_PROOF" id="1" />
 		<packet name="CMD_AUTH_ENABLE_CRYPT" id="50" />
 		<packet name="CMD_TEST_CRYPT" id="51" />
+		<packet name="CMD_SESSION_KEY" id="53" />
 	</opcodelist>
 	<opcodelist direction="UPSTREAM"
 		package="org.jmangos.realm.network.packet.auth.server.">
@@ -31,5 +32,6 @@
 		<packet name="SMD_AUTH_ENABLE_CRYPT" id="50" />
 		<packet name="SMD_TEST_CRYPT" id="51" />
 		<packet name="SMD_REALM_DATA" id="52" />
+		<packet name="SMD_SESSION_KEY" id="53" />
 	</opcodelist>
 </opcodes>

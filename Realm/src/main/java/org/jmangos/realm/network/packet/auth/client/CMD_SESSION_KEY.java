@@ -21,63 +21,51 @@ import java.nio.BufferUnderflowException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.jboss.netty.channel.ChannelPipeline;
+import org.jmangos.commons.model.Account;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
-import org.jmangos.realm.config.Config;
+import org.jmangos.commons.utils.BigNumber;
 import org.jmangos.realm.controller.RealmController;
-import org.jmangos.realm.network.decoder.AuthPacketFrameDecoder;
-import org.jmangos.realm.network.decoder.AuthPacketFrameEncoder;
-import org.jmangos.realm.network.handler.RealmToAuthChannelHandler;
 import org.jmangos.realm.network.packet.auth.AbstractRealmClientPacket;
-import org.jmangos.realm.network.packet.auth.server.SMD_REALM_DATA;
 import org.springframework.stereotype.Component;
 
 /**
- * The Class <tt>CMD_AUTH_ENABLE_CRYPT</tt>.
+ * The Class <tt>CMD_SESSION_KEY</tt>.
  */
 @Component
-public class CMD_AUTH_ENABLE_CRYPT extends AbstractRealmClientPacket {
+public class CMD_SESSION_KEY extends AbstractRealmClientPacket {
     
     @Inject
     @Named("serverPacketSender")
     private AbstractPacketSender sender;
     
     @Inject
-    private Config               config;
-    
-    @Inject
     private RealmController      realmController;
     
-    /*
-     * (non-Javadoc)
-     * 
+    private String               account;
+    private long                 accountId;
+    private BigNumber            sessionKey;
+    
+    /**
      * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
      */
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
-        // read size of the packet before enable encryption
-        readC();
+        this.account = readS();
+        this.accountId = readQ();
+        this.sessionKey = new BigNumber(readS());
     }
     
-    /*
-     * (non-Javadoc)
-     * 
+    /**
      * @see org.jmangos.commons.network.model.ReceivablePacket#runImpl()
      */
     @Override
     protected void runImpl() {
     
-        final ChannelPipeline pipeline = getClient().getChannel().getPipeline();
-        pipeline.addFirst("framedecoder", new AuthPacketFrameDecoder());
-        pipeline.addFirst("encoder", new AuthPacketFrameEncoder());
-        final RealmToAuthChannelHandler channelHandler = (RealmToAuthChannelHandler) pipeline.getLast();
-        channelHandler.getCrypt().init(channelHandler.getSeed());
-        
-        this.realmController.getAuthNetworkChannel(getClient());
-        
-        // read from Player service
-        final Float popl = 0.4f;
-        this.sender.send(getClient(), new SMD_REALM_DATA(this.config, popl));
+        final Account account = new Account();
+        account.setName(this.account);
+        account.setId(this.accountId);
+        account.setSessionKey(this.sessionKey.asHexStr());
+        this.realmController.setAccount(account);
     }
 }

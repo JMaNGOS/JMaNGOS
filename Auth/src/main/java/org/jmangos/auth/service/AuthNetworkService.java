@@ -42,7 +42,7 @@ public class AuthNetworkService extends AbstractNetworkService {
     
     /** The packet service. */
     @Inject
-    @Named("authToClientPacketHandlerFactory")
+    @Named("сlientPacketHandlerFactory")
     private PacketHandlerFactory   packetService;
     
     /**

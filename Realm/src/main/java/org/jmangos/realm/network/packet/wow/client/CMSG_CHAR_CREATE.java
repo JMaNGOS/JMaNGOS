@@ -10,11 +10,11 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
+import org.jmangos.realm.domain.CharacterData;
 import org.jmangos.realm.domain.InventoryItem;
 import org.jmangos.realm.domain.PlayerHomeBindData;
 import org.jmangos.realm.domain.Playercreateinfo;
 import org.jmangos.realm.domain.PlayercreateinfoPK;
-import org.jmangos.realm.domain.CharacterData;
 import org.jmangos.realm.model.enums.Classes;
 import org.jmangos.realm.model.enums.Races;
 import org.jmangos.realm.model.player.CharacterStartOutfit;
@@ -91,7 +91,7 @@ public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
         
         final CharacterData charData = new CharacterData();
         // Set account id
-        charData.setAccount(getAccount().getId());
+        charData.setAccount((int) getAccount().getId());
         
         // Set name
         charData.setName(this.charName);

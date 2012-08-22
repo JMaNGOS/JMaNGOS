@@ -48,7 +48,7 @@ public class RealmToAuthPipelineFactory extends BasicPipelineFactory {
     
     /** The packet service. */
     @Inject
-    @Named("authToClientPacketHandlerFactory")
+    @Named("realmToAuthPacketHandlerFactory")
     private PacketHandlerFactory packetService;
     
     /**
