@@ -21,7 +21,7 @@ import org.jmangos.auth.network.packet.wow.AbstractWoWServerPacket;
 /**
  * The Class <tt>TCMD_AUTH_ENABLE_CRYPT</tt>.
  */
-public class TCMD_AUTH_ENABLE_CRYPT extends AbstractWoWServerPacket {
+public class SMD_AUTH_ENABLE_CRYPT extends AbstractWoWServerPacket {
     
     /**
      * 

@@ -14,25 +14,54 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.auth.network.packet.wow.server;
+package org.jmangos.realm.network.packet.auth.server;
 
-import org.jmangos.auth.network.packet.wow.AbstractWoWServerPacket;
-import org.jmangos.commons.network.model.State;
+import org.jmangos.realm.network.packet.auth.AbstractRealmServerPacket;
 
 /**
- * The Class <tt>TCMD_RECONNECT_PROOF</tt>.
- * 
+ * The Class <tt>CMD_AUTH_LOGON_PROOF</tt>.
  */
-public class TCMD_RECONNECT_PROOF extends AbstractWoWServerPacket {
+public class SMD_AUTH_LOGON_PROOF extends AbstractRealmServerPacket {
+    
+    /** The m1. */
+    private byte[] m1;
+    
+    /** The a. */
+    private byte[] a;
     
     /**
-     * {@inheritDoc}
+     * Instantiates a new jmangos.
+     */
+    public SMD_AUTH_LOGON_PROOF() {
+    
+    }
+    
+    /**
+     * Instantiates a new jmangos.
+     * 
+     * @param a
+     *            the a
+     * @param m1
+     *            the m1
+     */
+    public SMD_AUTH_LOGON_PROOF(final byte[] a, final byte[] m1) {
+    
+        this.a = a;
+        this.m1 = m1;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
      */
     @Override
     protected void writeImpl() {
     
-        writeC(0);
+        final byte[] crc = new byte[20];
+        writeB(this.a);
+        writeB(this.m1);
+        writeB(crc);
         writeH(0);
-        getChannel().setChannelState(State.AUTHED);
     }
 }

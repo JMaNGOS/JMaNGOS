@@ -26,7 +26,7 @@ import org.jmangos.commons.utils.BigNumber;
  * The Class <tt>TCMD_AUTH_LOGON_CHALLENGE</tt>.
  * 
  */
-public class TCMD_AUTH_LOGON_CHALLENGE extends AbstractWoWServerPacket {
+public class SMD_AUTH_LOGON_CHALLENGE extends AbstractWoWServerPacket {
     
     /** The response. */
     private WoWAuthResponse response;
@@ -37,7 +37,7 @@ public class TCMD_AUTH_LOGON_CHALLENGE extends AbstractWoWServerPacket {
      * @param response
      *            auth response
      */
-    public TCMD_AUTH_LOGON_CHALLENGE(final WoWAuthResponse response) {
+    public SMD_AUTH_LOGON_CHALLENGE(final WoWAuthResponse response) {
     
         this.response = response;
     }
@@ -45,7 +45,7 @@ public class TCMD_AUTH_LOGON_CHALLENGE extends AbstractWoWServerPacket {
     /**
 	 * 
 	 */
-    public TCMD_AUTH_LOGON_CHALLENGE() {
+    public SMD_AUTH_LOGON_CHALLENGE() {
     
     }
     

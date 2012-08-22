@@ -16,42 +16,29 @@
  *******************************************************************************/
 package org.jmangos.realm.network.packet.auth.server;
 
-import javax.inject.Inject;
-
-import org.jmangos.commons.service.ServiceContent;
-import org.jmangos.realm.config.Config;
 import org.jmangos.realm.network.packet.auth.AbstractRealmServerPacket;
 
 /**
- * The Class <tt>CMD_AUTH_LOGON_CHALLENGE</tt>.
+ * The Class <tt>CMD_TEST_CRYPT</tt>.
  */
-public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmServerPacket {
+public class SMD_TEST_CRYPT extends AbstractRealmServerPacket {
     
-    @Inject
-    private Config config;
+    public SMD_TEST_CRYPT() {
     
-    /**
+    }
+    
+    /*
+     * (non-Javadoc)
      * 
      * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
      */
     @Override
     protected void writeImpl() {
     
-        this.config = ServiceContent.getContext().getBean(Config.class);
-        final byte[] empt = { 0, 0, 0, 0 };
-        writeC(0);
-        writeH(0);
-        writeB(empt);
-        writeC(0);
-        writeC(0);
-        writeC(0);
-        writeH(12340);
-        writeB(empt);
-        writeB(empt);
-        writeB(empt);
-        writeD(0);
-        writeD(0);
-        writeC(this.config.AUTH_LOGIN.length());
-        writeB(this.config.AUTH_LOGIN.toUpperCase().getBytes());
+        writeC('C');
+        writeC('R');
+        writeC('Y');
+        writeC('P');
+        writeC('T');
     }
 }

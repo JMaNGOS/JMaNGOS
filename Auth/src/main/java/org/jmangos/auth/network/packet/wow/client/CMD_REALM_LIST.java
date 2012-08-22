@@ -21,7 +21,7 @@ import javax.inject.Named;
 
 import org.jmangos.auth.config.Config;
 import org.jmangos.auth.network.packet.wow.AbstractWoWClientPacket;
-import org.jmangos.auth.network.packet.wow.server.TCMD_REALM_LIST;
+import org.jmangos.auth.network.packet.wow.server.SMD_REALM_LIST;
 import org.jmangos.auth.service.RealmListService;
 import org.jmangos.commons.config.Compatiple;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
@@ -83,6 +83,6 @@ public class CMD_REALM_LIST extends AbstractWoWClientPacket {
         if (this.config.COMPATIBLE.equals(Compatiple.MANGOS)) {
             this.worldlist.update();
         }
-        this.sender.send(getClient(), new TCMD_REALM_LIST(this.worldlist));
+        this.sender.send(getClient(), new SMD_REALM_LIST(this.worldlist));
     }
 }

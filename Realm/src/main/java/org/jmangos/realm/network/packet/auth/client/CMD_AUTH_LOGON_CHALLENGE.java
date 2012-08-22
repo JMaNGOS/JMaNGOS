@@ -32,7 +32,7 @@ import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.config.Config;
 import org.jmangos.realm.network.handler.RealmToAuthChannelHandler;
 import org.jmangos.realm.network.packet.auth.AbstractRealmClientPacket;
-import org.jmangos.realm.network.packet.auth.server.CMD_AUTH_LOGON_PROOF;
+import org.jmangos.realm.network.packet.auth.server.SMD_AUTH_LOGON_PROOF;
 import org.jmangos.realm.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -190,7 +190,7 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmClientPacket {
     @Override
     protected void runImpl() {
     
-        this.sender.send(getClient(), new CMD_AUTH_LOGON_PROOF(this.ahash, this.m1));
+        this.sender.send(getClient(), new SMD_AUTH_LOGON_PROOF(this.ahash, this.m1));
         
     }
 }

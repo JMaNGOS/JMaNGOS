@@ -26,7 +26,7 @@ import org.jmangos.auth.network.decoder.RealmPacketFrameDecoder;
 import org.jmangos.auth.network.decoder.RealmPacketFrameEncoder;
 import org.jmangos.auth.network.handler.AuthToClientChannelHandler;
 import org.jmangos.auth.network.packet.wow.AbstractWoWClientPacket;
-import org.jmangos.auth.network.packet.wow.server.TCMD_AUTH_ENABLE_CRYPT;
+import org.jmangos.auth.network.packet.wow.server.SMD_AUTH_ENABLE_CRYPT;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,6 +76,6 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractWoWClientPacket {
             channelHandler.getCrypt().init(getAccount().getvK());
         }
         
-        this.sender.send(getClient(), new TCMD_AUTH_ENABLE_CRYPT());
+        this.sender.send(getClient(), new SMD_AUTH_ENABLE_CRYPT());
     }
 }

@@ -21,7 +21,7 @@ import javax.inject.Named;
 
 import org.jmangos.auth.controller.AccountController;
 import org.jmangos.auth.network.packet.wow.AbstractWoWClientPacket;
-import org.jmangos.auth.network.packet.wow.server.TCMD_AUTH_LOGON_PROOF;
+import org.jmangos.auth.network.packet.wow.server.SMD_AUTH_LOGON_PROOF;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.springframework.stereotype.Component;
@@ -75,6 +75,6 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
     protected void runImpl() {
     
         final WoWAuthResponse response = this.accountController.checkPassword(getAccount(), this.a, this.m1);
-        this.sender.send(getClient(), new TCMD_AUTH_LOGON_PROOF(response));
+        this.sender.send(getClient(), new SMD_AUTH_LOGON_PROOF(response));
     }
 }

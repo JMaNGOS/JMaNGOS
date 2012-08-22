@@ -26,7 +26,7 @@ import org.jmangos.commons.model.Realm;
 /**
  * The Class <tt>TCMD_REALM_LIST</tt>.
  */
-public class TCMD_REALM_LIST extends AbstractWoWServerPacket {
+public class SMD_REALM_LIST extends AbstractWoWServerPacket {
     
     /** The worldlist. */
     private RealmListService worldlist;
@@ -34,7 +34,7 @@ public class TCMD_REALM_LIST extends AbstractWoWServerPacket {
     /**
      * Instantiates a new <tt>TCMD_REALM_LIST</tt>.
      */
-    public TCMD_REALM_LIST() {
+    public SMD_REALM_LIST() {
     
     }
     
@@ -44,7 +44,7 @@ public class TCMD_REALM_LIST extends AbstractWoWServerPacket {
      * @param worldlist
      *            the worldlist
      */
-    public TCMD_REALM_LIST(final RealmListService worldlist) {
+    public SMD_REALM_LIST(final RealmListService worldlist) {
     
         this.worldlist = worldlist;
     }

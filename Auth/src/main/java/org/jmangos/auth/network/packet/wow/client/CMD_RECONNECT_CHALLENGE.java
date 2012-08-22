@@ -21,7 +21,7 @@ import javax.inject.Named;
 
 import org.jmangos.auth.controller.AccountController;
 import org.jmangos.auth.network.packet.wow.AbstractWoWClientPacket;
-import org.jmangos.auth.network.packet.wow.server.TCMD_RECONNECT_CHALLENGE;
+import org.jmangos.auth.network.packet.wow.server.SMD_RECONNECT_CHALLENGE;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.springframework.stereotype.Component;
@@ -90,6 +90,6 @@ public class CMD_RECONNECT_CHALLENGE extends AbstractWoWClientPacket {
     protected void runImpl() {
     
         this.accountController.loadClean(this.login, (NettyNetworkChannel) getClient());
-        this.sender.send(getClient(), new TCMD_RECONNECT_CHALLENGE());
+        this.sender.send(getClient(), new SMD_RECONNECT_CHALLENGE());
     }
 }

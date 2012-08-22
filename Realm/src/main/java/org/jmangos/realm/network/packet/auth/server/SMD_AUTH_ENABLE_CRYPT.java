@@ -19,11 +19,11 @@ package org.jmangos.realm.network.packet.auth.server;
 import org.jmangos.realm.network.packet.auth.AbstractRealmServerPacket;
 
 /**
- * The Class <tt>CMD_TEST_CRYPT</tt>.
+ * The Class <tt>CMD_AUTH_ENABLE_CRYPT</tt>.
  */
-public class CMD_TEST_CRYPT extends AbstractRealmServerPacket {
+public class SMD_AUTH_ENABLE_CRYPT extends AbstractRealmServerPacket {
     
-    public CMD_TEST_CRYPT() {
+    public SMD_AUTH_ENABLE_CRYPT() {
     
     }
     
@@ -35,10 +35,5 @@ public class CMD_TEST_CRYPT extends AbstractRealmServerPacket {
     @Override
     protected void writeImpl() {
     
-        writeC('C');
-        writeC('R');
-        writeC('Y');
-        writeC('P');
-        writeC('T');
     }
 }

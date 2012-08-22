@@ -23,7 +23,7 @@ import javax.inject.Named;
 
 import org.jmangos.auth.controller.AccountController;
 import org.jmangos.auth.network.packet.wow.AbstractWoWClientPacket;
-import org.jmangos.auth.network.packet.wow.server.TCMD_AUTH_LOGON_CHALLENGE;
+import org.jmangos.auth.network.packet.wow.server.SMD_AUTH_LOGON_CHALLENGE;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
@@ -120,10 +120,10 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
         final WoWAuthResponse response = this.accountController.loadLogin(this.login, (NettyNetworkChannel) getClient());
         switch (response) {
             case WOW_FAIL_BANNED:
-                this.sender.sendAndClose(getClient(), new TCMD_AUTH_LOGON_CHALLENGE(response));
+                this.sender.sendAndClose(getClient(), new SMD_AUTH_LOGON_CHALLENGE(response));
                 break;
             default:
-                this.sender.send(getClient(), new TCMD_AUTH_LOGON_CHALLENGE(response));
+                this.sender.send(getClient(), new SMD_AUTH_LOGON_CHALLENGE(response));
                 break;
         }
     }

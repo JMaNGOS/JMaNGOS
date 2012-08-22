@@ -14,26 +14,30 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.realm.network.packet.auth.server;
+package org.jmangos.auth.network.packet.wow.server;
 
-import org.jmangos.realm.network.packet.auth.AbstractRealmServerPacket;
+import org.jmangos.auth.network.packet.wow.AbstractWoWServerPacket;
+import org.jmangos.commons.model.Account;
+import org.jmangos.commons.utils.BigNumber;
 
 /**
- * The Class <tt>CMD_AUTH_ENABLE_CRYPT</tt>.
+ * The Class <tt>TCMD_RECONNECT_CHALLENGE</tt>.
  */
-public class CMD_AUTH_ENABLE_CRYPT extends AbstractRealmServerPacket {
+public class SMD_RECONNECT_CHALLENGE extends AbstractWoWServerPacket {
     
-    public CMD_AUTH_ENABLE_CRYPT() {
-    
-    }
-    
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected void writeImpl() {
     
+        writeC(0x00);
+        final BigNumber s = new BigNumber();
+        s.setRand(16);
+        ((Account) (getChannel().getChanneledObject())).set_reconnectProof(s);
+        
+        writeB(s.asByteArray(16));
+        writeQ(0L);
+        writeQ(0L);
     }
 }

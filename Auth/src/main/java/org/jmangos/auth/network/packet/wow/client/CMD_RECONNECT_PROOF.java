@@ -21,7 +21,7 @@ import javax.inject.Named;
 
 import org.jmangos.auth.controller.AccountController;
 import org.jmangos.auth.network.packet.wow.AbstractWoWClientPacket;
-import org.jmangos.auth.network.packet.wow.server.TCMD_RECONNECT_PROOF;
+import org.jmangos.auth.network.packet.wow.server.SMD_RECONNECT_PROOF;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,7 +77,7 @@ public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
     
         final boolean response = this.accountController.checkSessionKey(getAccount(), this.R1, this.R2);
         if (response) {
-            this.sender.send(getClient(), new TCMD_RECONNECT_PROOF());
+            this.sender.send(getClient(), new SMD_RECONNECT_PROOF());
         } else {
             getChannel().close();
         }

@@ -22,16 +22,16 @@ import org.jmangos.realm.network.packet.auth.AbstractRealmServerPacket;
 /**
  * The Class <tt>CMD_REALM_DATA</tt>.
  */
-public class CMD_REALM_DATA extends AbstractRealmServerPacket {
+public class SMD_REALM_DATA extends AbstractRealmServerPacket {
     
     private Config configs;
     private Float  population;
     
-    public CMD_REALM_DATA() {
+    public SMD_REALM_DATA() {
     
     }
     
-    public CMD_REALM_DATA(final Config config, final Float population) {
+    public SMD_REALM_DATA(final Config config, final Float population) {
     
         this.configs = config;
         this.population = population;

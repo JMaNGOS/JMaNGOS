@@ -28,7 +28,7 @@ import org.jmangos.realm.network.decoder.AuthPacketFrameDecoder;
 import org.jmangos.realm.network.decoder.AuthPacketFrameEncoder;
 import org.jmangos.realm.network.handler.RealmToAuthChannelHandler;
 import org.jmangos.realm.network.packet.auth.AbstractRealmClientPacket;
-import org.jmangos.realm.network.packet.auth.server.CMD_REALM_DATA;
+import org.jmangos.realm.network.packet.auth.server.SMD_REALM_DATA;
 import org.springframework.stereotype.Component;
 
 /**
@@ -72,6 +72,6 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractRealmClientPacket {
         
         // read from Player service
         final Float popl = 0.4f;
-        this.sender.send(getClient(), new CMD_REALM_DATA(this.config, popl));
+        this.sender.send(getClient(), new SMD_REALM_DATA(this.config, popl));
     }
 }

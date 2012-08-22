@@ -24,7 +24,7 @@ import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.State;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
-import org.jmangos.realm.network.packet.auth.server.CMD_AUTH_LOGON_CHALLENGE;
+import org.jmangos.realm.network.packet.auth.server.SMD_AUTH_LOGON_CHALLENGE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -52,7 +52,7 @@ public class RealmToAuthConnectHandler implements ConnectHandler {
     
         networkChannel.setChannelState(State.CONNECTED);
         log.info("Connection to: " + networkChannel.getAddress());
-        this.sender.send(networkChannel, new CMD_AUTH_LOGON_CHALLENGE());
+        this.sender.send(networkChannel, new SMD_AUTH_LOGON_CHALLENGE());
     }
     
     /**

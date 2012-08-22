@@ -24,7 +24,7 @@ import javax.inject.Named;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.network.packet.auth.AbstractRealmClientPacket;
-import org.jmangos.realm.network.packet.auth.server.CMD_AUTH_ENABLE_CRYPT;
+import org.jmangos.realm.network.packet.auth.server.SMD_AUTH_ENABLE_CRYPT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -62,7 +62,7 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractRealmClientPacket {
     @Override
     protected void runImpl() {
     
-        this.sender.send(getClient(), new CMD_AUTH_ENABLE_CRYPT());
+        this.sender.send(getClient(), new SMD_AUTH_ENABLE_CRYPT());
         
     }
 }

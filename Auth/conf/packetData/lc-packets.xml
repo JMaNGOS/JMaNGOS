@@ -30,11 +30,11 @@
 	</opcodelist>
 	<opcodelist direction="UPSTREAM"
 		package="org.jmangos.auth.network.packet.wow.server.">
-		<packet id="00" name="TCMD_AUTH_LOGON_CHALLENGE" />
-		<packet id="01" name="TCMD_AUTH_LOGON_PROOF" />
-		<packet id="02" name="TCMD_RECONNECT_CHALLENGE" />
-		<packet id="03" name="TCMD_RECONNECT_PROOF" />
-		<packet id="10" name="TCMD_REALM_LIST" />
-		<packet id="50" name="TCMD_AUTH_ENABLE_CRYPT" />
+		<packet id="00" name="SMD_AUTH_LOGON_CHALLENGE" />
+		<packet id="01" name="SMD_AUTH_LOGON_PROOF" />
+		<packet id="02" name="SMD_RECONNECT_CHALLENGE" />
+		<packet id="03" name="SMD_RECONNECT_PROOF" />
+		<packet id="10" name="SMD_REALM_LIST" />
+		<packet id="50" name="SMD_AUTH_ENABLE_CRYPT" />
 	</opcodelist>
 </opcodes>
