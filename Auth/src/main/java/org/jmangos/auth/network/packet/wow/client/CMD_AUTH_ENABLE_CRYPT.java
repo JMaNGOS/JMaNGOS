@@ -67,13 +67,13 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractWoWClientPacket {
     protected void runImpl() {
     
         // TODO 5 - magic number send to config like realm acces
-        if (getAccount().getAccessLevel() == 5) {
-            logger.info("Realm " + getAccount().getName() + " started crypt");
+        if (getAccountInfo().getAccessLevel() == 5) {
+            logger.info("Realm " + getAccountInfo().getName() + " started crypt");
             final ChannelPipeline pipeline = getClient().getChannel().getPipeline();
             pipeline.addFirst("framedecoder", new RealmPacketFrameDecoder());
             pipeline.addFirst("encoder", new RealmPacketFrameEncoder());
             final AuthToClientChannelHandler channelHandler = (AuthToClientChannelHandler) pipeline.getLast();
-            channelHandler.getCrypt().init(getAccount().getvK());
+            channelHandler.getCrypt().init(getAccountInfo().getvK());
         }
         
         this.sender.send(getClient(), new SMD_AUTH_ENABLE_CRYPT());

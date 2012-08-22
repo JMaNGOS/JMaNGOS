@@ -91,7 +91,7 @@ public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
         
         final CharacterData charData = new CharacterData();
         // Set account id
-        charData.setAccount((int) getAccount().getId());
+        charData.setAccount((int) getAccountInfo().getId());
         
         // Set name
         charData.setName(this.charName);

@@ -16,7 +16,7 @@
  *******************************************************************************/
 package org.jmangos.realm.network.packet.wow;
 
-import org.jmangos.commons.model.Account;
+import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.ReceivablePacket;
 import org.jmangos.realm.model.player.Player;
@@ -63,9 +63,9 @@ public abstract class AbstractWoWClientPacket extends ReceivablePacket {
      * 
      * @return the account
      */
-    public Account getAccount() {
+    public AccountInfo getAccountInfo() {
     
-        return (Account) ((NettyNetworkChannel) this._client).getChanneledObject();
+        return (AccountInfo) ((NettyNetworkChannel) this._client).getChanneledObject();
     }
     
     /**

@@ -74,7 +74,7 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
-        final WoWAuthResponse response = this.accountController.checkPassword(getAccount(), this.a, this.m1);
+        final WoWAuthResponse response = this.accountController.checkPassword(getAccountInfo(), this.a, this.m1);
         this.sender.send(getClient(), new SMD_AUTH_LOGON_PROOF(response));
     }
 }

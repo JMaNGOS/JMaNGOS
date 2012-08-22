@@ -75,7 +75,7 @@ public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
-        final boolean response = this.accountController.checkSessionKey(getAccount(), this.R1, this.R2);
+        final boolean response = this.accountController.checkSessionKey(getAccountInfo(), this.R1, this.R2);
         if (response) {
             this.sender.send(getClient(), new SMD_RECONNECT_PROOF());
         } else {

@@ -20,7 +20,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
-import org.jmangos.commons.model.Account;
+import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.utils.BigNumber;
 
@@ -95,7 +95,7 @@ public class AccountUtils {
     
         final BigNumber b = new BigNumber();
         b.setRand(19);
-        ((Account) con.getChanneledObject()).setB(b);
+        ((AccountInfo) con.getChanneledObject()).setB(b);
         final BigNumber gmod = g.modPow(b, N);
         return ((v.multiply(k)).add(gmod)).mod(N);
         

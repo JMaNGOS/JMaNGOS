@@ -19,7 +19,7 @@ package org.jmangos.realm.model.player;
 import java.math.BigInteger;
 import java.util.BitSet;
 
-import org.jmangos.commons.model.Account;
+import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.network.model.ChanneledObject;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.NetworkChannel;
@@ -220,9 +220,9 @@ public class Player extends Units implements ChanneledObject {
      * 
      * @return the account
      */
-    public Account getAccount() {
+    public AccountInfo getAccountInfo() {
     
-        return (Account) ((NettyNetworkChannel) getChannel()).getChanneledObject();
+        return (AccountInfo) ((NettyNetworkChannel) getChannel()).getChanneledObject();
     }
     
     /**

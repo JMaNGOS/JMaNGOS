@@ -47,9 +47,9 @@ public class CMD_REALM_DATA extends AbstractWoWClientPacket {
     @Override
     protected void readImpl() throws RuntimeException {
     
-        logger.debug("Receive realm info from realm account: " + getAccount().getName());
+        logger.debug("Receive realm info from realm account: " + getAccountInfo().getName());
         this.realm = new Realm();
-        this.realm.setId(getAccount().getObjectId());
+        this.realm.setId(getAccountInfo().getObjectId());
         this.realm.setName(readS());
         this.realm.setAddress(readS());
         this.realm.setPort(readD());

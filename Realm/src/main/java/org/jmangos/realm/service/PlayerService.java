@@ -268,7 +268,7 @@ public class PlayerService {
         final Session session = this.databaseFactory.getWorldSessionFactory().openSession();
         final CharacterData character = new CharacterData();
         
-        character.setAccount((int) player.getAccount().getId());
+        character.setAccount((int) player.getAccountInfo().getId());
         character.setGuid(new Long(player.getObjectGuid().getRawValue()).intValue());
         character.setPlayerBytes(player.GetUInt32Value(PlayerFields.PLAYER_BYTES));
         character.setPlayerBytes2(player.GetUInt32Value(PlayerFields.PLAYER_BYTES_2));

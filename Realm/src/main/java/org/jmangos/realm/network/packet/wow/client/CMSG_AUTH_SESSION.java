@@ -34,7 +34,7 @@ import javolution.text.TextBuilder;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-import org.jmangos.commons.model.Account;
+import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.network.model.State;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.controller.RealmController;
@@ -146,7 +146,7 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
-        final Account account = this.realmController.getAccount(this.accountName);
+        final AccountInfo account = this.realmController.getAccount(this.accountName);
         
         getClient().setChanneledObject(account);
         // final String SessionKey = this.accountService.getSessionKeyFromDB(account.getName());

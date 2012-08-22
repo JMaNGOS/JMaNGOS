@@ -17,7 +17,7 @@
 package org.jmangos.auth.network.packet.wow.server;
 
 import org.jmangos.auth.network.packet.wow.AbstractWoWServerPacket;
-import org.jmangos.commons.model.Account;
+import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.utils.BigNumber;
 
 /**
@@ -34,7 +34,7 @@ public class SMD_RECONNECT_CHALLENGE extends AbstractWoWServerPacket {
         writeC(0x00);
         final BigNumber s = new BigNumber();
         s.setRand(16);
-        ((Account) (getChannel().getChanneledObject())).set_reconnectProof(s);
+        ((AccountInfo) (getChannel().getChanneledObject())).set_reconnectProof(s);
         
         writeB(s.asByteArray(16));
         writeQ(0L);

@@ -20,7 +20,7 @@ import javolution.util.FastMap;
 
 import org.jmangos.auth.network.packet.wow.AbstractWoWServerPacket;
 import org.jmangos.auth.service.RealmListService;
-import org.jmangos.commons.model.Account;
+import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.model.Realm;
 
 /**
@@ -56,13 +56,13 @@ public class SMD_REALM_LIST extends AbstractWoWServerPacket {
     @Override
     protected void writeImpl() {
     
-        final FastMap<Integer, Integer> amountofCharacters = this.worldlist.getAmountCharacters(((Account) (getChannel().getChanneledObject())).getObjectId());
+        final FastMap<Integer, Integer> amountofCharacters = this.worldlist.getAmountCharacters(((AccountInfo) (getChannel().getChanneledObject())).getObjectId());
         writeH(this.worldlist.getByteSize());
         writeD(0);
         writeH(this.worldlist.getRealmCount());
         for (final Realm realm : this.worldlist.getWorlds().values()) {
             writeC(realm.getIcon());
-            writeC((realm.getAllowedSecurityLevel() > ((Account) (getChannel().getChanneledObject())).getAccessLevel()) ? 1 : 0);
+            writeC((realm.getAllowedSecurityLevel() > ((AccountInfo) (getChannel().getChanneledObject())).getAccessLevel()) ? 1 : 0);
             writeC(realm.getRealmflags());
             writeS(realm.getName());
             writeS(realm.getAddress());

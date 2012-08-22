@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.jmangos.commons.model.Account;
+import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.network.packet.auth.server.SMD_SESSION_KEY;
@@ -20,7 +20,7 @@ public class RealmController {
     /** The Constant logger. */
     private static final Logger         logger   = LoggerFactory.getLogger(RealmController.class);
     
-    private static Map<String, Account> accounts = new HashMap<String, Account>();
+    private static Map<String, AccountInfo> accounts = new HashMap<String, AccountInfo>();
     
     /** The sender. */
     @Inject
@@ -34,7 +34,7 @@ public class RealmController {
         this.authNetworkChannel = authNetworkChannel;
     }
     
-    public Account getAccount(final String accountName) {
+    public AccountInfo getAccount(final String accountName) {
     
         if ((accountName != null) && !accountName.isEmpty() && (this.authNetworkChannel != null)) {
             this.authSender.send(this.authNetworkChannel, new SMD_SESSION_KEY(accountName));
@@ -50,7 +50,7 @@ public class RealmController {
                         Thread.sleep(2000);
                     }
                     if (accounts.get(accountName) != null) {
-                        final Account account = accounts.get(accountName);
+                        final AccountInfo account = accounts.get(accountName);
                         accounts.remove(accountName);
                         return account;
                     }
@@ -63,7 +63,7 @@ public class RealmController {
         return null;
     }
     
-    public void setAccount(final Account account) {
+    public void setAccount(final AccountInfo account) {
     
         accounts.put(account.getName(), account);
     }

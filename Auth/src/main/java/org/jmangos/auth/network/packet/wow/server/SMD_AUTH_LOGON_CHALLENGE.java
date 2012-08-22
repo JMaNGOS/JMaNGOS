@@ -18,7 +18,7 @@ package org.jmangos.auth.network.packet.wow.server;
 
 import org.jmangos.auth.network.packet.wow.AbstractWoWServerPacket;
 import org.jmangos.auth.utils.AccountUtils;
-import org.jmangos.commons.model.Account;
+import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.utils.BigNumber;
 
@@ -60,12 +60,12 @@ public class SMD_AUTH_LOGON_CHALLENGE extends AbstractWoWServerPacket {
         if (this.response == WoWAuthResponse.WOW_SUCCESS) {
             final BigNumber unk3 = new BigNumber();
             unk3.setRand(16);
-            writeB(((Account) (getChannel().getChanneledObject())).getcryptoB().asByteArray(32));
+            writeB(((AccountInfo) (getChannel().getChanneledObject())).getcryptoB().asByteArray(32));
             writeC(1);
             writeB(AccountUtils.g.asByteArray(1));
             writeC(32);
             writeB(AccountUtils.N.asByteArray(32));
-            writeB(((Account) (getChannel().getChanneledObject())).getS_crypto().asByteArray(32));
+            writeB(((AccountInfo) (getChannel().getChanneledObject())).getS_crypto().asByteArray(32));
             writeB(unk3.asByteArray(16));
             writeC(0);
         }

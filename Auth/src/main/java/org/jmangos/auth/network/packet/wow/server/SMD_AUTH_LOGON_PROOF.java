@@ -17,7 +17,7 @@
 package org.jmangos.auth.network.packet.wow.server;
 
 import org.jmangos.auth.network.packet.wow.AbstractWoWServerPacket;
-import org.jmangos.commons.model.Account;
+import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.model.State;
 
@@ -56,7 +56,7 @@ public class SMD_AUTH_LOGON_PROOF extends AbstractWoWServerPacket {
         writeC(this.response.getMessageId());
         if (this.response == WoWAuthResponse.WOW_SUCCESS) {
             getChannel().setChannelState(State.AUTHED);
-            writeB(((Account) (getChannel().getChanneledObject())).getM2());
+            writeB(((AccountInfo) (getChannel().getChanneledObject())).getM2());
             writeC(0);
             writeC(-128);
             writeC(0);

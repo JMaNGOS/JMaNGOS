@@ -17,14 +17,14 @@
 package org.jmangos.auth.network.packet.wow.server;
 
 import org.jmangos.auth.network.packet.wow.AbstractWoWServerPacket;
-import org.jmangos.commons.model.Account;
+import org.jmangos.commons.model.AccountInfo;
 
 /**
  * The Class <tt>SMD_SESSION_KEY</tt>.
  */
 public class SMD_SESSION_KEY extends AbstractWoWServerPacket {
     
-    private Account account;
+    private AccountInfo account;
     
     /**
      * Instantiates a new <tt>SMD_SESSION_KEY</tt>.
@@ -33,7 +33,7 @@ public class SMD_SESSION_KEY extends AbstractWoWServerPacket {
     
     }
     
-    public SMD_SESSION_KEY(final Account account) {
+    public SMD_SESSION_KEY(final AccountInfo account) {
     
         this.account = account;
     }

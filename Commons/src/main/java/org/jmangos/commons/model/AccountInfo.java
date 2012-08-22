@@ -23,7 +23,7 @@ import org.jmangos.commons.utils.BigNumber;
 /**
  * The Class Account.
  */
-public class Account extends NamedObject implements ChanneledObject {
+public class AccountInfo extends NamedObject implements ChanneledObject {
     
     private long           id;
     
@@ -58,7 +58,7 @@ public class Account extends NamedObject implements ChanneledObject {
     
     private BigNumber      sessionKey;
     
-    public Account() {
+    public AccountInfo() {
     
     }
     
@@ -104,7 +104,7 @@ public class Account extends NamedObject implements ChanneledObject {
      * @param objectId
      *            the object id
      */
-    public Account(final int objectId) {
+    public AccountInfo(final int objectId) {
     
         super(objectId);
     }

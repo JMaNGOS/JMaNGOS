@@ -24,7 +24,7 @@ import javax.inject.Named;
 import org.jmangos.auth.controller.AccountController;
 import org.jmangos.auth.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.auth.network.packet.wow.server.SMD_SESSION_KEY;
-import org.jmangos.commons.model.Account;
+import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.springframework.stereotype.Component;
 
@@ -65,7 +65,7 @@ public class CMD_SESSION_KEY extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
-        final Account account = this.accountController.getAccount(this.account);
+        final AccountInfo account = this.accountController.getAccount(this.account);
         this.sender.send(getClient(), new SMD_SESSION_KEY(account));
         
     }

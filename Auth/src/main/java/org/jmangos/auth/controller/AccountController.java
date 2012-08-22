@@ -17,7 +17,7 @@ import org.criteria4jpa.criterion.Restrictions;
 import org.jmangos.auth.model.AccountDto;
 import org.jmangos.auth.services.impl.AccountServiceImpl;
 import org.jmangos.auth.utils.AccountUtils;
-import org.jmangos.commons.model.Account;
+import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.utils.BigNumber;
@@ -34,7 +34,7 @@ public class AccountController {
     @Inject
     private AccountServiceImpl         accountService;
     
-    private final Map<String, Account> accounts = new HashMap<String, Account>();
+    private final Map<String, AccountInfo> accounts = new HashMap<String, AccountInfo>();
     
     /**
      * Login.
@@ -53,7 +53,7 @@ public class AccountController {
         // return WoWAuthResponse.WOW_FAIL_BANNED;
         // }
         
-        final Account account = new Account();
+        final AccountInfo account = new AccountInfo();
         
         final Criterion criterion = Restrictions.eq("username", name);
         final List<AccountDto> accountList = this.accountService.readAccounts(criterion);
@@ -93,7 +93,7 @@ public class AccountController {
         }
     }
     
-    public WoWAuthResponse checkPassword(final Account account, final byte[] a, final byte[] m1) {
+    public WoWAuthResponse checkPassword(final AccountInfo account, final byte[] a, final byte[] m1) {
     
         logger.debug("a length " + a.length);
         logger.debug("a value " + new BigInteger(1, a).toString(16).toUpperCase());
@@ -188,7 +188,7 @@ public class AccountController {
         }
     }
     
-    public boolean checkSessionKey(final Account account, final byte[] R1, final byte[] R2) {
+    public boolean checkSessionKey(final AccountInfo account, final byte[] R1, final byte[] R2) {
     
         MessageDigest sha = null;
         try {
@@ -219,13 +219,13 @@ public class AccountController {
         }
     }
     
-    public Account getAccount(final String login) {
+    public AccountInfo getAccount(final String login) {
     
         final Criterion criterion = Restrictions.eq("username", login);
         final List<AccountDto> accountList = this.accountService.readAccounts(criterion);
         if ((accountList != null) && !accountList.isEmpty()) {
             final AccountDto accountDto = accountList.get(0);
-            Account account = new Account();
+            AccountInfo account = new AccountInfo();
             account.setId(accountDto.getId());
             account.setName(accountDto.getUsername());
             account.setSessionKey(new BigNumber(accountDto.getSessionKey()));
@@ -261,7 +261,7 @@ public class AccountController {
      */
     public void loadClean(final String name, final NettyNetworkChannel channelHandler) {
     
-        final Account account = this.accounts.get(name);
+        final AccountInfo account = this.accounts.get(name);
         channelHandler.setChanneledObject(account);
     }
     

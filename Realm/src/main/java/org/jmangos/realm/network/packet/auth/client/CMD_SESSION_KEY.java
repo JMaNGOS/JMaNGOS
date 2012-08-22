@@ -21,7 +21,7 @@ import java.nio.BufferUnderflowException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.jmangos.commons.model.Account;
+import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.commons.utils.BigNumber;
 import org.jmangos.realm.controller.RealmController;
@@ -63,7 +63,7 @@ public class CMD_SESSION_KEY extends AbstractRealmClientPacket {
     @Override
     protected void runImpl() {
     
-        final Account account = new Account();
+        final AccountInfo account = new AccountInfo();
         account.setName(this.account);
         account.setId(this.accountId);
         account.setSessionKey(this.sessionKey);
