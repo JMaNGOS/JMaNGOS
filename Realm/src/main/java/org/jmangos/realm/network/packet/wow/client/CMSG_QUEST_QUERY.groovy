@@ -8,7 +8,7 @@ import java.nio.BufferUnderflowException
 
 import org.jmangos.realm.network.packet.wow.server.SMSG_QUEST_QUERY_RESPONSE
 import javax.inject.Named
-import org.jmangos.commons.network.netty.sender.AbstractPacketSender
+import org.jmangos.commons.network.sender.AbstractPacketSender
 import org.jmangos.realm.service.QuestStorages
 import org.springframework.stereotype.Component;
 import org.slf4j.Logger
