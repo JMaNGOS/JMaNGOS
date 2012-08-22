@@ -23,7 +23,7 @@ import org.apache.commons.lang.NotImplementedException;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jmangos.auth.config.Config;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
-import org.jmangos.commons.network.netty.service.AbstractNetworkService;
+import org.jmangos.commons.network.service.AbstractNetworkService;
 import org.springframework.stereotype.Component;
 
 /**
@@ -58,7 +58,7 @@ public class AuthNetworkService extends AbstractNetworkService {
     
     /**
      * 
-     * @see org.jmangos.commons.network.netty.service.NetworkService#status()
+     * @see org.jmangos.commons.network.service.NetworkService#status()
      */
     @Override
     public void status() {

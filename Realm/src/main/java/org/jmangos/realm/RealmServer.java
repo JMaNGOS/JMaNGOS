@@ -18,7 +18,7 @@ package org.jmangos.realm;
 
 import groovy.ui.Console;
 
-import org.jmangos.commons.network.netty.service.NetworkService;
+import org.jmangos.commons.network.service.NetworkService;
 import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.realm.service.ItemStorages;
 import org.jmangos.realm.utils.ShutdownHook;

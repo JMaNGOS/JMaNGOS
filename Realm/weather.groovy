@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import org.jmangos.realm.model.UpdateType;
 import org.jmangos.realm.model.base.update.UpdateFieldUtils;
 import org.jmangos.realm.model.player.Player;
-import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket;
+import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 import org.jmangos.commons.network.model.UpdateFieldType;
 
 import java.math.BigInteger;

@@ -17,7 +17,7 @@
 package org.jmangos.auth;
 
 import org.jmangos.auth.utils.ShutdownHook;
-import org.jmangos.commons.network.netty.service.NetworkService;
+import org.jmangos.commons.network.service.NetworkService;
 import org.jmangos.commons.service.ServiceContent;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

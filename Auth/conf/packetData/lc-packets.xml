@@ -18,7 +18,7 @@
 <opcodes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="packets.xsd">
 	<opcodelist direction="DOWNSTREAM"
-		package="org.jmangos.auth.network.netty.packet.client.">
+		package="org.jmangos.auth.network.packet.wow.client.">
 		<packet id="00" name="CMD_AUTH_LOGON_CHALLENGE" state="CONNECTED" />
 		<packet id="01" name="CMD_AUTH_LOGON_PROOF" state="CONNECTED" />
 		<packet id="02" name="CMD_RECONNECT_CHALLENGE" state="CONNECTED" />
@@ -29,7 +29,7 @@
 		<packet id="52" name="CMD_REALM_DATA" state="AUTHED" />
 	</opcodelist>
 	<opcodelist direction="UPSTREAM"
-		package="org.jmangos.auth.network.netty.packet.server.">
+		package="org.jmangos.auth.network.packet.wow.server.">
 		<packet id="00" name="TCMD_AUTH_LOGON_CHALLENGE" />
 		<packet id="01" name="TCMD_AUTH_LOGON_PROOF" />
 		<packet id="02" name="TCMD_RECONNECT_CHALLENGE" />

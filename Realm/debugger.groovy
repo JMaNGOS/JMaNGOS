@@ -1,7 +1,7 @@
 import com.jcraft.jzlib.DeflaterOutputStream
 import com.jcraft.jzlib.InflaterInputStream
-import org.jmangos.realm.network.netty.packetClient.AbstractWoWServerPacket
-import org.jmangos.realm.network.netty.packetClient.server.SMSG_UPDATE_OBJECT
+import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket
+import org.jmangos.realm.network.packet.wow.server.SMSG_UPDATE_OBJECT
 
 import java.nio.ByteBuffer
 import java.nio.ByteOrder

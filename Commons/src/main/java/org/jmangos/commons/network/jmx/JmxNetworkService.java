@@ -3,7 +3,7 @@ package org.jmangos.commons.network.jmx;
 import javax.inject.Inject;
 
 import org.jmangos.commons.jmx.AbstractJmxBeanService;
-import org.jmangos.commons.network.netty.service.NetworkService;
+import org.jmangos.commons.network.service.NetworkService;
 
 public class JmxNetworkService extends AbstractJmxBeanService implements JmxNetworkServiceMBean {
     

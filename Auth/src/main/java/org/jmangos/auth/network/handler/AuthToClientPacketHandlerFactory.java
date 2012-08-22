@@ -17,7 +17,7 @@
 package org.jmangos.auth.network.handler;
 
 import org.jmangos.commons.network.handlers.AbstractPacketHandlerFactory;
-import org.jmangos.commons.network.netty.model.PacketData;
+import org.jmangos.commons.network.model.PacketData;
 import org.springframework.stereotype.Component;
 
 /**

@@ -18,7 +18,7 @@
 <opcodes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="packets.xsd">
 	<opcodelist direction="DOWNSTREAM"
-		package="org.jmangos.realm.network.netty.packetClient.client.">
+		package="org.jmangos.realm.network.packet.wow.client.">
 		<packet name="CMSG_PING" id="1DC" state="AUTHED" />
 		<packet name="CMSG_AUTH_SESSION" id="1ED" />
 		<packet name="CMSG_READY_FOR_ACCOUNT_DATA_TIMES" id="4FF" state="AUTHED" />
@@ -49,7 +49,7 @@
         <packet name="CMSG_LOGOUT_REQUEST" id="4B" state="AUTHED"/>
     </opcodelist>
 	<opcodelist direction="UPSTREAM"
-		package="org.jmangos.realm.network.netty.packetClient.server.">
+		package="org.jmangos.realm.network.packet.wow.server.">
 		<packet name="SMSG_AUTH_CHALLENGE" id="1EC" />
 		<packet name="SMSG_PONG" id="1DD" />
 		<packet name="SMSG_AUTH_RESPONSE" id="1EE" />

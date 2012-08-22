@@ -22,12 +22,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.jmangos.commons.dataholder.XmlDataLoader;
 import org.jmangos.commons.network.model.NetworkChannel;
+import org.jmangos.commons.network.model.PacketData;
+import org.jmangos.commons.network.model.PacketList;
+import org.jmangos.commons.network.model.PacketTemplate;
 import org.jmangos.commons.network.model.ReceivablePacket;
 import org.jmangos.commons.network.model.SendablePacket;
 import org.jmangos.commons.network.model.State;
-import org.jmangos.commons.network.netty.model.PacketData;
-import org.jmangos.commons.network.netty.model.PacketList;
-import org.jmangos.commons.network.netty.model.PacketTemplate;
 import org.jmangos.commons.service.ServiceContent;
 import org.springframework.context.ApplicationContext;
 

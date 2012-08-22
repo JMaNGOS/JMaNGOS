@@ -23,7 +23,7 @@ import org.apache.commons.lang.NotImplementedException;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jmangos.commons.config.Compatiple;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
-import org.jmangos.commons.network.netty.service.AbstractNetworkService;
+import org.jmangos.commons.network.service.AbstractNetworkService;
 import org.jmangos.realm.config.Config;
 import org.springframework.stereotype.Component;
 
@@ -72,7 +72,7 @@ public class RealmNetworkService extends AbstractNetworkService {
     
     /**
      * 
-     * @see org.jmangos.commons.network.netty.service.NetworkService#status()
+     * @see org.jmangos.commons.network.service.NetworkService#status()
      */
     @Override
     public void status() {
