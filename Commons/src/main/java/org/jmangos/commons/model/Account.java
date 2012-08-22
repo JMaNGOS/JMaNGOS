@@ -56,7 +56,7 @@ public class Account extends NamedObject implements ChanneledObject {
     
     private byte[]         vK;
     
-    private String         sessionKey;
+    private BigNumber      sessionKey;
     
     public Account() {
     
@@ -285,12 +285,12 @@ public class Account extends NamedObject implements ChanneledObject {
         this.vK = vK.clone();
     }
     
-    public String getSessionKey() {
+    public BigNumber getSessionKey() {
     
         return this.sessionKey;
     }
     
-    public void setSessionKey(final String sessionKey) {
+    public void setSessionKey(final BigNumber sessionKey) {
     
         this.sessionKey = sessionKey;
     }

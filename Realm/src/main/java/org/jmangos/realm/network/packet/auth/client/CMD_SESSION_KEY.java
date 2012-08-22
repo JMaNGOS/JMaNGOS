@@ -53,7 +53,8 @@ public class CMD_SESSION_KEY extends AbstractRealmClientPacket {
     
         this.account = readS();
         this.accountId = readQ();
-        this.sessionKey = new BigNumber(readS());
+        this.sessionKey = new BigNumber();
+        this.sessionKey.setBinary(readB(40));
     }
     
     /**
@@ -65,7 +66,7 @@ public class CMD_SESSION_KEY extends AbstractRealmClientPacket {
         final Account account = new Account();
         account.setName(this.account);
         account.setId(this.accountId);
-        account.setSessionKey(this.sessionKey.asHexStr());
+        account.setSessionKey(this.sessionKey);
         this.realmController.setAccount(account);
     }
 }

@@ -146,7 +146,7 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
-        Account account = realmController.getAccount(this.accountName);
+        final Account account = this.realmController.getAccount(this.accountName);
         
         getClient().setChanneledObject(account);
         // final String SessionKey = this.accountService.getSessionKeyFromDB(account.getName());
@@ -165,14 +165,14 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
         sha.update(t);
         sha.update(this.clientSeed);
         sha.update(channelHandler.getSeed());
-        sha.update(convertSessionKey(account.getSessionKey()));
+        sha.update(account.getSessionKey().asByteArray(40));
         
         if (!Arrays.equals(sha.digest(), this.digest)) {
             getChannel().close();
             return;
         }
         
-        channelHandler.getCrypt().init(convertSessionKey(account.getSessionKey()));
+        channelHandler.getCrypt().init(account.getSessionKey().asByteArray(40));
         this.sender.send(getClient(), new SMSG_AUTH_RESPONSE());
         getClient().setChannelState(State.AUTHED);
         // TODO: what is this?
@@ -184,24 +184,5 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
         this.sender.send(getClient(), addonInfoPacket);
         this.sender.send(getClient(), new SMSG_CLIENTCACHE_VERSION());
         this.sender.send(getClient(), new SMSG_TUTORIAL_FLAGS());
-        
-    }
-    
-    /**
-     * Convert mangos session key.
-     * 
-     * @param hexkey
-     *            the hexkey
-     * @return the byte[]
-     */
-    private byte[] convertSessionKey(final String hexkey) {
-    
-        final int len = hexkey.length();
-        final byte[] data = new byte[len / 2];
-        for (int i = 0; i < len; i += 2) {
-            data[((len - i) / 2) - 1] = (byte) ((Character.digit(hexkey.charAt(i), 16) << 4) + Character.digit(hexkey.charAt(i + 1), 16));
-        }
-        return data;
-        
     }
 }

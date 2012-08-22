@@ -228,7 +228,7 @@ public class AccountController {
             Account account = new Account();
             account.setId(accountDto.getId());
             account.setName(accountDto.getUsername());
-            account.setSessionKey(accountDto.getSessionKey());
+            account.setSessionKey(new BigNumber(accountDto.getSessionKey()));
             return account;
         }
         return null;

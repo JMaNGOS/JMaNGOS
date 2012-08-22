@@ -47,6 +47,6 @@ public class SMD_SESSION_KEY extends AbstractWoWServerPacket {
     
         writeS(this.account.getName());
         writeQ(this.account.getId());
-        writeS(this.account.getSessionKey());
+        writeB(this.account.getSessionKey().asByteArray(40));
     }
 }
