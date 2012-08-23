@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.auth.dao.AccountDao;
-import org.jmangos.auth.model.AccountDto;
+import org.jmangos.auth.entities.AccountEntity;
 import org.jmangos.auth.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,27 +32,27 @@ public class AccountServiceImpl implements AccountService {
     private AccountDao accountDao;
     
     @Override
-    public AccountDto readAccount(final Long id) {
+    public AccountEntity readAccount(final Long id) {
     
         return this.accountDao.readAccount(id);
     }
     
     @Override
-    public List<AccountDto> readAccounts(final Criterion... criterions) {
+    public List<AccountEntity> readAccounts(final Criterion... criterions) {
     
         return this.accountDao.readAccounts(criterions);
     }
     
     @Override
-    public Long createOrUpdateAccount(final AccountDto accountDto) {
+    public Long createOrUpdateAccount(final AccountEntity accountEntity) {
     
-        return this.accountDao.createOrUpdateAccount(accountDto);
+        return this.accountDao.createOrUpdateAccount(accountEntity);
     }
     
     @Override
-    public void deleteAccount(final AccountDto accountDto) {
+    public void deleteAccount(final AccountEntity accountEntity) {
     
-        this.accountDao.deleteAccount(accountDto);
+        this.accountDao.deleteAccount(accountEntity);
     }
     
 }

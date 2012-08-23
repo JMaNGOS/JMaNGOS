@@ -18,7 +18,7 @@ package org.jmangos.auth.network.packet.wow.server;
 
 import javolution.util.FastMap;
 
-import org.jmangos.auth.model.RealmDto;
+import org.jmangos.auth.entities.RealmEntity;
 import org.jmangos.auth.network.packet.wow.AbstractWoWServerPacket;
 import org.jmangos.auth.service.RealmListController;
 import org.jmangos.commons.model.AccountInfo;
@@ -60,15 +60,15 @@ public class SMD_REALM_LIST extends AbstractWoWServerPacket {
         writeH(this.worldlist.getByteSize());
         writeD(0);
         writeH(this.worldlist.getRealmCount());
-        for (final RealmDto realm : this.worldlist.getWorlds().values()) {
-            writeC(realm.getIcon());
-            writeC((realm.getAllowedSecurityLevel() > ((AccountInfo) (getChannel().getChanneledObject())).getAccessLevel()) ? 1 : 0);
-            writeC(realm.getRealmflags());
-            writeS(realm.getName());
-            writeS(realm.getAddress() + ":" + realm.getPort());
-            writeF(realm.getPopulation());
-            writeC((amountofCharacters.containsKey(realm.getId())) ? amountofCharacters.get(realm.getId()) : 0);
-            writeC(realm.getTimezone());
+        for (final RealmEntity realmEntity : this.worldlist.getWorlds().values()) {
+            writeC(realmEntity.getIcon());
+            writeC((realmEntity.getAllowedSecurityLevel() > ((AccountInfo) (getChannel().getChanneledObject())).getAccessLevel()) ? 1 : 0);
+            writeC(realmEntity.getRealmflags());
+            writeS(realmEntity.getName());
+            writeS(realmEntity.getAddress() + ":" + realmEntity.getPort());
+            writeF(realmEntity.getPopulation());
+            writeC((amountofCharacters.containsKey(realmEntity.getId())) ? amountofCharacters.get(realmEntity.getId()) : 0);
+            writeC(realmEntity.getTimezone());
             writeC(0x2C);
         }
         writeH(0x0010);

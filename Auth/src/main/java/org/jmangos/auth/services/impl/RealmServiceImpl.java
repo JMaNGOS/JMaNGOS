@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.auth.dao.RealmDao;
-import org.jmangos.auth.model.RealmDto;
+import org.jmangos.auth.entities.RealmEntity;
 import org.jmangos.auth.services.RealmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,27 +32,27 @@ public class RealmServiceImpl implements RealmService {
     private RealmDao realmDao;
     
     @Override
-    public RealmDto readRealm(final Long id) {
+    public RealmEntity readRealm(final Long id) {
     
         return this.realmDao.readRealm(id);
     }
     
     @Override
-    public List<RealmDto> readRealms(final Criterion... criterions) {
+    public List<RealmEntity> readRealms(final Criterion... criterions) {
     
         return this.realmDao.readRealms(criterions);
     }
     
     @Override
-    public Long createOrUpdateRealm(final RealmDto realmDto) {
+    public Long createOrUpdateRealm(final RealmEntity realmEntity) {
     
-        return this.realmDao.createOrUpdateRealm(realmDto);
+        return this.realmDao.createOrUpdateRealm(realmEntity);
     }
     
     @Override
-    public void deleteRealm(final RealmDto realmDto) {
+    public void deleteRealm(final RealmEntity realmEntity) {
     
-        this.realmDao.deleteRealm(realmDto);
+        this.realmDao.deleteRealm(realmEntity);
     }
     
 }

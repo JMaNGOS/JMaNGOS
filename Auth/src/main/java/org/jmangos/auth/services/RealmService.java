@@ -19,16 +19,16 @@ package org.jmangos.auth.services;
 import java.util.List;
 
 import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.auth.model.RealmDto;
+import org.jmangos.auth.entities.RealmEntity;
 
 public interface RealmService {
     
-    public RealmDto readRealm(Long id);
+    public RealmEntity readRealm(Long id);
     
-    public List<RealmDto> readRealms(final Criterion... criterions);
+    public List<RealmEntity> readRealms(final Criterion... criterions);
     
-    public Long createOrUpdateRealm(RealmDto realmDto);
+    public Long createOrUpdateRealm(RealmEntity realmEntity);
     
-    public void deleteRealm(RealmDto realmDto);
+    public void deleteRealm(RealmEntity realmEntity);
     
 }

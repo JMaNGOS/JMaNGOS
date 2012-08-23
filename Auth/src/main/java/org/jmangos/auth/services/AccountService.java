@@ -19,16 +19,16 @@ package org.jmangos.auth.services;
 import java.util.List;
 
 import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.auth.model.AccountDto;
+import org.jmangos.auth.entities.AccountEntity;
 
 public interface AccountService {
     
-    public AccountDto readAccount(Long id);
+    public AccountEntity readAccount(Long id);
     
-    public List<AccountDto> readAccounts(final Criterion... criterions);
+    public List<AccountEntity> readAccounts(final Criterion... criterions);
     
-    public Long createOrUpdateAccount(AccountDto accountDto);
+    public Long createOrUpdateAccount(AccountEntity accountEntity);
     
-    public void deleteAccount(AccountDto accountDto);
+    public void deleteAccount(AccountEntity accountEntity);
     
 }

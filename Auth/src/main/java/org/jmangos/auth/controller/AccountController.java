@@ -14,7 +14,7 @@ import javax.inject.Inject;
 import org.apache.commons.lang.ArrayUtils;
 import org.criteria4jpa.criterion.Criterion;
 import org.criteria4jpa.criterion.Restrictions;
-import org.jmangos.auth.model.AccountDto;
+import org.jmangos.auth.entities.AccountEntity;
 import org.jmangos.auth.services.impl.AccountServiceImpl;
 import org.jmangos.auth.utils.AccountUtils;
 import org.jmangos.commons.model.AccountInfo;
@@ -29,10 +29,10 @@ import org.springframework.stereotype.Component;
 public class AccountController {
     
     /** The Constant logger. */
-    private static final Logger        logger   = LoggerFactory.getLogger(AccountController.class);
+    private static final Logger            logger   = LoggerFactory.getLogger(AccountController.class);
     
     @Inject
-    private AccountServiceImpl         accountService;
+    private AccountServiceImpl             accountService;
     
     private final Map<String, AccountInfo> accounts = new HashMap<String, AccountInfo>();
     
@@ -56,9 +56,9 @@ public class AccountController {
         final AccountInfo account = new AccountInfo();
         
         final Criterion criterion = Restrictions.eq("username", name);
-        final List<AccountDto> accountList = this.accountService.readAccounts(criterion);
+        final List<AccountEntity> accountList = this.accountService.readAccounts(criterion);
         if ((accountList != null) && !accountList.isEmpty()) {
-            final AccountDto accountDto = accountList.get(0);
+            final AccountEntity accountEntity = accountList.get(0);
             
             HashMap<String, BigNumber> variable; // calculateVSFields will create it.
             BigNumber s = new BigNumber();
@@ -66,15 +66,15 @@ public class AccountController {
             
             this.accounts.put(name, account);
             channelHandler.setChanneledObject(account);
-            if ((accountDto.getV().length() != (32 * 2)) || (accountDto.getS().length() != (32 * 2))) {
-                variable = AccountUtils.calculateVSFields(accountDto.getShaPasswordHash());
+            if ((accountEntity.getV().length() != (32 * 2)) || (accountEntity.getS().length() != (32 * 2))) {
+                variable = AccountUtils.calculateVSFields(accountEntity.getShaPasswordHash());
                 s = variable.get("s");
                 v = variable.get("v");
-                accountDto.setS(s.asHexStr());
-                accountDto.setV(v.asHexStr());
+                accountEntity.setS(s.asHexStr());
+                accountEntity.setV(v.asHexStr());
             } else {
-                s.setHexStr(accountDto.getS());
-                v.setHexStr(accountDto.getV());
+                s.setHexStr(accountEntity.getS());
+                v.setHexStr(accountEntity.getV());
             }
             
             final BigNumber B = AccountUtils.getB(v, channelHandler);
@@ -82,10 +82,10 @@ public class AccountController {
             account.setB_crypto(B);
             account.sets(s);
             account.setV_crypto(v);
-            account.setAccessLevel(accountDto.getGmlevel());
-            accountDto.setLastIp(channelHandler.getAddress().getAddress().getHostAddress());
+            account.setAccessLevel(accountEntity.getGmlevel());
+            accountEntity.setLastIp(channelHandler.getAddress().getAddress().getHostAddress());
             
-            this.accountService.createOrUpdateAccount(accountDto);
+            this.accountService.createOrUpdateAccount(accountEntity);
             
             return WoWAuthResponse.WOW_SUCCESS;
         } else {
@@ -173,12 +173,12 @@ public class AccountController {
             ArrayUtils.reverse(vK);
             
             final Criterion criterion = Restrictions.eq("username", account.getName());
-            final List<AccountDto> accountList = this.accountService.readAccounts(criterion);
+            final List<AccountEntity> accountList = this.accountService.readAccounts(criterion);
             if ((accountList != null) && !accountList.isEmpty()) {
-                final AccountDto accountDto = accountList.get(0);
+                final AccountEntity accountEntity = accountList.get(0);
                 final String sessionKey = new BigInteger(1, vK).toString(16).toUpperCase();
-                accountDto.setSessionKey(sessionKey);
-                this.accountService.createOrUpdateAccount(accountDto);
+                accountEntity.setSessionKey(sessionKey);
+                this.accountService.createOrUpdateAccount(accountEntity);
             } else {
                 return WoWAuthResponse.WOW_FAIL_INCORRECT_PASSWORD;
             }
@@ -199,10 +199,10 @@ public class AccountController {
         }
         
         final Criterion criterion = Restrictions.eq("username", account.getName());
-        final List<AccountDto> accountList = this.accountService.readAccounts(criterion);
+        final List<AccountEntity> accountList = this.accountService.readAccounts(criterion);
         if ((accountList != null) && !accountList.isEmpty()) {
-            final AccountDto accountDto = accountList.get(0);
-            final String sessionKey = accountDto.getSessionKey();
+            final AccountEntity accountEntity = accountList.get(0);
+            final String sessionKey = accountEntity.getSessionKey();
             
             sha.update(account.getName().getBytes());
             sha.update(R1);
@@ -222,13 +222,13 @@ public class AccountController {
     public AccountInfo getAccount(final String login) {
     
         final Criterion criterion = Restrictions.eq("username", login);
-        final List<AccountDto> accountList = this.accountService.readAccounts(criterion);
+        final List<AccountEntity> accountList = this.accountService.readAccounts(criterion);
         if ((accountList != null) && !accountList.isEmpty()) {
-            final AccountDto accountDto = accountList.get(0);
-            AccountInfo account = new AccountInfo();
-            account.setId(accountDto.getId());
-            account.setName(accountDto.getUsername());
-            account.setSessionKey(new BigNumber(accountDto.getSessionKey()));
+            final AccountEntity accountEntity = accountList.get(0);
+            final AccountInfo account = new AccountInfo();
+            account.setId(accountEntity.getId());
+            account.setName(accountEntity.getUsername());
+            account.setSessionKey(new BigNumber(accountEntity.getSessionKey()));
             return account;
         }
         return null;

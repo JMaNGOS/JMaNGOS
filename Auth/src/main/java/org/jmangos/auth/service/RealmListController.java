@@ -23,7 +23,7 @@ import javax.inject.Inject;
 
 import javolution.util.FastMap;
 
-import org.jmangos.auth.model.RealmDto;
+import org.jmangos.auth.entities.RealmEntity;
 import org.jmangos.auth.services.impl.RealmServiceImpl;
 import org.jmangos.commons.service.Service;
 import org.slf4j.Logger;
@@ -36,40 +36,40 @@ public class RealmListController implements Service {
     /**
      * Logger for this class.
      */
-    private final Logger                  log            = LoggerFactory.getLogger(getClass());
+    private final Logger                     log            = LoggerFactory.getLogger(getClass());
     
     /**
      * Map with realms
      */
-    private final FastMap<Long, RealmDto> realms         = new FastMap<Long, RealmDto>().shared();
+    private final FastMap<Long, RealmEntity> realms         = new FastMap<Long, RealmEntity>().shared();
     
     /** The byte size. */
-    private int                           byteSize;
+    private int                              byteSize;
     
     /** The realm dao. */
     @Inject
-    private RealmServiceImpl              realmService;
+    private RealmServiceImpl                 realmService;
     
-    private long                          nextUpdateTime = 0;
+    private long                             nextUpdateTime = 0;
     
     /**
      * Gets the worlds.
      * 
      * @return the worlds
      */
-    public FastMap<Long, RealmDto> getWorlds() {
+    public FastMap<Long, RealmEntity> getWorlds() {
     
         return this.realms;
     }
     
-    public void addFromConnected(final RealmDto realmDto) {
+    public void addFromConnected(final RealmEntity realmEntity) {
     
-        if (this.realms.containsKey(realmDto.getId())) {
+        if (this.realms.containsKey(realmEntity.getId())) {
             this.log.debug("Server with this id already connected. Replaced data.");
-            this.realms.remove(realmDto.getId());
-            this.realms.put(realmDto.getId(), realmDto);
+            this.realms.remove(realmEntity.getId());
+            this.realms.put(realmEntity.getId(), realmEntity);
         } else {
-            this.realms.put(realmDto.getId(), realmDto);
+            this.realms.put(realmEntity.getId(), realmEntity);
             this.byteSize = calculateWorldsSize();
         }
     }
@@ -97,12 +97,12 @@ public class RealmListController implements Service {
         final long UPDATE_INTERVAL = 2000;
         this.nextUpdateTime = System.currentTimeMillis() + UPDATE_INTERVAL;
         
-        final List<RealmDto> realmList = this.realmService.readRealms();
-        for (final RealmDto realmDto : realmList) {
-            if (this.realms.containsKey(realmDto.getId())) {
-                this.realms.get(realmDto.getId()).setPopulation(realmDto.getPopulation());
+        final List<RealmEntity> realmList = this.realmService.readRealms();
+        for (final RealmEntity realmEntity : realmList) {
+            if (this.realms.containsKey(realmEntity.getId())) {
+                this.realms.get(realmEntity.getId()).setPopulation(realmEntity.getPopulation());
             } else {
-                this.realms.put(realmDto.getId(), realmDto);
+                this.realms.put(realmEntity.getId(), realmEntity);
             }
         }
         // update byte size all realms
@@ -137,8 +137,8 @@ public class RealmListController implements Service {
     public int calculateWorldsSize() {
     
         int value = 8;
-        for (final RealmDto realmDto : this.realms.values()) {
-            value += 8 + 4 + realmDto.getAddress().length() + 1 + realmDto.getPort().toString().length() + realmDto.getName().length();
+        for (final RealmEntity realmEntity : this.realms.values()) {
+            value += 8 + 4 + realmEntity.getAddress().length() + 1 + realmEntity.getPort().toString().length() + realmEntity.getName().length();
         }
         return value;
     }
@@ -159,7 +159,7 @@ public class RealmListController implements Service {
     /**
      * @return the realms
      */
-    public final FastMap<Long, RealmDto> getRealms() {
+    public final FastMap<Long, RealmEntity> getRealms() {
     
         return this.realms;
     }

@@ -16,7 +16,6 @@
  *******************************************************************************/
 package org.jmangos.auth.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -27,7 +26,6 @@ import org.criteria4jpa.CriteriaUtils;
 import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.auth.dao.RealmDao;
 import org.jmangos.auth.entities.RealmEntity;
-import org.jmangos.auth.model.RealmDto;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,97 +36,39 @@ public class RealmDaoImpl implements RealmDao {
     private EntityManager entityManager;
     
     @Override
-    public RealmDto readRealm(final Long id) {
+    public RealmEntity readRealm(final Long id) {
     
-        final RealmEntity realmEntity = this.entityManager.find(RealmEntity.class, id);
-        return realmEntity != null ? entityToDto(realmEntity) : null;
-    }
-    
-    @Override
-    public List<RealmDto> readRealms(final Criterion... criterions) {
-    
-        final List<RealmDto> resultList = new ArrayList<RealmDto>();
-        final List<RealmEntity> realmList = getRealmList(criterions);
-        if (realmList != null) {
-            for (final RealmEntity realmEntity : realmList) {
-                resultList.add(entityToDto(realmEntity));
-            }
-        }
-        return resultList;
+        return this.entityManager.find(RealmEntity.class, id);
     }
     
     @SuppressWarnings("unchecked")
-    private List<RealmEntity> getRealmList(final Criterion... criterions) {
+    @Override
+    public List<RealmEntity> readRealms(final Criterion... criterions) {
     
         final Criteria criteria = CriteriaUtils.createCriteria(this.entityManager, RealmEntity.class);
         for (final Criterion criterion : criterions) {
             criteria.add(criterion);
         }
-        final List<RealmEntity> realmList = criteria.getResultList();
-        return realmList;
-    }
-    
-    private RealmDto entityToDto(final RealmEntity realmEntity) {
-    
-        final RealmDto realmDto = new RealmDto();
-        realmDto.setId(realmEntity.getId());
-        realmDto.setName(realmEntity.getName());
-        realmDto.setAddress(realmEntity.getAddress());
-        realmDto.setPort(realmEntity.getPort());
-        realmDto.setIcon(realmEntity.getIcon());
-        realmDto.setRealmflags(realmEntity.getRealmflags());
-        realmDto.setTimezone(realmEntity.getTimezone());
-        realmDto.setAllowedSecurityLevel(realmEntity.getAllowedSecurityLevel());
-        realmDto.setPopulation(realmEntity.getPopulation());
-        realmDto.setRealmbuilds(realmEntity.getRealmbuilds());
-        return realmDto;
-    }
-    
-    private RealmEntity dtoToEntity(final RealmDto realmDto) {
-    
-        final RealmEntity realmEntity = findOrCreateRealmEntity(realmDto.getId());
-        realmEntity.setId(realmDto.getId());
-        realmEntity.setName(realmDto.getName());
-        realmEntity.setAddress(realmDto.getAddress());
-        realmEntity.setPort(realmDto.getPort());
-        realmEntity.setIcon(realmDto.getIcon());
-        realmEntity.setRealmflags(realmDto.getRealmflags());
-        realmEntity.setTimezone(realmDto.getTimezone());
-        realmEntity.setAllowedSecurityLevel(realmDto.getAllowedSecurityLevel());
-        realmEntity.setPopulation(realmDto.getPopulation());
-        realmEntity.setRealmbuilds(realmDto.getRealmbuilds());
-        return realmEntity;
-    }
-    
-    private RealmEntity findOrCreateRealmEntity(final Long id) {
-    
-        if (id == null) {
-            return new RealmEntity();
-        }
-        return this.entityManager.find(RealmEntity.class, id);
+        return criteria.getResultList();
     }
     
     @Transactional
     @Override
-    public Long createOrUpdateRealm(final RealmDto realmDto) {
+    public Long createOrUpdateRealm(final RealmEntity realmEntity) {
     
-        final RealmEntity realmEntity = dtoToEntity(realmDto);
         if (realmEntity.getId() == null) {
             this.entityManager.persist(realmEntity);
         } else {
             this.entityManager.merge(realmEntity);
         }
         this.entityManager.flush();
-        final Long accountId = realmEntity.getId();
-        realmDto.setId(accountId);
-        return accountId;
+        return realmEntity.getId();
     }
     
     @Transactional
     @Override
-    public void deleteRealm(final RealmDto realmDto) {
+    public void deleteRealm(final RealmEntity realmEntity) {
     
-        final RealmEntity realmEntity = this.entityManager.find(RealmEntity.class, realmDto.getId());
         if (realmEntity == null) {
             return;
         }
