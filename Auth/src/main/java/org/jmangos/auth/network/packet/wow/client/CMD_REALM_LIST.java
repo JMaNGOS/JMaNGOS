@@ -22,7 +22,7 @@ import javax.inject.Named;
 import org.jmangos.auth.config.Config;
 import org.jmangos.auth.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.auth.network.packet.wow.server.SMD_REALM_LIST;
-import org.jmangos.auth.service.RealmListService;
+import org.jmangos.auth.service.RealmListController;
 import org.jmangos.commons.config.Compatiple;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.springframework.stereotype.Component;
@@ -40,7 +40,7 @@ public class CMD_REALM_LIST extends AbstractWoWClientPacket {
     
     /** The worldlist. */
     @Inject
-    private RealmListService     worldlist;
+    private RealmListController     worldlist;
     
     /** The worldlist. */
     @Inject

@@ -55,7 +55,7 @@ public class ItemPrototype extends NamedObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "entry", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
-    private int             entry;
+    private Long            entry;
     
     /** The Class. */
     @Basic
@@ -2049,12 +2049,12 @@ public class ItemPrototype extends NamedObject {
         this.Flags2 = flags2;
     }
     
-    public int getEntry() {
+    public Long getEntry() {
     
         return this.entry;
     }
     
-    public void setEntry(final int entry) {
+    public void setEntry(final Long entry) {
     
         this.entry = entry;
     }

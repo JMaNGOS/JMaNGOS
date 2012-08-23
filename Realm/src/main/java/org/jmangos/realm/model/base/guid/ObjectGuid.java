@@ -36,7 +36,7 @@ public class ObjectGuid extends NamedObject {
      */
     public ObjectGuid() {
     
-        super(0);
+        super(0L);
         this.guid = 0;
     };
     
@@ -46,7 +46,7 @@ public class ObjectGuid extends NamedObject {
      * @param _guid
      *            the _guid
      */
-    public ObjectGuid(final int _guid) {
+    public ObjectGuid(final Long _guid) {
     
         super(_guid);
         this.guid = _guid;
@@ -61,7 +61,7 @@ public class ObjectGuid extends NamedObject {
      */
     public ObjectGuid(final long _guid) {
     
-        super((int) (_guid & 0xFFFFFFFF));
+        super(_guid & 0xFFFFFFFF);
         this.guid = _guid & 0xFFFFFFFF;
         this.high = HighGuid.getType((int) ((_guid >> 48) & 0xFFFF));
     }
@@ -76,7 +76,7 @@ public class ObjectGuid extends NamedObject {
      * @param counter
      *            the counter
      */
-    public ObjectGuid(final HighGuid hi, final int entry, final int counter) {
+    public ObjectGuid(final HighGuid hi, final int entry, final Long counter) {
     
         super(counter | (entry << 24));
         this.guid = counter | (entry << 24);
@@ -91,7 +91,7 @@ public class ObjectGuid extends NamedObject {
      * @param counter
      *            the counter
      */
-    public ObjectGuid(final HighGuid hi, final int counter) {
+    public ObjectGuid(final HighGuid hi, final Long counter) {
     
         super(counter);
         this.guid = counter;

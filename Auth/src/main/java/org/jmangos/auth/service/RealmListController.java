@@ -16,20 +16,22 @@
  *******************************************************************************/
 package org.jmangos.auth.service;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import javolution.util.FastMap;
 
+import org.jmangos.auth.model.RealmDto;
+import org.jmangos.auth.services.impl.RealmServiceImpl;
+import org.jmangos.commons.service.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jmangos.auth.dao.RealmDAO;
-import org.jmangos.commons.model.Realm;
-import org.jmangos.commons.service.Service;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RealmListService implements Service {
+public class RealmListController implements Service {
     
     /**
      * Logger for this class.
@@ -39,14 +41,14 @@ public class RealmListService implements Service {
     /**
      * Map with realms
      */
-    private final FastMap<Integer, Realm> realms         = new FastMap<Integer, Realm>().shared();
+    private final FastMap<Long, RealmDto> realms         = new FastMap<Long, RealmDto>().shared();
     
     /** The byte size. */
     private int                           byteSize;
     
     /** The realm dao. */
     @Inject
-    private RealmDAO                      realmDAO;
+    private RealmServiceImpl              realmService;
     
     private long                          nextUpdateTime = 0;
     
@@ -55,19 +57,19 @@ public class RealmListService implements Service {
      * 
      * @return the worlds
      */
-    public FastMap<Integer, Realm> getWorlds() {
+    public FastMap<Long, RealmDto> getWorlds() {
     
         return this.realms;
     }
     
-    public void addFromConnected(final Realm newRealm) {
+    public void addFromConnected(final RealmDto realmDto) {
     
-        if (this.realms.containsKey(newRealm.getId())) {
+        if (this.realms.containsKey(realmDto.getId())) {
             this.log.debug("Server with this id already connected. Replaced data.");
-            this.realms.remove(newRealm.getId());
-            this.realms.put(newRealm.getId(), newRealm);
+            this.realms.remove(realmDto.getId());
+            this.realms.put(realmDto.getId(), realmDto);
         } else {
-            this.realms.put(newRealm.getId(), newRealm);
+            this.realms.put(realmDto.getId(), realmDto);
             this.byteSize = calculateWorldsSize();
         }
     }
@@ -87,19 +89,20 @@ public class RealmListService implements Service {
     /**
      * Update if need
      */
-    synchronized public void update() {
+    public void update() {
     
         if (this.nextUpdateTime > System.currentTimeMillis()) {
             return;
         }
         final long UPDATE_INTERVAL = 2000;
         this.nextUpdateTime = System.currentTimeMillis() + UPDATE_INTERVAL;
-        final FastMap<Integer, Realm> trealms = this.realmDAO.getAllRealms();
-        for (final Realm realm : trealms.values()) {
-            if (this.realms.containsKey(realm.getId())) {
-                this.realms.get(realm.getId()).setPopulation(realm.getPopulation());
+        
+        final List<RealmDto> realmList = this.realmService.readRealms();
+        for (final RealmDto realmDto : realmList) {
+            if (this.realms.containsKey(realmDto.getId())) {
+                this.realms.get(realmDto.getId()).setPopulation(realmDto.getPopulation());
             } else {
-                this.realms.put(realm.getId(), realm);
+                this.realms.put(realmDto.getId(), realmDto);
             }
         }
         // update byte size all realms
@@ -134,8 +137,8 @@ public class RealmListService implements Service {
     public int calculateWorldsSize() {
     
         int value = 8;
-        for (final Realm realm : this.realms.values()) {
-            value += realm.getSize();
+        for (final RealmDto realmDto : this.realms.values()) {
+            value += 8 + 4 + realmDto.getAddress().length() + 1 + realmDto.getPort().toString().length() + realmDto.getName().length();
         }
         return value;
     }
@@ -147,20 +150,16 @@ public class RealmListService implements Service {
      *            the id
      * @return the amount characters
      */
-    public FastMap<Integer, Integer> getAmountCharacters(final Integer id) {
+    public FastMap<Integer, Integer> getAmountCharacters(final Long id) {
     
-        return getWorldDAO().getAmountCharacters(id);
-    }
-    
-    private RealmDAO getWorldDAO() {
-    
-        return this.realmDAO;
+        // TODO:implement
+        return new FastMap<Integer, Integer>();
     }
     
     /**
      * @return the realms
      */
-    public final FastMap<Integer, Realm> getRealms() {
+    public final FastMap<Long, RealmDto> getRealms() {
     
         return this.realms;
     }

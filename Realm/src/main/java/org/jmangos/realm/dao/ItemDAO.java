@@ -17,6 +17,7 @@
 package org.jmangos.realm.dao;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
+import gnu.trove.map.hash.TLongObjectHashMap;
 
 import java.util.List;
 
@@ -57,14 +58,14 @@ public class ItemDAO implements DAO {
      * 
      * @return the t int object hash map
      */
-    public TIntObjectHashMap<ItemPrototype> loadItemPrototypes() {
+    public TLongObjectHashMap<ItemPrototype> loadItemPrototypes() {
     
         Long eTime = System.currentTimeMillis();
         
         final Session session = this.databaseFactory.getWorldSessionFactory().openSession();
         final Query query = session.createQuery("from ItemPrototype order by id");
         
-        final TIntObjectHashMap<ItemPrototype> map = new TIntObjectHashMap<ItemPrototype>();
+        final TLongObjectHashMap<ItemPrototype> map = new TLongObjectHashMap<ItemPrototype>();
         @SuppressWarnings("unchecked")
         final List<ItemPrototype> itemPrototypeList = query.list();
         

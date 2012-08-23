@@ -41,5 +41,5 @@ public interface ChanneledObject {
      * 
      * @return the object id
      */
-    int getObjectId();
+    Long getObjectId();
 }

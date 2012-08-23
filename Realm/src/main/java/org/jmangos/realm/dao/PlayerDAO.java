@@ -62,7 +62,7 @@ public class PlayerDAO implements DAO {
      *            the object id
      * @return the player home bind data
      */
-    public PlayerHomeBindData loadHomeBind(final int objectId) {
+    public PlayerHomeBindData loadHomeBind(final Long objectId) {
     
         final Session session = this.databaseFactory.getCharactersSessionFactory().openSession();
         final CharacterData characterData = (CharacterData) session.get(CharacterData.class, objectId);
@@ -76,7 +76,7 @@ public class PlayerDAO implements DAO {
      *            the object id
      * @return the list
      */
-    public List<InventoryItem> loadInventory(final int objectId) {
+    public List<InventoryItem> loadInventory(final Long objectId) {
     
         // TODO: implement
         return new ArrayList<InventoryItem>();

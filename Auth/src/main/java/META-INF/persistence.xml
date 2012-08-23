@@ -24,6 +24,7 @@
     <persistence-unit name="persistenceUnit">
 
         <class>org.jmangos.auth.entities.AccountEntity</class>
+        <class>org.jmangos.auth.entities.RealmEntity</class>
 
         <exclude-unlisted-classes/>
 

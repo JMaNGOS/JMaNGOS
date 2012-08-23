@@ -67,12 +67,12 @@ public class AccountInfo extends NamedObject implements ChanneledObject {
      * 
      * @return int account id
      */
-    public long getId() {
+    public Long getId() {
     
         return this.id;
     }
     
-    public long setId(final long id) {
+    public long setId(final Long id) {
     
         return this.id = id;
     }
@@ -104,7 +104,7 @@ public class AccountInfo extends NamedObject implements ChanneledObject {
      * @param objectId
      *            the object id
      */
-    public AccountInfo(final int objectId) {
+    public AccountInfo(final Long objectId) {
     
         super(objectId);
     }

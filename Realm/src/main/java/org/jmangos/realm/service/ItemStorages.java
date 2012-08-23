@@ -17,6 +17,7 @@
 package org.jmangos.realm.service;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
+import gnu.trove.map.hash.TLongObjectHashMap;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -38,7 +39,7 @@ import org.springframework.stereotype.Component;
  * The Class ItemStorages.
  */
 @Component
-public class ItemStorages implements DataLoadService<TIntObjectHashMap<ItemPrototype>> {
+public class ItemStorages implements DataLoadService<TLongObjectHashMap<ItemPrototype>> {
     
     /** The Constant logger. */
     private static final Logger              logger         = LoggerFactory.getLogger(ItemStorages.class);
@@ -48,14 +49,14 @@ public class ItemStorages implements DataLoadService<TIntObjectHashMap<ItemProto
     private ItemDAO                          itemDAO;
     
     /** The item prototypes. */
-    private TIntObjectHashMap<ItemPrototype> itemPrototypes = new TIntObjectHashMap<ItemPrototype>();
+    private TLongObjectHashMap<ItemPrototype> itemPrototypes = new TLongObjectHashMap<ItemPrototype>();
     
     /**
      * 
      * @see org.jmangos.commons.dataholder.DataLoadService#get()
      */
     @Override
-    public TIntObjectHashMap<ItemPrototype> get() {
+    public TLongObjectHashMap<ItemPrototype> get() {
     
         return this.itemPrototypes;
     }
@@ -117,7 +118,7 @@ public class ItemStorages implements DataLoadService<TIntObjectHashMap<ItemProto
      * @see org.jmangos.commons.dataholder.DataLoadService#load()
      */
     @Override
-    public TIntObjectHashMap<ItemPrototype> load() {
+    public TLongObjectHashMap<ItemPrototype> load() {
     
         this.itemPrototypes = this.itemDAO.loadItemPrototypes();
         return this.itemPrototypes;
@@ -130,7 +131,7 @@ public class ItemStorages implements DataLoadService<TIntObjectHashMap<ItemProto
     @Override
     public void reload() {
     
-        final TIntObjectHashMap<ItemPrototype> itemProrotypesTemp = this.itemDAO.loadItemPrototypes();
+        final TLongObjectHashMap<ItemPrototype> itemProrotypesTemp = this.itemDAO.loadItemPrototypes();
         this.itemPrototypes = itemProrotypesTemp;
     }
     

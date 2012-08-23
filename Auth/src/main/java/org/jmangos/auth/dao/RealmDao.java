@@ -14,53 +14,21 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.commons.model;
+package org.jmangos.auth.dao;
 
-/**
- * The Class NamedObject.
- */
-public class NamedObject extends ManagedObject {
+import java.util.List;
+
+import org.criteria4jpa.criterion.Criterion;
+import org.jmangos.auth.model.RealmDto;
+
+public interface RealmDao {
     
-    /**
-     * Default constructor for persistence content
-     */
-    public NamedObject() {
+    public RealmDto readRealm(Long id);
     
-    }
+    public List<RealmDto> readRealms(final Criterion... criterions);
     
-    /**
-     * Instantiates a new named object.
-     * 
-     * @param objectId
-     *            the object id
-     */
-    public NamedObject(final Long objectId) {
+    public Long createOrUpdateRealm(RealmDto realmDto);
     
-        super(objectId);
-    }
-    
-    /** The name. */
-    private String name;
-    
-    /**
-     * Gets the name.
-     * 
-     * @return the name
-     */
-    public String getName() {
-    
-        return this.name;
-    }
-    
-    /**
-     * Sets the name.
-     * 
-     * @param name
-     *            the name to set
-     */
-    public void setName(final String name) {
-    
-        this.name = name;
-    }
+    public void deleteRealm(RealmDto realmDto);
     
 }

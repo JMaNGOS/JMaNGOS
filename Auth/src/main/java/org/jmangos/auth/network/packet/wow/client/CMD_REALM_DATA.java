@@ -18,9 +18,9 @@ package org.jmangos.auth.network.packet.wow.client;
 
 import javax.inject.Inject;
 
+import org.jmangos.auth.model.RealmDto;
 import org.jmangos.auth.network.packet.wow.AbstractWoWClientPacket;
-import org.jmangos.auth.service.RealmListService;
-import org.jmangos.commons.model.Realm;
+import org.jmangos.auth.service.RealmListController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -35,9 +35,9 @@ public class CMD_REALM_DATA extends AbstractWoWClientPacket {
     private static Logger    logger = LoggerFactory.getLogger(CMD_REALM_DATA.class);
     
     @Inject
-    private RealmListService realmListService;
+    private RealmListController realmListService;
     
-    private Realm            realm;
+    private RealmDto         realm;
     
     public CMD_REALM_DATA() {
     
@@ -48,7 +48,7 @@ public class CMD_REALM_DATA extends AbstractWoWClientPacket {
     protected void readImpl() throws RuntimeException {
     
         logger.debug("Receive realm info from realm account: " + getAccountInfo().getName());
-        this.realm = new Realm();
+        this.realm = new RealmDto();
         this.realm.setId(getAccountInfo().getObjectId());
         this.realm.setName(readS());
         this.realm.setAddress(readS());

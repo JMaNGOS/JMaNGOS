@@ -38,7 +38,7 @@ public class CharacterData {
     
     @Basic
     @Column(name = "account", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 account;
+    private Long                 account;
     
     @Basic
     @Column(name = "actionBars", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
@@ -345,12 +345,12 @@ public class CharacterData {
         this.guid = guid;
     }
     
-    public int getAccount() {
+    public Long getAccount() {
     
         return this.account;
     }
     
-    public void setAccount(final int account) {
+    public void setAccount(final Long account) {
     
         this.account = account;
     }

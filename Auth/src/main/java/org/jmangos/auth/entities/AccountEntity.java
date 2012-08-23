@@ -33,7 +33,7 @@ import javax.persistence.Table;
 public class AccountEntity {
     
     @Id
-    @Column(nullable = false)
+    @Column(name = "ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long   id;
     

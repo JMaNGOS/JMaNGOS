@@ -19,40 +19,40 @@ package org.jmangos.auth.services.impl;
 import java.util.List;
 
 import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.auth.dao.AccountDao;
-import org.jmangos.auth.model.AccountDto;
-import org.jmangos.auth.services.AccountService;
+import org.jmangos.auth.dao.RealmDao;
+import org.jmangos.auth.model.RealmDto;
+import org.jmangos.auth.services.RealmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("accountService")
-public class AccountServiceImpl implements AccountService {
+@Service("realmService")
+public class RealmServiceImpl implements RealmService {
     
     @Autowired
-    private AccountDao accountDao;
+    private RealmDao realmDao;
     
     @Override
-    public AccountDto readAccount(final Long id) {
+    public RealmDto readRealm(final Long id) {
     
-        return this.accountDao.readAccount(id);
+        return this.realmDao.readRealm(id);
     }
     
     @Override
-    public List<AccountDto> readAccounts(final Criterion... criterions) {
+    public List<RealmDto> readRealms(final Criterion... criterions) {
     
-        return this.accountDao.readAccounts(criterions);
+        return this.realmDao.readRealms(criterions);
     }
     
     @Override
-    public Long createOrUpdateAccount(final AccountDto accountDto) {
+    public Long createOrUpdateRealm(final RealmDto realmDto) {
     
-        return this.accountDao.createOrUpdateAccount(accountDto);
+        return this.realmDao.createOrUpdateRealm(realmDto);
     }
     
     @Override
-    public void deleteAccount(final AccountDto accountDto) {
+    public void deleteRealm(final RealmDto realmDto) {
     
-        this.accountDao.deleteAccount(accountDto);
+        this.realmDao.deleteRealm(realmDto);
     }
     
 }

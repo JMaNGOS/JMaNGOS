@@ -4,16 +4,16 @@ import java.util.Map.Entry;
 
 import javax.inject.Inject;
 
-import org.jmangos.auth.service.RealmListService;
+import org.jmangos.auth.model.RealmDto;
+import org.jmangos.auth.service.RealmListController;
 import org.jmangos.commons.jmx.AbstractJmxBeanService;
-import org.jmangos.commons.model.Realm;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JmxRealmList extends AbstractJmxBeanService implements JmxRealmListMBean {
     
     @Inject
-    private RealmListService    realmListService;
+    private RealmListController    realmListService;
     
     private static final String BEAN_NAME = "auth.network.realms:name=JMXRealmList";
     
@@ -42,7 +42,7 @@ public class JmxRealmList extends AbstractJmxBeanService implements JmxRealmList
     public String printRealmInfo() {
     
         final StringBuffer sb = new StringBuffer();
-        for (final Entry<Integer, Realm> it : this.realmListService.getRealms().entrySet()) {
+        for (final Entry<Long, RealmDto> it : this.realmListService.getRealms().entrySet()) {
             sb.append("Realm info for: " + it.getKey() + " realm");
             sb.append("\n\tName: " + it.getValue().getName());
             sb.append("\n\tPopulation: " + it.getValue().getPopulation());
