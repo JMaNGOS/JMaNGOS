@@ -1,12 +1,11 @@
-package org.jmangos.auth.service.jmx;
-
-import java.util.Map.Entry;
+package org.jmangos.auth.realm.jmx;
 
 import javax.inject.Inject;
 
-import org.jmangos.auth.entities.RealmEntity;
-import org.jmangos.auth.service.RealmListController;
+import org.jmangos.auth.realm.controller.RealmListController;
+import org.jmangos.commons.dataholder.Visitor;
 import org.jmangos.commons.jmx.AbstractJmxBeanService;
+import org.jmangos.commons.model.RealmInfo;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -27,7 +26,7 @@ public class JmxRealmList extends AbstractJmxBeanService implements JmxRealmList
     }
     
     /**
-     * @see org.jmangos.auth.service.jmx.JmxRealmListMBean#getRealmCount()
+     * @see org.jmangos.auth.realm.jmx.JmxRealmListMBean#getRealmCount()
      */
     @Override
     public String getRealmCount() {
@@ -36,18 +35,24 @@ public class JmxRealmList extends AbstractJmxBeanService implements JmxRealmList
     }
     
     /**
-     * @see org.jmangos.auth.service.jmx.JmxRealmListMBean#printRealmInfo()
+     * @see org.jmangos.auth.realm.jmx.JmxRealmListMBean#printRealmInfo()
      */
     @Override
     public String printRealmInfo() {
     
         final StringBuffer sb = new StringBuffer();
-        for (final Entry<Long, RealmEntity> it : this.realmListService.getRealms().entrySet()) {
-            sb.append("Realm info for: " + it.getKey() + " realm");
-            sb.append("\n\tName: " + it.getValue().getName());
-            sb.append("\n\tPopulation: " + it.getValue().getPopulation());
-            sb.append("\n");
-        }
+        this.realmListService.getRealms().iterate(new Visitor<RealmInfo>() {
+            
+            @Override
+            public void visit(final RealmInfo realmInfo) {
+            
+                sb.append("Realm info for: " + realmInfo.getObjectId() + " realm");
+                sb.append("\n\tName: " + realmInfo.getName());
+                sb.append("\n\tPopulation: " + realmInfo.getPopulation());
+                sb.append("\n");
+                
+            }
+        });
         return sb.toString();
     }
     

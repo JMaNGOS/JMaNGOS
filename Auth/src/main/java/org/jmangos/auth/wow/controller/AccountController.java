@@ -1,4 +1,4 @@
-package org.jmangos.auth.controller;
+package org.jmangos.auth.wow.controller;
 
 import java.math.BigInteger;
 import java.nio.charset.Charset;
@@ -7,7 +7,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -15,8 +14,9 @@ import org.apache.commons.lang.ArrayUtils;
 import org.criteria4jpa.criterion.Criterion;
 import org.criteria4jpa.criterion.Restrictions;
 import org.jmangos.auth.entities.AccountEntity;
-import org.jmangos.auth.services.impl.AccountServiceImpl;
 import org.jmangos.auth.utils.AccountUtils;
+import org.jmangos.auth.wow.container.AccountsContainer;
+import org.jmangos.auth.wow.services.impl.AccountServiceImpl;
 import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
@@ -29,12 +29,12 @@ import org.springframework.stereotype.Component;
 public class AccountController {
     
     /** The Constant logger. */
-    private static final Logger            logger   = LoggerFactory.getLogger(AccountController.class);
+    private static final Logger     logger   = LoggerFactory.getLogger(AccountController.class);
     
     @Inject
-    private AccountServiceImpl             accountService;
+    private AccountServiceImpl      accountService;
     
-    private final Map<String, AccountInfo> accounts = new HashMap<String, AccountInfo>();
+    private final AccountsContainer accounts = new AccountsContainer();
     
     /**
      * Login.
@@ -64,7 +64,6 @@ public class AccountController {
             BigNumber s = new BigNumber();
             BigNumber v = new BigNumber();
             
-            this.accounts.put(name, account);
             channelHandler.setChanneledObject(account);
             if ((accountEntity.getV().length() != (32 * 2)) || (accountEntity.getS().length() != (32 * 2))) {
                 variable = AccountUtils.calculateVSFields(accountEntity.getShaPasswordHash());
@@ -83,6 +82,7 @@ public class AccountController {
             account.sets(s);
             account.setV_crypto(v);
             account.setAccessLevel(accountEntity.getGmlevel());
+            this.accounts.addObject(account);
             accountEntity.setLastIp(channelHandler.getAddress().getAddress().getHostAddress());
             
             this.accountService.createOrUpdateAccount(accountEntity);
@@ -226,7 +226,7 @@ public class AccountController {
         if ((accountList != null) && !accountList.isEmpty()) {
             final AccountEntity accountEntity = accountList.get(0);
             final AccountInfo account = new AccountInfo();
-            account.setId(accountEntity.getId());
+            account.setObjectId(accountEntity.getId());
             account.setName(accountEntity.getUsername());
             account.setSessionKey(new BigNumber(accountEntity.getSessionKey()));
             return account;
@@ -261,7 +261,7 @@ public class AccountController {
      */
     public void loadClean(final String name, final NettyNetworkChannel channelHandler) {
     
-        final AccountInfo account = this.accounts.get(name);
+        final AccountInfo account = this.accounts.getNamedObject(name);
         channelHandler.setChanneledObject(account);
     }
     

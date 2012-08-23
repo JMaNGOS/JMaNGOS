@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.auth.service;
+package org.jmangos.auth.realm.controller;
 
 import java.util.List;
 
@@ -24,7 +24,10 @@ import javax.inject.Inject;
 import javolution.util.FastMap;
 
 import org.jmangos.auth.entities.RealmEntity;
-import org.jmangos.auth.services.impl.RealmServiceImpl;
+import org.jmangos.auth.realm.container.RealmServersContainer;
+import org.jmangos.auth.realm.services.impl.RealmServiceImpl;
+import org.jmangos.commons.dataholder.Visitor;
+import org.jmangos.commons.model.RealmInfo;
 import org.jmangos.commons.service.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,42 +39,35 @@ public class RealmListController implements Service {
     /**
      * Logger for this class.
      */
-    private final Logger                     log            = LoggerFactory.getLogger(getClass());
+    private final Logger                log            = LoggerFactory.getLogger(getClass());
     
     /**
      * Map with realms
      */
-    private final FastMap<Long, RealmEntity> realms         = new FastMap<Long, RealmEntity>().shared();
+    private final RealmServersContainer realms         = new RealmServersContainer();
     
     /** The byte size. */
-    private int                              byteSize;
+    private int                         byteSize;
     
     /** The realm dao. */
     @Inject
-    private RealmServiceImpl                 realmService;
+    private RealmServiceImpl            realmService;
     
-    private long                             nextUpdateTime = 0;
+    private long                        nextUpdateTime = 0;
     
     /**
      * Gets the worlds.
      * 
      * @return the worlds
      */
-    public FastMap<Long, RealmEntity> getWorlds() {
+    public RealmServersContainer getWorlds() {
     
         return this.realms;
     }
     
-    public void addFromConnected(final RealmEntity realmEntity) {
+    public void addFromConnected(final RealmInfo realmInfo) {
     
-        if (this.realms.containsKey(realmEntity.getId())) {
-            this.log.debug("Server with this id already connected. Replaced data.");
-            this.realms.remove(realmEntity.getId());
-            this.realms.put(realmEntity.getId(), realmEntity);
-        } else {
-            this.realms.put(realmEntity.getId(), realmEntity);
-            this.byteSize = calculateWorldsSize();
-        }
+        this.realms.addObject(realmInfo);
     }
     
     /**
@@ -98,15 +94,25 @@ public class RealmListController implements Service {
         this.nextUpdateTime = System.currentTimeMillis() + UPDATE_INTERVAL;
         
         final List<RealmEntity> realmList = this.realmService.readRealms();
+        
         for (final RealmEntity realmEntity : realmList) {
-            if (this.realms.containsKey(realmEntity.getId())) {
-                this.realms.get(realmEntity.getId()).setPopulation(realmEntity.getPopulation());
+            if (this.realms.containsObject(realmEntity.getId())) {
+                this.realms.getObject(realmEntity.getId()).setPopulation(realmEntity.getPopulation());
             } else {
-                this.realms.put(realmEntity.getId(), realmEntity);
+                final RealmInfo realmInfo = new RealmInfo(realmEntity.getId());
+                realmInfo.setName(realmEntity.getName());
+                realmInfo.setAddress(realmEntity.getAddress());
+                realmInfo.setRealmbuilds(realmEntity.getRealmbuilds());
+                realmInfo.setRealmflags(realmEntity.getRealmflags());
+                realmInfo.setAllowedSecurityLevel(realmEntity.getAllowedSecurityLevel());
+                realmInfo.setIcon(realmEntity.getIcon());
+                realmInfo.setPopulation(realmEntity.getPopulation());
+                realmInfo.setPort(realmEntity.getPort());
+                this.realms.addObject(realmInfo);
             }
         }
         // update byte size all realms
-        this.byteSize = calculateWorldsSize();
+        calculateWorldsSize();
     }
     
     /**
@@ -134,13 +140,19 @@ public class RealmListController implements Service {
      * 
      * @return the int
      */
-    public int calculateWorldsSize() {
+    public void calculateWorldsSize() {
     
-        int value = 8;
-        for (final RealmEntity realmEntity : this.realms.values()) {
-            value += 8 + 4 + realmEntity.getAddress().length() + 1 + realmEntity.getPort().toString().length() + realmEntity.getName().length();
-        }
-        return value;
+        this.byteSize = 8;
+        this.realms.iterate(new Visitor<RealmInfo>() {
+            
+            @Override
+            public void visit(final RealmInfo realmInfo) {
+            
+                RealmListController.this.byteSize = 8 + 4 + realmInfo.getAddress().length() + 1 + realmInfo.getPort().toString().length()
+                        + realmInfo.getName().length();
+                
+            }
+        });
     }
     
     /**
@@ -150,7 +162,7 @@ public class RealmListController implements Service {
      *            the id
      * @return the amount characters
      */
-    public FastMap<Integer, Integer> getAmountCharacters(final Long id) {
+    public FastMap<Integer, Integer> getAmountCharacters(final Integer id) {
     
         // TODO:implement
         return new FastMap<Integer, Integer>();
@@ -159,7 +171,7 @@ public class RealmListController implements Service {
     /**
      * @return the realms
      */
-    public final FastMap<Long, RealmEntity> getRealms() {
+    public final RealmServersContainer getRealms() {
     
         return this.realms;
     }
@@ -170,7 +182,7 @@ public class RealmListController implements Service {
     @Override
     public void stop() {
     
-        this.realms.clear();
+        this.realms.clearData();
     }
     
 }

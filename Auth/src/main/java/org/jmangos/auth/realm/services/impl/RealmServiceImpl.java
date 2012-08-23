@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.auth.services.impl;
+package org.jmangos.auth.realm.services.impl;
 
 import java.util.List;
 
 import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.auth.dao.RealmDao;
 import org.jmangos.auth.entities.RealmEntity;
-import org.jmangos.auth.services.RealmService;
+import org.jmangos.auth.realm.services.RealmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +32,7 @@ public class RealmServiceImpl implements RealmService {
     private RealmDao realmDao;
     
     @Override
-    public RealmEntity readRealm(final Long id) {
+    public RealmEntity readRealm(final Integer id) {
     
         return this.realmDao.readRealm(id);
     }
@@ -44,7 +44,7 @@ public class RealmServiceImpl implements RealmService {
     }
     
     @Override
-    public Long createOrUpdateRealm(final RealmEntity realmEntity) {
+    public Integer createOrUpdateRealm(final RealmEntity realmEntity) {
     
         return this.realmDao.createOrUpdateRealm(realmEntity);
     }

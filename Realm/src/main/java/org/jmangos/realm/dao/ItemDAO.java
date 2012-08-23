@@ -16,7 +16,6 @@
  *******************************************************************************/
 package org.jmangos.realm.dao;
 
-import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.map.hash.TLongObjectHashMap;
 
 import java.util.List;

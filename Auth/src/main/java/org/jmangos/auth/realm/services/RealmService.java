@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.auth.services;
+package org.jmangos.auth.realm.services;
 
 import java.util.List;
 
@@ -23,11 +23,11 @@ import org.jmangos.auth.entities.RealmEntity;
 
 public interface RealmService {
     
-    public RealmEntity readRealm(Long id);
+    public RealmEntity readRealm(Integer id);
     
     public List<RealmEntity> readRealms(final Criterion... criterions);
     
-    public Long createOrUpdateRealm(RealmEntity realmEntity);
+    public Integer createOrUpdateRealm(RealmEntity realmEntity);
     
     public void deleteRealm(RealmEntity realmEntity);
     

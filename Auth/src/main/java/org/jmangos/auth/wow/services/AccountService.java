@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.auth.services;
+package org.jmangos.auth.wow.services;
 
 import java.util.List;
 
@@ -23,11 +23,11 @@ import org.jmangos.auth.entities.AccountEntity;
 
 public interface AccountService {
     
-    public AccountEntity readAccount(Long id);
+    public AccountEntity readAccount(Integer id);
     
     public List<AccountEntity> readAccounts(final Criterion... criterions);
     
-    public Long createOrUpdateAccount(AccountEntity accountEntity);
+    public Integer createOrUpdateAccount(AccountEntity accountEntity);
     
     public void deleteAccount(AccountEntity accountEntity);
     

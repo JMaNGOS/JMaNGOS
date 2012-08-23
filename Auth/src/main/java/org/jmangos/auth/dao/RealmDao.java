@@ -23,11 +23,11 @@ import org.jmangos.auth.entities.RealmEntity;
 
 public interface RealmDao {
     
-    public RealmEntity readRealm(Long id);
+    public RealmEntity readRealm(Integer id);
     
     public List<RealmEntity> readRealms(final Criterion... criterions);
     
-    public Long createOrUpdateRealm(RealmEntity realmEntity);
+    public Integer createOrUpdateRealm(RealmEntity realmEntity);
     
     public void deleteRealm(RealmEntity realmEntity);
     

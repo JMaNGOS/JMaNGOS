@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.auth.services.impl;
+package org.jmangos.auth.wow.services.impl;
 
 import java.util.List;
 
 import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.auth.dao.AccountDao;
 import org.jmangos.auth.entities.AccountEntity;
-import org.jmangos.auth.services.AccountService;
+import org.jmangos.auth.wow.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +32,7 @@ public class AccountServiceImpl implements AccountService {
     private AccountDao accountDao;
     
     @Override
-    public AccountEntity readAccount(final Long id) {
+    public AccountEntity readAccount(final Integer id) {
     
         return this.accountDao.readAccount(id);
     }
@@ -44,7 +44,7 @@ public class AccountServiceImpl implements AccountService {
     }
     
     @Override
-    public Long createOrUpdateAccount(final AccountEntity accountEntity) {
+    public Integer createOrUpdateAccount(final AccountEntity accountEntity) {
     
         return this.accountDao.createOrUpdateAccount(accountEntity);
     }

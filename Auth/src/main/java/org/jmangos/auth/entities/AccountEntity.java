@@ -16,8 +16,6 @@
  *******************************************************************************/
 package org.jmangos.auth.entities;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,242 +33,242 @@ public class AccountEntity {
     @Id
     @Column(name = "ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long   id;
+    private Integer id;
     
     /** The user name. */
     @Column(name = "USERNAME", length = 32, unique = true)
-    private String username;
+    private String  username;
     
     /** Password hash. */
     @Column(name = "SHA_PASS_HASH", length = 32)
-    private String shaPasswordHash;
+    private String  shaPasswordHash;
     
     /** Access level of account 0 = regular user, > 0 = GM. */
     @Column(name = "GMLEVEL")
-    private Byte   gmlevel;
+    private Byte    gmlevel;
     
     /** The session key. */
     @Column(name = "SESSIONKEY")
-    private String sessionKey;
+    private String  sessionKey;
     
     /** The v. */
     @Column(name = "V", nullable = false)
-    private String v;
+    private String  v;
     
     /** The s. */
     @Column(name = "S", nullable = false)
-    private String s;
+    private String  s;
     
     @Column(name = "EMAIL")
-    private String email;
+    private String  email;
     
-   // @Column(name = "JOINDATE")
-    //private Date   joindate;
+    // @Column(name = "JOINDATE")
+    // private Date joindate;
     
     @Column(name = "LAST_IP", length = 30)
-    private String lastIp;
+    private String  lastIp;
     
     @Column(name = "FAILED_LOGINS")
-    private Long   failedLogins;
+    private Long    failedLogins;
     
     /** Account activated. */
     @Column(name = "LOCKED")
-    private Byte   locked;
+    private Byte    locked;
     
-    //@Column(name = "LAST_LOGIN")
-   // private Date   lastLogin;
+    // @Column(name = "LAST_LOGIN")
+    // private Date lastLogin;
     
     @Column(name = "ACTIVE_REALM_ID")
-    private Long   activeRealmId;
+    private Long    activeRealmId;
     
     @Column(name = "EXPANSION")
-    private Byte   expansion;
+    private Byte    expansion;
     
     @Column(name = "MUTETIME")
-    private Long   mutetime;
+    private Long    mutetime;
     
     @Column(name = "LOCALE")
-    private Byte   locale;
+    private Byte    locale;
     
     @Column(name = "LAST_SERVER")
-    private Byte   lastServer;
+    private Byte    lastServer;
     
-    public Long getId() {
+    public Integer getId() {
     
-        return id;
+        return this.id;
     }
     
-    public void setId(Long id) {
+    public void setId(final Integer id) {
     
         this.id = id;
     }
     
     public String getUsername() {
     
-        return username;
+        return this.username;
     }
     
-    public void setUsername(String username) {
+    public void setUsername(final String username) {
     
         this.username = username;
     }
     
     public String getShaPasswordHash() {
     
-        return shaPasswordHash;
+        return this.shaPasswordHash;
     }
     
-    public void setShaPasswordHash(String shaPasswordHash) {
+    public void setShaPasswordHash(final String shaPasswordHash) {
     
         this.shaPasswordHash = shaPasswordHash;
     }
     
     public Byte getGmlevel() {
     
-        return gmlevel;
+        return this.gmlevel;
     }
     
-    public void setGmlevel(Byte gmlevel) {
+    public void setGmlevel(final Byte gmlevel) {
     
         this.gmlevel = gmlevel;
     }
     
     public String getSessionKey() {
     
-        return sessionKey;
+        return this.sessionKey;
     }
     
-    public void setSessionKey(String sessionKey) {
+    public void setSessionKey(final String sessionKey) {
     
         this.sessionKey = sessionKey;
     }
     
     public String getV() {
     
-        return v;
+        return this.v;
     }
     
-    public void setV(String v) {
+    public void setV(final String v) {
     
         this.v = v;
     }
     
     public String getS() {
     
-        return s;
+        return this.s;
     }
     
-    public void setS(String s) {
+    public void setS(final String s) {
     
         this.s = s;
     }
     
     public String getEmail() {
     
-        return email;
+        return this.email;
     }
     
-    public void setEmail(String email) {
+    public void setEmail(final String email) {
     
         this.email = email;
     }
     
-//    public Date getJoindate() {
-//    
-//        return joindate;
-//    }
-//    
-//    public void setJoindate(Date joindate) {
-//    
-//        this.joindate = joindate;
-//    }
+    // public Date getJoindate() {
+    //
+    // return joindate;
+    // }
+    //
+    // public void setJoindate(Date joindate) {
+    //
+    // this.joindate = joindate;
+    // }
     
     public String getLastIp() {
     
-        return lastIp;
+        return this.lastIp;
     }
     
-    public void setLastIp(String lastIp) {
+    public void setLastIp(final String lastIp) {
     
         this.lastIp = lastIp;
     }
     
     public Long getFailedLogins() {
     
-        return failedLogins;
+        return this.failedLogins;
     }
     
-    public void setFailedLogins(Long failedLogins) {
+    public void setFailedLogins(final Long failedLogins) {
     
         this.failedLogins = failedLogins;
     }
     
     public Byte getLocked() {
     
-        return locked;
+        return this.locked;
     }
     
-    public void setLocked(Byte locked) {
+    public void setLocked(final Byte locked) {
     
         this.locked = locked;
     }
     
-//    public Date getLastLogin() {
-//    
-//        return lastLogin;
-//    }
-//    
-//    public void setLastLogin(Date lastLogin) {
-//    
-//        this.lastLogin = lastLogin;
-//    }
+    // public Date getLastLogin() {
+    //
+    // return lastLogin;
+    // }
+    //
+    // public void setLastLogin(Date lastLogin) {
+    //
+    // this.lastLogin = lastLogin;
+    // }
     
     public Long getActiveRealmId() {
     
-        return activeRealmId;
+        return this.activeRealmId;
     }
     
-    public void setActiveRealmId(Long activeRealmId) {
+    public void setActiveRealmId(final Long activeRealmId) {
     
         this.activeRealmId = activeRealmId;
     }
     
     public Byte getExpansion() {
     
-        return expansion;
+        return this.expansion;
     }
     
-    public void setExpansion(Byte expansion) {
+    public void setExpansion(final Byte expansion) {
     
         this.expansion = expansion;
     }
     
     public Long getMutetime() {
     
-        return mutetime;
+        return this.mutetime;
     }
     
-    public void setMutetime(Long mutetime) {
+    public void setMutetime(final Long mutetime) {
     
         this.mutetime = mutetime;
     }
     
     public Byte getLocale() {
     
-        return locale;
+        return this.locale;
     }
     
-    public void setLocale(Byte locale) {
+    public void setLocale(final Byte locale) {
     
         this.locale = locale;
     }
     
     public Byte getLastServer() {
     
-        return lastServer;
+        return this.lastServer;
     }
     
-    public void setLastServer(Byte lastServer) {
+    public void setLastServer(final Byte lastServer) {
     
         this.lastServer = lastServer;
     }

@@ -21,9 +21,9 @@ import java.nio.charset.Charset;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.jmangos.auth.controller.AccountController;
 import org.jmangos.auth.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.auth.network.packet.wow.server.SMD_AUTH_LOGON_CHALLENGE;
+import org.jmangos.auth.wow.controller.AccountController;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.sender.AbstractPacketSender;

@@ -18,9 +18,9 @@ package org.jmangos.auth.network.packet.wow.client;
 
 import javax.inject.Inject;
 
-import org.jmangos.auth.entities.RealmEntity;
 import org.jmangos.auth.network.packet.wow.AbstractWoWClientPacket;
-import org.jmangos.auth.service.RealmListController;
+import org.jmangos.auth.realm.controller.RealmListController;
+import org.jmangos.commons.model.RealmInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -37,7 +37,7 @@ public class CMD_REALM_DATA extends AbstractWoWClientPacket {
     @Inject
     private RealmListController realmListService;
     
-    private RealmEntity         realmEntity;
+    private RealmInfo           realmInfo;
     
     public CMD_REALM_DATA() {
     
@@ -48,22 +48,22 @@ public class CMD_REALM_DATA extends AbstractWoWClientPacket {
     protected void readImpl() throws RuntimeException {
     
         logger.debug("Receive realm info from realm account: " + getAccountInfo().getName());
-        this.realmEntity = new RealmEntity();
-        this.realmEntity.setId(getAccountInfo().getObjectId());
-        this.realmEntity.setName(readS());
-        this.realmEntity.setAddress(readS());
-        this.realmEntity.setPort(readD());
-        this.realmEntity.setIcon(readC());
-        this.realmEntity.setRealmflags(readC());
-        this.realmEntity.setTimezone(readC());
-        this.realmEntity.setAllowedSecurityLevel(readC());
-        this.realmEntity.setPopulation(readF());
-        this.realmEntity.setRealmbuilds(readS());
+        this.realmInfo = new RealmInfo();
+        this.realmInfo.setObjectId(getAccountInfo().getObjectId());
+        this.realmInfo.setName(readS());
+        this.realmInfo.setAddress(readS());
+        this.realmInfo.setPort(readD());
+        this.realmInfo.setIcon(readC());
+        this.realmInfo.setRealmflags(readC());
+        this.realmInfo.setTimezone(readC());
+        this.realmInfo.setAllowedSecurityLevel(readC());
+        this.realmInfo.setPopulation(readF());
+        this.realmInfo.setRealmbuilds(readS());
     }
     
     @Override
     protected void runImpl() {
     
-        this.realmListService.addFromConnected(this.realmEntity);
+        this.realmListService.addFromConnected(this.realmInfo);
     }
 }

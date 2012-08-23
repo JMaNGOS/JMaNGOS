@@ -26,12 +26,12 @@ public class ManagedObject {
     /**
      * The object id.
      */
-    private final Long objectId;
+    private final int objectId;
     
     public ManagedObject() {
     
         final Random random = new Random();
-        this.objectId = random.nextLong();
+        this.objectId = random.nextInt();
     }
     
     /**
@@ -40,7 +40,7 @@ public class ManagedObject {
      * @param objectId
      *            the object id
      */
-    public ManagedObject(final Long objectId) {
+    public ManagedObject(final int objectId) {
     
         this.objectId = objectId;
     }
@@ -50,7 +50,7 @@ public class ManagedObject {
      * 
      * @return objectId
      */
-    public final Long getObjectId() {
+    public final int getObjectId() {
     
         return this.objectId;
     }

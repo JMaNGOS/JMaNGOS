@@ -16,17 +16,14 @@
  *******************************************************************************/
 package org.jmangos.realm.model.base.guid;
 
-import org.jmangos.commons.model.NamedObject;
+import org.jmangos.commons.model.ManagedObject;
 import org.jmangos.realm.model.enums.HighGuid;
 import org.jmangos.realm.model.enums.TypeID;
 
 /**
  * The Class ObjectGuid.
  */
-public class ObjectGuid extends NamedObject {
-    
-    /** The guid. */
-    private long     guid = 0;
+public class ObjectGuid extends ManagedObject {
     
     /** The high. */
     private HighGuid high = null;
@@ -36,22 +33,8 @@ public class ObjectGuid extends NamedObject {
      */
     public ObjectGuid() {
     
-        super(0L);
-        this.guid = 0;
+        super(0);
     };
-    
-    /**
-     * Instantiates a new object guid.
-     * 
-     * @param _guid
-     *            the _guid
-     */
-    public ObjectGuid(final Long _guid) {
-    
-        super(_guid);
-        this.guid = _guid;
-        this.high = HighGuid.PLAYER;
-    }
     
     /**
      * Instantiates a new object guid.
@@ -61,8 +44,7 @@ public class ObjectGuid extends NamedObject {
      */
     public ObjectGuid(final long _guid) {
     
-        super(_guid & 0xFFFFFFFF);
-        this.guid = _guid & 0xFFFFFFFF;
+        super((int) (_guid & 0xFFFFFFFF));
         this.high = HighGuid.getType((int) ((_guid >> 48) & 0xFFFF));
     }
     
@@ -76,10 +58,9 @@ public class ObjectGuid extends NamedObject {
      * @param counter
      *            the counter
      */
-    public ObjectGuid(final HighGuid hi, final int entry, final Long counter) {
+    public ObjectGuid(final HighGuid hi, final int entry, final Integer counter) {
     
         super(counter | (entry << 24));
-        this.guid = counter | (entry << 24);
         this.high = hi;
     };
     
@@ -91,10 +72,9 @@ public class ObjectGuid extends NamedObject {
      * @param counter
      *            the counter
      */
-    public ObjectGuid(final HighGuid hi, final Long counter) {
+    public ObjectGuid(final HighGuid hi, final Integer counter) {
     
         super(counter);
-        this.guid = counter;
         this.high = hi;
     };
     
@@ -105,7 +85,7 @@ public class ObjectGuid extends NamedObject {
      */
     public long getRawValue() {
     
-        return (this.high.getValue() << 48) | this.guid;
+        return (this.high.getValue() << 48) | getObjectId();
     }
     
     /**
@@ -117,16 +97,6 @@ public class ObjectGuid extends NamedObject {
     
         return this.high;
     };
-    
-    /**
-     * Checks if is empty.
-     * 
-     * @return true, if successful
-     */
-    boolean IsEmpty() {
-    
-        return this.guid == 0;
-    }
     
     /**
      * Checks if is creature.
@@ -185,7 +155,7 @@ public class ObjectGuid extends NamedObject {
      */
     boolean IsPlayer() {
     
-        return !IsEmpty() && (getHigh() == HighGuid.PLAYER);
+        return (getHigh() == HighGuid.PLAYER);
     }
     
     /**
@@ -314,8 +284,8 @@ public class ObjectGuid extends NamedObject {
     }
     
     public boolean hasEntry() {
-        switch (high)
-        {
+    
+        switch (this.high) {
             case ITEM:
             case PLAYER:
             case DYNAMICOBJECT:
@@ -333,6 +303,7 @@ public class ObjectGuid extends NamedObject {
     }
     
     public long getCounter() {
-        return hasEntry() ? (guid & 0xFFFFFF ) : (guid & 0xFFFFFFFF) ;
+    
+        return hasEntry() ? (getObjectId() & 0xFFFFFF) : (getObjectId() & 0xFFFFFFFF);
     }
 }

@@ -22,7 +22,7 @@ import javax.inject.Named;
 import org.jmangos.auth.config.Config;
 import org.jmangos.auth.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.auth.network.packet.wow.server.SMD_REALM_LIST;
-import org.jmangos.auth.service.RealmListController;
+import org.jmangos.auth.realm.controller.RealmListController;
 import org.jmangos.commons.config.Compatiple;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.springframework.stereotype.Component;
@@ -38,11 +38,11 @@ public class CMD_REALM_LIST extends AbstractWoWClientPacket {
     @Named("nettyPacketSender")
     private AbstractPacketSender sender;
     
-    /** The worldlist. */
+    /** The RealmListController. */
     @Inject
-    private RealmListController     worldlist;
+    private RealmListController  realmListController;
     
-    /** The worldlist. */
+    /** The Config. */
     @Inject
     private Config               config;
     
@@ -81,8 +81,8 @@ public class CMD_REALM_LIST extends AbstractWoWClientPacket {
     
         // must be reloaded from db
         if (this.config.COMPATIBLE.equals(Compatiple.MANGOS)) {
-            this.worldlist.update();
+            this.realmListController.update();
         }
-        this.sender.send(getClient(), new SMD_REALM_LIST(this.worldlist));
+        this.sender.send(getClient(), new SMD_REALM_LIST(this.realmListController));
     }
 }

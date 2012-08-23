@@ -33,7 +33,7 @@ public class RealmEntity {
     @Id
     @Column(name = "ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long    id;
+    private Integer id;
     
     /** The name. */
     @Column(name = "NAME", length = 32, nullable = false)
@@ -71,12 +71,12 @@ public class RealmEntity {
     @Column(name = "REALMBUILDS", length = 64, nullable = false)
     private String  realmbuilds;
     
-    public Long getId() {
+    public Integer getId() {
     
         return this.id;
     }
     
-    public void setId(final Long id) {
+    public void setId(final Integer id) {
     
         this.id = id;
     }

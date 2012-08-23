@@ -36,7 +36,7 @@ public class RealmDaoImpl implements RealmDao {
     private EntityManager entityManager;
     
     @Override
-    public RealmEntity readRealm(final Long id) {
+    public RealmEntity readRealm(final Integer id) {
     
         return this.entityManager.find(RealmEntity.class, id);
     }
@@ -54,7 +54,7 @@ public class RealmDaoImpl implements RealmDao {
     
     @Transactional
     @Override
-    public Long createOrUpdateRealm(final RealmEntity realmEntity) {
+    public Integer createOrUpdateRealm(final RealmEntity realmEntity) {
     
         if (realmEntity.getId() == null) {
             this.entityManager.persist(realmEntity);

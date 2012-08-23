@@ -1,4 +1,4 @@
-package org.jmangos.auth.service.jmx;
+package org.jmangos.auth.realm.jmx;
 
 public interface JmxRealmListMBean {
     

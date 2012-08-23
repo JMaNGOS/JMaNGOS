@@ -128,7 +128,7 @@ public class PlayerService {
      *            the guid
      * @return the player
      */
-    public Player preparePlayer(final NettyNetworkChannel chanel, final long guid) {
+    public Player preparePlayer(final NettyNetworkChannel chanel, final int guid) {
     
         final Player player = new Player(this.playerDAO.getCharacter(guid));
         player.setChannel(chanel);
@@ -268,7 +268,7 @@ public class PlayerService {
         final Session session = this.databaseFactory.getWorldSessionFactory().openSession();
         final CharacterData character = new CharacterData();
         
-        character.setAccount(player.getAccountInfo().getId());
+        character.setAccount(player.getAccountInfo().getObjectId());
         character.setGuid(new Long(player.getObjectGuid().getRawValue()).intValue());
         character.setPlayerBytes(player.GetUInt32Value(PlayerFields.PLAYER_BYTES));
         character.setPlayerBytes2(player.GetUInt32Value(PlayerFields.PLAYER_BYTES_2));

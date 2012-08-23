@@ -152,9 +152,9 @@ public class NettyNetworkChannel implements NetworkChannel {
      * @see org.wowemu.common.network.model.NetworkChannel#getObjectId()
      */
     @Override
-    public Long getObjectId() {
+    public int getObjectId() {
     
-        return this.channeledObject != null ? this.channeledObject.getObjectId() : -1;
+        return this.channeledObject.getObjectId();
     }
     
     /*

@@ -34,11 +34,11 @@ public class CharacterData {
     @TableGenerator(table = "sequences", allocationSize = 1, name = "char_seq")
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "char_seq")
     @Column(name = "guid", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
-    private long                guid;
+    private Integer             guid;
     
     @Basic
     @Column(name = "account", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private Long                 account;
+    private Integer             account;
     
     @Basic
     @Column(name = "actionBars", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
@@ -335,22 +335,22 @@ public class CharacterData {
     
     }
     
-    public long getGuid() {
+    public int getGuid() {
     
         return this.guid;
     }
     
-    public void setGuid(final long guid) {
+    public void setGuid(final int guid) {
     
         this.guid = guid;
     }
     
-    public Long getAccount() {
+    public int getAccount() {
     
         return this.account;
     }
     
-    public void setAccount(final Long account) {
+    public void setAccount(final int account) {
     
         this.account = account;
     }

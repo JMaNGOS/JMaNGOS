@@ -34,11 +34,11 @@ public class NamedObject extends ManagedObject {
      * @param objectId
      *            the object id
      */
-    public NamedObject(final Long objectId) {
+    public NamedObject(final int objectId) {
     
         super(objectId);
     }
-    
+        
     /** The name. */
     private String name;
     

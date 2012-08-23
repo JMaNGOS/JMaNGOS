@@ -24,12 +24,7 @@ import org.jmangos.commons.utils.BigNumber;
  * The Class Account.
  */
 public class AccountInfo extends NamedObject implements ChanneledObject {
-    
-    private long           id;
-    
-    /** The user name. */
-    private String         username;
-    
+
     /** Access level of account 0 = regular user, > 0 = GM. */
     private byte           accessLevel;
     
@@ -59,23 +54,9 @@ public class AccountInfo extends NamedObject implements ChanneledObject {
     private BigNumber      sessionKey;
     
     public AccountInfo() {
-    
+        super();
     }
     
-    /**
-     * Returns account's ID
-     * 
-     * @return int account id
-     */
-    public Long getId() {
-    
-        return this.id;
-    }
-    
-    public long setId(final Long id) {
-    
-        return this.id = id;
-    }
     
     /**
      * Gets the _reconnect proof.
@@ -104,7 +85,7 @@ public class AccountInfo extends NamedObject implements ChanneledObject {
      * @param objectId
      *            the object id
      */
-    public AccountInfo(final Long objectId) {
+    public AccountInfo(final int objectId) {
     
         super(objectId);
     }
@@ -153,17 +134,6 @@ public class AccountInfo extends NamedObject implements ChanneledObject {
     public byte[] getM2() {
     
         return this.M2;
-    }
-    
-    /**
-     * Returns account name.
-     * 
-     * @return account name
-     */
-    @Override
-    public String getName() {
-    
-        return this.username;
     }
     
     /**
@@ -239,17 +209,6 @@ public class AccountInfo extends NamedObject implements ChanneledObject {
         this.M2 = bs;
     }
     
-    /**
-     * Sets account name.
-     * 
-     * @param name
-     *            account name
-     */
-    @Override
-    public void setName(final String name) {
-    
-        this.username = name;
-    }
     
     /**
      * Sets the s.

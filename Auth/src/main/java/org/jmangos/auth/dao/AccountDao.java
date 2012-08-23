@@ -23,11 +23,11 @@ import org.jmangos.auth.entities.AccountEntity;
 
 public interface AccountDao {
     
-    public AccountEntity readAccount(Long id);
+    public AccountEntity readAccount(Integer id);
     
     public List<AccountEntity> readAccounts(final Criterion... criterions);
     
-    public Long createOrUpdateAccount(AccountEntity accountEntity);
+    public Integer createOrUpdateAccount(AccountEntity accountEntity);
     
     public void deleteAccount(AccountEntity accountEntity);
     

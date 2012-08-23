@@ -37,7 +37,7 @@ public interface NetworkChannel {
      * 
      * @return ID of channeled object or -1
      */
-    Long getObjectId();
+    int getObjectId();
     
     /**
      * Gets the channel.

@@ -65,9 +65,9 @@ public class WorldObject extends NamedObject {
      * @param objectId
      *            the object id
      */
-    public WorldObject(final Long objectId) {
+    public WorldObject(final long objectId) {
     
-        super(objectId);
+        super((int) objectId);
         this.guid = new ObjectGuid(objectId);
     }
     

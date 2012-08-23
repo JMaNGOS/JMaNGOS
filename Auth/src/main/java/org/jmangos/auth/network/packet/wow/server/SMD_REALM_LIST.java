@@ -18,10 +18,11 @@ package org.jmangos.auth.network.packet.wow.server;
 
 import javolution.util.FastMap;
 
-import org.jmangos.auth.entities.RealmEntity;
 import org.jmangos.auth.network.packet.wow.AbstractWoWServerPacket;
-import org.jmangos.auth.service.RealmListController;
+import org.jmangos.auth.realm.controller.RealmListController;
+import org.jmangos.commons.dataholder.Visitor;
 import org.jmangos.commons.model.AccountInfo;
+import org.jmangos.commons.model.RealmInfo;
 
 /**
  * The Class <tt>TCMD_REALM_LIST</tt>.
@@ -60,17 +61,23 @@ public class SMD_REALM_LIST extends AbstractWoWServerPacket {
         writeH(this.worldlist.getByteSize());
         writeD(0);
         writeH(this.worldlist.getRealmCount());
-        for (final RealmEntity realmEntity : this.worldlist.getWorlds().values()) {
-            writeC(realmEntity.getIcon());
-            writeC((realmEntity.getAllowedSecurityLevel() > ((AccountInfo) (getChannel().getChanneledObject())).getAccessLevel()) ? 1 : 0);
-            writeC(realmEntity.getRealmflags());
-            writeS(realmEntity.getName());
-            writeS(realmEntity.getAddress() + ":" + realmEntity.getPort());
-            writeF(realmEntity.getPopulation());
-            writeC((amountofCharacters.containsKey(realmEntity.getId())) ? amountofCharacters.get(realmEntity.getId()) : 0);
-            writeC(realmEntity.getTimezone());
-            writeC(0x2C);
-        }
+        this.worldlist.getRealms().iterate(new Visitor<RealmInfo>() {
+            
+            @Override
+            public void visit(final RealmInfo realmInfo) {
+            
+                writeC(realmInfo.getIcon());
+                writeC((realmInfo.getAllowedSecurityLevel() > ((AccountInfo) (getChannel().getChanneledObject())).getAccessLevel()) ? 1 : 0);
+                writeC(realmInfo.getRealmflags());
+                writeS(realmInfo.getName());
+                writeS(realmInfo.getAddress() + ":" + realmInfo.getPort());
+                writeF(realmInfo.getPopulation());
+                writeC((amountofCharacters.containsKey(realmInfo.getObjectId())) ? amountofCharacters.get(realmInfo.getObjectId()) : 0);
+                writeC(realmInfo.getTimezone());
+                writeC(0x2C);
+                
+            }
+        });
         writeH(0x0010);
     }
 }
