@@ -7,7 +7,6 @@
         <!-- DB schema will be updated if needed -->
         <property name="hbm2ddl.auto">update</property>
         <property name="current_session_context_class">thread</property>
-        <mapping class="org.jmangos.commons.model.Account"/>
         <mapping class="org.jmangos.commons.model.Realm"/>
         <mapping class="org.jmangos.commons.model.BanIp"/>
     </session-factory>
