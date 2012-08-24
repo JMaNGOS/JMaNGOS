@@ -41,7 +41,7 @@ public class CMD_SESSION_KEY extends AbstractWoWClientPacket {
     @Inject
     private AccountController    accountController;
     
-    private String               account;
+    private String               accountName;
     
     public CMD_SESSION_KEY() {
     
@@ -55,7 +55,7 @@ public class CMD_SESSION_KEY extends AbstractWoWClientPacket {
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
-        this.account = readS();
+        this.accountName = readS();
     }
     
     /**
@@ -65,7 +65,7 @@ public class CMD_SESSION_KEY extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
-        final AccountInfo account = this.accountController.getAccount(this.account);
+        final AccountInfo account = this.accountController.getAndCleanAccount(this.accountName);
         this.sender.send(getClient(), new SMD_SESSION_KEY(account));
         
     }

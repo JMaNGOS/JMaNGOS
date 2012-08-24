@@ -53,12 +53,11 @@ public class AccountController {
         // return WoWAuthResponse.WOW_FAIL_BANNED;
         // }
         
-        final AccountInfo account = new AccountInfo();
-        
         final Criterion criterion = Restrictions.eq("username", name);
         final List<AccountEntity> accountList = this.accountService.readAccounts(criterion);
         if ((accountList != null) && !accountList.isEmpty()) {
             final AccountEntity accountEntity = accountList.get(0);
+            final AccountInfo account = new AccountInfo(accountEntity.getId());
             
             HashMap<String, BigNumber> variable; // calculateVSFields will create it.
             BigNumber s = new BigNumber();
@@ -178,6 +177,7 @@ public class AccountController {
                 final AccountEntity accountEntity = accountList.get(0);
                 final String sessionKey = new BigInteger(1, vK).toString(16).toUpperCase();
                 accountEntity.setSessionKey(sessionKey);
+                account.setSessionKey(new BigNumber(vK));
                 this.accountService.createOrUpdateAccount(accountEntity);
             } else {
                 return WoWAuthResponse.WOW_FAIL_INCORRECT_PASSWORD;
@@ -265,4 +265,19 @@ public class AccountController {
         channelHandler.setChanneledObject(account);
     }
     
+    /**
+     * Find and clean account in Account container.
+     * 
+     * @param accountName
+     *            - account's name.
+     * @return AccountInfo - relation to accountName.
+     */
+    public AccountInfo getAndCleanAccount(final String accountName) {
+    
+        final AccountInfo aInfo = this.accounts.getNamedObject(accountName);
+        if (aInfo != null) {
+            this.accounts.removeObject(aInfo);
+        }
+        return aInfo;
+    }
 }
