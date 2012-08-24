@@ -108,6 +108,7 @@ public class RealmListController implements Service {
                 realmInfo.setIcon(realmEntity.getIcon());
                 realmInfo.setPopulation(realmEntity.getPopulation());
                 realmInfo.setPort(realmEntity.getPort());
+                realmInfo.setTimezone(realmEntity.getTimezone());
                 this.realms.addObject(realmInfo);
             }
         }
@@ -148,7 +149,7 @@ public class RealmListController implements Service {
             @Override
             public void visit(final RealmInfo realmInfo) {
             
-                RealmListController.this.byteSize = 8 + 4 + realmInfo.getAddress().length() + 1 + realmInfo.getPort().toString().length()
+                RealmListController.this.byteSize += 8 + 4 + realmInfo.getAddress().length() + 1 + realmInfo.getPort().toString().length()
                         + realmInfo.getName().length();
                 
             }
