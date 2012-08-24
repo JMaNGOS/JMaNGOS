@@ -1,6 +1,6 @@
 -- MySQL dump 10.11
 --
--- Host: localhost    Database: accounts
+-- Host: localhost    Database: auth
 -- ------------------------------------------------------
 -- Server version    5.0.45-Debian_1ubuntu3.1-log
 
@@ -16,23 +16,23 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `accounts_db_version`
+-- Table structure for table `auth_db_version`
 --
 
-DROP TABLE IF EXISTS `accounts_db_version`;
-CREATE TABLE `accounts_db_version` (
-  `required_000_0_1_01_start` bit(1) default NULL
+DROP TABLE IF EXISTS `auth_db_version`;
+CREATE TABLE `auth_db_version` (
+  `required_000_0_1_01_start_auth` bit(1) default NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Last applied sql update to DB';
 
 --
--- Dumping data for table `accounts_db_version`
+-- Dumping data for table `auth_db_version`
 --
 
-LOCK TABLES `accounts_db_version` WRITE;
-/*!40000 ALTER TABLE `accounts_db_version` DISABLE KEYS */;
-INSERT INTO `accounts_db_version` VALUES 
+LOCK TABLES `auth_db_version` WRITE;
+/*!40000 ALTER TABLE `auth_db_version` DISABLE KEYS */;
+INSERT INTO `auth_db_version` VALUES 
 (NULL);
-/*!40000 ALTER TABLE `accounts_db_version` ENABLE KEYS */;
+/*!40000 ALTER TABLE `auth_db_version` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -53,7 +53,7 @@ CREATE TABLE `account` (
   `last_ip` varchar(30) NOT NULL default '0.0.0.0',
   `failed_logins` int(11) unsigned NOT NULL default '0',
   `locked` tinyint(3) unsigned NOT NULL default '0',
-  `last_login` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `last_login` timestamp NULL DEFAULT NULL,
   `active_realm_id` int(11) unsigned NOT NULL default '0',
   `expansion` tinyint(3) unsigned NOT NULL default '0',
   `mutetime` bigint(40) unsigned NOT NULL default '0',
@@ -70,11 +70,11 @@ CREATE TABLE `account` (
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
 INSERT INTO `account` VALUES
-(1,'ADMINISTRATOR','a34b29541b87b7e4823683ce6c7bf6ae68beaaac',3,'','0','0','','2006-04-25 10:18:56','127.0.0.1',0,0,'0000-00-00 00:00:00',0,0,0,0),
-(2,'GAMEMASTER','7841e21831d7c6bc0b57fbe7151eb82bd65ea1f9',2,'','0','0','','2006-04-25 10:18:56','127.0.0.1',0,0,'0000-00-00 00:00:00',0,0,0,0),
-(3,'MODERATOR','a7f5fbff0b4eec2d6b6e78e38e8312e64d700008',1,'','0','0','','2006-04-25 10:19:35','127.0.0.1',0,0,'0000-00-00 00:00:00',0,0,0,0),
-(4,'PLAYER','3ce8a96d17c5ae88a30681024e86279f1a38c041',0,'','0','0','','2006-04-25 10:19:35','127.0.0.1',0,0,'0000-00-00 00:00:00',0,0,0,0),
-(5,'JMaNGOS','c43a8b850b5744306ff2fab8ac6725a602572c3c',5,'','0','0','','2006-04-25 10:19:35','127.0.0.1',0,0,'0000-00-00 00:00:00',0,0,0,0);
+(1,'ADMINISTRATOR','a34b29541b87b7e4823683ce6c7bf6ae68beaaac',3,'','0','0','','2006-04-25 10:18:56','127.0.0.1',0,0,null,0,0,0,0),
+(2,'GAMEMASTER','7841e21831d7c6bc0b57fbe7151eb82bd65ea1f9',2,'','0','0','','2006-04-25 10:18:56','127.0.0.1',0,0,null,0,0,0,0),
+(3,'MODERATOR','a7f5fbff0b4eec2d6b6e78e38e8312e64d700008',1,'','0','0','','2006-04-25 10:19:35','127.0.0.1',0,0,null,0,0,0,0),
+(4,'PLAYER','3ce8a96d17c5ae88a30681024e86279f1a38c041',0,'','0','0','','2006-04-25 10:19:35','127.0.0.1',0,0,null,0,0,0,0),
+(5,'JMaNGOS','c43a8b850b5744306ff2fab8ac6725a602572c3c',5,'','0','0','','2006-04-25 10:19:35','127.0.0.1',0,0,null,0,0,0,0);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -16,26 +16,26 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `db_version`
+-- Table structure for table `world_db_version`
 --
 
-DROP TABLE IF EXISTS `db_version`;
-CREATE TABLE `db_version` (
+DROP TABLE IF EXISTS `world_db_version`;
+CREATE TABLE `world_db_version` (
   `version` varchar(120) default NULL,
   `creature_ai_version` varchar(120) default NULL,
   `cache_id` int(10) default '0',
-  `required_000_0_1_01_start` bit(1) default NULL
+  `required_000_0_1_01_start_world` bit(1) default NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Used DB version notes';
 
 --
--- Dumping data for table `db_version`
+-- Dumping data for table `world_db_version`
 --
 
-LOCK TABLES `db_version` WRITE;
-/*!40000 ALTER TABLE `db_version` DISABLE KEYS */;
-INSERT INTO `db_version` VALUES
-('Mangos default database.','Creature EventAI not provided.',0,NULL);
-/*!40000 ALTER TABLE `db_version` ENABLE KEYS */;
+LOCK TABLES `world_db_version` WRITE;
+/*!40000 ALTER TABLE `world_db_version` DISABLE KEYS */;
+INSERT INTO `world_db_version` VALUES
+('JMangos default database.','Creature EventAI not provided.',0,NULL);
+/*!40000 ALTER TABLE `world_db_version` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

@@ -23,6 +23,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+
 /**
  * The Class Account.
  */
@@ -33,65 +36,67 @@ public class AccountEntity {
     @Id
     @Column(name = "ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer  id;
     
     /** The user name. */
     @Column(name = "USERNAME", length = 32, unique = true)
-    private String  username;
+    private String   username;
     
     /** Password hash. */
     @Column(name = "SHA_PASS_HASH", length = 32)
-    private String  shaPasswordHash;
+    private String   shaPasswordHash;
     
     /** Access level of account 0 = regular user, > 0 = GM. */
     @Column(name = "GMLEVEL")
-    private Byte    gmlevel;
+    private Byte     gmlevel;
     
     /** The session key. */
     @Column(name = "SESSIONKEY")
-    private String  sessionKey;
+    private String   sessionKey;
     
     /** The v. */
     @Column(name = "V", nullable = false)
-    private String  v;
+    private String   v;
     
     /** The s. */
     @Column(name = "S", nullable = false)
-    private String  s;
+    private String   s;
     
     @Column(name = "EMAIL")
-    private String  email;
+    private String   email;
     
-    // @Column(name = "JOINDATE")
-    // private Date joindate;
+    @Column(name = "JOINDATE")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime joindate;
     
     @Column(name = "LAST_IP", length = 30)
-    private String  lastIp;
+    private String   lastIp;
     
     @Column(name = "FAILED_LOGINS")
-    private Long    failedLogins;
+    private Long     failedLogins;
     
     /** Account activated. */
     @Column(name = "LOCKED")
-    private Byte    locked;
+    private Byte     locked;
     
-    // @Column(name = "LAST_LOGIN")
-    // private Date lastLogin;
+    @Column(name = "LAST_LOGIN")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime lastLogin;
     
     @Column(name = "ACTIVE_REALM_ID")
-    private Long    activeRealmId;
+    private Long     activeRealmId;
     
     @Column(name = "EXPANSION")
-    private Byte    expansion;
+    private Byte     expansion;
     
     @Column(name = "MUTETIME")
-    private Long    mutetime;
+    private Long     mutetime;
     
     @Column(name = "LOCALE")
-    private Byte    locale;
+    private Byte     locale;
     
     @Column(name = "LAST_SERVER")
-    private Byte    lastServer;
+    private Byte     lastServer;
     
     public Integer getId() {
     
@@ -173,15 +178,15 @@ public class AccountEntity {
         this.email = email;
     }
     
-    // public Date getJoindate() {
-    //
-    // return joindate;
-    // }
-    //
-    // public void setJoindate(Date joindate) {
-    //
-    // this.joindate = joindate;
-    // }
+    public DateTime getJoindate() {
+    
+        return this.joindate;
+    }
+    
+    public void setJoindate(final DateTime joindate) {
+    
+        this.joindate = joindate;
+    }
     
     public String getLastIp() {
     
@@ -213,15 +218,15 @@ public class AccountEntity {
         this.locked = locked;
     }
     
-    // public Date getLastLogin() {
-    //
-    // return lastLogin;
-    // }
-    //
-    // public void setLastLogin(Date lastLogin) {
-    //
-    // this.lastLogin = lastLogin;
-    // }
+    public DateTime getLastLogin() {
+    
+        return this.lastLogin;
+    }
+    
+    public void setLastLogin(final DateTime lastLogin) {
+    
+        this.lastLogin = lastLogin;
+    }
     
     public Long getActiveRealmId() {
     
