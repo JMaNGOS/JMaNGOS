@@ -16,6 +16,8 @@
  *******************************************************************************/
 package org.jmangos.auth.entities;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,11 +25,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- * The Class Account.
- */
 @Entity
-@Table(name = "realmlist")
+@Table(name = "REALMLIST")
 public class RealmEntity {
     
     @Id
@@ -169,6 +168,28 @@ public class RealmEntity {
     public void setRealmbuilds(final String realmbuilds) {
     
         this.realmbuilds = realmbuilds;
+    }
+    
+    @Override
+    public int hashCode() {
+    
+        return Objects.hash(this.id, this.name);
+    }
+    
+    @Override
+    public boolean equals(final Object obj) {
+    
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final RealmEntity other = (RealmEntity) obj;
+        return Objects.equals(this.id, other.id) && Objects.equals(this.name, other.name);
     }
     
 }

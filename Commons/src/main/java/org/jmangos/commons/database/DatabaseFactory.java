@@ -41,7 +41,6 @@ public class DatabaseFactory implements Service {
      */
     private static SessionFactory worldSessionFactory;
     private static SessionFactory charactersSessionFactory;
-    private static SessionFactory accountsSessionFactory;
     
     /**
      * Initializes DatabaseFactory.
@@ -51,33 +50,6 @@ public class DatabaseFactory implements Service {
     public synchronized void start() {
     
         // Loading config fields
-    }
-    
-    /**
-     * Returns number of active connections in the pool.
-     * 
-     * @return int Active DB Connections
-     */
-    public int getActiveConnections() {
-    
-        Long count = getCharactersSessionFactory().getStatistics().getSessionOpenCount() - getCharactersSessionFactory().getStatistics().getSessionCloseCount();
-        count += getWorldSessionFactory().getStatistics().getSessionOpenCount() - getWorldSessionFactory().getStatistics().getSessionCloseCount();
-        
-        return count.intValue();
-    }
-    
-    /**
-     * Returns number of Idle connections. Idle connections represent the number of instances in
-     * Database Connections that have once been connected and now are closed and ready for re-use.
-     * The 'getConnection' function will grab idle connections before creating new ones.
-     * 
-     * @return int Idle DB Connections
-     */
-    public int getIdleConnections() {
-    
-        // TODO: reimplement
-        return 0;
-        // return connectionPool.getNumIdle();
     }
     
     /**
@@ -93,16 +65,12 @@ public class DatabaseFactory implements Service {
             if (charactersSessionFactory != null) {
                 charactersSessionFactory.close();
             }
-            if (accountsSessionFactory != null) {
-                accountsSessionFactory.close();
-            }
         } catch (final Exception e) {
             log.warn("Failed to shutdown DatabaseFactory", e);
         }
         
         worldSessionFactory = null;
         charactersSessionFactory = null;
-        accountsSessionFactory = null;
     }
     
     /**
@@ -161,32 +129,4 @@ public class DatabaseFactory implements Service {
         return charactersSessionFactory;
     }
     
-    public synchronized SessionFactory getAccountsSessionFactory() {
-    
-        if (accountsSessionFactory == null) {
-            // Bring up hibernate
-            final AnnotationConfiguration config = new AnnotationConfiguration();
-            config.setProperty("hibernate.connection.driver_class", this.databaseConfig.ACCOUNT_DATABASE_DRIVER);
-            config.setProperty("hibernate.connection.url", this.databaseConfig.ACCOUNT_DATABASE_URL + this.databaseConfig.ACCOUNT_DATABASE_NAME
-                    + "?autoReconnect=true");
-            config.setProperty("hibernate.connection.username", this.databaseConfig.ACCOUNT_DATABASE_USER);
-            config.setProperty("hibernate.connection.password", this.databaseConfig.ACCOUNT_DATABASE_PASSWORD);
-            config.setProperty("hibernate.dialect", this.databaseConfig.ACCOUNT_DATABASE_DIALECT);
-            config.setProperty("hibernate.c3p0.min_size", this.databaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MIN.toString());
-            config.setProperty("hibernate.c3p0.max_size", this.databaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MAX.toString());
-            config.configure("/accounts.cfg.xml");
-            
-            accountsSessionFactory = config.buildSessionFactory();
-            log.info("Hibernate accountsSessionFactory initialized...");
-        }
-        
-        return accountsSessionFactory;
-    }
-    
-    /**
-     * Default constructor.
-     */
-    public DatabaseFactory() {
-    
-    }
 }

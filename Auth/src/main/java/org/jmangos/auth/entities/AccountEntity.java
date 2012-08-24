@@ -16,6 +16,8 @@
  *******************************************************************************/
 package org.jmangos.auth.entities;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,11 +28,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
-/**
- * The Class Account.
- */
 @Entity
-@Table(name = "account")
+@Table(name = "ACCOUNT")
 public class AccountEntity {
     
     @Id
@@ -278,47 +277,27 @@ public class AccountEntity {
         this.lastServer = lastServer;
     }
     
-    /**
-     * Retunrns true if players name and password has are equals.
-     * 
-     * @param o
-     *            another player to check
-     * @return true if names and password hash matches
-     */
-    @Override
-    public boolean equals(final Object o) {
-    
-        if (this == o) {
-            return true;
-        }
-        
-        if (!(o instanceof AccountEntity)) {
-            return false;
-        }
-        
-        final AccountEntity account = (AccountEntity) o;
-        
-        if (this.username != null ? !this.username.equals(account.username) : account.username != null) {
-            return false;
-        }
-        
-        return !(this.shaPasswordHash != null ? !this.shaPasswordHash.equals(account.shaPasswordHash) : account.shaPasswordHash != null);
-        
-    }
-    
-    /**
-     * Returns player hashcode.
-     * 
-     * @return player hashcode
-     */
     @Override
     public int hashCode() {
     
-        int result = this.username != null ? this.username.hashCode() : 0;
-        
-        result = (31 * result) + (this.shaPasswordHash != null ? this.shaPasswordHash.hashCode() : 0);
-        
-        return result;
+        return Objects.hash(this.id, this.username, this.shaPasswordHash);
+    }
+    
+    @Override
+    public boolean equals(final Object obj) {
+    
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final AccountEntity other = (AccountEntity) obj;
+        return Objects.equals(this.id, other.id) && Objects.equals(this.username, other.username)
+                && Objects.equals(this.shaPasswordHash, other.shaPasswordHash);
     }
     
 }
