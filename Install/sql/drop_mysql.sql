@@ -10,7 +10,7 @@ REVOKE GRANT OPTION ON `realm` . * FROM 'JMaNGOS'@'localhost';
 
 REVOKE ALL PRIVILEGES ON `auth` . * FROM 'JMaNGOS'@'localhost';
 
-REVOKE GRANT OPTION ON `uth` . * FROM 'JMaNGOS'@'localhost';
+REVOKE GRANT OPTION ON `auth` . * FROM 'JMaNGOS'@'localhost';
 
 DELETE FROM `user` WHERE CONVERT( User USING utf8 ) = CONVERT( 'JMaNGOS' USING utf8 ) AND CONVERT( Host USING utf8 ) = CONVERT( 'localhost' USING utf8 ) ;
 
