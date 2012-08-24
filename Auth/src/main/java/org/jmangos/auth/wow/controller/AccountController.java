@@ -16,7 +16,7 @@ import org.criteria4jpa.criterion.Restrictions;
 import org.jmangos.auth.entities.AccountEntity;
 import org.jmangos.auth.utils.AccountUtils;
 import org.jmangos.auth.wow.container.AccountsContainer;
-import org.jmangos.auth.wow.services.impl.AccountServiceImpl;
+import org.jmangos.auth.wow.services.AccountService;
 import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
@@ -32,7 +32,7 @@ public class AccountController {
     private static final Logger     logger   = LoggerFactory.getLogger(AccountController.class);
     
     @Inject
-    private AccountServiceImpl      accountService;
+    private AccountService          accountService;
     
     private final AccountsContainer accounts = new AccountsContainer();
     

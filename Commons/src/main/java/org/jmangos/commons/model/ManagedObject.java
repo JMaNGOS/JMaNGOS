@@ -26,7 +26,7 @@ public class ManagedObject {
     /**
      * The object id.
      */
-    private final int objectId;
+    private int objectId;
     
     public ManagedObject() {
     
@@ -62,8 +62,8 @@ public class ManagedObject {
      *            the object id
      * @return the int
      */
-    public final int setObjectId(final int objectId) {
+    public void setObjectId(final int objectId) {
     
-        return objectId;
+        this.objectId = objectId;
     }
 }

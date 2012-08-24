@@ -7,7 +7,7 @@
         <!-- DB schema will be updated if needed -->
         <property name="hbm2ddl.auto">update</property>
         <property name="current_session_context_class">thread</property>
-        <mapping class="org.jmangos.realm.domain.CharacterData"/>
+        <mapping class="org.jmangos.realm.entities.CharacterEntity"/>
         <mapping class="org.jmangos.realm.domain.PlayerHomeBindData"/>
         <mapping class="org.jmangos.realm.domain.InventoryItem"/>
     </session-factory>

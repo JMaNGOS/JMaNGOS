@@ -26,8 +26,8 @@ import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.commons.network.sender.NettyPacketSender;
 import org.jmangos.commons.service.ServiceContent;
-import org.jmangos.realm.domain.CharacterData;
 import org.jmangos.realm.domain.PlayerHomeBindData;
+import org.jmangos.realm.entities.CharacterEntity;
 import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.base.update.PlayerFields;
 import org.jmangos.realm.model.base.update.UnitField;
@@ -63,7 +63,7 @@ public class Player extends Units implements ChanneledObject {
     final static int            TRADE_SLOT_COUNT     = 7;
     
     /** The character data. */
-    private CharacterData       characterData;
+    private CharacterEntity       characterData;
     
     /** The channel. */
     private NetworkChannel      channel;
@@ -114,7 +114,7 @@ public class Player extends Units implements ChanneledObject {
      * @param cd
      *            the cd
      */
-    public Player(final CharacterData cd) {
+    public Player(final CharacterEntity cd) {
     
         super(cd.getGuid());
         setName(cd.getName());
@@ -135,7 +135,7 @@ public class Player extends Units implements ChanneledObject {
      * @param characterData
      *            the characterData to set
      */
-    public final void setCharacterData(final CharacterData characterData) {
+    public final void setCharacterData(final CharacterEntity characterData) {
     
         this.characterData = characterData;
         setName(characterData.getName());
@@ -185,7 +185,7 @@ public class Player extends Units implements ChanneledObject {
      * 
      * @return the characterData
      */
-    public CharacterData getCharacterData() {
+    public CharacterEntity getCharacterData() {
     
         return this.characterData;
     }

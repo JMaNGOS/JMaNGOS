@@ -58,9 +58,9 @@ public class SMSG_NAME_QUERY_RESPONSE extends AbstractWoWServerPacket {
         writeC(0);
         writeS(this.player.getName());
         writeC(0);
-        writeC(this.player.getCharacterData().getRace().getValue());
+        writeC(this.player.getCharacterData().getRace());
         writeC(this.player.getCharacterData().getGender());
-        writeC(this.player.getCharacterData().getClazz().getValue());
+        writeC(this.player.getCharacterData().getClazz());
         writeC(0);
     }
     

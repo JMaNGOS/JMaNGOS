@@ -1,4 +1,4 @@
-package org.jmangos.realm.domain;
+package org.jmangos.realm.entities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +19,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
+import org.jmangos.realm.domain.InventoryItem;
+import org.jmangos.realm.domain.PlayerHomeBindData;
 import org.jmangos.realm.model.enums.Classes;
 import org.jmangos.realm.model.enums.Races;
 
@@ -28,7 +30,7 @@ import org.jmangos.realm.model.enums.Races;
  */
 @Entity
 @Table(name = "characters")
-public class CharacterData {
+public class CharacterEntity {
     
     @Id
     @TableGenerator(table = "sequences", allocationSize = 1, name = "char_seq")
@@ -70,7 +72,7 @@ public class CharacterData {
     
     @Enumerated(EnumType.STRING)
     @Column(name = "class", nullable = true, insertable = true, updatable = true, length = 50, precision = 0)
-    private Classes             clazz;
+    private int             clazz;
     
     @Basic
     @Column(name = "death_expire_time", nullable = true, insertable = true, updatable = true, length = 19, precision = 0)
@@ -214,7 +216,7 @@ public class CharacterData {
     
     @Enumerated(EnumType.STRING)
     @Column(name = "race", nullable = true, insertable = true, updatable = true, length = 50, precision = 0)
-    private Races               race;
+    private int               race;
     
     @Basic
     @Column(name = "resettalents_cost", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
@@ -331,11 +333,11 @@ public class CharacterData {
     /**
      * Empty constructor
      */
-    public CharacterData() {
+    public CharacterEntity() {
     
     }
     
-    public int getGuid() {
+    public Integer getGuid() {
     
         return this.guid;
     }
@@ -995,22 +997,22 @@ public class CharacterData {
         this.zone = zone;
     }
     
-    public Classes getClazz() {
+    public int getClazz() {
     
         return this.clazz;
     }
     
-    public void setClazz(final Classes clazz) {
+    public void setClazz(final int clazz) {
     
         this.clazz = clazz;
     }
     
-    public Races getRace() {
+    public int getRace() {
     
         return this.race;
     }
     
-    public void setRace(final Races race) {
+    public void setRace(final int race) {
     
         this.race = race;
     }

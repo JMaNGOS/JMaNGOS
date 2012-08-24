@@ -42,7 +42,7 @@ public class CMD_SESSION_KEY extends AbstractRealmClientPacket {
     private RealmController      realmController;
     
     private String               account;
-    private int                 accountId;
+    private int                  accountId;
     private BigNumber            sessionKey;
     
     /**

@@ -24,7 +24,7 @@ import org.jmangos.commons.utils.BigNumber;
  * The Class Account.
  */
 public class AccountInfo extends NamedObject implements ChanneledObject {
-
+    
     /** Access level of account 0 = regular user, > 0 = GM. */
     private byte           accessLevel;
     
@@ -54,9 +54,9 @@ public class AccountInfo extends NamedObject implements ChanneledObject {
     private BigNumber      sessionKey;
     
     public AccountInfo() {
+    
         super();
     }
-    
     
     /**
      * Gets the _reconnect proof.
@@ -208,7 +208,6 @@ public class AccountInfo extends NamedObject implements ChanneledObject {
     
         this.M2 = bs;
     }
-    
     
     /**
      * Sets the s.

@@ -10,17 +10,18 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
-import org.jmangos.realm.domain.CharacterData;
 import org.jmangos.realm.domain.InventoryItem;
 import org.jmangos.realm.domain.PlayerHomeBindData;
 import org.jmangos.realm.domain.Playercreateinfo;
 import org.jmangos.realm.domain.PlayercreateinfoPK;
+import org.jmangos.realm.entities.CharacterEntity;
 import org.jmangos.realm.model.enums.Classes;
 import org.jmangos.realm.model.enums.Races;
 import org.jmangos.realm.model.player.CharacterStartOutfit;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_CREATE;
 import org.jmangos.realm.service.DBCStorage;
+import org.jmangos.realm.services.CharacterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -33,6 +34,9 @@ import org.springframework.stereotype.Component;
 public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
     
     Logger                       log = LoggerFactory.getLogger(getClass());
+    
+    @Inject
+    private CharacterService     characterService;
     
     @Inject
     private DatabaseFactory      databaseFactory;
@@ -71,9 +75,17 @@ public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
+        // final Criterion criterion = Restrictions.eq("name", this.charName);
+        // final List<CharacterEntity> characters = this.characterService.readCharacters(criterion);
+        // if(characters != null && !characters.isEmpty()){
+        // this.log.warn("Username already exists: " + this.charName);
+        // this.sender.send(getClient(), new
+        // SMSG_CHAR_CREATE(SMSG_CHAR_CREATE.CharCreateCodes.NAME_IN_USE));
+        // }
+        
         final Session session = this.databaseFactory.getCharactersSessionFactory().openSession();
         
-        final Query query = session.createQuery("from CharacterData where name = :name").setString("name", this.charName);
+        final Query query = session.createQuery("from CharacterEntity where name = :name").setString("name", this.charName);
         if (query.list().size() != 0) {
             this.log.warn("Username already exists: " + this.charName);
             this.sender.send(getClient(), new SMSG_CHAR_CREATE(SMSG_CHAR_CREATE.CharCreateCodes.NAME_IN_USE));
@@ -89,7 +101,7 @@ public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
             return;
         }
         
-        final CharacterData charData = new CharacterData();
+        final CharacterEntity charData = new CharacterEntity();
         // Set account id
         charData.setAccount(getAccountInfo().getObjectId());
         
@@ -97,8 +109,8 @@ public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
         charData.setName(this.charName);
         
         // Set Class/Race/Gender
-        charData.setClazz(Classes.get(this.charClass));
-        charData.setRace(Races.get(this.charRace));
+        charData.setClazz(this.charClass);
+        charData.setRace(this.charRace);
         charData.setGender(this.gender);
         
         // Set spawn coord

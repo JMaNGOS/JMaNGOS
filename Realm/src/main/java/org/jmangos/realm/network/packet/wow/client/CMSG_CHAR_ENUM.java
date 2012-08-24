@@ -17,17 +17,19 @@
 package org.jmangos.realm.network.packet.wow.client;
 
 import java.nio.BufferUnderflowException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.criteria4jpa.criterion.Criterion;
+import org.criteria4jpa.criterion.Restrictions;
+import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
-import org.jmangos.realm.domain.CharacterData;
+import org.jmangos.realm.entities.CharacterEntity;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_ENUM;
-import org.jmangos.realm.service.ItemStorages;
+import org.jmangos.realm.services.CharacterService;
 import org.springframework.stereotype.Component;
 
 /**
@@ -42,7 +44,7 @@ public class CMSG_CHAR_ENUM extends AbstractWoWClientPacket {
     private AbstractPacketSender sender;
     
     @Inject
-    private ItemStorages         itemStorages;
+    private CharacterService     characterService;
     
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
@@ -53,9 +55,10 @@ public class CMSG_CHAR_ENUM extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
-        // TODO FIX ME!!!
-        List<CharacterData> charlist = new ArrayList<CharacterData>();
-        this.sender.send(getClient(), new SMSG_CHAR_ENUM(charlist));
+        final AccountInfo account = (AccountInfo) getClient().getChanneledObject();
+        final Criterion criterion = Restrictions.eq("account", account.getObjectId());
+        final List<CharacterEntity> characters = this.characterService.readCharacters(criterion);
+        this.sender.send(getClient(), new SMSG_CHAR_ENUM(characters));
     }
     
 }

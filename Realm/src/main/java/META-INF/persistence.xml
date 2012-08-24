@@ -21,10 +21,11 @@
     http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
     version="2.0">
 
-    <persistence-unit name="auth">
-
-        <class>org.jmangos.auth.entities.AccountEntity</class>
-        <class>org.jmangos.auth.entities.RealmEntity</class>
+    <persistence-unit name="realm">
+    
+        <class>org.jmangos.realm.entities.CharacterEntity</class>
+        <class>org.jmangos.realm.domain.PlayerHomeBindData</class>
+        <class>org.jmangos.realm.domain.InventoryItem</class>
 
         <exclude-unlisted-classes/>
 

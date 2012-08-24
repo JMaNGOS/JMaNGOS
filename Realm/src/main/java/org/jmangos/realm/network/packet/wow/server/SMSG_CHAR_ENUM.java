@@ -20,8 +20,8 @@ import java.util.BitSet;
 import java.util.List;
 
 import org.jmangos.commons.service.ServiceContent;
-import org.jmangos.realm.domain.CharacterData;
 import org.jmangos.realm.domain.InventoryItem;
+import org.jmangos.realm.entities.CharacterEntity;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 import org.jmangos.realm.network.packet.wow.client.CMSG_AUTH_SESSION;
 import org.jmangos.realm.service.ItemStorages;
@@ -34,10 +34,10 @@ import org.slf4j.LoggerFactory;
 public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
     
     /** The charlist. */
-    private final List<CharacterData> charlist;
+    private final List<CharacterEntity> charlist;
     
     /** The Constant logger. */
-    private static final Logger       logger = LoggerFactory.getLogger(CMSG_AUTH_SESSION.class);
+    private static final Logger         logger = LoggerFactory.getLogger(CMSG_AUTH_SESSION.class);
     
     /**
      * Instantiates a new <tt>SMSG_CHAR_ENUM</tt> packet.
@@ -45,7 +45,7 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
      * @param charlist
      *            the charlist
      */
-    public SMSG_CHAR_ENUM(final List<CharacterData> charlist) {
+    public SMSG_CHAR_ENUM(final List<CharacterEntity> charlist) {
     
         this.charlist = charlist;
     }
@@ -58,12 +58,12 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
     
         logger.info("CHARLIST SIZE " + this.charlist.size());
         writeC(this.charlist.size());
-        for (final CharacterData character : this.charlist) {
+        for (final CharacterEntity character : this.charlist) {
             writeQ(character.getGuid());
             // writePackedGuid( character.getGuid() );
             writeS(character.getName());
-            writeC((byte) character.getRace().getValue());
-            writeC((byte) character.getClazz().getValue());
+            writeC((byte) character.getRace());
+            writeC((byte) character.getClazz());
             writeC(character.getGender());
             final int playerBytes = character.getPlayerBytes();
             writeC(playerBytes & 0xFF);
@@ -89,7 +89,7 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
             writeD(0x00 /* character.getPetLevel() */);
             writeD(0x00 /* character.getPetFamily() */);
             
-           // final List<InventoryItem> inventory = character.getInventory();
+            // final List<InventoryItem> inventory = character.getInventory();
             
             final ItemStorages itemStorages = ServiceContent.getContext().getBean(ItemStorages.class);
             if (itemStorages == null) {

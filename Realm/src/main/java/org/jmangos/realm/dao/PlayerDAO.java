@@ -24,9 +24,9 @@ import javax.inject.Inject;
 import org.hibernate.Session;
 import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
-import org.jmangos.realm.domain.CharacterData;
 import org.jmangos.realm.domain.InventoryItem;
 import org.jmangos.realm.domain.PlayerHomeBindData;
+import org.jmangos.realm.entities.CharacterEntity;
 import org.springframework.stereotype.Component;
 
 /**
@@ -48,10 +48,10 @@ public class PlayerDAO implements DAO {
         return PlayerDAO.class.getName();
     }
     
-    public CharacterData getCharacter(final int characterId) {
+    public CharacterEntity getCharacter(final int characterId) {
     
         final Session session = this.databaseFactory.getCharactersSessionFactory().openSession();
-        final CharacterData characterData = (CharacterData) session.get(CharacterData.class, characterId);
+        final CharacterEntity characterData = (CharacterEntity) session.get(CharacterEntity.class, characterId);
         return characterData;
     }
     
@@ -65,7 +65,7 @@ public class PlayerDAO implements DAO {
     public PlayerHomeBindData loadHomeBind(final int objectId) {
     
         final Session session = this.databaseFactory.getCharactersSessionFactory().openSession();
-        final CharacterData characterData = (CharacterData) session.get(CharacterData.class, objectId);
+        final CharacterEntity characterData = (CharacterEntity) session.get(CharacterEntity.class, objectId);
         return characterData.getHomeBindData();
     }
     

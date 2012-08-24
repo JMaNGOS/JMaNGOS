@@ -25,7 +25,7 @@ import javolution.util.FastMap;
 
 import org.jmangos.auth.entities.RealmEntity;
 import org.jmangos.auth.realm.container.RealmServersContainer;
-import org.jmangos.auth.realm.services.impl.RealmServiceImpl;
+import org.jmangos.auth.realm.services.RealmService;
 import org.jmangos.commons.dataholder.Visitor;
 import org.jmangos.commons.model.RealmInfo;
 import org.jmangos.commons.service.Service;
@@ -51,7 +51,7 @@ public class RealmListController implements Service {
     
     /** The realm dao. */
     @Inject
-    private RealmServiceImpl            realmService;
+    private RealmService                realmService;
     
     private long                        nextUpdateTime = 0;
     

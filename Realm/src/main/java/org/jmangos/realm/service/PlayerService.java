@@ -29,11 +29,11 @@ import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.RealmServer;
 import org.jmangos.realm.dao.PlayerDAO;
-import org.jmangos.realm.domain.CharacterData;
 import org.jmangos.realm.domain.InventoryItem;
 import org.jmangos.realm.domain.ItemPrototype;
 import org.jmangos.realm.domain.PlayerClassLevelInfo;
 import org.jmangos.realm.domain.PlayerLevelInfo;
+import org.jmangos.realm.entities.CharacterEntity;
 import org.jmangos.realm.model.base.WorldObject;
 import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.base.update.ObjectFields;
@@ -266,7 +266,7 @@ public class PlayerService {
     public void savePlayer(final Player player) {
     
         final Session session = this.databaseFactory.getWorldSessionFactory().openSession();
-        final CharacterData character = new CharacterData();
+        final CharacterEntity character = new CharacterEntity();
         
         character.setAccount(player.getAccountInfo().getObjectId());
         character.setGuid(new Long(player.getObjectGuid().getRawValue()).intValue());
@@ -315,10 +315,10 @@ public class PlayerService {
     
         player.initfields();
         player.SetUInt64Value(ObjectFields.OBJECT_FIELD_GUID, player.getObjectGuid().getRawValue());
-        final CharacterData ch = player.getCharacterData();
+        final CharacterEntity ch = player.getCharacterData();
         int bytes0 = 0;
-        bytes0 |= ch.getRace().getValue();
-        bytes0 |= ch.getClazz().getValue() << 8;
+        bytes0 |= ch.getRace();
+        bytes0 |= ch.getClazz() << 8;
         bytes0 |= ch.getGender() << 16;
         player.SetUInt32Value(UnitField.UNIT_FIELD_BYTES_0, bytes0);
         player.SetUInt32Value(UnitField.UNIT_FIELD_LEVEL, ch.getLevel());
