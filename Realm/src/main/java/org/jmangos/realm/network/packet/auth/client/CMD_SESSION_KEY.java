@@ -19,12 +19,10 @@ package org.jmangos.realm.network.packet.auth.client;
 import java.nio.BufferUnderflowException;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.jmangos.commons.model.AccountInfo;
-import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.commons.utils.BigNumber;
-import org.jmangos.realm.controller.RealmController;
+import org.jmangos.realm.controller.AccountQueueController;
 import org.jmangos.realm.network.packet.auth.AbstractRealmClientPacket;
 import org.springframework.stereotype.Component;
 
@@ -35,15 +33,11 @@ import org.springframework.stereotype.Component;
 public class CMD_SESSION_KEY extends AbstractRealmClientPacket {
     
     @Inject
-    @Named("serverPacketSender")
-    private AbstractPacketSender sender;
+    private AccountQueueController accountQueueController;
     
-    @Inject
-    private RealmController      realmController;
-    
-    private String               account;
-    private int                  accountId;
-    private BigNumber            sessionKey;
+    private String                 accountName;
+    private int                    accountId;
+    private BigNumber              sessionKey;
     
     /**
      * @see org.jmangos.commons.network.model.ReceivablePacket#readImpl()
@@ -51,7 +45,7 @@ public class CMD_SESSION_KEY extends AbstractRealmClientPacket {
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
-        this.account = readS();
+        this.accountName = readS();
         this.accountId = readD();
         this.sessionKey = new BigNumber();
         this.sessionKey.setBinary(readB(40));
@@ -64,9 +58,9 @@ public class CMD_SESSION_KEY extends AbstractRealmClientPacket {
     protected void runImpl() {
     
         final AccountInfo account = new AccountInfo();
-        account.setName(this.account);
+        account.setName(this.accountName);
         account.setObjectId(this.accountId);
         account.setSessionKey(this.sessionKey);
-        this.realmController.setAccount(account);
+        this.accountQueueController.recieveAccountData(account);
     }
 }

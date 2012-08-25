@@ -18,7 +18,7 @@ package org.jmangos.realm.network.packet.wow.server;
 
 import java.util.List;
 
-import org.jmangos.realm.model.base.AddonInfo;
+import org.jmangos.commons.model.AddonInfo;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 
 /**

@@ -24,6 +24,7 @@ import javax.inject.Named;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.config.Config;
+import org.jmangos.realm.controller.AccountQueueController;
 import org.jmangos.realm.controller.RealmController;
 import org.jmangos.realm.network.decoder.AuthPacketFrameDecoder;
 import org.jmangos.realm.network.decoder.AuthPacketFrameEncoder;
@@ -40,13 +41,16 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractRealmClientPacket {
     
     @Inject
     @Named("serverPacketSender")
-    private AbstractPacketSender sender;
+    private AbstractPacketSender   sender;
     
     @Inject
-    private Config               config;
+    private Config                 config;
     
     @Inject
-    private RealmController      realmController;
+    private RealmController        realmController;
+    
+    @Inject
+    private AccountQueueController accountQueueController;
     
     /*
      * (non-Javadoc)
@@ -74,7 +78,9 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractRealmClientPacket {
         final RealmToAuthChannelHandler channelHandler = (RealmToAuthChannelHandler) pipeline.getLast();
         channelHandler.getCrypt().init(channelHandler.getSeed());
         
-        this.realmController.getAuthNetworkChannel(getClient());
+        // TODO save in network service
+        this.realmController.setAuthNetworkChannel(getClient());
+        this.accountQueueController.setAuthNetworkChannel(getClient());
         
         // read from Player service
         final Float popl = 0.4f;

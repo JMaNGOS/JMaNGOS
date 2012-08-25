@@ -16,6 +16,8 @@
  *******************************************************************************/
 package org.jmangos.commons.model;
 
+import java.util.ArrayList;
+
 import org.jmangos.commons.network.model.ChanneledObject;
 import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.utils.BigNumber;
@@ -26,32 +28,36 @@ import org.jmangos.commons.utils.BigNumber;
 public class AccountInfo extends NamedObject implements ChanneledObject {
     
     /** Access level of account 0 = regular user, > 0 = GM. */
-    private byte           accessLevel;
+    private byte                 accessLevel;
     
     /** The M2. */
-    private byte[]         M2;
+    private byte[]               M2;
     
     /** The channel. */
-    private NetworkChannel channel;
+    private NetworkChannel       channel;
     
     /** The b. */
-    private BigNumber      b;
+    private BigNumber            b;
     
     /** The crypto b. */
-    private BigNumber      cryptoB;
+    private BigNumber            cryptoB;
     
     /** The s_crypto. */
-    private BigNumber      s_crypto;
+    private BigNumber            s_crypto;
     
     /** The v_crypto. */
-    private BigNumber      v_crypto;
+    private BigNumber            v_crypto;
     
     /** The _reconnect proof. */
-    private BigNumber      _reconnectProof = new BigNumber();
+    private BigNumber            _reconnectProof = new BigNumber();
     
-    private byte[]         vK;
+    private byte[]               vK;
     
-    private BigNumber      sessionKey;
+    private BigNumber            sessionKey;
+    
+    private ArrayList<AddonInfo> addonLists;
+    
+    private byte[]               clientSeed;
     
     public AccountInfo() {
     
@@ -253,4 +259,27 @@ public class AccountInfo extends NamedObject implements ChanneledObject {
         this.sessionKey = sessionKey;
     }
     
+    public ArrayList<AddonInfo> getAddonLists() {
+    
+        return this.addonLists;
+    }
+    
+    public void setAddonLists(final ArrayList<AddonInfo> addonLists) {
+    
+        this.addonLists = addonLists;
+    }
+    
+    public void setClientSeed(final byte[] clientSeed) {
+    
+        this.clientSeed = clientSeed;
+        
+    }
+    
+    /**
+     * @return the clientSeed
+     */
+    public final byte[] getClientSeed() {
+    
+        return this.clientSeed;
+    }
 }
