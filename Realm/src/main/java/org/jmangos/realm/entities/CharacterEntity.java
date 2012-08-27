@@ -21,8 +21,6 @@ import javax.persistence.TableGenerator;
 
 import org.jmangos.realm.domain.InventoryItem;
 import org.jmangos.realm.domain.PlayerHomeBindData;
-import org.jmangos.realm.model.enums.Classes;
-import org.jmangos.realm.model.enums.Races;
 
 /**
  * Created with IntelliJ IDEA. User: paalgyula email: paalgyula@gmail.com Date: 2012.08.11. Time:
@@ -72,7 +70,7 @@ public class CharacterEntity {
     
     @Enumerated(EnumType.STRING)
     @Column(name = "class", nullable = true, insertable = true, updatable = true, length = 50, precision = 0)
-    private int             clazz;
+    private int                 clazz;
     
     @Basic
     @Column(name = "death_expire_time", nullable = true, insertable = true, updatable = true, length = 19, precision = 0)
@@ -216,7 +214,7 @@ public class CharacterEntity {
     
     @Enumerated(EnumType.STRING)
     @Column(name = "race", nullable = true, insertable = true, updatable = true, length = 50, precision = 0)
-    private int               race;
+    private int                 race;
     
     @Basic
     @Column(name = "resettalents_cost", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)

@@ -10,7 +10,7 @@ public class SMSG_CHAR_CREATE extends AbstractWoWServerPacket {
     
     private Integer code;
     
-    public static enum CharCreateCodes {
+    public static enum Code {
         IN_PROGRESS(0x2E),
         SUCCESS(0x2F),
         ERROR(0x30),
@@ -38,7 +38,7 @@ public class SMSG_CHAR_CREATE extends AbstractWoWServerPacket {
         
         private int value;
         
-        CharCreateCodes(final int value) {
+        Code(final int value) {
         
             this.value = value;
         }
@@ -58,7 +58,7 @@ public class SMSG_CHAR_CREATE extends AbstractWoWServerPacket {
         this.code = code;
     }
     
-    public SMSG_CHAR_CREATE(final CharCreateCodes code) {
+    public SMSG_CHAR_CREATE(final Code code) {
     
         this.code = code.getValue();
     }

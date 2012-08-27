@@ -19,11 +19,11 @@ package org.jmangos.commons.database;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.jmangos.commons.service.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -40,7 +40,6 @@ public class DatabaseFactory implements Service {
      * Returns Hibernate Session
      */
     private static SessionFactory worldSessionFactory;
-    private static SessionFactory charactersSessionFactory;
     
     /**
      * Initializes DatabaseFactory.
@@ -62,15 +61,11 @@ public class DatabaseFactory implements Service {
             if (worldSessionFactory != null) {
                 worldSessionFactory.close();
             }
-            if (charactersSessionFactory != null) {
-                charactersSessionFactory.close();
-            }
         } catch (final Exception e) {
             log.warn("Failed to shutdown DatabaseFactory", e);
         }
         
         worldSessionFactory = null;
-        charactersSessionFactory = null;
     }
     
     /**
@@ -98,35 +93,6 @@ public class DatabaseFactory implements Service {
         }
         
         return worldSessionFactory;
-    }
-    
-    /**
-     * Returns Character Database's hibernate session
-     * 
-     * @return Hibernate Session
-     */
-    public synchronized SessionFactory getCharactersSessionFactory() {
-    
-        if (charactersSessionFactory == null) {
-            // Bring up hibernate
-            
-            final AnnotationConfiguration config = new AnnotationConfiguration();
-            config.setProperty("hibernate.connection.driver_class", this.databaseConfig.CHARS_DATABASE_DRIVER);
-            config.setProperty("hibernate.connection.url", this.databaseConfig.CHARS_DATABASE_URL + this.databaseConfig.CHARS_DATABASE_NAME
-                    + "?autoReconnect=true");
-            config.setProperty("hibernate.connection.username", this.databaseConfig.CHARS_DATABASE_USER);
-            config.setProperty("hibernate.connection.password", this.databaseConfig.CHARS_DATABASE_PASSWORD);
-            config.setProperty("hibernate.dialect", this.databaseConfig.CHARS_DATABASE_DIALECT);
-            config.setProperty("hibernate.c3p0.min_size", this.databaseConfig.CHARS_DATABASE_CONNECTIONS_MIN.toString());
-            config.setProperty("hibernate.c3p0.max_size", this.databaseConfig.CHARS_DATABASE_CONNECTIONS_MAX.toString());
-            config.configure("/characters.cfg.xml");
-            
-            charactersSessionFactory = config.buildSessionFactory();
-            charactersSessionFactory.getStatistics().setStatisticsEnabled(true);
-            log.info("Hibernate charactersSessionFactory initialized...");
-        }
-        
-        return charactersSessionFactory;
     }
     
 }

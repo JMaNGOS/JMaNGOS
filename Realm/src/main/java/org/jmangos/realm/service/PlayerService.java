@@ -28,7 +28,6 @@ import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.RealmServer;
-import org.jmangos.realm.dao.PlayerDAO;
 import org.jmangos.realm.domain.InventoryItem;
 import org.jmangos.realm.domain.ItemPrototype;
 import org.jmangos.realm.domain.PlayerClassLevelInfo;
@@ -62,6 +61,7 @@ import org.jmangos.realm.network.packet.wow.server.SMSG_POWER_UPDATE;
 import org.jmangos.realm.network.packet.wow.server.SMSG_SPELL_GO;
 import org.jmangos.realm.network.packet.wow.server.SMSG_TALENTS_INFO;
 import org.jmangos.realm.network.packet.wow.server.SMSG_TIME_SYNC_REQ;
+import org.jmangos.realm.services.CharacterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -92,9 +92,8 @@ public class PlayerService {
     @Inject
     private DatabaseFactory                   databaseFactory;
     
-    /** The player dao. */
     @Inject
-    private PlayerDAO                         playerDAO;
+    private CharacterService                  characterService;
     
     /** The player class level info storages. */
     @Inject
@@ -130,7 +129,7 @@ public class PlayerService {
      */
     public Player preparePlayer(final NettyNetworkChannel chanel, final int guid) {
     
-        final Player player = new Player(this.playerDAO.getCharacter(guid));
+        final Player player = new Player(this.characterService.readCharacter(guid));
         player.setChannel(chanel);
         chanel.setActiveObject(player);
         return player;
@@ -301,7 +300,8 @@ public class PlayerService {
      */
     public boolean LoadHomeBind(final Player player) {
     
-        return player.setHomeBind(this.playerDAO.loadHomeBind(player.getObjectId()));
+        final CharacterEntity characterEntity = this.characterService.readCharacter(player.getObjectId());
+        return player.setHomeBind(characterEntity.getHomeBindData());
     }
     
     /**
@@ -362,7 +362,8 @@ public class PlayerService {
      */
     public void LoadInventory(final Player player) {
     
-        final List<InventoryItem> inventoryItem = this.playerDAO.loadInventory(player.getObjectId());
+        final CharacterEntity characterEntity = this.characterService.readCharacter(player.getObjectId());
+        final List<InventoryItem> inventoryItem = characterEntity.getInventory();
         for (final InventoryItem iT : inventoryItem) {
             final ItemPrototype proto = this.itemStorages.get(iT.getItem_id());
             if (proto != null) {

@@ -122,7 +122,7 @@ public class AccountQueueController {
         cAccountInfo.setObjectId(account.getObjectId());
         channelHandler.getCrypt().init(account.getSessionKey().asByteArray(40));
         cAccountInfo.getChannel().setChannelState(State.AUTHED);
-        realmController.addAccount(cAccountInfo);
+        this.realmController.addAccount(cAccountInfo);
         return true;
     }
     
