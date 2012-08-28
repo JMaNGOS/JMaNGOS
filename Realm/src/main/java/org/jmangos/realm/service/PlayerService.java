@@ -28,7 +28,6 @@ import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.RealmServer;
 import org.jmangos.realm.domain.InventoryItem;
 import org.jmangos.realm.entities.CharacterEntity;
-import org.jmangos.realm.entities.PlayerLevelInfo;
 import org.jmangos.realm.model.base.WorldObject;
 import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.base.update.ObjectFields;
@@ -102,7 +101,7 @@ public class PlayerService {
     
     /** The simple storages. */
     @Inject
-    private SimpleStoragesService                    simpleStoragesServiceImpl;
+    private SimpleStoragesService             simpleStoragesServiceImpl;
     
     /** The item storages. */
     @Inject
@@ -393,8 +392,9 @@ public class PlayerService {
         
         // InitStatBuffMods();
         
-        for (int i = PlayerFields.PLAYER_FIELD_COMBAT_RATING_1.getValue(); i < PlayerFields.PLAYER_FIELD_COMBAT_RATING_1.getValue() + Units.MAX_COMBAT_RATING; ++i)
+        for (int i = PlayerFields.PLAYER_FIELD_COMBAT_RATING_1.getValue(); i < (PlayerFields.PLAYER_FIELD_COMBAT_RATING_1.getValue() + Units.MAX_COMBAT_RATING); ++i) {
             player.SetUInt32Value(i, 0);
+        }
         
         player.SetUInt32Value(PlayerFields.PLAYER_FIELD_MOD_HEALING_DONE_POS, 0);
         
@@ -427,8 +427,9 @@ public class PlayerService {
         player.SetFloatValue(PlayerFields.PLAYER_OFFHAND_CRIT_PERCENTAGE, 0.0f);
         player.SetFloatValue(PlayerFields.PLAYER_RANGED_CRIT_PERCENTAGE, 0.0f);
         
-        for (final SpellSchools spellscool : SpellSchools.values())
+        for (final SpellSchools spellscool : SpellSchools.values()) {
             player.SetFloatValue(PlayerFields.PLAYER_SPELL_CRIT_PERCENTAGE1.getValue() + spellscool.ordinal(), 0.0f);
+        }
         
         player.SetFloatValue(PlayerFields.PLAYER_PARRY_PERCENTAGE, 0.0f);
         player.SetFloatValue(PlayerFields.PLAYER_BLOCK_PERCENTAGE, 0.0f);
@@ -447,8 +448,9 @@ public class PlayerService {
         player.SetUInt32Value(PlayerFields.PLAYER_FIELD_MOD_TARGET_RESISTANCE, 0);
         player.SetUInt32Value(PlayerFields.PLAYER_FIELD_MOD_TARGET_PHYSICAL_RESISTANCE, 0);
         
-        for (int i = 0; i < 3; ++i)
+        for (int i = 0; i < 3; ++i) {
             player.SetUInt32Value(PlayerFields.PLAYER_NO_REAGENT_COST_1.getValue() + i, 0);
+        }
         
         // InitDataForForm();
         for (final Powers power : Powers.values()) {

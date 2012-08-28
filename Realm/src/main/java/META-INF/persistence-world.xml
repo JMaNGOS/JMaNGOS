@@ -23,15 +23,11 @@
     
     <persistence-unit name="world">
 
-<<<<<<< HEAD
         <class>org.jmangos.world.entities.ItemPrototype</class>
         <class>org.jmangos.world.entities.PlayerLevelInfo</class>
         <class>org.jmangos.world.entities.PlayerClassLevelInfo</class>
         <class>org.jmangos.world.entities.QuestPrototype</class>
         <class>org.jmangos.world.entities.Playercreateinfo</class>
-=======
-        <class>org.jmangos.realm.entities.PlayerLevelInfo</class>
->>>>>>> refs/remotes/origin/master
 
     </persistence-unit>
 
