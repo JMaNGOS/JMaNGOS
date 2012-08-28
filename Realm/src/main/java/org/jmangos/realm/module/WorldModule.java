@@ -23,24 +23,24 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 @Configuration
 @EnableTransactionManagement
-public class RealmModule {
+public class WorldModule {
     
     /** Database config */
     @Inject
     private DatabaseConfig databaseConfig;
     
     @Bean
-    public DataSource dataSourceRealm() {
+    public DataSource dataSourceWorld() {
     
         final ComboPooledDataSource ds = new ComboPooledDataSource();
         try {
-            ds.setDriverClass(this.databaseConfig.CHARS_DATABASE_DIALECT);
-            ds.setJdbcUrl(this.databaseConfig.CHARS_DATABASE_URL + this.databaseConfig.CHARS_DATABASE_NAME + "?autoReconnect=true");
-            ds.setUser(this.databaseConfig.CHARS_DATABASE_USER);
-            ds.setPassword(this.databaseConfig.CHARS_DATABASE_PASSWORD);
+            ds.setDriverClass(this.databaseConfig.WORLD_DATABASE_DRIVER);
+            ds.setJdbcUrl(this.databaseConfig.WORLD_DATABASE_URL + this.databaseConfig.WORLD_DATABASE_NAME + "?autoReconnect=true");
+            ds.setUser(this.databaseConfig.WORLD_DATABASE_USER);
+            ds.setPassword(this.databaseConfig.WORLD_DATABASE_PASSWORD);
             
-            ds.setMinPoolSize(this.databaseConfig.CHARS_DATABASE_CONNECTIONS_MIN);
-            ds.setMaxPoolSize(this.databaseConfig.CHARS_DATABASE_CONNECTIONS_MAX);
+            ds.setMinPoolSize(this.databaseConfig.WORLD_DATABASE_CONNECTIONS_MIN);
+            ds.setMaxPoolSize(this.databaseConfig.WORLD_DATABASE_CONNECTIONS_MAX);
             ds.setAutoCommitOnClose(false);
         } catch (final PropertyVetoException e) {
             // TODO Auto-generated catch block
@@ -50,46 +50,46 @@ public class RealmModule {
     }
     
     @Bean
-    public JpaVendorAdapter jpaVendorAdapterRealm() {
+    public JpaVendorAdapter jpaVendorAdapterWorld() {
     
         final HibernateJpaVendorAdapter hjva = new HibernateJpaVendorAdapter();
         hjva.setShowSql(true);
         hjva.setGenerateDdl(true);
-        hjva.setDatabasePlatform(this.databaseConfig.CHARS_DATABASE_DIALECT);
+        hjva.setDatabasePlatform(this.databaseConfig.WORLD_DATABASE_DIALECT);
         return hjva;
     }
     
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryRealm() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactoryWorld() {
     
         final LocalContainerEntityManagerFactoryBean lcemfb = new LocalContainerEntityManagerFactoryBean();
-        lcemfb.setDataSource(dataSourceRealm());
-        lcemfb.setPersistenceXmlLocation("classpath:META-INF/persistence-realm.xml");
-        lcemfb.setJpaVendorAdapter(jpaVendorAdapterRealm());
+        lcemfb.setDataSource(dataSourceWorld());
+        lcemfb.setPersistenceXmlLocation("classpath:META-INF/persistence-world.xml");
+        lcemfb.setJpaVendorAdapter(jpaVendorAdapterWorld());
         lcemfb.setJpaDialect(new HibernateJpaDialect());
         return lcemfb;
     }
     
     @Bean
-    public JpaTransactionManager transactionManagerRealm() {
+    public JpaTransactionManager transactionManagerWorld() {
     
         final JpaTransactionManager jtm = new JpaTransactionManager();
-        jtm.setEntityManagerFactory(entityManagerFactoryRealm().getObject());
+        jtm.setEntityManagerFactory(entityManagerFactoryWorld().getObject());
         return jtm;
     }
     
     @Bean
-    public TransactionInterceptor transactionInterceptorRealm() {
+    public TransactionInterceptor transactionInterceptorWorld() {
     
-        return new TransactionInterceptor(transactionManagerRealm(), new AnnotationTransactionAttributeSource());
+        return new TransactionInterceptor(transactionManagerWorld(), new AnnotationTransactionAttributeSource());
     }
     
     @Bean
-    public TransactionAttributeSourceAdvisor transactionAttributeSourceAdvisorRealm() {
+    public TransactionAttributeSourceAdvisor transactionAttributeSourceAdvisorWorld() {
     
         final TransactionAttributeSourceAdvisor tasa = new TransactionAttributeSourceAdvisor();
-        tasa.setTransactionInterceptor(transactionInterceptorRealm());
-        tasa.setClassFilter(new TypePatternClassFilter("org.jmangos.realm.*"));
+        tasa.setTransactionInterceptor(transactionInterceptorWorld());
+        tasa.setClassFilter(new TypePatternClassFilter("org.jmangos.world.*"));
         return tasa;
     }
     

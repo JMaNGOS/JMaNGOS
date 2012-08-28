@@ -17,16 +17,17 @@
 package org.jmangos.realm.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.jmangos.commons.dataholder.DataLoadService;
-import org.jmangos.realm.dao.SimpleDataDAO;
-import org.jmangos.realm.domain.PlayerLevelInfo;
 import org.jmangos.realm.domain.PlayerLevelInfoPK;
 import org.jmangos.realm.model.enums.Classes;
 import org.jmangos.realm.model.enums.Races;
+import org.jmangos.world.entities.PlayerLevelInfo;
+import org.jmangos.world.services.PlayerLevelInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -40,9 +41,8 @@ public class PlayerLevelStorages implements DataLoadService<HashMap<PlayerLevelI
     /** The Constant log. */
     private static final Logger                         log        = LoggerFactory.getLogger(PlayerLevelStorages.class);
     
-    /** The simple data dao. */
     @Inject
-    SimpleDataDAO                                       simpleDataDAO;
+    PlayerLevelInfoService                              playerLevelInfoService;
     
     /** The Player Race Class Level info. */
     private HashMap<PlayerLevelInfoPK, PlayerLevelInfo> playerRCLI = new HashMap<PlayerLevelInfoPK, PlayerLevelInfo>();
@@ -78,8 +78,12 @@ public class PlayerLevelStorages implements DataLoadService<HashMap<PlayerLevelI
     @Override
     public HashMap<PlayerLevelInfoPK, PlayerLevelInfo> load() {
     
-        // TODO Auto-generated method stub
-        return this.playerRCLI = this.simpleDataDAO.getRaceClassLevelInfos();
+        final HashMap<PlayerLevelInfoPK, PlayerLevelInfo> map = new HashMap<PlayerLevelInfoPK, PlayerLevelInfo>();
+        final List<PlayerLevelInfo> infoList = this.playerLevelInfoService.readPlayerLevelInfos();
+        for (final PlayerLevelInfo levelInfo : infoList) {
+            map.put(levelInfo.getPlayerLevelInfoPK(), levelInfo);
+        }
+        return this.playerRCLI = map;
     }
     
     /**
@@ -89,9 +93,12 @@ public class PlayerLevelStorages implements DataLoadService<HashMap<PlayerLevelI
     @Override
     public void reload() {
     
-        HashMap<PlayerLevelInfoPK, PlayerLevelInfo> playerRCLITemp = this.simpleDataDAO.getRaceClassLevelInfos();
+        final HashMap<PlayerLevelInfoPK, PlayerLevelInfo> playerRCLITemp = new HashMap<PlayerLevelInfoPK, PlayerLevelInfo>();
+        final List<PlayerLevelInfo> infoList = this.playerLevelInfoService.readPlayerLevelInfos();
+        for (final PlayerLevelInfo levelInfo : infoList) {
+            playerRCLITemp.put(levelInfo.getPlayerLevelInfoPK(), levelInfo);
+        }
         this.playerRCLI = playerRCLITemp;
-        playerRCLITemp = null;
     }
     
     /**

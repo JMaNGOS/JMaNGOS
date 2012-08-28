@@ -14,33 +14,22 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.auth;
+package org.jmangos.world.dao;
 
-import org.jmangos.commons.network.service.NetworkService;
-import org.jmangos.commons.service.ServiceContent;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import java.util.List;
 
-/**
- * The Class AuthServer.
- * 
- * @author MinimaJack
- */
-public class AuthServer {
+import org.criteria4jpa.criterion.Criterion;
+import org.jmangos.realm.domain.PlayerClassLevelInfoPK;
+import org.jmangos.world.entities.PlayerClassLevelInfo;
+
+public interface PlayerClassLevelInfoDao {
     
-    /**
-     * The main method.
-     * 
-     * @param args
-     *            the arguments
-     * @throws Exception
-     *             the exception
-     */
-    public static void main(final String[] args) throws Exception {
+    public PlayerClassLevelInfo readPlayerClassLevelInfo(PlayerClassLevelInfoPK pk);
     
-        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-        context.scan("org.jmangos.commons", "org.jmangos.auth");
-        context.refresh();
-        ServiceContent.setContext(context);
-        context.getBean(NetworkService.class).start();
-    }
+    public List<PlayerClassLevelInfo> readPlayerClassLevelInfos(final Criterion... criterions);
+    
+    public PlayerClassLevelInfoPK createOrUpdatePlayerClassLevelInfo(PlayerClassLevelInfo playerClassLevelInfo);
+    
+    public void deletePlayerClassLevelInfo(PlayerClassLevelInfo playerClassLevelInfo);
+    
 }

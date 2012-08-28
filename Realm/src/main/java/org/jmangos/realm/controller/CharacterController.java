@@ -23,11 +23,8 @@ import javax.inject.Inject;
 
 import org.criteria4jpa.criterion.Criterion;
 import org.criteria4jpa.criterion.Restrictions;
-import org.hibernate.Session;
-import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.realm.domain.InventoryItem;
 import org.jmangos.realm.domain.PlayerHomeBindData;
-import org.jmangos.realm.domain.Playercreateinfo;
 import org.jmangos.realm.domain.PlayercreateinfoPK;
 import org.jmangos.realm.entities.CharacterEntity;
 import org.jmangos.realm.model.enums.Classes;
@@ -36,6 +33,8 @@ import org.jmangos.realm.model.player.CharacterStartOutfit;
 import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_CREATE;
 import org.jmangos.realm.service.DBCStorage;
 import org.jmangos.realm.services.CharacterService;
+import org.jmangos.world.entities.Playercreateinfo;
+import org.jmangos.world.services.PlayercreateinfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -44,16 +43,16 @@ import org.springframework.stereotype.Component;
 public class CharacterController {
     
     /** The Constant logger. */
-    private static final Logger logger = LoggerFactory.getLogger(CharacterController.class);
+    private static final Logger     logger = LoggerFactory.getLogger(CharacterController.class);
     
     @Inject
-    private CharacterService    characterService;
+    private CharacterService        characterService;
     
     @Inject
-    private DatabaseFactory     databaseFactory;
+    private PlayercreateinfoService playercreateinfoService;
     
     @Inject
-    private DBCStorage          dbcStorage;
+    private DBCStorage              dbcStorage;
     
     public SMSG_CHAR_CREATE createCharacter(final int accountId, final String charName, final int charRace, final int charClass, final int gender,
             final int skin, final int face, final int hairStyle, final int hairColor, final int facialHair, final int outfitId) {
@@ -65,8 +64,7 @@ public class CharacterController {
             return new SMSG_CHAR_CREATE(SMSG_CHAR_CREATE.Code.NAME_IN_USE);
         }
         
-        final Session worldSession = this.databaseFactory.getWorldSessionFactory().openSession();
-        final Playercreateinfo info = (Playercreateinfo) worldSession.get(Playercreateinfo.class, new PlayercreateinfoPK(charClass, charRace));
+        final Playercreateinfo info = this.playercreateinfoService.readPlayercreateinfo(new PlayercreateinfoPK(charClass, charRace));
         if (info == null) {
             logger.error("Player create template not found for: " + Classes.get(charClass) + " " + Races.get(charRace));
             return new SMSG_CHAR_CREATE(SMSG_CHAR_CREATE.Code.ERROR);

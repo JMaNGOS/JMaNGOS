@@ -18,11 +18,13 @@ package org.jmangos.realm.service;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.jmangos.commons.dataholder.DataLoadService;
-import org.jmangos.realm.dao.QuestDAO;
-import org.jmangos.realm.domain.QuestPrototype;
+import org.jmangos.world.entities.QuestPrototype;
+import org.jmangos.world.services.QuestPrototypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -39,9 +41,8 @@ public class QuestStorages implements DataLoadService<TIntObjectHashMap<QuestPro
     /** The player class level infos. */
     private TIntObjectHashMap<QuestPrototype> questMap = new TIntObjectHashMap<QuestPrototype>();
     
-    /** The quest dao. */
     @Inject
-    private QuestDAO                          questDAO;
+    QuestPrototypeService                     questPrototypeService;
     
     /*
      * (non-Javadoc)
@@ -74,7 +75,16 @@ public class QuestStorages implements DataLoadService<TIntObjectHashMap<QuestPro
     @Override
     public TIntObjectHashMap<QuestPrototype> load() {
     
-        this.questMap = this.questDAO.loadQuestPrototypes();
+        final List<QuestPrototype> questPrototypeList = this.questPrototypeService.readQuestPrototypes();
+        
+        // Quest map by id
+        final TIntObjectHashMap<QuestPrototype> map = new TIntObjectHashMap<QuestPrototype>();
+        
+        for (final QuestPrototype quest : questPrototypeList) {
+            map.put(quest.getEntry(), quest);
+        }
+        
+        this.questMap = map;
         return this.questMap;
     }
     
@@ -88,7 +98,11 @@ public class QuestStorages implements DataLoadService<TIntObjectHashMap<QuestPro
     
         // Don't replace directly becouse the players can't query quest while it's loading!
         logger.info("Loading quest templates to temoary store.");
-        TIntObjectHashMap<QuestPrototype> tempQuestMap = this.questDAO.loadQuestPrototypes();
+        final List<QuestPrototype> questPrototypeList = this.questPrototypeService.readQuestPrototypes();
+        TIntObjectHashMap<QuestPrototype> tempQuestMap = new TIntObjectHashMap<QuestPrototype>();
+        for (final QuestPrototype quest : questPrototypeList) {
+            tempQuestMap.put(quest.getEntry(), quest);
+        }
         logger.info("Loaded " + tempQuestMap.size() + " quests. Replacing new old Quests with newer");
         this.questMap = tempQuestMap;
         tempQuestMap = null;

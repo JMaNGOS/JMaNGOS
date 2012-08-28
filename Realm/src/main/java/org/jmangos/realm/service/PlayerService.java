@@ -23,15 +23,10 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.hibernate.Session;
-import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.RealmServer;
 import org.jmangos.realm.domain.InventoryItem;
-import org.jmangos.realm.domain.ItemPrototype;
-import org.jmangos.realm.domain.PlayerClassLevelInfo;
-import org.jmangos.realm.domain.PlayerLevelInfo;
 import org.jmangos.realm.entities.CharacterEntity;
 import org.jmangos.realm.model.base.WorldObject;
 import org.jmangos.realm.model.base.item.Item;
@@ -62,6 +57,9 @@ import org.jmangos.realm.network.packet.wow.server.SMSG_SPELL_GO;
 import org.jmangos.realm.network.packet.wow.server.SMSG_TALENTS_INFO;
 import org.jmangos.realm.network.packet.wow.server.SMSG_TIME_SYNC_REQ;
 import org.jmangos.realm.services.CharacterService;
+import org.jmangos.world.entities.ItemPrototype;
+import org.jmangos.world.entities.PlayerClassLevelInfo;
+import org.jmangos.world.entities.PlayerLevelInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -88,9 +86,6 @@ public class PlayerService {
     @Inject
     @Named("nettyPacketSender")
     private AbstractPacketSender              sender;
-    
-    @Inject
-    private DatabaseFactory                   databaseFactory;
     
     @Inject
     private CharacterService                  characterService;
@@ -264,7 +259,6 @@ public class PlayerService {
     
     public void savePlayer(final Player player) {
     
-        final Session session = this.databaseFactory.getWorldSessionFactory().openSession();
         final CharacterEntity character = new CharacterEntity();
         
         character.setAccount(player.getAccountInfo().getObjectId());
@@ -274,21 +268,7 @@ public class PlayerService {
         character.setName(player.getName());
         character.setRace(player.getCharacterData().getRace());
         character.setClazz(player.getCharacterData().getClazz());
-        
-        session.getTransaction().begin();
-        try {
-            session.saveOrUpdate(character);
-            session.getTransaction().commit();
-        } catch (final Exception e) {
-            session.getTransaction().rollback();
-            logger.error("Cannot save/update character [name: {}, guid: {}]", character.getName(), character.getGuid());
-        } finally {
-            if (session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            session.close();
-        }
-        
+        this.characterService.createOrUpdateCharacter(character);
     }
     
     /**

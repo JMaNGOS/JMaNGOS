@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.realm.dao.impl;
+package org.jmangos.world.dao.impl;
 
 import java.util.List;
 
@@ -24,28 +24,29 @@ import javax.persistence.PersistenceContext;
 import org.criteria4jpa.Criteria;
 import org.criteria4jpa.CriteriaUtils;
 import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.dao.CharacterDao;
-import org.jmangos.realm.entities.CharacterEntity;
+import org.jmangos.realm.domain.PlayerClassLevelInfoPK;
+import org.jmangos.world.dao.PlayerClassLevelInfoDao;
+import org.jmangos.world.entities.PlayerClassLevelInfo;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository("characterDao")
-public class CharacterDaoImpl implements CharacterDao {
+@Repository("playerClassLevelInfoDao")
+public class PlayerClassLevelInfoDaoImpl implements PlayerClassLevelInfoDao {
     
-    @PersistenceContext(unitName = "realm")
+    @PersistenceContext(unitName = "world")
     private EntityManager entityManager;
     
     @Override
-    public CharacterEntity readCharacter(final Integer id) {
+    public PlayerClassLevelInfo readPlayerClassLevelInfo(final PlayerClassLevelInfoPK pk) {
     
-        return this.entityManager.find(CharacterEntity.class, id);
+        return this.entityManager.find(PlayerClassLevelInfo.class, pk);
     }
     
     @Override
     @SuppressWarnings("unchecked")
-    public List<CharacterEntity> readCharacters(final Criterion... criterions) {
+    public List<PlayerClassLevelInfo> readPlayerClassLevelInfos(final Criterion... criterions) {
     
-        final Criteria criteria = CriteriaUtils.createCriteria(this.entityManager, CharacterEntity.class);
+        final Criteria criteria = CriteriaUtils.createCriteria(this.entityManager, PlayerClassLevelInfo.class);
         for (final Criterion criterion : criterions) {
             criteria.add(criterion);
         }
@@ -54,25 +55,25 @@ public class CharacterDaoImpl implements CharacterDao {
     
     @Transactional
     @Override
-    public Integer createOrUpdateCharacter(final CharacterEntity characterEntity) {
+    public PlayerClassLevelInfoPK createOrUpdatePlayerClassLevelInfo(final PlayerClassLevelInfo playerClassLevelInfo) {
     
-        if (characterEntity.getGuid() == null) {
-            this.entityManager.persist(characterEntity);
+        if (playerClassLevelInfo.getPlayerClassLevelInfoPK() == null) {
+            this.entityManager.persist(playerClassLevelInfo);
         } else {
-            this.entityManager.merge(characterEntity);
+            this.entityManager.merge(playerClassLevelInfo);
         }
         this.entityManager.flush();
-        return characterEntity.getGuid();
+        return playerClassLevelInfo.getPlayerClassLevelInfoPK();
     }
     
     @Transactional
     @Override
-    public void deleteCharacter(final CharacterEntity characterEntity) {
+    public void deletePlayerClassLevelInfo(final PlayerClassLevelInfo playerClassLevelInfo) {
     
-        if (characterEntity == null) {
+        if (playerClassLevelInfo == null) {
             return;
         }
-        this.entityManager.remove(characterEntity);
+        this.entityManager.remove(playerClassLevelInfo);
     }
     
 }

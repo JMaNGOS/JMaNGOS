@@ -14,33 +14,21 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.auth;
+package org.jmangos.world.dao;
 
-import org.jmangos.commons.network.service.NetworkService;
-import org.jmangos.commons.service.ServiceContent;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import java.util.List;
 
-/**
- * The Class AuthServer.
- * 
- * @author MinimaJack
- */
-public class AuthServer {
+import org.criteria4jpa.criterion.Criterion;
+import org.jmangos.world.entities.ItemPrototype;
+
+public interface ItemPrototypeDao {
     
-    /**
-     * The main method.
-     * 
-     * @param args
-     *            the arguments
-     * @throws Exception
-     *             the exception
-     */
-    public static void main(final String[] args) throws Exception {
+    public ItemPrototype readItemPrototype(Integer id);
     
-        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-        context.scan("org.jmangos.commons", "org.jmangos.auth");
-        context.refresh();
-        ServiceContent.setContext(context);
-        context.getBean(NetworkService.class).start();
-    }
+    public List<ItemPrototype> readItemPrototypes(final Criterion... criterions);
+    
+    public Integer createOrUpdateItemPrototype(ItemPrototype itemPrototype);
+    
+    public void deleteItemPrototype(ItemPrototype itemPrototype);
+    
 }

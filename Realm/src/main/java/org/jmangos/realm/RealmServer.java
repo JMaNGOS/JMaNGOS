@@ -21,7 +21,6 @@ import groovy.ui.Console;
 import org.jmangos.commons.network.service.NetworkService;
 import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.realm.service.ItemStorages;
-import org.jmangos.realm.utils.ShutdownHook;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
@@ -40,13 +39,9 @@ public class RealmServer {
     public static void main(final String[] args) {
     
         final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-        context.scan("org.jmangos.commons", "org.jmangos.realm");
+        context.scan("org.jmangos.commons", "org.jmangos.world", "org.jmangos.realm");
         context.refresh();
         ServiceContent.setContext(context);
-        
-        Runtime.getRuntime().addShutdownHook(context.getBean(ShutdownHook.class));
-        System.gc();
-        
         context.getBean(NetworkService.class).start();
         
         console = new Console();

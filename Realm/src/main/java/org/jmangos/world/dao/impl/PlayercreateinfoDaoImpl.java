@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.realm.dao.impl;
+package org.jmangos.world.dao.impl;
 
 import java.util.List;
 
@@ -24,28 +24,29 @@ import javax.persistence.PersistenceContext;
 import org.criteria4jpa.Criteria;
 import org.criteria4jpa.CriteriaUtils;
 import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.dao.CharacterDao;
-import org.jmangos.realm.entities.CharacterEntity;
+import org.jmangos.realm.domain.PlayercreateinfoPK;
+import org.jmangos.world.dao.PlayercreateinfoDao;
+import org.jmangos.world.entities.Playercreateinfo;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository("characterDao")
-public class CharacterDaoImpl implements CharacterDao {
+@Repository("playercreateinfoDao")
+public class PlayercreateinfoDaoImpl implements PlayercreateinfoDao {
     
-    @PersistenceContext(unitName = "realm")
+    @PersistenceContext(unitName = "world")
     private EntityManager entityManager;
     
     @Override
-    public CharacterEntity readCharacter(final Integer id) {
+    public Playercreateinfo readPlayercreateinfo(final PlayercreateinfoPK pk) {
     
-        return this.entityManager.find(CharacterEntity.class, id);
+        return this.entityManager.find(Playercreateinfo.class, pk);
     }
     
     @Override
     @SuppressWarnings("unchecked")
-    public List<CharacterEntity> readCharacters(final Criterion... criterions) {
+    public List<Playercreateinfo> readPlayercreateinfos(final Criterion... criterions) {
     
-        final Criteria criteria = CriteriaUtils.createCriteria(this.entityManager, CharacterEntity.class);
+        final Criteria criteria = CriteriaUtils.createCriteria(this.entityManager, Playercreateinfo.class);
         for (final Criterion criterion : criterions) {
             criteria.add(criterion);
         }
@@ -54,25 +55,25 @@ public class CharacterDaoImpl implements CharacterDao {
     
     @Transactional
     @Override
-    public Integer createOrUpdateCharacter(final CharacterEntity characterEntity) {
+    public PlayercreateinfoPK createOrUpdatePlayercreateinfo(final Playercreateinfo playercreateinfo) {
     
-        if (characterEntity.getGuid() == null) {
-            this.entityManager.persist(characterEntity);
+        if (playercreateinfo.getPlayercreateinfoPK() == null) {
+            this.entityManager.persist(playercreateinfo);
         } else {
-            this.entityManager.merge(characterEntity);
+            this.entityManager.merge(playercreateinfo);
         }
         this.entityManager.flush();
-        return characterEntity.getGuid();
+        return playercreateinfo.getPlayercreateinfoPK();
     }
     
     @Transactional
     @Override
-    public void deleteCharacter(final CharacterEntity characterEntity) {
+    public void deletePlayercreateinfo(final Playercreateinfo playercreateinfo) {
     
-        if (characterEntity == null) {
+        if (playercreateinfo == null) {
             return;
         }
-        this.entityManager.remove(characterEntity);
+        this.entityManager.remove(playercreateinfo);
     }
     
 }

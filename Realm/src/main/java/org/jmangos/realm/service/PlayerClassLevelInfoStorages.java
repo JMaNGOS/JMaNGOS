@@ -17,15 +17,16 @@
 package org.jmangos.realm.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.jmangos.commons.dataholder.DataLoadService;
-import org.jmangos.realm.dao.SimpleDataDAO;
-import org.jmangos.realm.domain.PlayerClassLevelInfo;
 import org.jmangos.realm.domain.PlayerClassLevelInfoPK;
 import org.jmangos.realm.model.enums.Classes;
+import org.jmangos.world.entities.PlayerClassLevelInfo;
+import org.jmangos.world.services.PlayerClassLevelInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -39,9 +40,8 @@ public class PlayerClassLevelInfoStorages implements DataLoadService<HashMap<Pla
     /** The Constant log. */
     private static final Logger                                   log       = LoggerFactory.getLogger(PlayerClassLevelInfoStorages.class);
     
-    /** The simple data dao. */
     @Inject
-    SimpleDataDAO                                                 simpleDataDAO;
+    PlayerClassLevelInfoService                                   playerClassLevelInfoService;
     
     /** The Player cli. */
     private HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> playerCLI = new HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo>();
@@ -76,7 +76,12 @@ public class PlayerClassLevelInfoStorages implements DataLoadService<HashMap<Pla
     @Override
     public HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> load() {
     
-        return this.playerCLI = this.simpleDataDAO.getClassLevelInfos();
+        final HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> map = new HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo>();
+        final List<PlayerClassLevelInfo> infoList = this.playerClassLevelInfoService.readPlayerClassLevelInfos();
+        for (final PlayerClassLevelInfo levelInfo : infoList) {
+            map.put(levelInfo.getPlayerClassLevelInfoPK(), levelInfo);
+        }
+        return this.playerCLI = map;
     }
     
     /**

@@ -5,7 +5,6 @@ import java.nio.BufferUnderflowException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.network.model.SendablePacket;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.controller.CharacterController;
@@ -23,9 +22,6 @@ import org.springframework.stereotype.Component;
 public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
     
     Logger                       log = LoggerFactory.getLogger(getClass());
-    
-    @Inject
-    private DatabaseFactory      databaseFactory;
     
     @Inject
     @Named("nettyPacketSender")

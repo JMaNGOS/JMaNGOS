@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.realm.dao.impl;
+package org.jmangos.world.dao.impl;
 
 import java.util.List;
 
@@ -24,28 +24,28 @@ import javax.persistence.PersistenceContext;
 import org.criteria4jpa.Criteria;
 import org.criteria4jpa.CriteriaUtils;
 import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.dao.CharacterDao;
-import org.jmangos.realm.entities.CharacterEntity;
+import org.jmangos.world.dao.QuestPrototypeDao;
+import org.jmangos.world.entities.QuestPrototype;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository("characterDao")
-public class CharacterDaoImpl implements CharacterDao {
+@Repository("questPrototypeDao")
+public class QuestPrototypeDaoImpl implements QuestPrototypeDao {
     
-    @PersistenceContext(unitName = "realm")
+    @PersistenceContext(unitName = "world")
     private EntityManager entityManager;
     
     @Override
-    public CharacterEntity readCharacter(final Integer id) {
+    public QuestPrototype readQuestPrototype(final Integer id) {
     
-        return this.entityManager.find(CharacterEntity.class, id);
+        return this.entityManager.find(QuestPrototype.class, id);
     }
     
     @Override
     @SuppressWarnings("unchecked")
-    public List<CharacterEntity> readCharacters(final Criterion... criterions) {
+    public List<QuestPrototype> readQuestPrototypes(final Criterion... criterions) {
     
-        final Criteria criteria = CriteriaUtils.createCriteria(this.entityManager, CharacterEntity.class);
+        final Criteria criteria = CriteriaUtils.createCriteria(this.entityManager, QuestPrototype.class);
         for (final Criterion criterion : criterions) {
             criteria.add(criterion);
         }
@@ -54,25 +54,25 @@ public class CharacterDaoImpl implements CharacterDao {
     
     @Transactional
     @Override
-    public Integer createOrUpdateCharacter(final CharacterEntity characterEntity) {
+    public Integer createOrUpdateQuestPrototype(final QuestPrototype questPrototype) {
     
-        if (characterEntity.getGuid() == null) {
-            this.entityManager.persist(characterEntity);
+        if (questPrototype.getEntry() == null) {
+            this.entityManager.persist(questPrototype);
         } else {
-            this.entityManager.merge(characterEntity);
+            this.entityManager.merge(questPrototype);
         }
         this.entityManager.flush();
-        return characterEntity.getGuid();
+        return questPrototype.getEntry();
     }
     
     @Transactional
     @Override
-    public void deleteCharacter(final CharacterEntity characterEntity) {
+    public void deleteQuestPrototype(final QuestPrototype questPrototype) {
     
-        if (characterEntity == null) {
+        if (questPrototype == null) {
             return;
         }
-        this.entityManager.remove(characterEntity);
+        this.entityManager.remove(questPrototype);
     }
     
 }
