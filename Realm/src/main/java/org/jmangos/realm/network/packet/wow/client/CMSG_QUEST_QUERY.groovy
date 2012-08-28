@@ -2,7 +2,6 @@ package org.jmangos.realm.network.packet.wow.client
 
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket
 import javax.inject.Inject
-import org.jmangos.commons.database.DatabaseFactory
 
 import java.nio.BufferUnderflowException
 
@@ -31,9 +30,6 @@ public class CMSG_QUEST_QUERY extends AbstractWoWClientPacket {
     
     @Inject
     private QuestStorages questStorages;
-    
-    @Inject
-    private DatabaseFactory databaseFactory;
     
     private def questProrotype = null;
     
