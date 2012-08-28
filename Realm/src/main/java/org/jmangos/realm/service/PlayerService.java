@@ -38,6 +38,7 @@ import org.jmangos.realm.model.enums.Powers;
 import org.jmangos.realm.model.enums.SpellSchools;
 import org.jmangos.realm.model.enums.Stats;
 import org.jmangos.realm.model.player.Player;
+import org.jmangos.realm.model.unit.Units;
 import org.jmangos.realm.network.packet.wow.server.MSG_SET_DUNGEON_DIFFICULTY;
 import org.jmangos.realm.network.packet.wow.server.SMSG_ACTION_BUTTONS;
 import org.jmangos.realm.network.packet.wow.server.SMSG_ALL_ACHIEVEMENT_DATA;
@@ -58,6 +59,7 @@ import org.jmangos.realm.network.packet.wow.server.SMSG_SPELL_GO;
 import org.jmangos.realm.network.packet.wow.server.SMSG_TALENTS_INFO;
 import org.jmangos.realm.network.packet.wow.server.SMSG_TIME_SYNC_REQ;
 import org.jmangos.realm.services.CharacterService;
+import org.jmangos.realm.services.SimpleStoragesService;
 import org.jmangos.world.entities.ItemPrototype;
 import org.jmangos.world.entities.PlayerClassLevelInfo;
 import org.slf4j.Logger;
@@ -100,7 +102,7 @@ public class PlayerService {
     
     /** The simple storages. */
     @Inject
-    private SimpleStorages                    simpleStorages;
+    private SimpleStoragesService                    simpleStoragesServiceImpl;
     
     /** The item storages. */
     @Inject
@@ -373,83 +375,101 @@ public class PlayerService {
         final org.jmangos.world.entities.PlayerLevelInfo info = this.playerLevelStorages.get(player.getCharacterData().getRace(), player.getCharacterData().getClazz(), player.getCharacterData().getLevel());
         
         player.SetUInt32Value(PlayerFields.PLAYER_FIELD_MAX_LEVEL, CONFIG_UINT32_MAX_PLAYER_LEVEL);
-        player.SetUInt32Value(PlayerFields.PLAYER_NEXT_LEVEL_XP, this.simpleStorages.GetXPForLevel((byte) player.getCharacterData().getLevel()));
+        player.SetUInt32Value(PlayerFields.PLAYER_NEXT_LEVEL_XP, this.simpleStoragesServiceImpl.getXpForLevel((byte) player.getCharacterData().getLevel()));
         
         // UpdateSkillsForLevel ();
         
         player.SetFloatValue(UnitField.UNIT_MOD_CAST_SPEED, 1.0f);
         
         for (final Stats stat : Stats.values()) {
-            try {
-                final int val = info.getStats(stat);
-                player.setCreateStat(stat, val);
-                player.SetUInt32Value(UnitField.UNIT_FIELD_STAT0.getValue() + stat.ordinal(), val);
-            } catch (final Exception e) {
-                logger.info("Error while loading stats...");
-            }
+            final int val = info.getStats(stat);
+            player.setCreateStat(stat, val);
+            player.SetUInt32Value(UnitField.UNIT_FIELD_STAT0.getValue() + stat.ordinal(), val);
         }
         
-        try {
-            player.SetUInt32Value(UnitField.UNIT_FIELD_BASE_HEALTH, classInfo.getBasehealth());
-            player.SetUInt32Value(UnitField.UNIT_FIELD_BASE_MANA, classInfo.getBasemana());
-            player.SetArmor(info.getStats(Stats.AGILITY) * 2);
-        } catch (final Exception e) {
-            logger.info("Error while loading base units (hp, mana, armor )");
-        }
+        player.SetUInt32Value(UnitField.UNIT_FIELD_BASE_HEALTH, classInfo.getBasehealth());
+        player.SetUInt32Value(UnitField.UNIT_FIELD_BASE_MANA, classInfo.getBasemana());
+        player.SetArmor(info.getStats(Stats.AGILITY) * 2);
         
         // InitStatBuffMods();
         
+        for (int i = PlayerFields.PLAYER_FIELD_COMBAT_RATING_1.getValue(); i < PlayerFields.PLAYER_FIELD_COMBAT_RATING_1.getValue() + Units.MAX_COMBAT_RATING; ++i)
+            player.SetUInt32Value(i, 0);
+        
+        player.SetUInt32Value(PlayerFields.PLAYER_FIELD_MOD_HEALING_DONE_POS, 0);
+        
         for (final SpellSchools spellscool : SpellSchools.values()) {
+            player.SetUInt32Value(PlayerFields.PLAYER_FIELD_MOD_DAMAGE_DONE_NEG.getValue() + spellscool.ordinal(), 0);
+            player.SetUInt32Value(PlayerFields.PLAYER_FIELD_MOD_DAMAGE_DONE_POS.getValue() + spellscool.ordinal(), 0);
             player.SetFloatValue(PlayerFields.PLAYER_FIELD_MOD_DAMAGE_DONE_PCT.getValue() + spellscool.ordinal(), 1.00f);
         }
         
         player.SetFloatValue(UnitField.UNIT_FIELD_BASEATTACKTIME, 2000.0f);
+        // off hand attack time
         player.SetFloatValue(UnitField.UNIT_FIELD_BASEATTACKTIME.getValue() + 1, 2000.0f);
-        // offhand attack time
         player.SetFloatValue(UnitField.UNIT_FIELD_RANGEDATTACKTIME, 2000.0f);
         
-        // set armor (resistance 0) to original value (create_agility*2)
+        player.SetFloatValue(UnitField.UNIT_FIELD_MINDAMAGE, 0.0f);
+        player.SetFloatValue(UnitField.UNIT_FIELD_MAXDAMAGE, 0.0f);
+        player.SetFloatValue(UnitField.UNIT_FIELD_MINOFFHANDDAMAGE, 0.0f);
+        player.SetFloatValue(UnitField.UNIT_FIELD_MAXOFFHANDDAMAGE, 0.0f);
+        player.SetFloatValue(UnitField.UNIT_FIELD_MINRANGEDDAMAGE, 0.0f);
+        player.SetFloatValue(UnitField.UNIT_FIELD_MAXRANGEDDAMAGE, 0.0f);
+        
+        player.SetUInt32Value(UnitField.UNIT_FIELD_ATTACK_POWER, 0);
+        player.SetUInt32Value(UnitField.UNIT_FIELD_ATTACK_POWER_MODS, 0);
+        player.SetFloatValue(UnitField.UNIT_FIELD_ATTACK_POWER_MULTIPLIER, 0.0f);
+        player.SetUInt32Value(UnitField.UNIT_FIELD_RANGED_ATTACK_POWER, 0);
+        player.SetUInt32Value(UnitField.UNIT_FIELD_RANGED_ATTACK_POWER_MODS, 0);
+        player.SetFloatValue(UnitField.UNIT_FIELD_RANGED_ATTACK_POWER_MULTIPLIER, 0.0f);
+        
+        player.SetFloatValue(PlayerFields.PLAYER_CRIT_PERCENTAGE, 0.0f);
+        player.SetFloatValue(PlayerFields.PLAYER_OFFHAND_CRIT_PERCENTAGE, 0.0f);
+        player.SetFloatValue(PlayerFields.PLAYER_RANGED_CRIT_PERCENTAGE, 0.0f);
+        
+        for (final SpellSchools spellscool : SpellSchools.values())
+            player.SetFloatValue(PlayerFields.PLAYER_SPELL_CRIT_PERCENTAGE1.getValue() + spellscool.ordinal(), 0.0f);
+        
+        player.SetFloatValue(PlayerFields.PLAYER_PARRY_PERCENTAGE, 0.0f);
+        player.SetFloatValue(PlayerFields.PLAYER_BLOCK_PERCENTAGE, 0.0f);
+        player.SetUInt32Value(PlayerFields.PLAYER_SHIELD_BLOCK, 0);
+        
+        player.SetFloatValue(PlayerFields.PLAYER_DODGE_PERCENTAGE, 0.0f);
+        
+        for (final SpellSchools spellscool : SpellSchools.values()) {
+            player.SetResistance(spellscool, spellscool.equals(SpellSchools.NORMAL) ? info.getStats(Stats.AGILITY) * 2 : 0);
+            player.SetResistanceBuffMods(spellscool, true, 0.0f);
+            player.SetResistanceBuffMods(spellscool, false, 0.0f);
+            player.SetUInt32Value(UnitField.UNIT_FIELD_POWER_COST_MODIFIER.getValue() + spellscool.ordinal(), 0);
+            player.SetFloatValue(UnitField.UNIT_FIELD_POWER_COST_MULTIPLIER.getValue() + spellscool.ordinal(), 0.0f);
+        }
+        
+        player.SetUInt32Value(PlayerFields.PLAYER_FIELD_MOD_TARGET_RESISTANCE, 0);
+        player.SetUInt32Value(PlayerFields.PLAYER_FIELD_MOD_TARGET_PHYSICAL_RESISTANCE, 0);
+        
+        for (int i = 0; i < 3; ++i)
+            player.SetUInt32Value(PlayerFields.PLAYER_NO_REAGENT_COST_1.getValue() + i, 0);
         
         // InitDataForForm();
-        
-        // save new stats
         for (final Powers power : Powers.values()) {
             player.SetMaxPower(power, player.GetCreatePowers(power));
         }
         
-        // TODO TEMP DISABLED
-        // player.SetMaxHealth(classInfo.getBasehealth());
+        player.SetMaxHealth(classInfo.getBasehealth());
         
-        // stamina bonus will applied later
+        player.SetUInt32Value(UnitField.UNIT_FIELD_MOUNTDISPLAYID, 0);
         
-        // player.SetFlag(PlayerFields.UNIT_FIELD_FLAGS,
-        // UnitFlags.UNIT_FLAG_PVP_ATTACKABLE.getValue() );
-        // must be set
-        /*
-         * SetFlag(UNIT_FIELD_FLAGS_2,UNIT_FLAG2_REGENERATE_POWER); // must be set
-         * 
-         * // cleanup player flags (will be re-applied if need at aura load), to avoid have ghost
-         * flag without ghost aura, for example. RemoveFlag(PLAYER_FLAGS, PLAYER_FLAGS_AFK |
-         * PLAYER_FLAGS_DND | PLAYER_FLAGS_GM | PLAYER_FLAGS_GHOST);
-         * 
-         * RemoveStandFlags(UNIT_STAND_FLAGS_ALL); // one form stealth modified bytes
-         * RemoveByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_FFA_PVP |
-         * UNIT_BYTE2_FLAG_SANCTUARY);
-         * 
-         * // restore if need some important flags SetUInt32Value(PLAYER_FIELD_BYTES2, 0 ); // flags
-         * empty by default
-         * 
-         * if(reapplyMods) //reapply stats values only on .reset stats (level) command
-         * _ApplyAllStatBonuses();
-         * 
-         * // set current level health and mana/energy to maximum after applying all mods.
-         */
+        player.SetUInt32Value(PlayerFields.PLAYER_FIELD_BYTES2.getValue(), 0);
+        
         player.SetHealth(player.GetMaxHealth());
         player.SetPower(Powers.MANA, player.GetMaxPower(Powers.MANA));
         player.SetPower(Powers.ENERGY, player.GetMaxPower(Powers.ENERGY));
         if (player.GetPower(Powers.RAGE) > player.GetMaxPower(Powers.RAGE)) {
             player.SetPower(Powers.RAGE, player.GetMaxPower(Powers.RAGE));
         }
+        player.SetPower(Powers.FOCUS, 0);
+        player.SetPower(Powers.HAPPINESS, 0);
+        player.SetPower(Powers.RUNIC_POWER, 0);
         
     }
     
