@@ -3,14 +3,16 @@
         "-//Hibernate/Hibernate Configuration DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory>
-        <!-- DB schema will be updated if needed -->
-        <property name="hbm2ddl.auto">update</property>
-        <property name="current_session_context_class">thread</property>
-        <mapping class="org.jmangos.realm.domain.ItemPrototype"/>
-        <mapping class="org.jmangos.realm.entities.PlayerLevelInfo"/>
-        <mapping class="org.jmangos.realm.domain.PlayerClassLevelInfo"/>
-        <mapping class="org.jmangos.realm.domain.QuestPrototype"/>
-        <mapping class="org.jmangos.realm.domain.Playercreateinfo"/>
-    </session-factory>
+	<session-factory>
+		<!-- DB schema will be updated if needed -->
+		<property name="hbm2ddl.auto">update</property>
+		<property name="current_session_context_class">thread</property>
+		<mapping class="org.jmangos.realm.domain.ItemPrototype" />
+		<mapping class="org.jmangos.realm.entities.PlayerLevelInfo" />
+		<mapping class="org.jmangos.realm.domain.PlayerClassLevelInfo" />
+		<mapping class="org.jmangos.realm.domain.QuestPrototype" />
+		<mapping class="org.jmangos.realm.domain.Playercreateinfo" />
+		<mapping class="org.jmangos.realm.entities.PlayerCreateActionEntity" />
+		<mapping class="org.jmangos.realm.entities.PlayerCreateSpellEntity" />
+	</session-factory>
 </hibernate-configuration>

@@ -1,11 +1,19 @@
 package org.jmangos.realm.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.jmangos.realm.entities.PlayerCreateActionEntity;
+import org.jmangos.realm.entities.PlayerCreateSpellEntity;
 
 /**
  * Created with IntelliJ IDEA. User: paalgyula email: paalgyula@gmail.com Date: 2012.08.11. Time:
@@ -16,31 +24,37 @@ import javax.persistence.Table;
 public class Playercreateinfo {
     
     @EmbeddedId
-    PlayercreateinfoPK playercreateinfoPK;
+    PlayercreateinfoPK                     playercreateinfoPK;
     
     @Basic
     @Column(name = "map", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
-    private short      map;
+    private short                          map;
     
     @Basic
     @Column(name = "zone", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
-    private int        zone;
+    private int                            zone;
     
     @Basic
     @Column(name = "position_x", nullable = false, insertable = true, updatable = true, length = 12, precision = 0)
-    private float      positionX;
+    private float                          positionX;
     
     @Basic
     @Column(name = "position_y", nullable = false, insertable = true, updatable = true, length = 12, precision = 0)
-    private float      positionY;
+    private float                          positionY;
     
     @Basic
     @Column(name = "position_z", nullable = false, insertable = true, updatable = true, length = 12, precision = 0)
-    private float      positionZ;
+    private float                          positionZ;
     
     @Basic
     @Column(name = "orientation", nullable = false, insertable = true, updatable = true, length = 12, precision = 0)
-    private float      orientation;
+    private float                          orientation;
+    
+    @OneToMany(mappedBy = "playercreateinfoPK", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<PlayerCreateActionEntity> actions = new ArrayList<PlayerCreateActionEntity>();
+    
+    @OneToMany(mappedBy = "playercreateinfoPK", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<PlayerCreateSpellEntity>  spell   = new ArrayList<PlayerCreateSpellEntity>();
     
     public Playercreateinfo() {
     
@@ -116,8 +130,42 @@ public class Playercreateinfo {
         this.orientation = orientation;
     }
     
+    /**
+     * @return the actions
+     */
+    public List<PlayerCreateActionEntity> getActions() {
+    
+        return this.actions;
+    }
+    
+    /**
+     * @param actions
+     *            the actions to set
+     */
+    public void setActions(final List<PlayerCreateActionEntity> actions) {
+    
+        this.actions = actions;
+    }
+    
+    /**
+     * @return the spell
+     */
+    public final List<PlayerCreateSpellEntity> getSpell() {
+    
+        return this.spell;
+    }
+    
+    /**
+     * @param spell
+     *            the spell to set
+     */
+    public final void setSpell(final List<PlayerCreateSpellEntity> spell) {
+    
+        this.spell = spell;
+    }
+    
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
     
         if (this == object) {
             return true;
@@ -125,7 +173,7 @@ public class Playercreateinfo {
         if (!(object instanceof Playercreateinfo)) {
             return false;
         }
-        if (playercreateinfoPK.equals(((Playercreateinfo) object).getPlayercreateinfoPK())) {
+        if (this.playercreateinfoPK.equals(((Playercreateinfo) object).getPlayercreateinfoPK())) {
             return true;
         }
         return false;
