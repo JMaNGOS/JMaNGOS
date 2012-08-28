@@ -14,5 +14,6 @@
 		<mapping class="org.jmangos.realm.domain.Playercreateinfo" />
 		<mapping class="org.jmangos.realm.entities.PlayerCreateActionEntity" />
 		<mapping class="org.jmangos.realm.entities.PlayerCreateSpellEntity" />
+		<mapping class="org.jmangos.realm.entities.PlayerXpForLevelEntity" />
 	</session-factory>
 </hibernate-configuration>

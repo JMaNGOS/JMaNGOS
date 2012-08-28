@@ -16,6 +16,8 @@
  *******************************************************************************/
 package org.jmangos.realm.dao;
 
+import gnu.trove.map.hash.TByteObjectHashMap;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,6 +30,7 @@ import org.jmangos.realm.domain.PlayerClassLevelInfo;
 import org.jmangos.realm.domain.PlayerClassLevelInfoPK;
 import org.jmangos.realm.domain.PlayerLevelInfoPK;
 import org.jmangos.realm.entities.PlayerLevelInfo;
+import org.jmangos.realm.entities.PlayerXpForLevelEntity;
 import org.springframework.stereotype.Component;
 
 /**
@@ -83,6 +86,22 @@ public class SimpleDataDAO implements DAO {
         }
         
         return map;
+    }
+    
+    /**
+     * 
+     * @return TIntObjectHashMap&lt;PlayerXpForLevelEntity&gt;
+     */
+    public TByteObjectHashMap<PlayerXpForLevelEntity> getXpForLevel() {
+    
+        final TByteObjectHashMap<PlayerXpForLevelEntity> xpForLevel = new TByteObjectHashMap<PlayerXpForLevelEntity>();
+        final Session session = this.databaseFactory.getWorldSessionFactory().openSession();
+        @SuppressWarnings("unchecked")
+        final List<PlayerXpForLevelEntity> infoList = session.createQuery("select pxl from PlayerXpForLevelEntity pxl").list();
+        for (final PlayerXpForLevelEntity levelXpInfo : infoList) {
+            xpForLevel.put(levelXpInfo.getLevel(), levelXpInfo);
+        }
+        return xpForLevel;
     }
     
 }

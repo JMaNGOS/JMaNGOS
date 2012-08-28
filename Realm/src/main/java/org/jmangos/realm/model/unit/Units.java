@@ -33,19 +33,22 @@ import org.jmangos.realm.model.enums.WeaponAttackType;
 public class Units extends WorldObject {
     
     /** The base move speed. */
-    float[]         baseMoveSpeed   = new float[UnitMoveType.MAX_TYPE];
+    float[]                 baseMoveSpeed     = new float[UnitMoveType.MAX_TYPE];
     
     /** The m_speed_rate. */
-    float[]         m_speed_rate    = new float[UnitMoveType.MAX_TYPE];
+    float[]                 m_speed_rate      = new float[UnitMoveType.MAX_TYPE];
     
     /** The base rating value. */
-    int[]           baseRatingValue = new int[CombatRating.MAX_COMBAT_RATING.ordinal()];
+    int[]                   baseRatingValue   = new int[CombatRating.MAX_COMBAT_RATING.ordinal()];
     
     /** The m_attack timer. */
-    protected int[] m_attackTimer   = new int[WeaponAttackType.MAX.ordinal()];
+    protected int[]         m_attackTimer     = new int[WeaponAttackType.MAX.ordinal()];
     
     /** The create stats. */
-    float[]         createStats     = new float[Stats.MAX_STATS];
+    float[]                 createStats       = new float[Stats.MAX_STATS];
+    
+    /** Max combat rating */
+    public static final int MAX_COMBAT_RATING = 25;
     
     /**
      * Gets the creates the stat.
@@ -154,6 +157,18 @@ public class Units extends WorldObject {
     public void SetResistance(final SpellSchools school, final int value) {
     
         SetUInt32Value(UnitField.UNIT_FIELD_RESISTANCES.getValue() + school.ordinal(), value);
+    }
+    
+    /**
+     * 
+     * @param school
+     * @param positive
+     * @param val
+     */
+    public void SetResistanceBuffMods(final SpellSchools school, final boolean positive, final float val) {
+    
+        SetFloatValue(positive ? UnitField.UNIT_FIELD_RESISTANCEBUFFMODSPOSITIVE.getValue() + school.ordinal() : UnitField.UNIT_FIELD_RESISTANCEBUFFMODSNEGATIVE.getValue()
+                + school.ordinal(), val);
     }
     
     /**
