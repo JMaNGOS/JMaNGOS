@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.realm.dao.impl;
+package org.jmangos.realm.dao.r.impl;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository("characterDao")
 public class CharacterDaoImpl implements CharacterDao {
     
-    @PersistenceContext
+    @PersistenceContext(unitName = "realm")
     private EntityManager entityManager;
     
     @Override

@@ -8,7 +8,7 @@
         <property name="hbm2ddl.auto">update</property>
         <property name="current_session_context_class">thread</property>
         <mapping class="org.jmangos.realm.domain.ItemPrototype"/>
-        <mapping class="org.jmangos.realm.domain.PlayerLevelInfo"/>
+        <mapping class="org.jmangos.realm.entities.PlayerLevelInfo"/>
         <mapping class="org.jmangos.realm.domain.PlayerClassLevelInfo"/>
         <mapping class="org.jmangos.realm.domain.QuestPrototype"/>
         <mapping class="org.jmangos.realm.domain.Playercreateinfo"/>

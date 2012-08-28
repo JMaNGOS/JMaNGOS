@@ -8,7 +8,6 @@ import javax.sql.DataSource;
 import org.jmangos.commons.database.DatabaseConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jmx.export.annotation.AnnotationMBeanExporter;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -16,7 +15,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.AnnotationTransactionAttributeSource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.interceptor.TransactionAttributeSource;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -30,7 +28,7 @@ public class AuthModule {
     private DatabaseConfig databaseConfig;
     
     @Bean
-    public DataSource dataSource() {
+    public DataSource dataSourceAuth() {
     
         final ComboPooledDataSource ds = new ComboPooledDataSource();
         try {
@@ -39,8 +37,8 @@ public class AuthModule {
             ds.setUser(this.databaseConfig.ACCOUNT_DATABASE_USER);
             ds.setPassword(this.databaseConfig.ACCOUNT_DATABASE_PASSWORD);
             
-            ds.setMinPoolSize(this.databaseConfig.WORLD_DATABASE_CONNECTIONS_MIN);
-            ds.setMaxPoolSize(this.databaseConfig.WORLD_DATABASE_CONNECTIONS_MAX);
+            ds.setMinPoolSize(this.databaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MIN);
+            ds.setMaxPoolSize(this.databaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MAX);
             ds.setAutoCommitOnClose(false);
         } catch (final PropertyVetoException e) {
             // TODO Auto-generated catch block
@@ -50,7 +48,7 @@ public class AuthModule {
     }
     
     @Bean
-    public JpaVendorAdapter jpaVendorAdapter() {
+    public JpaVendorAdapter jpaVendorAdapterAuth() {
     
         final HibernateJpaVendorAdapter hjva = new HibernateJpaVendorAdapter();
         hjva.setShowSql(true);
@@ -63,14 +61,14 @@ public class AuthModule {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
     
         final LocalContainerEntityManagerFactoryBean lcemfb = new LocalContainerEntityManagerFactoryBean();
-        lcemfb.setDataSource(dataSource());
-        lcemfb.setJpaVendorAdapter(jpaVendorAdapter());
+        lcemfb.setDataSource(dataSourceAuth());
+        lcemfb.setJpaVendorAdapter(jpaVendorAdapterAuth());
         lcemfb.setJpaDialect(new HibernateJpaDialect());
         return lcemfb;
     }
     
     @Bean
-    public JpaTransactionManager transactionManager() {
+    public JpaTransactionManager transactionManagerAuth() {
     
         final JpaTransactionManager jtm = new JpaTransactionManager();
         jtm.setEntityManagerFactory(entityManagerFactory().getObject());
@@ -78,21 +76,9 @@ public class AuthModule {
     }
     
     @Bean
-    public AnnotationMBeanExporter annotationMBeanExporter() {
+    public TransactionInterceptor transactionInterceptorAuth() {
     
-        return new AnnotationMBeanExporter();
-    }
-    
-    @Bean
-    public TransactionAttributeSource annotationTransactionAttributeSource() {
-    
-        return new AnnotationTransactionAttributeSource();
-    }
-    
-    @Bean
-    public TransactionInterceptor transactionInterceptor() {
-    
-        return new TransactionInterceptor(transactionManager(), annotationTransactionAttributeSource());
+        return new TransactionInterceptor(transactionManagerAuth(), new AnnotationTransactionAttributeSource());
     }
     
 }

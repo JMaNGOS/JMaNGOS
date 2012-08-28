@@ -26,8 +26,8 @@ import org.jmangos.commons.database.DatabaseFactory;
 import org.jmangos.commons.database.dao.DAO;
 import org.jmangos.realm.domain.PlayerClassLevelInfo;
 import org.jmangos.realm.domain.PlayerClassLevelInfoPK;
-import org.jmangos.realm.domain.PlayerLevelInfo;
 import org.jmangos.realm.domain.PlayerLevelInfoPK;
+import org.jmangos.realm.entities.PlayerLevelInfo;
 import org.springframework.stereotype.Component;
 
 /**
