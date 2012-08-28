@@ -28,6 +28,7 @@ import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.RealmServer;
 import org.jmangos.realm.domain.InventoryItem;
 import org.jmangos.realm.entities.CharacterEntity;
+import org.jmangos.realm.entities.PlayerLevelInfo;
 import org.jmangos.realm.model.base.WorldObject;
 import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.base.update.ObjectFields;
@@ -59,7 +60,6 @@ import org.jmangos.realm.network.packet.wow.server.SMSG_TIME_SYNC_REQ;
 import org.jmangos.realm.services.CharacterService;
 import org.jmangos.world.entities.ItemPrototype;
 import org.jmangos.world.entities.PlayerClassLevelInfo;
-import org.jmangos.world.entities.PlayerLevelInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -370,7 +370,7 @@ public class PlayerService {
     public void InitStatsForLevel(final Player player) {
     
         final PlayerClassLevelInfo classInfo = this.playerClassLevelInfoStorages.get(player.getCharacterData().getClazz(), player.getCharacterData().getLevel());
-        final PlayerLevelInfo info = this.playerLevelStorages.get(player.getCharacterData().getRace(), player.getCharacterData().getClazz(), player.getCharacterData().getLevel());
+        final org.jmangos.world.entities.PlayerLevelInfo info = this.playerLevelStorages.get(player.getCharacterData().getRace(), player.getCharacterData().getClazz(), player.getCharacterData().getLevel());
         
         player.SetUInt32Value(PlayerFields.PLAYER_FIELD_MAX_LEVEL, CONFIG_UINT32_MAX_PLAYER_LEVEL);
         player.SetUInt32Value(PlayerFields.PLAYER_NEXT_LEVEL_XP, this.simpleStorages.GetXPForLevel((byte) player.getCharacterData().getLevel()));
