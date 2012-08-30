@@ -28,6 +28,9 @@
         <class>org.jmangos.world.entities.PlayerClassLevelInfo</class>
         <class>org.jmangos.world.entities.QuestPrototype</class>
         <class>org.jmangos.world.entities.Playercreateinfo</class>
+        <class>org.jmangos.world.entities.PlayerCreateAction</class>
+        <class>org.jmangos.world.entities.PlayerCreateSpell</class>
+        <class>org.jmangos.world.entities.PlayerXpForLevel</class>
 
     </persistence-unit>
 

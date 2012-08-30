@@ -1,4 +1,4 @@
-package org.jmangos.realm.entities;
+package org.jmangos.world.entities;
 
 import java.io.Serializable;
 
@@ -17,7 +17,7 @@ import org.jmangos.realm.domain.PlayercreateinfoPK;
  */
 @Entity
 @Table(name = "playercreateinfo_spell")
-public class PlayerCreateSpellEntity implements Serializable {
+public class PlayerCreateSpell implements Serializable {
     
     /**
      * 
@@ -34,7 +34,7 @@ public class PlayerCreateSpellEntity implements Serializable {
     /**
      * Empty constructor
      */
-    public PlayerCreateSpellEntity() {
+    public PlayerCreateSpell() {
     
     }
     
@@ -81,9 +81,9 @@ public class PlayerCreateSpellEntity implements Serializable {
     @Override
     public boolean equals(final Object obj) {
     
-        if (!(obj instanceof PlayerCreateSpellEntity)) {
+        if (!(obj instanceof PlayerCreateSpell)) {
             return false;
         }
-        return ((PlayerCreateSpellEntity) obj).hashCode() == hashCode();
+        return ((PlayerCreateSpell) obj).hashCode() == hashCode();
     }
 }

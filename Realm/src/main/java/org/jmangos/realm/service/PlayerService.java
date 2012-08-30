@@ -58,7 +58,6 @@ import org.jmangos.realm.network.packet.wow.server.SMSG_SPELL_GO;
 import org.jmangos.realm.network.packet.wow.server.SMSG_TALENTS_INFO;
 import org.jmangos.realm.network.packet.wow.server.SMSG_TIME_SYNC_REQ;
 import org.jmangos.realm.services.CharacterService;
-import org.jmangos.realm.services.SimpleStoragesService;
 import org.jmangos.world.entities.ItemPrototype;
 import org.jmangos.world.entities.PlayerClassLevelInfo;
 import org.slf4j.Logger;
@@ -101,7 +100,7 @@ public class PlayerService {
     
     /** The simple storages. */
     @Inject
-    private SimpleStoragesService             simpleStoragesServiceImpl;
+    private PlayerXpForLevelStorages          playerXpForLevelStorages;
     
     /** The item storages. */
     @Inject
@@ -374,7 +373,7 @@ public class PlayerService {
         final org.jmangos.world.entities.PlayerLevelInfo info = this.playerLevelStorages.get(player.getCharacterData().getRace(), player.getCharacterData().getClazz(), player.getCharacterData().getLevel());
         
         player.SetUInt32Value(PlayerFields.PLAYER_FIELD_MAX_LEVEL, CONFIG_UINT32_MAX_PLAYER_LEVEL);
-        player.SetUInt32Value(PlayerFields.PLAYER_NEXT_LEVEL_XP, this.simpleStoragesServiceImpl.getXpForLevel((byte) player.getCharacterData().getLevel()));
+        player.SetUInt32Value(PlayerFields.PLAYER_NEXT_LEVEL_XP, this.playerXpForLevelStorages.getXpForLevel((byte) player.getCharacterData().getLevel()));
         
         // UpdateSkillsForLevel ();
         

@@ -1,4 +1,4 @@
-package org.jmangos.realm.entities;
+package org.jmangos.world.entities;
 
 import java.io.Serializable;
 
@@ -18,7 +18,7 @@ import org.jmangos.realm.domain.PlayercreateinfoPK;
  */
 @Entity
 @Table(name = "playercreateinfo_action")
-public class PlayerCreateActionEntity implements Serializable {
+public class PlayerCreateAction implements Serializable {
     
     /**
      * 
@@ -43,7 +43,7 @@ public class PlayerCreateActionEntity implements Serializable {
     /**
      * Empty constructor
      */
-    public PlayerCreateActionEntity() {
+    public PlayerCreateAction() {
     
     }
     
@@ -124,9 +124,9 @@ public class PlayerCreateActionEntity implements Serializable {
     @Override
     public boolean equals(final Object obj) {
     
-        if (!(obj instanceof PlayerCreateActionEntity)) {
+        if (!(obj instanceof PlayerCreateAction)) {
             return false;
         }
-        return ((PlayerCreateActionEntity) obj).hashCode() == hashCode();
+        return ((PlayerCreateAction) obj).hashCode() == hashCode();
     }
 }

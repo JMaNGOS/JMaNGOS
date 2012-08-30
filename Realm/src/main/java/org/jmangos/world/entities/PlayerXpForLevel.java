@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.realm.entities;
+package org.jmangos.world.entities;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -27,11 +27,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "player_xp_for_level")
-public class PlayerXpForLevelEntity {
+public class PlayerXpForLevel {
     
     @Id
     @Column(name = "lvl", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
-    private byte level;
+    private Byte level;
     
     @Basic
     @Column(name = "xp_for_next_level", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
@@ -40,7 +40,7 @@ public class PlayerXpForLevelEntity {
     /**
      * Initialize Persistent entity
      */
-    public PlayerXpForLevelEntity() {
+    public PlayerXpForLevel() {
     
     }
 
@@ -48,7 +48,7 @@ public class PlayerXpForLevelEntity {
     /**
      * @return the level
      */
-    public final byte getLevel() {
+    public final Byte getLevel() {
     
         return level;
     }

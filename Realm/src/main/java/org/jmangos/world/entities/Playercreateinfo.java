@@ -1,9 +1,14 @@
 package org.jmangos.world.entities;
 
+import java.util.Set;
+
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.jmangos.realm.domain.PlayercreateinfoPK;
@@ -43,6 +48,12 @@ public class Playercreateinfo {
     @Basic
     @Column(name = "orientation", nullable = false, insertable = true, updatable = true, length = 12, precision = 0)
     private float      orientation;
+    
+    @OneToMany(mappedBy = "playercreateinfoPK", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<PlayerCreateAction> actions;
+    
+    @OneToMany(mappedBy = "playercreateinfoPK", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<PlayerCreateSpell>  spell;
     
     public Playercreateinfo() {
     
@@ -118,6 +129,42 @@ public class Playercreateinfo {
         this.orientation = orientation;
     }
     
+    
+    /**
+     * @return the actions
+     */
+    public final Set<PlayerCreateAction> getActions() {
+    
+        return actions;
+    }
+
+    
+    /**
+     * @param actions the actions to set
+     */
+    public final void setActions(final Set<PlayerCreateAction> actions) {
+    
+        this.actions = actions;
+    }
+
+    
+    /**
+     * @return the spell
+     */
+    public final Set<PlayerCreateSpell> getSpell() {
+    
+        return spell;
+    }
+
+    
+    /**
+     * @param spell the spell to set
+     */
+    public final void setSpell(final Set<PlayerCreateSpell> spell) {
+    
+        this.spell = spell;
+    }
+
     @Override
     public boolean equals(Object object) {
     
