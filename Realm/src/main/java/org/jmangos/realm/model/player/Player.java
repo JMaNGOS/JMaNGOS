@@ -175,7 +175,7 @@ public class Player extends Units implements ChanneledObject {
      * 
      * @return the int
      */
-    public int GetMapId() {
+    public int getMapId() {
     
         return this.characterData.getMap();
     }

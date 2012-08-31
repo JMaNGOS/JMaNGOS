@@ -52,7 +52,7 @@ public class Map {
      * @param plObject
      *            the pl object
      */
-    public void AddObject(final WorldObject plObject) {
+    public void addObject(final WorldObject plObject) {
     
         switch (plObject.getObjectTypeId()) {
             case PLAYER:
@@ -83,6 +83,23 @@ public class Map {
         System.out.println("Player on map " + this.playerList.size());
         System.out.println("units on map " + this.units.size());
         return true;
+    }
+    
+    /**
+     * @return the id
+     */
+    public final int getId() {
+    
+        return this.id;
+    }
+    
+    /**
+     * @param id
+     *            the id to set
+     */
+    public final void setId(int id) {
+    
+        this.id = id;
     }
     
 }

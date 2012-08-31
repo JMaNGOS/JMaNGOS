@@ -99,7 +99,7 @@ public class Item extends WorldObject {
      *            the slot
      * @return true, if successful
      */
-    public static boolean IsInventoryPos(final int bag, final int slot) {
+    public static boolean isInventoryPos(final int bag, final int slot) {
     
         if ((bag == INVENTORY_SLOT_BAG_0) && (slot == NULL_SLOT)) {
             return true;
@@ -125,7 +125,7 @@ public class Item extends WorldObject {
      *            the slot
      * @return true, if successful
      */
-    public static boolean IsEquipmentPos(final int bag, final int slot) {
+    public static boolean isEquipmentPos(final int bag, final int slot) {
     
         if ((bag == INVENTORY_SLOT_BAG_0) && (slot < EquipmentSlots.END.getValue())) {
             return true;

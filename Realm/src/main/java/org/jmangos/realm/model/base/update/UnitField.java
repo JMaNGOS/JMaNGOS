@@ -507,11 +507,11 @@ public enum UnitField implements UpdateField {
     /**
      * The UNIT_END 0x94 - 148 dec
      */
-    public static int UNIT_END = OBJECT_END + 0x008E;
+    public static final int UNIT_END = OBJECT_END + 0x008E;
     
-    int               value;
-    int               size;
-    UpdateFieldType   type;
+    int                     value;
+    int                     size;
+    UpdateFieldType         type;
     
     UnitField(final int value, final int size, final UpdateFieldType type) {
     

@@ -26,14 +26,13 @@ import org.springframework.stereotype.Component;
 @Component("сlientPacketHandlerFactory")
 public class RealmToClientPacketHandlerFactory extends AbstractPacketHandlerFactory {
     
-    protected String clientPacketPath = "./conf/packetData/rc-packets.xml";
-    
     /**
      * @see org.jmangos.commons.network.handlers.PacketHandlerFactory#loadPacket()
      */
     @Override
     public void loadPacket() {
     
+        clientPacketPath = "./conf/packetData/rc-packets.xml";
         addList(loadStaticData(PacketData.class, this.packetXSDLocation, this.clientPacketPath));
     }
 }

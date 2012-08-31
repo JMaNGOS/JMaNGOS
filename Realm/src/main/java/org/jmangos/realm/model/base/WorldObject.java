@@ -342,16 +342,6 @@ public class WorldObject extends NamedObject {
      * @param index
      * @return
      */
-    public byte GetByteValue(final UpdateField index) {
-    
-        return GetByteValue(index);
-    }
-    
-    /**
-     * 
-     * @param index
-     * @return
-     */
     public byte GetByteValue(final int index) {
     
         return this.m_uint32Values.getByte(index * 4);
@@ -439,5 +429,23 @@ public class WorldObject extends NamedObject {
     
         this.bitTypes.clear();
         this.bitSet.clear();
+    }
+
+    
+    /**
+     * @return the m_uint32Values_mirror
+     */
+    public final ChannelBuffer getM_uint32Values_mirror() {
+    
+        return this.m_uint32Values_mirror;
+    }
+
+    
+    /**
+     * @param m_uint32Values_mirror the m_uint32Values_mirror to set
+     */
+    public final void setM_uint32Values_mirror(ChannelBuffer m_uint32Values_mirror) {
+    
+        this.m_uint32Values_mirror = m_uint32Values_mirror;
     }
 }

@@ -217,9 +217,9 @@ public enum ItemFields implements UpdateField {
     ITEM_FIELD_PAD(OBJECT_END + 0x0039);
     
     /** The ITEM end. */
-    public static int ITEM_END = OBJECT_END + 0x003A;
+    public static final int ITEM_END = OBJECT_END + 0x003A;
     
-    private int       value;
+    private int             value;
     
     ItemFields(final int value) {
     

@@ -128,14 +128,15 @@ public class CharacterController {
             startOutfit = null;
         }
         
-        final Iterator<CharacterStartOutfit.ItemSlot> itr = startOutfit.getItems().iterator();
-        while (itr.hasNext()) {
-            final CharacterStartOutfit.ItemSlot item = itr.next();
-            final InventoryItem inventoryItem = new InventoryItem(item.getItemId(), item.getInventorySlot());
-            charData.getInventory().add(inventoryItem);
-            logger.info("Adding item for character: " + item.getItemId() + " SlotId: " + item.getInventorySlot());
+        if (startOutfit != null) {
+            final Iterator<CharacterStartOutfit.ItemSlot> itr = startOutfit.getItems().iterator();
+            while (itr.hasNext()) {
+                final CharacterStartOutfit.ItemSlot item = itr.next();
+                final InventoryItem inventoryItem = new InventoryItem(item.getItemId(), item.getInventorySlot());
+                charData.getInventory().add(inventoryItem);
+                logger.info("Adding item for character: " + item.getItemId() + " SlotId: " + item.getInventorySlot());
+            }
         }
-        
         this.characterService.createOrUpdateCharacter(charData);
         
         return new SMSG_CHAR_CREATE(SMSG_CHAR_CREATE.Code.SUCCESS);

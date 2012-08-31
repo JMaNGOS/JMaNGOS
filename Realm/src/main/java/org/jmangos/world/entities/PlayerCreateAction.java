@@ -118,7 +118,7 @@ public class PlayerCreateAction implements Serializable {
     @Override
     public int hashCode() {
     
-        return (getPlayercreateinfoPK().hashCode() << 8) | getButton();
+        return (getPlayercreateinfoPK().hashCode() << 8) | (getButton() & 0xFF);
     }
     
     @Override

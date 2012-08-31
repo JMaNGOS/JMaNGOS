@@ -28,7 +28,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  */
 public class RealmServer {
     
-    public static Console console;
+    public static final Console console = new Console();
     
     /**
      * The main method.
@@ -44,7 +44,6 @@ public class RealmServer {
         ServiceContent.setContext(context);
         context.getBean(NetworkService.class).start();
         
-        console = new Console();
         console.setVariable("applicationContext", context);
         console.setVariable("itemStorage", context.getBean(ItemStorages.class));
         // console.run();

@@ -13,7 +13,6 @@ import javax.persistence.Table;
 
 import org.jmangos.realm.domain.PlayercreateinfoPK;
 
-
 /**
  * Created with IntelliJ IDEA. User: paalgyula email: paalgyula@gmail.com Date: 2012.08.11. Time:
  * 21:10
@@ -23,31 +22,31 @@ import org.jmangos.realm.domain.PlayercreateinfoPK;
 public class Playercreateinfo {
     
     @EmbeddedId
-    PlayercreateinfoPK playercreateinfoPK;
+    PlayercreateinfoPK              playercreateinfoPK;
     
     @Basic
     @Column(name = "map", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
-    private short      map;
+    private short                   map;
     
     @Basic
     @Column(name = "zone", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
-    private int        zone;
+    private int                     zone;
     
     @Basic
     @Column(name = "position_x", nullable = false, insertable = true, updatable = true, length = 12, precision = 0)
-    private float      positionX;
+    private float                   positionX;
     
     @Basic
     @Column(name = "position_y", nullable = false, insertable = true, updatable = true, length = 12, precision = 0)
-    private float      positionY;
+    private float                   positionY;
     
     @Basic
     @Column(name = "position_z", nullable = false, insertable = true, updatable = true, length = 12, precision = 0)
-    private float      positionZ;
+    private float                   positionZ;
     
     @Basic
     @Column(name = "orientation", nullable = false, insertable = true, updatable = true, length = 12, precision = 0)
-    private float      orientation;
+    private float                   orientation;
     
     @OneToMany(mappedBy = "playercreateinfoPK", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<PlayerCreateAction> actions;
@@ -129,7 +128,6 @@ public class Playercreateinfo {
         this.orientation = orientation;
     }
     
-    
     /**
      * @return the actions
      */
@@ -137,16 +135,15 @@ public class Playercreateinfo {
     
         return actions;
     }
-
     
     /**
-     * @param actions the actions to set
+     * @param actions
+     *            the actions to set
      */
     public final void setActions(final Set<PlayerCreateAction> actions) {
     
         this.actions = actions;
     }
-
     
     /**
      * @return the spell
@@ -155,16 +152,22 @@ public class Playercreateinfo {
     
         return spell;
     }
-
     
     /**
-     * @param spell the spell to set
+     * @param spell
+     *            the spell to set
      */
     public final void setSpell(final Set<PlayerCreateSpell> spell) {
     
         this.spell = spell;
     }
-
+    
+    @Override
+    public int hashCode() {
+    
+        return getPlayercreateinfoPK().hashCode();
+    }
+    
     @Override
     public boolean equals(Object object) {
     

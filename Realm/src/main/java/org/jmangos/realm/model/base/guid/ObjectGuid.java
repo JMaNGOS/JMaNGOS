@@ -304,6 +304,6 @@ public class ObjectGuid extends ManagedObject {
     
     public long getCounter() {
     
-        return hasEntry() ? (getObjectId() & 0xFFFFFF) : (getObjectId() & 0xFFFFFFFF);
+        return hasEntry() ? (getObjectId() & 0xFFFFFF) : getObjectId();
     }
 }

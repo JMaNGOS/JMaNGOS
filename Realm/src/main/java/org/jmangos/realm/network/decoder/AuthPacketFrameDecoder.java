@@ -25,11 +25,9 @@ import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.frame.FrameDecoder;
 import org.jmangos.realm.network.crypt.Crypt;
 import org.jmangos.realm.network.handler.RealmToAuthChannelHandler;
-import org.jmangos.realm.network.handler.RealmToClientChannelHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class PacketFrameDecoder.
  */
@@ -60,7 +58,7 @@ public class AuthPacketFrameDecoder extends FrameDecoder {
         final ChannelBuffer clientHeader = ChannelBuffers.wrappedBuffer(ByteOrder.LITTLE_ENDIAN, header);
         final byte opcode = clientHeader.readByte();
         final int size = clientHeader.readShort();
-        if ((size < 0) || (size > 10240) || (opcode > 10240)) {
+        if ((size < 0) || (size > 10240)) {
             log.error("PacketFrameDecoder::decode: realm sent malformed packet size = " + size + " , opcode = " + opcode);
             channel.close();
             return null;

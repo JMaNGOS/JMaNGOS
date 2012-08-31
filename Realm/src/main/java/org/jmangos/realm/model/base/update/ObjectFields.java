@@ -52,9 +52,9 @@ public enum ObjectFields implements UpdateField {
     OBJECT_FIELD_PADDING(0x0005);
     
     /** The OBJECT_END */
-    public static int OBJECT_END = 0x0006;
+    public static final int OBJECT_END = 0x0006;
     
-    int               value;
+    int                     value;
     
     private ObjectFields(final int value) {
     
