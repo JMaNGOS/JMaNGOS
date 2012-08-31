@@ -52,7 +52,7 @@ public class QuestPrototypeDaoImpl implements QuestPrototypeDao {
         return criteria.getResultList();
     }
     
-    @Transactional
+    @Transactional(value = "world")
     @Override
     public Integer createOrUpdateQuestPrototype(final QuestPrototype questPrototype) {
     
@@ -65,7 +65,7 @@ public class QuestPrototypeDaoImpl implements QuestPrototypeDao {
         return questPrototype.getEntry();
     }
     
-    @Transactional
+    @Transactional(value = "world")
     @Override
     public void deleteQuestPrototype(final QuestPrototype questPrototype) {
     

@@ -52,7 +52,7 @@ public class ItemPrototypeDaoImpl implements ItemPrototypeDao {
         return criteria.getResultList();
     }
     
-    @Transactional
+    @Transactional(value = "world")
     @Override
     public Integer createOrUpdateItemPrototype(final ItemPrototype itemPrototype) {
     
@@ -65,7 +65,7 @@ public class ItemPrototypeDaoImpl implements ItemPrototypeDao {
         return itemPrototype.getEntry();
     }
     
-    @Transactional
+    @Transactional(value = "world")
     @Override
     public void deleteItemPrototype(final ItemPrototype itemPrototype) {
     

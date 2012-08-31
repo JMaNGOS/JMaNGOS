@@ -52,7 +52,7 @@ public class CharacterDaoImpl implements CharacterDao {
         return criteria.getResultList();
     }
     
-    @Transactional
+    @Transactional(value = "realm")
     @Override
     public Integer createOrUpdateCharacter(final CharacterEntity characterEntity) {
     
@@ -65,7 +65,7 @@ public class CharacterDaoImpl implements CharacterDao {
         return characterEntity.getGuid();
     }
     
-    @Transactional
+    @Transactional(value = "realm")
     @Override
     public void deleteCharacter(final CharacterEntity characterEntity) {
     

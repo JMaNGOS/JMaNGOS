@@ -53,7 +53,7 @@ public class PlayercreateinfoDaoImpl implements PlayercreateinfoDao {
         return criteria.getResultList();
     }
     
-    @Transactional
+    @Transactional(value = "world")
     @Override
     public PlayercreateinfoPK createOrUpdatePlayercreateinfo(final Playercreateinfo playercreateinfo) {
     
@@ -66,7 +66,7 @@ public class PlayercreateinfoDaoImpl implements PlayercreateinfoDao {
         return playercreateinfo.getPlayercreateinfoPK();
     }
     
-    @Transactional
+    @Transactional(value = "world")
     @Override
     public void deletePlayercreateinfo(final Playercreateinfo playercreateinfo) {
     

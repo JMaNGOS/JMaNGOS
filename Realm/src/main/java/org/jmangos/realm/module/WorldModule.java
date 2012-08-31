@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import javax.sql.DataSource;
 
 import org.jmangos.commons.database.DatabaseConfig;
-import org.springframework.aop.aspectj.TypePatternClassFilter;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -16,7 +16,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.AnnotationTransactionAttributeSource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.interceptor.TransactionAttributeSourceAdvisor;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -71,6 +70,7 @@ public class WorldModule {
     }
     
     @Bean
+    @Qualifier("world")
     public JpaTransactionManager transactionManagerWorld() {
     
         final JpaTransactionManager jtm = new JpaTransactionManager();
@@ -82,15 +82,6 @@ public class WorldModule {
     public TransactionInterceptor transactionInterceptorWorld() {
     
         return new TransactionInterceptor(transactionManagerWorld(), new AnnotationTransactionAttributeSource());
-    }
-    
-    @Bean
-    public TransactionAttributeSourceAdvisor transactionAttributeSourceAdvisorWorld() {
-    
-        final TransactionAttributeSourceAdvisor tasa = new TransactionAttributeSourceAdvisor();
-        tasa.setTransactionInterceptor(transactionInterceptorWorld());
-        tasa.setClassFilter(new TypePatternClassFilter("org.jmangos.world.*"));
-        return tasa;
     }
     
 }

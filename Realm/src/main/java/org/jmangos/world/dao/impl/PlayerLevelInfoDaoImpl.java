@@ -53,7 +53,7 @@ public class PlayerLevelInfoDaoImpl implements PlayerLevelInfoDao {
         return criteria.getResultList();
     }
     
-    @Transactional
+    @Transactional(value = "world")
     @Override
     public PlayerLevelInfoPK createOrUpdatePlayerLevelInfo(final PlayerLevelInfo playerLevelInfo) {
     
@@ -66,7 +66,7 @@ public class PlayerLevelInfoDaoImpl implements PlayerLevelInfoDao {
         return playerLevelInfo.getPlayerLevelInfoPK();
     }
     
-    @Transactional
+    @Transactional(value = "world")
     @Override
     public void deletePlayerLevelInfo(final PlayerLevelInfo playerLevelInfo) {
     

@@ -27,6 +27,7 @@ import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.world.dao.PlayerXpForLevelDao;
 import org.jmangos.world.entities.PlayerXpForLevel;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The Class PlayerXpForLevelDaoImpl.
@@ -53,6 +54,7 @@ public class PlayerXpForLevelDaoImpl implements PlayerXpForLevelDao {
         return criteria.getResultList();
     }
     
+    @Transactional(value = "world")
     @Override
     public Byte createOrUpdatePlayerLevelInfo(PlayerXpForLevel playerXpForLevel) {
     
@@ -65,6 +67,7 @@ public class PlayerXpForLevelDaoImpl implements PlayerXpForLevelDao {
         return playerXpForLevel.getLevel();
     }
     
+    @Transactional(value = "world")
     @Override
     public void deletePlayerXpForLevel(PlayerXpForLevel playerXpForLevel) {
     
