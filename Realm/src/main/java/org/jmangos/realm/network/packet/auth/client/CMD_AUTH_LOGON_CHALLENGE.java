@@ -148,7 +148,7 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmClientPacket {
             }
             
             byte[] t4 = new byte[20];
-            t4 = sha.digest(this.config.AUTH_LOGIN.toUpperCase().getBytes());
+            t4 = sha.digest(this.config.AUTH_LOGIN.toUpperCase().getBytes(Charset.forName("UTF-8")));
             
             sha.update(hash);
             logger.debug("hash:" + StringUtils.toHexString(hash));

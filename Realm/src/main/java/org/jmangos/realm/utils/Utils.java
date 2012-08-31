@@ -30,7 +30,7 @@ public class Utils {
      *            the millisec
      * @return the int
      */
-    public static final int TimeToBitFields(final Long millisec) {
+    public static final int timeToBitFields(final Long millisec) {
     
         final Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millisec);

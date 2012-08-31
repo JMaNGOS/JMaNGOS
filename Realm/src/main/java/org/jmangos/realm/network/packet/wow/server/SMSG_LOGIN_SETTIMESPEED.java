@@ -33,7 +33,7 @@ public class SMSG_LOGIN_SETTIMESPEED extends AbstractWoWServerPacket {
     @Override
     protected void writeImpl() {
     
-        writeD(Utils.TimeToBitFields(System.currentTimeMillis()));
+        writeD(Utils.timeToBitFields(System.currentTimeMillis()));
         writeF(0.01666667F);
         writeD(0);
     }

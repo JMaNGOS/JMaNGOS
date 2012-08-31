@@ -210,7 +210,7 @@ public class ItemPrototype extends NamedObject {
     // 3, precision = 0)
     /** item stats. */
     @Transient
-    private Object[]        itemStat;
+    private _ItemStat[]        itemStat;
     
     /** The Scaling stat distribution. */
     @Basic
@@ -420,7 +420,7 @@ public class ItemPrototype extends NamedObject {
     // @Column(name = "socketContent_1", nullable = false, insertable = true, updatable = true,
     // length = 7, precision = 0)
     @Transient
-    private Object[]        Socket;
+    private _Socket[]        Socket;
     
     /** The socket bonus. */
     @Basic
@@ -1044,7 +1044,7 @@ public class ItemPrototype extends NamedObject {
      * @param is
      *            the new item stat
      */
-    public void setItemStat(final Object[] is) {
+    public void setItemStat(final _ItemStat[] is) {
     
         this.itemStat = is;
     }
@@ -1750,7 +1750,7 @@ public class ItemPrototype extends NamedObject {
      * @param ob
      *            the new socket
      */
-    public void setSocket(final Object[] ob) {
+    public void setSocket(final _Socket[] ob) {
     
         this.Socket = ob;
     }

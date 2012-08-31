@@ -87,7 +87,7 @@ public class MapService implements Service {
     /**
      * The Class MapUpdater.
      */
-    class MapUpdater implements TObjectProcedure<Map> {
+    static final class MapUpdater implements TObjectProcedure<Map> {
         
         /**
          * 

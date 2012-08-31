@@ -262,7 +262,7 @@ public class PlayerService {
         final CharacterEntity character = new CharacterEntity();
         
         character.setAccount(player.getAccountInfo().getObjectId());
-        character.setGuid(new Long(player.getObjectGuid().getRawValue()).intValue());
+        character.setGuid(player.getObjectId());
         character.setPlayerBytes(player.GetUInt32Value(PlayerFields.PLAYER_BYTES));
         character.setPlayerBytes2(player.GetUInt32Value(PlayerFields.PLAYER_BYTES_2));
         character.setName(player.getName());
@@ -278,7 +278,7 @@ public class PlayerService {
      *            the player
      * @return true, if successful
      */
-    public boolean LoadHomeBind(final Player player) {
+    public boolean loadHomeBind(final Player player) {
     
         final CharacterEntity characterEntity = this.characterService.readCharacter(player.getObjectId());
         return player.setHomeBind(characterEntity.getHomeBindData());
@@ -291,7 +291,7 @@ public class PlayerService {
      *            the player
      * @return true, if successful
      */
-    public boolean LoadFromDB(final Player player) {
+    public boolean loadFromDB(final Player player) {
     
         player.initfields();
         player.SetUInt64Value(ObjectFields.OBJECT_FIELD_GUID, player.getObjectGuid().getRawValue());
@@ -328,7 +328,7 @@ public class PlayerService {
         
         player.outDebugValue();
         
-        InitStatsForLevel(player);
+        initStatsForLevel(player);
         // LoadInventory(player);
         player.outDebugValue();
         return false;
@@ -340,7 +340,7 @@ public class PlayerService {
      * @param player
      *            the player
      */
-    public void LoadInventory(final Player player) {
+    public void loadInventory(final Player player) {
     
         final CharacterEntity characterEntity = this.characterService.readCharacter(player.getObjectId());
         final List<InventoryItem> inventoryItem = characterEntity.getInventory();
@@ -367,7 +367,7 @@ public class PlayerService {
      * @param player
      *            the player
      */
-    public void InitStatsForLevel(final Player player) {
+    public void initStatsForLevel(final Player player) {
     
         final PlayerClassLevelInfo classInfo = this.playerClassLevelInfoStorages.get(player.getCharacterData().getClazz(), player.getCharacterData().getLevel());
         final org.jmangos.world.entities.PlayerLevelInfo info = this.playerLevelStorages.get(player.getCharacterData().getRace(), player.getCharacterData().getClazz(), player.getCharacterData().getLevel());
