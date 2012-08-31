@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="PropertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:/hibernate.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="commonDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close" abstract="true">
+		<property name="driverClass" value="org.hibernate.dialect.MySQL5Dialect" />
+		<property name="user" value="JMaNGOS" />
+		<property name="password" value="JMaNGOS" />
+		<property name="idleConnectionTestPeriod" value="10800" />
+		<property name="maxIdleTime" value="21600" />
+	</bean>
+
+
+	<bean id="persistenceUnitManager"
+		class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
+		<property name="persistenceXmlLocations">
+			<list>
+				<value>classpath:META-INF/world/persistence.world.xml</value>
+				<!-- now disabled -->
+				<!-- value>classpath:META-INF/realm/persistence.realm.xml</value -->
+			</list>
+		</property>
+		<property name="dataSources">
+			<map>
+				<entry key="world" value-ref="worldDataSource" />
+				<!-- now disabled -->
+				<!-- entry key="realm" value-ref="realmDataSource" / -->
+			</map>
+		</property>
+	</bean>
+
+	<bean id="jpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="databasePlatform" value="${hibernate.dialect}" />
+		<property name="showSql" value="${hibernate.show_sql}" />
+		<property name="generateDdl" value="true" />
+	</bean>
+
+	<!-- data world -->
+	<import resource="classpath:/META-INF/world/applicationContext.world.xml" />
+
+	<!-- data realm -->
+	<!-- now disabled -->
+	<!-- import resource="classpath:/META-INF/realm/applicationContext.realm.xml" 
+		/ -->
+
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+</beans>

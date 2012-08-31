@@ -18,6 +18,7 @@ package org.jmangos.realm.network.packet.auth.client;
 
 import java.math.BigInteger;
 import java.nio.BufferUnderflowException;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -93,7 +94,7 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmClientPacket {
             ArrayUtils.reverse(Nb);
             final BigInteger a = new BigInteger(1, random.generateSeed(19));
             
-            final byte[] passhash = sha.digest(this.config.AUTH_LOGIN.toUpperCase().concat(":").concat(this.config.AUTH_PASSWORD.toUpperCase()).getBytes());
+            final byte[] passhash = sha.digest(this.config.AUTH_LOGIN.toUpperCase().concat(":").concat(this.config.AUTH_PASSWORD.toUpperCase()).getBytes(Charset.forName("UTF-8")));
             sha.update(saltb);
             sha.update(passhash);
             

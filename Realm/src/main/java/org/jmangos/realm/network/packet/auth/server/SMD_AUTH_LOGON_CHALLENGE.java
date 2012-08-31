@@ -16,6 +16,8 @@
  *******************************************************************************/
 package org.jmangos.realm.network.packet.auth.server;
 
+import java.nio.charset.Charset;
+
 import javax.inject.Inject;
 
 import org.jmangos.commons.service.ServiceContent;
@@ -52,6 +54,6 @@ public class SMD_AUTH_LOGON_CHALLENGE extends AbstractRealmServerPacket {
         writeD(0);
         writeD(0);
         writeC(this.config.AUTH_LOGIN.length());
-        writeB(this.config.AUTH_LOGIN.toUpperCase().getBytes());
+        writeB(this.config.AUTH_LOGIN.toUpperCase().getBytes(Charset.forName("UTF-8")));
     }
 }

@@ -20,22 +20,22 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 import org.jmangos.tools.dbc.dataholder.DBCStruct;
 
-
 public class CharStartOutfitEntry extends DBCStruct<CharStartOutfitEntry> {
-	public final static int MAX_OUTFIT_ITEMS = 24;
-	@XmlAttribute(name="id")
-    public final Unsigned32 id = new Unsigned32();  
-	@XmlAttribute(name="race" ,required=true)
-    public final Unsigned8 race= new Unsigned8(); 
-	@XmlAttribute(name="class" ,required=true)
-    public final Unsigned8 clazz= new Unsigned8(); 
-	@XmlAttribute(name="gender" ,required=true)
-    public final Unsigned8 gender= new Unsigned8(); 
-    public final Unsigned8 pad= new Unsigned8(); 
-	@XmlAttribute(name="ItemId" ,required=true)
-    public final Signed32[] ItemId= array(new Signed32[MAX_OUTFIT_ITEMS]); 
-	@XmlAttribute(name="ItemDisplayId")
-    public final Signed32[] ItemDisplayId= array(new Signed32[MAX_OUTFIT_ITEMS]); 
-	@XmlAttribute(name="ItemInventorySlot")
-    public final Signed32[] ItemInventorySlot= array(new Signed32[MAX_OUTFIT_ITEMS]); 
+    
+    public final static int MAX_OUTFIT_ITEMS  = 24;
+    @XmlAttribute(name = "id")
+    public final Signed32   id                = new Signed32();
+    @XmlAttribute(name = "race", required = true)
+    public final Signed8    race              = new Signed8();
+    @XmlAttribute(name = "class", required = true)
+    public final Signed8    clazz             = new Signed8();
+    @XmlAttribute(name = "gender", required = true)
+    public final Signed8    gender            = new Signed8();
+    public final Unsigned8  pad               = new Unsigned8();
+    @XmlAttribute(name = "ItemId", required = true)
+    public final Signed32[] ItemId            = array(new Signed32[MAX_OUTFIT_ITEMS]);
+    @XmlAttribute(name = "ItemDisplayId")
+    public final Signed32[] ItemDisplayId     = array(new Signed32[MAX_OUTFIT_ITEMS]);
+    @XmlAttribute(name = "ItemInventorySlot")
+    public final Signed32[] ItemInventorySlot = array(new Signed32[MAX_OUTFIT_ITEMS]);
 }

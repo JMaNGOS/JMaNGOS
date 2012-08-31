@@ -19,6 +19,7 @@ package org.jmangos.realm.network.packet.wow.client;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.BufferUnderflowException;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.zip.Deflater;
 
@@ -67,7 +68,7 @@ public class CMSG_REQUEST_ACCOUNT_DATA extends AbstractWoWClientPacket {
                                                                                          // */
         if (adata.containsKey(this.type)) {
             final Deflater compressor = new Deflater();
-            final byte[] dataToCompress = adata.get(this.type).getData().getBytes();
+            final byte[] dataToCompress = adata.get(this.type).getData().getBytes(Charset.forName("UTF-8"));
             
             compressor.setInput(dataToCompress);
             compressor.finish();

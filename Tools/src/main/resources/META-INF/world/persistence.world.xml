@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+    http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+
+	<persistence-unit name="world">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>org.jmangos.commons.entities.CharStartOutfitEntity</class>
+		
+		<properties>
+			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/world?autoReconnect=true" />
+			<property name="hibernate.connection.username" value="JMaNGOS" />
+			<property name="hibernate.connection.password" value="JMaNGOS" />
+		</properties>
+	</persistence-unit>
+
+</persistence>

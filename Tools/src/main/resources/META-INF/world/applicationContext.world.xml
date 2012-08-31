@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+                http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+                http://www.springframework.org/schema/tx 
+                http://www.springframework.org/schema/tx/spring-tx-3.0.xsd 
+                http://www.springframework.org/schema/aop 
+                http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+	xmlns:context="http://www.springframework.org/schema/context"
+	default-autowire="byName">
+	
+	<tx:annotation-driven />
+
+	<context:component-scan base-package="org.jmangos.tools.dbcconverter" />
+
+	<bean id="world"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitManager" ref="persistenceUnitManager" />
+		<property name="persistenceUnitName" value="world" />
+		<property name="dataSource" ref="worldDataSource" />
+		<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+		<property name="loadTimeWeaver">
+			<bean
+				class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
+		</property>
+		<property name="jpaDialect">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+		</property>
+	</bean>
+
+	<bean id="worldTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<qualifier value="world" />
+		<property name="entityManagerFactory" ref="world" />
+		<property name="dataSource" ref="worldDataSource" />
+		<property name="jpaDialect">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+		</property>
+	</bean>
+
+	<bean id="worldDataSource" parent="commonDataSource" />
+
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<bean id="transactionInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager" ref="worldTransactionManager" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="proxyTargetClass" value="true" />
+		<property name="beanNames">
+			<value>*Service</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>transactionInterceptor</value>
+			</list>
+		</property>
+	</bean>
+</beans>
