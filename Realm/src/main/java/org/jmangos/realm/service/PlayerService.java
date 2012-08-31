@@ -349,10 +349,10 @@ public class PlayerService {
             if (proto != null) {
                 logger.debug(proto.getName() + " - " + iT.getSlot());
                 final Item item = this.itemStorages.loadFromDB(iT, proto);
-                if (Item.IsInventoryPos(Item.INVENTORY_SLOT_BAG_0, iT.getSlot())) {
+                if (Item.isInventoryPos(Item.INVENTORY_SLOT_BAG_0, iT.getSlot())) {
                     logger.debug(proto.getName() + " - " + "in INVENTORY_SLOT_BAG_0");
                 }
-                if (Item.IsEquipmentPos(Item.INVENTORY_SLOT_BAG_0, iT.getSlot())) {
+                if (Item.isEquipmentPos(Item.INVENTORY_SLOT_BAG_0, iT.getSlot())) {
                     logger.debug(proto.getName() + " - " + "in INVENTORY_SLOT_BAG_0 and can equip");
                     player.equipItem(iT.getSlot(), item);
                 }

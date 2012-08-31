@@ -54,7 +54,7 @@ public class SMSG_INIT_WORLD_STATES extends AbstractWoWServerPacket {
     @Override
     protected void writeImpl() {
     
-        writeD(this.player.GetMapId());
+        writeD(this.player.getMapId());
         writeD(0xD7);
         writeD(0xDD);
         writeD(0x12);
