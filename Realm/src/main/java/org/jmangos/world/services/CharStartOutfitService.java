@@ -19,17 +19,21 @@ package org.jmangos.world.services;
 import java.util.List;
 
 import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.domain.PlayerClassLevelInfoPK;
-import org.jmangos.world.entities.PlayerClassLevelInfo;
+import org.jmangos.commons.entities.CharStartOutfitEntity;
+import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
 
-public interface PlayerClassLevelInfoService {
+/**
+ * @author MinimaJack
+ * 
+ */
+public interface CharStartOutfitService {
     
-    public PlayerClassLevelInfo readPlayerClassLevelInfo(PlayerClassLevelInfoPK pk);
+    CharStartOutfitEntity readCharStartOutfitEntity(CharStartOutfitEntityPk pk);
     
-    public List<PlayerClassLevelInfo> readPlayerClassLevelInfos(final Criterion... criterions);
+    List<CharStartOutfitEntity> readCharStartOutfitEntities(final Criterion... criterions);
     
-    public PlayerClassLevelInfoPK createOrUpdatePlayerClassLevelInfo(PlayerClassLevelInfo playerClassLevelInfo);
+    CharStartOutfitEntityPk createOrUpdateCharStartOutfitEntity(CharStartOutfitEntity charStartOutfitEntity);
     
-    public void deletePlayerClassLevelInfo(PlayerClassLevelInfo playerClassLevelInfo);
+    void deleteCharStartOutfitEntity(CharStartOutfitEntity charStartOutfitEntity);
     
 }

@@ -16,15 +16,16 @@
  *******************************************************************************/
 package org.jmangos.realm.network.packet.wow.server;
 
-import java.util.BitSet;
 import java.util.List;
 
 import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.realm.domain.InventoryItem;
 import org.jmangos.realm.entities.CharacterEntity;
+import org.jmangos.realm.model.enums.EquipmentSlots;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 import org.jmangos.realm.network.packet.wow.client.CMSG_AUTH_SESSION;
 import org.jmangos.realm.service.ItemStorages;
+import org.jmangos.world.entities.ItemPrototype;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -96,22 +97,22 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
                 logger.error("Cannot get ItemStorages instance!");
             }
             
-            for (int i = 0; i < 23; i++) {
+            for (int i = 0; i < EquipmentSlots.END.getValue(); i++) {
                 final InventoryItem invItem = character.findInventorySlot(i);
-                if (invItem != null) {
+                if ((invItem != null)) {
                     int displayInfoID = 0x00;
+                    byte inventoryType = 0;
                     try {
-                        displayInfoID = itemStorages.get(invItem.getItem_guid()).getDisplayInfoID();
+                        final ItemPrototype proto = itemStorages.get(invItem.getItem_guid());
+                        displayInfoID = proto.getDisplayInfoID();
+                        inventoryType = (byte) proto.getInventoryType().ordinal();
                     } catch (final Exception e) {
                         logger.error("ID not found in the storage: " + invItem.getItem_guid(), e);
                     }
                     
                     writeD(displayInfoID);
-                    writeC(displayInfoID);
-                    writeD(0x00 /*
-                                 * paalgyula: need some info about it
-                                 * character.getItems()[i].getEnchantAuraId()
-                                 */);
+                    writeC(inventoryType);
+                    writeD(0x00);
                 } else {
                     writeD(0x00);
                     writeC(0x00);
@@ -120,12 +121,12 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
             }
             
             // TODO: implement bags
-            /*
-             * for (int i = 0; i < character.getBags().length; i++) { writeD(0); // DisplayID
-             * writeC(0); // InventoryType writeD(0); // Enchantment }
-             */
             
-            new BitSet();
+            for (int i = 0; i < 4; i++) {
+                writeD(0); // DisplayID
+                writeC(0); // InventoryType
+                writeD(0); // Enchantment
+            }
         }
         
     }

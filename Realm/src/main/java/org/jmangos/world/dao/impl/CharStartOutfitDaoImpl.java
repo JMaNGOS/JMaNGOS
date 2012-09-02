@@ -24,29 +24,29 @@ import javax.persistence.PersistenceContext;
 import org.criteria4jpa.Criteria;
 import org.criteria4jpa.CriteriaUtils;
 import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.domain.PlayerClassLevelInfoPK;
-import org.jmangos.world.dao.PlayerClassLevelInfoDao;
-import org.jmangos.world.entities.PlayerClassLevelInfo;
+import org.jmangos.commons.entities.CharStartOutfitEntity;
+import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
+import org.jmangos.world.dao.CharStartOutfitDao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository("playerClassLevelInfoDao")
-public class PlayerClassLevelInfoDaoImpl implements PlayerClassLevelInfoDao {
+@Repository("charStartOutfitDao")
+public class CharStartOutfitDaoImpl implements CharStartOutfitDao {
     
     @PersistenceContext(unitName = "world")
     private EntityManager entityManager;
     
     @Override
-    public PlayerClassLevelInfo readPlayerClassLevelInfo(final PlayerClassLevelInfoPK pk) {
+    public CharStartOutfitEntity readCharStartOutfit(final CharStartOutfitEntityPk pk) {
     
-        return this.entityManager.find(PlayerClassLevelInfo.class, pk);
+        return this.entityManager.find(CharStartOutfitEntity.class, pk);
     }
     
-    @Override
     @SuppressWarnings("unchecked")
-    public List<PlayerClassLevelInfo> readPlayerClassLevelInfos(final Criterion... criterions) {
+    @Override
+    public List<CharStartOutfitEntity> readCharStartOutfits(final Criterion... criterions) {
     
-        final Criteria criteria = CriteriaUtils.createCriteria(this.entityManager, PlayerClassLevelInfo.class);
+        final Criteria criteria = CriteriaUtils.createCriteria(this.entityManager, CharStartOutfitEntity.class);
         for (final Criterion criterion : criterions) {
             criteria.add(criterion);
         }
@@ -55,25 +55,25 @@ public class PlayerClassLevelInfoDaoImpl implements PlayerClassLevelInfoDao {
     
     @Transactional(value = "world")
     @Override
-    public PlayerClassLevelInfoPK createOrUpdatePlayerClassLevelInfo(final PlayerClassLevelInfo playerClassLevelInfo) {
+    public CharStartOutfitEntityPk createOrUpdateCharStartOutfitEntity(final CharStartOutfitEntity charStartOutfitEntity) {
     
-        if (playerClassLevelInfo.getPlayerClassLevelInfoPK() == null) {
-            this.entityManager.persist(playerClassLevelInfo);
+        if (charStartOutfitEntity.getCharStartOutfitEntityPk() == null) {
+            this.entityManager.persist(charStartOutfitEntity);
         } else {
-            this.entityManager.merge(playerClassLevelInfo);
+            this.entityManager.merge(charStartOutfitEntity);
         }
         this.entityManager.flush();
-        return playerClassLevelInfo.getPlayerClassLevelInfoPK();
+        return charStartOutfitEntity.getCharStartOutfitEntityPk();
     }
     
     @Transactional(value = "world")
     @Override
-    public void deletePlayerClassLevelInfo(final PlayerClassLevelInfo playerClassLevelInfo) {
+    public void deleteCharStartOutfitEntity(final CharStartOutfitEntity charStartOutfitEntity) {
     
-        if (playerClassLevelInfo == null) {
+        if (charStartOutfitEntity == null) {
             return;
         }
-        this.entityManager.remove(playerClassLevelInfo);
+        this.entityManager.remove(charStartOutfitEntity);
     }
     
 }

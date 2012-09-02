@@ -16,22 +16,24 @@
  *******************************************************************************/
 package org.jmangos.realm.controller;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import org.criteria4jpa.criterion.Criterion;
 import org.criteria4jpa.criterion.Restrictions;
+import org.jmangos.commons.entities.CharStartOutfitEntity;
 import org.jmangos.realm.domain.InventoryItem;
 import org.jmangos.realm.domain.PlayerHomeBindData;
 import org.jmangos.realm.domain.PlayercreateinfoPK;
 import org.jmangos.realm.entities.CharacterEntity;
+import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.enums.Classes;
+import org.jmangos.realm.model.enums.EquipmentSlots;
+import org.jmangos.realm.model.enums.InventoryType;
 import org.jmangos.realm.model.enums.Races;
-import org.jmangos.realm.model.player.CharacterStartOutfit;
 import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_CREATE;
-import org.jmangos.realm.service.DBCStorage;
+import org.jmangos.realm.service.CharStartOutfitStorages;
 import org.jmangos.realm.services.CharacterService;
 import org.jmangos.world.entities.Playercreateinfo;
 import org.jmangos.world.services.PlayercreateinfoService;
@@ -52,7 +54,7 @@ public class CharacterController {
     private PlayercreateinfoService playercreateinfoService;
     
     @Inject
-    private DBCStorage              dbcStorage;
+    private CharStartOutfitStorages charStartOutfitStorages;
     
     public SMSG_CHAR_CREATE createCharacter(final int accountId, final String charName, final int charRace, final int charClass, final int gender,
             final int skin, final int face, final int hairStyle, final int hairColor, final int facialHair, final int outfitId) {
@@ -118,25 +120,24 @@ public class CharacterController {
         charData.setHomeBindData(phbd);
         
         // Inventory items
-        final Iterator<CharacterStartOutfit> outfitItr = this.dbcStorage.getOutfitEntries().iterator();
-        CharacterStartOutfit startOutfit = null;
-        while (outfitItr.hasNext()) {
-            startOutfit = outfitItr.next();
-            if ((startOutfit.clazz == charClass) && (startOutfit.gender == gender) && (startOutfit.race == charRace)) {
-                break;
+        // items in bag
+        int itemIndex = 23;
+        for (final InventoryType inventoryType : InventoryType.values()) {
+            final CharStartOutfitEntity item = this.charStartOutfitStorages.get((byte) charClass, (byte) charRace, (byte) gender, (byte) inventoryType.ordinal());
+            if (item == null) {
+                continue;
             }
-            startOutfit = null;
+            EquipmentSlots es = Item.findEquipSlot(inventoryType);
+            final InventoryItem inventoryItem;
+            if (es == null) {
+                inventoryItem = new InventoryItem(item.getItemId(), itemIndex++);
+            } else {
+                inventoryItem = new InventoryItem(item.getItemId(), es.getValue());
+            }
+            charData.getInventory().add(inventoryItem);
+            logger.info("Adding item for character: " + item.getItemId());
         }
         
-        if (startOutfit != null) {
-            final Iterator<CharacterStartOutfit.ItemSlot> itr = startOutfit.getItems().iterator();
-            while (itr.hasNext()) {
-                final CharacterStartOutfit.ItemSlot item = itr.next();
-                final InventoryItem inventoryItem = new InventoryItem(item.getItemId(), item.getInventorySlot());
-                charData.getInventory().add(inventoryItem);
-                logger.info("Adding item for character: " + item.getItemId() + " SlotId: " + item.getInventorySlot());
-            }
-        }
         this.characterService.createOrUpdateCharacter(charData);
         
         return new SMSG_CHAR_CREATE(SMSG_CHAR_CREATE.Code.SUCCESS);

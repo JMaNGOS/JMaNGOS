@@ -31,6 +31,7 @@
         <class>org.jmangos.world.entities.PlayerCreateAction</class>
         <class>org.jmangos.world.entities.PlayerCreateSpell</class>
         <class>org.jmangos.world.entities.PlayerXpForLevel</class>
+        <class>org.jmangos.commons.entities.CharStartOutfitEntity</class>
 
     </persistence-unit>
 

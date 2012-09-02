@@ -23,28 +23,28 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.jmangos.commons.dataholder.DataLoadService;
-import org.jmangos.realm.domain.PlayerClassLevelInfoPK;
+import org.jmangos.commons.entities.CharStartOutfitEntity;
+import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
 import org.jmangos.realm.model.enums.Classes;
-import org.jmangos.world.entities.PlayerClassLevelInfo;
-import org.jmangos.world.services.PlayerClassLevelInfoService;
+import org.jmangos.world.services.CharStartOutfitService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * The Class PlayerClassLevelInfoStorages.
+ * The Class CharStartOutfitStorages.
  */
 @Component
-public class PlayerClassLevelInfoStorages implements DataLoadService<HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo>> {
+public class CharStartOutfitStorages implements DataLoadService<HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity>> {
     
     /** The Constant log. */
-    private static final Logger                                   log       = LoggerFactory.getLogger(PlayerClassLevelInfoStorages.class);
+    private static final Logger                                     logger    = LoggerFactory.getLogger(CharStartOutfitStorages.class);
     
     @Inject
-    PlayerClassLevelInfoService                                   playerClassLevelInfoService;
+    CharStartOutfitService                                          charStartOutfitService;
     
     /** The Player cli. */
-    private HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> playerCLI = new HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo>();
+    private HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity> playerCSO = new HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity>();
     
     /**
      * 
@@ -55,7 +55,7 @@ public class PlayerClassLevelInfoStorages implements DataLoadService<HashMap<Pla
     public void start() {
     
         load();
-        log.info("Loaded " + this.playerCLI.size() + " PlayerClassLevelInfos");
+        logger.info("Loaded {} CharStartOutfits", this.playerCSO.size());
     }
     
     /**
@@ -74,14 +74,14 @@ public class PlayerClassLevelInfoStorages implements DataLoadService<HashMap<Pla
      * @see org.jmangos.commons.dataholder.DataLoadService#load()
      */
     @Override
-    public HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> load() {
+    public HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity> load() {
     
-        final HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> map = new HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo>();
-        final List<PlayerClassLevelInfo> infoList = this.playerClassLevelInfoService.readPlayerClassLevelInfos();
-        for (final PlayerClassLevelInfo levelInfo : infoList) {
-            map.put(levelInfo.getPlayerClassLevelInfoPK(), levelInfo);
+        final HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity> map = new HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity>();
+        final List<CharStartOutfitEntity> infoList = this.charStartOutfitService.readCharStartOutfitEntities();
+        for (final CharStartOutfitEntity сharStartOutfit : infoList) {
+            map.put(сharStartOutfit.getCharStartOutfitEntityPk(), сharStartOutfit);
         }
-        return this.playerCLI = map;
+        return this.playerCSO = map;
     }
     
     /**
@@ -91,9 +91,9 @@ public class PlayerClassLevelInfoStorages implements DataLoadService<HashMap<Pla
     @Override
     public void reload() {
     
-        HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> tempPlayerCLI = load();
-        this.playerCLI = tempPlayerCLI;
-        tempPlayerCLI = null;
+        HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity> tempPlayerCSO = load();
+        this.playerCSO = tempPlayerCSO;
+        tempPlayerCSO = null;
     }
     
     /**
@@ -108,21 +108,23 @@ public class PlayerClassLevelInfoStorages implements DataLoadService<HashMap<Pla
     }
     
     /**
-     * Gets the.
      * 
      * @param clazz
-     *            the clazz
-     * @param level
-     *            the level
-     * @return the player class level info
+     * @param race
+     * @param gender
+     * @param itemInventorySlot
+     * @return charStartOutfitEntity
      */
-    public PlayerClassLevelInfo get(final int clazz, final int level) {
+    public CharStartOutfitEntity get(final byte clazz, final byte race, final byte gender, final int itemInventorySlot) {
     
-        final PlayerClassLevelInfoPK cl = new PlayerClassLevelInfoPK(clazz, level);
-        if (this.playerCLI.containsKey(cl)) {
-            return this.playerCLI.get(cl);
+        final CharStartOutfitEntityPk cl = new CharStartOutfitEntityPk();
+        cl.setClazz(clazz);
+        cl.setRace(race);
+        cl.setGender(gender);
+        cl.setItemInventorySlot(itemInventorySlot);
+        if (this.playerCSO.containsKey(cl)) {
+            return this.playerCSO.get(cl);
         } else {
-            log.warn("can't find proper PlayerClassLevelInfo");
             return null;
         }
     }
@@ -136,9 +138,9 @@ public class PlayerClassLevelInfoStorages implements DataLoadService<HashMap<Pla
      *            the level
      * @return the player class level info
      */
-    public PlayerClassLevelInfo get(final Classes clazz, final int level) {
+    public CharStartOutfitEntity get(final Classes clazz, final byte race, final byte gender, final int itemInventorySlot) {
     
-        return get(clazz.getValue(), level);
+        return get((byte) clazz.getValue(), race, gender, itemInventorySlot);
     }
     
     /**
@@ -146,7 +148,7 @@ public class PlayerClassLevelInfoStorages implements DataLoadService<HashMap<Pla
      * @see org.jmangos.commons.dataholder.DataLoadService#get()
      */
     @Override
-    public HashMap<PlayerClassLevelInfoPK, PlayerClassLevelInfo> get() {
+    public HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity> get() {
     
         // TODO Auto-generated method stub
         return null;

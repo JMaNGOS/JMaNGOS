@@ -19,41 +19,41 @@ package org.jmangos.world.services.impl;
 import java.util.List;
 
 import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.domain.PlayerClassLevelInfoPK;
-import org.jmangos.world.dao.PlayerClassLevelInfoDao;
-import org.jmangos.world.entities.PlayerClassLevelInfo;
-import org.jmangos.world.services.PlayerClassLevelInfoService;
+import org.jmangos.commons.entities.CharStartOutfitEntity;
+import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
+import org.jmangos.world.dao.CharStartOutfitDao;
+import org.jmangos.world.services.CharStartOutfitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("playerClassLevelInfoService")
-public class PlayerClassLevelInfoServiceImpl implements PlayerClassLevelInfoService {
+@Service("charStartOutfitService")
+public class CharStartOutfitServiceImpl implements CharStartOutfitService {
     
     @Autowired
-    private PlayerClassLevelInfoDao playerClassLevelInfoDao;
+    private CharStartOutfitDao charStartOutfitDao;
     
     @Override
-    public PlayerClassLevelInfo readPlayerClassLevelInfo(final PlayerClassLevelInfoPK pk) {
+    public CharStartOutfitEntity readCharStartOutfitEntity(final CharStartOutfitEntityPk pk) {
     
-        return this.playerClassLevelInfoDao.readPlayerClassLevelInfo(pk);
+        return this.charStartOutfitDao.readCharStartOutfit(pk);
     }
     
     @Override
-    public List<PlayerClassLevelInfo> readPlayerClassLevelInfos(final Criterion... criterions) {
+    public List<CharStartOutfitEntity> readCharStartOutfitEntities(final Criterion... criterions) {
     
-        return this.playerClassLevelInfoDao.readPlayerClassLevelInfos(criterions);
+        return this.charStartOutfitDao.readCharStartOutfits(criterions);
     }
     
     @Override
-    public PlayerClassLevelInfoPK createOrUpdatePlayerClassLevelInfo(final PlayerClassLevelInfo playerClassLevelInfo) {
+    public CharStartOutfitEntityPk createOrUpdateCharStartOutfitEntity(final CharStartOutfitEntity charStartOutfitEntity) {
     
-        return this.playerClassLevelInfoDao.createOrUpdatePlayerClassLevelInfo(playerClassLevelInfo);
+        return this.charStartOutfitDao.createOrUpdateCharStartOutfitEntity(charStartOutfitEntity);
     }
     
     @Override
-    public void deletePlayerClassLevelInfo(final PlayerClassLevelInfo playerClassLevelInfo) {
+    public void deleteCharStartOutfitEntity(final CharStartOutfitEntity charStartOutfitEntity) {
     
-        this.playerClassLevelInfoDao.deletePlayerClassLevelInfo(playerClassLevelInfo);
+        this.charStartOutfitDao.deleteCharStartOutfitEntity(charStartOutfitEntity);
     }
     
 }

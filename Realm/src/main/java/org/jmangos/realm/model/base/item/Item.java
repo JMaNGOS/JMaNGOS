@@ -20,6 +20,7 @@ import org.jmangos.realm.model.base.WorldObject;
 import org.jmangos.realm.model.base.update.ItemFields;
 import org.jmangos.realm.model.enums.EquipmentSlots;
 import org.jmangos.realm.model.enums.InventorySlots;
+import org.jmangos.realm.model.enums.InventoryType;
 import org.jmangos.realm.model.enums.TypeID;
 import org.jmangos.realm.model.enums.TypeMask;
 
@@ -88,6 +89,56 @@ public class Item extends WorldObject {
     public int getSlot() {
     
         return this.slot;
+    }
+    
+    public static EquipmentSlots findEquipSlot(InventoryType inventoryType) {
+    
+        switch (inventoryType) {
+            case HEAD:
+                return EquipmentSlots.HEAD;
+            case SHOULDERS:
+                return EquipmentSlots.SHOULDERS;
+            case BODY:
+                return EquipmentSlots.BODY;
+            case CHEST:
+                return EquipmentSlots.CHEST;
+            case ROBE:
+                return EquipmentSlots.CHEST;
+            case WAIST:
+                return EquipmentSlots.WAIST;
+            case LEGS:
+                return EquipmentSlots.LEGS;
+            case FEET:
+                return EquipmentSlots.FEET;
+            case WRISTS:
+                return EquipmentSlots.WRISTS;
+            case HANDS:
+                return EquipmentSlots.HANDS;
+            case CLOAK:
+                return EquipmentSlots.BACK;
+            case WEAPON:
+                return EquipmentSlots.MAINHAND;
+            case SHIELD:
+                return EquipmentSlots.OFFHAND;
+            case RANGED:
+                return EquipmentSlots.RANGED;
+            case TWOHWEAPON:
+                return EquipmentSlots.MAINHAND;
+            case TABARD:
+                return EquipmentSlots.TABARD;
+            case WEAPONMAINHAND:
+                return EquipmentSlots.MAINHAND;
+            case WEAPONOFFHAND:
+                return EquipmentSlots.OFFHAND;
+            case HOLDABLE:
+                return EquipmentSlots.OFFHAND;
+            case THROWN:
+                return EquipmentSlots.RANGED;
+            case RANGEDRIGHT:
+                return EquipmentSlots.RANGED;
+            default:
+                return null;
+        }
     }
     
     /**

@@ -106,10 +106,6 @@ public class PlayerService {
     @Inject
     private ItemStorages                      itemStorages;
     
-    /** The DBC Storage */
-    @Inject
-    private DBCStorage                        dbcStorage;
-    
     /** The playerlist. */
     private static TLongObjectHashMap<Player> playerlist                     = new TLongObjectHashMap<Player>();
     
@@ -252,7 +248,6 @@ public class PlayerService {
         RealmServer.console.setVariable("playerService", this);
         RealmServer.console.setVariable("sender", this.sender);
         RealmServer.console.setVariable("player", player);
-        RealmServer.console.setVariable("dbcStorage", this.dbcStorage);
         
         return player;
     }

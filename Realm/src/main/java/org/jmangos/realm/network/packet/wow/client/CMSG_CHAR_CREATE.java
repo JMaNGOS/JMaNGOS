@@ -9,7 +9,6 @@ import org.jmangos.commons.network.model.SendablePacket;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.controller.CharacterController;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
-import org.jmangos.realm.service.DBCStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -28,9 +27,6 @@ public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
     private AbstractPacketSender sender;
     @Inject
     private CharacterController  characterController;
-    
-    @Inject
-    private DBCStorage           dbcStorage;
     
     String                       charName;
     Integer                      charRace;

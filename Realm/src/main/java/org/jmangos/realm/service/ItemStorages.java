@@ -77,7 +77,7 @@ public class ItemStorages implements DataLoadService<TLongObjectHashMap<ItemProt
             logger.debug(String.format("The specified id: %d not in the store. Trying to load directly from the database!", guid));
             final ItemPrototype ip = this.itemPrototypeService.readItemPrototype(guid);
             if (ip != null) {
-                this.itemPrototypes.put(ip.getObjectId(), ip);
+                this.itemPrototypes.put(ip.getEntry(), ip);
                 return ip;
             }
         }

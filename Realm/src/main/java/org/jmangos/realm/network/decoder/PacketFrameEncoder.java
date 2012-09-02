@@ -68,10 +68,8 @@ public class PacketFrameEncoder extends OneToOneEncoder {
         final ChannelBuffer tmp = message.readBytes(message.readableBytes());
         frame.writeBytes(tmp);
         log.info(String.format("[SEND PACKET] :  0x%02X - %s", opcode, OpcodeTable.getOpcode(opcode)));
-        final List<String> d = breakStringInChunks(new BigInteger(1, tmp.array()).toString(16).toUpperCase(), 16);
-        for (final String string : d) {
-            log.debug(string);
-        }
+        final String d = toHex(tmp.array());
+        log.info(d);
         return frame;
     }
     
@@ -83,14 +81,9 @@ public class PacketFrameEncoder extends OneToOneEncoder {
      *            the chunk size
      * @return the list
      */
-    private static List<String> breakStringInChunks(final String text, final int chunkSize) {
+    public static String toHex(byte[] bytes) {
     
-        final int numChunks = 0 == (text.length() % chunkSize) ? text.length() / chunkSize : 1 + (text.length() / chunkSize);
-        final List<String> chunks = new ArrayList<String>(numChunks);
-        for (int startIndex = 0; startIndex < text.length(); startIndex += chunkSize) {
-            final int endIndex = Math.min(text.length(), startIndex + chunkSize);
-            chunks.add(text.substring(startIndex, endIndex));
-        }
-        return chunks;
+        BigInteger bi = new BigInteger(1, bytes);
+        return String.format("%0" + (bytes.length << 1) + "X", bi);
     }
 }

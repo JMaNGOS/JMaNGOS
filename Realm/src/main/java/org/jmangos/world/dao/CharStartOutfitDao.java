@@ -14,22 +14,26 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.world.services;
+package org.jmangos.world.dao;
 
 import java.util.List;
 
 import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.domain.PlayerClassLevelInfoPK;
-import org.jmangos.world.entities.PlayerClassLevelInfo;
+import org.jmangos.commons.entities.CharStartOutfitEntity;
+import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
 
-public interface PlayerClassLevelInfoService {
+/**
+ * @author MinimaJack
+ * 
+ */
+public interface CharStartOutfitDao {
     
-    public PlayerClassLevelInfo readPlayerClassLevelInfo(PlayerClassLevelInfoPK pk);
+    CharStartOutfitEntity readCharStartOutfit(CharStartOutfitEntityPk pk);
     
-    public List<PlayerClassLevelInfo> readPlayerClassLevelInfos(final Criterion... criterions);
+    List<CharStartOutfitEntity> readCharStartOutfits(Criterion... criterions);
     
-    public PlayerClassLevelInfoPK createOrUpdatePlayerClassLevelInfo(PlayerClassLevelInfo playerClassLevelInfo);
+    CharStartOutfitEntityPk createOrUpdateCharStartOutfitEntity(CharStartOutfitEntity charStartOutfitEntity);
     
-    public void deletePlayerClassLevelInfo(PlayerClassLevelInfo playerClassLevelInfo);
+    void deleteCharStartOutfitEntity(CharStartOutfitEntity charStartOutfitEntity);
     
 }
