@@ -25,34 +25,36 @@ import java.nio.ByteOrder;
 
 import org.jmangos.tools.chunk.BaseChunk;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
-import org.jmangos.tools.wmo.chunks.group.*;
+import org.jmangos.tools.wmo.chunks.group.MOGPChunk;
 
 public class WmoGroup {
-	public MOGPChunk groupChunk;
-
-	public static WmoGroup read(File f) throws IOException {
-		FileInputStream fis = null;
-		ByteBuffer bb = ByteBuffer.allocate((int) f.length());
-		WmoGroup result = new WmoGroup();
-		try {
-			fis = new FileInputStream(f);
-			fis.getChannel().read(bb);
-			bb.rewind();
-			bb.order(ByteOrder.LITTLE_ENDIAN);
-			
-			int glOffset = 0;
-			while (glOffset < (int)f.length()) {
-				BaseChunk ch = new WMOChunk().readChunkByHeader(bb,glOffset);
-				if (ch instanceof MOGPChunk){
-					result.groupChunk = (MOGPChunk) ch;
-				}
-				glOffset = ch.getGlobalOffcet();
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			fis.close();
-		}
-		return result;
-	}
+    
+    public MOGPChunk groupChunk;
+    
+    public static WmoGroup read(final File f) throws IOException {
+    
+        FileInputStream fis = null;
+        final ByteBuffer bb = ByteBuffer.allocate((int) f.length());
+        final WmoGroup result = new WmoGroup();
+        try {
+            fis = new FileInputStream(f);
+            fis.getChannel().read(bb);
+            bb.rewind();
+            bb.order(ByteOrder.LITTLE_ENDIAN);
+            
+            int glOffset = 0;
+            while (glOffset < (int) f.length()) {
+                final BaseChunk ch = new WMOChunk().readChunkByHeader(bb, glOffset);
+                if (ch instanceof MOGPChunk) {
+                    result.groupChunk = (MOGPChunk) ch;
+                }
+                glOffset = ch.getGlobalOffcet();
+            }
+        } catch (final FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            fis.close();
+        }
+        return result;
+    }
 }

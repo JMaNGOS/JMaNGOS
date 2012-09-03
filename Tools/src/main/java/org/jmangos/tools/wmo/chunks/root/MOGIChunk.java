@@ -21,39 +21,48 @@ import java.nio.ByteBuffer;
 import org.jmangos.tools.chunk.BaseChunk;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
-public class MOGIChunk extends WMOChunk{
-	class MOGIEntry extends WMOChunk{ 
-		Unsigned32 Flags = new Unsigned32();   		
-		Float32[] bbox1 = array(new Float32[3]); 		
-		Float32[] bbox2 = array(new Float32[3]); 		
-		Signed32 name  = new Signed32();
-	}
-	private MOGIEntry[] MOGIEntries;
-	@Override
-	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
-		MOGIEntries = new MOGIEntry[(int) (size /32)];
-		for (int i = 0; i < (size /32); i++) {
-			MOGIEntries[i] = new MOGIEntry();
-			MOGIEntries[i].setByteBuffer(bb, offset + 32*i);
-		}
-		setGlobalOffcet(offset + size + HEADERSIZE);
-		this.setByteBuffer(bb, offset);
-		return this;
-	}
-	@SuppressWarnings("unused")
-	private String getAllName(){
-		String tmp = "";
-		for (int i = 0; i < MOGIEntries.length; i++) {
-			tmp +="\n\tFlags:" + MOGIEntries[i].Flags.get()+
-			"\n\tBounding box 1:" + MOGIEntries[i].bbox1[0].get()+ " " +MOGIEntries[i].bbox1[1].get()+ " " + MOGIEntries[i].bbox1[2].get()+
-			"\n\tBounding box 2:" + MOGIEntries[i].bbox2[0].get()+ " " +MOGIEntries[i].bbox2[1].get()+ " " + MOGIEntries[i].bbox2[2].get()+
-			"\n\tname or index:" + MOGIEntries[i].name.get();
-
-		}
-		return tmp;
-	}
-	public String toString(){
-		return "[MOGIChunk] \n\tMOGIEntries count: " + MOGIEntries.length; 
-		//getAllName();
-	}
+public class MOGIChunk extends WMOChunk {
+    
+    class MOGIEntry extends WMOChunk {
+        
+        Unsigned32 Flags = new Unsigned32();
+        Float32[]  bbox1 = array(new Float32[3]);
+        Float32[]  bbox2 = array(new Float32[3]);
+        Signed32   name  = new Signed32();
+    }
+    
+    private MOGIEntry[] MOGIEntries;
+    
+    @Override
+    public BaseChunk reads(final ByteBuffer bb, final int offset, final long size) {
+    
+        this.MOGIEntries = new MOGIEntry[(int) (size / 32)];
+        for (int i = 0; i < (size / 32); i++) {
+            this.MOGIEntries[i] = new MOGIEntry();
+            this.MOGIEntries[i].setByteBuffer(bb, offset + (32 * i));
+        }
+        setGlobalOffcet(offset + size + HEADERSIZE);
+        setByteBuffer(bb, offset);
+        return this;
+    }
+    
+    @SuppressWarnings("unused")
+    private String getAllName() {
+    
+        String tmp = "";
+        for (final MOGIEntry mogiEntrie : this.MOGIEntries) {
+            tmp += "\n\tFlags:" + mogiEntrie.Flags.get() + "\n\tBounding box 1:" + mogiEntrie.bbox1[0].get() + " " + mogiEntrie.bbox1[1].get() + " "
+                    + mogiEntrie.bbox1[2].get() + "\n\tBounding box 2:" + mogiEntrie.bbox2[0].get() + " " + mogiEntrie.bbox2[1].get() + " "
+                    + mogiEntrie.bbox2[2].get() + "\n\tname or index:" + mogiEntrie.name.get();
+            
+        }
+        return tmp;
+    }
+    
+    @Override
+    public String toString() {
+    
+        return "[MOGIChunk] \n\tMOGIEntries count: " + this.MOGIEntries.length;
+        // getAllName();
+    }
 }

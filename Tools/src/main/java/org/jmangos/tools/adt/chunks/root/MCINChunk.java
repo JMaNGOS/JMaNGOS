@@ -20,36 +20,45 @@ import java.nio.ByteBuffer;
 
 import org.jmangos.tools.adt.chunks.ADTChunk;
 
-public class MCINChunk extends ADTChunk{
-	class MCINEntry extends ADTChunk{
-		public final Unsigned32 mcnk = new Unsigned32();                   // absolute offset.
-		public final Unsigned32 size = new Unsigned32();                // the size of the MCNK chunk, this is refering to.
-		public final Unsigned32 flags = new Unsigned32();               // these two are always 0. only set in the client.
-		public final Unsigned32 asyncId = new Unsigned32();
-	}
-	public MCINEntry[] MCINEntrys =  new MCINEntry[16*16];
-
-	@Override
-	public ADTChunk reads(ByteBuffer bb, int offset, long size) {
-		setGlobalOffcet(offset + size + HEADERSIZE);
-		this.setByteBuffer(bb, offset);
-		for (int i = 0; i < 256; i++) {
-			MCINEntrys[i] = new MCINEntry();
-			MCINEntrys[i].setByteBuffer(bb, offset + 16*i);
-		}
-		return this;	
-	}
-	public String getOffsets(){
-		String g = "";
-		for (int i = 0; i < 16*16; i++) {
-			g += "\n mcnk:" + MCINEntrys[i].mcnk.get()+" mcnk size:" + MCINEntrys[i].size.get();
-		}	
-		return g;
-	}
-	
-	public String toString(){
-		return "[MCINChunk]" +
-		"\n offsets count: " + MCINEntrys.length; 
-	}
-
+public class MCINChunk extends ADTChunk {
+    
+    class MCINEntry extends ADTChunk {
+        
+        public final Unsigned32 mcnk    = new Unsigned32(); // absolute offset.
+        public final Unsigned32 size    = new Unsigned32(); // the size of the MCNK chunk, this is
+                                                            // refering to.
+        public final Unsigned32 flags   = new Unsigned32(); // these two are always 0. only set in
+                                                            // the client.
+        public final Unsigned32 asyncId = new Unsigned32();
+    }
+    
+    public MCINEntry[] MCINEntrys = new MCINEntry[16 * 16];
+    
+    @Override
+    public ADTChunk reads(final ByteBuffer bb, final int offset, final long size) {
+    
+        setGlobalOffcet(offset + size + HEADERSIZE);
+        setByteBuffer(bb, offset);
+        for (int i = 0; i < 256; i++) {
+            this.MCINEntrys[i] = new MCINEntry();
+            this.MCINEntrys[i].setByteBuffer(bb, offset + (16 * i));
+        }
+        return this;
+    }
+    
+    public String getOffsets() {
+    
+        String g = "";
+        for (int i = 0; i < (16 * 16); i++) {
+            g += "\n mcnk:" + this.MCINEntrys[i].mcnk.get() + " mcnk size:" + this.MCINEntrys[i].size.get();
+        }
+        return g;
+    }
+    
+    @Override
+    public String toString() {
+    
+        return "[MCINChunk]" + "\n offsets count: " + this.MCINEntrys.length;
+    }
+    
 }

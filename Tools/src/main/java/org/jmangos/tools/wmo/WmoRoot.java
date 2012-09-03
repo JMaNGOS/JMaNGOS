@@ -29,33 +29,36 @@ import org.jmangos.tools.chunk.BaseChunk;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
 public class WmoRoot {
-	FastTable<BaseChunk> chunks = new FastTable<BaseChunk>();
-
-	public static WmoRoot read(File f) throws IOException {
-		FileInputStream fis = null;
-		ByteBuffer bb = ByteBuffer.allocate((int) f.length());
-		WmoRoot result = new WmoRoot();
-		try {
-			fis = new FileInputStream(f);
-			fis.getChannel().read(bb);
-			bb.rewind();
-			bb.order(ByteOrder.LITTLE_ENDIAN);
-
-			int glOffset = 0;
-			while (glOffset < (int) f.length()) {
-				BaseChunk ch = new WMOChunk().readChunkByHeader(bb, glOffset);
-				glOffset = ch.getGlobalOffcet();
-				result.chunks.add(ch);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			fis.close();
-		}
-		return result;
-	}
-
-	public FastTable<BaseChunk> getChunks() {
-		return chunks;
-	}
+    
+    FastTable<BaseChunk> chunks = new FastTable<BaseChunk>();
+    
+    public static WmoRoot read(final File f) throws IOException {
+    
+        FileInputStream fis = null;
+        final ByteBuffer bb = ByteBuffer.allocate((int) f.length());
+        final WmoRoot result = new WmoRoot();
+        try {
+            fis = new FileInputStream(f);
+            fis.getChannel().read(bb);
+            bb.rewind();
+            bb.order(ByteOrder.LITTLE_ENDIAN);
+            
+            int glOffset = 0;
+            while (glOffset < (int) f.length()) {
+                final BaseChunk ch = new WMOChunk().readChunkByHeader(bb, glOffset);
+                glOffset = ch.getGlobalOffcet();
+                result.chunks.add(ch);
+            }
+        } catch (final FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            fis.close();
+        }
+        return result;
+    }
+    
+    public FastTable<BaseChunk> getChunks() {
+    
+        return this.chunks;
+    }
 }

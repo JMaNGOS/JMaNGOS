@@ -21,17 +21,22 @@ import java.nio.ByteBuffer;
 import org.jmangos.tools.chunk.BaseChunk;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
-public class MONRChunk extends WMOChunk{
-	Float32[] normals;		
-
-	@Override
-	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
-		setGlobalOffcet(offset + size + HEADERSIZE);
-		this.setByteBuffer(bb, offset);
-		normals = array(new Float32[(int) (size/4)]);
-		return this;	
-	}
-	public String toString(){
-		return "[MONRChunk] \n\tNormals count:" + normals.length;
-	}
+public class MONRChunk extends WMOChunk {
+    
+    Float32[] normals;
+    
+    @Override
+    public BaseChunk reads(final ByteBuffer bb, final int offset, final long size) {
+    
+        setGlobalOffcet(offset + size + HEADERSIZE);
+        setByteBuffer(bb, offset);
+        this.normals = array(new Float32[(int) (size / 4)]);
+        return this;
+    }
+    
+    @Override
+    public String toString() {
+    
+        return "[MONRChunk] \n\tNormals count:" + this.normals.length;
+    }
 }

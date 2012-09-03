@@ -21,44 +21,40 @@ import java.nio.ByteBuffer;
 import org.jmangos.tools.chunk.BaseChunk;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
-public class MOHDChunk extends WMOChunk{
-	Unsigned32 nTextures = new Unsigned32();		
-	Unsigned32 nGroups = new Unsigned32();		
-	Unsigned32 nPortals = new Unsigned32();		
-	Unsigned32 nLights = new Unsigned32();		
-	Unsigned32 nModels = new Unsigned32();		
-	Unsigned32 nDoodads = new Unsigned32();		
-	Unsigned32 nSets = new Unsigned32();		
-	Unsigned8 colR = new Unsigned8();				
-	Unsigned8 colG = new Unsigned8();			
-	Unsigned8 colB = new Unsigned8();				
-	Unsigned8 colX = new Unsigned8();					
-	Unsigned32 wmoID = new Unsigned32();
-	Float32[]  bbox1 = array(new Float32[3]);
-	Float32[]  bbox2 = array(new Float32[3]);		
-	Unsigned32 LiquidType = new Unsigned32();	
-
-	@Override
-	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
-		setGlobalOffcet(offset + size + HEADERSIZE);
-		this.setByteBuffer(bb, offset);
-		return this;	
-	}
-	public String toString(){
-		return "[MOHDChunk] \n\tnTextures:" + nTextures.get()+
-		"\n\tnGroups:" + nGroups.get()+
-		"\n\tnPortals:" + nPortals.get()+
-		"\n\tnLights:" + nLights.get()+
-		"\n\tnModels:" + nModels.get()+
-		"\n\tnDoodads:" + nDoodads.get()+
-		"\n\tnSets:" + nSets.get()+
-		"\n\tcolR:" + colR.get()+
-		"\n\tcolG:" + colG.get()+
-		"\n\tcolB:" + colB.get()+
-		"\n\tcolX:" + colX.get()+
-		"\n\twmoID:" + wmoID.get()+
-		"\n\tBounding box 1:" + bbox1[0].get()+ " " +bbox1[1].get()+ " " + bbox1[2].get()+
-		"\n\tBounding box 2:" + bbox2[0].get()+ " " +bbox2[1].get()+ " " + bbox2[2].get()+
-		"\n\tLiquidType:" + LiquidType.get();
-	}
+public class MOHDChunk extends WMOChunk {
+    
+    Unsigned32 nTextures  = new Unsigned32();
+    Unsigned32 nGroups    = new Unsigned32();
+    Unsigned32 nPortals   = new Unsigned32();
+    Unsigned32 nLights    = new Unsigned32();
+    Unsigned32 nModels    = new Unsigned32();
+    Unsigned32 nDoodads   = new Unsigned32();
+    Unsigned32 nSets      = new Unsigned32();
+    Unsigned8  colR       = new Unsigned8();
+    Unsigned8  colG       = new Unsigned8();
+    Unsigned8  colB       = new Unsigned8();
+    Unsigned8  colX       = new Unsigned8();
+    Unsigned32 wmoID      = new Unsigned32();
+    Float32[]  bbox1      = array(new Float32[3]);
+    Float32[]  bbox2      = array(new Float32[3]);
+    Unsigned32 LiquidType = new Unsigned32();
+    
+    @Override
+    public BaseChunk reads(final ByteBuffer bb, final int offset, final long size) {
+    
+        setGlobalOffcet(offset + size + HEADERSIZE);
+        setByteBuffer(bb, offset);
+        return this;
+    }
+    
+    @Override
+    public String toString() {
+    
+        return "[MOHDChunk] \n\tnTextures:" + this.nTextures.get() + "\n\tnGroups:" + this.nGroups.get() + "\n\tnPortals:" + this.nPortals.get()
+                + "\n\tnLights:" + this.nLights.get() + "\n\tnModels:" + this.nModels.get() + "\n\tnDoodads:" + this.nDoodads.get() + "\n\tnSets:"
+                + this.nSets.get() + "\n\tcolR:" + this.colR.get() + "\n\tcolG:" + this.colG.get() + "\n\tcolB:" + this.colB.get() + "\n\tcolX:"
+                + this.colX.get() + "\n\twmoID:" + this.wmoID.get() + "\n\tBounding box 1:" + this.bbox1[0].get() + " " + this.bbox1[1].get() + " "
+                + this.bbox1[2].get() + "\n\tBounding box 2:" + this.bbox2[0].get() + " " + this.bbox2[1].get() + " " + this.bbox2[2].get() + "\n\tLiquidType:"
+                + this.LiquidType.get();
+    }
 }

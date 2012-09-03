@@ -19,28 +19,34 @@ package org.jmangos.tools.m2;
 import java.nio.ByteBuffer;
 
 public class Textures {
-	public int Type;
-	public int Flags;
-	public int lenFilename;
-	public int ofsFilename;
-	public String FileName;
-
-	public static Textures read(ByteBuffer bb) {
-		Textures result = new Textures();
-		result.Type = bb.getInt();
-		result.Flags = bb.getInt();
-		result.lenFilename = bb.getInt();
-		result.ofsFilename = bb.getInt();
-
-		return result;
-	}
-	public final String getFileName() {
-		if(FileName != null){
-			return FileName;
-		}
-		return null;
-	}
-	public final void setFileName(String fileName) {
-		FileName = fileName;
-	}
+    
+    public int    Type;
+    public int    Flags;
+    public int    lenFilename;
+    public int    ofsFilename;
+    public String FileName;
+    
+    public static Textures read(final ByteBuffer bb) {
+    
+        final Textures result = new Textures();
+        result.Type = bb.getInt();
+        result.Flags = bb.getInt();
+        result.lenFilename = bb.getInt();
+        result.ofsFilename = bb.getInt();
+        
+        return result;
+    }
+    
+    public final String getFileName() {
+    
+        if (this.FileName != null) {
+            return this.FileName;
+        }
+        return null;
+    }
+    
+    public final void setFileName(final String fileName) {
+    
+        this.FileName = fileName;
+    }
 }

@@ -21,17 +21,22 @@ import java.nio.ByteBuffer;
 import org.jmangos.tools.chunk.BaseChunk;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
-public class MOVTChunk extends WMOChunk{
-	public Float32[] vertices;		
-
-	@Override
-	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
-		setGlobalOffcet(offset + size + HEADERSIZE);
-		this.setByteBuffer(bb, offset);
-		vertices = array(new Float32[(int) (size/4)]);
-		return this;	
-	}
-	public String toString(){
-		return "[MOVTChunk] \n\tVertices count:" + vertices.length;
-	}
+public class MOVTChunk extends WMOChunk {
+    
+    public Float32[] vertices;
+    
+    @Override
+    public BaseChunk reads(final ByteBuffer bb, final int offset, final long size) {
+    
+        setGlobalOffcet(offset + size + HEADERSIZE);
+        setByteBuffer(bb, offset);
+        this.vertices = array(new Float32[(int) (size / 4)]);
+        return this;
+    }
+    
+    @Override
+    public String toString() {
+    
+        return "[MOVTChunk] \n\tVertices count:" + this.vertices.length;
+    }
 }

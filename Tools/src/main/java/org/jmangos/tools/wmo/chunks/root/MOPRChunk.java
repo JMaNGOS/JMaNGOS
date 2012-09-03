@@ -21,42 +21,47 @@ import java.nio.ByteBuffer;
 import org.jmangos.tools.chunk.BaseChunk;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
-public class MOPRChunk extends WMOChunk{
-	class MOPREntry extends WMOChunk{ 
-		Unsigned16  PortalIndex = new Unsigned16();
-		Unsigned16 	WmoGroupIndex = new Unsigned16();
-		Signed16 unk = new Signed16(); 		
-		Unsigned16 unknown  = new Unsigned16();
-	}
-
-	private MOPREntry[] MOPREntries;
-	@Override
-	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
-		MOPREntries = new MOPREntry[(int) (size /8)];
-		for (int i = 0; i < (size /8); i++) {
-			MOPREntries[i] = new MOPREntry();
-			MOPREntries[i].setByteBuffer(bb, offset + 8*i);
-		}
-		setGlobalOffcet(offset + size + HEADERSIZE);
-		this.setByteBuffer(bb, offset);
-		return this;	
-	}
-	
-	@SuppressWarnings("unused")
-	private String getAllName(){
-		String tmp = "";
-		for (int i = 0; i < MOPREntries.length; i++) {
-			tmp +="\n\tPortalIndex:" + MOPREntries[i].PortalIndex.get()+
-			"\n\tWmoGroupIndex:" + MOPREntries[i].WmoGroupIndex.get()+
-			"\n\tunk:" + MOPREntries[i].unk.get()+
-			"\n\tunknown:" + MOPREntries[i].unknown.get() + "\n";
-
-		}
-		return tmp;
-	}
-	
-	public String toString(){
-		return "[MOPRChunk]" + 
-		"\n\tMOPREntries count: " + MOPREntries.length ;//+ getAllName(); 
-	}
+public class MOPRChunk extends WMOChunk {
+    
+    class MOPREntry extends WMOChunk {
+        
+        Unsigned16 PortalIndex   = new Unsigned16();
+        Unsigned16 WmoGroupIndex = new Unsigned16();
+        Signed16   unk           = new Signed16();
+        Unsigned16 unknown       = new Unsigned16();
+    }
+    
+    private MOPREntry[] MOPREntries;
+    
+    @Override
+    public BaseChunk reads(final ByteBuffer bb, final int offset, final long size) {
+    
+        this.MOPREntries = new MOPREntry[(int) (size / 8)];
+        for (int i = 0; i < (size / 8); i++) {
+            this.MOPREntries[i] = new MOPREntry();
+            this.MOPREntries[i].setByteBuffer(bb, offset + (8 * i));
+        }
+        setGlobalOffcet(offset + size + HEADERSIZE);
+        setByteBuffer(bb, offset);
+        return this;
+    }
+    
+    @SuppressWarnings("unused")
+    private String getAllName() {
+    
+        String tmp = "";
+        for (final MOPREntry moprEntrie : this.MOPREntries) {
+            tmp += "\n\tPortalIndex:" + moprEntrie.PortalIndex.get() + "\n\tWmoGroupIndex:" + moprEntrie.WmoGroupIndex.get() + "\n\tunk:"
+                    + moprEntrie.unk.get() + "\n\tunknown:" + moprEntrie.unknown.get() + "\n";
+            
+        }
+        return tmp;
+    }
+    
+    @Override
+    public String toString() {
+    
+        return "[MOPRChunk]" + "\n\tMOPREntries count: " + this.MOPREntries.length;// +
+                                                                                   // getAllName();
+    }
 }

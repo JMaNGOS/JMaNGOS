@@ -20,20 +20,23 @@ import java.nio.ByteBuffer;
 
 import org.jmangos.tools.adt.chunks.ADTChunk;
 
-public class MWIDChunk extends ADTChunk{
-	public Unsigned32[] offset;
-
-	@Override
-	public ADTChunk reads(ByteBuffer bb, int offset, long size) {
-		setGlobalOffcet(offset + size + HEADERSIZE);
-		this.setByteBuffer(bb, offset);
-		this.offset = array(new Unsigned32[(int) (size/4)]);
-		return this;	
-	}
-	
-	public String toString(){
-		return "[MWIDChunk]" +
-		"\n offsets count: " + offset.length; 
-	}
-
+public class MWIDChunk extends ADTChunk {
+    
+    public Unsigned32[] offset;
+    
+    @Override
+    public ADTChunk reads(final ByteBuffer bb, final int offset, final long size) {
+    
+        setGlobalOffcet(offset + size + HEADERSIZE);
+        setByteBuffer(bb, offset);
+        this.offset = array(new Unsigned32[(int) (size / 4)]);
+        return this;
+    }
+    
+    @Override
+    public String toString() {
+    
+        return "[MWIDChunk]" + "\n offsets count: " + this.offset.length;
+    }
+    
 }

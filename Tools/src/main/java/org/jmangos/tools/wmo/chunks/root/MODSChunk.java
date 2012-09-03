@@ -21,35 +21,41 @@ import java.nio.ByteBuffer;
 import org.jmangos.tools.chunk.BaseChunk;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
-public class MODSChunk extends WMOChunk{
-	class MODSEntry extends WMOChunk{ 
-		UTF8String  setName = new UTF8String(20);
-		Unsigned32 	Index = new Unsigned32();
-		Unsigned32 countInSet = new Unsigned32(); 		
-		Unsigned32 unknown  = new Unsigned32();
-	}
-
-	private MODSEntry[] MODSEntries;
-	@Override
-	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
-		MODSEntries = new MODSEntry[(int) (size /32)];
-		for (int i = 0; i < (size /32); i++) {
-			MODSEntries[i] = new MODSEntry();
-			MODSEntries[i].setByteBuffer(bb, offset + 32*i);
-		}
-		setGlobalOffcet(offset + size + HEADERSIZE);
-		this.setByteBuffer(bb, offset);
-		return this;	
-	}
-	
-	public String toString(){
-		StringBuilder sb = new StringBuilder();
-		sb.append("[MODSChunk] MODSEntries size:") .append(MODSEntries.length);
-		for (int i = 0; i < MODSEntries.length; i++) {
-			sb.append("\n\tsetName:").append(MODSEntries[i].setName.get());
-			sb.append("\n\tFirstIndex:").append(MODSEntries[i].Index.get());
-			sb.append("\n\tcountInSet:").append(MODSEntries[i].countInSet.get());
-		}
-		return sb.toString();
-	}
+public class MODSChunk extends WMOChunk {
+    
+    class MODSEntry extends WMOChunk {
+        
+        UTF8String setName    = new UTF8String(20);
+        Unsigned32 Index      = new Unsigned32();
+        Unsigned32 countInSet = new Unsigned32();
+        Unsigned32 unknown    = new Unsigned32();
+    }
+    
+    private MODSEntry[] MODSEntries;
+    
+    @Override
+    public BaseChunk reads(final ByteBuffer bb, final int offset, final long size) {
+    
+        this.MODSEntries = new MODSEntry[(int) (size / 32)];
+        for (int i = 0; i < (size / 32); i++) {
+            this.MODSEntries[i] = new MODSEntry();
+            this.MODSEntries[i].setByteBuffer(bb, offset + (32 * i));
+        }
+        setGlobalOffcet(offset + size + HEADERSIZE);
+        setByteBuffer(bb, offset);
+        return this;
+    }
+    
+    @Override
+    public String toString() {
+    
+        final StringBuilder sb = new StringBuilder();
+        sb.append("[MODSChunk] MODSEntries size:").append(this.MODSEntries.length);
+        for (final MODSEntry modsEntrie : this.MODSEntries) {
+            sb.append("\n\tsetName:").append(modsEntrie.setName.get());
+            sb.append("\n\tFirstIndex:").append(modsEntrie.Index.get());
+            sb.append("\n\tcountInSet:").append(modsEntrie.countInSet.get());
+        }
+        return sb.toString();
+    }
 }

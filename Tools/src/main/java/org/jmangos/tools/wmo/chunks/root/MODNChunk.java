@@ -25,41 +25,44 @@ import java.util.ArrayList;
 import org.jmangos.tools.chunk.BaseChunk;
 import org.jmangos.tools.wmo.chunks.WMOChunk;
 
-public class MODNChunk extends WMOChunk{
-	ArrayList<String> groupNames = new ArrayList<String>();
-
-
-	@Override
-	public BaseChunk reads(ByteBuffer bb, int offset, long size) {
-		byte[] tsring = new byte[2024];
-		CharsetDecoder decoder = Charset.forName("UTF-8").newDecoder();
-		setGlobalOffcet(offset + size + HEADERSIZE);
-		this.setByteBuffer(bb, offset);
-		int reading = 0;
-		int si = 0;
-		while( (size - reading) > 0){
-			int i = 0;
-			for (; (tsring[i] = getByteBuffer().get(
-					(int) (offset+ HEADERSIZE  + i + si))) != 0; i++) {
-				reading++;
-			}
-			if( i > 0)
-			try {
-				groupNames.add( decoder.decode(ByteBuffer.wrap(tsring, 0, i)).toString());
-			} catch (CharacterCodingException e) {
-				e.printStackTrace();
-			}
-			si = ++reading;
-		}
-		return this;	
-	}
-	
-	public String toString(){
-		StringBuilder sb = new StringBuilder();
-		sb.append("[MODNChunk] groupNames size is:").append(groupNames.size());
-		for (int i = 0; i < groupNames.size(); i++) {
-			sb.append("\n\t").append(groupNames.get(i)) ;
-		}
-		return sb.toString();
-	}
+public class MODNChunk extends WMOChunk {
+    
+    ArrayList<String> groupNames = new ArrayList<String>();
+    
+    @Override
+    public BaseChunk reads(final ByteBuffer bb, final int offset, final long size) {
+    
+        final byte[] tsring = new byte[2024];
+        final CharsetDecoder decoder = Charset.forName("UTF-8").newDecoder();
+        setGlobalOffcet(offset + size + HEADERSIZE);
+        setByteBuffer(bb, offset);
+        int reading = 0;
+        int si = 0;
+        while ((size - reading) > 0) {
+            int i = 0;
+            for (; (tsring[i] = getByteBuffer().get(offset + HEADERSIZE + i + si)) != 0; i++) {
+                reading++;
+            }
+            if (i > 0) {
+                try {
+                    this.groupNames.add(decoder.decode(ByteBuffer.wrap(tsring, 0, i)).toString());
+                } catch (final CharacterCodingException e) {
+                    e.printStackTrace();
+                }
+            }
+            si = ++reading;
+        }
+        return this;
+    }
+    
+    @Override
+    public String toString() {
+    
+        final StringBuilder sb = new StringBuilder();
+        sb.append("[MODNChunk] groupNames size is:").append(this.groupNames.size());
+        for (int i = 0; i < this.groupNames.size(); i++) {
+            sb.append("\n\t").append(this.groupNames.get(i));
+        }
+        return sb.toString();
+    }
 }

@@ -24,51 +24,57 @@ import java.nio.charset.CharsetDecoder;
 import org.jmangos.tools.adt.chunks.ADTChunk;
 
 public class MMDXChunk extends ADTChunk {
-	String[] filename;
-	private MMIDChunk mmid;
-	private int offset;
-
-	@Override
-	public ADTChunk reads(ByteBuffer bb, int offset, long size) {
-		setGlobalOffcet(offset + size + HEADERSIZE);
-		this.setByteBuffer(bb, offset);
-		this.offset = offset;
-		return this;
-	}
-
-	public String fillName() {
-		String name = "";
-		if (mmid != null) {
-			filename = new String[mmid.offset.length];
-			for (int i = 0; i < mmid.offset.length; i++) {
-				filename[i] = readStringf((int) mmid.offset[i].get());
-				name += "\n"+filename[i].toString();
-			}
-		}
-		return name;
-	}
-
-	public String readStringf(int l) {
-		byte[] tsring = new byte[2024];
-		CharsetDecoder decoder = Charset.forName("UTF-8").newDecoder();
-		int i = 0;
-		for (; (tsring[i] = getByteBuffer().get(
-				(int) (offset+ HEADERSIZE + i + l))) != 0; i++) {
-		}
-		try {
-			return decoder.decode(ByteBuffer.wrap(tsring, 0, i)).toString();
-		} catch (CharacterCodingException e) {
-			e.printStackTrace();
-		}
-		return "";
-
-	}
-
-	public String toString() {
-		return "[MMDXChunk]" + fillName();
-	}
-
-	public void setMMID(MMIDChunk mmid) {
-		this.mmid = mmid;
-	}
+    
+    String[]          filename;
+    private MMIDChunk mmid;
+    private int       offset;
+    
+    @Override
+    public ADTChunk reads(final ByteBuffer bb, final int offset, final long size) {
+    
+        setGlobalOffcet(offset + size + HEADERSIZE);
+        setByteBuffer(bb, offset);
+        this.offset = offset;
+        return this;
+    }
+    
+    public String fillName() {
+    
+        String name = "";
+        if (this.mmid != null) {
+            this.filename = new String[this.mmid.offset.length];
+            for (int i = 0; i < this.mmid.offset.length; i++) {
+                this.filename[i] = readStringf((int) this.mmid.offset[i].get());
+                name += "\n" + this.filename[i].toString();
+            }
+        }
+        return name;
+    }
+    
+    public String readStringf(final int l) {
+    
+        final byte[] tsring = new byte[2024];
+        final CharsetDecoder decoder = Charset.forName("UTF-8").newDecoder();
+        int i = 0;
+        for (; (tsring[i] = getByteBuffer().get(this.offset + HEADERSIZE + i + l)) != 0; i++) {
+        }
+        try {
+            return decoder.decode(ByteBuffer.wrap(tsring, 0, i)).toString();
+        } catch (final CharacterCodingException e) {
+            e.printStackTrace();
+        }
+        return "";
+        
+    }
+    
+    @Override
+    public String toString() {
+    
+        return "[MMDXChunk]" + fillName();
+    }
+    
+    public void setMMID(final MMIDChunk mmid) {
+    
+        this.mmid = mmid;
+    }
 }
