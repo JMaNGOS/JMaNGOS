@@ -54,6 +54,7 @@ public class CharOutfitService extends AbstractDbcService<CharStartOutfitEntity,
                     final CharStartOutfitEntityPk pk = new CharStartOutfitEntityPk();
                     pk.setClazz(entry.clazz.get());
                     pk.setGender(entry.gender.get());
+                    pk.setRace(entry.race.get());
                     pk.setItemInventorySlot(entry.ItemInventorySlot[numbItem].get());
                     
                     tf.setItemId(entry.ItemId[numbItem].get());
