@@ -22,7 +22,7 @@ import org.jmangos.tools.adt.chunks.ADTChunk;
 
 public class MCNKChunk extends ADTChunk {
     
-    public class MCNKHeader extends ADTChunk {
+    public static final class MCNKHeader extends ADTChunk {
         
         public MCVT               fHeight;
         public final Unsigned32   flags                         = new Unsigned32();
@@ -51,7 +51,7 @@ public class MCNKChunk extends ADTChunk {
         public final Float32[]    position                      = array(new Float32[3]);
     }
     
-    public class MCVT extends ADTChunk {
+    public static class MCVT extends ADTChunk {
         
         public final Float32[] position = array(new Float32[145]);
         
@@ -79,11 +79,12 @@ public class MCNKChunk extends ADTChunk {
     
     public String getOffsets() {
     
-        String g = "";
-        for (int i = 0; i < 3; i++) {
-            g += "\n position " + this.fMCNKHeader.position[i];
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < 3; ++i) {
+            buf.append("\n position ");
+            buf.append(this.fMCNKHeader.position[i]);
         }
-        return g;
+        return buf.toString();
     }
     
     @Override

@@ -37,29 +37,38 @@ import java.util.List;
  **/
 public class BLP {
     
-    public byte[]       signature     = new byte[4];            // BLP2
-    public int          type;                                   // 0 = JPEG compression; 1 =
-                                                                 // Uncompressed or DirectX
-                                                                 // compression
-    public byte         encoding;                               // 1 for uncompressed, 2 for
-                                                                 // DirectX compression
-    public byte         alphaBitDepth;                          // 0, 1 or 8
-    public byte         alphaEncoding;                          // 0 = DirectX 1 alpha (0/1 bit); 1
-                                                                 // = DirectX 2/3 alpha (4-bit
-                                                                 // alpha); 2 = DirectX 4/5 alpha
-                                                                 // (interpolated)
-    public byte         hasMips;                                // 0 = no mip maps; 1 = has mips (#
-                                                                 // determined by dimensions)
-    public int          width;
-    public int          height;
-    public int[]        mipmapOffsets = new int[16];
-    public int[]        mipmapSize    = new int[16];
-    public Color[]      palette       = new Color[256];
-    public List<byte[]> mipmaps       = new ArrayList<byte[]>();
+    /**
+     * Minimal header length
+     */
+    private static final int HEADER_LENGTH = 20;
+    private byte[]           signature     = new byte[4];            // BLP2
+    private int              type;                                   // 0 = JPEG compression; 1 =
+                                                                      // Uncompressed or DirectX
+                                                                      // compression
+    private byte             encoding;                               // 1 for uncompressed, 2 for
+                                                                      // DirectX compression
+    private byte             alphaBitDepth;                          // 0, 1 or 8
+    private byte             alphaEncoding;                          // 0 = DirectX 1 alpha (0/1
+                                                                      // bit);
+                                                                      // 1
+                                                                      // = DirectX 2/3 alpha (4-bit
+                                                                      // alpha); 2 = DirectX 4/5
+                                                                      // alpha
+                                                                      // (interpolated)
+    private byte             hasMips;                                // 0 = no mip maps; 1 = has
+                                                                      // mips
+                                                                      // (#
+                                                                      // determined by dimensions)
+    private int              width;
+    private int              height;
+    private int[]            mipmapOffsets = new int[16];
+    private int[]            mipmapSize    = new int[16];
+    private Color[]          palette       = new Color[256];
+    private List<byte[]>     mipmaps       = new ArrayList<byte[]>();
     
     public static BLP read(final ByteBuffer bb) {
     
-        if (bb.capacity() < 20) {
+        if (bb.capacity() < HEADER_LENGTH) {
             return null;
         }
         bb.order(ByteOrder.LITTLE_ENDIAN); // format is in little endian, ensure the buffer is too
@@ -92,7 +101,7 @@ public class BLP {
     }
     
     @Override
-    public String toString() {
+    public final String toString() {
     
         return "(" + this.width + "x" + this.height + ") " + this.type + "/" + this.encoding + "/" + this.alphaBitDepth + "/" + this.alphaEncoding;
     }
@@ -112,7 +121,7 @@ public class BLP {
         }
     }
     
-    public BufferedImage getBufferedImage() {
+    public final BufferedImage getBufferedImage() {
     
         if (this.mipmaps.size() == 0) {
             return null;
@@ -148,7 +157,7 @@ public class BLP {
         return result;
     }
     
-    protected BufferedImage getBufferedImageUncompressed(final ByteBuffer bb, final int alphaBitDepth) {
+    protected final BufferedImage getBufferedImageUncompressed(final ByteBuffer bb, final int givenAlphaBitDepth) {
     
         final BufferedImage result = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB_PRE);
         final int[][] colors = new int[this.height][this.width];
@@ -165,9 +174,9 @@ public class BLP {
         }
         for (int y = 0; y < this.height; y++) {
             for (int x = 0; x < this.width; x++) {
-                if (alphaBitDepth == 0) {
-                    alpha[y][x] = 255 << 24;
-                } else if (alphaBitDepth == 1) {
+                if (givenAlphaBitDepth == 0) {
+                    alpha[y][x] = 0xFF << 24;
+                } else if (givenAlphaBitDepth == 1) {
                     final byte b = bb.get();
                     int actualB = b;
                     if (actualB < 0) {
@@ -423,6 +432,210 @@ public class BLP {
         final int g = color.g;
         final int b = color.b;
         return (r << 16) | (g << 8) | b;
+    }
+    
+    /**
+     * @return the signature
+     */
+    public final byte[] getSignature() {
+    
+        return this.signature;
+    }
+    
+    /**
+     * @param signature
+     *            the signature to set
+     */
+    public final void setSignature(final byte[] signature) {
+    
+        this.signature = signature;
+    }
+    
+    /**
+     * @return the type
+     */
+    public final int getType() {
+    
+        return this.type;
+    }
+    
+    /**
+     * @param type
+     *            the type to set
+     */
+    public final void setType(final int type) {
+    
+        this.type = type;
+    }
+    
+    /**
+     * @return the encoding
+     */
+    public final byte getEncoding() {
+    
+        return this.encoding;
+    }
+    
+    /**
+     * @param encoding
+     *            the encoding to set
+     */
+    public final void setEncoding(final byte encoding) {
+    
+        this.encoding = encoding;
+    }
+    
+    /**
+     * @return the alphaBitDepth
+     */
+    public final byte getAlphaBitDepth() {
+    
+        return this.alphaBitDepth;
+    }
+    
+    /**
+     * @param alphaBitDepth
+     *            the alphaBitDepth to set
+     */
+    public final void setAlphaBitDepth(final byte alphaBitDepth) {
+    
+        this.alphaBitDepth = alphaBitDepth;
+    }
+    
+    /**
+     * @return the alphaEncoding
+     */
+    public final byte getAlphaEncoding() {
+    
+        return this.alphaEncoding;
+    }
+    
+    /**
+     * @param alphaEncoding
+     *            the alphaEncoding to set
+     */
+    public final void setAlphaEncoding(final byte alphaEncoding) {
+    
+        this.alphaEncoding = alphaEncoding;
+    }
+    
+    /**
+     * @return the hasMips
+     */
+    public final byte getHasMips() {
+    
+        return this.hasMips;
+    }
+    
+    /**
+     * @param hasMips
+     *            the hasMips to set
+     */
+    public final void setHasMips(final byte hasMips) {
+    
+        this.hasMips = hasMips;
+    }
+    
+    /**
+     * @return the width
+     */
+    public final int getWidth() {
+    
+        return this.width;
+    }
+    
+    /**
+     * @param width
+     *            the width to set
+     */
+    public final void setWidth(final int width) {
+    
+        this.width = width;
+    }
+    
+    /**
+     * @return the height
+     */
+    public final int getHeight() {
+    
+        return this.height;
+    }
+    
+    /**
+     * @param height
+     *            the height to set
+     */
+    public final void setHeight(final int height) {
+    
+        this.height = height;
+    }
+    
+    /**
+     * @return the mipmapOffsets
+     */
+    public final int[] getMipmapOffsets() {
+    
+        return this.mipmapOffsets;
+    }
+    
+    /**
+     * @param mipmapOffsets
+     *            the mipmapOffsets to set
+     */
+    public final void setMipmapOffsets(final int[] mipmapOffsets) {
+    
+        this.mipmapOffsets = mipmapOffsets;
+    }
+    
+    /**
+     * @return the mipmapSize
+     */
+    public final int[] getMipmapSize() {
+    
+        return this.mipmapSize;
+    }
+    
+    /**
+     * @param mipmapSize
+     *            the mipmapSize to set
+     */
+    public final void setMipmapSize(final int[] mipmapSize) {
+    
+        this.mipmapSize = mipmapSize;
+    }
+    
+    /**
+     * @return the palette
+     */
+    public final Color[] getPalette() {
+    
+        return this.palette;
+    }
+    
+    /**
+     * @param palette
+     *            the palette to set
+     */
+    public final void setPalette(final Color[] palette) {
+    
+        this.palette = palette;
+    }
+    
+    /**
+     * @return the mipmaps
+     */
+    public final List<byte[]> getMipmaps() {
+    
+        return this.mipmaps;
+    }
+    
+    /**
+     * @param mipmaps
+     *            the mipmaps to set
+     */
+    public final void setMipmaps(final List<byte[]> mipmaps) {
+    
+        this.mipmaps = mipmaps;
     }
     
 }

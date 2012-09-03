@@ -132,9 +132,9 @@ public class MapEntry extends DBCStruct<MapEntry> {
     public final Unsigned32          maxPlayers              = new Unsigned32();         // 65 max
                                                                                           // players
                                                                                           
-    public boolean IsMountAllowed() {
+    public boolean isMountAllowed() {
     
-        return !IsDungeon() || (this.id.get() == 209) || (this.id.get() == 269) || (this.id.get() == 309) || /**
+        return !isDungeon() || (this.id.get() == 209) || (this.id.get() == 269) || (this.id.get() == 309) || /**
          * 
          * 
          * TanarisInstance, CavernsOfTime, Zul'gurub
@@ -151,7 +151,7 @@ public class MapEntry extends DBCStruct<MapEntry> {
         /** Ulduar, The Obsidian Sanctum, The Eye Of Eternity */
     }
     
-    private boolean IsDungeon() {
+    private boolean isDungeon() {
     
         return (this.mapType.get() == MapTypes.MAP_INSTANCE.ordinal()) || (this.mapType.get() == MapTypes.MAP_RAID.ordinal());
     }

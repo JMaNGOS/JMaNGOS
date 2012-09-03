@@ -22,7 +22,7 @@ import org.jmangos.tools.adt.chunks.ADTChunk;
 
 public class MH2OChunk extends ADTChunk {
     
-    class MH2OHeader extends ADTChunk {
+    final class MH2OHeader extends ADTChunk {
         
         public final Unsigned32 ofsInformation = new Unsigned32();
         public final Unsigned32 layerCount     = new Unsigned32();
@@ -31,7 +31,7 @@ public class MH2OChunk extends ADTChunk {
         public MH2ORender       render;
     }
     
-    class MH20Information extends ADTChunk {
+    final class MH20Information extends ADTChunk {
         
         public final Unsigned16  LiquidType   = new Unsigned16();
         public final Unsigned16  flags        = new Unsigned16();
@@ -47,7 +47,7 @@ public class MH2OChunk extends ADTChunk {
         
     }
     
-    class MH2OHeightmapData extends ADTChunk {
+    final static class MH2OHeightmapData extends ADTChunk {
         
         public int         count;
         public Float32[]   heightMap;

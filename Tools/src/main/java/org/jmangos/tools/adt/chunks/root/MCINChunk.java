@@ -22,7 +22,7 @@ import org.jmangos.tools.adt.chunks.ADTChunk;
 
 public class MCINChunk extends ADTChunk {
     
-    class MCINEntry extends ADTChunk {
+    final static class MCINEntry extends ADTChunk {
         
         public final Unsigned32 mcnk    = new Unsigned32(); // absolute offset.
         public final Unsigned32 size    = new Unsigned32(); // the size of the MCNK chunk, this is
@@ -48,11 +48,14 @@ public class MCINChunk extends ADTChunk {
     
     public String getOffsets() {
     
-        String g = "";
-        for (int i = 0; i < (16 * 16); i++) {
-            g += "\n mcnk:" + this.MCINEntrys[i].mcnk.get() + " mcnk size:" + this.MCINEntrys[i].size.get();
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < (16 * 16); ++i) {
+            buf.append("\n mcnk:");
+            buf.append(this.MCINEntrys[i].mcnk.get());
+            buf.append(" mcnk size:");
+            buf.append(this.MCINEntrys[i].size.get());
         }
-        return g;
+        return buf.toString();
     }
     
     @Override
