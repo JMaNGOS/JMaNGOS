@@ -18,115 +18,177 @@ package org.jmangos.tools.m2;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-public class M2 {
+/**
+ * @author MinimaJack
+ *
+ */
+/**
+ * @author MinimaJack
+ *
+ */
+/**
+ * @author MinimaJack
+ *
+ */
+/**
+ * @author MinimaJack
+ *
+ */
+/**
+ * @author MinimaJack
+ * 
+ */
+public final class M2 {
     
-    public _offsets   offsets = new _offsets();
-    public _other     other   = new _other();
-    public _data      data    = new _data();
-    public _lengths   lengths = new _lengths();
-    public Textures[] textures;
+    /**
+     * Offsets
+     */
+    private final Offsets offsets = new Offsets();
+    /**
+     * Other data
+     */
+    private final Other   other   = new Other();
+    /**
+     * Data
+     */
+    private final Data    data    = new Data();
+    /**
+     * Lengths
+     */
+    private final Lengths lengths = new Lengths();
     
+    /**
+     * hidden constructor
+     */
     private M2() {
     
     }
     
+    /**
+     * @param bb
+     *            - ByteBuffer
+     * @return M2
+     */
     public static M2 read(final ByteBuffer bb) {
     
         bb.order(ByteOrder.LITTLE_ENDIAN); // format is in little endian, ensure
                                            // the buffer is too
         final M2 result = new M2();
         
-        bb.get(result.other.magic);
-        result.other.version = bb.getInt();
-        result.lengths.lName = bb.getInt();
-        result.offsets.ofsName = bb.getInt();
-        result.other.globalModelFlags = bb.getInt();
-        result.lengths.nGlobalSequences = bb.getInt();
-        result.offsets.ofsGlobalSequences = bb.getInt();
-        result.lengths.nAnimations = bb.getInt();
-        result.offsets.ofsAnimations = bb.getInt();
-        result.lengths.nAnimationLookup = bb.getInt();
-        result.offsets.ofsAnimationLookup = bb.getInt();
-        result.lengths.nBones = bb.getInt();
-        result.offsets.ofsBones = bb.getInt();
-        result.lengths.nKeyBoneLookup = bb.getInt();
-        result.offsets.ofsKeyBoneLookup = bb.getInt();
-        result.lengths.nVertices = bb.getInt();
-        result.offsets.ofsVertices = bb.getInt();
-        result.lengths.nViews = bb.getInt();
-        result.lengths.nColors = bb.getInt();
-        result.offsets.ofsColors = bb.getInt();
-        result.lengths.nTextures = bb.getInt();
-        result.offsets.ofsTextures = bb.getInt();
-        result.lengths.nTransparency = bb.getInt();
-        result.offsets.ofsTransparency = bb.getInt();
-        result.lengths.nTextureAnimations = bb.getInt();
-        result.offsets.ofsTextureAnimations = bb.getInt();
-        result.lengths.nTexReplace = bb.getInt();
-        result.offsets.ofsTexReplace = bb.getInt();
-        result.lengths.nRenderFlags = bb.getInt();
-        result.offsets.ofsRenderFlags = bb.getInt();
-        result.lengths.nBoneLookupTable = bb.getInt();
-        result.offsets.ofsBoneLookupTable = bb.getInt();
-        result.lengths.nTexLookup = bb.getInt();
-        result.offsets.ofsTexLookup = bb.getInt();
-        result.lengths.nTexUnits = bb.getInt();
-        result.offsets.ofsTexUnits = bb.getInt();
-        result.lengths.nTransLookup = bb.getInt();
-        result.offsets.ofsTransLookup = bb.getInt();
-        result.lengths.nTexAnimLookup = bb.getInt();
-        for (int index = 0; index < result.other.theFloats.length; index++) {
-            result.other.theFloats[index] = bb.getFloat();
+        bb.get(result.other.getMagic());
+        result.other.setVersion(bb.getInt());
+        result.lengths.setlName(bb.getInt());
+        result.offsets.setOfsName(bb.getInt());
+        result.other.setGlobalModelFlags(bb.getInt());
+        result.lengths.setnGlobalSequences(bb.getInt());
+        result.offsets.setOfsGlobalSequences(bb.getInt());
+        result.lengths.setnAnimations(bb.getInt());
+        result.offsets.setOfsAnimations(bb.getInt());
+        result.lengths.setnAnimationLookup(bb.getInt());
+        result.offsets.setOfsAnimationLookup(bb.getInt());
+        result.lengths.setnBones(bb.getInt());
+        result.offsets.setOfsBones(bb.getInt());
+        result.lengths.setnKeyBoneLookup(bb.getInt());
+        result.offsets.setOfsKeyBoneLookup(bb.getInt());
+        result.lengths.setnVertices(bb.getInt());
+        result.offsets.setOfsVertices(bb.getInt());
+        result.lengths.setnViews(bb.getInt());
+        result.lengths.setnColors(bb.getInt());
+        result.offsets.setOfsColors(bb.getInt());
+        result.lengths.setnTextures(bb.getInt());
+        result.offsets.setOfsTextures(bb.getInt());
+        result.lengths.setnTransparency(bb.getInt());
+        result.offsets.setOfsTransparency(bb.getInt());
+        result.lengths.setnTextureAnimations(bb.getInt());
+        result.offsets.setOfsTextureAnimations(bb.getInt());
+        result.lengths.setnTexReplace(bb.getInt());
+        result.offsets.setOfsTexReplace(bb.getInt());
+        result.lengths.setnRenderFlags(bb.getInt());
+        result.offsets.setOfsRenderFlags(bb.getInt());
+        result.lengths.setnBoneLookupTable(bb.getInt());
+        result.offsets.setOfsBoneLookupTable(bb.getInt());
+        result.lengths.setnTexLookup(bb.getInt());
+        result.offsets.setOfsTexLookup(bb.getInt());
+        result.lengths.setnTexUnits(bb.getInt());
+        result.offsets.setOfsTexUnits(bb.getInt());
+        result.lengths.setnTransLookup(bb.getInt());
+        result.offsets.setOfsTransLookup(bb.getInt());
+        result.lengths.setnTexAnimLookup(bb.getInt());
+        for (int index = 0; index < result.other.getTheFloats().length; index++) {
+            result.other.getTheFloats()[index] = bb.getFloat();
         }
-        result.lengths.nBoundingTringles = bb.getInt();
-        result.offsets.ofsBoundTriangles = bb.getInt();
-        result.lengths.nBoundingVertices = bb.getInt();
-        result.offsets.ofsBoundingVertices = bb.getInt();
-        result.lengths.nBoundingNormals = bb.getInt();
-        result.offsets.ofsBoundingNormals = bb.getInt();
-        result.lengths.nAttachments = bb.getInt();
-        result.offsets.ofsAttachments = bb.getInt();
-        result.lengths.nAttachLookup = bb.getInt();
-        result.offsets.ofsAttachLookup = bb.getInt();
-        result.lengths.nAttachments_2 = bb.getInt();
-        result.offsets.ofsAttachments_2 = bb.getInt();
-        result.lengths.nLights = bb.getInt();
-        result.offsets.ofsLights = bb.getInt();
-        result.lengths.nCameras = bb.getInt();
-        result.offsets.ofsCameras = bb.getInt();
-        result.lengths.nCameraLookup = bb.getInt();
-        result.offsets.ofsCameraLookup = bb.getInt();
-        result.lengths.nRibbonEmitters = bb.getInt();
-        result.offsets.ofsRibbonEmitters = bb.getInt();
-        result.lengths.nParticleEmitters = bb.getInt();
-        result.offsets.ofsParticleEmitters = bb.getInt();
-        result.lengths.nUnknown = bb.getInt();
-        result.offsets.ofsUnknown = bb.getInt();
+        result.lengths.setnBoundingTringles(bb.getInt());
+        result.offsets.setOfsBoundTriangles(bb.getInt());
+        result.lengths.setnBoundingVertices(bb.getInt());
+        result.offsets.setOfsBoundingVertices(bb.getInt());
+        result.lengths.setnBoundingNormals(bb.getInt());
+        result.offsets.setOfsBoundingNormals(bb.getInt());
+        result.lengths.setnAttachments(bb.getInt());
+        result.offsets.setOfsAttachments(bb.getInt());
+        result.lengths.setnAttachLookup(bb.getInt());
+        result.offsets.setOfsAttachLookup(bb.getInt());
+        result.lengths.setnAttachments2(bb.getInt());
+        result.offsets.setOfsAttachments2(bb.getInt());
+        result.lengths.setnLights(bb.getInt());
+        result.offsets.setOfsLights(bb.getInt());
+        result.lengths.setnCameras(bb.getInt());
+        result.offsets.setOfsCameras(bb.getInt());
+        result.lengths.setnCameraLookup(bb.getInt());
+        result.offsets.setOfsCameraLookup(bb.getInt());
+        result.lengths.setnRibbonEmitters(bb.getInt());
+        result.offsets.setOfsRibbonEmitters(bb.getInt());
+        result.lengths.setnParticleEmitters(bb.getInt());
+        result.offsets.setOfsParticleEmitters(bb.getInt());
+        result.lengths.setnUnknown(bb.getInt());
+        result.offsets.setOfsUnknown(bb.getInt());
         
         readData(result, bb);
         
         return result;
     }
     
+    /**
+     * 
+     * @return data vertexes
+     */
     public Vertex[] getVertexes() {
     
-        return this.data.vertexes;
+        return this.data.getVertexes();
     }
     
+    /**
+     * 
+     * @param i
+     *            - vertex index
+     * @return data vertex by index i
+     */
     public Vertex getVertex(final int i) {
     
-        return this.data.vertexes[i];
+        return this.data.getVertexes()[i];
     }
     
+    /**
+     * 
+     * @return vertexes count
+     */
     public int getVertexesCount() {
     
-        return this.data.vertexes.length;
+        return this.data.getVertexes().length;
     }
     
-    public static M2 read(final File f) throws Exception {
+    /**
+     * Read m2 from file
+     * 
+     * @param f
+     *            - file with M2
+     * @return M2 from given File or null if file not exist.
+     */
+    public static M2 read(final File f) {
     
         if (!f.exists()) {
             return null;
@@ -139,149 +201,73 @@ public class M2 {
             fis.getChannel().read(bb);
             bb.rewind();
             result = read(bb);
+        } catch (final FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (final IOException e) {
+            e.printStackTrace();
         } finally {
-            fis.close();
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (final IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return result;
     }
     
-    protected static void readData(final M2 result, final ByteBuffer bb) {
+    /**
+     * read m2 data
+     * 
+     * @param m2Object
+     *            - m2 object
+     * @param bb
+     *            - ByteBuffer
+     */
+    protected static void readData(final M2 m2Object, final ByteBuffer bb) {
     
-        bb.position(result.offsets.ofsName);
-        result.data.name = ByteBufferUtil.readString(bb, result.lengths.lName);
+        bb.position(m2Object.offsets.getOfsName());
+        m2Object.data.setName(ByteBufferUtil.readString(bb, m2Object.lengths.getlName()));
         
-        bb.position(result.offsets.ofsGlobalSequences);
-        result.data.globalSequences = ByteBufferUtil.readInts(bb, result.lengths.nGlobalSequences);
+        bb.position(m2Object.offsets.getOfsGlobalSequences());
+        m2Object.data.setGlobalSequences(ByteBufferUtil.readInts(bb, m2Object.lengths.getnGlobalSequences()));
         
-        bb.position(result.offsets.ofsAnimationLookup);
-        result.data.animationLookups = ByteBufferUtil.readShorts(bb, result.lengths.nAnimationLookup);
+        bb.position(m2Object.offsets.getOfsAnimationLookup());
+        m2Object.data.setAnimationLookups(ByteBufferUtil.readShorts(bb, m2Object.lengths.getnAnimationLookup()));
         
-        bb.position(result.offsets.ofsRenderFlags);
-        result.data.renderFlags = ByteBufferUtil.readInts(bb, result.lengths.nRenderFlags);
+        bb.position(m2Object.offsets.getOfsRenderFlags());
+        m2Object.data.setRenderFlags(ByteBufferUtil.readInts(bb, m2Object.lengths.getnRenderFlags()));
         
-        bb.position(result.offsets.ofsKeyBoneLookup);
-        result.data.keyBoneLookupTable = ByteBufferUtil.readShorts(bb, result.lengths.nKeyBoneLookup);
+        bb.position(m2Object.offsets.getOfsKeyBoneLookup());
+        m2Object.data.setKeyBoneLookupTable(ByteBufferUtil.readShorts(bb, m2Object.lengths.getnKeyBoneLookup()));
         
-        bb.position(result.offsets.ofsBoneLookupTable);
-        result.data.boneLookupTable = ByteBufferUtil.readShorts(bb, result.lengths.nBoneLookupTable);
+        bb.position(m2Object.offsets.getOfsBoneLookupTable());
+        m2Object.data.setBoneLookupTable(ByteBufferUtil.readShorts(bb, m2Object.lengths.getnBoneLookupTable()));
         
-        bb.position(result.offsets.ofsVertices);
-        result.data.vertexes = new Vertex[result.lengths.nVertices];
-        for (int index = 0; index < result.lengths.nVertices; index++) {
-            result.data.vertexes[index] = Vertex.read(bb);
+        bb.position(m2Object.offsets.getOfsVertices());
+        m2Object.data.setVertexes(new Vertex[m2Object.lengths.getnVertices()]);
+        for (int index = 0; index < m2Object.lengths.getnVertices(); index++) {
+            m2Object.data.getVertexes()[index] = Vertex.read(bb);
         }
         
-        bb.position(result.offsets.ofsAnimations);
-        result.data.animations = new AnimationSequence[result.lengths.nAnimations];
-        for (int index = 0; index < result.lengths.nAnimations; index++) {
-            result.data.animations[index] = AnimationSequence.read(bb);
+        bb.position(m2Object.offsets.getOfsAnimations());
+        m2Object.data.setAnimations(new AnimationSequence[m2Object.lengths.getnAnimations()]);
+        for (int index = 0; index < m2Object.lengths.getnAnimations(); index++) {
+            m2Object.data.getAnimations()[index] = AnimationSequence.read(bb);
         }
         
-        bb.position(result.offsets.ofsTextures);
-        result.data.textures = new Textures[result.lengths.nTextures];
-        for (int index = 0; index < result.lengths.nTextures; index++) {
-            result.data.textures[index] = Textures.read(bb);
+        bb.position(m2Object.offsets.getOfsTextures());
+        m2Object.data.setTextures(new Textures[m2Object.lengths.getnTextures()]);
+        for (int index = 0; index < m2Object.lengths.getnTextures(); index++) {
+            m2Object.data.getTextures()[index] = Textures.read(bb);
         }
         
-        for (int index = 0; index < result.lengths.nTextures; index++) {
-            if (result.data.textures[index].Type == 0) {
-                bb.position(result.data.textures[index].ofsFilename);
-                result.data.textures[index].setFileName(ByteBufferUtil.readString(bb, result.data.textures[index].lenFilename));
+        for (int index = 0; index < m2Object.lengths.getnTextures(); index++) {
+            if (m2Object.data.getTextures()[index].getType() == 0) {
+                bb.position(m2Object.data.getTextures()[index].getOfsFilename());
+                m2Object.data.getTextures()[index].setFileName(ByteBufferUtil.readString(bb, m2Object.data.getTextures()[index].getLenFilename()));
             }
         }
-    }
-    
-    public Textures[] getTextures() {
-    
-        return this.data.textures;
-    }
-    
-    class _offsets {
-        
-        int ofsName;
-        int ofsGlobalSequences;
-        int ofsAnimations;
-        int ofsAnimationLookup;
-        int ofsBones;
-        int ofsKeyBoneLookup;
-        int ofsVertices;
-        int ofsColors;
-        int ofsTextures;
-        int ofsTransparency;
-        int ofsTextureAnimations;
-        int ofsTexReplace;
-        int ofsRenderFlags;
-        int ofsBoneLookupTable;
-        int ofsTexLookup;
-        int ofsTexUnits;
-        int ofsBoundTriangles;
-        int ofsBoundingVertices;
-        int ofsBoundingNormals;
-        int ofsAttachments;
-        int ofsAttachLookup;
-        int ofsAttachments_2;
-        int ofsLights;
-        int ofsCameras;
-        int ofsCameraLookup;
-        int ofsRibbonEmitters;
-        int ofsParticleEmitters;
-        int ofsUnknown;
-        int ofsTransLookup;
-    }
-    
-    public class _lengths {
-        
-        int lName;
-        int nGlobalSequences;
-        int nAnimations;
-        int nAnimationLookup;
-        int nBones;
-        int nKeyBoneLookup;
-        int nVertices;
-        int nViews;
-        int nColors;
-        int nTextures;
-        int nTransparency;
-        int nTextureAnimations;
-        int nTexReplace;
-        int nRenderFlags;
-        int nBoneLookupTable;
-        int nTexLookup;
-        int nTexUnits;
-        int nTransLookup;
-        int nTexAnimLookup;
-        int nBoundingTringles;
-        int nBoundingVertices;
-        int nBoundingNormals;
-        int nAttachments;
-        int nAttachLookup;
-        int nAttachments_2;
-        int nLights;
-        int nCameras;
-        int nCameraLookup;
-        int nRibbonEmitters;
-        int nParticleEmitters;
-        int nUnknown;
-    }
-    
-    public class _other {
-        
-        public byte[]  magic     = new byte[4];
-        public int     version;
-        public int     globalModelFlags;
-        public float[] theFloats = new float[14];
-    }
-    
-    public class _data {
-        
-        public String              name     = null;
-        public Vertex[]            vertexes = null;
-        public int[]               globalSequences;
-        public short[]             animationLookups;
-        public int[]               renderFlags;
-        public short[]             boneLookupTable;
-        public short[]             keyBoneLookupTable;
-        public AnimationSequence[] animations;
-        public Textures[]          textures;
     }
 }

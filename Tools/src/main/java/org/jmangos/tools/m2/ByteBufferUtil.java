@@ -19,8 +19,28 @@ package org.jmangos.tools.m2;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
-public class ByteBufferUtil {
+/**
+ * 
+ * @author MinimaJack
+ * 
+ */
+public final class ByteBufferUtil {
     
+    /**
+     * hide constructor
+     */
+    private ByteBufferUtil() {
+    
+    }
+    
+    /**
+     * 
+     * @param bb
+     *            ByteBuffer
+     * @param length
+     *            count floats
+     * @return float array
+     */
     public static float[] readFloats(final ByteBuffer bb, final int length) {
     
         final float[] result = new float[length];
@@ -30,6 +50,14 @@ public class ByteBufferUtil {
         return result;
     }
     
+    /**
+     * 
+     * @param bb
+     *            ByteBuffer
+     * @param length
+     *            count Bytes
+     * @return bytes array
+     */
     public static byte[] readBytes(final ByteBuffer bb, final int length) {
     
         final byte[] result = new byte[length];
@@ -39,6 +67,14 @@ public class ByteBufferUtil {
         return result;
     }
     
+    /**
+     * 
+     * @param bb
+     *            ByteBuffer
+     * @param length
+     *            count Shorts
+     * @return Shorts array
+     */
     public static short[] readShorts(final ByteBuffer bb, final int length) {
     
         final short[] result = new short[length];
@@ -48,6 +84,14 @@ public class ByteBufferUtil {
         return result;
     }
     
+    /**
+     * 
+     * @param bb
+     *            ByteBuffer
+     * @param length
+     *            count ints
+     * @return ints array
+     */
     public static int[] readInts(final ByteBuffer bb, final int length) {
     
         final int[] result = new int[length];
@@ -57,22 +101,18 @@ public class ByteBufferUtil {
         return result;
     }
     
+    /**
+     * 
+     * @param bb
+     *            ByteBuffer
+     * @param length
+     *            length string
+     * @return read String
+     */
     public static String readString(final ByteBuffer bb, final int length) {
     
         final byte[] temp = new byte[length];
-        
         bb.get(temp);
-        
         return new String(temp, Charset.forName("UTF-8")).trim();
     }
-    
-    public static int normalizeByte(final byte b) {
-    
-        int result = b;
-        if (result < 0) {
-            result = 256 + b;
-        }
-        return result;
-    }
-    
 }

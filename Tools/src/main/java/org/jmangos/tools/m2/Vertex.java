@@ -18,15 +18,58 @@ package org.jmangos.tools.m2;
 
 import java.nio.ByteBuffer;
 
-public class Vertex {
+/**
+ * 
+ * @author MinimaJack
+ * 
+ */
+public final class Vertex {
     
-    public float[] position      = new float[3];
-    byte[]         boneWeight    = new byte[4];
-    byte[]         boneIndices   = new byte[4];
-    public float[] normal        = new float[3];
-    public float[] textureCoords = new float[2];
-    float[]        unknown       = new float[2];
+    /** Constant count coordinate */
+    private static final int COUNT_POINTS        = 3;
+    /** Constant count bone data */
+    private static final int COUNT_BONE_DATA     = 4;
+    /** Constant count textures data */
+    private static final int COUNT_TEXTURES_DATA = 2;
+    /**
+     * Position
+     */
+    private float[]          position            = new float[COUNT_POINTS];
+    /**
+     * Bone weight
+     */
+    private byte[]           boneWeight          = new byte[COUNT_BONE_DATA];
+    /**
+     * Bone indexes
+     */
+    private byte[]           boneIndices         = new byte[COUNT_BONE_DATA];
+    /**
+     * Normals
+     */
+    private float[]          normal              = new float[COUNT_POINTS];
+    /**
+     * Texture coords
+     */
+    private float[]          textureCoords       = new float[COUNT_TEXTURES_DATA];
+    /**
+     * Unknown data
+     */
+    private float[]          unknown             = new float[COUNT_TEXTURES_DATA];
     
+    /**
+     * Instantiate new Vertex
+     */
+    private Vertex() {
+    
+    }
+    
+    /**
+     * Read vertices
+     * 
+     * @param bb
+     *            ByteBuffer
+     * @return Vertex
+     */
     public static Vertex read(final ByteBuffer bb) {
     
         final Vertex result = new Vertex();
