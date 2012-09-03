@@ -234,6 +234,12 @@
 				<artifactId>usertype.core</artifactId>
 				<version>3.0.0.CR3</version>
 			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>3.1.2.RELEASE</version>
+				<scope>test</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -362,7 +368,8 @@
 						<configuration>
 							<autoVersionSubmodules>true</autoVersionSubmodules>
 							<goals>deploy</goals>
-							<arguments>-Ddist=${dist} -Djenkins.buildNumber=${jenkins.buildNumber}</arguments>
+							<arguments>-Ddist=${dist}
+								-Djenkins.buildNumber=${jenkins.buildNumber}</arguments>
 						</configuration>
 					</plugin>
 				</plugins>
