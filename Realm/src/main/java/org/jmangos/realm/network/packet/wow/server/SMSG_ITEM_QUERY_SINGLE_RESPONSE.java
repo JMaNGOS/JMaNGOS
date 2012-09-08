@@ -38,10 +38,8 @@ public class SMSG_ITEM_QUERY_SINGLE_RESPONSE extends AbstractWoWServerPacket {
         this.itemPrototype = itemPrototype;
     }
     
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+    /**
+     * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
      */
     @Override
     protected void writeImpl() {
