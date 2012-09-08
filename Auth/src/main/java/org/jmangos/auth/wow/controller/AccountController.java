@@ -204,7 +204,7 @@ public class AccountController {
             final AccountEntity accountEntity = accountList.get(0);
             final String sessionKey = accountEntity.getSessionKey();
             
-            sha.update(account.getName().getBytes());
+            sha.update(account.getName().getBytes(Charset.forName("UTF-8")));
             sha.update(R1);
             sha.update(account.get_reconnectProof().asByteArray(16));
             sha.update(convertSessionKey(sessionKey));

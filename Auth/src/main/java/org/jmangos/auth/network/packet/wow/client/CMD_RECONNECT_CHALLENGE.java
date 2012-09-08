@@ -16,6 +16,8 @@
  *******************************************************************************/
 package org.jmangos.auth.network.packet.wow.client;
 
+import java.nio.charset.Charset;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -80,7 +82,7 @@ public class CMD_RECONNECT_CHALLENGE extends AbstractWoWClientPacket {
         /* int timezone_bias = */readD();
         /* int ip = */readD();
         final int lenLogin = readC();
-        this.login = new String(readB(lenLogin), 0, lenLogin);
+        this.login = new String(readB(lenLogin), Charset.forName("UTF-8"));
     }
     
     /**
