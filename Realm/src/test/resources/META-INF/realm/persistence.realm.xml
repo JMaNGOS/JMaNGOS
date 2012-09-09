@@ -11,7 +11,6 @@
 		<class>org.jmangos.realm.entities.ItemEntity</class>
 		<class>org.jmangos.realm.domain.PlayerHomeBindData</class>
 		<class>org.jmangos.realm.domain.InventoryItem</class>
-		<class>org.jmangos.test.entities.TransportInfo</class>
 		
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />

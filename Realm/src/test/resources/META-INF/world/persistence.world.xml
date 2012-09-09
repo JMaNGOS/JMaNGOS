@@ -29,7 +29,7 @@
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
-			<property name="hibernate.connection.url" value="jdbc:mysql://192.168.0.1:3306/world" />
+			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/world" />
 			<property name="hibernate.connection.username" value="JMaNGOS" />
 			<property name="hibernate.connection.password" value="JMaNGOS" />
 			<property name="hibernate.c3p0.max_size" value="2" />
