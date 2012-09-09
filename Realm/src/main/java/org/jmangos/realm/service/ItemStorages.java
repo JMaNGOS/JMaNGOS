@@ -24,12 +24,11 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.jmangos.commons.dataholder.DataLoadService;
+import org.jmangos.commons.enums.InventoryType;
 import org.jmangos.realm.domain.InventoryItem;
 import org.jmangos.realm.model.base.item.Bag;
 import org.jmangos.realm.model.base.item.Item;
-import org.jmangos.realm.model.base.update.ItemFields;
 import org.jmangos.realm.model.enums.HighGuid;
-import org.jmangos.realm.model.enums.InventoryType;
 import org.jmangos.world.entities.ItemPrototype;
 import org.jmangos.world.services.ItemPrototypeService;
 import org.slf4j.Logger;
@@ -95,7 +94,7 @@ public class ItemStorages implements DataLoadService<TLongObjectHashMap<ItemProt
      */
     public Item loadFromDB(final InventoryItem itemplate, final ItemPrototype proto) {
     
-        final long guid = (HighGuid.ITEM.getValue() << 48) | itemplate.getItem_guid();
+        final long guid = (HighGuid.ITEM.getValue() << 48) | itemplate.getItem().getGuid();
         Item item = null;
         if (proto.getInventoryType() == InventoryType.BAG) {
             item = new Bag(guid);
@@ -103,14 +102,8 @@ public class ItemStorages implements DataLoadService<TLongObjectHashMap<ItemProt
             item = new Item(guid);
         }
         item.initfields();
-        if (item.loadValues(itemplate.getData().split(" "))) {
-            logger.debug("Good items " + proto.getName() + " count " + item.GetUInt32Value(ItemFields.ITEM_FIELD_STACK_COUNT));
-            
-            return item;
-        } else {
-            logger.debug("Bad items" + proto.getName());
-            return null;
-        }
+        return item;
+        
     }
     
     /**
@@ -166,8 +159,8 @@ public class ItemStorages implements DataLoadService<TLongObjectHashMap<ItemProt
     @PostConstruct
     @Override
     public void start() {
-    
-        load();
+        // ENABLE LAZY Loading for develop
+        // load();
     }
     
     /**

@@ -22,9 +22,6 @@ public class CharStartOutfitEntityPk implements Serializable {
     @Basic
     @Column(name = "race", nullable = true, insertable = true, updatable = true, length = 3, precision = 0)
     public Byte               race;
-    @Basic
-    @Column(name = "itemInventorySlot", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    public Integer            itemInventorySlot;
     
     /**
      * @return the clazz
@@ -61,23 +58,6 @@ public class CharStartOutfitEntityPk implements Serializable {
     }
     
     /**
-     * @return the itemInventorySlot
-     */
-    public final Integer getItemInventorySlot() {
-    
-        return this.itemInventorySlot;
-    }
-    
-    /**
-     * @param itemInventorySlot
-     *            the itemInventorySlot to set
-     */
-    public final void setItemInventorySlot(final Integer itemInventorySlot) {
-    
-        this.itemInventorySlot = itemInventorySlot;
-    }
-    
-    /**
      * @return the race
      */
     public final Byte getRace() {
@@ -102,13 +82,12 @@ public class CharStartOutfitEntityPk implements Serializable {
         }
         
         return ((CharStartOutfitEntityPk) obj).getGender().equals(getGender()) && ((CharStartOutfitEntityPk) obj).getClazz().equals(getClazz())
-                && ((CharStartOutfitEntityPk) obj).getItemInventorySlot().equals(getItemInventorySlot())
                 && ((CharStartOutfitEntityPk) obj).getRace().equals(getRace());
     }
     
     @Override
     public int hashCode() {
     
-        return (getRace() << 24) | (getClazz() << 16) | (getItemInventorySlot() << 8) | getGender();
+        return (getRace() << 16) | (getClazz() << 8) | getGender();
     }
 }

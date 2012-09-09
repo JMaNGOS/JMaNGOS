@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.realm.model.enums;
+package org.jmangos.commons.enums;
 
 /**
  * Created with IntelliJ IDEA. User: Adrian Date: 2012.08.11. Time: 23:09 To change this template
@@ -41,7 +41,11 @@ public enum EquipmentSlots {
     OFFHAND(16),
     RANGED(17),
     TABARD(18),
-    END(19);
+    BAG1(19),
+    BAG2(20),
+    BAG3(21),
+    BAG4(22),
+    END(23);
     
     private int value;
     

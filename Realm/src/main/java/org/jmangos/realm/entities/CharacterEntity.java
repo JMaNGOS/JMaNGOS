@@ -1,7 +1,6 @@
 package org.jmangos.realm.entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -13,12 +12,16 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
+import javolution.util.FastMap;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.jmangos.realm.domain.InventoryItem;
 import org.jmangos.realm.domain.PlayerHomeBindData;
 
@@ -34,282 +37,283 @@ public class CharacterEntity {
     @TableGenerator(table = "sequences", allocationSize = 1, name = "char_seq")
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "char_seq")
     @Column(name = "guid", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
-    private Integer             guid;
+    private Integer                     guid;
     
     @Basic
     @Column(name = "account", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private Integer             account;
+    private Integer                     account;
     
     @Basic
     @Column(name = "actionBars", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 actionBars;
+    private int                         actionBars;
     
     @Basic
     @Column(name = "activeSpec", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 activeSpec;
+    private int                         activeSpec;
     
     @Basic
     @Column(name = "ammoId", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 ammoId;
+    private int                         ammoId;
     
     @Basic
     @Column(name = "arenaPoints", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 arenaPoints;
+    private int                         arenaPoints;
     
     @Basic
     @Column(name = "at_login", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 atLoginFlags;
+    private int                         atLoginFlags;
     
     @Basic
     @Column(name = "chosenTitle", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 chosenTitle;
+    private int                         chosenTitle;
     
     @Basic
     @Column(name = "cinematic", nullable = true, insertable = true, updatable = true, length = 1, precision = 0)
-    private boolean             cinematic;
+    private boolean                     cinematic;
     
     @Enumerated(EnumType.STRING)
     @Column(name = "class", nullable = true, insertable = true, updatable = true, length = 50, precision = 0)
-    private int                 clazz;
+    private int                         clazz;
     
     @Basic
     @Column(name = "death_expire_time", nullable = true, insertable = true, updatable = true, length = 19, precision = 0)
-    private long                deathExpireTime;
+    private long                        deathExpireTime;
     
     @Basic
     @Column(name = "deleteDate", nullable = true, insertable = true, updatable = true, length = 19, precision = 0)
-    private long                deleteDate;
+    private long                        deleteDate;
     
     @Basic
     @Column(name = "deleteInfos_Account", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 deleteInfosAccount;
+    private int                         deleteInfosAccount;
     
     @Basic
     @Column(name = "deleteInfos_Name", nullable = true, insertable = true, updatable = true, length = 255, precision = 0)
-    private String              deleteInfosName;
+    private String                      deleteInfosName;
     
     @Basic
     @Column(name = "drunk", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 drunk;
+    private int                         drunk;
     
     @Basic
     @Column(name = "dungeon_difficulty", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 dungeonDifficulty;
+    private int                         dungeonDifficulty;
     
     @Basic
     @Column(name = "equipmentCache", nullable = true, insertable = true, updatable = true, length = 255, precision = 0)
-    private String              equipmentCache;
+    private String                      equipmentCache;
     
     @Basic
     @Column(name = "exploredZones", nullable = true, insertable = true, updatable = true, length = 255, precision = 0)
-    private String              exploredZones;
+    private String                      exploredZones;
     
     @Basic
     @Column(name = "extra_flags", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 extraFlags;
+    private int                         extraFlags;
     
     @Basic
     @Column(name = "gender", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 gender;
+    private int                         gender;
     
     @Basic
     @Column(name = "health", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 health;
+    private int                         health;
     
     @Basic
     @Column(name = "is_logout_resting", nullable = true, insertable = true, updatable = true, length = 1, precision = 0)
-    private boolean             isLogoutResting;
+    private boolean                     isLogoutResting;
     
     @Basic
     @Column(name = "knownCurrencies", nullable = true, insertable = true, updatable = true, length = 19, precision = 0)
-    private long                knownCurrencies;
+    private long                        knownCurrencies;
     
     @Basic
     @Column(name = "knownTitles", nullable = true, insertable = true, updatable = true, length = 255, precision = 0)
-    private String              knownTitles;
+    private String                      knownTitles;
     
     @Basic
     @Column(name = "level", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 level;
+    private int                         level;
     
     @Basic
     @Column(name = "leveltime", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 leveltime;
+    private int                         leveltime;
     
     @Basic
     @Column(name = "logout_time", nullable = true, insertable = true, updatable = true, length = 19, precision = 0)
-    private long                logoutTime;
+    private long                        logoutTime;
     
     @Basic
     @Column(name = "map", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 map;
+    private int                         map;
     
     @Basic
     @Column(name = "money", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 money;
+    private int                         money;
     
     @Basic
     @Column(name = "name", nullable = true, insertable = true, updatable = true, length = 255, precision = 0)
-    private String              name;
+    private String                      name;
     
     @Basic
     @Column(name = "online", nullable = true, insertable = true, updatable = true, length = 1, precision = 0)
-    private boolean             online;
+    private boolean                     online;
     
     @Basic
     @Column(name = "orientation", nullable = true, insertable = true, updatable = true, length = 12, precision = 0)
-    private float               orientation;
+    private float                       orientation;
     
     @Basic
     @Column(name = "playerBytes", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 playerBytes;
+    private int                         playerBytes;
     
     @Basic
     @Column(name = "playerBytes2", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 playerBytes2;
+    private int                         playerBytes2;
     
     @Basic
     @Column(name = "playerFlags", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 playerFlags;
+    private int                         playerFlags;
     
     @Basic
     @Column(name = "position_x", nullable = true, insertable = true, updatable = true, length = 12, precision = 0)
-    private float               positionX;
+    private float                       positionX;
     
     @Basic
     @Column(name = "position_y", nullable = true, insertable = true, updatable = true, length = 12, precision = 0)
-    private float               positionY;
+    private float                       positionY;
     
     @Basic
     @Column(name = "position_z", nullable = true, insertable = true, updatable = true, length = 12, precision = 0)
-    private float               positionZ;
+    private float                       positionZ;
     
     @Basic
     @Column(name = "power1", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 power1;
+    private int                         power1;
     
     @Basic
     @Column(name = "power2", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 power2;
+    private int                         power2;
     
     @Basic
     @Column(name = "power3", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 power3;
+    private int                         power3;
     
     @Basic
     @Column(name = "power4", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 power4;
+    private int                         power4;
     
     @Basic
     @Column(name = "power5", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 power5;
+    private int                         power5;
     
     @Basic
     @Column(name = "power6", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 power6;
+    private int                         power6;
     
     @Basic
     @Column(name = "power7", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 power7;
+    private int                         power7;
     
     @Enumerated(EnumType.STRING)
     @Column(name = "race", nullable = true, insertable = true, updatable = true, length = 50, precision = 0)
-    private int                 race;
+    private int                         race;
     
     @Basic
     @Column(name = "resettalents_cost", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 resettalentsCost;
+    private int                         resettalentsCost;
     
     @Basic
     @Column(name = "resettalents_time", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 resettalentsTime;
+    private int                         resettalentsTime;
     
     @Basic
     @Column(name = "rest_bonus", nullable = true, insertable = true, updatable = true, length = 12, precision = 0)
-    private float               restBonus;
+    private float                       restBonus;
     
     @Basic
     @Column(name = "specCount", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 specCount;
+    private int                         specCount;
     
     @Basic
     @Column(name = "stable_slots", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 stableSlots;
+    private int                         stableSlots;
     
     @Basic
     @Column(name = "taxi_path", nullable = true, insertable = true, updatable = true, length = 255, precision = 0)
-    private String              taxiPath;
+    private String                      taxiPath;
     
     @Basic
     @Column(name = "taximask", nullable = true, insertable = true, updatable = true, length = 255, precision = 0)
-    private String              taximask;
+    private String                      taximask;
     
     @Basic
     @Column(name = "todayHonorPoints", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 todayHonorPoints;
+    private int                         todayHonorPoints;
     
     @Basic
     @Column(name = "todayKills", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 todayKills;
+    private int                         todayKills;
     
     @Basic
     @Column(name = "totalHonorPoints", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 totalHonorPoints;
+    private int                         totalHonorPoints;
     
     @Basic
     @Column(name = "totalKills", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 totalKills;
+    private int                         totalKills;
     
     @Basic
     @Column(name = "totaltime", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 totaltime;
+    private int                         totaltime;
     
     @Basic
     @Column(name = "trans_o", nullable = true, insertable = true, updatable = true, length = 12, precision = 0)
-    private float               transO;
+    private float                       transO;
     
     @Basic
     @Column(name = "trans_x", nullable = true, insertable = true, updatable = true, length = 12, precision = 0)
-    private float               transX;
+    private float                       transX;
     
     @Basic
     @Column(name = "trans_y", nullable = true, insertable = true, updatable = true, length = 12, precision = 0)
-    private float               transY;
+    private float                       transY;
     
     @Basic
     @Column(name = "trans_z", nullable = true, insertable = true, updatable = true, length = 12, precision = 0)
-    private float               transZ;
+    private float                       transZ;
     
     @Basic
     @Column(name = "transguid", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 transguid;
+    private int                         transguid;
     
     @Basic
     @Column(name = "watchedFaction", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 watchedFaction;
+    private int                         watchedFaction;
     
     @Basic
     @Column(name = "xp", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 xp;
+    private int                         xp;
     
     @Basic
     @Column(name = "yesterdayHonorPoints", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 yesterdayHonorPoints;
+    private int                         yesterdayHonorPoints;
     
     @Basic
     @Column(name = "yesterdayKills", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 yesterdayKills;
+    private int                         yesterdayKills;
     
     @Basic
     @Column(name = "zone", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private int                 zone;
+    private int                         zone;
     
     @OneToOne(targetEntity = PlayerHomeBindData.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private PlayerHomeBindData  homeBindData;
+    private PlayerHomeBindData          homeBindData;
     
-    @JoinColumn(referencedColumnName = "guid")
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<InventoryItem> inventory = new ArrayList<InventoryItem>();
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "ownerCharacter")
+    @MapKeyColumn(name = "slot")
+    @Fetch(value = FetchMode.SUBSELECT)
+    private Map<Integer, InventoryItem> inventory = new FastMap<Integer, InventoryItem>();
     
     /**
      * Find item by inventory slot
@@ -317,14 +321,11 @@ public class CharacterEntity {
      * @param slot
      * @return
      */
-    public InventoryItem findInventorySlot(final int slot) {
+    public InventoryItem findInventorySlot(final Integer slot) {
     
-        for (final InventoryItem invItem : this.inventory) {
-            if (invItem.getSlot() == slot) {
-                return invItem;
-            }
+        if (this.inventory.containsKey(slot)) {
+            return this.inventory.get(slot);
         }
-        // :( not found
         return null;
     }
     
@@ -1020,18 +1021,26 @@ public class CharacterEntity {
         return this.homeBindData;
     }
     
+    /**
+     * @return the inventory
+     */
+    public final Map<Integer, InventoryItem> getInventory() {
+    
+        return this.inventory;
+    }
+    
+    /**
+     * @param inventory
+     *            the inventory to set
+     */
+    public final void setInventory(final Map<Integer, InventoryItem> inventory) {
+    
+        this.inventory = inventory;
+    }
+    
     public void setHomeBindData(final PlayerHomeBindData homeBindData) {
     
         this.homeBindData = homeBindData;
     }
     
-    public List<InventoryItem> getInventory() {
-    
-        return this.inventory;
-    }
-    
-    public void setInventory(final List<InventoryItem> inventory) {
-    
-        this.inventory = inventory;
-    }
 }

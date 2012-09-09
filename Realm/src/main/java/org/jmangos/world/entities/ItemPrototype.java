@@ -25,11 +25,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.jmangos.commons.enums.InventoryType;
 import org.jmangos.commons.model.NamedObject;
 import org.jmangos.realm.model.base.item._Damage;
 import org.jmangos.realm.model.base.item._ItemStat;
 import org.jmangos.realm.model.base.item._Socket;
-import org.jmangos.realm.model.enums.InventoryType;
 
 /**
  * The Class ItemPrototype.
@@ -210,7 +210,7 @@ public class ItemPrototype extends NamedObject {
     // 3, precision = 0)
     /** item stats. */
     @Transient
-    private _ItemStat[]        itemStat;
+    private _ItemStat[]     itemStat;
     
     /** The Scaling stat distribution. */
     @Basic
@@ -420,7 +420,7 @@ public class ItemPrototype extends NamedObject {
     // @Column(name = "socketContent_1", nullable = false, insertable = true, updatable = true,
     // length = 7, precision = 0)
     @Transient
-    private _Socket[]        Socket;
+    private _Socket[]       Socket;
     
     /** The socket bonus. */
     @Basic
@@ -1035,7 +1035,7 @@ public class ItemPrototype extends NamedObject {
      */
     public _ItemStat getItemStat(final int i) {
     
-        return (_ItemStat) this.itemStat[i];
+        return this.itemStat[i];
     }
     
     /**

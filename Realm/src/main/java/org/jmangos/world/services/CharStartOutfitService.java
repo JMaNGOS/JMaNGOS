@@ -21,6 +21,8 @@ import java.util.List;
 import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.commons.entities.CharStartOutfitEntity;
 import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
+import org.jmangos.realm.model.enums.Classes;
+import org.jmangos.realm.model.enums.Races;
 
 /**
  * @author MinimaJack
@@ -35,5 +37,7 @@ public interface CharStartOutfitService {
     CharStartOutfitEntityPk createOrUpdateCharStartOutfitEntity(CharStartOutfitEntity charStartOutfitEntity);
     
     void deleteCharStartOutfitEntity(CharStartOutfitEntity charStartOutfitEntity);
+    
+    List<CharStartOutfitEntity> readCharStartOutfitEntities(Races charRace, Classes charClass, Byte gender);
     
 }

@@ -18,18 +18,14 @@ package org.jmangos.realm.service;
 
 import gnu.trove.map.hash.TLongObjectHashMap;
 
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.RealmServer;
-import org.jmangos.realm.domain.InventoryItem;
 import org.jmangos.realm.entities.CharacterEntity;
 import org.jmangos.realm.model.base.WorldObject;
-import org.jmangos.realm.model.base.item.Item;
 import org.jmangos.realm.model.base.update.ObjectFields;
 import org.jmangos.realm.model.base.update.PlayerFields;
 import org.jmangos.realm.model.base.update.UnitField;
@@ -58,7 +54,6 @@ import org.jmangos.realm.network.packet.wow.server.SMSG_SPELL_GO;
 import org.jmangos.realm.network.packet.wow.server.SMSG_TALENTS_INFO;
 import org.jmangos.realm.network.packet.wow.server.SMSG_TIME_SYNC_REQ;
 import org.jmangos.realm.services.CharacterService;
-import org.jmangos.world.entities.ItemPrototype;
 import org.jmangos.world.entities.PlayerClassLevelInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -338,21 +333,19 @@ public class PlayerService {
     public void loadInventory(final Player player) {
     
         final CharacterEntity characterEntity = this.characterService.readCharacter(player.getObjectId());
-        final List<InventoryItem> inventoryItem = characterEntity.getInventory();
-        for (final InventoryItem iT : inventoryItem) {
-            final ItemPrototype proto = this.itemStorages.get(iT.getItem_id());
-            if (proto != null) {
-                logger.debug(proto.getName() + " - " + iT.getSlot());
-                final Item item = this.itemStorages.loadFromDB(iT, proto);
-                if (Item.isInventoryPos(Item.INVENTORY_SLOT_BAG_0, iT.getSlot())) {
-                    logger.debug(proto.getName() + " - " + "in INVENTORY_SLOT_BAG_0");
-                }
-                if (Item.isEquipmentPos(Item.INVENTORY_SLOT_BAG_0, iT.getSlot())) {
-                    logger.debug(proto.getName() + " - " + "in INVENTORY_SLOT_BAG_0 and can equip");
-                    player.equipItem(iT.getSlot(), item);
-                }
-            }
-        }
+        // TODO need rework
+        /*
+         * final List<InventoryItem> inventoryItem = characterEntity.getInventory(); for (final
+         * InventoryItem iT : inventoryItem) { final ItemPrototype proto =
+         * this.itemStorages.get(iT.getItem().getProto()); if (proto != null) {
+         * logger.debug(proto.getName() + " - " + iT.getSlot()); final Item item =
+         * this.itemStorages.loadFromDB(iT, proto); if
+         * (Item.isInventoryPos(Item.INVENTORY_SLOT_BAG_0, iT.getSlot())) {
+         * logger.debug(proto.getName() + " - " + "in INVENTORY_SLOT_BAG_0"); } if
+         * (Item.isEquipmentPos(Item.INVENTORY_SLOT_BAG_0, iT.getSlot())) {
+         * logger.debug(proto.getName() + " - " + "in INVENTORY_SLOT_BAG_0 and can equip");
+         * player.equipItem(iT.getSlot(), item); } } }
+         */
         
     }
     

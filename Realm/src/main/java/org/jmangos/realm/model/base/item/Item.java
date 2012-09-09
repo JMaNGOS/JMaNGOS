@@ -16,11 +16,11 @@
  *******************************************************************************/
 package org.jmangos.realm.model.base.item;
 
+import org.jmangos.commons.enums.EquipmentSlots;
+import org.jmangos.commons.enums.InventoryType;
 import org.jmangos.realm.model.base.WorldObject;
 import org.jmangos.realm.model.base.update.ItemFields;
-import org.jmangos.realm.model.enums.EquipmentSlots;
 import org.jmangos.realm.model.enums.InventorySlots;
-import org.jmangos.realm.model.enums.InventoryType;
 import org.jmangos.realm.model.enums.TypeID;
 import org.jmangos.realm.model.enums.TypeMask;
 
@@ -91,7 +91,7 @@ public class Item extends WorldObject {
         return this.slot;
     }
     
-    public static EquipmentSlots findEquipSlot(InventoryType inventoryType) {
+    public static EquipmentSlots findEquipSlot(final InventoryType inventoryType) {
     
         switch (inventoryType) {
             case HEAD:

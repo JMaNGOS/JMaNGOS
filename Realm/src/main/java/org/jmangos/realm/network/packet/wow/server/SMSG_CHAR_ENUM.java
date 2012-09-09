@@ -18,10 +18,10 @@ package org.jmangos.realm.network.packet.wow.server;
 
 import java.util.List;
 
+import org.jmangos.commons.enums.EquipmentSlots;
 import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.realm.domain.InventoryItem;
 import org.jmangos.realm.entities.CharacterEntity;
-import org.jmangos.realm.model.enums.EquipmentSlots;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 import org.jmangos.realm.network.packet.wow.client.CMSG_AUTH_SESSION;
 import org.jmangos.realm.service.ItemStorages;
@@ -103,11 +103,11 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
                     int displayInfoID = 0x00;
                     byte inventoryType = 0;
                     try {
-                        final ItemPrototype proto = itemStorages.get(invItem.getItem_guid());
+                        final ItemPrototype proto = itemStorages.get(invItem.getItem().getProto());
                         displayInfoID = proto.getDisplayInfoID();
                         inventoryType = (byte) proto.getInventoryType().ordinal();
                     } catch (final Exception e) {
-                        logger.error("ID not found in the storage: " + invItem.getItem_guid(), e);
+                        logger.error("ID not found in the storage: " + invItem.getItem().getProto(), e);
                     }
                     
                     writeD(displayInfoID);
@@ -120,13 +120,6 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
                 }
             }
             
-            // TODO: implement bags
-            
-            for (int i = 0; i < 4; i++) {
-                writeD(0); // DisplayID
-                writeC(0); // InventoryType
-                writeD(0); // Enchantment
-            }
         }
         
     }

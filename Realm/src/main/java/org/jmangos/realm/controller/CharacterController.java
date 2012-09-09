@@ -27,18 +27,18 @@ import org.jmangos.realm.domain.InventoryItem;
 import org.jmangos.realm.domain.PlayerHomeBindData;
 import org.jmangos.realm.domain.PlayercreateinfoPK;
 import org.jmangos.realm.entities.CharacterEntity;
-import org.jmangos.realm.model.base.item.Item;
+import org.jmangos.realm.entities.ItemEntity;
 import org.jmangos.realm.model.enums.Classes;
-import org.jmangos.realm.model.enums.EquipmentSlots;
-import org.jmangos.realm.model.enums.InventoryType;
 import org.jmangos.realm.model.enums.Races;
 import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_CREATE;
-import org.jmangos.realm.service.CharStartOutfitStorages;
 import org.jmangos.realm.services.CharacterService;
+import org.jmangos.realm.services.ItemService;
 import org.jmangos.world.entities.Playercreateinfo;
+import org.jmangos.world.services.CharStartOutfitService;
 import org.jmangos.world.services.PlayercreateinfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -53,8 +53,11 @@ public class CharacterController {
     @Inject
     private PlayercreateinfoService playercreateinfoService;
     
-    @Inject
-    private CharStartOutfitStorages charStartOutfitStorages;
+    @Autowired
+    private CharStartOutfitService  charStartOutfitService;
+    
+    @Autowired
+    ItemService                     itemService;
     
     public SMSG_CHAR_CREATE createCharacter(final int accountId, final String charName, final int charRace, final int charClass, final int gender,
             final int skin, final int face, final int hairStyle, final int hairColor, final int facialHair, final int outfitId) {
@@ -119,23 +122,22 @@ public class CharacterController {
         
         charData.setHomeBindData(phbd);
         
-        // Inventory items
-        // items in bag
-        int itemIndex = 23;
-        for (final InventoryType inventoryType : InventoryType.values()) {
-            final CharStartOutfitEntity item = this.charStartOutfitStorages.get((byte) charClass, (byte) charRace, (byte) gender, (byte) inventoryType.ordinal());
-            if (item == null) {
-                continue;
-            }
-            EquipmentSlots es = Item.findEquipSlot(inventoryType);
-            final InventoryItem inventoryItem;
-            if (es == null) {
-                inventoryItem = new InventoryItem(item.getItemId(), itemIndex++);
-            } else {
-                inventoryItem = new InventoryItem(item.getItemId(), es.getValue());
-            }
-            charData.getInventory().add(inventoryItem);
-            logger.info("Adding item for character: " + item.getItemId());
+        this.characterService.createOrUpdateCharacter(charData);
+        
+        final List<CharStartOutfitEntity> startItems = this.charStartOutfitService.readCharStartOutfitEntities(Races.get(charRace), Classes.get(charClass), (byte) gender);
+        for (final CharStartOutfitEntity startItem : startItems) {
+            final ItemEntity itemEntity = new ItemEntity();
+            itemEntity.setOwner(charData);
+            itemEntity.setProto(startItem.getProtoId());
+            
+            this.itemService.createOrUpdateItem(itemEntity);
+            
+            final InventoryItem inventoryItem = new InventoryItem();
+            inventoryItem.setItem(itemEntity);
+            inventoryItem.setSlot(startItem.getSlot());
+            inventoryItem.setOwnerCharacter(charData);
+            charData.getInventory().put(startItem.getSlot(), inventoryItem);
+            logger.info("Adding item for character: " + startItem.getProtoId());
         }
         
         this.characterService.createOrUpdateCharacter(charData);

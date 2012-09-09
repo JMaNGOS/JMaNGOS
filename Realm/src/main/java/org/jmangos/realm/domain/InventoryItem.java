@@ -21,11 +21,16 @@ package org.jmangos.realm.domain;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
+
+import org.jmangos.realm.entities.CharacterEntity;
+import org.jmangos.realm.entities.ItemEntity;
 
 /**
  * The Class InventoryItem.
@@ -34,97 +39,30 @@ import javax.persistence.TableGenerator;
 @Table(name = "character_inventory")
 public class InventoryItem {
     
-    /** The bag_guid. */
-    @Basic
-    @Column(name = "bag", length = 11, nullable = false)
-    private int    bag_guid;
-    
-    /** The item_guid. */
-    @Basic
-    @Column(name = "item_template", length = 11, nullable = false)
-    private int    item_guid;
-    
-    /** The item_id. */
-    @Id
-    @TableGenerator(table = "sequences", allocationSize = 1, name = "char_inv_item")
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "char_inv_item")
-    @Column(name = "item", length = 11, nullable = false)
-    private int    item_id;
-    
     /** The slot. */
     @Basic
     @Column(name = "slot", length = 3, nullable = false)
-    private int    slot;
+    private int        slot;
     
-    @Basic
-    @Column(name = "data", length = 512, nullable = false)
-    private String data = "";
+    /** The item_guid. */
+    @Id
+    @Column(name = "itemId", length = 11, nullable = false)
+    private int        itemId;
+    
+    /** The item_id. */
+    @OneToOne
+    @PrimaryKeyJoinColumn(name = "item", referencedColumnName = "guid")
+    private ItemEntity item;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_guid", nullable = false)
+    CharacterEntity    ownerCharacter;
     
     public InventoryItem() {
     
     }
     
-    public InventoryItem(final int item_guid, final int slot) {
-    
-        this.item_guid = item_guid;
-        this.slot = slot;
-    }
-    
     /**
-     * Instantiates a new inventory template.
-     * 
-     * @param data
-     *            the data
-     * @param bagGuid
-     *            the bag guid
-     * @param slot
-     *            the slot
-     * @param itemGuid
-     *            the item guid
-     * @param itemId
-     *            the item id
-     */
-    public InventoryItem(final String data, final int bagGuid, final byte slot, final int itemGuid, final int itemId) {
-    
-        this.bag_guid = bagGuid;
-        this.slot = slot;
-        this.item_guid = itemGuid;
-        this.item_id = itemId;
-    }
-    
-    /**
-     * Gets the bag_guid.
-     * 
-     * @return the bag_guid
-     */
-    public final int getBag_guid() {
-    
-        return this.bag_guid;
-    }
-    
-    /**
-     * Gets the item_guid.
-     * 
-     * @return the item_guid
-     */
-    public final int getItem_guid() {
-    
-        return this.item_guid;
-    }
-    
-    /**
-     * Gets the item_id.
-     * 
-     * @return the item_id
-     */
-    public final int getItem_id() {
-    
-        return this.item_id;
-    }
-    
-    /**
-     * Gets the slot.
-     * 
      * @return the slot
      */
     public final int getSlot() {
@@ -133,41 +71,6 @@ public class InventoryItem {
     }
     
     /**
-     * Sets the bag_guid.
-     * 
-     * @param bagGuid
-     *            the bag_guid to set
-     */
-    public final void setBag_guid(final int bagGuid) {
-    
-        this.bag_guid = bagGuid;
-    }
-    
-    /**
-     * Sets the item_guid.
-     * 
-     * @param itemGuid
-     *            the item_guid to set
-     */
-    public final void setItem_guid(final int itemGuid) {
-    
-        this.item_guid = itemGuid;
-    }
-    
-    /**
-     * Sets the item_id.
-     * 
-     * @param itemId
-     *            the item_id to set
-     */
-    public final void setItem_id(final int itemId) {
-    
-        this.item_id = itemId;
-    }
-    
-    /**
-     * Sets the slot.
-     * 
      * @param slot
      *            the slot to set
      */
@@ -176,13 +79,56 @@ public class InventoryItem {
         this.slot = slot;
     }
     
-    public String getData() {
+    /**
+     * @return the itemId
+     */
+    public final int getItemId() {
     
-        return this.data;
+        return this.itemId;
     }
     
-    public void setData(final String data) {
+    /**
+     * @param itemId
+     *            the itemId to set
+     */
+    public final void setItemId(final int itemId) {
     
-        this.data = data;
+        this.itemId = itemId;
     }
+    
+    /**
+     * @return the item
+     */
+    public final ItemEntity getItem() {
+    
+        return this.item;
+    }
+    
+    /**
+     * @param item
+     *            the item to set
+     */
+    public final void setItem(final ItemEntity item) {
+    
+        setItemId(item.getGuid());
+        this.item = item;
+    }
+    
+    /**
+     * @return the ownerCharacter
+     */
+    public final CharacterEntity getOwnerCharacter() {
+    
+        return this.ownerCharacter;
+    }
+    
+    /**
+     * @param ownerCharacter
+     *            the ownerCharacter to set
+     */
+    public final void setOwnerCharacter(final CharacterEntity ownerCharacter) {
+    
+        this.ownerCharacter = ownerCharacter;
+    }
+    
 }

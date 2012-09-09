@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.realm.model.enums;
+package org.jmangos.commons.enums;
 
 /**
  * The Enum InventoryType.
@@ -107,4 +107,15 @@ public enum InventoryType {
     
     /** The RELIC. */
     RELIC;
+    
+    public static InventoryType get(final int value) {
+    
+        for (final InventoryType it : values()) {
+            if (it.ordinal() == value) {
+                return it;
+            }
+        }
+        // Not found :O
+        return null;
+    }
 }

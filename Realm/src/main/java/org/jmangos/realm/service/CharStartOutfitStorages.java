@@ -43,7 +43,7 @@ public class CharStartOutfitStorages implements DataLoadService<HashMap<CharStar
     @Inject
     CharStartOutfitService                                          charStartOutfitService;
     
-    /** The Player cli. */
+    /** The Player. */
     private HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity> playerCSO = new HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity>();
     
     /**
@@ -53,8 +53,8 @@ public class CharStartOutfitStorages implements DataLoadService<HashMap<CharStar
     @PostConstruct
     @Override
     public void start() {
-    
-        load();
+        // TEMPORARY NOT USED
+       // load();
         logger.info("Loaded {} CharStartOutfits", this.playerCSO.size());
     }
     
@@ -112,16 +112,14 @@ public class CharStartOutfitStorages implements DataLoadService<HashMap<CharStar
      * @param clazz
      * @param race
      * @param gender
-     * @param itemInventorySlot
      * @return charStartOutfitEntity
      */
-    public CharStartOutfitEntity get(final byte clazz, final byte race, final byte gender, final int itemInventorySlot) {
+    public CharStartOutfitEntity get(final byte clazz, final byte race, final byte gender) {
     
         final CharStartOutfitEntityPk cl = new CharStartOutfitEntityPk();
         cl.setClazz(clazz);
         cl.setRace(race);
         cl.setGender(gender);
-        cl.setItemInventorySlot(itemInventorySlot);
         if (this.playerCSO.containsKey(cl)) {
             return this.playerCSO.get(cl);
         } else {
@@ -140,7 +138,7 @@ public class CharStartOutfitStorages implements DataLoadService<HashMap<CharStar
      */
     public CharStartOutfitEntity get(final Classes clazz, final byte race, final byte gender, final int itemInventorySlot) {
     
-        return get((byte) clazz.getValue(), race, gender, itemInventorySlot);
+        return get((byte) clazz.getValue(), race, gender);
     }
     
     /**

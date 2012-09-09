@@ -2,8 +2,11 @@ package org.jmangos.commons.entities;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
@@ -12,18 +15,75 @@ import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
 @Table(name = "charstartoutfit")
 public class CharStartOutfitEntity {
     
-    @EmbeddedId
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = true, updatable = true, length = 8, precision = 0)
+    Integer                 id;
+    
+    @Embedded
     CharStartOutfitEntityPk charStartOutfitEntityPk;
     
     @Basic
-    @Column(name = "itemId", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    public Integer          itemId;
+    @Column(name = "protoId", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
+    public Integer          protoId;
+    
     @Basic
-    @Column(name = "itemDisplayId", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    public Integer          itemDisplayId;
+    @Column(name = "slot", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
+    public Integer          slot;
     
     public CharStartOutfitEntity() {
     
+    }
+    
+    /**
+     * @return the id
+     */
+    public final Integer getId() {
+    
+        return this.id;
+    }
+    
+    /**
+     * @param id
+     *            the id to set
+     */
+    public final void setId(final Integer id) {
+    
+        this.id = id;
+    }
+    
+    /**
+     * @return the protoId
+     */
+    public final Integer getProtoId() {
+    
+        return this.protoId;
+    }
+    
+    /**
+     * @param protoId
+     *            the protoId to set
+     */
+    public final void setProtoId(final Integer protoId) {
+    
+        this.protoId = protoId;
+    }
+    
+    /**
+     * @return the slot
+     */
+    public final Integer getSlot() {
+    
+        return this.slot;
+    }
+    
+    /**
+     * @param slot
+     *            the slot to set
+     */
+    public final void setSlot(final Integer slot) {
+    
+        this.slot = slot;
     }
     
     /**
@@ -41,40 +101,6 @@ public class CharStartOutfitEntity {
     public final void setCharStartOutfitEntityPk(final CharStartOutfitEntityPk charStartOutfitEntityPk) {
     
         this.charStartOutfitEntityPk = charStartOutfitEntityPk;
-    }
-    
-    /**
-     * @return the itemId
-     */
-    public final Integer getItemId() {
-    
-        return this.itemId;
-    }
-    
-    /**
-     * @param itemId
-     *            the itemId to set
-     */
-    public final void setItemId(final Integer itemId) {
-    
-        this.itemId = itemId;
-    }
-    
-    /**
-     * @return the itemDisplayId
-     */
-    public final Integer getItemDisplayId() {
-    
-        return this.itemDisplayId;
-    }
-    
-    /**
-     * @param itemDisplayId
-     *            the itemDisplayId to set
-     */
-    public final void setItemDisplayId(final Integer itemDisplayId) {
-    
-        this.itemDisplayId = itemDisplayId;
     }
     
 }
