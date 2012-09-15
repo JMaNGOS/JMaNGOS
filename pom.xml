@@ -367,6 +367,7 @@
 						<artifactId>maven-release-plugin</artifactId>
 						<configuration>
 							<autoVersionSubmodules>true</autoVersionSubmodules>
+							<preparationGoals>clean validate</preparationGoals>
 							<goals>deploy</goals>
 							<arguments>-Drelease=${release}</arguments>
 							<arguments>-Ddist=${dist}</arguments>
