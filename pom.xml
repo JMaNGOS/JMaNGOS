@@ -367,12 +367,8 @@
 						<artifactId>maven-release-plugin</artifactId>
 						<configuration>
 							<autoVersionSubmodules>true</autoVersionSubmodules>
-							<preparationGoals>clean validate</preparationGoals>
 							<goals>deploy</goals>
-							<arguments>-Drelease=${release}</arguments>
-							<arguments>-Ddist=${dist}</arguments>
-							<arguments>-Dmaven.test.skip=${maven.test.skip}</arguments>
-							<arguments>-Djenkins.buildNumber=${jenkins.buildNumber}</arguments>
+							<arguments>-Drelease=${release} -Ddist=${dist} -Dmaven.test.skip=${maven.test.skip} -Djenkins.buildNumber=${jenkins.buildNumber}</arguments>
 						</configuration>
 					</plugin>
 				</plugins>
