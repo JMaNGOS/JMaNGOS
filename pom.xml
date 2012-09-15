@@ -353,10 +353,10 @@
 
 	<profiles>
 		<profile>
-			<id>dist</id>
+			<id>release</id>
 			<activation>
 				<property>
-					<name>dist</name>
+					<name>release</name>
 					<value>true</value>
 				</property>
 			</activation>
