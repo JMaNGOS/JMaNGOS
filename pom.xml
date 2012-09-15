@@ -368,7 +368,10 @@
 						<configuration>
 							<autoVersionSubmodules>true</autoVersionSubmodules>
 							<goals>deploy</goals>
-							<arguments>-Ddist=${dist} -Djenkins.buildNumber=${jenkins.buildNumber}</arguments>
+							<arguments>-Drelease=${release}</arguments>
+							<arguments>-Ddist=${dist}</arguments>
+							<arguments>-Dmaven.test.skip=${maven.test.skip}</arguments>
+							<arguments>-Djenkins.buildNumber=${jenkins.buildNumber}</arguments>
 						</configuration>
 					</plugin>
 				</plugins>
