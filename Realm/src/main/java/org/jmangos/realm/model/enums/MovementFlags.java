@@ -151,4 +151,9 @@ public enum MovementFlags {
     
         return this.value;
     }
+    
+    public boolean contains(int val) {
+        
+        return ((this.getValue() & val) == this.getValue());
+    }
 }

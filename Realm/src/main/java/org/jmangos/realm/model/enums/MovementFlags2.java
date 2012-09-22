@@ -83,7 +83,7 @@ public enum MovementFlags2 {
      */
     MovementFlags2(final int flag) {
     
-        value = flag;
+        this.value = flag;
     }
     
     /**
@@ -96,21 +96,18 @@ public enum MovementFlags2 {
         return this.value;
     }
     
-    public static MovementFlags2 get(int value) {
+    public static MovementFlags2 get(final int value) {
     
-        for (MovementFlags2 val : values()) {
-            if (val.getValue() == value)
+        for (final MovementFlags2 val : values()) {
+            if (val.getValue() == value) {
                 return val;
+            }
         }
         return null;
     }
     
-    public boolean contains(int val) {
+    public boolean contains(final int val) {
     
-        for (MovementFlags2 values : values()) {
-            if ((values.getValue() & val) == values.getValue())
-                return true;
-        }
-        return false;
+        return ((getValue() & val) == getValue());
     }
 }

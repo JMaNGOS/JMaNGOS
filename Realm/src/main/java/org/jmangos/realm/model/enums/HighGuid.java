@@ -90,7 +90,7 @@ public enum HighGuid {
      * 
      * @return the value
      */
-    public long getValue() {
+    public int getValue() {
     
         return this.value;
     }

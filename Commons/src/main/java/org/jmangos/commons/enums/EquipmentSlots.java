@@ -16,46 +16,37 @@
  *******************************************************************************/
 package org.jmangos.commons.enums;
 
+import java.util.EnumSet;
+
 /**
  * Created with IntelliJ IDEA. User: Adrian Date: 2012.08.11. Time: 23:09 To change this template
  * use File | Settings | File Templates.
  */
 public enum EquipmentSlots {
-    START(0),
-    HEAD(0),
-    NECK(1),
-    SHOULDERS(2),
-    BODY(3),
-    CHEST(4),
-    WAIST(5),
-    LEGS(6),
-    FEET(7),
-    WRISTS(8),
-    HANDS(9),
-    FINGER1(10),
-    FINGER2(11),
-    TRINKET1(12),
-    TRINKET2(13),
-    BACK(14),
-    MAINHAND(15),
-    OFFHAND(16),
-    RANGED(17),
-    TABARD(18),
-    BAG1(19),
-    BAG2(20),
-    BAG3(21),
-    BAG4(22),
-    END(23);
+    HEAD,
+    NECK,
+    SHOULDERS,
+    BODY,
+    CHEST,
+    WAIST,
+    LEGS,
+    FEET,
+    WRISTS,
+    HANDS,
+    FINGER1,
+    FINGER2,
+    TRINKET1,
+    TRINKET2,
+    BACK,
+    MAINHAND,
+    OFFHAND,
+    RANGED,
+    TABARD,
+    BAG1,
+    BAG2,
+    BAG3,
+    BAG4;
     
-    private int value;
-    
-    private EquipmentSlots(final int value) {
-    
-        this.value = value;
-    }
-    
-    public int getValue() {
-    
-        return this.value;
-    }
+    public static final EnumSet<EquipmentSlots> ITEMS = EnumSet.range(HEAD, TABARD);
+    public static final EnumSet<EquipmentSlots> BAGS = EnumSet.range(BAG1, BAG4);
 }

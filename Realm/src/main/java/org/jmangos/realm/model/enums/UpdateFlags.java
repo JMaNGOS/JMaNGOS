@@ -46,7 +46,7 @@ public enum UpdateFlags {
         return null;
     }
     
-    private int getValue() {
+    public int getValue() {
     
         return value;
     }

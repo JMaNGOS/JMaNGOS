@@ -96,9 +96,9 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
             if (itemStorages == null) {
                 logger.error("Cannot get ItemStorages instance!");
             }
-            
-            for (int i = 0; i < EquipmentSlots.END.getValue(); i++) {
-                final InventoryItem invItem = character.findInventorySlot(i);
+            for (EquipmentSlots slot : EquipmentSlots.values()) {
+                
+                final InventoryItem invItem = character.findInventorySlot(slot.ordinal());
                 if ((invItem != null)) {
                     int displayInfoID = 0x00;
                     byte inventoryType = 0;

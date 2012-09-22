@@ -20,7 +20,6 @@ import org.jmangos.commons.enums.EquipmentSlots;
 import org.jmangos.commons.enums.InventoryType;
 import org.jmangos.realm.model.base.WorldObject;
 import org.jmangos.realm.model.base.update.ItemFields;
-import org.jmangos.realm.model.enums.InventorySlots;
 import org.jmangos.realm.model.enums.TypeID;
 import org.jmangos.realm.model.enums.TypeMask;
 
@@ -139,52 +138,6 @@ public class Item extends WorldObject {
             default:
                 return null;
         }
-    }
-    
-    /**
-     * Checks if is inventory pos.
-     * 
-     * @param bag
-     *            the bag
-     * @param slot
-     *            the slot
-     * @return true, if successful
-     */
-    public static boolean isInventoryPos(final int bag, final int slot) {
-    
-        if ((bag == INVENTORY_SLOT_BAG_0) && (slot == NULL_SLOT)) {
-            return true;
-        }
-        if ((bag == INVENTORY_SLOT_BAG_0) && ((slot >= INVENTORY_SLOT_ITEM_START) && (slot < INVENTORY_SLOT_ITEM_END))) {
-            return true;
-        }
-        if ((bag >= InventorySlots.BAG_START.getValue()) && (bag < InventorySlots.BAG_END.getValue())) {
-            return true;
-        }
-        if ((bag == INVENTORY_SLOT_BAG_0) && ((slot >= KEYRING_SLOT_START) && (slot < CURRENCYTOKEN_SLOT_END))) {
-            return true;
-        }
-        return false;
-    }
-    
-    /**
-     * Checks if is equipment pos.
-     * 
-     * @param bag
-     *            the bag
-     * @param slot
-     *            the slot
-     * @return true, if successful
-     */
-    public static boolean isEquipmentPos(final int bag, final int slot) {
-    
-        if ((bag == INVENTORY_SLOT_BAG_0) && (slot < EquipmentSlots.END.getValue())) {
-            return true;
-        }
-        if ((bag == INVENTORY_SLOT_BAG_0) && ((slot >= InventorySlots.BAG_START.getValue()) && (slot < InventorySlots.BAG_END.getValue()))) {
-            return true;
-        }
-        return false;
     }
     
 }

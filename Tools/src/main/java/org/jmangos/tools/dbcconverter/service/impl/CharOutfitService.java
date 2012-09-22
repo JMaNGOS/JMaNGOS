@@ -63,7 +63,7 @@ public class CharOutfitService extends AbstractDbcService<CharStartOutfitEntity,
                         tf.setSlot(startedFreeSlot);
                         startedFreeSlot++;
                     } else {
-                        tf.setSlot(slot.getValue());
+                        tf.setSlot(slot.ordinal());
                     }
                     
                     tf.setProtoId(entry.protoId[numbItem].get());
