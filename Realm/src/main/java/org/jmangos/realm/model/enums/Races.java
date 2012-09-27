@@ -17,7 +17,9 @@
 package org.jmangos.realm.model.enums;
 
 /**
- * Created with IntelliJ IDEA. User: paalgyula Date: 2012.08.10. Time: 4:24
+ * 
+ * @author MinimaJack
+ *
  */
 public enum Races {
     HUMAN(1),
@@ -42,19 +44,19 @@ public enum Races {
     NORTHREND_SKELETON(20),
     ICE_TROLL(21);
     
-    private int value;
+    private byte value;
     
     Races(final int value) {
     
+        this.value = (byte) value;
+    }
+    
+    public void setValue(final byte value) {
+    
         this.value = value;
     }
     
-    public void setValue(final int value) {
-    
-        this.value = value;
-    }
-    
-    public int getValue() {
+    public byte getValue() {
     
         return this.value;
     }

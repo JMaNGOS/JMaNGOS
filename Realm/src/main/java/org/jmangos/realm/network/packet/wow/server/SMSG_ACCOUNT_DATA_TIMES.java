@@ -69,15 +69,21 @@ public class SMSG_ACCOUNT_DATA_TIMES extends AbstractWoWServerPacket {
     @Override
     public void writeImpl() {
     
-        writeD(System.currentTimeMillis() / 1000L);
-        writeC(1);
-        writeD(this.curmask);
-        for (int i = 0; i < AccountDataType.NUM_ACCOUNT_DATA_TYPES.getValue(); ++i) {
-            if ((this.curmask & (1 << i)) > 0) {
-                if (this.accountData.containsKey(i)) {
-                    writeD(this.accountData.get(i).getTime());
-                }
-            }
+        if (curmask == GLOBAL_CACHE_MASK) {
+            writeD(System.currentTimeMillis() / 1000L);
+            writeC(1);
+            writeD(0x00000015); // 0, 2, 4
+            writeD(0x0); // 0 - CONFIG
+            writeD(0x0); // 2 - BINDINGS
+            writeD(0x0); // 4 - MACROS
+        }else{
+            writeD(System.currentTimeMillis() / 1000L);
+            writeC(1);
+            writeD(0x000000AA); // 1, 3, 5, 7
+            writeD(0x0); // 1 -  CONFIG_2
+            writeD(0x0); // 3 - unk
+            writeD(0x0); // 5 - unk
+            writeD(0x0); // 7 - COLORS
         }
     }
 }

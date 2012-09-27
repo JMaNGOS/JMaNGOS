@@ -23,43 +23,43 @@ import javax.inject.Named;
 
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
-import org.jmangos.realm.network.packet.wow.server.SMSG_ITEM_QUERY_SINGLE_RESPONSE;
-import org.jmangos.realm.service.ItemStorages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * The Class CMSG_ITEM_QUERY_SINGLE.
+ * The Class CMSG_READY_FOR_ACCOUNT_DATA_TIMES.
  */
 @Component
-public class CMSG_ITEM_QUERY_SINGLE extends AbstractWoWClientPacket {
+public class CMSG_SWAP_INV_ITEM extends AbstractWoWClientPacket {
     
-    private static final Logger  logger = LoggerFactory.getLogger(CMSG_ITEM_QUERY_SINGLE.class);
-    /** The item. */
-    private int                  item;
-    
+    /** The logger. */
+    private static Logger        logger = LoggerFactory.getLogger(CMSG_SWAP_INV_ITEM.class);
     /** The sender. */
     @Inject
     @Named("nettyPacketSender")
     private AbstractPacketSender sender;
-    
-    /** The item storages. */
-    @Inject
-    private ItemStorages         itemStorages;
+    private int src;
+    private int dst;
     
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
-        this.item = readD();
-        logger.info("Player wan't info for item {}", item);
-        
+        logger.info("CMSG_SWAP_INV_ITEM");
+        dst = readC();
+        src = readC();
+        logger.info("CMSG_SWAP_INV_ITEM {} {}", src, dst);
     }
     
     @Override
     protected void runImpl() {
     
-        this.sender.send(getClient(), new SMSG_ITEM_QUERY_SINGLE_RESPONSE(this.itemStorages.get(this.item)));
+        // TODO: reimplement account data save
+        /*
+         * getAccount().setAccountData( accountServise.getAccountData(getAccount().getObjectId()));
+         * sender.send(getClient(), new SMSG_ACCOUNT_DATA_TIMES(
+         * SMSG_ACCOUNT_DATA_TIMES.GLOBAL_CACHE_MASK, getAccount() .getAccountData()));
+         */
+        
     }
-    
 }

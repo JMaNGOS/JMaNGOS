@@ -31,6 +31,7 @@ import org.springframework.stereotype.Component;
 public class RealmController {
     
     /** The Constant logger. */
+    @SuppressWarnings("unused")
     private static final Logger      logger   = LoggerFactory.getLogger(RealmController.class);
     
     private static AccountsContainer accounts = new AccountsContainer();
@@ -48,6 +49,7 @@ public class RealmController {
     }
     
     public AccountInfo getAccount(final String accountName) {
+    
         return accounts.getNamedObject(accountName);
     }
     

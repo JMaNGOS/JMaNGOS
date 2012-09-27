@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.realm.dao.CharacterDao;
-import org.jmangos.realm.entities.CharacterEntity;
+import org.jmangos.realm.entities.CharacterData;
 import org.jmangos.realm.services.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,27 +32,27 @@ public class CharacterServiceImpl implements CharacterService {
     private CharacterDao characterDao;
     
     @Override
-    public CharacterEntity readCharacter(final Integer id) {
+    public CharacterData readCharacter(final Long id) {
     
         return this.characterDao.readCharacter(id);
     }
     
     @Override
-    public List<CharacterEntity> readCharacters(final Criterion... criterions) {
+    public List<CharacterData> readCharacters(final Criterion... criterions) {
     
         return this.characterDao.readCharacters(criterions);
     }
     
     @Override
-    public Integer createOrUpdateCharacter(final CharacterEntity characterEntity) {
+    public Long createOrUpdateCharacter(final CharacterData characterData) {
     
-        return this.characterDao.createOrUpdateCharacter(characterEntity);
+        return this.characterDao.createOrUpdateCharacter(characterData);
     }
     
     @Override
-    public void deleteCharacter(final CharacterEntity characterEntity) {
+    public void deleteCharacter(final CharacterData characterData) {
     
-        this.characterDao.deleteCharacter(characterEntity);
+        this.characterDao.deleteCharacter(characterData);
     }
     
 }

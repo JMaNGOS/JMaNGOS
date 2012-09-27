@@ -19,6 +19,8 @@ package org.jmangos.world.entities;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -114,7 +116,7 @@ public class ItemPrototype extends NamedObject {
     private int             SellPrice;
     
     /** The inventory type. */
-    @Basic
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "InventoryType", nullable = false, insertable = true, updatable = true, length = 3, precision = 0)
     private InventoryType   inventoryType;
     
@@ -228,7 +230,6 @@ public class ItemPrototype extends NamedObject {
                                                                                           // in
     // ScalingStatValues.dbc
     
-    /** damages. */
     /*
      * @Columns(columns = {
      * 

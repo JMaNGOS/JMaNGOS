@@ -20,8 +20,12 @@ import java.util.List;
 
 import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.realm.dao.ItemDao;
-import org.jmangos.realm.entities.ItemEntity;
+import org.jmangos.realm.entities.FieldsContainer;
+import org.jmangos.realm.entities.FieldsItem;
+import org.jmangos.realm.model.enums.ItemClass;
+import org.jmangos.realm.model.enums.ItemFlags;
 import org.jmangos.realm.services.ItemService;
+import org.jmangos.world.entities.ItemPrototype;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,27 +36,52 @@ public class ItemServiceImpl implements ItemService {
     private ItemDao itemDao;
     
     @Override
-    public ItemEntity readItem(final Integer id) {
+    public FieldsItem readItem(final Long id) {
     
         return this.itemDao.readItem(id);
     }
     
     @Override
-    public List<ItemEntity> readItems(final Criterion... criterions) {
+    public List<FieldsItem> readItems(final Criterion... criterions) {
     
         return this.itemDao.readItems(criterions);
     }
     
     @Override
-    public Integer createOrUpdateItem(final ItemEntity itemEntity) {
+    public Long createOrUpdateItem(final FieldsItem item) {
     
-        return this.itemDao.createOrUpdateItem(itemEntity);
+        return this.itemDao.createOrUpdateItem(item);
     }
     
     @Override
-    public void deleteItem(final ItemEntity itemEntity) {
+    public void deleteItem(final FieldsItem item) {
     
-        this.itemDao.deleteItem(itemEntity);
+        this.itemDao.deleteItem(item);
+    }
+
+    @Override
+    public FieldsItem createItem(ItemPrototype itemProto, int itemCount) {
+        FieldsItem item = null;
+        if (itemProto.getStackable() < itemCount) {
+            itemCount = itemProto.getStackable();
+        }
+        
+        if ((itemProto.getClazz() == ItemClass.CONTAINER.ordinal()) || (itemProto.getClazz() == ItemClass.QUIVER.ordinal())) {
+            item = new FieldsContainer();
+            ((FieldsContainer) item).setSlotsCount((byte) itemProto.getContainerSlots());
+        } else {
+            item = new FieldsItem();
+        }
+        item.setPrototype(itemProto);
+        item.setEntry(itemProto.getEntry());
+        item.setDurability(itemProto.getMaxDurability());
+        item.setMaxDurability(itemProto.getMaxDurability());
+        item.setStackCount(itemCount);
+        item.setFlags(ItemFlags.JUST_CREATED.getValue());
+        this.itemDao.createOrUpdateItem(item);
+        item.initBits();
+        
+        return item;
     }
     
 }

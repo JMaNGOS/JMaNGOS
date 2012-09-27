@@ -82,7 +82,9 @@ public class PacketFrameEncoder extends OneToOneEncoder {
      * @return the list
      */
     public static String toHex(byte[] bytes) {
-    
+        if(bytes.length ==0){
+            return "";
+        }
         BigInteger bi = new BigInteger(1, bytes);
         return String.format("%0" + (bytes.length << 1) + "X", bi);
     }

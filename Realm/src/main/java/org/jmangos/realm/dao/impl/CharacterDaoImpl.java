@@ -25,7 +25,7 @@ import org.criteria4jpa.Criteria;
 import org.criteria4jpa.CriteriaUtils;
 import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.realm.dao.CharacterDao;
-import org.jmangos.realm.entities.CharacterEntity;
+import org.jmangos.realm.entities.CharacterData;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,16 +36,16 @@ public class CharacterDaoImpl implements CharacterDao {
     private EntityManager entityManager;
     
     @Override
-    public CharacterEntity readCharacter(final Integer id) {
+    public CharacterData readCharacter(final Long id) {
     
-        return this.entityManager.find(CharacterEntity.class, id);
+        return this.entityManager.find(CharacterData.class, id);
     }
     
     @Override
     @SuppressWarnings("unchecked")
-    public List<CharacterEntity> readCharacters(final Criterion... criterions) {
+    public List<CharacterData> readCharacters(final Criterion... criterions) {
     
-        final Criteria criteria = CriteriaUtils.createCriteria(this.entityManager, CharacterEntity.class);
+        final Criteria criteria = CriteriaUtils.createCriteria(this.entityManager, CharacterData.class);
         for (final Criterion criterion : criterions) {
             criteria.add(criterion);
         }
@@ -54,25 +54,25 @@ public class CharacterDaoImpl implements CharacterDao {
     
     @Transactional(value = "realm")
     @Override
-    public Integer createOrUpdateCharacter(final CharacterEntity characterEntity) {
+    public Long createOrUpdateCharacter(final CharacterData characterData) {
     
-        if (characterEntity.getGuid() == null) {
-            this.entityManager.persist(characterEntity);
+        if (characterData.getGuid() == null) {
+            this.entityManager.persist(characterData);
         } else {
-            this.entityManager.merge(characterEntity);
+            this.entityManager.merge(characterData);
         }
         this.entityManager.flush();
-        return characterEntity.getGuid();
+        return characterData.getGuid();
     }
     
     @Transactional(value = "realm")
     @Override
-    public void deleteCharacter(final CharacterEntity characterEntity) {
+    public void deleteCharacter(final CharacterData characterData) {
     
-        if (characterEntity == null) {
+        if (characterData == null) {
             return;
         }
-        this.entityManager.remove(characterEntity);
+        this.entityManager.remove(characterData);
     }
     
 }

@@ -23,9 +23,17 @@ public class SMSG_UPDATE_OBJECT extends AbstractWoWServerPacket {
     private BigInteger       guid       = null;
     private final UpdateType updateType = UpdateType.VALUES;
     
+    private byte[]           data;
+    
     public SMSG_UPDATE_OBJECT(final Player player, final UpdateType updateType) {
     
         this.player = player;
+    }
+    
+    public SMSG_UPDATE_OBJECT(Player player2, byte[] array) {
+    
+        this.player = player2;
+        this.data = array;
     }
     
     public void setGuid(final BigInteger guid) {
@@ -35,6 +43,12 @@ public class SMSG_UPDATE_OBJECT extends AbstractWoWServerPacket {
     
     @Override
     protected void writeImpl() {
+    
+        writeB(data);
+        this.log.info("Update complete. packets cleared.");
+    }
+    
+    protected void writeImpls() {
     
         final BitSet bits = this.player.getBitSet();
         

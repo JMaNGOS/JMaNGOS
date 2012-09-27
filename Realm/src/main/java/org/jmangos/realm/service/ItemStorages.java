@@ -24,11 +24,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.jmangos.commons.dataholder.DataLoadService;
-import org.jmangos.commons.enums.InventoryType;
-import org.jmangos.realm.domain.InventoryItem;
-import org.jmangos.realm.model.base.item.Bag;
-import org.jmangos.realm.model.base.item.Item;
-import org.jmangos.realm.model.enums.HighGuid;
 import org.jmangos.world.entities.ItemPrototype;
 import org.jmangos.world.services.ItemPrototypeService;
 import org.slf4j.Logger;
@@ -84,29 +79,6 @@ public class ItemStorages implements DataLoadService<TLongObjectHashMap<ItemProt
     }
     
     /**
-     * Load from db.
-     * 
-     * @param itemplate
-     *            the itemplate
-     * @param proto
-     *            the proto
-     * @return the item
-     */
-    public Item loadFromDB(final InventoryItem itemplate, final ItemPrototype proto) {
-    
-        final long guid = (HighGuid.ITEM.getValue() << 48) | itemplate.getItem().getGuid();
-        Item item = null;
-        if (proto.getInventoryType() == InventoryType.BAG) {
-            item = new Bag(guid);
-        } else {
-            item = new Item(guid);
-        }
-        item.initfields();
-        return item;
-        
-    }
-    
-    /**
      * 
      * @see org.jmangos.commons.dataholder.DataLoadService#load()
      */
@@ -159,6 +131,7 @@ public class ItemStorages implements DataLoadService<TLongObjectHashMap<ItemProt
     @PostConstruct
     @Override
     public void start() {
+    
         // ENABLE LAZY Loading for develop
         // load();
     }

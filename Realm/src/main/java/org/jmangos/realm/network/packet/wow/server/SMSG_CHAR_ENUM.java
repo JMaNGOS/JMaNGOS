@@ -20,8 +20,8 @@ import java.util.List;
 
 import org.jmangos.commons.enums.EquipmentSlots;
 import org.jmangos.commons.service.ServiceContent;
-import org.jmangos.realm.domain.InventoryItem;
-import org.jmangos.realm.entities.CharacterEntity;
+import org.jmangos.realm.entities.CharacterData;
+import org.jmangos.realm.entities.FieldsItem;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 import org.jmangos.realm.network.packet.wow.client.CMSG_AUTH_SESSION;
 import org.jmangos.realm.service.ItemStorages;
@@ -35,10 +35,10 @@ import org.slf4j.LoggerFactory;
 public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
     
     /** The charlist. */
-    private final List<CharacterEntity> charlist;
+    private final List<CharacterData> charlist;
     
     /** The Constant logger. */
-    private static final Logger         logger = LoggerFactory.getLogger(CMSG_AUTH_SESSION.class);
+    private static final Logger   logger = LoggerFactory.getLogger(CMSG_AUTH_SESSION.class);
     
     /**
      * Instantiates a new <tt>SMSG_CHAR_ENUM</tt> packet.
@@ -46,7 +46,7 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
      * @param charlist
      *            the charlist
      */
-    public SMSG_CHAR_ENUM(final List<CharacterEntity> charlist) {
+    public SMSG_CHAR_ENUM(final List<CharacterData> charlist) {
     
         this.charlist = charlist;
     }
@@ -59,30 +59,30 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
     
         logger.info("CHARLIST SIZE " + this.charlist.size());
         writeC(this.charlist.size());
-        for (final CharacterEntity character : this.charlist) {
-            writeQ(character.getGuid());
+        for (final CharacterData characterData : this.charlist) {
+            writeQ(characterData.getGuid());
             // writePackedGuid( character.getGuid() );
-            writeS(character.getName());
-            writeC((byte) character.getRace());
-            writeC((byte) character.getClazz());
-            writeC(character.getGender());
-            final int playerBytes = character.getPlayerBytes();
+            writeS(characterData.getName());
+            writeC(characterData.getRace().getValue());
+            writeC(characterData.getClazz().getValue());
+            writeC(characterData.getGender().getValue());
+            final int playerBytes = characterData.getPlayerBytes();
             writeC(playerBytes & 0xFF);
             writeC((playerBytes >> 8) & 0xFF);
             writeC((playerBytes >> 16) & 0xFF);
             writeC((playerBytes >> 24) & 0xFF);
-            writeC(character.getPlayerBytes2() & 0xFF);
-            writeC(character.getLevel());
-            writeD(character.getZone());
-            writeD(character.getMap());
-            writeF(character.getPositionX());
-            writeF(character.getPositionY());
-            writeF(character.getPositionY());
+            writeC(characterData.getPlayerBytes2() & 0xFF);
+            writeC(characterData.getLevel());
+            writeD(characterData.getMovement().getZone());
+            writeD(characterData.getMovement().getMap());
+            writeF(characterData.getMovement().getPosition().getX());
+            writeF(characterData.getMovement().getPosition().getY());
+            writeF(characterData.getMovement().getPosition().getZ());
             // TODO: implement guild
             writeD(-1);
             // Ban, dead, help, cloak, rename values. default: no flags
             writeD(0);
-            writeD(character.getAtLoginFlags());
+            writeD(0); //character.getAtLoginFlags()
             
             writeC(0); // FIXME check at login first
             // TODO: implement Pet!
@@ -97,17 +97,17 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
                 logger.error("Cannot get ItemStorages instance!");
             }
             for (EquipmentSlots slot : EquipmentSlots.values()) {
+                FieldsItem invItem = characterData.getInventory().get(slot.ordinal());
                 
-                final InventoryItem invItem = character.findInventorySlot(slot.ordinal());
                 if ((invItem != null)) {
                     int displayInfoID = 0x00;
                     byte inventoryType = 0;
                     try {
-                        final ItemPrototype proto = itemStorages.get(invItem.getItem().getProto());
+                        final ItemPrototype proto = itemStorages.get(invItem.getEntry());
                         displayInfoID = proto.getDisplayInfoID();
                         inventoryType = (byte) proto.getInventoryType().ordinal();
                     } catch (final Exception e) {
-                        logger.error("ID not found in the storage: " + invItem.getItem().getProto(), e);
+                        logger.error("ID not found in the storage: " + invItem.getEntry(), e);
                     }
                     
                     writeD(displayInfoID);

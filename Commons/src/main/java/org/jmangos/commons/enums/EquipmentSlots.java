@@ -48,5 +48,12 @@ public enum EquipmentSlots {
     BAG4;
     
     public static final EnumSet<EquipmentSlots> ITEMS = EnumSet.range(HEAD, TABARD);
-    public static final EnumSet<EquipmentSlots> BAGS = EnumSet.range(BAG1, BAG4);
+    public static final EnumSet<EquipmentSlots> BAGS  = EnumSet.range(BAG1, BAG4);
+    
+    public static EquipmentSlots get(Integer key) {
+    
+        if (key < values().length)
+            return values()[key];
+        return null;
+    }
 }

@@ -14,21 +14,34 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.realm.dao;
+package org.jmangos.realm.network.packet.wow.client;
 
-import java.util.List;
+import java.nio.BufferUnderflowException;
 
-import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.entities.CharacterData;
+import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-public interface CharacterDao {
+/**
+ * The Class CMSG_SET_ACTIVE_VOICE_CHANNEL.
+ */
+@Component
+public class CMSG_SET_ACTIVE_MOVER extends AbstractWoWClientPacket {
     
-    public CharacterData readCharacter(Long id);
+    private static final Logger logger = LoggerFactory.getLogger(CMSG_SET_ACTIVE_MOVER.class);
     
-    public List<CharacterData> readCharacters(final Criterion... criterions);
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
-    public Long createOrUpdateCharacter(CharacterData characterData);
+        long guid = readD();
+        skipAll();
+        logger.debug("CMSG_SET_ACTIVE_MOVER: ", guid);
+        
+    }
     
-    public void deleteCharacter(CharacterData characterData);
+    @Override
+    protected void runImpl() {
     
+    }
 }

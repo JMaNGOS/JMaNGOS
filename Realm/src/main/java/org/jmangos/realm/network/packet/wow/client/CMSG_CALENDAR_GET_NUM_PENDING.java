@@ -23,6 +23,7 @@ import javax.inject.Named;
 
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
+import org.jmangos.realm.network.packet.wow.server.SMSG_CALENDAR_SEND_NUM_PENDING;
 import org.jmangos.realm.network.packet.wow.server.SMSG_ITEM_QUERY_SINGLE_RESPONSE;
 import org.jmangos.realm.service.ItemStorages;
 import org.slf4j.Logger;
@@ -30,36 +31,29 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * The Class CMSG_ITEM_QUERY_SINGLE.
+ * The Class CMSG_CALENDAR_GET_NUM_PENDING.
  */
 @Component
-public class CMSG_ITEM_QUERY_SINGLE extends AbstractWoWClientPacket {
+public class CMSG_CALENDAR_GET_NUM_PENDING extends AbstractWoWClientPacket {
     
-    private static final Logger  logger = LoggerFactory.getLogger(CMSG_ITEM_QUERY_SINGLE.class);
-    /** The item. */
-    private int                  item;
+    private static final Logger  logger = LoggerFactory.getLogger(CMSG_CALENDAR_GET_NUM_PENDING.class);
     
     /** The sender. */
     @Inject
     @Named("nettyPacketSender")
     private AbstractPacketSender sender;
     
-    /** The item storages. */
-    @Inject
-    private ItemStorages         itemStorages;
-    
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
-        this.item = readD();
-        logger.info("Player wan't info for item {}", item);
+        skipAll();
         
     }
     
     @Override
     protected void runImpl() {
     
-        this.sender.send(getClient(), new SMSG_ITEM_QUERY_SINGLE_RESPONSE(this.itemStorages.get(this.item)));
+        this.sender.send(getClient(), new SMSG_CALENDAR_SEND_NUM_PENDING());
     }
     
 }

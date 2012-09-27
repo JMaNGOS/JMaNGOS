@@ -25,7 +25,7 @@ import org.criteria4jpa.Criteria;
 import org.criteria4jpa.CriteriaUtils;
 import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.realm.dao.ItemDao;
-import org.jmangos.realm.entities.ItemEntity;
+import org.jmangos.realm.entities.FieldsItem;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,16 +36,16 @@ public class ItemDaoImpl implements ItemDao {
     private EntityManager entityManager;
     
     @Override
-    public ItemEntity readItem(final Integer id) {
+    public FieldsItem readItem(final Long id) {
     
-        return this.entityManager.find(ItemEntity.class, id);
+        return this.entityManager.find(FieldsItem.class, id);
     }
     
     @Override
     @SuppressWarnings("unchecked")
-    public List<ItemEntity> readItems(final Criterion... criterions) {
+    public List<FieldsItem> readItems(final Criterion... criterions) {
     
-        final Criteria criteria = CriteriaUtils.createCriteria(this.entityManager, ItemEntity.class);
+        final Criteria criteria = CriteriaUtils.createCriteria(this.entityManager, FieldsItem.class);
         for (final Criterion criterion : criterions) {
             criteria.add(criterion);
         }
@@ -54,7 +54,7 @@ public class ItemDaoImpl implements ItemDao {
     
     @Transactional(value = "realm")
     @Override
-    public Integer createOrUpdateItem(final ItemEntity givenItem) {
+    public Long createOrUpdateItem(final FieldsItem givenItem) {
     
         if (givenItem.getGuid() == null) {
             this.entityManager.persist(givenItem);
@@ -67,7 +67,7 @@ public class ItemDaoImpl implements ItemDao {
     
     @Transactional(value = "realm")
     @Override
-    public void deleteItem(final ItemEntity givenItem) {
+    public void deleteItem(final FieldsItem givenItem) {
     
         if (givenItem == null) {
             return;

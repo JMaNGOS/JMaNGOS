@@ -43,19 +43,18 @@ public class CMSG_PLAYER_LOGIN extends AbstractWoWClientPacket {
     private PlayerService        playerService;
     
     /** The guid. */
-    private int                 guid;
+    private long                 guid;
     
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
-        this.guid = (int) (readQ() & 0xFFFFFFFF);
+        this.guid =readQ();
     }
     
     @Override
     protected void runImpl() {
     
         final Player player = this.playerService.preparePlayer(getClient(), this.guid);
-        this.playerService.loadFromDB(player);
         this.playerService.sendInicialPackets(player);
     }
     

@@ -22,37 +22,37 @@ package org.jmangos.realm.model.enums;
 public enum HighGuid {
     
     /** The ITEM. */
-    ITEM(0x4700),
+    ITEM(0x470),
     
     /** The CONTAINER. */
-    CONTAINER(0x4700),
+    CONTAINER(0x470),
     
     /** The PLAYER. */
-    PLAYER(0x0000),
+    PLAYER(0x070),
     
     /** The GAMEOBJECT. */
-    GAMEOBJECT(0xF110),
+    GAMEOBJECT(0xF11),
     
     /** The TRANSPORT. */
-    TRANSPORT(0xF120),
+    TRANSPORT(0xF12),
     
     /** The UNIT. */
-    UNIT(0xF130),
+    UNIT(0xF13),
     
     /** The PET. */
-    PET(0xF140),
+    PET(0xF14),
     
     /** The VEHICLE. */
-    VEHICLE(0xF150),
+    VEHICLE(0xF15),
     
     /** The DYNAMICOBJECT. */
-    DYNAMICOBJECT(0xF100),
+    DYNAMICOBJECT(0xF10),
     
     /** The CORPSE. */
-    CORPSE(0xF500),
+    CORPSE(0xF50),
     
     /** The MO_TRANSPORT. */
-    MO_TRANSPORT(0x1FC0),
+    MO_TRANSPORT(0x1FC),
     
     /** The INSTANCE */
     INSTANCE(0x1F4),

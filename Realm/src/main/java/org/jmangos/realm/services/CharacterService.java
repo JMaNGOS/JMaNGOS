@@ -19,16 +19,16 @@ package org.jmangos.realm.services;
 import java.util.List;
 
 import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.entities.CharacterEntity;
+import org.jmangos.realm.entities.CharacterData;
 
 public interface CharacterService {
     
-    public CharacterEntity readCharacter(Integer id);
+    public CharacterData readCharacter(Long id);
     
-    public List<CharacterEntity> readCharacters(final Criterion... criterions);
+    public List<CharacterData> readCharacters(final Criterion... criterions);
     
-    public Integer createOrUpdateCharacter(CharacterEntity characterEntity);
+    public Long createOrUpdateCharacter(CharacterData characterData);
     
-    public void deleteCharacter(CharacterEntity characterEntity);
+    public void deleteCharacter(CharacterData characterData);
     
 }

@@ -98,7 +98,7 @@ public class Units extends WorldObject {
      */
     public int GetMaxPower(final Powers power) {
     
-        return GetUInt32Value(UnitField.UNIT_FIELD_MAXPOWER1.getValue() + power.getValue());
+        return GetUInt32Value(UnitField.UNIT_FIELD_MAXHEALTH.getValue() + power.ordinal());
     }
     
     /**

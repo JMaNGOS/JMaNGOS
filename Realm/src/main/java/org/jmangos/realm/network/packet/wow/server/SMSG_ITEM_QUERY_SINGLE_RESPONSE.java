@@ -46,7 +46,7 @@ public class SMSG_ITEM_QUERY_SINGLE_RESPONSE extends AbstractWoWServerPacket {
     @Override
     protected void writeImpl() {
     
-        writeD(this.itemPrototype.getObjectId());
+        writeD(this.itemPrototype.getEntry());
         writeD(this.itemPrototype.getClazz());
         writeD(this.itemPrototype.getSubClass());
         writeD(this.itemPrototype.getUnk0());
@@ -60,6 +60,7 @@ public class SMSG_ITEM_QUERY_SINGLE_RESPONSE extends AbstractWoWServerPacket {
         writeD(this.itemPrototype.getFlags2() & 0xFFFFFFFF);
         writeD(this.itemPrototype.getBuyPrice());
         writeD(this.itemPrototype.getSellPrice());
+        System.out.println(this.itemPrototype.getInventoryType());
         writeD(this.itemPrototype.getInventoryType().ordinal());
         writeD(this.itemPrototype.getAllowableClass());
         writeD(this.itemPrototype.getAllowableRace());

@@ -18,7 +18,6 @@ package org.jmangos.realm.network.packet.wow.server;
 
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SMSG_POWER_UPDATE.
  */
@@ -32,7 +31,7 @@ public class SMSG_POWER_UPDATE extends AbstractWoWServerPacket {
     @Override
     public void writeImpl() {
     
-        writeB(new byte[] { 0x01, 0x01, 0x03, 0x64, 0x00, 0x00, 0x00 });
+        writeB(new byte[] { 0x01, 0x01, 0x00, 0x64, 0x00, 0x00, 0x00 });
         
     }
     

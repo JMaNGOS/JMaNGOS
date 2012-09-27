@@ -26,7 +26,7 @@ import org.criteria4jpa.criterion.Criterion;
 import org.criteria4jpa.criterion.Restrictions;
 import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
-import org.jmangos.realm.entities.CharacterEntity;
+import org.jmangos.realm.entities.CharacterData;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_ENUM;
 import org.jmangos.realm.services.CharacterService;
@@ -57,8 +57,8 @@ public class CMSG_CHAR_ENUM extends AbstractWoWClientPacket {
     
         final AccountInfo account = (AccountInfo) getClient().getChanneledObject();
         final Criterion criterion = Restrictions.eq("account", account.getObjectId());
-        final List<CharacterEntity> characters = this.characterService.readCharacters(criterion);
-        this.sender.send(getClient(), new SMSG_CHAR_ENUM(characters));
+        final List<CharacterData> characterDatas = this.characterService.readCharacters(criterion);
+        this.sender.send(getClient(), new SMSG_CHAR_ENUM(characterDatas));
     }
     
 }

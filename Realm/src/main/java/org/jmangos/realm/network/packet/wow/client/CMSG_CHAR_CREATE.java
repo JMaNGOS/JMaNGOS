@@ -8,7 +8,12 @@ import javax.inject.Named;
 import org.jmangos.commons.network.model.SendablePacket;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.controller.CharacterController;
+import org.jmangos.realm.model.enums.Classes;
+import org.jmangos.realm.model.enums.Gender;
+import org.jmangos.realm.model.enums.Races;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
+import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_CREATE;
+import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_CREATE.Code;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -29,33 +34,35 @@ public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
     private CharacterController  characterController;
     
     String                       charName;
-    Integer                      charRace;
-    Integer                      charClass;
-    Integer                      gender, skin, face, hairStyle, hairColor, facialHair, outfitId;
+    Races                        charRace;
+    Classes                      charClass;
+    Gender                       gender;
+    
+    Integer                      skin, face, hairStyle, hairColor, facialHair;
     
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
         this.charName = readS();
-        this.charRace = readC();
-        this.charClass = readC();
+        this.charRace = Races.get(readC());
+        this.charClass = Classes.get(readC());
         
-        this.gender = readC();
+        this.gender = Gender.get(readC());
         this.skin = readC();
         this.face = readC();
         this.hairStyle = readC();
         this.hairColor = readC();
         this.facialHair = readC();
-        this.outfitId = readC();
+        /* this.outfitId = */readC();
         
-        this.log.info(String.format("PlayerCreate: [%s] Race: %d, Class: %d", this.charName, this.charRace, this.charClass));
         skipAll();
     }
     
     @Override
     protected void runImpl() {
     
-        final SendablePacket packet = this.characterController.createCharacter(getAccountInfo().getObjectId(), this.charName, this.charRace, this.charClass, this.gender, this.skin, this.face, this.hairStyle, this.hairColor, this.facialHair, this.outfitId);
-        this.sender.send(getClient(), packet);
+        final Code code = this.characterController.createCharacter(getAccountInfo().getObjectId(), this.charName, this.charRace, this.charClass, this.gender, this.skin, this.face, this.hairStyle, this.hairColor, this.facialHair);
+        this.sender.send(getClient(), new SMSG_CHAR_CREATE(code));
+        
     }
 }

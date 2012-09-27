@@ -6,7 +6,7 @@ package org.jmangos.realm.dao;
 import java.util.List;
 
 import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.entities.ItemEntity;
+import org.jmangos.realm.entities.FieldsItem;
 
 /**
  * @author MinimaJack
@@ -14,12 +14,12 @@ import org.jmangos.realm.entities.ItemEntity;
  */
 public interface ItemDao {
     
-    ItemEntity readItem(Integer id);
+    FieldsItem readItem(Long id);
     
-    List<ItemEntity> readItems(Criterion... criterions);
+    List<FieldsItem> readItems(Criterion... criterions);
     
-    Integer createOrUpdateItem(ItemEntity givenItem);
+    Long createOrUpdateItem(FieldsItem givenItem);
     
-    void deleteItem(ItemEntity givenItem);
+    void deleteItem(FieldsItem givenItem);
     
 }

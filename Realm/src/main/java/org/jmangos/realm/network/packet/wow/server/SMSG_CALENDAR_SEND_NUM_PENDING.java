@@ -14,21 +14,25 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.realm.dao;
+package org.jmangos.realm.network.packet.wow.server;
 
-import java.util.List;
+import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 
-import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.entities.CharacterData;
 
-public interface CharacterDao {
+/**
+ * @author MinimaJack
+ *
+ */
+public class SMSG_CALENDAR_SEND_NUM_PENDING extends AbstractWoWServerPacket {
     
-    public CharacterData readCharacter(Long id);
+    /* (non-Javadoc)
+     * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
+     */
+    @Override
+    protected void writeImpl() {
     
-    public List<CharacterData> readCharacters(final Criterion... criterions);
-    
-    public Long createOrUpdateCharacter(CharacterData characterData);
-    
-    public void deleteCharacter(CharacterData characterData);
+        writeD(0);
+        
+    }
     
 }

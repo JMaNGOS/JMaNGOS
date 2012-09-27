@@ -16,70 +16,39 @@
  *******************************************************************************/
 package org.jmangos.realm.model.enums;
 
+import java.util.EnumSet;
+
 /**
  * The Enum Powers.
  */
 public enum Powers {
+    /** The HEALTH. */
+    HEALTH, // 24
     
     /** The MANA. */
-    MANA(0),
+    MANA, // 25
     
     /** The RAGE. */
-    RAGE(1),
+    RAGE, // 26
     
     /** The FOCUS. */
-    FOCUS(2),
+    FOCUS, // 27
     
     /** The ENERGY. */
-    ENERGY(3),
+    ENERGY, // 28
     
     /** The HAPPINESS. */
-    HAPPINESS(4),
+    HAPPINESS, // 29
     
     /** The RUNE. */
-    RUNE(5),
+    RUNE, // 30
     
     /** The RUNIC_POWER. */
-    RUNIC_POWER(6),
-    
-    /** The HEALTH. */
-    HEALTH(0xFFFFFFFE);
-    
-    /** The value. */
-    private int       value;
+    RUNIC_POWER; // 31
     
     /** The MA x_ power. */
-    public static int MAX_POWER = 7;
+    public static final int MAX_POWER = 7;
     
-    /**
-     * Instantiates a new powers.
-     * 
-     * @param val
-     *            the val
-     */
-    Powers(final int val) {
+    public static final EnumSet<Powers> PLAYER_CREATE_POWERS = EnumSet.of(HEALTH,MANA,RAGE,FOCUS,ENERGY,RUNE);
     
-        setValue(val);
-    }
-    
-    /**
-     * Sets the value.
-     * 
-     * @param value
-     *            the new value
-     */
-    public void setValue(final int value) {
-    
-        this.value = value;
-    }
-    
-    /**
-     * Gets the value.
-     * 
-     * @return the value
-     */
-    public int getValue() {
-    
-        return this.value;
-    }
 }

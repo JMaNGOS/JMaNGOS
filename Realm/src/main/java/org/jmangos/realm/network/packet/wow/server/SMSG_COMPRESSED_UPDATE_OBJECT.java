@@ -16,10 +16,13 @@
  *******************************************************************************/
 package org.jmangos.realm.network.packet.wow.server;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.zip.DeflaterInputStream;
+
 import org.jmangos.realm.model.player.Player;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SMSG_COMPRESSED_UPDATE_OBJECT.
  */
@@ -31,15 +34,13 @@ public class SMSG_COMPRESSED_UPDATE_OBJECT extends AbstractWoWServerPacket {
     private byte[] packet;
     
     /**
-     * <<<<<<< .merge_file_a01472 Instantiates a new SMSG_compressed_update_object.
+     * 
      */
     public SMSG_COMPRESSED_UPDATE_OBJECT() {
     
     }
     
     /**
-     * Instantiates a new SMSG_compressed_update_object. ======= Instantiates a new sMS g_ compresse
-     * d_ updat e_ object. >>>>>>> .merge_file_a04904
      * 
      * @param player
      *            the player
@@ -63,7 +64,17 @@ public class SMSG_COMPRESSED_UPDATE_OBJECT extends AbstractWoWServerPacket {
     @Override
     public void writeImpl() {
     
-        writeB(this.packet);
+        ByteArrayInputStream bais = new ByteArrayInputStream(this.packet);
+        DeflaterInputStream deflaterInputStream = new DeflaterInputStream(bais);
+        byte[] defos;
+        try {
+            defos = sun.misc.IOUtils.readFully(deflaterInputStream, -1, true);
+            writeD(defos.length);
+            writeB(defos);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     
 }

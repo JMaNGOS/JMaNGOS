@@ -53,8 +53,9 @@ public class CharStartOutfitStorages implements DataLoadService<HashMap<CharStar
     @PostConstruct
     @Override
     public void start() {
+    
         // TEMPORARY NOT USED
-       // load();
+        // load();
         logger.info("Loaded {} CharStartOutfits", this.playerCSO.size());
     }
     

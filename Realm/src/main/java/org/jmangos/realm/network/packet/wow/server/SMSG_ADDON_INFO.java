@@ -75,6 +75,7 @@ public class SMSG_ADDON_INFO extends AbstractWoWServerPacket {
             writeC(unk1);
             
             final boolean unk2 = (addon.getCRC() != 0x4c1c776d); // CRC check
+            System.out.println("ADDON SRC" + addon.getCRC());
             writeC(unk2);
             if (unk2) {
                 writeB(this.publicKey);
