@@ -3,13 +3,11 @@ package org.jmangos.realm.network.packet.wow.client
 import java.nio.BufferUnderflowException;
 
 import javax.inject.Inject;
-import javax.inject.Named;
+
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
-import org.jmangos.realm.network.packet.wow.server.SMSG_QUEST_QUERY_RESPONSE;
 import org.jmangos.realm.service.QuestStorages;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
