@@ -14,49 +14,41 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.realm.controller;
+package org.jmangos.realm.network.packet.wow.client;
+
+import java.nio.BufferUnderflowException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.jmangos.commons.model.AccountInfo;
-import org.jmangos.commons.model.container.AccountsContainer;
-import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
+import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+/**
+ * The Class MSG_MOVE_SET_FACING.
+ */
 @Component
-public class RealmController {
+public class MSG_MOVE_SET_FACING extends AbstractWoWClientPacket {
     
-    /** The Constant logger. */
-    @SuppressWarnings("unused")
-    private static final Logger      logger   = LoggerFactory.getLogger(RealmController.class);
-    
-    private static AccountsContainer accounts = new AccountsContainer();
-    
+    private static final Logger  logger = LoggerFactory.getLogger(MSG_MOVE_SET_FACING.class);
     /** The sender. */
     @Inject
-    @Named("serverPacketSender")
-    private AbstractPacketSender     authSender;
+    @Named("nettyPacketSender")
+    private AbstractPacketSender sender;
     
-    @SuppressWarnings("unused")
-    private NetworkChannel           authNetworkChannel;
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
-    public void setAuthNetworkChannel(final NetworkChannel authNetworkChannel) {
-    
-        this.authNetworkChannel = authNetworkChannel;
+        final Long guid = readPackedGuid();
+        logger.debug("Resive MSG_MOVE_SET_FACING from {}", guid);
+        skipAll();
     }
     
-    public AccountInfo getAccount(final String accountName) {
+    @Override
+    protected void runImpl() {
     
-        return accounts.getNamedObject(accountName);
     }
-    
-    public void addAccount(final AccountInfo account) {
-    
-        accounts.addObject(account);
-    }
-    
 }

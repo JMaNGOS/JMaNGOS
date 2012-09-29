@@ -18,8 +18,6 @@ package org.jmangos.realm.network.decoder;
 
 import java.math.BigInteger;
 import java.nio.ByteOrder;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
@@ -81,11 +79,12 @@ public class PacketFrameEncoder extends OneToOneEncoder {
      *            the chunk size
      * @return the list
      */
-    public static String toHex(byte[] bytes) {
-        if(bytes.length ==0){
+    public static String toHex(final byte[] bytes) {
+    
+        if (bytes.length == 0) {
             return "";
         }
-        BigInteger bi = new BigInteger(1, bytes);
+        final BigInteger bi = new BigInteger(1, bytes);
         return String.format("%0" + (bytes.length << 1) + "X", bi);
     }
 }

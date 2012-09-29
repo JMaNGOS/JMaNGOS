@@ -61,6 +61,7 @@ public class SMSG_COMPRESSED_UPDATE_OBJECT extends AbstractWoWServerPacket {
      * 
      * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
      */
+    @SuppressWarnings("restriction")
     @Override
     public void writeImpl() {
     

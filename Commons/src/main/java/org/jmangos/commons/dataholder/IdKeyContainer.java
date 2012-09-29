@@ -17,7 +17,7 @@ import com.google.common.collect.ImmutableList;
  */
 public abstract class IdKeyContainer<T extends ManagedObject> implements Visitable<T> {
     
-    private FastMap<Integer, T> data = new FastMap<Integer, T>().shared();
+    private FastMap<Long, T> data = new FastMap<Long, T>().shared();
     
     public T getObject(int objectId) {
     
@@ -71,7 +71,7 @@ public abstract class IdKeyContainer<T extends ManagedObject> implements Visitab
         
     }
     
-    public abstract void onDataNotPresentEvent(int objectId);
+    public abstract void onDataNotPresentEvent(long objectId);
     
-    public abstract void onDataAlreadyAddedEvent(int objectId);
+    public abstract void onDataAlreadyAddedEvent(long objectId);
 }

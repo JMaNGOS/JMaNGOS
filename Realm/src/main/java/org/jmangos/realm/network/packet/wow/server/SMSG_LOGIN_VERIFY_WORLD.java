@@ -19,7 +19,6 @@ package org.jmangos.realm.network.packet.wow.server;
 import org.jmangos.realm.model.player.Player;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SMSG_LOGIN_VERIFY_WORLD.
  */
@@ -29,14 +28,14 @@ public class SMSG_LOGIN_VERIFY_WORLD extends AbstractWoWServerPacket {
     private Player player;
     
     /**
-     * Instantiates a new sMS g_ logi n_ verif y_ world.
+     * Instantiates a new SMSG_LOGIN_VERIFY_WORLD.
      */
     public SMSG_LOGIN_VERIFY_WORLD() {
     
     }
     
     /**
-     * Instantiates a new sMS g_ logi n_ verif y_ world.
+     * Instantiates a new SMSG_LOGIN_VERIFY_WORLD.
      * 
      * @param player
      *            the player
@@ -53,7 +52,6 @@ public class SMSG_LOGIN_VERIFY_WORLD extends AbstractWoWServerPacket {
      */
     @Override
     public void writeImpl() {
-    
         writeD(this.player.getCharacterData().getMovement().getMap());
         writeF(this.player.getCharacterData().getMovement().getPosition().getX());
         writeF(this.player.getCharacterData().getMovement().getPosition().getY());

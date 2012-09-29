@@ -91,7 +91,7 @@ public class AccountInfo extends NamedObject implements ChanneledObject {
      * @param objectId
      *            the object id
      */
-    public AccountInfo(final int objectId) {
+    public AccountInfo(final Long objectId) {
     
         super(objectId);
     }

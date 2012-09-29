@@ -14,7 +14,6 @@ import javax.persistence.Table;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jmangos.commons.enums.EquipmentSlots;
-import org.jmangos.realm.domain.PlayerHomeBindData;
 import org.jmangos.realm.model.base.update.PlayerFields;
 import org.jmangos.realm.model.base.update.UnitField;
 import org.jmangos.realm.model.enums.EnchantmentSlot;
@@ -609,13 +608,13 @@ public class CharacterData extends FieldsCharacter {
         return ocBuffer;
     }
     
-    public PlayerHomeBindData getHomeBindData() {
+    public HomeBindData getHomeBindData() {
     
         // TODO Auto-generated method stub
         return null;
     }
     
-    public void setHomeBindData(final PlayerHomeBindData homeBind) {
+    public void setHomeBindData(final HomeBindData homeBind) {
     
         // TODO Auto-generated method stub
         

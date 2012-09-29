@@ -45,7 +45,7 @@ import org.jmangos.realm.model.enums.VisibilityState;
 public class FieldsCharacter extends FieldsUnit {
     
     @Column(name = "account", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
-    private Integer                        account;
+    private Long                           account;
     
     @Column(name = "actionBars", nullable = true, insertable = true, updatable = true, length = 10, precision = 0)
     private int                            actionBars;
@@ -315,7 +315,7 @@ public class FieldsCharacter extends FieldsUnit {
     /**
      * @return the account
      */
-    public final Integer getAccount() {
+    public final Long getAccount() {
     
         return this.account;
     }
@@ -324,7 +324,7 @@ public class FieldsCharacter extends FieldsUnit {
      * @param account
      *            the account to set
      */
-    public final void setAccount(final Integer account) {
+    public final void setAccount(final long account) {
     
         this.account = account;
     }

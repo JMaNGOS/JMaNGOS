@@ -24,7 +24,6 @@
     <persistence-unit name="realm">
     
         <class>org.jmangos.realm.entities.CharacterData</class>
-        <class>org.jmangos.realm.domain.PlayerHomeBindData</class>
         <class>org.jmangos.realm.entities.FieldsItem</class>
 
     </persistence-unit>

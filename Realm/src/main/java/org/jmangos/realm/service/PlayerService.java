@@ -18,10 +18,6 @@ package org.jmangos.realm.service;
 
 import gnu.trove.map.hash.TLongObjectHashMap;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.nio.ByteOrder;
 
 import javax.inject.Inject;
@@ -33,13 +29,15 @@ import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.RealmServer;
 import org.jmangos.realm.controller.CharacterController;
-import org.jmangos.realm.model.base.WorldObject;
 import org.jmangos.realm.model.player.Player;
 import org.jmangos.realm.network.packet.wow.server.MSG_SET_DUNGEON_DIFFICULTY;
 import org.jmangos.realm.network.packet.wow.server.SMSG_ACCOUNT_DATA_TIMES;
+import org.jmangos.realm.network.packet.wow.server.SMSG_BINDPOINTUPDATE;
 import org.jmangos.realm.network.packet.wow.server.SMSG_INSTANCE_DIFFICULTY;
+import org.jmangos.realm.network.packet.wow.server.SMSG_LOGIN_SETTIMESPEED;
 import org.jmangos.realm.network.packet.wow.server.SMSG_LOGIN_VERIFY_WORLD;
 import org.jmangos.realm.network.packet.wow.server.SMSG_MOTD;
+import org.jmangos.realm.network.packet.wow.server.SMSG_TIME_SYNC_REQ;
 import org.jmangos.realm.network.packet.wow.server.SMSG_UPDATE_OBJECT;
 import org.jmangos.realm.services.CharacterService;
 import org.slf4j.Logger;
@@ -54,16 +52,8 @@ import org.springframework.stereotype.Component;
 public class PlayerService {
     
     /** The Constant logger. */
-    private static final Logger               logger                         = LoggerFactory.getLogger(PlayerService.class);
-    
-    /** The Constant PLAYER_EXPLORED_ZONES_SIZE. */
-    private static final int                  PLAYER_EXPLORED_ZONES_SIZE     = 128;
-    
-    /** The Constant KNOWN_TITLES_SIZE. */
-    private static final int                  KNOWN_TITLES_SIZE              = 3;
-    
-    /** The Constant CONFIG_UINT32_MAX_PLAYER_LEVEL. */
-    private static final int                  CONFIG_UINT32_MAX_PLAYER_LEVEL = 80;
+    @SuppressWarnings("unused")
+    private static final Logger               logger     = LoggerFactory.getLogger(PlayerService.class);
     
     /** The sender. */
     @Inject
@@ -93,7 +83,7 @@ public class PlayerService {
     private CharacterController               characterController;
     
     /** The playerlist. */
-    private static TLongObjectHashMap<Player> playerlist                     = new TLongObjectHashMap<Player>();
+    private static TLongObjectHashMap<Player> playerlist = new TLongObjectHashMap<Player>();
     
     /**
      * Prepare player.
@@ -119,7 +109,7 @@ public class PlayerService {
      *            the player
      * @return the world object
      */
-    public WorldObject sendInicialPackets(final Player player) {
+    public Player sendInicialPackets(final Player player) {
     
         // this.sender.send(player.getChannel(), new SMSG_POWER_UPDATE());
         
@@ -133,7 +123,7 @@ public class PlayerService {
         
         // this.sender.send(player.getChannel(), new SMSG_FEATURE_SYSTEM_STATUS());
         // sender.send(player.getChannel(), new SMSG_LEARNED_DANCE_MOVES());
-        // this.sender.send(player.getChannel(), new SMSG_BINDPOINTUPDATE(player));
+        this.sender.send(player.getChannel(), new SMSG_BINDPOINTUPDATE(player));
         // this.sender.send(player.getChannel(), new SMSG_TALENTS_INFO());
         // this.sender.send(player.getChannel(), new SMSG_INITIAL_SPELLS());
         // this.sender.send(player.getChannel(), new SMSG_ACTION_BUTTONS(player));
@@ -142,10 +132,10 @@ public class PlayerService {
         // this.sender.send(player.getChannel(), new SMSG_INIT_WORLD_STATES(player));
         // this.sender.send(player.getChannel(), new SMSG_EQUIPMENT_SET_LIST());
         // this.sender.send(player.getChannel(), new SMSG_ALL_ACHIEVEMENT_DATA());
-        // this.sender.send(player.getChannel(), new SMSG_LOGIN_SETTIMESPEED());
+        this.sender.send(player.getChannel(), new SMSG_LOGIN_SETTIMESPEED());
         // this.sender.send(player.getChannel(), new SMSG_INIT_WORLD_STATES(player));
-        // this.sender.send(player.getChannel(), new SMSG_TIME_SYNC_REQ());
-        // this.sender.send(player.getChannel(), new SMSG_SPELL_GO());
+        this.sender.send(player.getChannel(), new SMSG_TIME_SYNC_REQ());
+        //this.sender.send(player.getChannel(), new SMSG_SPELL_GO());
         // this.sender.send(player.getChannel(), new SMSG_PLAYED_TIME());
         
         final ChannelBuffer updateBlock = ChannelBuffers.dynamicBuffer(ByteOrder.LITTLE_ENDIAN, 1024);
@@ -156,7 +146,7 @@ public class PlayerService {
         updateBlock.setInt(0, countBlock);
         byte[] outputBuffer = updateBlock.readBytes(updateBlock.readableBytes()).array();
         
-        final SMSG_UPDATE_OBJECT updatePacket = new SMSG_UPDATE_OBJECT(player, outputBuffer);
+        final SMSG_UPDATE_OBJECT updatePacket = new SMSG_UPDATE_OBJECT(outputBuffer);
         this.sender.send(player.getChannel(), updatePacket);
         
         this.sender.send(player.getChannel(), new SMSG_MOTD("Test MotD String@test".split("@")));

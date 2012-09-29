@@ -18,43 +18,45 @@ package org.jmangos.realm.network.packet.wow.client;
 
 import java.nio.BufferUnderflowException;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * The Class CMSG_SWAP_INV_ITEM.
+ * The Class CMSG_JOIN_CHANNEL.
  */
 @Component
-public class CMSG_SWAP_INV_ITEM extends AbstractWoWClientPacket {
+public class CMSG_JOIN_CHANNEL extends AbstractWoWClientPacket {
     
-    /** The logger. */
-    private static Logger        logger = LoggerFactory.getLogger(CMSG_SWAP_INV_ITEM.class);
-    /** The sender. */
-    @Inject
-    @Named("nettyPacketSender")
-    private AbstractPacketSender sender;
-    private int src;
-    private int dst;
+    /** logger */
+    private static final Logger logger = LoggerFactory.getLogger(CMSG_JOIN_CHANNEL.class);
+    
+    private int                 chanellId;
+    private String              channelname;
+    
+    @SuppressWarnings("unused")
+    private String              password;
     
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
-        logger.info("CMSG_SWAP_INV_ITEM");
-        dst = readC();
-        src = readC();
-        logger.info("CMSG_SWAP_INV_ITEM {} {}", src, dst);
+        /**
+         * TODO implement channelMgr
+         */
+        this.chanellId = readD();
+        /* unk = */readC();
+        /* unk2 = */readC();
+        this.channelname = readUTF8(1024);
+        logger.debug("Character join to channel id: {} name: {}", this.chanellId, this.channelname);
+        if (this.channelname.length() == 0) {
+            return;
+        }
+        this.password = readUTF8(1024);
     }
     
     @Override
     protected void runImpl() {
     
-
-        
     }
 }

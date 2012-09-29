@@ -17,6 +17,10 @@
 package org.jmangos.commons.network.model;
 
 import java.nio.BufferUnderflowException;
+import java.nio.ByteBuffer;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
 
 import javolution.text.TextBuilder;
 
@@ -28,6 +32,8 @@ import org.jboss.netty.channel.Channel;
  * @author KenM
  */
 public abstract class ReceivablePacket extends AbstractPacket implements Runnable, Cloneable {
+    
+    private final CharsetDecoder decoder = Charset.forName("UTF-8").newDecoder();
     
     /**
      * Instantiates a new receivable packet.
@@ -261,6 +267,53 @@ public abstract class ReceivablePacket extends AbstractPacket implements Runnabl
         final String str = tb.toString();
         TextBuilder.recycle(tb);
         return str;
+    }
+    
+    /**
+     * Read s.
+     * 
+     * @return the string
+     */
+    protected final String readUTF8(int maxLength) {
+    
+        String string = null;
+        byte[] tsring = new byte[maxLength];
+        int i = 0;
+        while (i < maxLength) {
+            tsring[i] = (byte) readC();
+            if (tsring[i] == 0)
+                break;
+            i++;
+        }
+        
+        try {
+            string = this.decoder.decode(ByteBuffer.wrap(tsring, 0, i)).toString();
+        } catch (CharacterCodingException e) {
+            e.printStackTrace();
+        }
+        return string;
+    }
+    
+    /**
+     * Read packed guid.
+     * 
+     * @param guid
+     *            the guid (uint64)
+     */
+    protected final Long readPackedGuid() {
+    
+        long guid = 0l;
+        byte mask = (byte) readC();
+        if (mask == 0)
+            return guid;
+        int i = 0;
+        while (i < 8) {
+            if ((mask & (1 << i)) != 0) {
+                guid |= readC() << (i * 8);
+            }
+            i++;
+        }
+        return guid;
     }
     
     /**

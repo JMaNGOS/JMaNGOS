@@ -23,6 +23,9 @@ public class CharacterPositionerHolder extends BasicPositionerHolder {
     @Embedded
     private TransportInfo transportInfo = new TransportInfo();
     
+    @Embedded
+    private HomeBindData  homeBindData  = new HomeBindData();
+    
     @Transient
     /** MovementFlags */
     private int           flags;
@@ -122,7 +125,6 @@ public class CharacterPositionerHolder extends BasicPositionerHolder {
         buffer.writeInt(getTime());
         if (UpdateFlags.HAS_POSITION.contains(getUpdateFlags())) {
             this.position.writeTo(buffer);
-            System.out.println(this.position);
         }
         if (UpdateFlags.TRANSPORT.contains(getUpdateFlags())) {
             this.transportInfo.writeTo(buffer);
@@ -198,6 +200,24 @@ public class CharacterPositionerHolder extends BasicPositionerHolder {
         this.transportInfo = transportInfo;
     }
     
+    
+    /**
+     * @return the homeBindData
+     */
+    public final HomeBindData getHomeBindData() {
+    
+        return this.homeBindData;
+    }
+
+    
+    /**
+     * @param homeBindData the homeBindData to set
+     */
+    public final void setHomeBindData(HomeBindData homeBindData) {
+    
+        this.homeBindData = homeBindData;
+    }
+
     /**
      * @return the flags
      */

@@ -14,49 +14,42 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.realm.controller;
+package org.jmangos.realm.network.packet.wow.client;
+
+import java.nio.BufferUnderflowException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.jmangos.commons.model.AccountInfo;
-import org.jmangos.commons.model.container.AccountsContainer;
-import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
+import org.jmangos.realm.network.packet.wow.server.SMSG_GMTICKET_GETTICKET;
+import org.jmangos.realm.network.packet.wow.server.SMSG_QUERY_TIME_RESPONSE;
 import org.springframework.stereotype.Component;
 
+/**
+ * The Class CMSG_GMTICKET_GETTICKET.
+ */
 @Component
-public class RealmController {
-    
-    /** The Constant logger. */
-    @SuppressWarnings("unused")
-    private static final Logger      logger   = LoggerFactory.getLogger(RealmController.class);
-    
-    private static AccountsContainer accounts = new AccountsContainer();
+public class CMSG_GMTICKET_GETTICKET extends AbstractWoWClientPacket {
     
     /** The sender. */
     @Inject
-    @Named("serverPacketSender")
-    private AbstractPacketSender     authSender;
+    @Named("nettyPacketSender")
+    private AbstractPacketSender sender;
     
-    @SuppressWarnings("unused")
-    private NetworkChannel           authNetworkChannel;
+    @Override
+    protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
-    public void setAuthNetworkChannel(final NetworkChannel authNetworkChannel) {
-    
-        this.authNetworkChannel = authNetworkChannel;
+        // TODO Implement loading and save tickets
     }
     
-    public AccountInfo getAccount(final String accountName) {
+    @Override
+    protected void runImpl() {
     
-        return accounts.getNamedObject(accountName);
+        this.sender.send(getClient(), new SMSG_QUERY_TIME_RESPONSE());
+        // send empty ticket
+        this.sender.send(getClient(), new SMSG_GMTICKET_GETTICKET());
+        
     }
-    
-    public void addAccount(final AccountInfo account) {
-    
-        accounts.addObject(account);
-    }
-    
 }

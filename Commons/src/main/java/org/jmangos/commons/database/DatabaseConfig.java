@@ -16,8 +16,6 @@
  *******************************************************************************/
 package org.jmangos.commons.database;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jmangos.commons.configuration.AbstractConfig;
 import org.jmangos.commons.configuration.Property;
 import org.springframework.stereotype.Component;
@@ -28,9 +26,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DatabaseConfig extends AbstractConfig {
-    
-    /** Logger for database configuration. */
-    private final Logger       log         = LoggerFactory.getLogger(DatabaseConfig.class);
     
     /** Configuration file location. */
     public static final String CONFIG_FILE = "conf/database/database.properties";

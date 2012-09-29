@@ -267,7 +267,6 @@ public class FieldsUnit extends FieldsObject {
         if (this.bitSet.get(UnitField.UNIT_FIELD_FLAGS.getValue())) {
             ocBuffer.writeInt(getFlags());
         }
-        System.out.println("UNIT_FIELD_FLAGS_2" + this.bitSet.get(UnitField.UNIT_FIELD_FLAGS_2.getValue()));
         if (this.bitSet.get(UnitField.UNIT_FIELD_FLAGS_2.getValue())) {
             ocBuffer.writeInt(getFlags2());
         }

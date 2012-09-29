@@ -13,6 +13,7 @@ import org.jmangos.realm.entities.CharacterData;
 import org.jmangos.realm.entities.CharacterPositionerHolder;
 import org.jmangos.realm.entities.CharacterPowers;
 import org.jmangos.realm.entities.FieldsItem;
+import org.jmangos.realm.entities.HomeBindData;
 import org.jmangos.realm.entities.Position;
 import org.jmangos.realm.model.enums.Classes;
 import org.jmangos.realm.model.enums.Gender;
@@ -69,7 +70,7 @@ public class CharacterController {
     @Autowired
     PlayerXpForLevelStorages             playerXpForLevelStorages;
     
-    public SMSG_CHAR_CREATE.Code createCharacter(final int accountId, final String charName, final Races race, final Classes clazz, final Gender gender,
+    public SMSG_CHAR_CREATE.Code createCharacter(final long accountId, final String charName, final Races race, final Classes clazz, final Gender gender,
             final int skin, final int face, final int hairStyle, final int hairColor, final int facialHair) {
     
         final Criterion criterion = Restrictions.eq("name", charName);
@@ -158,16 +159,11 @@ public class CharacterController {
         
         characterData.setMovement(mh);
         
-        // Set home (hs) location
-        /*
-         * final PlayerHomeBindData phbd = new PlayerHomeBindData();
-         * phbd.setHomeBindAreaId(character.getZone()); phbd.setHomeBindMapId(character.getMap());
-         * phbd.setHomeBindPositionX(character.getPositionX());
-         * phbd.setHomeBindPositionY(character.getPositionY());
-         * phbd.setHomeBindPositionZ(character.getPositionZ());
-         * 
-         * character.setHomeBindData(phbd);
-         */
+        final HomeBindData hbd = new HomeBindData();
+        hbd.setHomeBindAreaId(info.getZone());
+        hbd.setHomeBindMapId(info.getMap());
+        hbd.setPosition(mh.getPosition().clone());
+        mh.setHomeBindData(hbd);
         
         this.characterService.createOrUpdateCharacter(characterData);
         
@@ -178,7 +174,7 @@ public class CharacterController {
             if (itemProto == null) {
                 continue;
             }
-            logger.info("Create item {}" , startItem.getProtoId());
+            logger.info("Create item {}", startItem.getProtoId());
             final int stackCount = itemProto.getBuyCount();
             final FieldsItem item = this.itemService.createItem(itemProto, stackCount);
             

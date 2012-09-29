@@ -19,7 +19,9 @@ package org.jmangos.commons.model;
 /**
  * The Class NamedObject.
  */
-public class NamedObject extends ManagedObject {
+public class NamedObject implements ManagedObject {
+    
+    private long objectId;
     
     /**
      * Default constructor for persistence content
@@ -34,11 +36,11 @@ public class NamedObject extends ManagedObject {
      * @param objectId
      *            the object id
      */
-    public NamedObject(final int objectId) {
+    public NamedObject(final long objectId) {
     
-        super(objectId);
+        this.objectId = objectId;
     }
-        
+    
     /** The name. */
     private String name;
     
@@ -61,6 +63,19 @@ public class NamedObject extends ManagedObject {
     public void setName(final String name) {
     
         this.name = name;
+    }
+    
+    @Override
+    public long getObjectId() {
+    
+        return objectId;
+    }
+    
+    @Override
+    public void setObjectId(final long objectId) {
+    
+        this.objectId = objectId;
+        
     }
     
 }

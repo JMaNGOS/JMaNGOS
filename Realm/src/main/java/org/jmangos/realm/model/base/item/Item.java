@@ -31,9 +31,6 @@ public class Item extends WorldObject {
     /** The Constant INVENTORY_SLOT_BAG_0. */
     public static final int  INVENTORY_SLOT_BAG_0      = 255;
     
-    /** The Constant NULL_SLOT. */
-    private static final int NULL_SLOT                 = 255;
-    
     /** The Constant INVENTORY_SLOT_ITEM_START. */
     public static final int  INVENTORY_SLOT_ITEM_START = 23;
     

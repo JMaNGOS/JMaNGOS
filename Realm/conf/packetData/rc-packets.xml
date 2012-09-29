@@ -41,6 +41,9 @@
 		<packet name="CMSG_SET_ACTIVE_MOVER" id="26A" state="AUTHED" />
 		<packet name="CMSG_SWAP_INV_ITEM" id="10D" state="AUTHED" />
 		<packet name="CMSG_CALENDAR_GET_NUM_PENDING" id="447" state="AUTHED" />
+		<packet name="CMSG_JOIN_CHANNEL" id="097" state="AUTHED" />
+		<packet name="CMSG_GMTICKET_GETTICKET" id="211" state="AUTHED" />
+		<packet name="MSG_MOVE_SET_FACING" id="0DA" state="AUTHED" />
 
         <!-- paalgyula implemented packets -->
         <packet name="CMSG_CHAR_CREATE" id="36" state="AUTHED"/>
@@ -89,7 +92,8 @@
 		<packet name="SMSG_TIME_SYNC_REQ" id="390" />
 		<packet name="SMSG_ALL_ACHIEVEMENT_DATA" id="47D" />
 		<packet name="SMSG_SPELL_GO" id="132" />
-		<packet name="SMSG_CALENDAR_SEND_NUM_PENDING" id="448" state="AUTHED" />
+		<packet name="SMSG_CALENDAR_SEND_NUM_PENDING" id="448" />
+		<packet name="SMSG_GMTICKET_GETTICKET" id="212"  />
 
         <!-- paalgyula implemented packets -->
         <packet name="SMSG_CHAR_CREATE" id="3A"/>

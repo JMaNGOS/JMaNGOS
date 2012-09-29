@@ -18,8 +18,6 @@ package org.jmangos.realm.model.base;
 
 import gnu.trove.map.hash.TLongObjectHashMap;
 
-import org.jmangos.realm.model.unit.Units;
-
 /**
  * The Class Map.
  */
@@ -56,10 +54,10 @@ public class Map {
     
         switch (plObject.getObjectTypeId()) {
             case PLAYER:
-                this.playerList.put(plObject.getObjectGuid().getRawValue(), plObject);
+                this.playerList.put(plObject.getObjectId(), plObject);
                 break;
             case UNIT:
-                this.units.put(plObject.getObjectGuid().getRawValue(), plObject);
+                this.units.put(plObject.getObjectId(), plObject);
                 break;
             default:
                 break;
@@ -75,10 +73,7 @@ public class Map {
     public boolean update() {
     
         for (final Object pl : this.playerList.values()) {
-            System.out.println("Player name: " + ((Units) pl).getName());
-        };
-        for (final Object pl : this.units.values()) {
-            System.out.println("Units name: " + ((Units) pl).getName());
+            System.out.println("Player name: " + ((WorldObject) pl).getName());
         };
         System.out.println("Player on map " + this.playerList.size());
         System.out.println("units on map " + this.units.size());
@@ -97,7 +92,7 @@ public class Map {
      * @param id
      *            the id to set
      */
-    public final void setId(int id) {
+    public final void setId(final int id) {
     
         this.id = id;
     }

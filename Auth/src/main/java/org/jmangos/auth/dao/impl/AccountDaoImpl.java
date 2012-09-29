@@ -36,7 +36,7 @@ public class AccountDaoImpl implements AccountDao {
     private EntityManager entityManager;
     
     @Override
-    public AccountEntity readAccount(final Integer id) {
+    public AccountEntity readAccount(final Long id) {
     
         return this.entityManager.find(AccountEntity.class, id);
     }
@@ -54,7 +54,7 @@ public class AccountDaoImpl implements AccountDao {
     
     @Transactional
     @Override
-    public Integer createOrUpdateAccount(final AccountEntity accountEntity) {
+    public Long createOrUpdateAccount(final AccountEntity accountEntity) {
     
         if (accountEntity.getId() == null) {
             this.entityManager.persist(accountEntity);

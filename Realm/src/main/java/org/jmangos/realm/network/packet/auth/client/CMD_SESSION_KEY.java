@@ -36,7 +36,7 @@ public class CMD_SESSION_KEY extends AbstractRealmClientPacket {
     private AccountQueueController accountQueueController;
     
     private String                 accountName;
-    private int                    accountId;
+    private long                   accountId;
     private BigNumber              sessionKey;
     
     /**
@@ -46,7 +46,7 @@ public class CMD_SESSION_KEY extends AbstractRealmClientPacket {
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
         this.accountName = readS();
-        this.accountId = readD();
+        this.accountId = readQ();
         this.sessionKey = new BigNumber();
         this.sessionKey.setBinary(readB(40));
     }

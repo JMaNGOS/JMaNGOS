@@ -6,7 +6,7 @@ import javax.persistence.Embeddable;
 import org.jboss.netty.buffer.ChannelBuffer;
 
 @Embeddable
-public class Position {
+public class Position implements Cloneable {
     
     @Column(name = "position_x", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private float x;
@@ -96,6 +96,17 @@ public class Position {
     public String toString() {
     
         return "[Position] x:" + this.x + " y:" + this.y + " z:" + this.z;
+    }
+    
+    @Override
+    public Position clone() {
+    
+        Position newPos = new Position();
+        newPos.setX(getX());
+        newPos.setY(getY());
+        newPos.setZ(getZ());
+        newPos.setO(getO());
+        return newPos;
     }
     
     public void writeTo(final ChannelBuffer bb) {

@@ -32,7 +32,7 @@ public class AccountServiceImpl implements AccountService {
     private AccountDao accountDao;
     
     @Override
-    public AccountEntity readAccount(final Integer id) {
+    public AccountEntity readAccount(final Long id) {
     
         return this.accountDao.readAccount(id);
     }
@@ -44,7 +44,7 @@ public class AccountServiceImpl implements AccountService {
     }
     
     @Override
-    public Integer createOrUpdateAccount(final AccountEntity accountEntity) {
+    public Long createOrUpdateAccount(final AccountEntity accountEntity) {
     
         return this.accountDao.createOrUpdateAccount(accountEntity);
     }

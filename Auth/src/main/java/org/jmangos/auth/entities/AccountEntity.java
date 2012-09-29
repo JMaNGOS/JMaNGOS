@@ -35,7 +35,7 @@ public class AccountEntity {
     @Id
     @Column(name = "ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer  id;
+    private Long  id;
     
     /** The user name. */
     @Column(name = "USERNAME", length = 32, unique = true)
@@ -97,12 +97,12 @@ public class AccountEntity {
     @Column(name = "LAST_SERVER")
     private Byte     lastServer;
     
-    public Integer getId() {
+    public Long getId() {
     
         return this.id;
     }
     
-    public void setId(final Integer id) {
+    public void setId(final Long id) {
     
         this.id = id;
     }

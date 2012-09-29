@@ -16,44 +16,17 @@
  *******************************************************************************/
 package org.jmangos.commons.model;
 
-import java.util.Random;
-
 /**
  * The Class ManagedObject.
  */
-public class ManagedObject {
-    
-    /**
-     * The object id.
-     */
-    private int objectId;
-    
-    public ManagedObject() {
-    
-        final Random random = new Random();
-        this.objectId = random.nextInt();
-    }
-    
-    /**
-     * Instantiates a new managed object.
-     * 
-     * @param objectId
-     *            the object id
-     */
-    public ManagedObject(final int objectId) {
-    
-        this.objectId = objectId;
-    }
+public interface ManagedObject {
     
     /**
      * Gets the object id.
      * 
      * @return objectId
      */
-    public final int getObjectId() {
-    
-        return this.objectId;
-    }
+    public long getObjectId();
     
     /**
      * Sets the object id.
@@ -62,8 +35,5 @@ public class ManagedObject {
      *            the object id
      * @return the int
      */
-    public void setObjectId(final int objectId) {
-    
-        this.objectId = objectId;
-    }
+    public void setObjectId(final long objectId);
 }

@@ -14,39 +14,37 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package org.jmangos.auth.network.packet.wow.server;
+package org.jmangos.realm.network.packet.wow.server;
 
-import org.jmangos.auth.network.packet.wow.AbstractWoWServerPacket;
-import org.jmangos.commons.model.AccountInfo;
+import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 
 /**
- * The Class <tt>SMD_SESSION_KEY</tt>.
+ * The Class SMSG_GMTICKET_GETTICKET.
  */
-public class SMD_SESSION_KEY extends AbstractWoWServerPacket {
+public class SMSG_GMTICKET_GETTICKET extends AbstractWoWServerPacket {
     
-    private AccountInfo account;
+    private int status=0x0A;
     
-    /**
-     * Instantiates a new <tt>SMD_SESSION_KEY</tt>.
-     */
-    public SMD_SESSION_KEY() {
-    
-    }
-    
-    public SMD_SESSION_KEY(final AccountInfo account) {
-    
-        this.account = account;
-    }
-    
-    /**
+    /*
+     * (non-Javadoc)
      * 
-     * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
+     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
      */
     @Override
     protected void writeImpl() {
     
-        writeS(this.account.getName());
-        writeQ(this.account.getObjectId());
-        writeB(this.account.getSessionKey().asByteArray(40));
+        writeD(status);
+        if (status == 6) {
+            writeD(123);
+            writeS(""); 
+            writeC(0x7);
+            writeF(0);
+            writeF(0);
+            writeF(0);
+            writeC(0);
+            writeC(0);
+        }
+        
     }
+    
 }

@@ -16,10 +16,11 @@
  *******************************************************************************/
 package org.jmangos.realm.network.packet.wow.server;
 
+import org.jmangos.realm.entities.CharacterPositionerHolder;
+import org.jmangos.realm.entities.HomeBindData;
 import org.jmangos.realm.model.player.Player;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SMSG_BINDPOINTUPDATE.
  */
@@ -29,7 +30,7 @@ public class SMSG_BINDPOINTUPDATE extends AbstractWoWServerPacket {
     private final Player player;
     
     /**
-     * Instantiates a new sMS g_ bindpointupdate.
+     * Instantiates a new SMSG_BINDPOINTUPDATE.
      * 
      * @param player
      *            the player
@@ -47,10 +48,11 @@ public class SMSG_BINDPOINTUPDATE extends AbstractWoWServerPacket {
     @Override
     public void writeImpl() {
     
-        writeF(this.player.getHomeBind().getHomeBindPositionX());
-        writeF(this.player.getHomeBind().getHomeBindPositionY());
-        writeF(this.player.getHomeBind().getHomeBindPositionZ());
-        writeD(this.player.getHomeBind().getHomeBindMapId());
-        writeD(this.player.getHomeBind().getHomeBindAreaId());
+        HomeBindData hdb = ((CharacterPositionerHolder) this.player.getCharacterData().getMovement()).getHomeBindData();
+        writeF(hdb.getPosition().getX());
+        writeF(hdb.getPosition().getY());
+        writeF(hdb.getPosition().getZ());
+        writeD(hdb.getHomeBindMapId());
+        writeD(hdb.getHomeBindAreaId());
     }
 }

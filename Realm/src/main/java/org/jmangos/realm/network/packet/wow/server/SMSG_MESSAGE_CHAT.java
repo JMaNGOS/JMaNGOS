@@ -50,14 +50,14 @@ public class SMSG_MESSAGE_CHAT extends AbstractWoWServerPacket {
         writeD(this.chatLanguage.ordinal()); // 32 LANG_UNIVERSAL
         
         if (this.speaker != null) {
-            writeQ(this.speaker.getObjectGuid().getRawValue());
+            writeQ(this.speaker.getCharacterData().getGuid());
         } else {
             writeQ(0x00); // 64 GUID
         }
         
         writeD(0x00); // 2.1.0
-        writeD(this.speaker.getName().length() + 1);
-        writeS(this.speaker.getName());
+        writeD(this.speaker.getCharacterData().getName().length() + 1);
+        writeS(this.speaker.getCharacterData().getName());
         
         writeQ(0x00); // Listener guid TODO:implement target
         

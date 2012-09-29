@@ -33,7 +33,7 @@ public class CMSG_MOVE_TIME_SKIPPED extends AbstractWoWClientPacket {
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
         log.warn("CMSG_MOVE_TIME_SKIPPED packet size: " + getAvaliableBytes());
-        log.warn("CMSG_MOVE_TIME_SKIPPED wow guid: " + getPlayer().getObjectGuid().getRawValue());
+        log.warn("CMSG_MOVE_TIME_SKIPPED wow guid: " + getPlayer().getCharacterData().getGuid());
         
         try {
             this.guid = readQ();
@@ -46,6 +46,6 @@ public class CMSG_MOVE_TIME_SKIPPED extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
     
-        this.sender.send(getPlayer().getChannel(), new MSG_MOVE_TIME_SKIPPED(getPlayer().getObjectGuid().getRawValue(), this.time_dif));
+        this.sender.send(getPlayer().getChannel(), new MSG_MOVE_TIME_SKIPPED(this.guid, this.time_dif));
     }
 }

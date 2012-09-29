@@ -19,7 +19,6 @@ package org.jmangos.realm.network.packet.wow.server;
 import java.util.HashMap;
 
 import org.jmangos.realm.model.account.AccountData;
-import org.jmangos.realm.model.enums.AccountDataType;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 
 /**
@@ -37,6 +36,7 @@ public class SMSG_ACCOUNT_DATA_TIMES extends AbstractWoWServerPacket {
     private final int                     curmask;
     
     /** The account data. */
+    @SuppressWarnings("unused")
     private HashMap<Integer, AccountData> accountData;
     
     /**
@@ -69,18 +69,18 @@ public class SMSG_ACCOUNT_DATA_TIMES extends AbstractWoWServerPacket {
     @Override
     public void writeImpl() {
     
-        if (curmask == GLOBAL_CACHE_MASK) {
+        if (this.curmask == GLOBAL_CACHE_MASK) {
             writeD(System.currentTimeMillis() / 1000L);
             writeC(1);
             writeD(0x00000015); // 0, 2, 4
             writeD(0x0); // 0 - CONFIG
             writeD(0x0); // 2 - BINDINGS
             writeD(0x0); // 4 - MACROS
-        }else{
+        } else {
             writeD(System.currentTimeMillis() / 1000L);
             writeC(1);
             writeD(0x000000AA); // 1, 3, 5, 7
-            writeD(0x0); // 1 -  CONFIG_2
+            writeD(0x0); // 1 - CONFIG_2
             writeD(0x0); // 3 - unk
             writeD(0x0); // 5 - unk
             writeD(0x0); // 7 - COLORS

@@ -18,14 +18,14 @@ public class RealmServersContainer extends IdKeyContainer<RealmInfo> {
     private static final Logger logger = LoggerFactory.getLogger(RealmServersContainer.class);
     
     @Override
-    public void onDataNotPresentEvent(final int objectId) {
+    public void onDataNotPresentEvent(final long objectId) {
     
         logger.error("Realm with id {} not exist in container.", objectId);
         
     }
     
     @Override
-    public void onDataAlreadyAddedEvent(final int objectId) {
+    public void onDataAlreadyAddedEvent(final long objectId) {
     
         logger.error("Realm server already in container. Duplicate Id : {}", objectId);
         

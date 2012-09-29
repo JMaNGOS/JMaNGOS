@@ -24,10 +24,6 @@ import javax.inject.Named;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.realm.network.packet.wow.server.SMSG_CALENDAR_SEND_NUM_PENDING;
-import org.jmangos.realm.network.packet.wow.server.SMSG_ITEM_QUERY_SINGLE_RESPONSE;
-import org.jmangos.realm.service.ItemStorages;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,8 +31,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CMSG_CALENDAR_GET_NUM_PENDING extends AbstractWoWClientPacket {
-    
-    private static final Logger  logger = LoggerFactory.getLogger(CMSG_CALENDAR_GET_NUM_PENDING.class);
     
     /** The sender. */
     @Inject

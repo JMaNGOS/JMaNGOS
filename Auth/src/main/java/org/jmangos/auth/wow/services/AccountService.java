@@ -23,11 +23,11 @@ import org.jmangos.auth.entities.AccountEntity;
 
 public interface AccountService {
     
-    public AccountEntity readAccount(Integer id);
+    public AccountEntity readAccount(Long id);
     
     public List<AccountEntity> readAccounts(final Criterion... criterions);
     
-    public Integer createOrUpdateAccount(AccountEntity accountEntity);
+    public Long createOrUpdateAccount(AccountEntity accountEntity);
     
     public void deleteAccount(AccountEntity accountEntity);
     

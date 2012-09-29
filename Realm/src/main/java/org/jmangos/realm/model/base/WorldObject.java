@@ -26,7 +26,6 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.jmangos.commons.model.NamedObject;
 import org.jmangos.commons.network.model.UpdateField;
 import org.jmangos.commons.network.model.UpdateFieldType;
-import org.jmangos.realm.model.base.guid.ObjectGuid;
 import org.jmangos.realm.model.enums.TypeID;
 import org.jmangos.realm.model.enums.TypeMask;
 
@@ -34,9 +33,6 @@ import org.jmangos.realm.model.enums.TypeMask;
  * The Class WorldObject.
  */
 public class WorldObject extends NamedObject {
-    
-    /** The guid. */
-    ObjectGuid                                  guid        = null;
     
     /** The object type. */
     protected EnumSet<TypeMask>                 objectType  = EnumSet.noneOf(TypeMask.class);
@@ -68,7 +64,6 @@ public class WorldObject extends NamedObject {
     public WorldObject(final long objectId) {
     
         super((int) objectId);
-        this.guid = new ObjectGuid(objectId);
     }
     
     /**
@@ -90,16 +85,6 @@ public class WorldObject extends NamedObject {
     public final void setObjectType(final EnumSet<TypeMask> objectType) {
     
         this.objectType = objectType;
-    }
-    
-    /**
-     * Gets the object guid.
-     * 
-     * @return the guid
-     */
-    public final ObjectGuid getObjectGuid() {
-    
-        return this.guid;
     }
     
     /**
@@ -430,7 +415,6 @@ public class WorldObject extends NamedObject {
         this.bitTypes.clear();
         this.bitSet.clear();
     }
-
     
     /**
      * @return the m_uint32Values_mirror
@@ -439,10 +423,10 @@ public class WorldObject extends NamedObject {
     
         return this.m_uint32Values_mirror;
     }
-
     
     /**
-     * @param m_uint32Values_mirror the m_uint32Values_mirror to set
+     * @param m_uint32Values_mirror
+     *            the m_uint32Values_mirror to set
      */
     public final void setM_uint32Values_mirror(ChannelBuffer m_uint32Values_mirror) {
     

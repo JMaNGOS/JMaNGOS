@@ -23,10 +23,27 @@ public enum FriendListResults {
     FRIEND_IGNORE_ADDED(0x0F),
     FRIEND_IGNORE_REMOVED(0x10);
     
-    private int opcode;
+    private int value;
     
-    FriendListResults(final int opcode) {
+    FriendListResults(final int value) {
     
-        this.opcode = opcode;
+        setValue(value);
+    }
+    
+    /**
+     * @return the value
+     */
+    public int getValue() {
+    
+        return this.value;
+    }
+    
+    /**
+     * @param value
+     *            the value to set
+     */
+    public void setValue(final int value) {
+    
+        this.value = value;
     }
 }

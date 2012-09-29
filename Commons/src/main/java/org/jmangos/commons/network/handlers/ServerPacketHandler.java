@@ -32,6 +32,7 @@ public class ServerPacketHandler {
      *            the packet class
      * @return the op code
      */
+    @SuppressWarnings("deprecation")
     public int getOpCode(final SendablePacket packetClass) {
     
         Integer opcode = this.opcodes.get(packetClass.getClass());

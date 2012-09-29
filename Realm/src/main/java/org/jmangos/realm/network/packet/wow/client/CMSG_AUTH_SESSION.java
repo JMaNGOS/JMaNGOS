@@ -127,7 +127,8 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
             TextBuilder.recycle(tb);
             final byte enabled = addonInfo.readByte();
             final int crc = addonInfo.readInt();
-            /* int unk1 = */addonInfo.readInt();
+            int unk1 = addonInfo.readInt();
+            logger.debug("{}: {} {} {} {}", new Object[] { i, enabled, crc, unk1, addonName });
             this.addonLists.add(new AddonInfo(addonName, enabled, crc));
         }
         

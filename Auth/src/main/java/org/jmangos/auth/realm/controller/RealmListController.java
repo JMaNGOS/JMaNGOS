@@ -163,7 +163,7 @@ public class RealmListController implements Service {
      *            the id
      * @return the amount characters
      */
-    public FastMap<Integer, Integer> getAmountCharacters(final Integer id) {
+    public FastMap<Integer, Integer> getAmountCharacters(final Long id) {
     
         // TODO:implement
         return new FastMap<Integer, Integer>();

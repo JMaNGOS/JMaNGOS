@@ -19,7 +19,6 @@ package org.jmangos.realm.network.packet.wow.server;
 import org.jmangos.realm.model.player.Player;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SMSG_NAME_QUERY_RESPONSE.
  */
@@ -54,9 +53,9 @@ public class SMSG_NAME_QUERY_RESPONSE extends AbstractWoWServerPacket {
     @Override
     protected void writeImpl() {
     
-        writePackedGuid(this.player.getObjectId());
+        writePackedGuid(this.player.getCharacterData().getGuid());
         writeC(0);
-        writeS(this.player.getName());
+        writeS(this.player.getCharacterData().getName());
         writeC(0);
         writeC(this.player.getCharacterData().getRace().getValue());
         writeC(this.player.getCharacterData().getGender().getValue());
