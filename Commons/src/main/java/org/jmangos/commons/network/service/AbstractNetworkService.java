@@ -22,8 +22,6 @@ import java.util.Map.Entry;
 
 import javolution.util.FastMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelFutureListener;
@@ -31,6 +29,8 @@ import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jmangos.commons.network.factory.ClientChannelFactory;
 import org.jmangos.commons.network.factory.ServerChannelFactory;
 import org.jmangos.commons.network.model.NetworkChannel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Class AbstractNetworkService.

@@ -274,21 +274,22 @@ public abstract class ReceivablePacket extends AbstractPacket implements Runnabl
      * 
      * @return the string
      */
-    protected final String readUTF8(int maxLength) {
+    protected final String readUTF8(final int maxLength) {
     
         String string = null;
-        byte[] tsring = new byte[maxLength];
+        final byte[] tsring = new byte[maxLength];
         int i = 0;
         while (i < maxLength) {
             tsring[i] = (byte) readC();
-            if (tsring[i] == 0)
+            if (tsring[i] == 0) {
                 break;
+            }
             i++;
         }
         
         try {
             string = this.decoder.decode(ByteBuffer.wrap(tsring, 0, i)).toString();
-        } catch (CharacterCodingException e) {
+        } catch (final CharacterCodingException e) {
             e.printStackTrace();
         }
         return string;
@@ -303,9 +304,10 @@ public abstract class ReceivablePacket extends AbstractPacket implements Runnabl
     protected final Long readPackedGuid() {
     
         long guid = 0l;
-        byte mask = (byte) readC();
-        if (mask == 0)
+        final byte mask = (byte) readC();
+        if (mask == 0) {
             return guid;
+        }
         int i = 0;
         while (i < 8) {
             if ((mask & (1 << i)) != 0) {

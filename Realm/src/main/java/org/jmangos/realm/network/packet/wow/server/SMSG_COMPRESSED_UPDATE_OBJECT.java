@@ -65,14 +65,14 @@ public class SMSG_COMPRESSED_UPDATE_OBJECT extends AbstractWoWServerPacket {
     @Override
     public void writeImpl() {
     
-        ByteArrayInputStream bais = new ByteArrayInputStream(this.packet);
-        DeflaterInputStream deflaterInputStream = new DeflaterInputStream(bais);
+        final ByteArrayInputStream bais = new ByteArrayInputStream(this.packet);
+        final DeflaterInputStream deflaterInputStream = new DeflaterInputStream(bais);
         byte[] defos;
         try {
             defos = sun.misc.IOUtils.readFully(deflaterInputStream, -1, true);
             writeD(defos.length);
             writeB(defos);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }

@@ -121,8 +121,8 @@ public enum ItemFlags {
         return this.value;
     }
     
-    public boolean contains(int val) {
+    public boolean contains(final int val) {
     
-        return ((this.getValue() & val) == this.getValue());
+        return ((getValue() & val) == getValue());
     }
 }

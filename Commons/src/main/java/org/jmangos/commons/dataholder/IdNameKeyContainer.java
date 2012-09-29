@@ -7,39 +7,39 @@ import org.jmangos.commons.model.NamedObject;
 public abstract class IdNameKeyContainer<T extends NamedObject> extends IdKeyContainer<T> {
     
     /** name-data relations */
-    private FastMap<String, T> namedData = new FastMap<String, T>().shared();
+    private final FastMap<String, T> namedData = new FastMap<String, T>().shared();
     
-    public T getNamedObject(String name) {
+    public T getNamedObject(final String name) {
     
-        return namedData.get(name);
+        return this.namedData.get(name);
     }
     
     @Override
-    public void addObject(T object) {
+    public void addObject(final T object) {
     
         super.addObject(object);
-        if (namedData.containsKey(object.getName())) {
+        if (this.namedData.containsKey(object.getName())) {
             onDataAlreadyAddedEvent(object.getObjectId());
             return;
         }
-        namedData.put(object.getName(), object);
+        this.namedData.put(object.getName(), object);
     }
     
     @Override
-    public void removeObject(T object) {
+    public void removeObject(final T object) {
     
         super.removeObject(object);
-        if (!namedData.containsKey(object.getName())) {
+        if (!this.namedData.containsKey(object.getName())) {
             onDataNotPresentEvent(object.getObjectId());
             return;
         }
-        namedData.remove(object.getName());
+        this.namedData.remove(object.getName());
     }
     
     @Override
     public void clearData() {
     
         super.clearData();
-        namedData.clear();
+        this.namedData.clear();
     }
 }

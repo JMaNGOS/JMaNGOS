@@ -103,8 +103,10 @@ public abstract class FieldsObject implements Streamable {
     
     @PostPersist
     private final void packGuid() {
-        if(this.guid == null)
+    
+        if (this.guid == null) {
             return;
+        }
         long tguid = this.guid;
         final byte[] packGUID = new byte[8 + 1];
         packGUID[0] = 0;

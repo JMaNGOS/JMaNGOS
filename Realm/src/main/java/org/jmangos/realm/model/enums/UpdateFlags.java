@@ -32,29 +32,31 @@ public enum UpdateFlags {
     
     int value;
     
-    UpdateFlags(int val) {
+    UpdateFlags(final int val) {
     
-        value = val;
+        this.value = val;
     }
     
-    public static UpdateFlags get(int value) {
+    public static UpdateFlags get(final int value) {
     
-        for (UpdateFlags val : values()) {
-            if (val.getValue() == value)
+        for (final UpdateFlags val : values()) {
+            if (val.getValue() == value) {
                 return val;
+            }
         }
         return null;
     }
     
     public int getValue() {
     
-        return value;
+        return this.value;
     }
     
-    public boolean contains(int val) {
+    public boolean contains(final int val) {
     
-        if ((this.getValue() & val) == this.getValue())
+        if ((getValue() & val) == getValue()) {
             return true;
+        }
         return false;
     }
 }

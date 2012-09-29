@@ -64,7 +64,7 @@ public class CharStartOutfitServiceImpl implements CharStartOutfitService {
     
         final Criterion[] criter = new Criterion[3];
         criter[0] = Restrictions.eq("charStartOutfitEntityPk.clazz", (byte) charClass.getValue());
-        criter[1] = Restrictions.eq("charStartOutfitEntityPk.race", (byte) charRace.getValue());
+        criter[1] = Restrictions.eq("charStartOutfitEntityPk.race", charRace.getValue());
         criter[2] = Restrictions.eq("charStartOutfitEntityPk.gender", gender);
         
         return this.charStartOutfitDao.readCharStartOutfits(criter);

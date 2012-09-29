@@ -58,9 +58,10 @@ public class ItemServiceImpl implements ItemService {
     
         this.itemDao.deleteItem(item);
     }
-
+    
     @Override
-    public FieldsItem createItem(ItemPrototype itemProto, int itemCount) {
+    public FieldsItem createItem(final ItemPrototype itemProto, int itemCount) {
+    
         FieldsItem item = null;
         if (itemProto.getStackable() < itemCount) {
             itemCount = itemProto.getStackable();

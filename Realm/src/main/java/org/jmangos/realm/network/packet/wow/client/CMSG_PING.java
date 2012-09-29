@@ -47,7 +47,7 @@ public class CMSG_PING extends AbstractWoWClientPacket {
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
         this.ping = readD();
-        this.setLatency(readD());
+        setLatency(readD());
         
         if (GetChannelHandler().getLastPingTime() < 0) {
             GetChannelHandler().setLastPingTime(System.currentTimeMillis());
@@ -62,13 +62,13 @@ public class CMSG_PING extends AbstractWoWClientPacket {
         this.sender.send(getClient(), new SMSG_PONG(this.ping));
         
     }
-
+    
     public int getLatency() {
     
-        return latency;
+        return this.latency;
     }
-
-    public void setLatency(int latency) {
+    
+    public void setLatency(final int latency) {
     
         this.latency = latency;
     }

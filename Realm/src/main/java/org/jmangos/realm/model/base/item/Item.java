@@ -29,28 +29,28 @@ import org.jmangos.realm.model.enums.TypeMask;
 public class Item extends WorldObject {
     
     /** The Constant INVENTORY_SLOT_BAG_0. */
-    public static final int  INVENTORY_SLOT_BAG_0      = 255;
+    public static final int INVENTORY_SLOT_BAG_0      = 255;
     
     /** The Constant INVENTORY_SLOT_ITEM_START. */
-    public static final int  INVENTORY_SLOT_ITEM_START = 23;
+    public static final int INVENTORY_SLOT_ITEM_START = 23;
     
     /** The Constant INVENTORY_SLOT_ITEM_END. */
-    public static final int  INVENTORY_SLOT_ITEM_END   = 39;
+    public static final int INVENTORY_SLOT_ITEM_END   = 39;
     
     /** The Constant KEYRING_SLOT_START. */
-    public static final int  KEYRING_SLOT_START        = 86;
+    public static final int KEYRING_SLOT_START        = 86;
     
     /** The Constant KEYRING_SLOT_END. */
-    public static final int  KEYRING_SLOT_END          = 118;
+    public static final int KEYRING_SLOT_END          = 118;
     
     /** The Constant CURRENCYTOKEN_SLOT_START. */
-    public static final int  CURRENCYTOKEN_SLOT_START  = 118;
+    public static final int CURRENCYTOKEN_SLOT_START  = 118;
     
     /** The Constant CURRENCYTOKEN_SLOT_END. */
-    public static final int  CURRENCYTOKEN_SLOT_END    = 150;
+    public static final int CURRENCYTOKEN_SLOT_END    = 150;
     
     /** The slot. */
-    private int              slot                      = 0;
+    private int             slot                      = 0;
     
     /**
      * Instantiates a new item.

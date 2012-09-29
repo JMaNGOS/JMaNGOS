@@ -47,8 +47,8 @@ public enum Powers {
     RUNIC_POWER; // 31
     
     /** The MA x_ power. */
-    public static final int MAX_POWER = 7;
+    public static final int             MAX_POWER            = 7;
     
-    public static final EnumSet<Powers> PLAYER_CREATE_POWERS = EnumSet.of(HEALTH,MANA,RAGE,FOCUS,ENERGY,RUNE);
+    public static final EnumSet<Powers> PLAYER_CREATE_POWERS = EnumSet.of(HEALTH, MANA, RAGE, FOCUS, ENERGY, RUNE);
     
 }

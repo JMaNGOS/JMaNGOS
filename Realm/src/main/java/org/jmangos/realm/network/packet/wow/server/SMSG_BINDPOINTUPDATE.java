@@ -48,7 +48,7 @@ public class SMSG_BINDPOINTUPDATE extends AbstractWoWServerPacket {
     @Override
     public void writeImpl() {
     
-        HomeBindData hdb = ((CharacterPositionerHolder) this.player.getCharacterData().getMovement()).getHomeBindData();
+        final HomeBindData hdb = ((CharacterPositionerHolder) this.player.getCharacterData().getMovement()).getHomeBindData();
         writeF(hdb.getPosition().getX());
         writeF(hdb.getPosition().getY());
         writeF(hdb.getPosition().getZ());

@@ -119,7 +119,7 @@ public class PlayerService {
         this.sender.send(player.getChannel(), new SMSG_LOGIN_VERIFY_WORLD(player));
         // TODO: Reimplement (not needed to log in!)
         
-        sender.send(player.getChannel(), new SMSG_ACCOUNT_DATA_TIMES(SMSG_ACCOUNT_DATA_TIMES.GLOBAL_CACHE_MASK, null));
+        this.sender.send(player.getChannel(), new SMSG_ACCOUNT_DATA_TIMES(SMSG_ACCOUNT_DATA_TIMES.GLOBAL_CACHE_MASK, null));
         
         // this.sender.send(player.getChannel(), new SMSG_FEATURE_SYSTEM_STATUS());
         // sender.send(player.getChannel(), new SMSG_LEARNED_DANCE_MOVES());
@@ -135,7 +135,7 @@ public class PlayerService {
         this.sender.send(player.getChannel(), new SMSG_LOGIN_SETTIMESPEED());
         // this.sender.send(player.getChannel(), new SMSG_INIT_WORLD_STATES(player));
         this.sender.send(player.getChannel(), new SMSG_TIME_SYNC_REQ());
-        //this.sender.send(player.getChannel(), new SMSG_SPELL_GO());
+        // this.sender.send(player.getChannel(), new SMSG_SPELL_GO());
         // this.sender.send(player.getChannel(), new SMSG_PLAYED_TIME());
         
         final ChannelBuffer updateBlock = ChannelBuffers.dynamicBuffer(ByteOrder.LITTLE_ENDIAN, 1024);
@@ -144,13 +144,13 @@ public class PlayerService {
         final int countBlock = player.getCharacterData().buildCreateBlock(updateBlock, player.getCharacterData());
         // FILL COUNT BLOCKS
         updateBlock.setInt(0, countBlock);
-        byte[] outputBuffer = updateBlock.readBytes(updateBlock.readableBytes()).array();
+        final byte[] outputBuffer = updateBlock.readBytes(updateBlock.readableBytes()).array();
         
         final SMSG_UPDATE_OBJECT updatePacket = new SMSG_UPDATE_OBJECT(outputBuffer);
         this.sender.send(player.getChannel(), updatePacket);
         
         this.sender.send(player.getChannel(), new SMSG_MOTD("Test MotD String@test".split("@")));
-        sender.send(player.getChannel(), new SMSG_ACCOUNT_DATA_TIMES(SMSG_ACCOUNT_DATA_TIMES.PER_CHARACTER_CACHE_MASK, null));
+        this.sender.send(player.getChannel(), new SMSG_ACCOUNT_DATA_TIMES(SMSG_ACCOUNT_DATA_TIMES.PER_CHARACTER_CACHE_MASK, null));
         PlayerService.playerlist.put(player.getObjectId(), player);
         
         /**

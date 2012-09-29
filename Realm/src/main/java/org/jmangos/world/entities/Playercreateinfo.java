@@ -133,7 +133,7 @@ public class Playercreateinfo {
      */
     public final Set<PlayerCreateAction> getActions() {
     
-        return actions;
+        return this.actions;
     }
     
     /**
@@ -150,7 +150,7 @@ public class Playercreateinfo {
      */
     public final Set<PlayerCreateSpell> getSpell() {
     
-        return spell;
+        return this.spell;
     }
     
     /**
@@ -169,7 +169,7 @@ public class Playercreateinfo {
     }
     
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
     
         if (this == object) {
             return true;
@@ -177,7 +177,7 @@ public class Playercreateinfo {
         if (!(object instanceof Playercreateinfo)) {
             return false;
         }
-        if (playercreateinfoPK.equals(((Playercreateinfo) object).getPlayercreateinfoPK())) {
+        if (this.playercreateinfoPK.equals(((Playercreateinfo) object).getPlayercreateinfoPK())) {
             return true;
         }
         return false;

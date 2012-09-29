@@ -43,6 +43,7 @@ public class PlayerXpForLevelDaoImpl implements PlayerXpForLevelDao {
     
         return this.entityManager.find(PlayerXpForLevel.class, id);
     }
+    
     @Override
     @SuppressWarnings("unchecked")
     public List<PlayerXpForLevel> readPlayerXpForLevels(final Criterion... criterions) {
@@ -56,7 +57,7 @@ public class PlayerXpForLevelDaoImpl implements PlayerXpForLevelDao {
     
     @Transactional(value = "world")
     @Override
-    public Byte createOrUpdatePlayerLevelInfo(PlayerXpForLevel playerXpForLevel) {
+    public Byte createOrUpdatePlayerLevelInfo(final PlayerXpForLevel playerXpForLevel) {
     
         if (playerXpForLevel.getLevel() == null) {
             this.entityManager.persist(playerXpForLevel);
@@ -69,7 +70,7 @@ public class PlayerXpForLevelDaoImpl implements PlayerXpForLevelDao {
     
     @Transactional(value = "world")
     @Override
-    public void deletePlayerXpForLevel(PlayerXpForLevel playerXpForLevel) {
+    public void deletePlayerXpForLevel(final PlayerXpForLevel playerXpForLevel) {
     
         if (playerXpForLevel == null) {
             return;

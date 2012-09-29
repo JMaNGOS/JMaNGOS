@@ -53,7 +53,7 @@ public enum ChatLanguage {
     
     /** KALIMAG. */
     KALIMAG(12),
-
+    
     /** GNOMISH. */
     GNOMISH(13),
     
@@ -90,7 +90,7 @@ public enum ChatLanguage {
      */
     public int getValue() {
     
-        return value;
+        return this.value;
     }
     
 }

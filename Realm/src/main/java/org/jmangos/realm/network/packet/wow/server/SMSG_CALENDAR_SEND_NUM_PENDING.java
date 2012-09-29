@@ -18,14 +18,15 @@ package org.jmangos.realm.network.packet.wow.server;
 
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 
-
 /**
  * @author MinimaJack
- *
+ * 
  */
 public class SMSG_CALENDAR_SEND_NUM_PENDING extends AbstractWoWServerPacket {
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
      */
     @Override

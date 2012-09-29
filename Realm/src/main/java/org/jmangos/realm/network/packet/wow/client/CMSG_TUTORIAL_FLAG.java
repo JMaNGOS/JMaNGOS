@@ -27,7 +27,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class CMSG_TUTORIAL_FLAG extends AbstractWoWClientPacket {
     
-
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
@@ -36,16 +35,15 @@ public class CMSG_TUTORIAL_FLAG extends AbstractWoWClientPacket {
         if (wInt >= 8) {
             return;
         }
-       // final int rInt = (Flag % 32);
+        // final int rInt = (Flag % 32);
         
         // TODO:FIXME
-       // int tutorials = 0;// getAccount().getTutorials(wInt); /* disabled by paalgyula */
-       // tutorials |= (1 << rInt);
+        // int tutorials = 0;// getAccount().getTutorials(wInt); /* disabled by paalgyula */
+        // tutorials |= (1 << rInt);
         // getAccount().setTutorials(tutorials, wInt); /* disabled by paalgyula */
         
     }
     
-
     @Override
     protected void runImpl() {
     

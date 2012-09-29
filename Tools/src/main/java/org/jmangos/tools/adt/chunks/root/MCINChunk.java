@@ -48,7 +48,7 @@ public class MCINChunk extends ADTChunk {
     
     public String getOffsets() {
     
-        StringBuffer buf = new StringBuffer();
+        final StringBuffer buf = new StringBuffer();
         for (int i = 0; i < (16 * 16); ++i) {
             buf.append("\n mcnk:");
             buf.append(this.MCINEntrys[i].mcnk.get());

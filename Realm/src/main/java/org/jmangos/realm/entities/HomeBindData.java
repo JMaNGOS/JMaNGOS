@@ -53,7 +53,6 @@ public class HomeBindData {
     
     }
     
-    
     /**
      * @return the position
      */
@@ -61,16 +60,16 @@ public class HomeBindData {
     
         return this.position;
     }
-
     
     /**
-     * @param position the position to set
+     * @param position
+     *            the position to set
      */
-    public final void setPosition(Position position) {
+    public final void setPosition(final Position position) {
     
         this.position = position;
     }
-
+    
     /**
      * Gets the home bind map id.
      * 

@@ -52,7 +52,7 @@ public class CMSG_ITEM_QUERY_SINGLE extends AbstractWoWClientPacket {
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
         this.item = readD();
-        logger.info("Player wan't info for item {}", item);
+        logger.info("Player wan't info for item {}", this.item);
         
     }
     

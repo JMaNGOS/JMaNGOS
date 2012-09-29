@@ -32,7 +32,7 @@ public class RealmToClientPacketHandlerFactory extends AbstractPacketHandlerFact
     @Override
     public void loadPacket() {
     
-        clientPacketPath = "./conf/packetData/rc-packets.xml";
+        this.clientPacketPath = "./conf/packetData/rc-packets.xml";
         addList(loadStaticData(PacketData.class, this.packetXSDLocation, this.clientPacketPath));
     }
 }

@@ -61,8 +61,9 @@ import org.jmangos.world.entities.ItemPrototype;
 @DiscriminatorValue("1")
 public class FieldsItem extends FieldsObject implements Streamable {
     
-   // @Column(name = "slot", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
-   // private int                                     slot;
+    // @Column(name = "slot", nullable = false, insertable = true, updatable = true, length = 10,
+    // precision = 0)
+    // private int slot;
     
     @Column(name = "owner", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     private long                                    owner;

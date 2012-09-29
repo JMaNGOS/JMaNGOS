@@ -200,7 +200,6 @@ public class CharacterPositionerHolder extends BasicPositionerHolder {
         this.transportInfo = transportInfo;
     }
     
-    
     /**
      * @return the homeBindData
      */
@@ -208,16 +207,16 @@ public class CharacterPositionerHolder extends BasicPositionerHolder {
     
         return this.homeBindData;
     }
-
     
     /**
-     * @param homeBindData the homeBindData to set
+     * @param homeBindData
+     *            the homeBindData to set
      */
-    public final void setHomeBindData(HomeBindData homeBindData) {
+    public final void setHomeBindData(final HomeBindData homeBindData) {
     
         this.homeBindData = homeBindData;
     }
-
+    
     /**
      * @return the flags
      */

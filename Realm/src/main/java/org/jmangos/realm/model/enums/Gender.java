@@ -1,6 +1,5 @@
 package org.jmangos.realm.model.enums;
 
-
 public enum Gender {
     MALE((byte) 0),
     FEMALE((byte) 1);

@@ -428,7 +428,7 @@ public class WorldObject extends NamedObject {
      * @param m_uint32Values_mirror
      *            the m_uint32Values_mirror to set
      */
-    public final void setM_uint32Values_mirror(ChannelBuffer m_uint32Values_mirror) {
+    public final void setM_uint32Values_mirror(final ChannelBuffer m_uint32Values_mirror) {
     
         this.m_uint32Values_mirror = m_uint32Values_mirror;
     }

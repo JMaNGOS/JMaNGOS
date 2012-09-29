@@ -23,7 +23,7 @@ import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
  */
 public class SMSG_GMTICKET_GETTICKET extends AbstractWoWServerPacket {
     
-    private int status=0x0A;
+    private final int status = 0x0A;
     
     /*
      * (non-Javadoc)
@@ -33,10 +33,10 @@ public class SMSG_GMTICKET_GETTICKET extends AbstractWoWServerPacket {
     @Override
     protected void writeImpl() {
     
-        writeD(status);
-        if (status == 6) {
+        writeD(this.status);
+        if (this.status == 6) {
             writeD(123);
-            writeS(""); 
+            writeS("");
             writeC(0x7);
             writeF(0);
             writeF(0);

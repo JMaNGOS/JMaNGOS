@@ -81,6 +81,7 @@ public class TransportInfo {
     }
     
     public void writeTo(final ChannelBuffer bb) {
+    
         // TODO need implement
         throw new NotImplementedException();
     }

@@ -43,37 +43,35 @@ public class PlayerXpForLevel {
     public PlayerXpForLevel() {
     
     }
-
     
     /**
      * @return the level
      */
     public final Byte getLevel() {
     
-        return level;
+        return this.level;
     }
-
     
     /**
-     * @param level the level to set
+     * @param level
+     *            the level to set
      */
     public final void setLevel(final byte level) {
     
         this.level = level;
     }
-
     
     /**
      * @return the xpForNextLevel
      */
     public final int getXpForNextLevel() {
     
-        return xpForNextLevel;
+        return this.xpForNextLevel;
     }
-
     
     /**
-     * @param xpForNextLevel the xpForNextLevel to set
+     * @param xpForNextLevel
+     *            the xpForNextLevel to set
      */
     public final void setXpForNextLevel(final int xpForNextLevel) {
     

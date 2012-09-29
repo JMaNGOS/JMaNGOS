@@ -103,7 +103,7 @@ public enum SplineFlags {
      */
     SplineFlags(final int flag) {
     
-        value = flag;
+        this.value = flag;
     }
     
     /**
@@ -116,20 +116,22 @@ public enum SplineFlags {
         return this.value;
     }
     
-    public static SplineFlags get(int value) {
+    public static SplineFlags get(final int value) {
     
-        for (SplineFlags val : values()) {
-            if (val.getValue() == value)
+        for (final SplineFlags val : values()) {
+            if (val.getValue() == value) {
                 return val;
+            }
         }
         return null;
     }
     
-    public boolean contains(int val) {
+    public boolean contains(final int val) {
     
-        for (SplineFlags values : values()) {
-            if ((values.getValue() & val) == values.getValue())
+        for (final SplineFlags values : values()) {
+            if ((values.getValue() & val) == values.getValue()) {
                 return true;
+            }
         }
         return false;
     }

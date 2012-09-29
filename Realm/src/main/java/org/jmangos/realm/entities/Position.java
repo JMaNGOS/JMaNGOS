@@ -101,7 +101,7 @@ public class Position implements Cloneable {
     @Override
     public Position clone() {
     
-        Position newPos = new Position();
+        final Position newPos = new Position();
         newPos.setX(getX());
         newPos.setY(getY());
         newPos.setZ(getZ());

@@ -68,7 +68,7 @@ public class NamedObject implements ManagedObject {
     @Override
     public long getObjectId() {
     
-        return objectId;
+        return this.objectId;
     }
     
     @Override

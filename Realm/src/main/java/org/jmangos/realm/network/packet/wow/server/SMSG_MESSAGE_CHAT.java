@@ -12,7 +12,7 @@ import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 public class SMSG_MESSAGE_CHAT extends AbstractWoWServerPacket {
     
     private String       message;
-    private ChatMsg     chatMsg     = ChatMsg.SYSTEM;
+    private ChatMsg      chatMsg      = ChatMsg.SYSTEM;
     private ChatLanguage chatLanguage = ChatLanguage.UNIVERSAL;
     private Player       speaker      = null;
     

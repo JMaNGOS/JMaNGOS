@@ -33,7 +33,7 @@ public class CharStartOutfitEntry extends DBCStruct<CharStartOutfitEntry> {
     public final Signed8    gender            = new Signed8();
     public final Unsigned8  pad               = new Unsigned8();
     @XmlAttribute(name = "ItemId", required = true)
-    public final Signed32[] protoId            = array(new Signed32[MAX_OUTFIT_ITEMS]);
+    public final Signed32[] protoId           = array(new Signed32[MAX_OUTFIT_ITEMS]);
     @XmlAttribute(name = "ItemDisplayId")
     public final Signed32[] ItemDisplayId     = array(new Signed32[MAX_OUTFIT_ITEMS]);
     @XmlAttribute(name = "ItemInventorySlot")

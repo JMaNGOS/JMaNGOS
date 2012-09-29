@@ -38,7 +38,7 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
     private final List<CharacterData> charlist;
     
     /** The Constant logger. */
-    private static final Logger   logger = LoggerFactory.getLogger(CMSG_AUTH_SESSION.class);
+    private static final Logger       logger = LoggerFactory.getLogger(CMSG_AUTH_SESSION.class);
     
     /**
      * Instantiates a new <tt>SMSG_CHAR_ENUM</tt> packet.
@@ -82,7 +82,7 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
             writeD(-1);
             // Ban, dead, help, cloak, rename values. default: no flags
             writeD(0);
-            writeD(0); //character.getAtLoginFlags()
+            writeD(0); // character.getAtLoginFlags()
             
             writeC(0); // FIXME check at login first
             // TODO: implement Pet!
@@ -96,8 +96,8 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
             if (itemStorages == null) {
                 logger.error("Cannot get ItemStorages instance!");
             }
-            for (EquipmentSlots slot : EquipmentSlots.values()) {
-                FieldsItem invItem = characterData.getInventory().get(slot.ordinal());
+            for (final EquipmentSlots slot : EquipmentSlots.values()) {
+                final FieldsItem invItem = characterData.getInventory().get(slot.ordinal());
                 
                 if ((invItem != null)) {
                     int displayInfoID = 0x00;

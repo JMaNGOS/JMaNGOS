@@ -19,7 +19,7 @@ package org.jmangos.realm.model.enums;
 /**
  * 
  * @author MinimaJack
- *
+ * 
  */
 public enum Races {
     HUMAN(1),

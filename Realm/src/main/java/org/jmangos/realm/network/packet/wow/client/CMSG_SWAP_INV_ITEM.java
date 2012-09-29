@@ -39,22 +39,20 @@ public class CMSG_SWAP_INV_ITEM extends AbstractWoWClientPacket {
     @Inject
     @Named("nettyPacketSender")
     private AbstractPacketSender sender;
-    private int src;
-    private int dst;
+    private int                  src;
+    private int                  dst;
     
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
         logger.info("CMSG_SWAP_INV_ITEM");
-        dst = readC();
-        src = readC();
-        logger.info("CMSG_SWAP_INV_ITEM {} {}", src, dst);
+        this.dst = readC();
+        this.src = readC();
+        logger.info("CMSG_SWAP_INV_ITEM {} {}", this.src, this.dst);
     }
     
     @Override
     protected void runImpl() {
     
-
-        
     }
 }

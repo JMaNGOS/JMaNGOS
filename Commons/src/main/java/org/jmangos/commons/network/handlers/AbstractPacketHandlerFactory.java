@@ -18,8 +18,6 @@ package org.jmangos.commons.network.handlers;
 
 import gnu.trove.procedure.TIntObjectProcedure;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jmangos.commons.dataholder.XmlDataLoader;
 import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.model.PacketData;
@@ -29,6 +27,8 @@ import org.jmangos.commons.network.model.ReceivablePacket;
 import org.jmangos.commons.network.model.SendablePacket;
 import org.jmangos.commons.network.model.State;
 import org.jmangos.commons.service.ServiceContent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
 /**

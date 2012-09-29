@@ -137,7 +137,7 @@ public class CharacterData extends FieldsCharacter {
         
         for (final Entry<Integer, FieldsItem> equips : getInventory().entrySet()) {
             final EquipmentSlots slot = EquipmentSlots.get(equips.getKey());
-            if (slot != null && EquipmentSlots.ITEMS.contains(slot)) {
+            if ((slot != null) && EquipmentSlots.ITEMS.contains(slot)) {
                 this.bitSet.set(PlayerFields.PLAYER_VISIBLE_ITEM_1_ENTRYID.getValue() + (slot.ordinal() * 2));
                 if ((equips.getValue().getEnchants().get(EnchantmentSlot.PERM) != null) || (equips.getValue().getEnchants().get(EnchantmentSlot.TEMP) != null)) {
                     this.bitSet.set(PlayerFields.PLAYER_VISIBLE_ITEM_1_ENCHANTMENT.getValue() + (slot.ordinal() * 2));
@@ -243,8 +243,7 @@ public class CharacterData extends FieldsCharacter {
             addToInventory(lastEquipItem);
         }
         /**
-         * TODO fix crash client from hunter bugs
-         * now put it to pack
+         * TODO fix crash client from hunter bugs now put it to pack
          */
         if (EquipmentSlots.BAGS.contains(equipmentSlots)) {
             addToInventory(item);
@@ -298,8 +297,9 @@ public class CharacterData extends FieldsCharacter {
     private Integer getFreeSlotInPack() {
     
         for (Integer i = 23; i < 40; i++) {
-            if (!getInventory().containsKey(i))
+            if (!getInventory().containsKey(i)) {
                 return i;
+            }
         }
         return null;
     }

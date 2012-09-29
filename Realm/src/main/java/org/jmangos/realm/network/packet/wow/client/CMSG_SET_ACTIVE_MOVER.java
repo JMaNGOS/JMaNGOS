@@ -34,7 +34,7 @@ public class CMSG_SET_ACTIVE_MOVER extends AbstractWoWClientPacket {
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
     
-        long guid = readD();
+        final long guid = readD();
         skipAll();
         logger.debug("CMSG_SET_ACTIVE_MOVER: ", guid);
         

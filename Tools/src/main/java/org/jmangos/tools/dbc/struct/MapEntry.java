@@ -137,6 +137,7 @@ public class MapEntry extends DBCStruct<MapEntry> {
         return !isDungeon() || (this.id.get() == 209) || (this.id.get() == 269) || (this.id.get() == 309) || /**
          * 
          * 
+         * 
          * TanarisInstance, CavernsOfTime, Zul'gurub
          */
         (this.id.get() == 509) || (this.id.get() == 534) || (this.id.get() == 560) || /**

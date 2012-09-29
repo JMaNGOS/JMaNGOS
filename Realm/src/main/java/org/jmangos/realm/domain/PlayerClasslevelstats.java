@@ -6,7 +6,6 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-
 /**
  * Created with IntelliJ IDEA. User: paalgyula Date: 2012.08.12. Time: 14:31
  */

@@ -16,12 +16,12 @@
  *******************************************************************************/
 package org.jmangos.commons.network.receiver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.model.ReceivablePacket;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Class NettyPacketReceiver.

@@ -1,6 +1,5 @@
 package org.jmangos.realm.model.enums;
 
-
 /**
  * 
  * @author MinimaJack

@@ -79,7 +79,7 @@ public class MCNKChunk extends ADTChunk {
     
     public String getOffsets() {
     
-        StringBuffer buf = new StringBuffer();
+        final StringBuffer buf = new StringBuffer();
         for (int i = 0; i < 3; ++i) {
             buf.append("\n position ");
             buf.append(this.fMCNKHeader.position[i]);
