@@ -23,21 +23,23 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 @Configuration
 @EnableTransactionManagement
 public class RealmModule {
-    
+
     /** Database config */
     @Inject
     private DatabaseConfig databaseConfig;
-    
+
     @Bean
     public DataSource dataSourceRealm() {
-    
+
         final ComboPooledDataSource ds = new ComboPooledDataSource();
         try {
             ds.setDriverClass(this.databaseConfig.CHARS_DATABASE_DIALECT);
-            ds.setJdbcUrl(this.databaseConfig.CHARS_DATABASE_URL + this.databaseConfig.CHARS_DATABASE_NAME + "?autoReconnect=true");
+            ds.setJdbcUrl(this.databaseConfig.CHARS_DATABASE_URL +
+                this.databaseConfig.CHARS_DATABASE_NAME +
+                "?autoReconnect=true");
             ds.setUser(this.databaseConfig.CHARS_DATABASE_USER);
             ds.setPassword(this.databaseConfig.CHARS_DATABASE_PASSWORD);
-            
+
             ds.setMinPoolSize(this.databaseConfig.CHARS_DATABASE_CONNECTIONS_MIN);
             ds.setMaxPoolSize(this.databaseConfig.CHARS_DATABASE_CONNECTIONS_MAX);
             ds.setAutoCommitOnClose(false);
@@ -47,41 +49,43 @@ public class RealmModule {
         }
         return ds;
     }
-    
+
     @Bean
     public JpaVendorAdapter jpaVendorAdapterRealm() {
-    
+
         final HibernateJpaVendorAdapter hjva = new HibernateJpaVendorAdapter();
         hjva.setShowSql(true);
         hjva.setGenerateDdl(true);
         hjva.setDatabasePlatform(this.databaseConfig.CHARS_DATABASE_DIALECT);
         return hjva;
     }
-    
+
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryRealm() {
-    
-        final LocalContainerEntityManagerFactoryBean lcemfb = new LocalContainerEntityManagerFactoryBean();
+
+        final LocalContainerEntityManagerFactoryBean lcemfb =
+                new LocalContainerEntityManagerFactoryBean();
         lcemfb.setDataSource(dataSourceRealm());
         lcemfb.setPersistenceXmlLocation("classpath:META-INF/persistence-realm.xml");
         lcemfb.setJpaVendorAdapter(jpaVendorAdapterRealm());
         lcemfb.setJpaDialect(new HibernateJpaDialect());
         return lcemfb;
     }
-    
+
     @Bean
     @Qualifier("realm")
     public JpaTransactionManager transactionManagerRealm() {
-    
+
         final JpaTransactionManager jtm = new JpaTransactionManager();
         jtm.setEntityManagerFactory(entityManagerFactoryRealm().getObject());
         return jtm;
     }
-    
+
     @Bean
     public TransactionInterceptor transactionInterceptorRealm() {
-    
-        return new TransactionInterceptor(transactionManagerRealm(), new AnnotationTransactionAttributeSource());
+
+        return new TransactionInterceptor(transactionManagerRealm(),
+                new AnnotationTransactionAttributeSource());
     }
-    
+
 }

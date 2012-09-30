@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
@@ -34,55 +34,55 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
-    
+
     /** The sender. */
     @Inject
     @Named("nettyPacketSender")
     private AbstractPacketSender sender;
-    
+
     /** The account controller. */
     @Inject
-    private AccountController    accountController;
-    
-    private int                  lenLogin;
-    private String               login;
-    
+    private AccountController accountController;
+
+    private int lenLogin;
+    private String login;
+
     /**
      * Constructs new instance of <tt>CMD_AUTH_LOGON_CHALLENGE</tt> packet.
      * 
      * @param opcode
-     *            the opcode
+     *        the opcode
      */
-    
+
     public CMD_AUTH_LOGON_CHALLENGE(final int opcode) {
-    
+
         super(opcode);
     }
-    
+
     /**
      * Instantiates a new CMD_AUTH_LOGON_CHALLENGE.
      */
     public CMD_AUTH_LOGON_CHALLENGE() {
-    
+
         super();
     }
-    
+
     /**
      * 
      * @see org.jmangos.commons.network.model.ReceivablePacket#getMinimumLength()
      */
     @Override
     public int getMinimumLength() {
-    
+
         return 0;
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected void readImpl() {
-    
+
         /** int error = */
         readC();
         /** int size = */
@@ -110,21 +110,22 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
         this.lenLogin = readC();
         this.login = new String(readB(this.lenLogin), Charset.forName("UTF-8"));
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected void runImpl() {
-    
-        final WoWAuthResponse response = this.accountController.loadLogin(this.login, (NettyNetworkChannel) getClient());
+
+        final WoWAuthResponse response =
+                this.accountController.loadLogin(this.login, (NettyNetworkChannel) getClient());
         switch (response) {
             case WOW_FAIL_BANNED:
                 this.sender.sendAndClose(getClient(), new SMD_AUTH_LOGON_CHALLENGE(response));
-                break;
+            break;
             default:
                 this.sender.send(getClient(), new SMD_AUTH_LOGON_CHALLENGE(response));
-                break;
+            break;
         }
     }
 }

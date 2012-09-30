@@ -5,5 +5,5 @@ public enum ModType {
     BASE_PCT,
     TOTAL_FLAT,
     TOTAL_PCT;
-    
+
 }

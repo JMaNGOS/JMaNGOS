@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 @Service
 @Qualifier(value = "dbcStorages")
 public class DbcStorages {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(DbcStorages.class);
     @Autowired
-    CharOutfitService           charOutfitService;
-    
+    CharOutfitService charOutfitService;
+
     public void encode() {
-    
+
         logger.info("Start encoding dbc files");
         this.charOutfitService.saveAll();
         logger.info("Finished encoding dbc files");

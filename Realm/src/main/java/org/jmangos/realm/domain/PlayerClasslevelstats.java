@@ -12,36 +12,46 @@ import javax.persistence.Table;
 @Table(name = "player_classlevelstats")
 @Entity
 public class PlayerClasslevelstats {
-    
+
     @EmbeddedId
     PlayerClassLevelInfoPK playerClassLevelInfoPK;
-    
-    private short          basehp;
-    
-    @Column(name = "basehp", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
+
+    private short basehp;
+
+    @Column(name = "basehp",
+            nullable = false,
+            insertable = true,
+            updatable = true,
+            length = 5,
+            precision = 0)
     @Basic
     public short getBasehp() {
-    
+
         return this.basehp;
     }
-    
+
     public void setBasehp(final short basehp) {
-    
+
         this.basehp = basehp;
     }
-    
+
     private short basemana;
-    
-    @Column(name = "basemana", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
+
+    @Column(name = "basemana",
+            nullable = false,
+            insertable = true,
+            updatable = true,
+            length = 5,
+            precision = 0)
     @Basic
     public short getBasemana() {
-    
+
         return this.basemana;
     }
-    
+
     public void setBasemana(final short basemana) {
-    
+
         this.basemana = basemana;
     }
-    
+
 }

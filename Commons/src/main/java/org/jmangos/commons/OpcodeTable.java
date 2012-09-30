@@ -1,7 +1,8 @@
 package org.jmangos.commons;
 
 /**
- * Created with IntelliJ IDEA. User: Goofy Date: 2012.08.08. Time: 11:54 To change this template use
+ * Created with IntelliJ IDEA. User: Goofy Date: 2012.08.08. Time: 11:54 To
+ * change this template use
  * File | Settings | File Templates.
  */
 public enum OpcodeTable {
@@ -112,7 +113,8 @@ public enum OpcodeTable {
     SMSG_FRIEND_STATUS(0x068), // implemented
     CMSG_ADD_FRIEND(0x069), // implemented
     CMSG_DEL_FRIEND(0x06A), // implemented
-    CMSG_SET_CONTACT_NOTES(0x06B), // implemented (Commented in WorldSession.cpp, why ?)
+    CMSG_SET_CONTACT_NOTES(0x06B), // implemented (Commented in
+                                   // WorldSession.cpp, why ?)
     CMSG_ADD_IGNORE(0x06C), // implemented
     CMSG_DEL_IGNORE(0x06D), // implemented
     CMSG_GROUP_INVITE(0x06E), // implemented
@@ -340,10 +342,12 @@ public enum OpcodeTable {
     SMSG_DAMAGE_DONE_OBSOLETE(0x14C), // not used in client
     SMSG_DAMAGE_TAKEN_OBSOLETE(0x14D), // not used in client
     SMSG_CANCEL_COMBAT(0x14E), // implemented
-    SMSG_SPELLBREAKLOG(0x14F), // / TODO: implement, same struct as SMSG_SPELLDISMISSLOG
+    SMSG_SPELLBREAKLOG(0x14F), // / TODO: implement, same struct as
+                               // SMSG_SPELLDISMISSLOG
     SMSG_SPELLHEALLOG(0x150), // implemented
     SMSG_SPELLENERGIZELOG(0x151), // implemented
-    SMSG_BREAK_TARGET(0x152), // / TODO: implement. was CMSG_SHEATHE_OBSOLETE in your enum.
+    SMSG_BREAK_TARGET(0x152), // / TODO: implement. was CMSG_SHEATHE_OBSOLETE in
+                              // your enum.
     CMSG_SAVE_PLAYER(0x153), // GM client only
     CMSG_SETDEATHBINDPOINT(0x154), // GM client only
     SMSG_BINDPOINTUPDATE(0x155), // implemented
@@ -361,7 +365,8 @@ public enum OpcodeTable {
     SMSG_LOOT_RELEASE_RESPONSE(0x161), // implemented
     SMSG_LOOT_REMOVED(0x162), // implemented
     SMSG_LOOT_MONEY_NOTIFY(0x163), // implemented
-    SMSG_LOOT_ITEM_NOTIFY(0x164), // / TODO: maybe implement. handled by client, but unused. Oo
+    SMSG_LOOT_ITEM_NOTIFY(0x164), // / TODO: maybe implement. handled by client,
+                                  // but unused. Oo
     SMSG_LOOT_CLEAR_MONEY(0x165), // implemented
     SMSG_ITEM_PUSH_RESULT(0x166), // implemented
     SMSG_DUEL_REQUESTED(0x167), // implemented
@@ -538,7 +543,8 @@ public enum OpcodeTable {
     SMSG_GMTICKET_GETTICKET(0x212), // implemented
     CMSG_UNLEARN_TALENTS(0x213), // implemented
     SMSG_GAMEOBJECT_SPAWN_ANIM_OBSOLETE(0x214), // not used in client
-    SMSG_GAMEOBJECT_DESPAWN_ANIM(0x215), // / cannot find this in client. obsolete? its implemented.
+    SMSG_GAMEOBJECT_DESPAWN_ANIM(0x215), // / cannot find this in client.
+                                         // obsolete? its implemented.
     MSG_CORPSE_QUERY(0x216), // implemented
     CMSG_GMTICKET_DELETETICKET(0x217), // implemented
     SMSG_GMTICKET_DELETETICKET(0x218), // implemented
@@ -564,9 +570,11 @@ public enum OpcodeTable {
     CMSG_GM_MOVECORPSE(0x22C), // GM client only
     CMSG_GM_FREEZE(0x22D), // GM client only
     CMSG_GM_UBERINVIS(0x22E), // GM client only
-    CMSG_GM_REQUEST_PLAYER_INFO(0x22F), // GM client only. handled and ignored in normal one. seems
+    CMSG_GM_REQUEST_PLAYER_INFO(0x22F), // GM client only. handled and ignored
+                                        // in normal one. seems
                                         // to be a SMSG, not a CMSG.
-    SMSG_GM_PLAYER_INFO(0x230), // GM client only. handled and ignored in normal one.
+    SMSG_GM_PLAYER_INFO(0x230), // GM client only. handled and ignored in normal
+                                // one.
     CMSG_GUILD_RANK(0x231), // implemented
     CMSG_GUILD_ADD_RANK(0x232), // implemented
     CMSG_GUILD_DEL_RANK(0x233), // implemented
@@ -692,7 +700,8 @@ public enum OpcodeTable {
     SMSG_SUMMON_REQUEST(0x2AB), // implemented
     CMSG_SUMMON_RESPONSE(0x2AC), // implemented
     MSG_MOVE_TOGGLE_GRAVITY_CHEAT(0x2AD), // / TODO: investigate
-    SMSG_MONSTER_MOVE_TRANSPORT(0x2AE), // / TODO: investigate. this is like the MONSTER_MOVE one,
+    SMSG_MONSTER_MOVE_TRANSPORT(0x2AE), // / TODO: investigate. this is like the
+                                        // MONSTER_MOVE one,
                                         // handle vehicle and NPC on boat.
     SMSG_PET_BROKEN(0x2AF), // / TODO: implement
     MSG_MOVE_FEATHER_FALL(0x2B0), // / TODO: investigate
@@ -770,7 +779,8 @@ public enum OpcodeTable {
     CMSG_MINIGAME_MOVE(0x2F8), // / TODO: implement
     SMSG_MINIGAME_MOVE_FAILED(0x2F9), // not used in client
     SMSG_RAID_INSTANCE_MESSAGE(0x2FA), // / TODO: implement
-    SMSG_COMPRESSED_MOVES(0x2FB), // / (TODO: investigate if you feel like it. i'm too lazy.)
+    SMSG_COMPRESSED_MOVES(0x2FB), // / (TODO: investigate if you feel like it.
+                                  // i'm too lazy.)
     CMSG_GUILD_INFO_TEXT(0x2FC), // implemented
     SMSG_CHAT_RESTRICTED(0x2FD), // / TODO: implement
     SMSG_SPLINE_SET_RUN_SPEED(0x2FE), // / TODO: investigate
@@ -826,7 +836,8 @@ public enum OpcodeTable {
     SMSG_SPELL_UPDATE_CHAIN_TARGETS(0x330), // / TODO: implement
     CMSG_CHAT_FILTERED(0x331), // / TODO: implement
     SMSG_EXPECTED_SPAM_RECORDS(0x332), // / TODO: implement
-    SMSG_SPELLSTEALLOG(0x333), // / implemented, same struct as SMSG_SPELLDISPELLOG
+    SMSG_SPELLSTEALLOG(0x333), // / implemented, same struct as
+                               // SMSG_SPELLDISPELLOG
     CMSG_LOTTERY_QUERY_OBSOLETE(0x334), // not used in client
     SMSG_LOTTERY_QUERY_RESULT_OBSOLETE(0x335), // not used in client
     CMSG_BUY_LOTTERY_TICKET_OBSOLETE(0x336), // not used in client
@@ -929,11 +940,15 @@ public enum OpcodeTable {
     SMSG_REAL_GROUP_UPDATE(0x397), // / TODO: implement
     SMSG_LFG_DISABLED(0x398), // / TODO: implement
     CMSG_ACTIVE_PVP_CHEAT(0x399), // GM client only
-    CMSG_CHEAT_DUMP_ITEMS_DEBUG_ONLY(0x39A), // used in debugging client only; PTR? seems to be
+    CMSG_CHEAT_DUMP_ITEMS_DEBUG_ONLY(0x39A), // used in debugging client only;
+                                             // PTR? seems to be
                                              // useful.
-    SMSG_CHEAT_DUMP_ITEMS_DEBUG_ONLY_RESPONSE(0x39B), // used in debugging client only, same as
+    SMSG_CHEAT_DUMP_ITEMS_DEBUG_ONLY_RESPONSE(0x39B), // used in debugging
+                                                      // client only, same as
                                                       // SMSG_ITEM_QUERY_SINGLE_RESPONSE
-    SMSG_CHEAT_DUMP_ITEMS_DEBUG_ONLY_RESPONSE_WRITE_FILE(0x39C), // used in debugging client only
+    SMSG_CHEAT_DUMP_ITEMS_DEBUG_ONLY_RESPONSE_WRITE_FILE(0x39C), // used in
+                                                                 // debugging
+                                                                 // client only
     SMSG_UPDATE_COMBO_POINTS(0x39D), // implemented
     SMSG_VOICE_SESSION_ROSTER_UPDATE(0x39E), // / TODO: investigate, implement
     SMSG_VOICE_SESSION_LEAVE(0x39F), // / TODO: implement
@@ -956,7 +971,8 @@ public enum OpcodeTable {
     SMSG_VOICE_SESSION_ENABLE(0x3B0), // not used in client
     SMSG_VOICE_PARENTAL_CONTROLS(0x3B1), // / TODO: implement
     CMSG_GM_WHISPER(0x3B2), // GM client only
-    SMSG_GM_MESSAGECHAT(0x3B3), // / TODO: implement. like SMSG_MESSAGECHAT (0x096)
+    SMSG_GM_MESSAGECHAT(0x3B3), // / TODO: implement. like SMSG_MESSAGECHAT
+                                // (0x096)
     MSG_GM_GEARRATING(0x3B4), // GM client only
     CMSG_COMMENTATOR_ENABLE(0x3B5), // / TODO: implement
     SMSG_COMMENTATOR_STATE_CHANGED(0x3B6), // / TODO: implement
@@ -1086,7 +1102,8 @@ public enum OpcodeTable {
     CMSG_CALENDAR_EVENT_RSVP(0x432), // / TODO: investigate, implement
     CMSG_CALENDAR_EVENT_REMOVE_INVITE(0x433), // / TODO: investigate, implement
     CMSG_CALENDAR_EVENT_STATUS(0x434), // / TODO: investigate, implement
-    CMSG_CALENDAR_EVENT_MODERATOR_STATUS(0x435), // / TODO: investigate, implement
+    CMSG_CALENDAR_EVENT_MODERATOR_STATUS(0x435), // / TODO: investigate,
+                                                 // implement
     SMSG_CALENDAR_SEND_CALENDAR(0x436), // / TODO: investigate, implement
     SMSG_CALENDAR_SEND_EVENT(0x437), // / TODO: investigate, implement
     SMSG_CALENDAR_FILTER_GUILD(0x438), // / TODO: implement
@@ -1098,16 +1115,20 @@ public enum OpcodeTable {
     SMSG_CALENDAR_RAID_LOCKOUT_ADDED(0x43E), // / TODO: investigate, implement
     SMSG_CALENDAR_RAID_LOCKOUT_REMOVED(0x43F), // / TODO: investigate, implement
     SMSG_CALENDAR_EVENT_INVITE_ALERT(0x440), // / TODO: investigate, implement
-    SMSG_CALENDAR_EVENT_INVITE_REMOVED_ALERT(0x441), // / TODO: investigate, implement
-    SMSG_CALENDAR_EVENT_INVITE_STATUS_ALERT(0x442), // / TODO: investigate, implement
+    SMSG_CALENDAR_EVENT_INVITE_REMOVED_ALERT(0x441), // / TODO: investigate,
+                                                     // implement
+    SMSG_CALENDAR_EVENT_INVITE_STATUS_ALERT(0x442), // / TODO: investigate,
+                                                    // implement
     SMSG_CALENDAR_EVENT_REMOVED_ALERT(0x443), // / TODO: investigate, implement
     SMSG_CALENDAR_EVENT_UPDATED_ALERT(0x444), // / TODO: investigate, implement
-    SMSG_CALENDAR_EVENT_MODERATOR_STATUS_ALERT(0x445), // / TODO: investigate, implement
+    SMSG_CALENDAR_EVENT_MODERATOR_STATUS_ALERT(0x445), // / TODO: investigate,
+                                                       // implement
     CMSG_CALENDAR_COMPLAIN(0x446), // / TODO: investigate, implement
     CMSG_CALENDAR_GET_NUM_PENDING(0x447), // / TODO: implement
     SMSG_CALENDAR_SEND_NUM_PENDING(0x448), // / TODO: implement
     CMSG_SAVE_DANCE(0x449), // development client only
-    SMSG_NOTIFY_DANCE(0x44A), // / TODO: investigate, well .. its in dev anyway..
+    SMSG_NOTIFY_DANCE(0x44A), // / TODO: investigate, well .. its in dev
+                              // anyway..
     CMSG_PLAY_DANCE(0x44B), // / TODO: investigate, well .. its in dev anyway..
     SMSG_PLAY_DANCE(0x44C), // / TODO: investigate, well .. its in dev anyway..
     CMSG_LOAD_DANCES(0x44D), // development client only
@@ -1115,10 +1136,13 @@ public enum OpcodeTable {
     SMSG_STOP_DANCE(0x44F), // / TODO: implement, well .. its in dev anyway..
     CMSG_SYNC_DANCE(0x450), // / TODO: implement, well .. its in dev anyway..
     CMSG_DANCE_QUERY(0x451), // development client only
-    SMSG_DANCE_QUERY_RESPONSE(0x452), // / TODO: investigate, well .. its in dev anyway..
-    SMSG_INVALIDATE_DANCE(0x453), // / TODO: implement, well .. its in dev anyway..
+    SMSG_DANCE_QUERY_RESPONSE(0x452), // / TODO: investigate, well .. its in dev
+                                      // anyway..
+    SMSG_INVALIDATE_DANCE(0x453), // / TODO: implement, well .. its in dev
+                                  // anyway..
     CMSG_DELETE_DANCE(0x454), // development client only
-    SMSG_LEARNED_DANCE_MOVES(0x455), // / TODO: investigate, well .. its in dev anyway..
+    SMSG_LEARNED_DANCE_MOVES(0x455), // / TODO: investigate, well .. its in dev
+                                     // anyway..
     CMSG_LEARN_DANCE_MOVE(0x456), // development client only
     CMSG_UNLEARN_DANCE_MOVE(0x457), // development client only
     CMSG_SET_RUNE_COUNT(0x458), // not used in client
@@ -1199,8 +1223,10 @@ public enum OpcodeTable {
     SMSG_SERVER_BUCK_DATA_START(0x4A3), // not used in client
     CMSG_QUERY_VEHICLE_STATUS(0x4A4), // not used in client
     UMSG_UNKNOWN_1189(0x4A5), // / TODO: investigate, old SMSG_PET_GUIDS
-    SMSG_UNKNOWN_1190(0x4A6), // / TODO: investigate, old SMSG_CLIENTCACHE_VERSION
-    SMSG_PLAYER_VEHICLE_DATA(0x4A7), // / TODO: investigate, smsg guid+uint32 (vehicle)
+    SMSG_UNKNOWN_1190(0x4A6), // / TODO: investigate, old
+                              // SMSG_CLIENTCACHE_VERSION
+    SMSG_PLAYER_VEHICLE_DATA(0x4A7), // / TODO: investigate, smsg guid+uint32
+                                     // (vehicle)
     CMSG_PLAYER_VEHICLE_ENTER(0x4A8), // / TODO: investigate, cmsg uint64
     CMSG_EJECT_PASSENGER(0x4A9), // / TODO: investigate, cmsg uint64
     SMSG_PET_GUIDS(0x4AA), // / TODO: implement
@@ -1217,25 +1243,33 @@ public enum OpcodeTable {
     SMSG_ITEMREFUNDREQUEST(0x4B5), // implemented
     CMSG_UNKNOWN_1206(0x4B6), // / TODO: investigate, CMSG, uint32
     SMSG_UNKNOWN_1207(0x4B7), // / TODO: investigate, SMSG, string+float
-    CMSG_LFG_SET_ROLES(0x4B8), // / TODO: investigate, CMSG, empty, lua: SetLFGRoles
+    CMSG_LFG_SET_ROLES(0x4B8), // / TODO: investigate, CMSG, empty, lua:
+                               // SetLFGRoles
     UMSG_UNKNOWN_1209(0x4B9), // / TODO: investigate
-    CMSG_UNKNOWN_1210(0x4BA), // / TODO: investigate, CMSG, uint64, lua: CalendarContextEventSignUp
+    CMSG_UNKNOWN_1210(0x4BA), // / TODO: investigate, CMSG, uint64, lua:
+                              // CalendarContextEventSignUp
     SMSG_UNKNOWN_1211(0x4BB), // / TODO: investigate, SMSG, calendar related
-    SMSG_EQUIPMENT_SET_LIST(0x4BC), // / TODO: investigate, SMSG, equipment manager list?
-    CMSG_EQUIPMENT_SET_SAVE(0x4BD), // / TODO: investigate, CMSG, lua: SaveEquipmentSet
+    SMSG_EQUIPMENT_SET_LIST(0x4BC), // / TODO: investigate, SMSG, equipment
+                                    // manager list?
+    CMSG_EQUIPMENT_SET_SAVE(0x4BD), // / TODO: investigate, CMSG, lua:
+                                    // SaveEquipmentSet
     CMSG_UNKNOWN_1214(0x4BE), // / TODO: investigate, CMSG, missle?
-    SMSG_UNKNOWN_1215(0x4BF), // TODO: investigate,/ SMSG, uint64, uint8, 3 x float
+    SMSG_UNKNOWN_1215(0x4BF), // TODO: investigate,/ SMSG, uint64, uint8, 3 x
+                              // float
     SMSG_TALENTS_INFO(0x4C0), // / TODO: investigate, SMSG, talents related
-    CMSG_LEARN_TALENTS_MULTIPLE(0x4C1), // / TODO: investigate, CMSG, lua: LearnPreviewTalents (for
+    CMSG_LEARN_TALENTS_MULTIPLE(0x4C1), // / TODO: investigate, CMSG, lua:
+                                        // LearnPreviewTalents (for
                                         // player?)
-    CMSG_LEARN_PREVIEW_TALENTS_PET(0x4C2), // / TODO: investigate, CMSG, lua: LearnPreviewTalents
+    CMSG_LEARN_PREVIEW_TALENTS_PET(0x4C2), // / TODO: investigate, CMSG, lua:
+                                           // LearnPreviewTalents
                                            // (for pet?)
     UMSG_UNKNOWN_1219(0x4C3), // / TODO: investigate
     UMSG_UNKNOWN_1220(0x4C4), // / TODO: investigate
     UMSG_UNKNOWN_1221(0x4C5), // / TODO: investigate
     UMSG_UNKNOWN_1222(0x4C6), // / TODO: investigate
     SMSG_UNKNOWN_1223(0x4C7), // / TODO: investigate, uint64, arena pet?
-    SMSG_UNKNOWN_1224(0x4C8), // / TODO: investigate, uint32 "Can't change arena team..."
+    SMSG_UNKNOWN_1224(0x4C8), // / TODO: investigate, uint32
+                              // "Can't change arena team..."
     UMSG_UNKNOWN_1225(0x4C9), // / TODO: investigate
     UMSG_UNKNOWN_1226(0x4CA), // / TODO: investigate
     CMSG_UNKNOWN_1227(0x4CB), //
@@ -1246,16 +1280,16 @@ public enum OpcodeTable {
     CMSG_WORLD_STATE_UI_TIMER_UPDATE(0x4F6), // implemented
     SMSG_WORLD_STATE_UI_TIMER_UPDATE(0x4F7), // implemented
     NUM_MSG_TYPES(0x4F8); // max msg number
-    
+
     private int opcode;
-    
+
     OpcodeTable(final int opcode) {
-    
+
         this.opcode = opcode;
     }
-    
+
     public static OpcodeTable getOpcode(final int ord) {
-    
+
         for (final OpcodeTable ot : OpcodeTable.values()) {
             if (ot.opcode == ord) {
                 return ot;
@@ -1263,9 +1297,9 @@ public enum OpcodeTable {
         }
         return null;
     }
-    
+
     public int value() {
-    
+
         return this.opcode;
     }
 }

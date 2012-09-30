@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
@@ -26,7 +26,8 @@ import java.util.List;
  * References: http://madx.dk/wowdev/wiki/index.php?title=BLP
  * http://forum.worldwindcentral.com/showthread.php?p=71605
  * http://en.wikipedia.org/wiki/S3_Texture_Compression
- * http://oss.sgi.com/projects/ogl-sample/registry/EXT/texture_compression_s3tc.txt
+ * http://oss.sgi.com/projects/ogl-sample/registry/EXT/texture_compression_s3tc.
+ * txt
  * http://msdn.microsoft.com/en-us/library/bb147243%28VS.85%29.aspx
  * 
  * This code is not at all optimized for performance nor for cleanliness.
@@ -36,42 +37,43 @@ import java.util.List;
  * @author Dan Watling <dan@synaptik.com>
  **/
 public class BLP {
-    
+
     /**
      * Minimal header length
      */
     private static final int HEADER_LENGTH = 20;
-    private byte[]           signature     = new byte[4];            // BLP2
-    private int              type;                                   // 0 = JPEG compression; 1 =
-                                                                      // Uncompressed or DirectX
-                                                                      // compression
-    private byte             encoding;                               // 1 for uncompressed, 2 for
-                                                                      // DirectX compression
-    private byte             alphaBitDepth;                          // 0, 1 or 8
-    private byte             alphaEncoding;                          // 0 = DirectX 1 alpha (0/1
-                                                                      // bit);
-                                                                      // 1
-                                                                      // = DirectX 2/3 alpha (4-bit
-                                                                      // alpha); 2 = DirectX 4/5
-                                                                      // alpha
-                                                                      // (interpolated)
-    private byte             hasMips;                                // 0 = no mip maps; 1 = has
-                                                                      // mips
-                                                                      // (#
-                                                                      // determined by dimensions)
-    private int              width;
-    private int              height;
-    private int[]            mipmapOffsets = new int[16];
-    private int[]            mipmapSize    = new int[16];
-    private Color[]          palette       = new Color[256];
-    private List<byte[]>     mipmaps       = new ArrayList<byte[]>();
-    
+    private byte[] signature = new byte[4];            // BLP2
+    private int type;                                   // 0 = JPEG compression; 1 =
+                      // Uncompressed or DirectX
+                      // compression
+    private byte encoding;                               // 1 for uncompressed, 2 for
+                           // DirectX compression
+    private byte alphaBitDepth;                          // 0, 1 or 8
+    private byte alphaEncoding;                          // 0 = DirectX 1 alpha (0/1
+                                // bit);
+                                // 1
+                                // = DirectX 2/3 alpha (4-bit
+                                // alpha); 2 = DirectX 4/5
+                                // alpha
+                                // (interpolated)
+    private byte hasMips;                                // 0 = no mip maps; 1 = has
+                          // mips
+                          // (#
+                          // determined by dimensions)
+    private int width;
+    private int height;
+    private int[] mipmapOffsets = new int[16];
+    private int[] mipmapSize = new int[16];
+    private Color[] palette = new Color[256];
+    private List<byte[]> mipmaps = new ArrayList<byte[]>();
+
     public static BLP read(final ByteBuffer bb) {
-    
+
         if (bb.capacity() < HEADER_LENGTH) {
             return null;
         }
-        bb.order(ByteOrder.LITTLE_ENDIAN); // format is in little endian, ensure the buffer is too
+        bb.order(ByteOrder.LITTLE_ENDIAN); // format is in little endian, ensure
+                                           // the buffer is too
         final BLP result = new BLP();
         bb.get(result.signature);
         result.type = bb.getInt();
@@ -81,7 +83,7 @@ public class BLP {
         result.hasMips = bb.get();
         result.width = bb.getInt();
         result.height = bb.getInt();
-        
+
         for (int index = 0; index < result.mipmapOffsets.length; index++) {
             result.mipmapOffsets[index] = bb.getInt();
         }
@@ -95,19 +97,30 @@ public class BLP {
             bb.get(); // toss alpha value
             result.palette[index] = new Color(r, g, b); // RGB
         }
-        
+
         readMipMaps(result, bb);
         return result;
     }
-    
+
     @Override
     public final String toString() {
-    
-        return "(" + this.width + "x" + this.height + ") " + this.type + "/" + this.encoding + "/" + this.alphaBitDepth + "/" + this.alphaEncoding;
+
+        return "(" +
+            this.width +
+            "x" +
+            this.height +
+            ") " +
+            this.type +
+            "/" +
+            this.encoding +
+            "/" +
+            this.alphaBitDepth +
+            "/" +
+            this.alphaEncoding;
     }
-    
+
     private static void readMipMaps(final BLP result, final ByteBuffer bb) {
-    
+
         for (int index = 0; index < result.mipmapOffsets.length; index++) {
             if ((result.mipmapOffsets[index] > 0) && (result.mipmapOffsets[index] < bb.capacity())) {
                 bb.position(result.mipmapOffsets[index]);
@@ -120,16 +133,16 @@ public class BLP {
             }
         }
     }
-    
+
     public final BufferedImage getBufferedImage() {
-    
+
         if (this.mipmaps.size() == 0) {
             return null;
         }
         final ByteBuffer bb = ByteBuffer.wrap(this.mipmaps.get(0));
         bb.order(ByteOrder.LITTLE_ENDIAN);
         BufferedImage result = null;
-        
+
         if ((this.type == 1) && (this.encoding == 1)) {
             if (this.alphaBitDepth == 0) {
                 result = getBufferedImageUncompressed(bb, this.alphaBitDepth);
@@ -153,13 +166,15 @@ public class BLP {
                 result = getBufferedImageDXT5(bb);
             }
         }
-        
+
         return result;
     }
-    
-    protected final BufferedImage getBufferedImageUncompressed(final ByteBuffer bb, final int givenAlphaBitDepth) {
-    
-        final BufferedImage result = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB_PRE);
+
+    protected final BufferedImage getBufferedImageUncompressed(final ByteBuffer bb,
+            final int givenAlphaBitDepth) {
+
+        final BufferedImage result =
+                new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB_PRE);
         final int[][] colors = new int[this.height][this.width];
         final int[][] alpha = new int[this.height][this.width];
         for (int y = 0; y < this.height; y++) {
@@ -203,7 +218,7 @@ public class BLP {
         }
         return result;
     }
-    
+
     /**
      * DXT1 doesn't look right. Alpha is odd (INV_Misc_Bag_09_Blue.blp)
      * 
@@ -212,11 +227,12 @@ public class BLP {
      * @return
      */
     protected BufferedImage getBufferedImageDXT1(final ByteBuffer bb, final boolean alpha) {
-    
+
         final int[] pixels = new int[16];
-        
-        final BufferedImage result = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB_PRE);
-        
+
+        final BufferedImage result =
+                new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB_PRE);
+
         final int numTilesWide = this.width / 4;
         final int numTilesHigh = this.height / 4;
         for (int i = 0; i < numTilesHigh; i++) {
@@ -225,7 +241,7 @@ public class BLP {
                 final short c1 = bb.getShort();
                 int uC0 = c0;
                 int uC1 = c1;
-                
+
                 if (uC0 < 0) {
                     uC0 = 65536 + c0;
                 }
@@ -233,9 +249,9 @@ public class BLP {
                     uC1 = 65536 + c1;
                 }
                 final Color[] lookupTable = expandLookupTableDXT1(c0, c1, alpha);
-                
+
                 final int colorData = bb.getInt();
-                
+
                 for (int k = pixels.length - 1; k >= 0; k--) {
                     final int colorCode = (colorData >>> (k * 2)) & 0x03;
                     int alphaValue = 255;
@@ -244,21 +260,22 @@ public class BLP {
                     }
                     pixels[k] = (alphaValue << 24) | getPixel888(lookupTable[colorCode]);
                 }
-                
+
                 result.setRGB(j * 4, i * 4, 4, 4, pixels, 0, 4);
             }
         }
         return result;
     }
-    
+
     // Yanked from http://forum.worldwindcentral.com/showthread.php?p=71605
     protected BufferedImage getBufferedImageDXT3(final ByteBuffer bb) {
-    
+
         final int[] pixels = new int[16];
         final int[] alphas = new int[16];
-        
-        final BufferedImage result = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB_PRE);
-        
+
+        final BufferedImage result =
+                new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB_PRE);
+
         final int numTilesWide = this.width / 4;
         final int numTilesHigh = this.height / 4;
         for (int i = 0; i < numTilesHigh; i++) {
@@ -266,35 +283,39 @@ public class BLP {
                 // Read the alpha table.
                 final long alphaData = bb.getLong();
                 for (int k = alphas.length - 1; k >= 0; k--) {
-                    alphas[k] = (int) (alphaData >>> (k * 4)) & 0xF; // Alphas are just 4 bits per
+                    alphas[k] = (int) (alphaData >>> (k * 4)) & 0xF; // Alphas
+                                                                     // are just
+                                                                     // 4 bits
+                                                                     // per
                                                                      // pixel
                     alphas[k] <<= 4;
                 }
-                
+
                 final short minColor = bb.getShort();
                 final short maxColor = bb.getShort();
                 final Color[] lookupTable = expandLookupTableDXT3(minColor, maxColor);
-                
+
                 final int colorData = bb.getInt();
-                
+
                 for (int k = pixels.length - 1; k >= 0; k--) {
                     final int colorCode = (colorData >>> (k * 2)) & 0x03;
                     pixels[k] = (alphas[k] << 24) | getPixel888(lookupTable[colorCode]);
                 }
-                
+
                 result.setRGB(j * 4, i * 4, 4, 4, pixels, 0, 4);
             }
         }
         return result;
     }
-    
+
     protected BufferedImage getBufferedImageDXT5(final ByteBuffer bb) {
-    
+
         final int[] pixels = new int[16];
         final int[] alphas = new int[16];
-        
-        final BufferedImage result = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB_PRE);
-        
+
+        final BufferedImage result =
+                new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB_PRE);
+
         final int numTilesWide = this.width / 4;
         final int numTilesHigh = this.height / 4;
         for (int i = 0; i < numTilesHigh; i++) {
@@ -302,60 +323,60 @@ public class BLP {
                 final long data = bb.getLong();
                 final short a0 = (short) (data & 0xFF);
                 final short a1 = (short) ((data >> 8) & 0xFF);
-                
+
                 final int[] alphaTable = expandAlphaTable(a0, a1);
-                
+
                 long alphaData = data >>> 16;
                 for (int k = 0; k < alphas.length; k++) {
                     final int alphaIndex = (int) (alphaData & 0x07);
                     alphas[k] = alphaTable[alphaIndex];
                     alphaData >>>= 3;
                 }
-                
+
                 final short minColor = bb.getShort();
                 final short maxColor = bb.getShort();
                 final Color[] lookupTable = expandLookupTableDXT3(minColor, maxColor);
-                
+
                 final int colorData = bb.getInt();
-                
+
                 for (int k = pixels.length - 1; k >= 0; k--) {
                     final int colorCode = (colorData >>> (k * 2)) & 0x03;
                     pixels[k] = (alphas[k] << 24) | getPixel888(lookupTable[colorCode]);
                 }
-                
+
                 result.setRGB(j * 4, i * 4, 4, 4, pixels, 0, 4);
             }
         }
         return result;
     }
-    
+
     // Yanked from http://forum.worldwindcentral.com/showthread.php?p=71605
     protected static Color getColor565(final int pixel) {
-    
+
         final Color color = new Color();
-        
+
         color.r = (int) (((long) pixel) & 0xf800) >>> 8;
         color.g = (int) (((long) pixel) & 0x07e0) >>> 3;
         color.b = (int) (((long) pixel) & 0x001f) << 3;
-        
+
         return color;
     }
-    
+
     protected static Color getColor555(final int pixel) {
-    
+
         final Color color = new Color();
-        
+
         color.r = (int) (((long) pixel) & 0xf800) >>> 8;
         color.g = (int) (((long) pixel) & 0x07c0) >>> 3;
         color.b = (int) (((long) pixel) & 0x001f) << 3;
-        
+
         return color;
     }
-    
+
     private static int[] expandAlphaTable(final short a0, final short a1) {
-    
+
         final int[] a = new int[] { a0, a1, 0, 0, 0, 0, 0, 0 };
-        
+
         if (a[0] > a[1]) {
             a[2] = ((6 * a[0]) + (1 * a[1]) + 3) / 7;
             a[3] = ((5 * a[0]) + (2 * a[1]) + 3) / 7;
@@ -371,44 +392,46 @@ public class BLP {
             a[6] = 0;
             a[7] = 255;
         }
-        
+
         return a;
     }
-    
+
     // Yanked from http://forum.worldwindcentral.com/showthread.php?p=71605
     private static Color[] expandLookupTableDXT3(final short c0, final short c1) {
-    
-        final Color[] c = new Color[] { getColor565(c0), getColor565(c1), new Color(), new Color() };
-        
+
+        final Color[] c =
+                new Color[] { getColor565(c0), getColor565(c1), new Color(), new Color() };
+
         c[2].r = ((2 * c[0].r) + c[1].r + 1) / 3;
         c[2].g = ((2 * c[0].g) + c[1].g + 1) / 3;
         c[2].b = ((2 * c[0].b) + c[1].b + 1) / 3;
-        
+
         c[3].r = (c[0].r + (2 * c[1].r) + 1) / 3;
         c[3].g = (c[0].g + (2 * c[1].g) + 1) / 3;
         c[3].b = (c[0].b + (2 * c[1].b) + 1) / 3;
-        
+
         return c;
     }
-    
+
     private static Color[] expandLookupTableDXT1(final short c0, final short c1, final boolean alpha) {
-    
+
         int uC0 = c0;
         int uC1 = c1;
-        
+
         if (uC0 < 0) {
             uC0 = 65536 + c0;
         }
         if (uC1 < 0) {
             uC1 = 65536 + c1;
         }
-        final Color[] c = new Color[] { getColor565(c0), getColor565(c1), new Color(), new Color() };
-        
+        final Color[] c =
+                new Color[] { getColor565(c0), getColor565(c1), new Color(), new Color() };
+
         if ((alpha && (uC0 > uC1)) || !alpha) {
             c[2].r = ((2 * c[0].r) + c[1].r + 1) / 3;
             c[2].g = ((2 * c[0].g) + c[1].g + 1) / 3;
             c[2].b = ((2 * c[0].b) + c[1].b + 1) / 3;
-            
+
             c[3].r = (c[0].r + 1 + (2 * c[1].r)) / 3;
             c[3].g = (c[0].g + 1 + (2 * c[1].g)) / 3;
             c[3].b = (c[0].b + 1 + (2 * c[1].b)) / 3;
@@ -416,226 +439,226 @@ public class BLP {
             c[2].r = (c[0].r + c[1].r + 1) / 2;
             c[2].g = (c[0].g + c[1].g + 1) / 2;
             c[2].b = (c[0].b + c[1].b + 1) / 2;
-            
+
             c[3].r = 0;
             c[3].g = 0;
             c[3].b = 0;
         }
-        
+
         return c;
     }
-    
+
     // Yanked from http://forum.worldwindcentral.com/showthread.php?p=71605
     protected static int getPixel888(final Color color) {
-    
+
         final int r = color.r;
         final int g = color.g;
         final int b = color.b;
         return (r << 16) | (g << 8) | b;
     }
-    
+
     /**
      * @return the signature
      */
     public final byte[] getSignature() {
-    
+
         return this.signature;
     }
-    
+
     /**
      * @param signature
-     *            the signature to set
+     *        the signature to set
      */
     public final void setSignature(final byte[] signature) {
-    
+
         this.signature = signature;
     }
-    
+
     /**
      * @return the type
      */
     public final int getType() {
-    
+
         return this.type;
     }
-    
+
     /**
      * @param type
-     *            the type to set
+     *        the type to set
      */
     public final void setType(final int type) {
-    
+
         this.type = type;
     }
-    
+
     /**
      * @return the encoding
      */
     public final byte getEncoding() {
-    
+
         return this.encoding;
     }
-    
+
     /**
      * @param encoding
-     *            the encoding to set
+     *        the encoding to set
      */
     public final void setEncoding(final byte encoding) {
-    
+
         this.encoding = encoding;
     }
-    
+
     /**
      * @return the alphaBitDepth
      */
     public final byte getAlphaBitDepth() {
-    
+
         return this.alphaBitDepth;
     }
-    
+
     /**
      * @param alphaBitDepth
-     *            the alphaBitDepth to set
+     *        the alphaBitDepth to set
      */
     public final void setAlphaBitDepth(final byte alphaBitDepth) {
-    
+
         this.alphaBitDepth = alphaBitDepth;
     }
-    
+
     /**
      * @return the alphaEncoding
      */
     public final byte getAlphaEncoding() {
-    
+
         return this.alphaEncoding;
     }
-    
+
     /**
      * @param alphaEncoding
-     *            the alphaEncoding to set
+     *        the alphaEncoding to set
      */
     public final void setAlphaEncoding(final byte alphaEncoding) {
-    
+
         this.alphaEncoding = alphaEncoding;
     }
-    
+
     /**
      * @return the hasMips
      */
     public final byte getHasMips() {
-    
+
         return this.hasMips;
     }
-    
+
     /**
      * @param hasMips
-     *            the hasMips to set
+     *        the hasMips to set
      */
     public final void setHasMips(final byte hasMips) {
-    
+
         this.hasMips = hasMips;
     }
-    
+
     /**
      * @return the width
      */
     public final int getWidth() {
-    
+
         return this.width;
     }
-    
+
     /**
      * @param width
-     *            the width to set
+     *        the width to set
      */
     public final void setWidth(final int width) {
-    
+
         this.width = width;
     }
-    
+
     /**
      * @return the height
      */
     public final int getHeight() {
-    
+
         return this.height;
     }
-    
+
     /**
      * @param height
-     *            the height to set
+     *        the height to set
      */
     public final void setHeight(final int height) {
-    
+
         this.height = height;
     }
-    
+
     /**
      * @return the mipmapOffsets
      */
     public final int[] getMipmapOffsets() {
-    
+
         return this.mipmapOffsets;
     }
-    
+
     /**
      * @param mipmapOffsets
-     *            the mipmapOffsets to set
+     *        the mipmapOffsets to set
      */
     public final void setMipmapOffsets(final int[] mipmapOffsets) {
-    
+
         this.mipmapOffsets = mipmapOffsets;
     }
-    
+
     /**
      * @return the mipmapSize
      */
     public final int[] getMipmapSize() {
-    
+
         return this.mipmapSize;
     }
-    
+
     /**
      * @param mipmapSize
-     *            the mipmapSize to set
+     *        the mipmapSize to set
      */
     public final void setMipmapSize(final int[] mipmapSize) {
-    
+
         this.mipmapSize = mipmapSize;
     }
-    
+
     /**
      * @return the palette
      */
     public final Color[] getPalette() {
-    
+
         return this.palette;
     }
-    
+
     /**
      * @param palette
-     *            the palette to set
+     *        the palette to set
      */
     public final void setPalette(final Color[] palette) {
-    
+
         this.palette = palette;
     }
-    
+
     /**
      * @return the mipmaps
      */
     public final List<byte[]> getMipmaps() {
-    
+
         return this.mipmaps;
     }
-    
+
     /**
      * @param mipmaps
-     *            the mipmaps to set
+     *        the mipmaps to set
      */
     public final void setMipmaps(final List<byte[]> mipmaps) {
-    
+
         this.mipmaps = mipmaps;
     }
-    
+
 }

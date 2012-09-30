@@ -3,13 +3,14 @@ package org.jmangos.realm.network.packet.wow.server;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 
 /**
- * Created with IntelliJ IDEA. User: Goofy Date: 2012.08.07. Time: 23:43 To change this template use
+ * Created with IntelliJ IDEA. User: Goofy Date: 2012.08.07. Time: 23:43 To
+ * change this template use
  * File | Settings | File Templates.
  */
 public class SMSG_CHAR_CREATE extends AbstractWoWServerPacket {
-    
+
     private Integer code;
-    
+
     public static enum Code {
         IN_PROGRESS(0x2E),
         SUCCESS(0x2F),
@@ -35,37 +36,37 @@ public class SMSG_CHAR_CREATE extends AbstractWoWServerPacket {
         CHARACTER_RACE_ONLY(0x43),
         CHARACTER_GOLD_LIMIT(0x44),
         FORCE_LOGIN(0x45);
-        
+
         private int value;
-        
+
         Code(final int value) {
-        
+
             this.value = value;
         }
-        
+
         public int getValue() {
-        
+
             return this.value;
         }
     };
-    
+
     public SMSG_CHAR_CREATE() {
-    
+
     }
-    
+
     public SMSG_CHAR_CREATE(final int code) {
-    
+
         this.code = code;
     }
-    
+
     public SMSG_CHAR_CREATE(final Code code) {
-    
+
         this.code = code.getValue();
     }
-    
+
     @Override
     protected void writeImpl() {
-    
+
         if (this.code != null) {
             writeC(this.code);
         } else {

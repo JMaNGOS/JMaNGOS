@@ -10,14 +10,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class AbstractConfig {
-    
+
     /**
      * Logger.
      */
     private static final Logger log = LoggerFactory.getLogger(AbstractConfig.class);
-    
+
     protected AbstractConfig(final String configFileName) {
-    
+
         Properties properties;
         try {
             properties = PropertiesUtils.load(configFileName);
@@ -26,9 +26,9 @@ public abstract class AbstractConfig {
         }
         process(this, properties);
     }
-    
+
     protected static void process(final Object obj, final Properties... properties) {
-    
+
         for (final Field field : obj.getClass().getDeclaredFields()) {
             if (Modifier.isStatic(field.getModifiers()) || Modifier.isFinal(field.getModifiers())) {
                 continue;
@@ -38,9 +38,10 @@ public abstract class AbstractConfig {
             }
         }
     }
-    
-    private static void processField(final Object obj, final Field field, final Properties... properties) {
-    
+
+    private static void processField(final Object obj, final Field field,
+            final Properties... properties) {
+
         final Property property = field.getAnnotation(Property.class);
         final boolean isAccessible = field.isAccessible();
         field.setAccessible(true);
@@ -55,12 +56,17 @@ public abstract class AbstractConfig {
         }
         field.setAccessible(isAccessible);
         if (log.isDebugEnabled()) {
-            log.debug("Field " + field.getName() + " of class " + field.getDeclaringClass().getName() + " is " + value);
+            log.debug("Field " +
+                field.getName() +
+                " of class " +
+                field.getDeclaringClass().getName() +
+                " is " +
+                value);
         }
     }
-    
+
     private static String findPropertyByKey(final String key, final Properties... properties) {
-    
+
         for (final Properties current : properties) {
             if (current.containsKey(key)) {
                 return current.getProperty(key);

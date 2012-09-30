@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
@@ -20,7 +20,7 @@ package org.jmangos.realm.model.enums;
  * The Enum MovementFlags.
  */
 public enum ItemFlags {
-    
+
     /** The BINDED */
     BINDED(0x00000001),
     /** The UNK1 */
@@ -85,44 +85,44 @@ public enum ItemFlags {
     UNK30(0x40000000),
     /** The UNK31. */
     UNK31(0x80000000);
-    
+
     /** The value. */
     private int value;
-    
+
     /**
      * Instantiates a new movement flags.
      * 
      * @param flag
-     *            the flag
+     *        the flag
      */
     ItemFlags(final int flag) {
-    
+
         setValue(flag);
     }
-    
+
     /**
      * Sets the value.
      * 
      * @param value
-     *            the new value
+     *        the new value
      */
     public void setValue(final int value) {
-    
+
         this.value = value;
     }
-    
+
     /**
      * Gets the value.
      * 
      * @return the value
      */
     public int getValue() {
-    
+
         return this.value;
     }
-    
+
     public boolean contains(final int val) {
-    
+
         return ((getValue() & val) == getValue());
     }
 }

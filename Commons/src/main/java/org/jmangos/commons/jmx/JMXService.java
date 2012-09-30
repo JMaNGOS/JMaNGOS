@@ -16,18 +16,18 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class JMXService {
-    
+
     private static final Logger log = LoggerFactory.getLogger(JMXService.class);
-    
+
     @Inject
-    private MBeanServer         server;
-    
+    private MBeanServer server;
+
     /**
      * @param mBean
      * @param beanName
      */
     public void start(final Object mBean, final String name) {
-    
+
         log.info(String.format("Starting JMX bean %s", name));
         try {
             this.server.registerMBean(mBean, new ObjectName(name));
@@ -35,12 +35,12 @@ public class JMXService {
             log.error(String.format("Can't register bean %s", name), e);
         }
     }
-    
+
     /**
      * @param beanName
      */
     public void stop(final String beanName) {
-    
+
         log.info(String.format("Stopping JMX bean %s", beanName));
         try {
             this.server.unregisterMBean(new ObjectName(beanName));

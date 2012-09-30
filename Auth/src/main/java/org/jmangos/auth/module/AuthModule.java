@@ -22,21 +22,23 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 @Configuration
 @EnableTransactionManagement
 public class AuthModule {
-    
+
     /** Database config */
     @Inject
     private DatabaseConfig databaseConfig;
-    
+
     @Bean
     public DataSource dataSourceAuth() {
-    
+
         final ComboPooledDataSource ds = new ComboPooledDataSource();
         try {
             ds.setDriverClass(this.databaseConfig.ACCOUNT_DATABASE_DRIVER);
-            ds.setJdbcUrl(this.databaseConfig.ACCOUNT_DATABASE_URL + this.databaseConfig.ACCOUNT_DATABASE_NAME + "?autoReconnect=true");
+            ds.setJdbcUrl(this.databaseConfig.ACCOUNT_DATABASE_URL +
+                this.databaseConfig.ACCOUNT_DATABASE_NAME +
+                "?autoReconnect=true");
             ds.setUser(this.databaseConfig.ACCOUNT_DATABASE_USER);
             ds.setPassword(this.databaseConfig.ACCOUNT_DATABASE_PASSWORD);
-            
+
             ds.setMinPoolSize(this.databaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MIN);
             ds.setMaxPoolSize(this.databaseConfig.ACCOUNT_DATABASE_CONNECTIONS_MAX);
             ds.setAutoCommitOnClose(false);
@@ -46,39 +48,41 @@ public class AuthModule {
         }
         return ds;
     }
-    
+
     @Bean
     public JpaVendorAdapter jpaVendorAdapterAuth() {
-    
+
         final HibernateJpaVendorAdapter hjva = new HibernateJpaVendorAdapter();
         hjva.setShowSql(true);
         hjva.setGenerateDdl(true);
         hjva.setDatabasePlatform(this.databaseConfig.ACCOUNT_DATABASE_DIALECT);
         return hjva;
     }
-    
+
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-    
-        final LocalContainerEntityManagerFactoryBean lcemfb = new LocalContainerEntityManagerFactoryBean();
+
+        final LocalContainerEntityManagerFactoryBean lcemfb =
+                new LocalContainerEntityManagerFactoryBean();
         lcemfb.setDataSource(dataSourceAuth());
         lcemfb.setJpaVendorAdapter(jpaVendorAdapterAuth());
         lcemfb.setJpaDialect(new HibernateJpaDialect());
         return lcemfb;
     }
-    
+
     @Bean
     public JpaTransactionManager transactionManagerAuth() {
-    
+
         final JpaTransactionManager jtm = new JpaTransactionManager();
         jtm.setEntityManagerFactory(entityManagerFactory().getObject());
         return jtm;
     }
-    
+
     @Bean
     public TransactionInterceptor transactionInterceptorAuth() {
-    
-        return new TransactionInterceptor(transactionManagerAuth(), new AnnotationTransactionAttributeSource());
+
+        return new TransactionInterceptor(transactionManagerAuth(),
+                new AnnotationTransactionAttributeSource());
     }
-    
+
 }

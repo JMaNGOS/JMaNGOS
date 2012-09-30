@@ -13,7 +13,7 @@ import org.jmangos.realm.entities.FieldsItem;
 import org.jmangos.realm.model.enums.HighGuid;
 
 public class WowExtendIdGenerator extends TableGenerator {
-    
+
     private static HashMap<Class<?>, Integer> hiClass;
     {
         if (hiClass == null) {
@@ -23,39 +23,42 @@ public class WowExtendIdGenerator extends TableGenerator {
             hiClass.put(FieldsGameObject.class, HighGuid.GAMEOBJECT.getValue());
             hiClass.put(CharacterData.class, HighGuid.PLAYER.getValue());
         }
-        
+
     }
-    
+
     /*
      * (non-Javadoc)
      * 
-     * @see org.hibernate.id.enhanced.TableGenerator#determineSegmentValue(java.util.Properties)
+     * @see
+     * org.hibernate.id.enhanced.TableGenerator#determineSegmentValue(java.util
+     * .Properties)
      */
     @Override
     protected String determineSegmentValue(final Properties params) {
-    
+
         String segmentName = params.getProperty(TABLE);
         // Container and Item id equals
         if (segmentName.equals("fields_container")) {
             segmentName = "fields_item";
         }
-        
+
         return segmentName;
     }
-    
+
     /*
      * (non-Javadoc)
      * 
      * @see
-     * org.hibernate.id.enhanced.TableGenerator#generate(org.hibernate.engine.spi.SessionImplementor
+     * org.hibernate.id.enhanced.TableGenerator#generate(org.hibernate.engine.spi
+     * .SessionImplementor
      * , java.lang.Object)
      */
     @Override
     public synchronized Serializable generate(final SessionImplementor session, final Object obj) {
-    
+
         final Serializable value = super.generate(session, obj);
         final Long l = (long) hiClass.get(obj.getClass());
         return (l << 52) | (Long) value;
     }
-    
+
 }

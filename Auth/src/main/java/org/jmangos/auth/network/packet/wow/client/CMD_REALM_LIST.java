@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
@@ -32,53 +32,53 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CMD_REALM_LIST extends AbstractWoWClientPacket {
-    
+
     /** The sender. */
     @Inject
     @Named("nettyPacketSender")
     private AbstractPacketSender sender;
-    
+
     /** The RealmListController. */
     @Inject
-    private RealmListController  realmListController;
-    
+    private RealmListController realmListController;
+
     /** The Config. */
     @Inject
-    private Config               config;
-    
+    private Config config;
+
     /**
      * 
      * @see org.jmangos.commons.network.model.ReceivablePacket#getMinimumLength()
      */
     @Override
     public int getMinimumLength() {
-    
+
         return 4;
     }
-    
+
     /**
      * Instantiates a new CMD_REALM_LIST.
      */
     public CMD_REALM_LIST() {
-    
+
         super();
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected void readImpl() {
-    
+
         readB(getAvaliableBytes());
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected void runImpl() {
-    
+
         // must be reloaded from db
         if (this.config.COMPATIBLE.equals(Compatiple.MANGOS)) {
             this.realmListController.update();

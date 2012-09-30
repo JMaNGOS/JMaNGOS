@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
@@ -48,29 +48,30 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 public class AccountQueueController {
-    
+
     /** The Constant logger. */
-    private static final Logger                logger       = LoggerFactory.getLogger(AccountQueueController.class);
+    private static final Logger logger = LoggerFactory.getLogger(AccountQueueController.class);
     /** */
-    private final FastMap<String, AccountInfo> accountQueue = new FastMap<String, AccountInfo>().shared();
+    private final FastMap<String, AccountInfo> accountQueue =
+            new FastMap<String, AccountInfo>().shared();
     /** The sender. */
     @Inject
     @Named("serverPacketSender")
-    private AbstractPacketSender               authSender;
+    private AbstractPacketSender authSender;
     @Inject
     @Named("nettyPacketSender")
-    private AbstractPacketSender               clientsender;
+    private AbstractPacketSender clientsender;
     /** */
-    private NetworkChannel                     authNetworkChannel;
-    
-    private static final Charset               charset      = Charset.forName("UTF-8");
-    
+    private NetworkChannel authNetworkChannel;
+
+    private static final Charset charset = Charset.forName("UTF-8");
+
     @Inject
-    RealmController                            realmController;
-    
+    RealmController realmController;
+
     /** */
     public void loadKeyAndValidateAccount(final AccountInfo aci) {
-    
+
         if (this.accountQueue.containsKey(aci.getName())) {
             logger.debug("Account {} exist in queue", aci.getName());
             return;
@@ -79,14 +80,15 @@ public class AccountQueueController {
         this.accountQueue.put(aci.getName(), aci);
         this.authSender.send(this.authNetworkChannel, new SMD_SESSION_KEY(aci.getName()));
     }
-    
+
     public void recieveAccountData(final AccountInfo account) {
-    
+
         if (this.accountQueue.containsKey(account.getName()) && validateAccountInfo(account)) {
             logger.debug("Recieve AccountInfo for account: {}", account.getName());
             final AccountInfo cAccountInfo = this.accountQueue.get(account.getName());
             this.clientsender.send(cAccountInfo.getChannel(), new SMSG_AUTH_RESPONSE());
-            this.clientsender.send(cAccountInfo.getChannel(), new SMSG_ADDON_INFO(cAccountInfo.getAddonLists()));
+            this.clientsender.send(cAccountInfo.getChannel(),
+                    new SMSG_ADDON_INFO(cAccountInfo.getAddonLists()));
             this.clientsender.send(cAccountInfo.getChannel(), new SMSG_CLIENTCACHE_VERSION());
             this.clientsender.send(cAccountInfo.getChannel(), new SMSG_TUTORIAL_FLAGS());
             this.accountQueue.remove(account.getName());
@@ -94,9 +96,9 @@ public class AccountQueueController {
             logger.debug("Auth server sent wrong data: {}", account.getName());
         }
     }
-    
+
     private boolean validateAccountInfo(final AccountInfo account) {
-    
+
         final AccountInfo cAccountInfo = this.accountQueue.get(account.getName());
         MessageDigest sha;
         try {
@@ -105,7 +107,8 @@ public class AccountQueueController {
             return false;
         }
         // TODO replace
-        final RealmToClientChannelHandler channelHandler = (RealmToClientChannelHandler) ((NettyNetworkChannel) cAccountInfo.getChannel()).getChannel().getPipeline().getLast();
+        final RealmToClientChannelHandler channelHandler =
+                (RealmToClientChannelHandler) ((NettyNetworkChannel) cAccountInfo.getChannel()).getChannel().getPipeline().getLast();
         final byte[] t = { 0, 0, 0, 0 };
         sha.update(account.getName().toUpperCase().getBytes(charset));
         sha.update(t);
@@ -125,14 +128,14 @@ public class AccountQueueController {
         this.realmController.addAccount(cAccountInfo);
         return true;
     }
-    
+
     public void removeFromQueue(final String accountName) {
-    
+
         this.accountQueue.remove(accountName);
     }
-    
+
     public void setAuthNetworkChannel(final NetworkChannel authNetworkChannel) {
-    
+
         this.authNetworkChannel = authNetworkChannel;
     }
 }

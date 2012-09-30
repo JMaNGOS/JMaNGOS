@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
@@ -34,13 +34,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CMD_AUTH_LOGON_PROOF extends AbstractRealmClientPacket {
-    
+
     /** The logger. */
-    private static Logger        logger = LoggerFactory.getLogger(CMD_AUTH_LOGON_PROOF.class);
+    private static Logger logger = LoggerFactory.getLogger(CMD_AUTH_LOGON_PROOF.class);
     @Inject
     @Named("serverPacketSender")
     private AbstractPacketSender sender;
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -48,12 +48,12 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractRealmClientPacket {
      */
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
-    
+
         if (readC() == WoWAuthResponse.WOW_SUCCESS.getMessageId()) {
             logger.debug("CMD_AUTH_LOGON_PROOF succes");
         }
     }
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -61,8 +61,8 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractRealmClientPacket {
      */
     @Override
     protected void runImpl() {
-    
+
         this.sender.send(getClient(), new SMD_AUTH_ENABLE_CRYPT());
-        
+
     }
 }

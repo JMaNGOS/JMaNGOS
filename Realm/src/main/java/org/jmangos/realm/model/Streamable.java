@@ -11,9 +11,9 @@ import org.jmangos.realm.entities.CharacterData;
  * 
  */
 public interface Streamable {
-    
+
     public ChannelBuffer writeValuesUpdate();
-    
+
     public int buildCreateBlock(final ChannelBuffer updateBlocks, CharacterData characterData);
-    
+
 }

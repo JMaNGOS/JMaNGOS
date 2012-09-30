@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
@@ -38,20 +38,20 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CMD_AUTH_ENABLE_CRYPT extends AbstractRealmClientPacket {
-    
+
     @Inject
     @Named("serverPacketSender")
-    private AbstractPacketSender   sender;
-    
+    private AbstractPacketSender sender;
+
     @Inject
-    private Config                 config;
-    
+    private Config config;
+
     @Inject
-    private RealmController        realmController;
-    
+    private RealmController realmController;
+
     @Inject
     private AccountQueueController accountQueueController;
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -59,11 +59,11 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractRealmClientPacket {
      */
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
-    
+
         // read size of the packet before enable encryption
         readC();
     }
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -71,17 +71,18 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractRealmClientPacket {
      */
     @Override
     protected void runImpl() {
-    
+
         final ChannelPipeline pipeline = getClient().getChannel().getPipeline();
         pipeline.addFirst("framedecoder", new AuthPacketFrameDecoder());
         pipeline.addFirst("encoder", new AuthPacketFrameEncoder());
-        final RealmToAuthChannelHandler channelHandler = (RealmToAuthChannelHandler) pipeline.getLast();
+        final RealmToAuthChannelHandler channelHandler =
+                (RealmToAuthChannelHandler) pipeline.getLast();
         channelHandler.getCrypt().init(channelHandler.getSeed());
-        
+
         // TODO save in network service
         this.realmController.setAuthNetworkChannel(getClient());
         this.accountQueueController.setAuthNetworkChannel(getClient());
-        
+
         // read from Player service
         final Float popl = 0.4f;
         this.sender.send(getClient(), new SMD_REALM_DATA(this.config, popl));

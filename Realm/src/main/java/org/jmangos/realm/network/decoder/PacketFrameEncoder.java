@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
@@ -33,22 +33,26 @@ import org.slf4j.LoggerFactory;
  * The Class PacketFrameEncoder.
  */
 public class PacketFrameEncoder extends OneToOneEncoder {
-    
+
     /** The Constant log. */
     private static final Logger log = LoggerFactory.getLogger(PacketFrameEncoder.class);
-    
+
     /*
      * (non-Javadoc)
      * 
-     * @see org.jboss.netty.handler.codec.oneone.OneToOneEncoder#encode(org.jboss.netty.channel.
+     * @see
+     * org.jboss.netty.handler.codec.oneone.OneToOneEncoder#encode(org.jboss
+     * .netty.channel.
      * ChannelHandlerContext, org.jboss.netty.channel.Channel, java.lang.Object)
      */
     @Override
-    protected Object encode(final ChannelHandlerContext ctx, final Channel channel, final Object msg) throws Exception {
-    
+    protected Object encode(final ChannelHandlerContext ctx, final Channel channel, final Object msg)
+            throws Exception {
+
         final ChannelBuffer message = (ChannelBuffer) msg;
-        
-        final RealmToClientChannelHandler channelHandler = (RealmToClientChannelHandler) ctx.getPipeline().getLast();
+
+        final RealmToClientChannelHandler channelHandler =
+                (RealmToClientChannelHandler) ctx.getPipeline().getLast();
         final int opcode = message.readUnsignedShort();
         final int size = message.readableBytes() + 2;
         final byte[] header = new byte[4];
@@ -65,22 +69,23 @@ public class PacketFrameEncoder extends OneToOneEncoder {
         frame.writeBytes(encryptHeader, 0, index + 1);
         final ChannelBuffer tmp = message.readBytes(message.readableBytes());
         frame.writeBytes(tmp);
-        log.info(String.format("[SEND PACKET] :  0x%02X - %s", opcode, OpcodeTable.getOpcode(opcode)));
+        log.info(String.format("[SEND PACKET] :  0x%02X - %s", opcode,
+                OpcodeTable.getOpcode(opcode)));
         final String d = toHex(tmp.array());
         log.info(d);
         return frame;
     }
-    
+
     /**
      * 
      * @param text
-     *            the text
+     *        the text
      * @param chunkSize
-     *            the chunk size
+     *        the chunk size
      * @return the list
      */
     public static String toHex(final byte[] bytes) {
-    
+
         if (bytes.length == 0) {
             return "";
         }

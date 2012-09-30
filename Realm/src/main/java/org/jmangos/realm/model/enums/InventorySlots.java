@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
@@ -44,21 +44,21 @@ public enum InventorySlots {
     ITEM_15(37),
     ITEM_16(38),
     ITEM_END(39);
-    
+
     private int value;
-    
+
     InventorySlots(final int value) {
-    
+
         this.value = value;
     }
-    
+
     public int getValue() {
-    
+
         return this.value;
     }
-    
+
     public static InventorySlots get(final int value) {
-    
+
         for (final InventorySlots slot : values()) {
             if (slot.getValue() == value) {
                 return slot;

@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
@@ -27,27 +27,32 @@ import javax.imageio.ImageIO;
 /*****************************************************************************
  * A convenience class for loading icons from images.
  * 
- * Icons loaded from this class are formatted to fit within the required dimension (16x16, 32x32, or
- * 128x128). If the source image is larger than the target dimension, it is shrunk down to the
- * minimum size that will fit. If it is smaller, then it is only scaled up if the new scale can be a
- * per-pixel linear scale (i.e., x2, x3, x4, etc). In both cases, the image's width/height ratio is
+ * Icons loaded from this class are formatted to fit within the required
+ * dimension (16x16, 32x32, or
+ * 128x128). If the source image is larger than the target dimension, it is
+ * shrunk down to the
+ * minimum size that will fit. If it is smaller, then it is only scaled up if
+ * the new scale can be a
+ * per-pixel linear scale (i.e., x2, x3, x4, etc). In both cases, the image's
+ * width/height ratio is
  * kept the same as the source image.
  * 
  * @author Chris Molini
  *****************************************************************************/
 public class IconLoader {
-    
+
     /*************************************************************************
      * Loads an icon in ByteBuffer form.
      * 
      * @param loader
-     *            A Loader pointing to the image.
+     *        A Loader pointing to the image.
      * 
-     * @return An array of ByteBuffers containing the pixel data for the icon in various sizes (as
+     * @return An array of ByteBuffers containing the pixel data for the icon in
+     *         various sizes (as
      *         recommended by the OS).
      *************************************************************************/
     public static ByteBuffer[] load(final String fileName) {
-    
+
         BufferedImage image = null;
         try {
             image = ImageIO.read(new File(fileName));
@@ -69,43 +74,47 @@ public class IconLoader {
         }
         return buffers;
     }
-    
+
     /*************************************************************************
      * Copies the supplied image into a square icon at the indicated size.
      * 
      * @param image
-     *            The image to place onto the icon.
+     *        The image to place onto the icon.
      * @param dimension
-     *            The desired size of the icon.
+     *        The desired size of the icon.
      * 
      * @return A ByteBuffer of pixel data at the indicated size.
      *************************************************************************/
     private static ByteBuffer loadInstance(final BufferedImage image, final int dimension) {
-    
-        final BufferedImage scaledIcon = new BufferedImage(dimension, dimension, BufferedImage.TYPE_INT_ARGB_PRE);
+
+        final BufferedImage scaledIcon =
+                new BufferedImage(dimension, dimension, BufferedImage.TYPE_INT_ARGB_PRE);
         final Graphics2D g = scaledIcon.createGraphics();
         final double ratio = getIconRatio(image, scaledIcon);
         final double width = image.getWidth() * ratio;
         final double height = image.getHeight() * ratio;
-        g.drawImage(image, (int) ((scaledIcon.getWidth() - width) / 2), (int) ((scaledIcon.getHeight() - height) / 2), (int) (width), (int) (height), null);
+        g.drawImage(image, (int) ((scaledIcon.getWidth() - width) / 2),
+                (int) ((scaledIcon.getHeight() - height) / 2), (int) (width), (int) (height), null);
         g.dispose();
-        
+
         return convertToByteBuffer(scaledIcon);
     }
-    
+
     /*************************************************************************
-     * Gets the width/height ratio of the icon. This is meant to simplify scaling the icon to a new
+     * Gets the width/height ratio of the icon. This is meant to simplify
+     * scaling the icon to a new
      * dimension.
      * 
      * @param src
-     *            The base image that will be placed onto the icon.
+     *        The base image that will be placed onto the icon.
      * @param icon
-     *            The icon that will have the image placed on it.
+     *        The icon that will have the image placed on it.
      * 
-     * @return The amount to scale the source image to fit it onto the icon appropriately.
+     * @return The amount to scale the source image to fit it onto the icon
+     *         appropriately.
      *************************************************************************/
     private static double getIconRatio(final BufferedImage src, final BufferedImage icon) {
-    
+
         double ratio = 1;
         if (src.getWidth() > icon.getWidth()) {
             ratio = (double) (icon.getWidth()) / src.getWidth();
@@ -125,17 +134,17 @@ public class IconLoader {
         }
         return ratio;
     }
-    
+
     /*************************************************************************
      * Converts a BufferedImage into a ByteBuffer of pixel data.
      * 
      * @param image
-     *            The image to convert.
+     *        The image to convert.
      * 
      * @return A ByteBuffer that contains the pixel data of the supplied image.
      *************************************************************************/
     public static ByteBuffer convertToByteBuffer(final BufferedImage image) {
-    
+
         final byte[] buffer = new byte[image.getWidth() * image.getHeight() * 4];
         int counter = 0;
         for (int i = 0; i < image.getHeight(); i++) {

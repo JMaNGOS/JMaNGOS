@@ -41,135 +41,142 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CharacterController {
-    
+
     /** The Constant logger. */
-    private static final Logger          logger = LoggerFactory.getLogger(CharacterController.class);
-    
+    private static final Logger logger = LoggerFactory.getLogger(CharacterController.class);
+
     @Inject
-    private CharacterService             characterService;
-    
+    private CharacterService characterService;
+
     @Inject
-    private PlayercreateinfoService      playercreateinfoService;
-    
+    private PlayercreateinfoService playercreateinfoService;
+
     @Autowired
-    private CharStartOutfitService       charStartOutfitService;
-    
+    private CharStartOutfitService charStartOutfitService;
+
     @Autowired
-    ItemService                          itemService;
-    
+    ItemService itemService;
+
     @Autowired
-    ItemStorages                         itemStorages;
-    
+    ItemStorages itemStorages;
+
     /** The player level storages. */
     @Autowired
-    private PlayerLevelStorages          playerLevelStorages;
-    
+    private PlayerLevelStorages playerLevelStorages;
+
     @Autowired
     private PlayerClassLevelInfoStorages playerClassLevelInfoStorages;
-    
+
     @Autowired
-    PlayerXpForLevelStorages             playerXpForLevelStorages;
-    
-    public SMSG_CHAR_CREATE.Code createCharacter(final long accountId, final String charName, final Races race, final Classes clazz, final Gender gender,
-            final int skin, final int face, final int hairStyle, final int hairColor, final int facialHair) {
-    
+    PlayerXpForLevelStorages playerXpForLevelStorages;
+
+    public SMSG_CHAR_CREATE.Code createCharacter(final long accountId, final String charName,
+            final Races race, final Classes clazz, final Gender gender, final int skin,
+            final int face, final int hairStyle, final int hairColor, final int facialHair) {
+
         final Criterion criterion = Restrictions.eq("name", charName);
         final List<CharacterData> characterDatas = this.characterService.readCharacters(criterion);
         if ((characterDatas != null) && !characterDatas.isEmpty()) {
             CharacterController.logger.warn("Username already exists: " + charName);
             return SMSG_CHAR_CREATE.Code.NAME_IN_USE;
         }
-        
-        final Playercreateinfo info = this.playercreateinfoService.readPlayercreateinfo(new PlayercreateinfoPK(race.getValue(), clazz.getValue()));
+
+        final Playercreateinfo info =
+                this.playercreateinfoService.readPlayercreateinfo(new PlayercreateinfoPK(
+                        race.getValue(), clazz.getValue()));
         if (info == null) {
             logger.error("Player create template not found for: " + clazz + " " + race);
             return SMSG_CHAR_CREATE.Code.ERROR;
         }
-        
+
         final CharacterData characterData = new CharacterData();
         // Set account id
         characterData.setAccount(accountId);
-        
+
         // Set name
         characterData.setName(charName);
-        
+
         // Set Class/Race/Gender
         characterData.setClazz(clazz);
         characterData.setRace(race);
         characterData.setGender(gender);
-        characterData.setPowerType(characterData.getPowerType().ordinal() - 1); // -1 health
-        
+        characterData.setPowerType(characterData.getPowerType().ordinal() - 1); // -1
+                                                                                // health
+
         characterData.setLevel(1);
-        
+
         // Skin, Face, Hair(style,color)
         characterData.setPlayerBytes(skin | (face << 8) | (hairStyle << 16) | (hairColor << 24));
-        
+
         // Hair(facial), Bankslot
         characterData.setPlayerBytes2((facialHair /* | (0xEE << 8) */| (0x02 << 24)));
-        
+
         // character.setExploredZones(Integer.toString(info.getZone()));
         // character.setKnownTitles("0");
-        // final PlayerLevelInfo playerLevelInfo = this.playerLevelStorages.get(race, clazz, 1);
+        // final PlayerLevelInfo playerLevelInfo =
+        // this.playerLevelStorages.get(race, clazz, 1);
         final PlayerClassLevelInfo classInfo = this.playerClassLevelInfoStorages.get(clazz, 1);
-        
+
         // TODO: make a config to create some inital value
         characterData.setMoney(0);
-        
+
         characterData.setXp(0);
-        
+
         final CharacterPowers up = new CharacterPowers();
         characterData.setPowers(up);
-        
+
         for (final Powers power : Powers.PLAYER_CREATE_POWERS) {
             switch (power) {
                 case ENERGY:
                     characterData.setPower(power, 100);
-                    break;
+                break;
                 case RAGE:
                     characterData.setPower(power, 1000);
-                    break;
+                break;
                 case FOCUS:
                     characterData.setPower(power, 100);
-                    break;
+                break;
                 case RUNE:
                     characterData.setPower(power, 8);
-                    break;
+                break;
                 default:
                     characterData.setPower(power, 0);
             }
         }
         characterData.setPower(Powers.HEALTH, classInfo.getBasehealth());
         characterData.setPower(characterData.getPowerType(), classInfo.getBasemana());
-        
+
         characterData.setLevel(1);
         // First login
-        // character.setAtLoginFlags(0x1);
-        
+        characterData.setAtLoginFlag(0x1);
+
         final CharacterPositionerHolder mh = new CharacterPositionerHolder();
-        
+
         mh.setMap(info.getMap());
         mh.setZone(info.getZone());
-        
+
         final Position pos = new Position();
         pos.setX(info.getPositionX());
         pos.setY(info.getPositionY());
         pos.setZ(info.getPositionZ());
         pos.setO(info.getOrientation());
         mh.setPosition(pos);
-        
+
         characterData.setMovement(mh);
-        
+
         final HomeBindData hbd = new HomeBindData();
         hbd.setHomeBindAreaId(info.getZone());
         hbd.setHomeBindMapId(info.getMap());
         hbd.setPosition(mh.getPosition().clone());
         mh.setHomeBindData(hbd);
-        
+
         this.characterService.createOrUpdateCharacter(characterData);
-        
-        final List<CharStartOutfitEntity> startItems = this.charStartOutfitService.readCharStartOutfitEntities(characterData.getRace(), characterData.getClazz(), characterData.getGender().getValue());
+
+        final List<CharStartOutfitEntity> startItems =
+                this.charStartOutfitService.readCharStartOutfitEntities(characterData.getRace(),
+                        characterData.getClazz(), characterData.getGender().getValue());
         for (final CharStartOutfitEntity startItem : startItems) {
-            
+
             final ItemPrototype itemProto = this.itemStorages.get(startItem.getProtoId());
             if (itemProto == null) {
                 continue;
@@ -177,51 +184,36 @@ public class CharacterController {
             logger.info("Create item {}", startItem.getProtoId());
             final int stackCount = itemProto.getBuyCount();
             final FieldsItem item = this.itemService.createItem(itemProto, stackCount);
-            
+
             if (startItem.getSlot() < EquipmentSlots.values().length) {
                 characterData.equipItem(EquipmentSlots.get(startItem.getSlot()), item);
             } else {
                 characterData.addToInventory(item);
             }
         }
-        
+
         this.characterService.createOrUpdateCharacter(characterData);
         return SMSG_CHAR_CREATE.Code.SUCCESS;
     }
-    
+
     public CharacterData loadCharacterByGuid(final Long guid) {
-    
+
         final CharacterData characterData = this.characterService.readCharacter(guid);
         if (characterData != null) {
-            final PlayerClassLevelInfo classInfo = this.playerClassLevelInfoStorages.get(characterData.getClazz(), characterData.getLevel());
-            final PlayerLevelInfo playerLevelInfo = this.playerLevelStorages.get(characterData.getRace(), characterData.getClazz(), characterData.getLevel());
-            
+            final PlayerClassLevelInfo classInfo =
+                    this.playerClassLevelInfoStorages.get(characterData.getClazz(),
+                            characterData.getLevel());
+            final PlayerLevelInfo playerLevelInfo =
+                    this.playerLevelStorages.get(characterData.getRace(), characterData.getClazz(),
+                            characterData.getLevel());
+
             /**
              * Avoid hibernate bug
              */
             characterData.initBitsForCollections();
-            
-            int statValue = 0;
+
             for (final Stats stat : Stats.values()) {
-                switch (stat) {
-                    case INTELLECT:
-                        statValue = playerLevelInfo.getIntellect();
-                        break;
-                    case AGILITY:
-                        statValue = playerLevelInfo.getAgility();
-                        break;
-                    case SPIRIT:
-                        statValue = playerLevelInfo.getSpirit();
-                        break;
-                    case STAMINA:
-                        statValue = playerLevelInfo.getStamina();
-                        break;
-                    case STRENGTH:
-                        statValue = playerLevelInfo.getStrength();
-                        break;
-                    default:
-                        break;
-                }
+                int statValue = playerLevelInfo.getStats(stat);
                 characterData.setStat(stat, statValue);
                 characterData.setCreateStat(stat, statValue);
             }
@@ -237,7 +229,7 @@ public class CharacterController {
         }
         return characterData;
     }
-    
+
     /**
      * <b>Don't drop</b><br />
      * <i>Exist only for Test</i>
@@ -246,15 +238,17 @@ public class CharacterController {
      * @return Player
      */
     public CharacterData loadCharacterByName(final String characterName) {
-    
+
         final Criterion criterion = Restrictions.eq("name", characterName);
         final List<CharacterData> characterDatas = this.characterService.readCharacters(criterion);
         if ((characterDatas != null) && !characterDatas.isEmpty()) {
-            
+
             final CharacterData characterData = characterDatas.get(0);
-            
-            final PlayerClassLevelInfo classInfo = this.playerClassLevelInfoStorages.get(characterData.getClazz(), characterData.getLevel());
-            
+
+            final PlayerClassLevelInfo classInfo =
+                    this.playerClassLevelInfoStorages.get(characterData.getClazz(),
+                            characterData.getLevel());
+
             characterData.setCreatePower(Powers.HEALTH, classInfo.getBasehealth());
             characterData.setCreatePower(characterData.getPowerType(), classInfo.getBasemana());
             characterData.setBaseHealth(classInfo.getBasehealth());
@@ -263,79 +257,62 @@ public class CharacterController {
              * Avoid hibernate bug
              */
             characterData.initBitsForCollections();
-            
-            final PlayerLevelInfo playerLevelInfo = this.playerLevelStorages.get(characterData.getRace(), characterData.getClazz(), characterData.getLevel());
-            int statValue = 0;
+
+            final PlayerLevelInfo playerLevelInfo =
+                    this.playerLevelStorages.get(characterData.getRace(), characterData.getClazz(),
+                            characterData.getLevel());
             for (final Stats stat : Stats.values()) {
-                switch (stat) {
-                    case INTELLECT:
-                        statValue = playerLevelInfo.getIntellect();
-                        break;
-                    case AGILITY:
-                        statValue = playerLevelInfo.getAgility();
-                        break;
-                    case SPIRIT:
-                        statValue = playerLevelInfo.getSpirit();
-                        break;
-                    case STAMINA:
-                        statValue = playerLevelInfo.getStamina();
-                        break;
-                    case STRENGTH:
-                        statValue = playerLevelInfo.getStrength();
-                        break;
-                    default:
-                        break;
-                }
+                int statValue = playerLevelInfo.getStats(stat);
                 characterData.setStat(stat, statValue);
                 characterData.setCreateStat(stat, statValue);
             }
-            
+
             characterData.updateMaxPowers();
             return characterData;
         }
         return null;
     }
-    
+
     private void initModelForCharacter(final CharacterData characterData) {
-    
+
         final byte gender = characterData.getGender().getValue();
         int model = 0;
         switch (characterData.getRace()) {
             case HUMAN:
                 model = 49 + gender;
-                break;
+            break;
             case DWARF:
                 model = 53 + gender;
-                break;
+            break;
             case NIGHTELF:
                 model = 55 + gender;
-                break;
+            break;
             case GNOME:
                 model = 1563 + gender;
-                break;
+            break;
             case DRAENEI:
                 model = 16125 + gender;
-                break;
+            break;
             case ORC:
                 model = 51 + gender;
-                break;
+            break;
             case UNDEAD:
                 model = 57 + gender;
-                break;
+            break;
             case TAUREN:
                 model = 59 + gender;
-                break;
+            break;
             case TROLL:
                 model = 1478 + gender;
-                break;
+            break;
             case BLOODELF:
                 model = 15476 - gender;
-                break;
+            break;
             default:
-                break;
+            break;
         }
         characterData.setDisplayId(ModelType.CURRENT, model);
         characterData.setDisplayId(ModelType.NATIVE, model);
     }
-    
+
 }

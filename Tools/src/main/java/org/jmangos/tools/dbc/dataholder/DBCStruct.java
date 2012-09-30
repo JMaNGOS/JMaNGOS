@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
@@ -31,18 +31,19 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
-public abstract class DBCStruct<T extends DBCStruct<T>> extends DBCBaseStruct implements Iterable<T>, Iterator<T>, Cloneable {
-    
-    private int      count;
-    private int      skiplenght   = 0;
-    private int      currposition = 0;
+public abstract class DBCStruct<T extends DBCStruct<T>> extends DBCBaseStruct
+        implements Iterable<T>, Iterator<T>, Cloneable {
+
+    private int count;
+    private int skiplenght = 0;
+    private int currposition = 0;
     private Object[] FiledsName;
-    private boolean  mode;
-    
+    private boolean mode;
+
     @SuppressWarnings("unchecked")
     @Override
     protected <M extends Member> M[] array(final M[] param) {
-    
+
         if (param.length > 0) {
             if (INTERNALSTRING.isInstance(param)) {
                 for (int i = 0; i < param.length;) {
@@ -56,24 +57,24 @@ public abstract class DBCStruct<T extends DBCStruct<T>> extends DBCBaseStruct im
             return null;
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     public T LookupEntry(final int i) {
-    
+
         setCurrposition(i);
         setByteBufferPosition(HEADER_SIZE + ((size() + this.skiplenght) * i));
         return (T) this;
     }
-    
+
     public final void setStringBufferPosition(final int stringBufPos) {
-    
+
         this.stringBufPos = stringBufPos;
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public T clone() {
-    
+
         T re = null;
         try {
             re = (T) this.getClass().newInstance();
@@ -86,51 +87,54 @@ public abstract class DBCStruct<T extends DBCStruct<T>> extends DBCBaseStruct im
         re.setStringBufferPosition(this.stringBufPos);
         return re;
     }
-    
+
     public int getCount() {
-    
+
         return this.count;
     }
-    
+
     public void setCount(final int count) {
-    
+
         this.count = count;
     }
-    
+
     public int getSkiplenght() {
-    
+
         return this.skiplenght;
     }
-    
+
     public void setSkipLenght(final int skiplenght) {
-    
+
         this.skiplenght = skiplenght;
     }
-    
+
     @Override
     public boolean hasNext() {
-    
+
         return (this.currposition + 1) < getCount();
     }
-    
+
     @Override
     public T next() {
-    
+
         if (hasNext()) {
             return LookupEntry(this.currposition + 1);
         }
         return null;
     }
-    
+
     @Override
     public void remove() {
-    
+
     }
-    
+
     public void saveToXML(final String path, final boolean full) throws IOException {
-    
+
         this.mode = full;
-        final Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path + this.getClass().getSimpleName() + ".xml"), "UTF-8"));
+        final Writer out =
+                new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path +
+                    this.getClass().getSimpleName() +
+                    ".xml"), "UTF-8"));
         try {
             final String header = this.getClass().getSimpleName() + "List";
             cacheFields(full);
@@ -145,13 +149,14 @@ public abstract class DBCStruct<T extends DBCStruct<T>> extends DBCBaseStruct im
             out.close();
         }
     }
-    
+
     public void cacheFields(final boolean mode) {
-    
+
         final Field[] f = this.getClass().getFields();
         final List<String> TFiledsName = new ArrayList<String>();
         for (int i = 0; i < f.length; i++) {
-            if (Modifier.isStatic(f[i].getModifiers()) || !f[i].isAnnotationPresent(XmlAttribute.class)) {
+            if (Modifier.isStatic(f[i].getModifiers()) ||
+                !f[i].isAnnotationPresent(XmlAttribute.class)) {
                 continue;
             }
             final XmlAttribute property = f[i].getAnnotation(XmlAttribute.class);
@@ -162,7 +167,8 @@ public abstract class DBCStruct<T extends DBCStruct<T>> extends DBCBaseStruct im
                         for (int j = 0; j < Array.getLength(sd); j++) {
                             TFiledsName.add(property.name() + (j + 1));
                         }
-                    } else if ((f[i].getType() == InternalString.class) || (f[i].getType() == MultiInternalString.class)) {
+                    } else if ((f[i].getType() == InternalString.class) ||
+                        (f[i].getType() == MultiInternalString.class)) {
                         if (mode) {
                             TFiledsName.add(property.name());
                         }
@@ -174,28 +180,31 @@ public abstract class DBCStruct<T extends DBCStruct<T>> extends DBCBaseStruct im
                 } catch (final IllegalAccessException e) {
                     e.printStackTrace();
                 }
-                
+
             }
         };
         this.FiledsName = TFiledsName.toArray();
     }
-    
+
     public void toXML(final Writer out) throws IOException {
-    
+
         final Field[] f = this.getClass().getFields();
         int counter = 0;
         do {
             out.write("\t<" + this.getClass().getSimpleName() + " ");
             for (int i = 0; i < f.length; i++) {
-                if (Modifier.isStatic(f[i].getModifiers()) || !f[i].isAnnotationPresent(XmlAttribute.class)) {
+                if (Modifier.isStatic(f[i].getModifiers()) ||
+                    !f[i].isAnnotationPresent(XmlAttribute.class)) {
                     continue;
                 }
                 final XmlAttribute property = f[i].getAnnotation(XmlAttribute.class);
                 if ((property.name() != null) & (property.required() | this.mode)) {
                     try {
-                        if ((f[i].getType() == InternalString.class) || (f[i].getType() == MultiInternalString.class)) {
+                        if ((f[i].getType() == InternalString.class) ||
+                            (f[i].getType() == MultiInternalString.class)) {
                             if (this.mode) {
-                                final String escapedString = escapeCharacters((f[i].get(this)).toString());
+                                final String escapedString =
+                                        escapeCharacters((f[i].get(this)).toString());
                                 if ((escapedString.length() > 0) | property.required()) {
                                     writeAttr((String) this.FiledsName[counter], escapedString, out);
                                 }
@@ -205,32 +214,35 @@ public abstract class DBCStruct<T extends DBCStruct<T>> extends DBCBaseStruct im
                             final Object sd = f[i].get(this);
                             for (int j = 0; j < Array.getLength(sd); j++) {
                                 Array.get(sd, j);
-                                writeAttr((String) this.FiledsName[counter++], Array.get(sd, j).toString(), out);
+                                writeAttr((String) this.FiledsName[counter++],
+                                        Array.get(sd, j).toString(), out);
                             }
                         } else {
-                            writeAttr((String) this.FiledsName[counter++], f[i].get(this).toString(), out);
+                            writeAttr((String) this.FiledsName[counter++],
+                                    f[i].get(this).toString(), out);
                         }
-                        
+
                     } catch (final IllegalArgumentException e) {
                         e.printStackTrace();
                     } catch (final IllegalAccessException e) {
                         e.printStackTrace();
                     }
-                    
+
                 }
             }
             out.write("/>\n");
             counter = 0;
         } while (this.next() != null);
     }
-    
-    public void writeAttr(final String name, final String value, final Writer out) throws IOException {
-    
+
+    public void writeAttr(final String name, final String value, final Writer out)
+            throws IOException {
+
         out.write(name + "=\"" + value + "\" ");
     }
-    
+
     public String escapeCharacters(final String str) {
-    
+
         if (str == null) {
             return "";
         }
@@ -239,35 +251,35 @@ public abstract class DBCStruct<T extends DBCStruct<T>> extends DBCBaseStruct im
             switch (s.charAt(i)) {
                 case '\"':
                     s = s.replace(i++, i, "&quot;");
-                    break;
+                break;
                 case '&':
                     s = s.replace(i++, i, "&amp;");
-                    break;
+                break;
                 case '<':
                     s = s.replace(i++, i, "&lt;");
-                    break;
+                break;
                 case '>':
                     s = s.replace(i++, i, "&gt;");
-                    break;
+                break;
                 case '\'':
                     s = s.replace(i++, i, "&apos;");
-                    break;
+                break;
                 default:
-                    break;
+                break;
             }
         }
         return s.toString();
     }
-    
+
     public void setCurrposition(final int currposition) {
-    
+
         this.currposition = currposition;
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public T iterator() {
-    
+
         return (T) this;
     }
 }

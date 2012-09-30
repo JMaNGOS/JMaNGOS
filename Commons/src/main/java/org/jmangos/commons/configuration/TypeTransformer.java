@@ -10,7 +10,7 @@ import java.net.InetSocketAddress;
  * @author Schiffer
  */
 public class TypeTransformer {
-    
+
     /**
      * Cast passed value to passed class. In this case used string constructor.
      * 
@@ -20,12 +20,13 @@ public class TypeTransformer {
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static <E extends Object> E castFromString(final String value, final Class<E> castTarget) {
-    
+
         try {
             if (castTarget.equals(InetSocketAddress.class)) {
                 final String[] parts = value.split(":");
                 if (parts.length != 2) {
-                    throw new RuntimeException("Can't transform property, must be in format \"address:port\"");
+                    throw new RuntimeException(
+                            "Can't transform property, must be in format \"address:port\"");
                 }
                 if ("*".equals(parts[0])) {
                     return (E) new InetSocketAddress(Integer.parseInt(parts[1]));
@@ -39,12 +40,14 @@ public class TypeTransformer {
             } else if (castTarget == Class.class) {
                 return (E) Class.forName(value);
             } else {
-                final Constructor<E> constructor = castTarget.getConstructor(new Class[] { String.class });
+                final Constructor<E> constructor =
+                        castTarget.getConstructor(new Class[] { String.class });
                 return constructor.newInstance(new Object[] { value });
             }
         } catch (final Exception e) {
             e.printStackTrace();
-            throw new RuntimeException(String.format("%s impossible cast to %s", value, castTarget.getSimpleName()));
+            throw new RuntimeException(String.format("%s impossible cast to %s", value,
+                    castTarget.getSimpleName()));
         }
     }
 }

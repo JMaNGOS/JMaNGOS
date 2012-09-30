@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
@@ -27,32 +27,32 @@ import org.springframework.stereotype.Service;
 
 @Service("questPrototypeService")
 public class QuestPrototypeServiceImpl implements QuestPrototypeService {
-    
+
     @Autowired
     private QuestPrototypeDao questPrototypeDao;
-    
+
     @Override
     public QuestPrototype readQuestPrototype(final Integer id) {
-    
+
         return this.questPrototypeDao.readQuestPrototype(id);
     }
-    
+
     @Override
     public List<QuestPrototype> readQuestPrototypes(final Criterion... criterions) {
-    
+
         return this.questPrototypeDao.readQuestPrototypes(criterions);
     }
-    
+
     @Override
     public Integer createOrUpdateQuestPrototype(final QuestPrototype questPrototype) {
-    
+
         return this.questPrototypeDao.createOrUpdateQuestPrototype(questPrototype);
     }
-    
+
     @Override
     public void deleteQuestPrototype(final QuestPrototype questPrototype) {
-    
+
         this.questPrototypeDao.deleteQuestPrototype(questPrototype);
     }
-    
+
 }

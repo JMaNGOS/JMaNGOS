@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
@@ -50,177 +50,187 @@ import org.lwjgl.util.glu.GLU;
  * 
  */
 public class TextureLoader {
-    
+
     /** The table of textures that have been loaded in this loader */
-    private final HashMap<String, Texture> table          = new HashMap<String, Texture>();
-    
+    private final HashMap<String, Texture> table = new HashMap<String, Texture>();
+
     /** The colour model including alpha for the GL image */
-    public ColorModel                      glAlphaColorModel;
-    
+    public ColorModel glAlphaColorModel;
+
     /** The colour model for the GL image */
-    private final ColorModel               glColorModel;
-    
-    private final int                      target         = GL11.GL_TEXTURE_2D;
-    private final int                      dstPixelFormat = GL11.GL_RGBA;
+    private final ColorModel glColorModel;
+
+    private final int target = GL11.GL_TEXTURE_2D;
+    private final int dstPixelFormat = GL11.GL_RGBA;
     // private int dstPixelFormat = GL13.GL_COMPRESSED_RGBA;
-    private final int                      minFilter      = GL11.GL_LINEAR;
-    private final int                      magFilter      = GL11.GL_LINEAR;
-    
+    private final int minFilter = GL11.GL_LINEAR;
+    private final int magFilter = GL11.GL_LINEAR;
+
     /**
      * Create a new texture loader based on the game panel
      * 
      * @param gl
-     *            The GL content in which the textures should be loaded
+     *        The GL content in which the textures should be loaded
      */
     public TextureLoader() {
-    
+
         // dstPixelFormat = 4;
-        
-        this.glAlphaColorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), new int[] { 8, 8, 8, 8 }, true, false, Transparency.TRANSLUCENT, DataBuffer.TYPE_BYTE);
-        
-        this.glColorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), new int[] { 8, 8, 8, 0 }, false, false, Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
+
+        this.glAlphaColorModel =
+                new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), new int[] {
+                    8, 8, 8, 8 }, true, false, Transparency.TRANSLUCENT, DataBuffer.TYPE_BYTE);
+
+        this.glColorModel =
+                new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), new int[] {
+                    8, 8, 8, 0 }, false, false, Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
     }
-    
+
     /**
      * Create a new texture ID
      * 
      * @return A new texture ID
      */
     private int createTextureID() {
-    
+
         final IntBuffer tmp = createIntBuffer(1);
         try {
             GL11.glGenTextures(tmp);
         } catch (final NullPointerException e) {
             // e.printStackTrace();
-            Sys.alert("Error", "Your system is not capable of running this game.\nPlease make sure your video drivers are current.");
+            Sys.alert(
+                    "Error",
+                    "Your system is not capable of running this game.\nPlease make sure your video drivers are current.");
             System.exit(0);
         }
         return tmp.get(0);
     }
-    
+
     /**
      * Load a texture
      * 
      * @param resourceName
-     *            The location of the resource to load
+     *        The location of the resource to load
      * @return The loaded texture
      * @throws IOException
-     *             Indicates a failure to access the resource
+     *         Indicates a failure to access the resource
      */
     public Texture getTexture(final String resourceName, final boolean injar) throws IOException {
-    
+
         Texture tex = this.table.get(resourceName);
-        
+
         if (tex != null) {
             return tex;
         }
-        
+
         tex = getTexture(resourceName, injar, this.target, // target
                 this.dstPixelFormat, // dst pixel format
                 this.minFilter, // min filter (unused)
                 this.magFilter);
-        
+
         this.table.put(resourceName, tex);
-        
+
         return tex;
     }
-    
+
     /**
      * Load a texture into OpenGL from a image reference on disk.
      * 
      * @param resourceName
-     *            The location of the resource to load
+     *        The location of the resource to load
      * @param target
-     *            The GL target to load the texture against
+     *        The GL target to load the texture against
      * @param dstPixelFormat
-     *            The pixel format of the screen
+     *        The pixel format of the screen
      * @param minFilter
-     *            The minimising filter
+     *        The minimising filter
      * @param magFilter
-     *            The magnification filter
+     *        The magnification filter
      * @return The loaded texture
      * @throws IOException
-     *             Indicates a failure to access the resource
+     *         Indicates a failure to access the resource
      */
-    public Texture getTexture(final String resourceName, final boolean injar, final int target, final int dstPixelFormat, final int minFilter,
-            final int magFilter) throws IOException {
-    
+    public Texture getTexture(final String resourceName, final boolean injar, final int target,
+            final int dstPixelFormat, final int minFilter, final int magFilter) throws IOException {
+
         int srcPixelFormat = 0;
-        
+
         // create the texture ID for this texture
         final int textureID = createTextureID();
         final Texture texture = new Texture(target, textureID);
-        
+
         // bind this texture
         GL11.glBindTexture(target, textureID);
-        
+
         final BufferedImage bufferedImage = loadImage(resourceName, injar);
         texture.setWidth(bufferedImage.getWidth());
         texture.setHeight(bufferedImage.getHeight());
-        
+
         if (bufferedImage.getColorModel().hasAlpha()) {
             srcPixelFormat = GL11.GL_RGBA;
         } else {
             srcPixelFormat = GL11.GL_RGB;
         }
-        
+
         // convert that image into a byte buffer of texture data
         final ByteBuffer textureBuffer = convertImageData(bufferedImage, texture);
-        
+
         if (target == GL11.GL_TEXTURE_2D) {
             GL11.glTexParameteri(target, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
             GL11.glTexParameteri(target, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
             GL11.glTexParameteri(target, GL11.GL_TEXTURE_MIN_FILTER, minFilter);
             GL11.glTexParameteri(target, GL11.GL_TEXTURE_MAG_FILTER, magFilter);
         }
-        
+
         // produce a texture from the byte buffer
         /*
-         * GL11.glTexImage2D(target, 0, dstPixelFormat, get2Fold(bufferedImage.getWidth()),
-         * get2Fold(bufferedImage.getHeight()), 0, srcPixelFormat, GL11.GL_UNSIGNED_BYTE,
+         * GL11.glTexImage2D(target, 0, dstPixelFormat,
+         * get2Fold(bufferedImage.getWidth()),
+         * get2Fold(bufferedImage.getHeight()), 0, srcPixelFormat,
+         * GL11.GL_UNSIGNED_BYTE,
          * textureBuffer );
          */
-        
-        GLU.gluBuild2DMipmaps(target, dstPixelFormat, get2Fold(bufferedImage.getWidth()), get2Fold(bufferedImage.getHeight()), srcPixelFormat, GL11.GL_UNSIGNED_BYTE, textureBuffer);
-        
+
+        GLU.gluBuild2DMipmaps(target, dstPixelFormat, get2Fold(bufferedImage.getWidth()),
+                get2Fold(bufferedImage.getHeight()), srcPixelFormat, GL11.GL_UNSIGNED_BYTE,
+                textureBuffer);
+
         return texture;
     }
-    
+
     /**
      * Get the closest greater power of 2 to the fold number
      * 
      * @param fold
-     *            The target number
+     *        The target number
      * @return The power of 2
      */
     private int get2Fold(final int fold) {
-    
+
         int ret = 2;
         while (ret < fold) {
             ret *= 2;
         }
         return ret;
     }
-    
+
     /**
      * Convert the buffered image to a texture
      * 
      * @param bufferedImage
-     *            The image to convert to a texture
+     *        The image to convert to a texture
      * @param texture
-     *            The texture to store the data into
+     *        The texture to store the data into
      * @return A buffer containing the data
      */
     private ByteBuffer convertImageData(final BufferedImage bufferedImage, final Texture texture) {
-    
+
         ByteBuffer imageBuffer = null;
         WritableRaster raster;
         BufferedImage texImage;
-        
+
         int texWidth = 2;
         int texHeight = 2;
-        
+
         // find the closest power of 2 for the width and height
         // of the produced texture
         while (texWidth < bufferedImage.getWidth()) {
@@ -229,57 +239,63 @@ public class TextureLoader {
         while (texHeight < bufferedImage.getHeight()) {
             texHeight *= 2;
         }
-        
+
         texture.setTextureHeight(texHeight);
         texture.setTextureWidth(texWidth);
-        
+
         // create a raster that can be used by OpenGL as a source
         // for a texture
         if (bufferedImage.getColorModel().hasAlpha()) {
-            raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, texWidth, texHeight, 4, null);
+            raster =
+                    Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, texWidth, texHeight, 4,
+                            null);
             texImage = new BufferedImage(this.glAlphaColorModel, raster, false, new Hashtable());
         } else {
-            raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, texWidth, texHeight, 3, null);
+            raster =
+                    Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, texWidth, texHeight, 3,
+                            null);
             texImage = new BufferedImage(this.glColorModel, raster, false, new Hashtable());
         }
-        
+
         // copy the source image into the produced image
         final Graphics g = texImage.getGraphics();
         g.setColor(new Color(0f, 0f, 0f, 0f));
         g.fillRect(0, 0, texWidth, texHeight);
         g.drawImage(bufferedImage, 0, 0, null);
-        
+
         // build a byte buffer from the temporary image
         // that be used by OpenGL to produce a texture.
         final byte[] data = ((DataBufferByte) texImage.getRaster().getDataBuffer()).getData();
-        
+
         imageBuffer = ByteBuffer.allocateDirect(data.length);
         imageBuffer.order(ByteOrder.nativeOrder());
         imageBuffer.put(data, 0, data.length);
         imageBuffer.flip();
-        
+
         return imageBuffer;
     }
-    
+
     /**
      * Load a given resource as a buffered image
      * 
      * @param ref
-     *            The location of the resource to load
+     *        The location of the resource to load
      * @return The loaded buffered image
      * @throws IOException
-     *             Indicates a failure to find a resource
+     *         Indicates a failure to find a resource
      */
     private BufferedImage loadImage(final String ref, final boolean injar) throws IOException {
-    
+
         // URL url = TextureLoader.class.getClassLoader().getResource(ref);
-        
+
         // if (url == null) {
         // throw new IOException("Cannot find: "+ref);
         // }
-        
+
         if (injar) {
-            final BufferedImage bufferedImage = ImageIO.read(new BufferedInputStream(getClass().getClassLoader().getResourceAsStream(ref)));
+            final BufferedImage bufferedImage =
+                    ImageIO.read(new BufferedInputStream(
+                            getClass().getClassLoader().getResourceAsStream(ref)));
             return bufferedImage;
         } else {
             final File file = new File(ref);
@@ -291,24 +307,25 @@ public class TextureLoader {
             }
             return bufferedImage;
         }
-        
+
     }
-    
+
     /**
-     * Creates an integer buffer to hold specified ints - strictly a utility method
+     * Creates an integer buffer to hold specified ints - strictly a utility
+     * method
      * 
      * @param size
-     *            how many int to contain
+     *        how many int to contain
      * @return created IntBuffer
      */
     protected IntBuffer createIntBuffer(final int size) {
-    
+
         final ByteBuffer temp = ByteBuffer.allocateDirect(4 * size);
         temp.order(ByteOrder.nativeOrder());
-        
+
         return temp.asIntBuffer();
     }
-    
+
     // ////////////////////////////////////////////////
     // // Added for BufferedImage Support /////////////
     // ////////////////////////////////////////////////
@@ -316,94 +333,99 @@ public class TextureLoader {
      * Load a texture
      * 
      * @param resourceName
-     *            The location of the resource to load
+     *        The location of the resource to load
      * @return The loaded texture
      * @throws IOException
-     *             Indicates a failure to access the resource
+     *         Indicates a failure to access the resource
      */
-    public Texture getTexture(final String resourceName, final BufferedImage resourceImage) throws IOException {
-    
+    public Texture getTexture(final String resourceName, final BufferedImage resourceImage)
+            throws IOException {
+
         Texture tex = this.table.get(resourceName);
-        
+
         if (tex != null) {
             return tex;
         }
-        
+
         tex = getTexture(resourceImage, this.target, // target
                 this.dstPixelFormat, // dst pixel format
                 this.minFilter, // min filter (unused)
                 this.magFilter);
-        
+
         this.table.put(resourceName, tex);
-        
+
         return tex;
     }
-    
+
     /**
      * Load a texture into OpenGL from a BufferedImage
      * 
      * @param resourceName
-     *            The location of the resource to load
+     *        The location of the resource to load
      * @param target
-     *            The GL target to load the texture against
+     *        The GL target to load the texture against
      * @param dstPixelFormat
-     *            The pixel format of the screen
+     *        The pixel format of the screen
      * @param minFilter
-     *            The minimising filter
+     *        The minimising filter
      * @param magFilter
-     *            The magnification filter
+     *        The magnification filter
      * @return The loaded texture
      * @throws IOException
-     *             Indicates a failure to access the resource
+     *         Indicates a failure to access the resource
      */
-    public Texture getTexture(final BufferedImage resourceimage, final int target, final int dstPixelFormat, final int minFilter, final int magFilter)
-            throws IOException {
-    
+    public Texture getTexture(final BufferedImage resourceimage, final int target,
+            final int dstPixelFormat, final int minFilter, final int magFilter) throws IOException {
+
         int srcPixelFormat = 0;
-        
+
         // create the texture ID for this texture
         final int textureID = createTextureID();
         final Texture texture = new Texture(target, textureID);
-        
+
         // bind this texture
         GL11.glBindTexture(target, textureID);
-        
+
         final BufferedImage bufferedImage = resourceimage;
         texture.setWidth(bufferedImage.getWidth());
         texture.setHeight(bufferedImage.getHeight());
-        
+
         if (bufferedImage.getColorModel().hasAlpha()) {
             srcPixelFormat = GL11.GL_RGBA;
         } else {
             srcPixelFormat = GL11.GL_RGB;
         }
-        
+
         // convert that image into a byte buffer of texture data
         final ByteBuffer textureBuffer = convertImageData(bufferedImage, texture);
-        
+
         if (target == GL11.GL_TEXTURE_2D) {
             GL11.glTexParameteri(target, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
             GL11.glTexParameteri(target, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
             GL11.glTexParameteri(target, GL11.GL_TEXTURE_MIN_FILTER, minFilter);
             GL11.glTexParameteri(target, GL11.GL_TEXTURE_MAG_FILTER, magFilter);
         }
-        
+
         // produce a texture from the byte buffer
         /*
-         * GL11.glTexImage2D(target, 0, dstPixelFormat, get2Fold(bufferedImage.getWidth()),
-         * get2Fold(bufferedImage.getHeight()), 0, srcPixelFormat, GL11.GL_UNSIGNED_BYTE,
+         * GL11.glTexImage2D(target, 0, dstPixelFormat,
+         * get2Fold(bufferedImage.getWidth()),
+         * get2Fold(bufferedImage.getHeight()), 0, srcPixelFormat,
+         * GL11.GL_UNSIGNED_BYTE,
          * textureBuffer );
          */
-        
-        GLU.gluBuild2DMipmaps(target, dstPixelFormat, get2Fold(bufferedImage.getWidth()), get2Fold(bufferedImage.getHeight()), srcPixelFormat, GL11.GL_UNSIGNED_BYTE, textureBuffer);
-        
+
+        GLU.gluBuild2DMipmaps(target, dstPixelFormat, get2Fold(bufferedImage.getWidth()),
+                get2Fold(bufferedImage.getHeight()), srcPixelFormat, GL11.GL_UNSIGNED_BYTE,
+                textureBuffer);
+
         return texture;
     }
-    
+
     // ////////////////////////////////////////////////////////////////
     // ////////////////////////////////////////////////////////////////
     // ////////////////////////////////////////////////////////////////
-    
+
     // ////////////////////////////////////////////////
     // // Added for No MipMapping Support /////////////
     // ////////////////////////////////////////////////
@@ -411,86 +433,89 @@ public class TextureLoader {
      * Load a texture
      * 
      * @param resourceName
-     *            The location of the resource to load
+     *        The location of the resource to load
      * @return The loaded texture
      * @throws IOException
-     *             Indicates a failure to access the resource
+     *         Indicates a failure to access the resource
      */
-    public Texture getNMMTexture(final String resourceName, final BufferedImage resourceImage) throws IOException {
-    
+    public Texture getNMMTexture(final String resourceName, final BufferedImage resourceImage)
+            throws IOException {
+
         Texture tex = this.table.get(resourceName);
-        
+
         if (tex != null) {
             return tex;
         }
-        
+
         tex = getNMMTexture(resourceImage, this.target, // target
                 this.dstPixelFormat, // dst pixel format
                 GL11.GL_NEAREST, // min filter (unused)
                 GL11.GL_LINEAR);
-        
+
         this.table.put(resourceName, tex);
-        
+
         return tex;
     }
-    
+
     /**
      * Load a texture into OpenGL from a BufferedImage
      * 
      * @param resourceName
-     *            The location of the resource to load
+     *        The location of the resource to load
      * @param target
-     *            The GL target to load the texture against
+     *        The GL target to load the texture against
      * @param dstPixelFormat
-     *            The pixel format of the screen
+     *        The pixel format of the screen
      * @param minFilter
-     *            The minimising filter
+     *        The minimising filter
      * @param magFilter
-     *            The magnification filter
+     *        The magnification filter
      * @return The loaded texture
      * @throws IOException
-     *             Indicates a failure to access the resource
+     *         Indicates a failure to access the resource
      */
-    public Texture getNMMTexture(final BufferedImage resourceimage, final int target, final int dstPixelFormat, final int minFilter, final int magFilter)
-            throws IOException {
-    
+    public Texture getNMMTexture(final BufferedImage resourceimage, final int target,
+            final int dstPixelFormat, final int minFilter, final int magFilter) throws IOException {
+
         int srcPixelFormat = 0;
-        
+
         // create the texture ID for this texture
         final int textureID = createTextureID();
         final Texture texture = new Texture(target, textureID);
-        
+
         // bind this texture
         GL11.glBindTexture(target, textureID);
-        
+
         final BufferedImage bufferedImage = resourceimage;
         texture.setWidth(bufferedImage.getWidth());
         texture.setHeight(bufferedImage.getHeight());
-        
+
         if (bufferedImage.getColorModel().hasAlpha()) {
             srcPixelFormat = GL11.GL_RGBA;
         } else {
             srcPixelFormat = GL11.GL_RGB;
         }
-        
+
         // convert that image into a byte buffer of texture data
         final ByteBuffer textureBuffer = convertImageData(bufferedImage, texture);
-        
+
         if (target == GL11.GL_TEXTURE_2D) {
             GL11.glTexParameteri(target, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
             GL11.glTexParameteri(target, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
             GL11.glTexParameteri(target, GL11.GL_TEXTURE_MIN_FILTER, minFilter);
             GL11.glTexParameteri(target, GL11.GL_TEXTURE_MAG_FILTER, magFilter);
         }
-        
+
         // produce a texture from the byte buffer
-        GL11.glTexImage2D(target, 0, dstPixelFormat, get2Fold(bufferedImage.getWidth()), get2Fold(bufferedImage.getHeight()), 0, srcPixelFormat, GL11.GL_UNSIGNED_BYTE, textureBuffer);
-        
+        GL11.glTexImage2D(target, 0, dstPixelFormat, get2Fold(bufferedImage.getWidth()),
+                get2Fold(bufferedImage.getHeight()), 0, srcPixelFormat, GL11.GL_UNSIGNED_BYTE,
+                textureBuffer);
+
         return texture;
     }
-    
+
     // ////////////////////////////////////////////////////////////////
     // ////////////////////////////////////////////////////////////////
     // ////////////////////////////////////////////////////////////////
-    
+
 }

@@ -23,21 +23,23 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 @Configuration
 @EnableTransactionManagement
 public class WorldModule {
-    
+
     /** Database config */
     @Inject
     private DatabaseConfig databaseConfig;
-    
+
     @Bean
     public DataSource dataSourceWorld() {
-    
+
         final ComboPooledDataSource ds = new ComboPooledDataSource();
         try {
             ds.setDriverClass(this.databaseConfig.WORLD_DATABASE_DRIVER);
-            ds.setJdbcUrl(this.databaseConfig.WORLD_DATABASE_URL + this.databaseConfig.WORLD_DATABASE_NAME + "?autoReconnect=true");
+            ds.setJdbcUrl(this.databaseConfig.WORLD_DATABASE_URL +
+                this.databaseConfig.WORLD_DATABASE_NAME +
+                "?autoReconnect=true");
             ds.setUser(this.databaseConfig.WORLD_DATABASE_USER);
             ds.setPassword(this.databaseConfig.WORLD_DATABASE_PASSWORD);
-            
+
             ds.setMinPoolSize(this.databaseConfig.WORLD_DATABASE_CONNECTIONS_MIN);
             ds.setMaxPoolSize(this.databaseConfig.WORLD_DATABASE_CONNECTIONS_MAX);
             ds.setAutoCommitOnClose(false);
@@ -47,41 +49,43 @@ public class WorldModule {
         }
         return ds;
     }
-    
+
     @Bean
     public JpaVendorAdapter jpaVendorAdapterWorld() {
-    
+
         final HibernateJpaVendorAdapter hjva = new HibernateJpaVendorAdapter();
         hjva.setShowSql(true);
         hjva.setGenerateDdl(true);
         hjva.setDatabasePlatform(this.databaseConfig.WORLD_DATABASE_DIALECT);
         return hjva;
     }
-    
+
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryWorld() {
-    
-        final LocalContainerEntityManagerFactoryBean lcemfb = new LocalContainerEntityManagerFactoryBean();
+
+        final LocalContainerEntityManagerFactoryBean lcemfb =
+                new LocalContainerEntityManagerFactoryBean();
         lcemfb.setDataSource(dataSourceWorld());
         lcemfb.setPersistenceXmlLocation("classpath:META-INF/persistence-world.xml");
         lcemfb.setJpaVendorAdapter(jpaVendorAdapterWorld());
         lcemfb.setJpaDialect(new HibernateJpaDialect());
         return lcemfb;
     }
-    
+
     @Bean
     @Qualifier("world")
     public JpaTransactionManager transactionManagerWorld() {
-    
+
         final JpaTransactionManager jtm = new JpaTransactionManager();
         jtm.setEntityManagerFactory(entityManagerFactoryWorld().getObject());
         return jtm;
     }
-    
+
     @Bean
     public TransactionInterceptor transactionInterceptorWorld() {
-    
-        return new TransactionInterceptor(transactionManagerWorld(), new AnnotationTransactionAttributeSource());
+
+        return new TransactionInterceptor(transactionManagerWorld(),
+                new AnnotationTransactionAttributeSource());
     }
-    
+
 }

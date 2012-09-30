@@ -14,15 +14,15 @@ import org.jmangos.world.entities.ItemPrototype;
  * 
  */
 public interface ItemService {
-    
+
     FieldsItem readItem(Long id);
-    
+
     List<FieldsItem> readItems(Criterion... criterions);
-    
+
     Long createOrUpdateItem(FieldsItem item);
-    
+
     void deleteItem(FieldsItem item);
-    
+
     FieldsItem createItem(ItemPrototype itemProto, int itemCount);
-    
+
 }

@@ -8,22 +8,22 @@ import org.springframework.stereotype.Component;
 
 @Component
 public abstract class AbstractJmxBeanService implements Service {
-    
+
     @Inject
     private JMXService jmxService;
-    
+
     @PostConstruct
     @Override
     public void start() {
-    
+
         this.jmxService.start(this, getBeanName());
     }
-    
+
     @Override
     public void stop() {
-    
+
         this.jmxService.stop(getBeanName());
     }
-    
+
     protected abstract String getBeanName();
 }

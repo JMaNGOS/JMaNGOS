@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
@@ -48,27 +48,34 @@ import org.slf4j.LoggerFactory;
 @Table(name = "fields_container")
 @DiscriminatorValue("2")
 public class FieldsContainer extends FieldsItem {
-    
-    private static final Logger         logger    = LoggerFactory.getLogger(FieldsContainer.class);
-    
-    @Column(name = "slotsCount", nullable = true, insertable = true, updatable = true, length = 8, precision = 0)
-    private byte                        slotsCount;
-    
-    @JoinTable(name = "container_Items", joinColumns = @JoinColumn(name = "container_guid"), inverseJoinColumns = @JoinColumn(name = "item_guid"))
+
+    private static final Logger logger = LoggerFactory.getLogger(FieldsContainer.class);
+
+    @Column(name = "slotsCount",
+            nullable = true,
+            insertable = true,
+            updatable = true,
+            length = 8,
+            precision = 0)
+    private byte slotsCount;
+
+    @JoinTable(name = "container_Items",
+            joinColumns = @JoinColumn(name = "container_guid"),
+            inverseJoinColumns = @JoinColumn(name = "item_guid"))
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @Fetch(value = FetchMode.SUBSELECT)
     @MapKeyColumn(name = "slot")
     private final Map<Byte, FieldsItem> inventory = new FastMap<Byte, FieldsItem>();
-    
+
     /**
      * 
      */
     public FieldsContainer() {
-    
+
         super();
     }
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -76,25 +83,27 @@ public class FieldsContainer extends FieldsItem {
      */
     @Override
     public void initBits() {
-    
+
         super.initBits();
         setType(getType() | TypeMask.CONTAINER.getValue());
     }
-    
+
     public final boolean addToInventory(final Byte slot, final FieldsItem item) {
-    
+
         if (slot > this.slotsCount) {
-            logger.debug("Try add item in container but slot {} > count slots {}.", slot, this.slotsCount);
+            logger.debug("Try add item in container but slot {} > count slots {}.", slot,
+                    this.slotsCount);
             return false;
         }
-        
+
         if (this.inventory.size() >= this.slotsCount) {
             logger.debug("Try add item {} in full container {}", item.getGuid(), getGuid());
             return false;
         }
-        
+
         if (this.inventory.get(slot) != null) {
-            logger.debug("Try add item {} but slot not free, have item {}", item.getGuid(), this.inventory.get(slot).getGuid());
+            logger.debug("Try add item {} but slot not free, have item {}", item.getGuid(),
+                    this.inventory.get(slot).getGuid());
             return false;
         }
         item.setContained(getGuid());
@@ -103,18 +112,18 @@ public class FieldsContainer extends FieldsItem {
         this.bitSet.set(ContainerFields.CONTAINER_FIELD_SLOT_1.getValue() + slot + 1);
         return true;
     }
-    
+
     public final boolean addToInventory(final FieldsItem item) {
-    
+
         final Byte slot = getFreeSlot();
         if (slot == null) {
             return false;
         }
         return this.addToInventory(slot, item);
     }
-    
+
     public final Byte getFreeSlot() {
-    
+
         for (byte i = 0; i < getSlotsCount(); i++) {
             if (!this.inventory.containsKey(i)) {
                 return i;
@@ -122,25 +131,25 @@ public class FieldsContainer extends FieldsItem {
         }
         return null;
     }
-    
+
     /**
      * @return the slotsCount
      */
     public final int getSlotsCount() {
-    
+
         return this.slotsCount;
     }
-    
+
     /**
      * @param slotsCount
-     *            the slotsCount to set
+     *        the slotsCount to set
      */
     public final void setSlotsCount(final byte slotsCount) {
-    
+
         this.bitSet.set(ContainerFields.CONTAINER_FIELD_NUM_SLOTS.getValue());
         this.slotsCount = slotsCount;
     }
-    
+
     /**
      * Don't use directly
      * 
@@ -148,10 +157,10 @@ public class FieldsContainer extends FieldsItem {
      */
     @Deprecated
     public final Map<Byte, FieldsItem> getInventory() {
-    
+
         return this.inventory;
     }
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -159,18 +168,20 @@ public class FieldsContainer extends FieldsItem {
      */
     @Override
     protected int getBitSize() {
-    
+
         return ContainerFields.CONTAINER_END;
     }
-    
+
     /*
      * (non-Javadoc)
      * 
-     * @see org.jmangos.test.subentities.ItemObject#writeValuesUpdate(java.nio.ByteBuffer)
+     * @see
+     * org.jmangos.test.subentities.ItemObject#writeValuesUpdate(java.nio.ByteBuffer
+     * )
      */
     @Override
     public ChannelBuffer writeValuesUpdate() {
-    
+
         final ChannelBuffer ocBuffer = super.writeValuesUpdate();
         if (this.bitSet.get(ContainerFields.CONTAINER_FIELD_NUM_SLOTS.getValue())) {
             ocBuffer.writeInt(getSlotsCount());
@@ -182,5 +193,5 @@ public class FieldsContainer extends FieldsItem {
         }
         return ocBuffer;
     }
-    
+
 }

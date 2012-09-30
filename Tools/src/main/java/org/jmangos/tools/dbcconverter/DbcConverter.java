@@ -11,14 +11,16 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * 
  */
 public class DbcConverter {
-    
+
     /**
      * @param args
      */
     public static void main(final String[] args) {
-    
-        final ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(new String[] { "/META-INF/applicationContext.xml" });
+
+        final ClassPathXmlApplicationContext appContext =
+                new ClassPathXmlApplicationContext(
+                        new String[] { "/META-INF/applicationContext.xml" });
         appContext.getBean(DbcStorages.class).encode();
     }
-    
+
 }

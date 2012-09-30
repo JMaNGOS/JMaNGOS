@@ -6,7 +6,7 @@
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * 
  * Contributors:
- *     JMANGOS - initial API and implementation
+ * JMANGOS - initial API and implementation
  ******************************************************************************/
 /*
  * Copyright (C) 2011 WoWEmu This program is free software; you can redistribute
@@ -35,38 +35,38 @@ import org.jmangos.commons.threadpool.ThreadPoolManager;
  * The Class UpdateService.
  */
 public class UpdateService implements Service {
-    
+
     /** The task manager. */
     private final TaskManager taskManager = new TaskManager();
-    
+
     /** The thread pool manager. */
     @Inject
     private ThreadPoolManager threadPoolManager;
-    
+
     /** The map service. */
     @Inject
-    private MapService        mapService;
-    
+    private MapService mapService;
+
     /**
      * The Enum UpdateWorldTaskId.
      */
     private static enum UpdateRealmTaskId implements TaskId {
-        
+
         /** The L s_ worl d_ update. */
         REALM_MAP_UPDATE;
-        
+
         /**
          * 
          * @see org.jmangos.commons.task.TaskId#getPriority()
          */
         @Override
         public TaskPriority getPriority() {
-        
+
             return TaskPriority.NORMAL;
         }
-        
+
     }
-    
+
     /**
      * 
      * @see org.jmangos.commons.service.Service#start()
@@ -74,32 +74,33 @@ public class UpdateService implements Service {
     @PostConstruct
     @Override
     public void start() {
-    
-        this.taskManager.addNewTask(UpdateRealmTaskId.REALM_MAP_UPDATE, this.threadPoolManager.scheduleAtFixedRate(new RealmUpdateWorldList(), 100, 100));
+
+        this.taskManager.addNewTask(UpdateRealmTaskId.REALM_MAP_UPDATE,
+                this.threadPoolManager.scheduleAtFixedRate(new RealmUpdateWorldList(), 100, 100));
     }
-    
+
     /**
      * 
      * @see org.jmangos.commons.service.Service#stop()
      */
     @Override
     public void stop() {
-    
+
         this.taskManager.cancelAllTasks();
     }
-    
+
     /**
      * The Class LUpdateWorldList.
      */
     private final class RealmUpdateWorldList implements Runnable {
-        
+
         /**
          * 
          * @see java.lang.Runnable#run()
          */
         @Override
         public void run() {
-        
+
             UpdateService.this.mapService.update();
         }
     }

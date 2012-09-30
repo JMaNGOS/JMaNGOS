@@ -13,13 +13,13 @@ import org.jmangos.realm.entities.FieldsItem;
  * 
  */
 public interface ItemDao {
-    
+
     FieldsItem readItem(Long id);
-    
+
     List<FieldsItem> readItems(Criterion... criterions);
-    
+
     Long createOrUpdateItem(FieldsItem givenItem);
-    
+
     void deleteItem(FieldsItem givenItem);
-    
+
 }

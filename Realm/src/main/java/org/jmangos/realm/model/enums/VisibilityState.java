@@ -19,29 +19,29 @@ public enum VisibilityState {
     HIGH((byte) 0x10),
     STEALTH((byte) 0x20),
     INVISIBILITY_GLOW((byte) 0x40);
-    
+
     private byte value;
-    
+
     VisibilityState(final byte val) {
-    
+
         this.value = val;
     }
-    
+
     /**
      * @return the value
      */
     public final byte getValue() {
-    
+
         return this.value;
     }
-    
+
     /**
      * @param value
-     *            the value to set
+     *        the value to set
      */
     public final void setValue(final byte value) {
-    
+
         this.value = value;
     }
-    
+
 }

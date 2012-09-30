@@ -27,44 +27,46 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AccountController {
-    
+
     /** The Constant logger. */
-    private static final Logger     logger   = LoggerFactory.getLogger(AccountController.class);
-    
+    private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
+
     @Inject
-    private AccountService          accountService;
-    
+    private AccountService accountService;
+
     private final AccountsContainer accounts = new AccountsContainer();
-    
+
     /**
      * Login.
      * 
      * @param name
-     *            the name
+     *        the name
      * @param channelHandler
-     *            the channel handler
+     *        the channel handler
      * @return the wow auth response
      */
     public WoWAuthResponse loadLogin(final String name, final NettyNetworkChannel channelHandler) {
-    
+
         // if
         // (BannedIpController.isBanned(channelHandler.getAddress().getAddress().getHostAddress()))
         // {
         // return WoWAuthResponse.WOW_FAIL_BANNED;
         // }
-        
+
         final Criterion criterion = Restrictions.eq("username", name);
         final List<AccountEntity> accountList = this.accountService.readAccounts(criterion);
         if ((accountList != null) && !accountList.isEmpty()) {
             final AccountEntity accountEntity = accountList.get(0);
             final AccountInfo account = new AccountInfo(accountEntity.getId());
-            
-            HashMap<String, BigNumber> variable; // calculateVSFields will create it.
+
+            HashMap<String, BigNumber> variable; // calculateVSFields will
+                                                 // create it.
             BigNumber s = new BigNumber();
             BigNumber v = new BigNumber();
-            
+
             channelHandler.setChanneledObject(account);
-            if ((accountEntity.getV().length() != (32 * 2)) || (accountEntity.getS().length() != (32 * 2))) {
+            if ((accountEntity.getV().length() != (32 * 2)) ||
+                (accountEntity.getS().length() != (32 * 2))) {
                 variable = AccountUtils.calculateVSFields(accountEntity.getShaPasswordHash());
                 s = variable.get("s");
                 v = variable.get("v");
@@ -74,7 +76,7 @@ public class AccountController {
                 s.setHexStr(accountEntity.getS());
                 v.setHexStr(accountEntity.getV());
             }
-            
+
             final BigNumber B = AccountUtils.getB(v, channelHandler);
             account.setName(name);
             account.setB_crypto(B);
@@ -83,17 +85,17 @@ public class AccountController {
             account.setAccessLevel(accountEntity.getGmlevel());
             this.accounts.addObject(account);
             accountEntity.setLastIp(channelHandler.getAddress().getAddress().getHostAddress());
-            
+
             this.accountService.createOrUpdateAccount(accountEntity);
-            
+
             return WoWAuthResponse.WOW_SUCCESS;
         } else {
             return WoWAuthResponse.WOW_FAIL_UNKNOWN_ACCOUNT;
         }
     }
-    
+
     public WoWAuthResponse checkPassword(final AccountInfo account, final byte[] a, final byte[] m1) {
-    
+
         logger.debug("a length " + a.length);
         logger.debug("a value " + new BigInteger(1, a).toString(16).toUpperCase());
         logger.debug("m1 length " + m1.length);
@@ -115,11 +117,13 @@ public class AccountController {
         final BigNumber A = new BigNumber();
         A.setBinary(a);
         logger.debug("A:" + A.asHexStr());
-        final BigNumber S = A.multiply((account.getV_crypto().modPow(u, AccountUtils.N))).modPow(account.getB(), AccountUtils.N);
-        
+        final BigNumber S =
+                A.multiply((account.getV_crypto().modPow(u, AccountUtils.N))).modPow(
+                        account.getB(), AccountUtils.N);
+
         final byte[] t1 = new byte[16];
         final byte[] vK = new byte[40];
-        
+
         final byte[] t = S.asByteArray(32);
         for (int i = 0; i < 16; ++i) {
             t1[i] = t[i * 2];
@@ -137,7 +141,7 @@ public class AccountController {
         for (int i = 0; i < 20; ++i) {
             vK[(i * 2) + 1] = t2[i];
         }
-        
+
         byte[] hash = new byte[20];
         logger.debug("N:" + AccountUtils.N.asHexStr());
         sha.update(AccountUtils.N.asByteArray(32));
@@ -148,29 +152,29 @@ public class AccountController {
         for (int i = 0; i < 20; ++i) {
             hash[i] ^= gH[i];
         }
-        
+
         byte[] t4 = new byte[20];
         sha.update(account.getName().toUpperCase().getBytes(Charset.forName("UTF-8")));
         t4 = sha.digest();
-        
+
         sha.update(hash);
         sha.update(t4);
         sha.update(account.getS_crypto().asByteArray(32));
         sha.update(A.asByteArray(32));
         sha.update(B.asByteArray(32));
         sha.update(vK);
-        
+
         final byte[] sh = sha.digest();
-        
+
         if (Arrays.equals(sh, m1)) {
             sha.update(A.asByteArray(32));
             sha.update(sh);
             sha.update(vK);
-            
+
             account.setM2(sha.digest());
             account.setvK(vK);
             ArrayUtils.reverse(vK);
-            
+
             final Criterion criterion = Restrictions.eq("username", account.getName());
             final List<AccountEntity> accountList = this.accountService.readAccounts(criterion);
             if ((accountList != null) && !accountList.isEmpty()) {
@@ -187,9 +191,9 @@ public class AccountController {
             return WoWAuthResponse.WOW_FAIL_INCORRECT_PASSWORD;
         }
     }
-    
+
     public boolean checkSessionKey(final AccountInfo account, final byte[] R1, final byte[] R2) {
-    
+
         MessageDigest sha = null;
         try {
             sha = MessageDigest.getInstance("SHA-1");
@@ -197,13 +201,13 @@ public class AccountController {
             e.printStackTrace();
             return false;
         }
-        
+
         final Criterion criterion = Restrictions.eq("username", account.getName());
         final List<AccountEntity> accountList = this.accountService.readAccounts(criterion);
         if ((accountList != null) && !accountList.isEmpty()) {
             final AccountEntity accountEntity = accountList.get(0);
             final String sessionKey = accountEntity.getSessionKey();
-            
+
             sha.update(account.getName().getBytes(Charset.forName("UTF-8")));
             sha.update(R1);
             sha.update(account.get_reconnectProof().asByteArray(16));
@@ -211,16 +215,16 @@ public class AccountController {
         } else {
             return false;
         }
-        
+
         if (Arrays.equals(sha.digest(), R2)) {
             return true;
         } else {
             return false;
         }
     }
-    
+
     public AccountInfo getAccount(final String login) {
-    
+
         final Criterion criterion = Restrictions.eq("username", login);
         final List<AccountEntity> accountList = this.accountService.readAccounts(criterion);
         if ((accountList != null) && !accountList.isEmpty()) {
@@ -233,7 +237,7 @@ public class AccountController {
         }
         return null;
     }
-    
+
     /**
      * Convert to session key.
      * 
@@ -242,38 +246,40 @@ public class AccountController {
      * @return the byte[]
      */
     private byte[] convertSessionKey(final String hexkey) {
-    
+
         final int len = hexkey.length();
         final byte[] data = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {
-            data[((len - i) / 2) - 1] = (byte) ((Character.digit(hexkey.charAt(i), 16) << 4) + Character.digit(hexkey.charAt(i + 1), 16));
+            data[((len - i) / 2) - 1] =
+                    (byte) ((Character.digit(hexkey.charAt(i), 16) << 4) + Character.digit(
+                            hexkey.charAt(i + 1), 16));
         }
         return data;
     }
-    
+
     /**
      * Load clean.
      * 
      * @param name
-     *            the name
+     *        the name
      * @param channelHandler
-     *            the channel handler
+     *        the channel handler
      */
     public void loadClean(final String name, final NettyNetworkChannel channelHandler) {
-    
+
         final AccountInfo account = this.accounts.getNamedObject(name);
         channelHandler.setChanneledObject(account);
     }
-    
+
     /**
      * Find and clean account in Account container.
      * 
      * @param accountName
-     *            - account's name.
+     *        - account's name.
      * @return AccountInfo - relation to accountName.
      */
     public AccountInfo getAndCleanAccount(final String accountName) {
-    
+
         final AccountInfo aInfo = this.accounts.getNamedObject(accountName);
         if (aInfo != null) {
             this.accounts.removeObject(aInfo);

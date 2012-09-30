@@ -13,21 +13,21 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class RealmServersContainer extends IdKeyContainer<RealmInfo> {
-    
+
     /** Constant logger. */
     private static final Logger logger = LoggerFactory.getLogger(RealmServersContainer.class);
-    
+
     @Override
     public void onDataNotPresentEvent(final long objectId) {
-    
+
         logger.error("Realm with id {} not exist in container.", objectId);
-        
+
     }
-    
+
     @Override
     public void onDataAlreadyAddedEvent(final long objectId) {
-    
+
         logger.error("Realm server already in container. Duplicate Id : {}", objectId);
-        
+
     }
 }

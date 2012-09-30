@@ -7,6 +7,7 @@ import java.util.EnumSet;
 import java.util.Map.Entry;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
@@ -36,10 +37,15 @@ import org.jmangos.realm.model.enums.UpdateType;
 @Entity
 @Table(name = "fields_player")
 public class CharacterData extends FieldsCharacter {
-    
-    @OneToOne(targetEntity = CharacterPositionerHolder.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+    @OneToOne(targetEntity = CharacterPositionerHolder.class,
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
     CharacterPositionerHolder movement;
-    
+
+    @Column(name = "atLoginFlag", nullable = true, insertable = true, updatable = true)
+    private int atLoginFlag;
+
     /*
      * (non-Javadoc)
      * 
@@ -47,12 +53,12 @@ public class CharacterData extends FieldsCharacter {
      */
     @Override
     public void setGender(final Gender gender) {
-    
+
         super.setGender(gender);
         setPlayerBytes3(getPlayerBytes3() | (0x1 & gender.getValue()));
-        
+
     }
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -60,16 +66,16 @@ public class CharacterData extends FieldsCharacter {
      */
     @Override
     public void initBits() {
-    
+
         super.initBits();
         setType(getType() | TypeMask.PLAYER.getValue());
-        
+
         final EnumSet<Powers> usedPower = EnumSet.of(Powers.HEALTH, getPowerType());
         for (final Powers powers : usedPower) {
             this.bitSet.set(UnitField.UNIT_FIELD_HEALTH.getValue() + powers.ordinal());
             this.bitSet.set(UnitField.UNIT_FIELD_MAXHEALTH.getValue() + powers.ordinal());
         }
-        
+
         this.bitSet.set(PlayerFields.PLAYER_BYTES.getValue());
         this.bitSet.set(PlayerFields.PLAYER_BYTES_2.getValue());
         setFlags(UnitFlags.PVP_ATTACKABLE.getValue());
@@ -119,104 +125,106 @@ public class CharacterData extends FieldsCharacter {
         setModDamageDonePct(0, 1f);
         setRangedDemage(0, 2.4285715f);
         setRangedDemage(1, 3.4285715f);
-        
+
         for (int i = 0; i < 4; i++) {
             this.bitSet.set(PlayerFields.PLAYER_RUNE_REGEN_1.getValue() + i);
         }
-        
+
         for (int i = 0; i < 6; i++) {
             this.bitSet.set(PlayerFields.PLAYER_FIELD_GLYPH_SLOTS_1.getValue() + i);
         }
-        
+
     }
-    
+
     @Override
     public void initBitsForCollections() {
-    
+
         super.initBitsForCollections();
-        
+
         for (final Entry<Integer, FieldsItem> equips : getInventory().entrySet()) {
             final EquipmentSlots slot = EquipmentSlots.get(equips.getKey());
             if ((slot != null) && EquipmentSlots.ITEMS.contains(slot)) {
-                this.bitSet.set(PlayerFields.PLAYER_VISIBLE_ITEM_1_ENTRYID.getValue() + (slot.ordinal() * 2));
-                if ((equips.getValue().getEnchants().get(EnchantmentSlot.PERM) != null) || (equips.getValue().getEnchants().get(EnchantmentSlot.TEMP) != null)) {
-                    this.bitSet.set(PlayerFields.PLAYER_VISIBLE_ITEM_1_ENCHANTMENT.getValue() + (slot.ordinal() * 2));
+                this.bitSet.set(PlayerFields.PLAYER_VISIBLE_ITEM_1_ENTRYID.getValue() +
+                    (slot.ordinal() * 2));
+                if ((equips.getValue().getEnchants().get(EnchantmentSlot.PERM) != null) ||
+                    (equips.getValue().getEnchants().get(EnchantmentSlot.TEMP) != null)) {
+                    this.bitSet.set(PlayerFields.PLAYER_VISIBLE_ITEM_1_ENCHANTMENT.getValue() +
+                        (slot.ordinal() * 2));
                 }
             }
-            this.bitSet.set(PlayerFields.PLAYER_FIELD_INV_SLOT_HEAD.getValue() + (equips.getKey() * 2));
-            this.bitSet.set(PlayerFields.PLAYER_FIELD_INV_SLOT_HEAD.getValue() + (equips.getKey() * 2) + 1);
+            this.bitSet.set(PlayerFields.PLAYER_FIELD_INV_SLOT_HEAD.getValue() +
+                (equips.getKey() * 2));
+            this.bitSet.set(PlayerFields.PLAYER_FIELD_INV_SLOT_HEAD.getValue() +
+                (equips.getKey() * 2) +
+                1);
         }
     }
-    
+
     public void updateMaxPowers() {
-    
+
         int value = 0;
         for (final Powers power : Powers.PLAYER_CREATE_POWERS) {
             value = getPowers().getCreatePower(power);
-            
+
             value += getModifierValue(power, ModType.BASE_FLAT);
             value *= getModifierValue(power, ModType.BASE_PCT);
             value += getModifierValue(power, ModType.TOTAL_FLAT) + getBonusPowerValue(power);
             value *= getModifierValue(power, ModType.TOTAL_PCT);
-            
+
             getPowers().setMaxPower(power, value);
         }
     }
-    
+
     private int getBonusPowerValue(final Powers power) {
-    
+
         switch (power) {
             case HEALTH:
                 final int stamina = getStat(Stats.STAMINA);
-                
+
                 final int baseStam = stamina < 20 ? stamina : 20;
                 final int moreStam = stamina - baseStam;
-                
+
                 return baseStam + (moreStam * 10);
             case MANA:
                 final int intellect = getStat(Stats.INTELLECT);
-                
+
                 final int baseInt = (intellect < 20) ? intellect : 20;
                 final int moreInt = intellect - baseInt;
-                
+
                 return baseInt + (moreInt * 15);
             default:
                 return 0;
         }
     }
-    
+
     @Override
     public BasicPositionerHolder getMovement() {
-    
+
         return this.movement;
     }
-    
+
     /**
      * @param movement
-     *            the movement to set
+     *        the movement to set
      */
     public final void setMovement(final CharacterPositionerHolder movement) {
-    
+
         this.movement = movement;
     }
-    
+
     @Override
     public int buildCreateBlock(final ChannelBuffer updateBlock, final CharacterData characterData) {
-    
+
         int count = 0;
         count += super.buildCreateBlock(updateBlock, characterData);
         if (this == characterData) {
             for (final Entry<Integer, FieldsItem> equips : getInventory().entrySet()) {
                 count += equips.getValue().buildCreateBlock(updateBlock, characterData);
             }
-            /*
-             * for (final Entry<Byte, FieldsItem> equips : getPackInventory().entrySet()) { count +=
-             * equips.getValue().buildCreateBlock(updateBlock, characterData); }
-             */
         }
         return count;
     }
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -224,18 +232,18 @@ public class CharacterData extends FieldsCharacter {
      */
     @Override
     protected int getTypeId() {
-    
+
         return TypeID.PLAYER.getValue();
     }
-    
+
     @Override
     protected UpdateType getCreateUpdateType() {
-    
+
         return UpdateType.CREATE_OBJECT2;
     }
-    
+
     public void equipItem(final EquipmentSlots equipmentSlots, final FieldsItem item) {
-    
+
         item.setContained(getGuid());
         item.setOwner(getGuid());
         if (getInventory().containsKey(equipmentSlots.ordinal())) {
@@ -249,24 +257,30 @@ public class CharacterData extends FieldsCharacter {
             addToInventory(item);
         } else {
             getInventory().put(equipmentSlots.ordinal(), item);
-            
+
             if (EquipmentSlots.ITEMS.contains(equipmentSlots)) {
-                this.bitSet.set(PlayerFields.PLAYER_VISIBLE_ITEM_1_ENTRYID.getValue() + (equipmentSlots.ordinal() * 2));
-                if ((item.getEnchants().get(EnchantmentSlot.PERM) != null) || (item.getEnchants().get(EnchantmentSlot.TEMP) != null)) {
-                    this.bitSet.set(PlayerFields.PLAYER_VISIBLE_ITEM_1_ENCHANTMENT.getValue() + (equipmentSlots.ordinal() * 2));
+                this.bitSet.set(PlayerFields.PLAYER_VISIBLE_ITEM_1_ENTRYID.getValue() +
+                    (equipmentSlots.ordinal() * 2));
+                if ((item.getEnchants().get(EnchantmentSlot.PERM) != null) ||
+                    (item.getEnchants().get(EnchantmentSlot.TEMP) != null)) {
+                    this.bitSet.set(PlayerFields.PLAYER_VISIBLE_ITEM_1_ENCHANTMENT.getValue() +
+                        (equipmentSlots.ordinal() * 2));
                 }
             }
-            this.bitSet.set(PlayerFields.PLAYER_FIELD_INV_SLOT_HEAD.getValue() + (equipmentSlots.ordinal() * 2));
-            this.bitSet.set(PlayerFields.PLAYER_FIELD_INV_SLOT_HEAD.getValue() + (equipmentSlots.ordinal() * 2) + 1);
+            this.bitSet.set(PlayerFields.PLAYER_FIELD_INV_SLOT_HEAD.getValue() +
+                (equipmentSlots.ordinal() * 2));
+            this.bitSet.set(PlayerFields.PLAYER_FIELD_INV_SLOT_HEAD.getValue() +
+                (equipmentSlots.ordinal() * 2) +
+                1);
         }
         if (item.getPrototype().getBonding() == ItemBondingsCondition.WHEN_EQUIPPED.ordinal()) {
             item.addFlags(ItemFlags.BINDED.getValue());
         }
-        
+
     }
-    
+
     public boolean addToInventory(final FieldsItem item) {
-    
+
         item.setOwner(getGuid());
         final Integer slot = getFreeSlotInPack();
         boolean success = false;
@@ -275,11 +289,12 @@ public class CharacterData extends FieldsCharacter {
             getInventory().put(slot, item);
             success = true;
         }
-        
+
         if (!success) {
             for (final EquipmentSlots bag : EquipmentSlots.BAGS) {
                 if (getInventory().containsKey(bag.ordinal())) {
-                    final FieldsContainer curbag = (FieldsContainer) getInventory().get(bag.ordinal());
+                    final FieldsContainer curbag =
+                            (FieldsContainer) getInventory().get(bag.ordinal());
                     if (curbag.addToInventory(item)) {
                         success = true;
                         break;
@@ -287,15 +302,16 @@ public class CharacterData extends FieldsCharacter {
                 }
             }
         }
-        
-        if (success && (item.getPrototype().getBonding() == ItemBondingsCondition.WHEN_PICKED_UP.ordinal())) {
+
+        if (success &&
+            (item.getPrototype().getBonding() == ItemBondingsCondition.WHEN_PICKED_UP.ordinal())) {
             item.addFlags(ItemFlags.BINDED.getValue());
         }
         return success;
     }
-    
+
     private Integer getFreeSlotInPack() {
-    
+
         for (Integer i = 23; i < 40; i++) {
             if (!getInventory().containsKey(i)) {
                 return i;
@@ -303,15 +319,17 @@ public class CharacterData extends FieldsCharacter {
         }
         return null;
     }
-    
+
     /*
      * (non-Javadoc)
      * 
-     * @see org.jmangos.test.subentities.ItemObject#writeValuesUpdate(java.nio.ByteBuffer)
+     * @see
+     * org.jmangos.test.subentities.ItemObject#writeValuesUpdate(java.nio.ByteBuffer
+     * )
      */
     @Override
     public ChannelBuffer writeValuesUpdate() {
-    
+
         final ChannelBuffer ocBuffer = super.writeValuesUpdate();
         if (this.bitSet.get(PlayerFields.PLAYER_DUEL_ARBITER.getValue())) {
             ocBuffer.writeLong(getDuelArbiter());
@@ -346,18 +364,22 @@ public class CharacterData extends FieldsCharacter {
             }
         }
         for (final EquipmentSlots slot : EquipmentSlots.ITEMS) {
-            
-            if (this.bitSet.get(PlayerFields.PLAYER_VISIBLE_ITEM_1_ENTRYID.getValue() + (slot.ordinal() * 2))) {
+
+            if (this.bitSet.get(PlayerFields.PLAYER_VISIBLE_ITEM_1_ENTRYID.getValue() +
+                (slot.ordinal() * 2))) {
                 ocBuffer.writeInt(getInventory().get(slot.ordinal()).getEntry());
             };
-            if (this.bitSet.get(PlayerFields.PLAYER_VISIBLE_ITEM_1_ENCHANTMENT.getValue() + (slot.ordinal() * 2))) {
-                ItemEnchant enchant = getInventory().get(slot.ordinal()).getEnchants().get(EnchantmentSlot.PERM);
+            if (this.bitSet.get(PlayerFields.PLAYER_VISIBLE_ITEM_1_ENCHANTMENT.getValue() +
+                (slot.ordinal() * 2))) {
+                ItemEnchant enchant =
+                        getInventory().get(slot.ordinal()).getEnchants().get(EnchantmentSlot.PERM);
                 if (enchant != null) {
                     ocBuffer.writeShort(enchant.getEnchantId());
                 } else {
                     ocBuffer.writeShort(0);
                 }
-                enchant = getInventory().get(slot.ordinal()).getEnchants().get(EnchantmentSlot.TEMP);
+                enchant =
+                        getInventory().get(slot.ordinal()).getEnchants().get(EnchantmentSlot.TEMP);
                 if (enchant != null) {
                     ocBuffer.writeShort(enchant.getEnchantId());
                 } else {
@@ -404,7 +426,7 @@ public class CharacterData extends FieldsCharacter {
         if (this.bitSet.get(PlayerFields.PLAYER_CHARACTER_POINTS2.getValue())) {
             ocBuffer.writeInt(getCharacterPoints2());
         }
-        
+
         if (this.bitSet.get(PlayerFields.PLAYER_TRACK_CREATURES.getValue())) {
             ocBuffer.writeInt(getTrackCreatures());
         }
@@ -435,7 +457,7 @@ public class CharacterData extends FieldsCharacter {
         if (this.bitSet.get(PlayerFields.PLAYER_OFFHAND_CRIT_PERCENTAGE.getValue())) {
             ocBuffer.writeFloat(getOffHandCritPercentage());
         }
-        
+
         for (int i = 0; i < 7; i++) {
             if (this.bitSet.get(PlayerFields.PLAYER_SPELL_CRIT_PERCENTAGE1.getValue() + i)) {
                 ocBuffer.writeFloat(getSpellCritPercentage()[i]);
@@ -473,7 +495,7 @@ public class CharacterData extends FieldsCharacter {
                 ocBuffer.writeFloat(getModDamageDonePct()[i]);
             }
         }
-        
+
         if (this.bitSet.get(PlayerFields.PLAYER_FIELD_MOD_HEALING_DONE_POS.getValue())) {
             ocBuffer.writeInt(getModHealingDonePos());
         }
@@ -582,16 +604,21 @@ public class CharacterData extends FieldsCharacter {
         }
         return ocBuffer;
     }
-    
-    public HomeBindData getHomeBindData() {
-    
-        // TODO Auto-generated method stub
-        return null;
+
+    /**
+     * @return the atLoginFlag
+     */
+    public int getAtLoginFlag() {
+
+        return atLoginFlag;
     }
-    
-    public void setHomeBindData(final HomeBindData homeBind) {
-    
-        // TODO Auto-generated method stub
-        
+
+    /**
+     * @param atLoginFlag
+     *        the atLoginFlag to set
+     */
+    public void setAtLoginFlag(int atLoginFlag) {
+
+        this.atLoginFlag = atLoginFlag;
     }
 }

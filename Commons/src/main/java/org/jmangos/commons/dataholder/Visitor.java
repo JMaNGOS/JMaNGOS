@@ -8,6 +8,6 @@ package org.jmangos.commons.dataholder;
  * 
  */
 public interface Visitor<T> {
-    
+
     void visit(T member);
 }

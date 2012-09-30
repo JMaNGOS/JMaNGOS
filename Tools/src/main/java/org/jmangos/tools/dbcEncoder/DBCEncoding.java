@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
@@ -106,7 +106,7 @@ import org.jmangos.tools.dbc.struct.WorldMapOverlayEntry;
 import org.jmangos.tools.dbc.struct.WorldSafeLocsEntry;
 
 public class DBCEncoding {
-    
+
     /**
      * @param <T>
      * @param args
@@ -114,8 +114,9 @@ public class DBCEncoding {
      * @throws InstantiationException
      * @throws InterruptedException
      */
-    public static <T extends DBCStruct<T>> void main(final String[] args) throws InstantiationException, IllegalAccessException, InterruptedException {
-    
+    public static <T extends DBCStruct<T>> void main(final String[] args)
+            throws InstantiationException, IllegalAccessException, InterruptedException {
+
         boolean full = true;
         for (final String string : args) {
             if (string.contains("quick")) {
@@ -123,10 +124,12 @@ public class DBCEncoding {
             }
         }
         final long start = System.currentTimeMillis();
-        System.out.println(new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss]").format(new Date()) + " Start");
+        System.out.println(new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss]").format(new Date()) +
+            " Start");
         final File dir = new File("./dbc/");
         final CommonThreadPoolManager threadPoolManager = new CommonThreadPoolManager();
-        final FastMap<String, DBCStruct<? extends DBCStruct<?>>> list = new FastMap<String, DBCStruct<? extends DBCStruct<?>>>();
+        final FastMap<String, DBCStruct<? extends DBCStruct<?>>> list =
+                new FastMap<String, DBCStruct<? extends DBCStruct<?>>>();
         list.put("spellshapeshiftform", SpellShapeshiftFormEntry.class.newInstance());
         // list.put("zonemusic", ZoneMusicEntry.class.newInstance());
         // list.put("spellicon", SpellIconEntry.class.newInstance());
@@ -337,7 +340,8 @@ public class DBCEncoding {
         // list.put("groundeffecttexture",
         // GroundEffectTextureEntry.class.newInstance());
         // list.put("skilltiers", SkillTiersEntry.class.newInstance());
-        list.put("spellitemenchantmentcondition", SpellItemEnchantmentConditionEntry.class.newInstance());
+        list.put("spellitemenchantmentcondition",
+                SpellItemEnchantmentConditionEntry.class.newInstance());
         // list.put("paperdollitemframe",
         // PaperDollItemFrameEntry.class.newInstance());
         // list.put("animationdata", AnimationDataEntry.class.newInstance());
@@ -464,10 +468,10 @@ public class DBCEncoding {
         // list.put("light", LightEntry.class.newInstance());
         list.put("itemextendedcost", ItemExtendedCostEntry.class.newInstance());
         final String[] children = dir.list(new FilenameFilter() {
-            
+
             @Override
             public boolean accept(final File dir, final String name) {
-            
+
                 return name.endsWith(".dbc");
             }
         });
@@ -477,31 +481,38 @@ public class DBCEncoding {
             threadPoolManager.start();
             for (final String filename : children) {
                 final boolean mode = full;
-                final String normalname = filename.substring(0, filename.length() - 4).toLowerCase();
+                final String normalname =
+                        filename.substring(0, filename.length() - 4).toLowerCase();
                 if (list.containsKey(normalname)) {
                     threadPoolManager.schedule(new Runnable() {
-                        
+
                         @SuppressWarnings("unchecked")
                         @Override
                         public void run() {
-                        
-                            DBCDataLoader.saveDBC2XML(list.get(normalname).getClass(), "./dbc/" + filename, "./xml/", mode);
+
+                            DBCDataLoader.saveDBC2XML(list.get(normalname).getClass(), "./dbc/" +
+                                filename, "./xml/", mode);
                             list.remove(normalname);
                         }
                     }, 0);
-                    
+
                 }
             }
             PoolStats ps = threadPoolManager.fillPoolStats(ThreadPoolType.SCHEDULED);
             int condition = ps.getActiveCount();
             System.out.println("Task Count: " + ps.getTaskCount());
             do {
-                System.out.println("Active thread: " + condition + "\n" + "Complite thread: " + ps.getCompletedTaskCount());
+                System.out.println("Active thread: " +
+                    condition +
+                    "\n" +
+                    "Complite thread: " +
+                    ps.getCompletedTaskCount());
                 Thread.sleep(300L);
                 ps = threadPoolManager.fillPoolStats(ThreadPoolType.SCHEDULED);
             } while ((condition = ps.getActiveCount()) > 0);
             threadPoolManager.stop();
-            System.out.println(new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss]").format(new Date()) + " End");
+            System.out.println(new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss]").format(new Date()) +
+                " End");
             final long end = System.currentTimeMillis();
             System.out.println("DBCEncoding loading took: " + (end - start) + "ms");
         }

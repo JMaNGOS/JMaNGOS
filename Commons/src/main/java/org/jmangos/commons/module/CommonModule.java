@@ -10,17 +10,17 @@ import org.springframework.jmx.export.annotation.AnnotationMBeanExporter;
 
 @Configuration
 public class CommonModule {
-    
+
     @Bean
     public AnnotationMBeanExporter annotationMBeanExporter() {
-    
+
         return new AnnotationMBeanExporter();
     }
-    
+
     @Bean
     public MBeanServer provideMBeanServer() {
-    
+
         return ManagementFactory.getPlatformMBeanServer();
     }
-    
+
 }

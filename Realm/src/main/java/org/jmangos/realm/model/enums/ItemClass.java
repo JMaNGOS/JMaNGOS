@@ -23,5 +23,5 @@ public enum ItemClass {
     PERMANENT,
     MISC,
     GLYPH;
-    
+
 }

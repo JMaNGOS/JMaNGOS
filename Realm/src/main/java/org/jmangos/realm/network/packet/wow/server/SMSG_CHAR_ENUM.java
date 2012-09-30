@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
@@ -33,35 +33,34 @@ import org.slf4j.LoggerFactory;
  * The Class SMSG_CHAR_ENUM.
  */
 public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
-    
+
     /** The charlist. */
     private final List<CharacterData> charlist;
-    
+
     /** The Constant logger. */
-    private static final Logger       logger = LoggerFactory.getLogger(CMSG_AUTH_SESSION.class);
-    
+    private static final Logger logger = LoggerFactory.getLogger(CMSG_AUTH_SESSION.class);
+
     /**
      * Instantiates a new <tt>SMSG_CHAR_ENUM</tt> packet.
      * 
      * @param charlist
-     *            the charlist
+     *        the charlist
      */
     public SMSG_CHAR_ENUM(final List<CharacterData> charlist) {
-    
+
         this.charlist = charlist;
     }
-    
+
     /**
      * @see org.jmangos.commons.network.model.SendablePacket#writeImpl()
      */
     @Override
     public void writeImpl() {
-    
+
         logger.info("CHARLIST SIZE " + this.charlist.size());
         writeC(this.charlist.size());
         for (final CharacterData characterData : this.charlist) {
             writeQ(characterData.getGuid());
-            // writePackedGuid( character.getGuid() );
             writeS(characterData.getName());
             writeC(characterData.getRace().getValue());
             writeC(characterData.getClazz().getValue());
@@ -82,23 +81,25 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
             writeD(-1);
             // Ban, dead, help, cloak, rename values. default: no flags
             writeD(0);
-            writeD(0); // character.getAtLoginFlags()
-            
-            writeC(0); // FIXME check at login first
+            writeD(characterData.getAtLoginFlag()); //
+
+            writeC(characterData.getAtLoginFlag() & 0x1); // FIXME check at
+                                                          // login first
             // TODO: implement Pet!
             writeD(0x00 /* character.getPetDisplayId() */);
             writeD(0x00 /* character.getPetLevel() */);
             writeD(0x00 /* character.getPetFamily() */);
-            
+
             // final List<InventoryItem> inventory = character.getInventory();
-            
-            final ItemStorages itemStorages = ServiceContent.getContext().getBean(ItemStorages.class);
+
+            final ItemStorages itemStorages =
+                    ServiceContent.getContext().getBean(ItemStorages.class);
             if (itemStorages == null) {
                 logger.error("Cannot get ItemStorages instance!");
             }
             for (final EquipmentSlots slot : EquipmentSlots.values()) {
                 final FieldsItem invItem = characterData.getInventory().get(slot.ordinal());
-                
+
                 if ((invItem != null)) {
                     int displayInfoID = 0x00;
                     byte inventoryType = 0;
@@ -109,7 +110,7 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
                     } catch (final Exception e) {
                         logger.error("ID not found in the storage: " + invItem.getEntry(), e);
                     }
-                    
+
                     writeD(displayInfoID);
                     writeC(inventoryType);
                     writeD(0x00);
@@ -119,9 +120,9 @@ public class SMSG_CHAR_ENUM extends AbstractWoWServerPacket {
                     writeD(0x00);
                 }
             }
-            
+
         }
-        
+
     }
-    
+
 }

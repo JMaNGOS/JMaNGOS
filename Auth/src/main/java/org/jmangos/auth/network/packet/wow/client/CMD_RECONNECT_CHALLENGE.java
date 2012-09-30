@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
@@ -33,42 +33,42 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CMD_RECONNECT_CHALLENGE extends AbstractWoWClientPacket {
-    
+
     /** The sender. */
     @Inject
     @Named("nettyPacketSender")
     private AbstractPacketSender sender;
-    
+
     /** The account controller. */
     @Inject
-    private AccountController    accountController;
-    
+    private AccountController accountController;
+
     /** The login. */
-    private String               login;
-    
+    private String login;
+
     /**
      * Instantiates a new CMD_RECONNECT_CHALLENGE.
      */
     public CMD_RECONNECT_CHALLENGE() {
-    
+
         super();
     }
-    
+
     /**
      * @see org.jmangos.commons.network.model.ReceivablePacket#getMinimumLength()
      */
     @Override
     public int getMinimumLength() {
-    
+
         return 0;
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected void readImpl() {
-    
+
         readC(); // error
         readH(); // size
         readB(4); // gamename
@@ -84,13 +84,13 @@ public class CMD_RECONNECT_CHALLENGE extends AbstractWoWClientPacket {
         final int lenLogin = readC();
         this.login = new String(readB(lenLogin), Charset.forName("UTF-8"));
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected void runImpl() {
-    
+
         this.accountController.loadClean(this.login, (NettyNetworkChannel) getClient());
         this.sender.send(getClient(), new SMD_RECONNECT_CHALLENGE());
     }

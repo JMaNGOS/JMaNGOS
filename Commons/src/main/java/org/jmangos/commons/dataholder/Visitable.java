@@ -7,10 +7,10 @@ package org.jmangos.commons.dataholder;
  * @param <T>
  */
 public interface Visitable<T> {
-    
+
     /**
      * @param visitor
      */
     void iterate(Visitor<T> visitor);
-    
+
 }

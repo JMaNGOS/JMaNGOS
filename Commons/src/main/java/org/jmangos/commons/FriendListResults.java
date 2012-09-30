@@ -1,7 +1,8 @@
 package org.jmangos.commons;
 
 /**
- * Created with IntelliJ IDEA. User: Goofy Date: 2012.08.08. Time: 12:15 To change this template use
+ * Created with IntelliJ IDEA. User: Goofy Date: 2012.08.08. Time: 12:15 To
+ * change this template use
  * File | Settings | File Templates.
  */
 public enum FriendListResults {
@@ -22,28 +23,28 @@ public enum FriendListResults {
     FRIEND_IGNORE_ALREADY(0x0E),
     FRIEND_IGNORE_ADDED(0x0F),
     FRIEND_IGNORE_REMOVED(0x10);
-    
+
     private int value;
-    
+
     FriendListResults(final int value) {
-    
+
         setValue(value);
     }
-    
+
     /**
      * @return the value
      */
     public int getValue() {
-    
+
         return this.value;
     }
-    
+
     /**
      * @param value
-     *            the value to set
+     *        the value to set
      */
     public void setValue(final int value) {
-    
+
         this.value = value;
     }
 }

@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
@@ -39,24 +39,24 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CMSG_REQUEST_ACCOUNT_DATA extends AbstractWoWClientPacket {
-    
+
     /** The sender. */
     @Inject
     @Named("nettyPacketSender")
     private AbstractPacketSender sender;
-    
+
     /** The type. */
-    private int                  type;
-    
+    private int type;
+
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
-    
+
         this.type = readD();
     }
-    
+
     @Override
     protected void runImpl() {
-    
+
         if (this.type > AccountDataType.NUM_ACCOUNT_DATA_TYPES.getValue()) {
             return;
         }
@@ -68,12 +68,13 @@ public class CMSG_REQUEST_ACCOUNT_DATA extends AbstractWoWClientPacket {
                                                                                          // */
         if (adata.containsKey(this.type)) {
             final Deflater compressor = new Deflater();
-            final byte[] dataToCompress = adata.get(this.type).getData().getBytes(Charset.forName("UTF-8"));
-            
+            final byte[] dataToCompress =
+                    adata.get(this.type).getData().getBytes(Charset.forName("UTF-8"));
+
             compressor.setInput(dataToCompress);
             compressor.finish();
             final ByteArrayOutputStream bos = new ByteArrayOutputStream(dataToCompress.length);
-            
+
             final byte[] buf = new byte[1024];
             while (!compressor.finished()) {
                 final int count = compressor.deflate(buf);
@@ -81,12 +82,11 @@ public class CMSG_REQUEST_ACCOUNT_DATA extends AbstractWoWClientPacket {
             }
             try {
                 bos.close();
-            } catch (final IOException e) {
-            }
+            } catch (final IOException e) {}
             // FIXME NEED COMPLETE
             @SuppressWarnings("unused")
             final byte[] compressedData = bos.toByteArray();
-            
+
         }
     }
 }

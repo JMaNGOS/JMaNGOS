@@ -23,30 +23,31 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Qualifier(value = "charOutfitService")
-public class CharOutfitService extends AbstractDbcService<CharStartOutfitEntity, CharStartOutfitEntry> {
-    
+public class CharOutfitService
+        extends AbstractDbcService<CharStartOutfitEntity, CharStartOutfitEntry> {
+
     CharOutfitService() {
-    
+
         super();
     }
-    
+
     @PersistenceContext(unitName = "world")
     private EntityManager entityManager;
-    
+
     @Override
     public void save(final CharStartOutfitEntity charStartOutfitEntity) {
-    
+
         if (charStartOutfitEntity.getCharStartOutfitEntityPk() == null) {
             this.entityManager.persist(charStartOutfitEntity);
         } else {
             this.entityManager.merge(charStartOutfitEntity);
         }
-        
+
     }
-    
+
     @Override
     public void saveAll() {
-    
+
         CharStartOutfitEntry entry = getEntry();
         do {
             int numbItem = 0;
@@ -58,33 +59,34 @@ public class CharOutfitService extends AbstractDbcService<CharStartOutfitEntity,
                     pk.setClazz(entry.clazz.get());
                     pk.setGender(entry.gender.get());
                     pk.setRace(entry.race.get());
-                    final EquipmentSlots slot = findEquipSlot(InventoryType.get(entry.ItemInventorySlot[numbItem].get()));
+                    final EquipmentSlots slot =
+                            findEquipSlot(InventoryType.get(entry.ItemInventorySlot[numbItem].get()));
                     if (slot == null) {
                         tf.setSlot(startedFreeSlot);
                         startedFreeSlot++;
                     } else {
                         tf.setSlot(slot.ordinal());
                     }
-                    
+
                     tf.setProtoId(entry.protoId[numbItem].get());
                     tf.setCharStartOutfitEntityPk(pk);
                     this.entityManager.merge(tf);
                 }
                 numbItem++;
             }
-            
+
         } while ((entry = entry.next()) != null);
-        
+
     }
-    
+
     @Override
     public String getDbcPath() {
-    
+
         return "./../realm/dbc/Charstartoutfit.dbc";
     }
-    
+
     public static EquipmentSlots findEquipSlot(final InventoryType inventoryType) {
-    
+
         switch (inventoryType) {
             case HEAD:
                 return EquipmentSlots.HEAD;

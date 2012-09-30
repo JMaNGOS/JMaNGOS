@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
@@ -44,23 +44,23 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmClientPacket {
-    
+
     /** The logger. */
-    private static Logger        logger = LoggerFactory.getLogger(CMD_AUTH_LOGON_CHALLENGE.class);
-    
+    private static Logger logger = LoggerFactory.getLogger(CMD_AUTH_LOGON_CHALLENGE.class);
+
     @Inject
-    private Config               config;
-    
+    private Config config;
+
     /** The sender. */
     @Inject
     @Named("serverPacketSender")
     private AbstractPacketSender sender;
-    
+
     /** The m1. */
-    private byte[]               m1;
-    
-    private byte[]               ahash;
-    
+    private byte[] m1;
+
+    private byte[] ahash;
+
     /*
      * (non-Javadoc)
      * 
@@ -68,7 +68,7 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmClientPacket {
      */
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
-    
+
         readC();
         if (readC() == WoWAuthResponse.WOW_SUCCESS.getMessageId()) {
             final SecureRandom random = new SecureRandom();
@@ -93,11 +93,14 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmClientPacket {
             final BigInteger N = new BigInteger(1, Nb);
             ArrayUtils.reverse(Nb);
             final BigInteger a = new BigInteger(1, random.generateSeed(19));
-            
-            final byte[] passhash = sha.digest(this.config.AUTH_LOGIN.toUpperCase().concat(":").concat(this.config.AUTH_PASSWORD.toUpperCase()).getBytes(Charset.forName("UTF-8")));
+
+            final byte[] passhash =
+                    sha.digest(this.config.AUTH_LOGIN.toUpperCase().concat(":").concat(
+                            this.config.AUTH_PASSWORD.toUpperCase()).getBytes(
+                            Charset.forName("UTF-8")));
             sha.update(saltb);
             sha.update(passhash);
-            
+
             final byte[] xhash = sha.digest();
             ArrayUtils.reverse(xhash);
             final BigInteger x = new BigInteger(1, xhash);
@@ -115,8 +118,9 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmClientPacket {
             ArrayUtils.reverse(hashu);
             final BigInteger u = new BigInteger(1, hashu);
             logger.debug("u:" + u.toString(16).toUpperCase());
-            final BigInteger S = (B.subtract(k.multiply(g.modPow(x, N)))).modPow(a.add(u.multiply(x)), N);
-            
+            final BigInteger S =
+                    (B.subtract(k.multiply(g.modPow(x, N)))).modPow(a.add(u.multiply(x)), N);
+
             final byte[] full_S = S.toByteArray();
             ArrayUtils.reverse(full_S);
             logger.debug("t:" + StringUtils.toHexString(full_S));
@@ -133,23 +137,25 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmClientPacket {
                 vK[i * 2] = t1[i];
                 vK[(i * 2) + 1] = t2[i];
             }
-            
+
             byte[] hash = new byte[20];
             logger.debug("N:" + N.toString(16).toUpperCase());
             hash = sha.digest(Nb);
-            
+
             logger.debug("hash:" + new BigInteger(1, hash).toString(16).toUpperCase());
-            
+
             byte[] gH = new byte[20];
             sha.update(g.toByteArray());
             gH = sha.digest();
             for (int i = 0; i < 20; ++i) {
                 hash[i] ^= gH[i];
             }
-            
+
             byte[] t4 = new byte[20];
-            t4 = sha.digest(this.config.AUTH_LOGIN.toUpperCase().getBytes(Charset.forName("UTF-8")));
-            
+            t4 =
+                    sha.digest(this.config.AUTH_LOGIN.toUpperCase().getBytes(
+                            Charset.forName("UTF-8")));
+
             sha.update(hash);
             logger.debug("hash:" + StringUtils.toHexString(hash));
             sha.update(t4);
@@ -163,17 +169,17 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmClientPacket {
             sha.update(vK);
             logger.debug("vK:" + StringUtils.toHexString(vK));
             this.m1 = sha.digest();
-            
+
             sha.update(this.ahash);
             sha.update(this.m1);
             sha.update(vK);
             logger.debug("m1 value" + StringUtils.toHexString(this.m1));
             @SuppressWarnings("unused")
             final byte[] m2 = sha.digest();
-            
+
             final ChannelPipeline pipeline = getClient().getChannel().getPipeline();
             ((RealmToAuthChannelHandler) pipeline.getLast()).setSeed(vK);
-            
+
         } else {
             getChannel().getPipeline().remove("handler");
             getChannel().getPipeline().remove("eventlog");
@@ -182,7 +188,7 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmClientPacket {
             getChannel().getFactory().releaseExternalResources();
         }
     }
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -190,8 +196,8 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmClientPacket {
      */
     @Override
     protected void runImpl() {
-    
+
         this.sender.send(getClient(), new SMD_AUTH_LOGON_PROOF(this.ahash, this.m1));
-        
+
     }
 }
