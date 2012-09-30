@@ -128,16 +128,6 @@ public class FieldsCharacter extends FieldsUnit {
     private final Map<Integer, FieldsItem> equipInventory      = new FastMap<Integer, FieldsItem>();
     
     @Transient
-    private final long[]                   bankSlot            = new long[28];
-    @Transient
-    private final long[]                   bankBagSlot         = new long[7];
-    @Transient
-    private final long[]                   buyBackSlot         = new long[12];
-    @Transient
-    private final long[]                   keyRingSlot         = new long[32];
-    @Transient
-    private final long[]                   currencyTokenSlot   = new long[32];
-    @Transient
     private long                           farsight;
     
     @Column(name = "knownTitles", nullable = true, insertable = true, updatable = true)
@@ -578,101 +568,6 @@ public class FieldsCharacter extends FieldsUnit {
     
         this.bitSet.set(PlayerFields.PLAYER_FAKE_INEBRIATION.getValue());
         this.fakeInebriation = fakeInebriation;
-    }
-    
-    /**
-     * @return the bankSlot
-     */
-    public long[] getBankSlot() {
-    
-        return this.bankSlot;
-    }
-    
-    /**
-     * @param bankSlot
-     *            the bankSlot to set
-     */
-    public void setBankSlot(final int index, final long bankSlot) {
-    
-        this.bitSet.set(PlayerFields.PLAYER_FIELD_BANK_SLOT_1.getValue());
-        this.bitSet.set(PlayerFields.PLAYER_FIELD_BANK_SLOT_1.getValue() + 1);
-        this.bankSlot[index] = bankSlot;
-    }
-    
-    /**
-     * @return the bankBagSlot
-     */
-    public long[] getBankBagSlot() {
-    
-        return this.bankBagSlot;
-    }
-    
-    /**
-     * @param bankBagSlot
-     *            the bankBagSlot to set
-     */
-    public void setBankBagSlot(final int index, final long bankBagSlot) {
-    
-        this.bitSet.set(PlayerFields.PLAYER_FIELD_BANKBAG_SLOT_1.getValue());
-        this.bitSet.set(PlayerFields.PLAYER_FIELD_BANKBAG_SLOT_1.getValue() + 1);
-        this.bankBagSlot[index] = bankBagSlot;
-    }
-    
-    /**
-     * @return the buyBackSlot
-     */
-    public long[] getBuyBackSlot() {
-    
-        return this.buyBackSlot;
-    }
-    
-    /**
-     * @param buyBackSlot
-     *            the buyBackSlot to set
-     */
-    public void setBuyBackSlot(final int index, final long buyBackSlot) {
-    
-        this.bitSet.set(PlayerFields.PLAYER_FIELD_VENDORBUYBACK_SLOT_1.getValue());
-        this.bitSet.set(PlayerFields.PLAYER_FIELD_VENDORBUYBACK_SLOT_1.getValue() + 1);
-        this.buyBackSlot[index] = buyBackSlot;
-    }
-    
-    /**
-     * @return the keyRingSlot
-     */
-    public long[] getKeyRingSlot() {
-    
-        return this.keyRingSlot;
-    }
-    
-    /**
-     * @param keyRingSlot
-     *            the keyRingSlot to set
-     */
-    public void setKeyRingSlot(final int index, final long keyRingSlot) {
-    
-        this.bitSet.set(PlayerFields.PLAYER_FIELD_KEYRING_SLOT_1.getValue());
-        this.bitSet.set(PlayerFields.PLAYER_FIELD_KEYRING_SLOT_1.getValue() + 1);
-        this.keyRingSlot[index] = keyRingSlot;
-    }
-    
-    /**
-     * @return the currencyTokenSlot
-     */
-    public long[] getCurrencyTokenSlot() {
-    
-        return this.currencyTokenSlot;
-    }
-    
-    /**
-     * @param currencyTokenSlot
-     *            the currencyTokenSlot to set
-     */
-    public void setCurrencyTokenSlot(final int index, final long currencyTokenSlot) {
-    
-        this.bitSet.set(PlayerFields.PLAYER_FIELD_CURRENCYTOKEN_SLOT_1.getValue());
-        this.bitSet.set(PlayerFields.PLAYER_FIELD_CURRENCYTOKEN_SLOT_1.getValue() + 1);
-        this.currencyTokenSlot[index] = currencyTokenSlot;
     }
     
     /**

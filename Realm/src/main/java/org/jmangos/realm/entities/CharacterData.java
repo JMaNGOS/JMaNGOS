@@ -371,34 +371,9 @@ public class CharacterData extends FieldsCharacter {
         if (this.bitSet.get(PlayerFields.PLAYER_FAKE_INEBRIATION.getValue())) {
             ocBuffer.writeInt(getFakeInebriation());
         }
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < 150; i++) {
             if (this.bitSet.get(PlayerFields.PLAYER_FIELD_INV_SLOT_HEAD.getValue() + (i * 2))) {
                 ocBuffer.writeLong(getInventory().get(i).getGuid());
-            }
-        }
-        for (int i = 0; i < 28; i++) {
-            if (this.bitSet.get(PlayerFields.PLAYER_FIELD_BANK_SLOT_1.getValue() + (i * 2))) {
-                ocBuffer.writeLong(getBankSlot()[i]);
-            }
-        }
-        for (int i = 0; i < 7; i++) {
-            if (this.bitSet.get(PlayerFields.PLAYER_FIELD_BANKBAG_SLOT_1.getValue() + (i * 2))) {
-                ocBuffer.writeLong(getBankBagSlot()[i]);
-            }
-        }
-        for (int i = 0; i < 12; i++) {
-            if (this.bitSet.get(PlayerFields.PLAYER_FIELD_VENDORBUYBACK_SLOT_1.getValue() + (i * 2))) {
-                ocBuffer.writeLong(getBuyBackSlot()[i]);
-            }
-        }
-        for (int i = 0; i < 32; i++) {
-            if (this.bitSet.get(PlayerFields.PLAYER_FIELD_KEYRING_SLOT_1.getValue() + (i * 2))) {
-                ocBuffer.writeLong(getKeyRingSlot()[i]);
-            }
-        }
-        for (int i = 0; i < 32; i++) {
-            if (this.bitSet.get(PlayerFields.PLAYER_FIELD_CURRENCYTOKEN_SLOT_1.getValue() + (i * 2))) {
-                ocBuffer.writeLong(getCurrencyTokenSlot()[i]);
             }
         }
         if (this.bitSet.get(PlayerFields.PLAYER_FARSIGHT.getValue())) {

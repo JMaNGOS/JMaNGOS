@@ -18,7 +18,6 @@ package org.jmangos.realm.network.packet.wow.server;
 
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SMSG_TIME_SYNC_REQ.
  */

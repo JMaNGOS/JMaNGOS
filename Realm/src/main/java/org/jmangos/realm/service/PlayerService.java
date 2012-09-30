@@ -124,6 +124,7 @@ public class PlayerService {
         // this.sender.send(player.getChannel(), new SMSG_FEATURE_SYSTEM_STATUS());
         // sender.send(player.getChannel(), new SMSG_LEARNED_DANCE_MOVES());
         this.sender.send(player.getChannel(), new SMSG_BINDPOINTUPDATE(player));
+        this.sender.send(player.getChannel(), new SMSG_MOTD("Test MotD String@test".split("@")));
         // this.sender.send(player.getChannel(), new SMSG_TALENTS_INFO());
         // this.sender.send(player.getChannel(), new SMSG_INITIAL_SPELLS());
         // this.sender.send(player.getChannel(), new SMSG_ACTION_BUTTONS(player));
@@ -134,7 +135,6 @@ public class PlayerService {
         // this.sender.send(player.getChannel(), new SMSG_ALL_ACHIEVEMENT_DATA());
         this.sender.send(player.getChannel(), new SMSG_LOGIN_SETTIMESPEED());
         // this.sender.send(player.getChannel(), new SMSG_INIT_WORLD_STATES(player));
-        this.sender.send(player.getChannel(), new SMSG_TIME_SYNC_REQ());
         // this.sender.send(player.getChannel(), new SMSG_SPELL_GO());
         // this.sender.send(player.getChannel(), new SMSG_PLAYED_TIME());
         
@@ -149,7 +149,8 @@ public class PlayerService {
         final SMSG_UPDATE_OBJECT updatePacket = new SMSG_UPDATE_OBJECT(outputBuffer);
         this.sender.send(player.getChannel(), updatePacket);
         
-        this.sender.send(player.getChannel(), new SMSG_MOTD("Test MotD String@test".split("@")));
+        this.sender.send(player.getChannel(), new SMSG_TIME_SYNC_REQ());
+        
         this.sender.send(player.getChannel(), new SMSG_ACCOUNT_DATA_TIMES(SMSG_ACCOUNT_DATA_TIMES.PER_CHARACTER_CACHE_MASK, null));
         PlayerService.playerlist.put(player.getObjectId(), player);
         

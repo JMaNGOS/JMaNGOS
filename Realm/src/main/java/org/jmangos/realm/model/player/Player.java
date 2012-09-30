@@ -42,7 +42,7 @@ public class Player extends NamedObject implements ChanneledObject {
     private NetworkChannel      channel;
     
     /** The time sync counter. */
-    private int                 timeSyncCounter = 0;
+    private int                 timeSyncCounter = -1;
     
     /**
      * Instantiates a new player.
