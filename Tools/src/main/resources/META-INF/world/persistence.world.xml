@@ -9,12 +9,17 @@
 	<persistence-unit name="world">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>org.jmangos.commons.entities.CharStartOutfitEntity</class>
-		
+		<class>org.jmangos.commons.entities.SpellEntity</class>
+		<class>org.jmangos.commons.entities.SpellEffectEntity</class>
+		<class>org.jmangos.commons.entities.SkillLineAbilityEntity</class>
+
 		<properties>
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
-			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/world?autoReconnect=true" />
+			<property name="hibernate.connection.url"
+				value="jdbc:mysql://localhost:3306/world?autoReconnect=true" />
 			<property name="hibernate.connection.username" value="JMaNGOS" />
 			<property name="hibernate.connection.password" value="JMaNGOS" />
+			<property name="hibernate.connection.useUnicode" value="true" />
 		</properties>
 	</persistence-unit>
 

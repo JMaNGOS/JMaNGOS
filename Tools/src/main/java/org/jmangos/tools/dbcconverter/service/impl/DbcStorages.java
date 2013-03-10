@@ -13,11 +13,16 @@ public class DbcStorages {
     private static final Logger logger = LoggerFactory.getLogger(DbcStorages.class);
     @Autowired
     CharOutfitService charOutfitService;
-
+    @Autowired
+    SpellService spellService;
+    @Autowired
+    SkillLineAbilityService skillLineAbilityService;
     public void encode() {
 
         logger.info("Start encoding dbc files");
-        this.charOutfitService.saveAll();
+       // this.charOutfitService.saveAll();
+        //this.spellService.saveAll();
+        this.skillLineAbilityService.saveAll();
         logger.info("Finished encoding dbc files");
     }
 }

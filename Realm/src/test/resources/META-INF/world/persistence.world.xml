@@ -26,6 +26,55 @@
 		<class>org.jmangos.world.entities.PlayerXpForLevel</class>
 		<class>org.jmangos.commons.entities.CharStartOutfitEntity</class>
 		
+		<class>org.jmangos.test.entities.SkillEntity</class>
+		
+		<class>org.jmangos.commons.entities.SpellEntity</class>
+		
+		<class>org.jmangos.commons.entities.SpellEffectEntity</class>
+		<!-- 2 -->
+		<class>org.jmangos.commons.entities.effects.SpellDamage</class>
+		<!-- 3 -->
+		<class>org.jmangos.commons.entities.effects.PeriodicDamage</class>
+		<!-- 6 -->
+		<class>org.jmangos.commons.entities.effects.ApplyAura</class>
+		<!-- 10 -->
+		<class>org.jmangos.commons.entities.effects.Heal</class>
+		<!-- 17 -->
+		<class>org.jmangos.commons.entities.effects.Shoot</class>
+		<!-- 20 -->
+		<class>org.jmangos.commons.entities.effects.Dodge</class>
+		<!-- 23 -->
+		<class>org.jmangos.commons.entities.effects.Block</class>
+		<!-- 24 -->
+		<class>org.jmangos.commons.entities.effects.CreateItem</class>
+		
+		<!-- 25 -->
+		<class>org.jmangos.commons.entities.effects.Weapon</class>
+		<!-- 26 -->
+		<class>org.jmangos.commons.entities.effects.Defence</class>
+		<!-- 33 -->
+		<class>org.jmangos.commons.entities.effects.OpenLocked</class>
+		<!-- 37 -->
+		<class>org.jmangos.commons.entities.effects.SpellDefence</class>
+		<!-- 39 -->
+		<class>org.jmangos.commons.entities.effects.Language</class>
+		<!-- 49 -->
+		<class>org.jmangos.commons.entities.effects.Detect</class>
+		<!-- 58 -->
+		<class>org.jmangos.commons.entities.effects.WeaponDamage</class>
+		<!-- 60 -->
+		<class>org.jmangos.commons.entities.effects.Proficiency</class>
+		<!-- 78 -->
+		<class>org.jmangos.commons.entities.effects.Attack</class>
+		<!-- 83 -->
+		<class>org.jmangos.commons.entities.effects.Duel</class>
+		<!-- 84 -->
+		<class>org.jmangos.commons.entities.effects.Stuck</class>
+		<!-- 116 -->
+		<class>org.jmangos.commons.entities.effects.RemoveInsignia</class>
+		<!-- 152 -->
+		<class>org.jmangos.commons.entities.effects.SummonFriend</class>
+
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
@@ -37,7 +86,7 @@
 			<property name="hibernate.c3p0.timeout" value="5000" />
 			<property name="hibernate.c3p0.max_statements" value="100" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
-			
+
 		</properties>
 	</persistence-unit>
 

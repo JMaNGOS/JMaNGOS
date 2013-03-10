@@ -4,6 +4,7 @@
 package org.jmangos.realm.entities;
 
 import java.util.EnumSet;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.persistence.CascadeType;
@@ -12,9 +13,15 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import javolution.util.FastMap;
 
 import org.jboss.netty.buffer.ChannelBuffer;
+import org.jmangos.commons.entities.SpellEntity;
 import org.jmangos.commons.enums.EquipmentSlots;
+import org.jmangos.commons.enums.ItemClass;
+import org.jmangos.commons.model.CanUseSpell;
 import org.jmangos.realm.model.base.update.PlayerFields;
 import org.jmangos.realm.model.base.update.UnitField;
 import org.jmangos.realm.model.enums.EnchantmentSlot;
@@ -36,8 +43,11 @@ import org.jmangos.realm.model.enums.UpdateType;
  */
 @Entity
 @Table(name = "fields_player")
-public class CharacterData extends FieldsCharacter {
+public class CharacterData extends FieldsCharacter implements CanUseSpell{
 
+    @Transient
+    private final Map<Integer, SpellEntity> spells = new FastMap<Integer,SpellEntity>();
+    
     @OneToOne(targetEntity = CharacterPositionerHolder.class,
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
@@ -46,6 +56,17 @@ public class CharacterData extends FieldsCharacter {
     @Column(name = "atLoginFlag", nullable = true, insertable = true, updatable = true)
     private int atLoginFlag;
 
+    public void addSpell(SpellEntity spell){
+        
+            spell.onAdd(this);
+    }
+    
+    public void removeSpell(SpellEntity spell){
+        if(spells.containsKey(spell.getId())){
+            spells.remove(spell.getId());
+            spell.onRemove(this);
+        }
+    }
     /*
      * (non-Javadoc)
      * 
@@ -621,4 +642,30 @@ public class CharacterData extends FieldsCharacter {
 
         this.atLoginFlag = atLoginFlag;
     }
+
+    @Override
+    public boolean addToSpellContainer(SpellEntity spell) {
+        if(!spells.containsKey(spell.getId())){
+            spells.put(spell.getId(), spell);
+            return true;
+        }else{
+            return false;
+        }
+        
+    }
+
+    @Override
+    public void addProficiency(ItemClass itemclass, int mask) {
+    
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void removeProficiency(ItemClass itemclass, int mask) {
+    
+        // TODO Auto-generated method stub
+        
+    }
+
 }

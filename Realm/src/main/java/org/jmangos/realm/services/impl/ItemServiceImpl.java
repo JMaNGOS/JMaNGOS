@@ -19,10 +19,10 @@ package org.jmangos.realm.services.impl;
 import java.util.List;
 
 import org.criteria4jpa.criterion.Criterion;
+import org.jmangos.commons.enums.ItemClass;
 import org.jmangos.realm.dao.ItemDao;
 import org.jmangos.realm.entities.FieldsContainer;
 import org.jmangos.realm.entities.FieldsItem;
-import org.jmangos.realm.model.enums.ItemClass;
 import org.jmangos.realm.model.enums.ItemFlags;
 import org.jmangos.realm.services.ItemService;
 import org.jmangos.world.entities.ItemPrototype;

@@ -35,10 +35,10 @@
 			<artifactId>lwjgl-platform</artifactId>
 			<type>pom</type>
 		</dependency>
-		<dependency>
+		<!-- dependency>
 			<groupId>org.critterai</groupId>
 			<artifactId>cai-nmgen</artifactId>
-		</dependency>
+		</dependency -->
 	</dependencies>
 
 	<build>

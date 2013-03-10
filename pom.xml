@@ -242,7 +242,7 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<distributionManagement>
+	<!-- file:///home/admin/git/jmangos.zipdistributionManagement>
 		<repository>
 			<id>jmangos.releases</id>
 			<url>http://nexus.jmangos.org/content/repositories/releases/</url>
@@ -258,7 +258,7 @@
 			<id>jmangos.public</id>
 			<url>http://nexus.jmangos.org/content/groups/public/</url>
 		</repository>
-	</repositories>
+	</repositories -->
 
 	<build>
 		<finalName>${project.name}</finalName>

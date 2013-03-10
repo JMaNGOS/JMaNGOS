@@ -3,7 +3,10 @@
 <beans>
 	<bean id="databaseConfig" class="org.jmangos.commons.database.DatabaseConfig" />
 	
+	<bean id="CharacterController" class="org.jmangos.realm.controller.CharacterController" />
+	
 	<bean id="ItemPrototypeDao" class="org.jmangos.world.dao.impl.ItemPrototypeDaoImpl" />
+	<bean id="SpellDao" class="org.jmangos.test.dao.impl.SpellDaoImpl" />
 	<bean id="PlayerLevelInfoDao" class="org.jmangos.world.dao.impl.PlayerLevelInfoDaoImpl" />
 	<bean id="PlayerClassLevelInfoDao" class="org.jmangos.world.dao.impl.PlayerClassLevelInfoDaoImpl" />
 	<bean id="PlayercreateinfoDao" class="org.jmangos.world.dao.impl.PlayercreateinfoDaoImpl" />
@@ -13,6 +16,7 @@
 	<bean id="charStartOutfitDao" class="org.jmangos.world.dao.impl.CharStartOutfitDaoImpl" />
 
 
+	<bean id="SpellService" class="org.jmangos.test.services.impl.SpellServiceImpl" />
 	<bean id="PlayerService" class="org.jmangos.realm.service.PlayerService" />
 	<bean id="PlayerLevelInfoService" class="org.jmangos.world.services.impl.PlayerLevelInfoServiceImpl" />
 	<bean id="characterService" class="org.jmangos.realm.services.impl.CharacterServiceImpl" />
@@ -47,7 +51,7 @@
 	<bean id="jpaVendorAdapter"
 		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 		<property name="databasePlatform" value="org.hibernate.dialect.MySQL5Dialect" />
-		<property name="showSql" value="true" />
+		<property name="showSql" value="false" />
 	</bean>
 
 	<bean id="persistenceUnitManager"
