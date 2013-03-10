@@ -17,7 +17,7 @@
 	</organization>
 
 	<issueManagement>
-		<url>https://github.com/JMaNGOS/JMaNGOS/issues</url>
+		<url>https://github.com/MinimaJack/JMaNGOS/issues</url>
 		<system>GitHub</system>
 	</issueManagement>
 
@@ -27,9 +27,9 @@
 	</ciManagement>
 
 	<scm>
-		<connection>scm:git:git@github.com:JMaNGOS/JMaNGOS.git</connection>
-		<developerConnection>scm:git:git@github.com:JMaNGOS/JMaNGOS.git</developerConnection>
-		<url>https://github.com/JMaNGOS/JMaNGOS.git</url>
+		<connection>scm:git:git@github.com:MinimaJack/JMaNGOS.git</connection>
+		<developerConnection>scm:git:git@github.com:MinimaJack/JMaNGOS.git</developerConnection>
+		<url>https://github.com/MinimaJack/JMaNGOS.git</url>
 		<tag>HEAD</tag>
 	</scm>
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jmangos.jmangos</groupId>
 	<artifactId>install</artifactId>
@@ -80,9 +81,14 @@
 										<copy todir="${izpack.staging}">
 											<fileset dir="${basedir}/src/izpack" />
 										</copy>
-										<taskdef name="IzPack" classpathref="maven.plugin.classpath" classname="com.izforge.izpack.ant.IzPackTask" />
-										<IzPack input="${izpack.staging}/install.xml" output="${izpack.staging}/${project.build.finalName}.jar" installerType="standard" basedir="${izpack.staging}" IzPackDir="${izpack.staging}/" />
-										<attachartifact file="${izpack.staging}/${project.build.finalName}.jar" type="jar" />
+										<taskdef name="IzPack" classpathref="maven.plugin.classpath"
+											classname="com.izforge.izpack.ant.IzPackTask" />
+										<IzPack input="${izpack.staging}/install.xml"
+											output="${izpack.staging}/${project.build.finalName}.jar"
+											installerType="standard" basedir="${izpack.staging}"
+											IzPackDir="${izpack.staging}/" />
+										<attachartifact
+											file="${izpack.staging}/${project.build.finalName}.jar" type="jar" />
 									</target>
 								</configuration>
 							</execution>
