@@ -4,7 +4,7 @@ import java.beans.PropertyVetoException;
 
 import javax.sql.DataSource;
 
-import org.apache.activemq.spring.ActiveMQConnectionFactory;
+import org.apache.activemq.ActiveMQConnectionFactory;
 
 import org.jmangos.commons.database.DatabaseConfig;
 import org.springframework.beans.factory.annotation.Autowired;
