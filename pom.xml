@@ -90,7 +90,7 @@
 				<version>2.4</version>
 			</dependency>
 			<dependency>
-				<groupId>org.jboss.netty</groupId>
+				<groupId>io.netty</groupId>
 				<artifactId>netty</artifactId>
 				<version>3.6.3.Final</version>
 			</dependency>

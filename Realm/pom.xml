@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jmangos.jmangos</groupId>
 	<artifactId>realm</artifactId>
@@ -31,9 +32,9 @@
 			<artifactId>groovy</artifactId>
 		</dependency>
 		<dependency>
-		  <groupId>org.springframework</groupId>
-		  <artifactId>spring-test</artifactId>
-		  <scope>test</scope>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -46,6 +47,14 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jms</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
@@ -78,7 +87,8 @@
 									<classpath refid="maven.compile.classpath" />
 								</taskdef>
 								<mkdir dir="${project.build.outputDirectory}" />
-								<groovyc destdir="${project.build.outputDirectory}" srcdir="${basedir}/src/main/java/" listfiles="true">
+								<groovyc destdir="${project.build.outputDirectory}"
+									srcdir="${basedir}/src/main/java/" listfiles="true">
 									<classpath refid="maven.compile.classpath" />
 								</groovyc>
 							</target>
@@ -97,7 +107,8 @@
 									<classpath refid="maven.test.classpath" />
 								</taskdef>
 								<mkdir dir="${project.build.testOutputDirectory}" />
-								<groovyc destdir="${project.build.testOutputDirectory}" srcdir="${basedir}/src/test/java/" listfiles="true">
+								<groovyc destdir="${project.build.testOutputDirectory}"
+									srcdir="${basedir}/src/test/java/" listfiles="true">
 									<classpath refid="maven.test.classpath" />
 								</groovyc>
 							</target>
