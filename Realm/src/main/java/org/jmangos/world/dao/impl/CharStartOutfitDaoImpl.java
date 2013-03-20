@@ -20,12 +20,15 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
-import org.criteria4jpa.Criteria;
-import org.criteria4jpa.CriteriaUtils;
-import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.commons.entities.CharStartOutfitEntity;
 import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
+import org.jmangos.commons.enums.Classes;
+import org.jmangos.commons.enums.Races;
 import org.jmangos.world.dao.CharStartOutfitDao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,16 +45,32 @@ public class CharStartOutfitDaoImpl implements CharStartOutfitDao {
         return this.entityManager.find(CharStartOutfitEntity.class, pk);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public List<CharStartOutfitEntity> readCharStartOutfits(final Criterion... criterions) {
+    public List<CharStartOutfitEntity> readCharStartOutfits() {
 
-        final Criteria criteria =
-                CriteriaUtils.createCriteria(this.entityManager, CharStartOutfitEntity.class);
-        for (final Criterion criterion : criterions) {
-            criteria.add(criterion);
-        }
-        return criteria.getResultList();
+        final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        final CriteriaQuery<CharStartOutfitEntity> criteria =
+                builder.createQuery(CharStartOutfitEntity.class);
+        final Root<CharStartOutfitEntity> xpRoot = criteria.from(CharStartOutfitEntity.class);
+        criteria.select(xpRoot);
+        return this.entityManager.createQuery(criteria).getResultList();
+    }
+
+    @Override
+    public List<CharStartOutfitEntity> readForRaceClassGender(final Races charRace,
+            final Classes charClass, final Byte gender) {
+        final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        final CriteriaQuery<CharStartOutfitEntity> criteria =
+                builder.createQuery(CharStartOutfitEntity.class);
+        final Root<CharStartOutfitEntity> root = criteria.from(CharStartOutfitEntity.class);
+        criteria.select(root);
+        final CharStartOutfitEntityPk pk = new CharStartOutfitEntityPk();
+        pk.setClazz((byte) charClass.getValue());
+        pk.setRace(charRace.getValue());
+        pk.setGender(gender);
+        final Predicate pPk = builder.equal(root.get("charStartOutfitEntityPk"), pk);
+        criteria.where(pPk);
+        return this.entityManager.createQuery(criteria).getResultList();
     }
 
     @Transactional(value = "world")
@@ -77,5 +96,4 @@ public class CharStartOutfitDaoImpl implements CharStartOutfitDao {
         }
         this.entityManager.remove(charStartOutfitEntity);
     }
-
 }

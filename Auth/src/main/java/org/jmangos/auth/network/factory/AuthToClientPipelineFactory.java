@@ -21,9 +21,6 @@ package org.jmangos.auth.network.factory;
 
 import static org.jboss.netty.channel.Channels.pipeline;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jmangos.auth.network.handler.AuthToClientChannelHandler;
 import org.jmangos.auth.network.handler.EventLogHandler;
@@ -31,6 +28,8 @@ import org.jmangos.commons.network.factory.BasicPipelineFactory;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.receiver.NettyPacketReceiver;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -42,13 +41,13 @@ import org.springframework.stereotype.Component;
 public class AuthToClientPipelineFactory extends BasicPipelineFactory {
 
     /** The connection handler. */
-    @Inject
-    @Named("authToClientConnectHandler")
+    @Autowired
+    @Qualifier("authToClientConnectHandler")
     private ConnectHandler connectionHandler;
 
     /** The packet service. */
-    @Inject
-    @Named("сlientPacketHandlerFactory")
+    @Autowired
+    @Qualifier("сlientPacketHandlerFactory")
     private PacketHandlerFactory packetService;
 
     /**

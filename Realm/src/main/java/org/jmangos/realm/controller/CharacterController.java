@@ -2,25 +2,25 @@ package org.jmangos.realm.controller;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
-import org.criteria4jpa.criterion.Criterion;
-import org.criteria4jpa.criterion.Restrictions;
 import org.jmangos.commons.entities.CharStartOutfitEntity;
+import org.jmangos.commons.entities.CharacterData;
+import org.jmangos.commons.entities.CharacterPositionerHolder;
+import org.jmangos.commons.entities.CharacterPowers;
+import org.jmangos.commons.entities.FieldsItem;
+import org.jmangos.commons.entities.HomeBindData;
+import org.jmangos.commons.entities.ItemPrototype;
+import org.jmangos.commons.entities.PlayerClassLevelInfo;
+import org.jmangos.commons.entities.PlayerLevelInfo;
+import org.jmangos.commons.entities.Playercreateinfo;
+import org.jmangos.commons.entities.Position;
+import org.jmangos.commons.entities.pk.PlayercreateinfoPK;
+import org.jmangos.commons.enums.Classes;
 import org.jmangos.commons.enums.EquipmentSlots;
-import org.jmangos.realm.domain.PlayercreateinfoPK;
-import org.jmangos.realm.entities.CharacterData;
-import org.jmangos.realm.entities.CharacterPositionerHolder;
-import org.jmangos.realm.entities.CharacterPowers;
-import org.jmangos.realm.entities.FieldsItem;
-import org.jmangos.realm.entities.HomeBindData;
-import org.jmangos.realm.entities.Position;
-import org.jmangos.realm.model.enums.Classes;
-import org.jmangos.realm.model.enums.Gender;
-import org.jmangos.realm.model.enums.ModelType;
-import org.jmangos.realm.model.enums.Powers;
-import org.jmangos.realm.model.enums.Races;
-import org.jmangos.realm.model.enums.Stats;
+import org.jmangos.commons.enums.Gender;
+import org.jmangos.commons.enums.ModelType;
+import org.jmangos.commons.enums.Powers;
+import org.jmangos.commons.enums.Races;
+import org.jmangos.commons.enums.Stats;
 import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_CREATE;
 import org.jmangos.realm.service.ItemStorages;
 import org.jmangos.realm.service.PlayerClassLevelInfoStorages;
@@ -28,17 +28,12 @@ import org.jmangos.realm.service.PlayerLevelStorages;
 import org.jmangos.realm.service.PlayerXpForLevelStorages;
 import org.jmangos.realm.services.CharacterService;
 import org.jmangos.realm.services.ItemService;
-import org.jmangos.world.entities.ItemPrototype;
-import org.jmangos.world.entities.PlayerClassLevelInfo;
-import org.jmangos.world.entities.PlayerLevelInfo;
-import org.jmangos.world.entities.Playercreateinfo;
 import org.jmangos.world.services.CharStartOutfitService;
 import org.jmangos.world.services.PlayercreateinfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class CharacterController {
@@ -46,10 +41,10 @@ public class CharacterController {
     /** The Constant logger. */
     private static final Logger logger = LoggerFactory.getLogger(CharacterController.class);
 
-    @Inject
+    @Autowired
     private CharacterService characterService;
 
-    @Inject
+    @Autowired
     private PlayercreateinfoService playercreateinfoService;
 
     @Autowired
@@ -75,9 +70,9 @@ public class CharacterController {
             final Races race, final Classes clazz, final Gender gender, final int skin,
             final int face, final int hairStyle, final int hairColor, final int facialHair) {
 
-        final Criterion criterion = Restrictions.eq("name", charName);
-        final List<CharacterData> characterDatas = this.characterService.readCharacters(criterion);
-        if ((characterDatas != null) && !characterDatas.isEmpty()) {
+        // TODO Check for only exist not load all =)))
+        CharacterData characterData = this.characterService.readCharacterByName(charName);
+        if (characterData != null) {
             CharacterController.logger.warn("Username already exists: " + charName);
             return SMSG_CHAR_CREATE.Code.NAME_IN_USE;
         }
@@ -90,7 +85,7 @@ public class CharacterController {
             return SMSG_CHAR_CREATE.Code.ERROR;
         }
 
-        final CharacterData characterData = new CharacterData();
+        characterData = new CharacterData();
         // Set account id
         characterData.setAccount(accountId);
 
@@ -214,7 +209,7 @@ public class CharacterController {
             characterData.initBitsForCollections();
 
             for (final Stats stat : Stats.values()) {
-                int statValue = playerLevelInfo.getStats(stat);
+                final int statValue = playerLevelInfo.getStats(stat);
                 characterData.setStat(stat, statValue);
                 characterData.setCreateStat(stat, statValue);
             }
@@ -240,12 +235,9 @@ public class CharacterController {
      */
     public CharacterData loadCharacterByName(final String characterName) {
 
-        final Criterion criterion = Restrictions.eq("name", characterName);
-        final List<CharacterData> characterDatas = this.characterService.readCharacters(criterion);
-        if ((characterDatas != null) && !characterDatas.isEmpty()) {
-
-            final CharacterData characterData = characterDatas.get(0);
-
+        final CharacterData characterData =
+                this.characterService.readCharacterByName(characterName);
+        if (characterData != null) {
             final PlayerClassLevelInfo classInfo =
                     this.playerClassLevelInfoStorages.get(characterData.getClazz(),
                             characterData.getLevel());
@@ -263,7 +255,7 @@ public class CharacterController {
                     this.playerLevelStorages.get(characterData.getRace(), characterData.getClazz(),
                             characterData.getLevel());
             for (final Stats stat : Stats.values()) {
-                int statValue = playerLevelInfo.getStats(stat);
+                final int statValue = playerLevelInfo.getStats(stat);
                 characterData.setStat(stat, statValue);
                 characterData.setCreateStat(stat, statValue);
             }

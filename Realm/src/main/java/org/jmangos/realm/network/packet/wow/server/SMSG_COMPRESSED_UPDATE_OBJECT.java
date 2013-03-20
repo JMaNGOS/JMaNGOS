@@ -20,7 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.zip.DeflaterInputStream;
 
-import org.jmangos.realm.model.player.Player;
+import org.jmangos.commons.model.player.Player;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 
 /**

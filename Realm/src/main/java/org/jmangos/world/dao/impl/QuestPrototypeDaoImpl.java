@@ -20,12 +20,12 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-import org.criteria4jpa.Criteria;
-import org.criteria4jpa.CriteriaUtils;
-import org.criteria4jpa.criterion.Criterion;
+import org.jmangos.commons.entities.QuestPrototype;
 import org.jmangos.world.dao.QuestPrototypeDao;
-import org.jmangos.world.entities.QuestPrototype;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,15 +42,12 @@ public class QuestPrototypeDaoImpl implements QuestPrototypeDao {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public List<QuestPrototype> readQuestPrototypes(final Criterion... criterions) {
-
-        final Criteria criteria =
-                CriteriaUtils.createCriteria(this.entityManager, QuestPrototype.class);
-        for (final Criterion criterion : criterions) {
-            criteria.add(criterion);
-        }
-        return criteria.getResultList();
+    public List<QuestPrototype> readQuestPrototypes() {
+        final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        final CriteriaQuery<QuestPrototype> criteria = builder.createQuery(QuestPrototype.class);
+        final Root<QuestPrototype> root = criteria.from(QuestPrototype.class);
+        criteria.select(root);
+        return this.entityManager.createQuery(criteria).getResultList();
     }
 
     @Transactional(value = "world")

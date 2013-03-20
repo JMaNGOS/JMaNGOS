@@ -20,13 +20,13 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-import org.criteria4jpa.Criteria;
-import org.criteria4jpa.CriteriaUtils;
-import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.domain.PlayercreateinfoPK;
+import org.jmangos.commons.entities.Playercreateinfo;
+import org.jmangos.commons.entities.pk.PlayercreateinfoPK;
 import org.jmangos.world.dao.PlayercreateinfoDao;
-import org.jmangos.world.entities.Playercreateinfo;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,15 +43,14 @@ public class PlayercreateinfoDaoImpl implements PlayercreateinfoDao {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public List<Playercreateinfo> readPlayercreateinfos(final Criterion... criterions) {
+    public List<Playercreateinfo> readPlayercreateinfos() {
 
-        final Criteria criteria =
-                CriteriaUtils.createCriteria(this.entityManager, Playercreateinfo.class);
-        for (final Criterion criterion : criterions) {
-            criteria.add(criterion);
-        }
-        return criteria.getResultList();
+        final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        final CriteriaQuery<Playercreateinfo> criteria =
+                builder.createQuery(Playercreateinfo.class);
+        final Root<Playercreateinfo> root = criteria.from(Playercreateinfo.class);
+        criteria.select(root);
+        return this.entityManager.createQuery(criteria).getResultList();
     }
 
     @Transactional(value = "world")

@@ -16,9 +16,6 @@
  *******************************************************************************/
 package org.jmangos.realm.network.handler;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.jboss.netty.channel.ChannelHandler;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
@@ -27,6 +24,8 @@ import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.network.packet.wow.server.SMSG_AUTH_CHALLENGE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -39,8 +38,8 @@ public class RealmToClientConnectHandler implements ConnectHandler {
     private static final Logger log = LoggerFactory.getLogger(RealmToClientConnectHandler.class);
 
     /** The sender. */
-    @Inject
-    @Named("nettyPacketSender")
+    @Autowired
+    @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
 
     /**

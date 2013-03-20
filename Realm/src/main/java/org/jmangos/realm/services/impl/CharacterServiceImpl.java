@@ -18,9 +18,8 @@ package org.jmangos.realm.services.impl;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
+import org.jmangos.commons.entities.CharacterData;
 import org.jmangos.realm.dao.CharacterDao;
-import org.jmangos.realm.entities.CharacterData;
 import org.jmangos.realm.services.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,9 +37,9 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     @Override
-    public List<CharacterData> readCharacters(final Criterion... criterions) {
+    public List<CharacterData> readCharacters() {
 
-        return this.characterDao.readCharacters(criterions);
+        return this.characterDao.readCharacters();
     }
 
     @Override
@@ -53,6 +52,16 @@ public class CharacterServiceImpl implements CharacterService {
     public void deleteCharacter(final CharacterData characterData) {
 
         this.characterDao.deleteCharacter(characterData);
+    }
+
+    @Override
+    public CharacterData readCharacterByName(final String name) {
+        return this.characterDao.readCharacterByName(name);
+    }
+
+    @Override
+    public List<CharacterData> readCharactersForAccount(final Long objectId) {
+        return this.characterDao.readCharacterByName(objectId);
     }
 
 }

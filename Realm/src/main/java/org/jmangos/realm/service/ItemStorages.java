@@ -21,13 +21,13 @@ import gnu.trove.map.hash.TLongObjectHashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 
 import org.jmangos.commons.dataholder.DataLoadService;
-import org.jmangos.world.entities.ItemPrototype;
+import org.jmangos.commons.entities.ItemPrototype;
 import org.jmangos.world.services.ItemPrototypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -39,7 +39,7 @@ public class ItemStorages implements DataLoadService<TLongObjectHashMap<ItemProt
     /** The Constant logger. */
     private static final Logger logger = LoggerFactory.getLogger(ItemStorages.class);
 
-    @Inject
+    @Autowired
     private ItemPrototypeService itemPrototypeService;
 
     /** The item prototypes. */

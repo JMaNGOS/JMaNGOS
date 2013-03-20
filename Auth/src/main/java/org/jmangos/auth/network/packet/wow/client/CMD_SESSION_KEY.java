@@ -18,14 +18,13 @@ package org.jmangos.auth.network.packet.wow.client;
 
 import java.nio.BufferUnderflowException;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.jmangos.auth.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.auth.network.packet.wow.server.SMD_SESSION_KEY;
 import org.jmangos.auth.wow.controller.AccountController;
 import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,11 +33,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class CMD_SESSION_KEY extends AbstractWoWClientPacket {
 
-    @Inject
-    @Named("nettyPacketSender")
+    @Autowired
+    @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
 
-    @Inject
+    @Autowired
     private AccountController accountController;
 
     private String accountName;

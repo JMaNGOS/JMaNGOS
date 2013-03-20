@@ -20,16 +20,16 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 
 import org.jmangos.commons.dataholder.DataLoadService;
-import org.jmangos.realm.domain.PlayerLevelInfoPK;
-import org.jmangos.realm.model.enums.Classes;
-import org.jmangos.realm.model.enums.Races;
-import org.jmangos.world.entities.PlayerLevelInfo;
+import org.jmangos.commons.entities.PlayerLevelInfo;
+import org.jmangos.commons.entities.pk.PlayerLevelInfoPK;
+import org.jmangos.commons.enums.Classes;
+import org.jmangos.commons.enums.Races;
 import org.jmangos.world.services.PlayerLevelInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -42,7 +42,7 @@ public class PlayerLevelStorages
     /** The Constant log. */
     private static final Logger log = LoggerFactory.getLogger(PlayerLevelStorages.class);
 
-    @Inject
+    @Autowired
     PlayerLevelInfoService playerLevelInfoService;
 
     /** The Player Race Class Level info. */

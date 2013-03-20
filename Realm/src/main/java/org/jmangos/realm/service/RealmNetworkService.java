@@ -16,15 +16,14 @@
  *******************************************************************************/
 package org.jmangos.realm.service;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.apache.commons.lang.NotImplementedException;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jmangos.commons.config.Compatiple;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.service.AbstractNetworkService;
 import org.jmangos.realm.config.Config;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,25 +32,25 @@ import org.springframework.stereotype.Component;
 @Component
 public class RealmNetworkService extends AbstractNetworkService {
 
-    @Inject
+    @Autowired
     private Config config;
 
     /** The RealmToClient pipeline factory. */
-    @Inject
-    @Named("realmToClientPipelineFactory")
+    @Autowired
+    @Qualifier("realmToClientPipelineFactory")
     private ChannelPipelineFactory realmToClientPipelineFactory;
 
     /** The packet service. */
-    @Inject
-    @Named("сlientPacketHandlerFactory")
+    @Autowired
+    @Qualifier("сlientPacketHandlerFactory")
     private PacketHandlerFactory clientPacketService;
     /** The packet service. */
-    @Inject
-    @Named("realmToAuthPacketHandlerFactory")
+    @Autowired
+    @Qualifier("realmToAuthPacketHandlerFactory")
     private PacketHandlerFactory authPacketService;
 
-    @Inject
-    @Named("realmToAuthPipelineFactory")
+    @Autowired
+    @Qualifier("realmToAuthPipelineFactory")
     private ChannelPipelineFactory realmToAuthPipelineFactory;
 
     /**

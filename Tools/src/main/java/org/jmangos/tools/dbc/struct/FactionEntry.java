@@ -25,8 +25,8 @@ public class FactionEntry extends DBCStruct<FactionEntry> {
     public final static int MAX_REP = 4;
     @XmlAttribute(name = "id", required = true)
     public final Unsigned32 ID = new Unsigned32();                  // 0,
-                                                   // holiday
-                                                   // id
+    // holiday
+    // id
     @XmlAttribute(name = "reputationListID", required = true)
     public final Signed32 reputationListID = new Signed32();                    // 1
     @XmlAttribute(name = "BaseRepRaceMask", required = true)

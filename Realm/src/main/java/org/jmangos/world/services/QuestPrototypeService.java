@@ -18,14 +18,13 @@ package org.jmangos.world.services;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.world.entities.QuestPrototype;
+import org.jmangos.commons.entities.QuestPrototype;
 
 public interface QuestPrototypeService {
 
     public QuestPrototype readQuestPrototype(Integer id);
 
-    public List<QuestPrototype> readQuestPrototypes(final Criterion... criterions);
+    public List<QuestPrototype> readQuestPrototypes();
 
     public Integer createOrUpdateQuestPrototype(QuestPrototype questPrototype);
 

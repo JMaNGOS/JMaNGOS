@@ -16,14 +16,13 @@
  *******************************************************************************/
 package org.jmangos.auth.service;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.apache.commons.lang.NotImplementedException;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jmangos.auth.config.Config;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.service.AbstractNetworkService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,17 +31,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthNetworkService extends AbstractNetworkService {
 
-    @Inject
+    @Autowired
     private Config config;
 
     /** The auth to client pipeline factory. */
-    @Inject
-    @Named("authToClientPipelineFactory")
+    @Autowired
+    @Qualifier("authToClientPipelineFactory")
     private ChannelPipelineFactory authToClientPipelineFactory;
 
     /** The packet service. */
-    @Inject
-    @Named("сlientPacketHandlerFactory")
+    @Autowired
+    @Qualifier("сlientPacketHandlerFactory")
     private PacketHandlerFactory packetService;
 
     /**

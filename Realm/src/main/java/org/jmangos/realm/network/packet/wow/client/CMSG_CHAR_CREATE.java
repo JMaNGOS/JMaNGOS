@@ -2,19 +2,18 @@ package org.jmangos.realm.network.packet.wow.client;
 
 import java.nio.BufferUnderflowException;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
+import org.jmangos.commons.enums.Classes;
+import org.jmangos.commons.enums.Gender;
+import org.jmangos.commons.enums.Races;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.controller.CharacterController;
-import org.jmangos.realm.model.enums.Classes;
-import org.jmangos.realm.model.enums.Gender;
-import org.jmangos.realm.model.enums.Races;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_CREATE;
 import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_CREATE.Code;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -27,10 +26,10 @@ public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
 
     Logger log = LoggerFactory.getLogger(getClass());
 
-    @Inject
-    @Named("nettyPacketSender")
+    @Autowired
+    @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
-    @Inject
+    @Autowired
     private CharacterController characterController;
 
     String charName;

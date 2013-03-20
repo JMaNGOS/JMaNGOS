@@ -18,7 +18,6 @@ package org.jmangos.auth.realm.services.impl;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.auth.dao.RealmDao;
 import org.jmangos.auth.entities.RealmEntity;
 import org.jmangos.auth.realm.services.RealmService;
@@ -38,9 +37,9 @@ public class RealmServiceImpl implements RealmService {
     }
 
     @Override
-    public List<RealmEntity> readRealms(final Criterion... criterions) {
+    public List<RealmEntity> readRealms() {
 
-        return this.realmDao.readRealms(criterions);
+        return this.realmDao.readRealms();
     }
 
     @Override

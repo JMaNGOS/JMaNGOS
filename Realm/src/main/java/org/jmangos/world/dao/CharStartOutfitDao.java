@@ -18,9 +18,10 @@ package org.jmangos.world.dao;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.commons.entities.CharStartOutfitEntity;
 import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
+import org.jmangos.commons.enums.Classes;
+import org.jmangos.commons.enums.Races;
 
 /**
  * @author MinimaJack
@@ -30,11 +31,14 @@ public interface CharStartOutfitDao {
 
     CharStartOutfitEntity readCharStartOutfit(CharStartOutfitEntityPk pk);
 
-    List<CharStartOutfitEntity> readCharStartOutfits(Criterion... criterions);
+    List<CharStartOutfitEntity> readCharStartOutfits();
 
     CharStartOutfitEntityPk createOrUpdateCharStartOutfitEntity(
             CharStartOutfitEntity charStartOutfitEntity);
 
     void deleteCharStartOutfitEntity(CharStartOutfitEntity charStartOutfitEntity);
+
+    List<CharStartOutfitEntity> readForRaceClassGender(Races charRace, Classes charClass,
+            Byte gender);
 
 }

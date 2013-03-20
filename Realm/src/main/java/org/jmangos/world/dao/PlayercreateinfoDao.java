@@ -18,15 +18,14 @@ package org.jmangos.world.dao;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.domain.PlayercreateinfoPK;
-import org.jmangos.world.entities.Playercreateinfo;
+import org.jmangos.commons.entities.Playercreateinfo;
+import org.jmangos.commons.entities.pk.PlayercreateinfoPK;
 
 public interface PlayercreateinfoDao {
 
     public Playercreateinfo readPlayercreateinfo(PlayercreateinfoPK pk);
 
-    public List<Playercreateinfo> readPlayercreateinfos(final Criterion... criterions);
+    public List<Playercreateinfo> readPlayercreateinfos();
 
     public PlayercreateinfoPK createOrUpdatePlayercreateinfo(Playercreateinfo playercreateinfo);
 

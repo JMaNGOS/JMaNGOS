@@ -18,15 +18,14 @@ package org.jmangos.auth.network.packet.wow.client;
 
 import java.nio.charset.Charset;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.jmangos.auth.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.auth.network.packet.wow.server.SMD_AUTH_LOGON_CHALLENGE;
 import org.jmangos.auth.wow.controller.AccountController;
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,12 +35,12 @@ import org.springframework.stereotype.Component;
 public class CMD_AUTH_LOGON_CHALLENGE extends AbstractWoWClientPacket {
 
     /** The sender. */
-    @Inject
-    @Named("nettyPacketSender")
+    @Autowired
+    @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
 
     /** The account controller. */
-    @Inject
+    @Autowired
     private AccountController accountController;
 
     private int lenLogin;

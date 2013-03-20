@@ -18,9 +18,8 @@ package org.jmangos.world.services.impl;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
+import org.jmangos.commons.entities.PlayerXpForLevel;
 import org.jmangos.world.dao.PlayerXpForLevelDao;
-import org.jmangos.world.entities.PlayerXpForLevel;
 import org.jmangos.world.services.PlayerXpForLevelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,9 +41,9 @@ public class PlayerXpForLevelServiceImpl implements PlayerXpForLevelService {
     }
 
     @Override
-    public List<PlayerXpForLevel> readPlayerLevelInfos(final Criterion... criterions) {
+    public List<PlayerXpForLevel> readPlayerLevelInfos() {
 
-        return this.playerXpForLevelDao.readPlayerXpForLevels(criterions);
+        return this.playerXpForLevelDao.readPlayerXpForLevels();
     }
 
     @Override

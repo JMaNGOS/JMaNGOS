@@ -20,12 +20,12 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-import org.criteria4jpa.Criteria;
-import org.criteria4jpa.CriteriaUtils;
-import org.criteria4jpa.criterion.Criterion;
+import org.jmangos.commons.entities.FieldsItem;
 import org.jmangos.realm.dao.ItemDao;
-import org.jmangos.realm.entities.FieldsItem;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,15 +42,13 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public List<FieldsItem> readItems(final Criterion... criterions) {
+    public List<FieldsItem> readItems() {
 
-        final Criteria criteria =
-                CriteriaUtils.createCriteria(this.entityManager, FieldsItem.class);
-        for (final Criterion criterion : criterions) {
-            criteria.add(criterion);
-        }
-        return criteria.getResultList();
+        final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        final CriteriaQuery<FieldsItem> criteria = builder.createQuery(FieldsItem.class);
+        final Root<FieldsItem> root = criteria.from(FieldsItem.class);
+        criteria.select(root);
+        return this.entityManager.createQuery(criteria).getResultList();
     }
 
     @Transactional(value = "realm")

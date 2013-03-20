@@ -44,22 +44,22 @@ public class BLP {
     private static final int HEADER_LENGTH = 20;
     private byte[] signature = new byte[4];            // BLP2
     private int type;                                   // 0 = JPEG compression; 1 =
-                      // Uncompressed or DirectX
-                      // compression
+    // Uncompressed or DirectX
+    // compression
     private byte encoding;                               // 1 for uncompressed, 2 for
-                           // DirectX compression
+    // DirectX compression
     private byte alphaBitDepth;                          // 0, 1 or 8
     private byte alphaEncoding;                          // 0 = DirectX 1 alpha (0/1
-                                // bit);
-                                // 1
-                                // = DirectX 2/3 alpha (4-bit
-                                // alpha); 2 = DirectX 4/5
-                                // alpha
-                                // (interpolated)
+    // bit);
+    // 1
+    // = DirectX 2/3 alpha (4-bit
+    // alpha); 2 = DirectX 4/5
+    // alpha
+    // (interpolated)
     private byte hasMips;                                // 0 = no mip maps; 1 = has
-                          // mips
-                          // (#
-                          // determined by dimensions)
+    // mips
+    // (#
+    // determined by dimensions)
     private int width;
     private int height;
     private int[] mipmapOffsets = new int[16];

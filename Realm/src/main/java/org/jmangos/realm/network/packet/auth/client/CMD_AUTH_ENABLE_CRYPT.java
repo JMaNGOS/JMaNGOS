@@ -18,9 +18,6 @@ package org.jmangos.realm.network.packet.auth.client;
 
 import java.nio.BufferUnderflowException;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.config.Config;
@@ -31,6 +28,8 @@ import org.jmangos.realm.network.decoder.AuthPacketFrameEncoder;
 import org.jmangos.realm.network.handler.RealmToAuthChannelHandler;
 import org.jmangos.realm.network.packet.auth.AbstractRealmClientPacket;
 import org.jmangos.realm.network.packet.auth.server.SMD_REALM_DATA;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -39,17 +38,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class CMD_AUTH_ENABLE_CRYPT extends AbstractRealmClientPacket {
 
-    @Inject
-    @Named("serverPacketSender")
+    @Autowired
+    @Qualifier("serverPacketSender")
     private AbstractPacketSender sender;
 
-    @Inject
+    @Autowired
     private Config config;
 
-    @Inject
+    @Autowired
     private RealmController realmController;
 
-    @Inject
+    @Autowired
     private AccountQueueController accountQueueController;
 
     /*

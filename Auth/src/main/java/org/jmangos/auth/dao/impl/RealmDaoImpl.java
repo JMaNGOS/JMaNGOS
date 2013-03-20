@@ -20,10 +20,10 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-import org.criteria4jpa.Criteria;
-import org.criteria4jpa.CriteriaUtils;
-import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.auth.dao.RealmDao;
 import org.jmangos.auth.entities.RealmEntity;
 import org.springframework.stereotype.Repository;
@@ -41,16 +41,14 @@ public class RealmDaoImpl implements RealmDao {
         return this.entityManager.find(RealmEntity.class, id);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public List<RealmEntity> readRealms(final Criterion... criterions) {
+    public List<RealmEntity> readRealms() {
 
-        final Criteria criteria =
-                CriteriaUtils.createCriteria(this.entityManager, RealmEntity.class);
-        for (final Criterion criterion : criterions) {
-            criteria.add(criterion);
-        }
-        return criteria.getResultList();
+        final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        final CriteriaQuery<RealmEntity> criteria = builder.createQuery(RealmEntity.class);
+        final Root<RealmEntity> root = criteria.from(RealmEntity.class);
+        criteria.select(root);
+        return this.entityManager.createQuery(criteria).getResultList();
     }
 
     @Transactional

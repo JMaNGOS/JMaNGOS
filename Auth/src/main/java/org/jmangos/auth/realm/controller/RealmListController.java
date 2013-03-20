@@ -19,7 +19,6 @@ package org.jmangos.auth.realm.controller;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 
 import javolution.util.FastMap;
 
@@ -31,6 +30,7 @@ import org.jmangos.commons.model.RealmInfo;
 import org.jmangos.commons.service.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -50,7 +50,7 @@ public class RealmListController implements Service {
     private int byteSize;
 
     /** The realm dao. */
-    @Inject
+    @Autowired
     private RealmService realmService;
 
     private long nextUpdateTime = 0;

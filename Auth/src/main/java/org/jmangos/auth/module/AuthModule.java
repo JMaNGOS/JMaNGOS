@@ -2,10 +2,12 @@ package org.jmangos.auth.module;
 
 import java.beans.PropertyVetoException;
 
-import javax.inject.Inject;
 import javax.sql.DataSource;
 
+import org.apache.activemq.spring.ActiveMQConnectionFactory;
+
 import org.jmangos.commons.database.DatabaseConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -24,7 +26,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 public class AuthModule {
 
     /** Database config */
-    @Inject
+    @Autowired
     private DatabaseConfig databaseConfig;
 
     @Bean
@@ -83,6 +85,12 @@ public class AuthModule {
 
         return new TransactionInterceptor(transactionManagerAuth(),
                 new AnnotationTransactionAttributeSource());
+    }
+    @Bean
+    public ActiveMQConnectionFactory ActiveMQConnectionFactory() {
+        ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory(); 
+        factory.setBrokerURL("tcp://localhost:61616");
+        return factory;
     }
 
 }

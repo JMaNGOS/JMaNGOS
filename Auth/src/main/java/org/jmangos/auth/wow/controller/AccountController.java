@@ -6,13 +6,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-
-import javax.inject.Inject;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.criteria4jpa.criterion.Criterion;
-import org.criteria4jpa.criterion.Restrictions;
 import org.jmangos.auth.entities.AccountEntity;
 import org.jmangos.auth.utils.AccountUtils;
 import org.jmangos.auth.wow.services.AccountService;
@@ -23,6 +18,7 @@ import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.utils.BigNumber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -31,7 +27,7 @@ public class AccountController {
     /** The Constant logger. */
     private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
-    @Inject
+    @Autowired
     private AccountService accountService;
 
     private final AccountsContainer accounts = new AccountsContainer();
@@ -53,10 +49,8 @@ public class AccountController {
         // return WoWAuthResponse.WOW_FAIL_BANNED;
         // }
 
-        final Criterion criterion = Restrictions.eq("username", name);
-        final List<AccountEntity> accountList = this.accountService.readAccounts(criterion);
-        if ((accountList != null) && !accountList.isEmpty()) {
-            final AccountEntity accountEntity = accountList.get(0);
+        final AccountEntity accountEntity = this.accountService.readAccountByUserName(name);
+        if (accountEntity != null) {
             final AccountInfo account = new AccountInfo(accountEntity.getId());
 
             HashMap<String, BigNumber> variable; // calculateVSFields will
@@ -175,10 +169,9 @@ public class AccountController {
             account.setvK(vK);
             ArrayUtils.reverse(vK);
 
-            final Criterion criterion = Restrictions.eq("username", account.getName());
-            final List<AccountEntity> accountList = this.accountService.readAccounts(criterion);
-            if ((accountList != null) && !accountList.isEmpty()) {
-                final AccountEntity accountEntity = accountList.get(0);
+            final AccountEntity accountEntity =
+                    this.accountService.readAccountByUserName(account.getName());
+            if (accountEntity != null) {
                 final String sessionKey = new BigInteger(1, vK).toString(16).toUpperCase();
                 accountEntity.setSessionKey(sessionKey);
                 account.setSessionKey(new BigNumber(vK));
@@ -202,12 +195,10 @@ public class AccountController {
             return false;
         }
 
-        final Criterion criterion = Restrictions.eq("username", account.getName());
-        final List<AccountEntity> accountList = this.accountService.readAccounts(criterion);
-        if ((accountList != null) && !accountList.isEmpty()) {
-            final AccountEntity accountEntity = accountList.get(0);
+        final AccountEntity accountEntity =
+                this.accountService.readAccountByUserName(account.getName());
+        if (accountEntity != null) {
             final String sessionKey = accountEntity.getSessionKey();
-
             sha.update(account.getName().getBytes(Charset.forName("UTF-8")));
             sha.update(R1);
             sha.update(account.get_reconnectProof().asByteArray(16));
@@ -225,15 +216,14 @@ public class AccountController {
 
     public AccountInfo getAccount(final String login) {
 
-        final Criterion criterion = Restrictions.eq("username", login);
-        final List<AccountEntity> accountList = this.accountService.readAccounts(criterion);
-        if ((accountList != null) && !accountList.isEmpty()) {
-            final AccountEntity accountEntity = accountList.get(0);
-            final AccountInfo account = new AccountInfo();
-            account.setObjectId(accountEntity.getId());
-            account.setName(accountEntity.getUsername());
-            account.setSessionKey(new BigNumber(accountEntity.getSessionKey()));
-            return account;
+        // final Criterion criterion = Restrictions.eq("username", login);
+        final AccountEntity account = this.accountService.readAccountByUserName(login);
+        if (account != null) {
+            final AccountInfo accountInfo = new AccountInfo();
+            accountInfo.setObjectId(account.getId());
+            accountInfo.setName(account.getUsername());
+            accountInfo.setSessionKey(new BigNumber(account.getSessionKey()));
+            return accountInfo;
         }
         return null;
     }

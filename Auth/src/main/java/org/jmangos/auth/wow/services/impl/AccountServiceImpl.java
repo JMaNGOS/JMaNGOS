@@ -18,7 +18,6 @@ package org.jmangos.auth.wow.services.impl;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.auth.dao.AccountDao;
 import org.jmangos.auth.entities.AccountEntity;
 import org.jmangos.auth.wow.services.AccountService;
@@ -38,9 +37,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<AccountEntity> readAccounts(final Criterion... criterions) {
+    public List<AccountEntity> readAccounts() {
 
-        return this.accountDao.readAccounts(criterions);
+        return this.accountDao.readAccounts();
     }
 
     @Override
@@ -53,6 +52,11 @@ public class AccountServiceImpl implements AccountService {
     public void deleteAccount(final AccountEntity accountEntity) {
 
         this.accountDao.deleteAccount(accountEntity);
+    }
+
+    @Override
+    public AccountEntity readAccountByUserName(String login) {
+        return this.accountDao.readAccountsByUserName(login);
     }
 
 }

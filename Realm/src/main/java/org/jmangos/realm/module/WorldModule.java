@@ -2,10 +2,10 @@ package org.jmangos.realm.module;
 
 import java.beans.PropertyVetoException;
 
-import javax.inject.Inject;
 import javax.sql.DataSource;
 
 import org.jmangos.commons.database.DatabaseConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +25,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 public class WorldModule {
 
     /** Database config */
-    @Inject
+    @Autowired
     private DatabaseConfig databaseConfig;
 
     @Bean

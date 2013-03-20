@@ -18,10 +18,9 @@ package org.jmangos.world.services.impl;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.domain.PlayercreateinfoPK;
+import org.jmangos.commons.entities.Playercreateinfo;
+import org.jmangos.commons.entities.pk.PlayercreateinfoPK;
 import org.jmangos.world.dao.PlayercreateinfoDao;
-import org.jmangos.world.entities.Playercreateinfo;
 import org.jmangos.world.services.PlayercreateinfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,9 +38,9 @@ public class PlayercreateinfoServiceImpl implements PlayercreateinfoService {
     }
 
     @Override
-    public List<Playercreateinfo> readPlayercreateinfos(final Criterion... criterions) {
+    public List<Playercreateinfo> readPlayercreateinfos() {
 
-        return this.playercreateinfoDao.readPlayercreateinfos(criterions);
+        return this.playercreateinfoDao.readPlayercreateinfos();
     }
 
     @Override

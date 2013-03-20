@@ -16,15 +16,14 @@
  *******************************************************************************/
 package org.jmangos.auth.network.packet.wow.client;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.jmangos.auth.config.Config;
 import org.jmangos.auth.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.auth.network.packet.wow.server.SMD_REALM_LIST;
 import org.jmangos.auth.realm.controller.RealmListController;
 import org.jmangos.commons.config.Compatiple;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,16 +33,16 @@ import org.springframework.stereotype.Component;
 public class CMD_REALM_LIST extends AbstractWoWClientPacket {
 
     /** The sender. */
-    @Inject
-    @Named("nettyPacketSender")
+    @Autowired
+    @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
 
     /** The RealmListController. */
-    @Inject
+    @Autowired
     private RealmListController realmListController;
 
     /** The Config. */
-    @Inject
+    @Autowired
     private Config config;
 
     /**

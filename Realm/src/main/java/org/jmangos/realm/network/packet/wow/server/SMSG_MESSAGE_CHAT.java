@@ -1,8 +1,8 @@
 package org.jmangos.realm.network.packet.wow.server;
 
-import org.jmangos.realm.model.enums.ChatLanguage;
-import org.jmangos.realm.model.enums.ChatMsg;
-import org.jmangos.realm.model.player.Player;
+import org.jmangos.commons.enums.ChatLanguage;
+import org.jmangos.commons.enums.ChatMsg;
+import org.jmangos.commons.model.player.Player;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 
 /**

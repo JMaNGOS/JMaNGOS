@@ -16,15 +16,14 @@
  *******************************************************************************/
 package org.jmangos.realm.controller;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.model.container.AccountsContainer;
 import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -37,8 +36,8 @@ public class RealmController {
     private static AccountsContainer accounts = new AccountsContainer();
 
     /** The sender. */
-    @Inject
-    @Named("serverPacketSender")
+    @Autowired
+    @Qualifier("serverPacketSender")
     private AbstractPacketSender authSender;
 
     @SuppressWarnings("unused")

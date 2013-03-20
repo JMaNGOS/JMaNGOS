@@ -21,9 +21,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import javolution.util.FastMap;
 
 import org.jmangos.commons.model.AccountInfo;
@@ -39,6 +36,8 @@ import org.jmangos.realm.network.packet.wow.server.SMSG_CLIENTCACHE_VERSION;
 import org.jmangos.realm.network.packet.wow.server.SMSG_TUTORIAL_FLAGS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -55,18 +54,18 @@ public class AccountQueueController {
     private final FastMap<String, AccountInfo> accountQueue =
             new FastMap<String, AccountInfo>().shared();
     /** The sender. */
-    @Inject
-    @Named("serverPacketSender")
+    @Autowired
+    @Qualifier("serverPacketSender")
     private AbstractPacketSender authSender;
-    @Inject
-    @Named("nettyPacketSender")
+    @Autowired
+    @Qualifier("nettyPacketSender")
     private AbstractPacketSender clientsender;
     /** */
     private NetworkChannel authNetworkChannel;
 
     private static final Charset charset = Charset.forName("UTF-8");
 
-    @Inject
+    @Autowired
     RealmController realmController;
 
     /** */

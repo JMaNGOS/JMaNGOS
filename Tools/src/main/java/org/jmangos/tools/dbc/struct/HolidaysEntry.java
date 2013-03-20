@@ -33,7 +33,7 @@ public class HolidaysEntry extends DBCStruct<HolidaysEntry> {
                                                                 // fields
     @XmlAttribute(name = "NameId")
     public final Unsigned32 holidayNameId = new Unsigned32();         // 49, id for
-                                                              // HolidayNames.dbc
+    // HolidayNames.dbc
     @XmlAttribute(name = "DescriptionId")
     public final Unsigned32 holidayDescriptionId = new Unsigned32();
     @XmlAttribute(name = "Skin")

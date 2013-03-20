@@ -45,13 +45,13 @@ public class MHDRChunk extends ADTChunk {
     Unsigned32 mwid = new Unsigned32();
     Unsigned32 mddf = new Unsigned32();
     Unsigned32 mfbo;                                                   // this
-                     // is
-                     // only
-                     // set
-                     // if
-                     // flags
-                     // &
-                     // mhdr_MFBO.
+    // is
+    // only
+    // set
+    // if
+    // flags
+    // &
+    // mhdr_MFBO.
     Unsigned32 modf;
 
     Unsigned32 mh2o;

@@ -1,17 +1,16 @@
 package org.jmangos.auth.realm.jmx;
 
-import javax.inject.Inject;
-
 import org.jmangos.auth.realm.controller.RealmListController;
 import org.jmangos.commons.dataholder.Visitor;
 import org.jmangos.commons.jmx.AbstractJmxBeanService;
 import org.jmangos.commons.model.RealmInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JmxRealmList extends AbstractJmxBeanService implements JmxRealmListMBean {
 
-    @Inject
+    @Autowired
     private RealmListController realmListService;
 
     private static final String BEAN_NAME = "auth.network.realms:name=JMXRealmList";

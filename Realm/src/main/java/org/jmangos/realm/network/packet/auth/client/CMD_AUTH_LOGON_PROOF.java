@@ -18,15 +18,14 @@ package org.jmangos.realm.network.packet.auth.client;
 
 import java.nio.BufferUnderflowException;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.jmangos.commons.model.WoWAuthResponse;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.network.packet.auth.AbstractRealmClientPacket;
 import org.jmangos.realm.network.packet.auth.server.SMD_AUTH_ENABLE_CRYPT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -37,8 +36,8 @@ public class CMD_AUTH_LOGON_PROOF extends AbstractRealmClientPacket {
 
     /** The logger. */
     private static Logger logger = LoggerFactory.getLogger(CMD_AUTH_LOGON_PROOF.class);
-    @Inject
-    @Named("serverPacketSender")
+    @Autowired
+    @Qualifier("serverPacketSender")
     private AbstractPacketSender sender;
 
     /*

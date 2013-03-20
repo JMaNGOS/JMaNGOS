@@ -18,9 +18,8 @@ package org.jmangos.world.services.impl;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
+import org.jmangos.commons.entities.QuestPrototype;
 import org.jmangos.world.dao.QuestPrototypeDao;
-import org.jmangos.world.entities.QuestPrototype;
 import org.jmangos.world.services.QuestPrototypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,9 +37,9 @@ public class QuestPrototypeServiceImpl implements QuestPrototypeService {
     }
 
     @Override
-    public List<QuestPrototype> readQuestPrototypes(final Criterion... criterions) {
+    public List<QuestPrototype> readQuestPrototypes() {
 
-        return this.questPrototypeDao.readQuestPrototypes(criterions);
+        return this.questPrototypeDao.readQuestPrototypes();
     }
 
     @Override

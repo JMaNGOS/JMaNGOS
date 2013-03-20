@@ -18,14 +18,13 @@ package org.jmangos.realm.services.impl;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
+import org.jmangos.commons.entities.FieldsContainer;
+import org.jmangos.commons.entities.FieldsItem;
+import org.jmangos.commons.entities.ItemPrototype;
 import org.jmangos.commons.enums.ItemClass;
+import org.jmangos.commons.enums.ItemFlags;
 import org.jmangos.realm.dao.ItemDao;
-import org.jmangos.realm.entities.FieldsContainer;
-import org.jmangos.realm.entities.FieldsItem;
-import org.jmangos.realm.model.enums.ItemFlags;
 import org.jmangos.realm.services.ItemService;
-import org.jmangos.world.entities.ItemPrototype;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,9 +41,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<FieldsItem> readItems(final Criterion... criterions) {
+    public List<FieldsItem> readItems() {
 
-        return this.itemDao.readItems(criterions);
+        return this.itemDao.readItems();
     }
 
     @Override

@@ -16,13 +16,12 @@
  *******************************************************************************/
 package org.jmangos.auth.network.packet.wow.client;
 
-import javax.inject.Inject;
-
 import org.jmangos.auth.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.auth.realm.controller.RealmListController;
 import org.jmangos.commons.model.RealmInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,7 +33,7 @@ public class CMD_REALM_DATA extends AbstractWoWClientPacket {
     /** The logger. */
     private static Logger logger = LoggerFactory.getLogger(CMD_REALM_DATA.class);
 
-    @Inject
+    @Autowired
     private RealmListController realmListService;
 
     private RealmInfo realmInfo;

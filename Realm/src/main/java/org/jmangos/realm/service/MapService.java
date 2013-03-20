@@ -21,8 +21,8 @@ import gnu.trove.procedure.TObjectProcedure;
 
 import javax.annotation.PostConstruct;
 
+import org.jmangos.commons.model.base.Map;
 import org.jmangos.commons.service.Service;
-import org.jmangos.realm.model.base.Map;
 import org.springframework.stereotype.Component;
 
 /**

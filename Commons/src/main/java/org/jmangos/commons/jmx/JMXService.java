@@ -1,12 +1,12 @@
 package org.jmangos.commons.jmx;
 
-import javax.inject.Inject;
 import javax.management.JMException;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,7 +19,7 @@ public class JMXService {
 
     private static final Logger log = LoggerFactory.getLogger(JMXService.class);
 
-    @Inject
+    @Autowired
     private MBeanServer server;
 
     /**

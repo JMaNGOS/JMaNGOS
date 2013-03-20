@@ -18,14 +18,13 @@ package org.jmangos.auth.realm.services;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.auth.entities.RealmEntity;
 
 public interface RealmService {
 
     public RealmEntity readRealm(Integer id);
 
-    public List<RealmEntity> readRealms(final Criterion... criterions);
+    public List<RealmEntity> readRealms();
 
     public Integer createOrUpdateRealm(RealmEntity realmEntity);
 

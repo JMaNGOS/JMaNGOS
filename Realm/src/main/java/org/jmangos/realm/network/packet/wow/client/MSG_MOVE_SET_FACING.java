@@ -18,13 +18,12 @@ package org.jmangos.realm.network.packet.wow.client;
 
 import java.nio.BufferUnderflowException;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,8 +34,8 @@ public class MSG_MOVE_SET_FACING extends AbstractWoWClientPacket {
 
     private static final Logger logger = LoggerFactory.getLogger(MSG_MOVE_SET_FACING.class);
     /** The sender. */
-    @Inject
-    @Named("nettyPacketSender")
+    @Autowired
+    @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
 
     @Override

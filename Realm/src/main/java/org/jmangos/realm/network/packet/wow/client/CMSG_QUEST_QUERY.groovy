@@ -2,14 +2,14 @@ package org.jmangos.realm.network.packet.wow.client
 
 import java.nio.BufferUnderflowException;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.realm.network.packet.wow.server.SMSG_QUEST_QUERY_RESPONSE;
 import org.jmangos.realm.service.QuestStorages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,11 +23,11 @@ import org.springframework.stereotype.Component;
 public class CMSG_QUEST_QUERY extends AbstractWoWClientPacket {
     private static final Logger log = LoggerFactory.getLogger( CMSG_QUEST_QUERY.class );
     
-    @Inject
-    @Named("nettyPacketSender")
+    @Autowired
+    @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
     
-    @Inject
+    @Autowired
     private QuestStorages questStorages;
     
     private def questProrotype = null;

@@ -16,6 +16,7 @@
  *******************************************************************************/
 package org.jmangos.auth.entities;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -24,9 +25,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
 
 @Entity
 @Table(name = "ACCOUNT")
@@ -65,8 +63,7 @@ public class AccountEntity {
     private String email;
 
     @Column(name = "JOINDATE")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    private DateTime joindate;
+    private Calendar joindate;
 
     @Column(name = "LAST_IP", length = 30)
     private String lastIp;
@@ -79,8 +76,7 @@ public class AccountEntity {
     private Byte locked;
 
     @Column(name = "LAST_LOGIN")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    private DateTime lastLogin;
+    private Calendar lastLogin;
 
     @Column(name = "ACTIVE_REALM_ID")
     private Long activeRealmId;
@@ -177,12 +173,12 @@ public class AccountEntity {
         this.email = email;
     }
 
-    public DateTime getJoindate() {
+    public Calendar getJoindate() {
 
         return this.joindate;
     }
 
-    public void setJoindate(final DateTime joindate) {
+    public void setJoindate(final Calendar joindate) {
 
         this.joindate = joindate;
     }
@@ -217,12 +213,12 @@ public class AccountEntity {
         this.locked = locked;
     }
 
-    public DateTime getLastLogin() {
+    public Calendar getLastLogin() {
 
         return this.lastLogin;
     }
 
-    public void setLastLogin(final DateTime lastLogin) {
+    public void setLastLogin(final Calendar lastLogin) {
 
         this.lastLogin = lastLogin;
     }

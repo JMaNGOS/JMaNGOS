@@ -24,9 +24,6 @@ import java.util.ArrayList;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import javolution.text.TextBuilder;
 
 import org.jboss.netty.buffer.ChannelBuffer;
@@ -38,6 +35,8 @@ import org.jmangos.realm.controller.AccountQueueController;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -50,11 +49,11 @@ public class CMSG_AUTH_SESSION extends AbstractWoWClientPacket {
     private static final Logger logger = LoggerFactory.getLogger(CMSG_AUTH_SESSION.class);
 
     /** The sender. */
-    @Inject
-    @Named("nettyPacketSender")
+    @Autowired
+    @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
 
-    @Inject
+    @Autowired
     private AccountQueueController queueController;
 
     /** The account name. */

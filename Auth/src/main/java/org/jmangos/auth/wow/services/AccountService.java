@@ -18,17 +18,18 @@ package org.jmangos.auth.wow.services;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.auth.entities.AccountEntity;
 
 public interface AccountService {
 
     public AccountEntity readAccount(Long id);
 
-    public List<AccountEntity> readAccounts(final Criterion... criterions);
+    public List<AccountEntity> readAccounts();
 
     public Long createOrUpdateAccount(AccountEntity accountEntity);
 
     public void deleteAccount(AccountEntity accountEntity);
+
+    public AccountEntity readAccountByUserName(String login);
 
 }

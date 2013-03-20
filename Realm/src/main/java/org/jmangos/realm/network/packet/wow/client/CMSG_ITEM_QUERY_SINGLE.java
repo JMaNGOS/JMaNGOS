@@ -18,15 +18,14 @@ package org.jmangos.realm.network.packet.wow.client;
 
 import java.nio.BufferUnderflowException;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.realm.network.packet.wow.server.SMSG_ITEM_QUERY_SINGLE_RESPONSE;
 import org.jmangos.realm.service.ItemStorages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -40,12 +39,12 @@ public class CMSG_ITEM_QUERY_SINGLE extends AbstractWoWClientPacket {
     private int item;
 
     /** The sender. */
-    @Inject
-    @Named("nettyPacketSender")
+    @Autowired
+    @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
 
     /** The item storages. */
-    @Inject
+    @Autowired
     private ItemStorages itemStorages;
 
     @Override

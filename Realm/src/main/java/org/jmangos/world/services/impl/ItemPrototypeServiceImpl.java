@@ -18,9 +18,8 @@ package org.jmangos.world.services.impl;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
+import org.jmangos.commons.entities.ItemPrototype;
 import org.jmangos.world.dao.ItemPrototypeDao;
-import org.jmangos.world.entities.ItemPrototype;
 import org.jmangos.world.services.ItemPrototypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,9 +37,9 @@ public class ItemPrototypeServiceImpl implements ItemPrototypeService {
     }
 
     @Override
-    public List<ItemPrototype> readItemPrototypes(final Criterion... criterions) {
+    public List<ItemPrototype> readItemPrototypes() {
 
-        return this.itemPrototypeDao.readItemPrototypes(criterions);
+        return this.itemPrototypeDao.readItemPrototypes();
     }
 
     @Override

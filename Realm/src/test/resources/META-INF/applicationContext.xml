@@ -6,6 +6,10 @@
 	<bean id="CharacterController" class="org.jmangos.realm.controller.CharacterController" />
 	
 	<bean id="ItemPrototypeDao" class="org.jmangos.world.dao.impl.ItemPrototypeDaoImpl" />
+	
+	<bean id="SkillLineAbilityDao" class="org.jmangos.world.dao.impl.SkillLineAbilityDaoImpl" />
+	<bean id="SkillRaceClassDao" class="org.jmangos.world.dao.impl.SkillRaceClassDaoImpl" />
+	
 	<bean id="SpellDao" class="org.jmangos.test.dao.impl.SpellDaoImpl" />
 	<bean id="PlayerLevelInfoDao" class="org.jmangos.world.dao.impl.PlayerLevelInfoDaoImpl" />
 	<bean id="PlayerClassLevelInfoDao" class="org.jmangos.world.dao.impl.PlayerClassLevelInfoDaoImpl" />
@@ -15,6 +19,9 @@
 	<bean id="playerXpForLevelDao" class="org.jmangos.world.dao.impl.PlayerXpForLevelDaoImpl" />
 	<bean id="charStartOutfitDao" class="org.jmangos.world.dao.impl.CharStartOutfitDaoImpl" />
 
+	<bean id="SkillService" class="org.jmangos.world.services.impl.SkillServiceImpl" />
+	<bean id="SkillLineAbilityService"
+		class="org.jmangos.world.services.impl.SkillLineAbilityServiceImpl" />
 
 	<bean id="SpellService" class="org.jmangos.test.services.impl.SpellServiceImpl" />
 	<bean id="PlayerService" class="org.jmangos.realm.service.PlayerService" />
@@ -51,15 +58,15 @@
 	<bean id="jpaVendorAdapter"
 		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 		<property name="databasePlatform" value="org.hibernate.dialect.MySQL5Dialect" />
-		<property name="showSql" value="false" />
+		<property name="showSql" value="true" />
 	</bean>
 
 	<bean id="persistenceUnitManager"
 		class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
 		<property name="persistenceXmlLocations">
 			<list>
-				<value>classpath:META-INF/realm/persistence.realm.xml</value>
-				<value>classpath:META-INF/world/persistence.world.xml</value>
+				<value>classpath:META-INF/spring/realm/persistence.realm.xml</value>
+				<value>classpath:META-INF/spring/world/persistence.world.xml</value>
 			</list>
 		</property>
 		<property name="dataSources">
@@ -71,10 +78,10 @@
 	</bean>
 
 	<!-- data.first -->
-	<import resource="classpath:/META-INF/world/applicationContext.world.xml" />
+	<import resource="classpath:/META-INF/spring/world/applicationContext.world.xml" />
 
 	<!-- data.second -->
-	<import resource="classpath:/META-INF/realm/applicationContext.realm.xml" />
+	<import resource="classpath:/META-INF/spring/realm/applicationContext.realm.xml" />
 
 	<bean
 		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />

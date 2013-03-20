@@ -20,13 +20,12 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.jmangos.commons.dataholder.DataLoadService;
-import org.jmangos.world.entities.QuestPrototype;
+import org.jmangos.commons.entities.QuestPrototype;
 import org.jmangos.world.services.QuestPrototypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -41,7 +40,7 @@ public class QuestStorages implements DataLoadService<TIntObjectHashMap<QuestPro
     /** The player class level infos. */
     private TIntObjectHashMap<QuestPrototype> questMap = new TIntObjectHashMap<QuestPrototype>();
 
-    @Inject
+    @Autowired
     QuestPrototypeService questPrototypeService;
 
     /*

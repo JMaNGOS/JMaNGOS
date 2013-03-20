@@ -20,12 +20,12 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-import org.criteria4jpa.Criteria;
-import org.criteria4jpa.CriteriaUtils;
-import org.criteria4jpa.criterion.Criterion;
+import org.jmangos.commons.entities.PlayerXpForLevel;
 import org.jmangos.world.dao.PlayerXpForLevelDao;
-import org.jmangos.world.entities.PlayerXpForLevel;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,24 +36,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class PlayerXpForLevelDaoImpl implements PlayerXpForLevelDao {
 
     @PersistenceContext(unitName = "world")
-    private EntityManager entityManager;
+    private EntityManager em;
 
     @Override
     public PlayerXpForLevel readXpForLevel(final Byte id) {
-
-        return this.entityManager.find(PlayerXpForLevel.class, id);
+        return this.em.find(PlayerXpForLevel.class, id);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public List<PlayerXpForLevel> readPlayerXpForLevels(final Criterion... criterions) {
-
-        final Criteria criteria =
-                CriteriaUtils.createCriteria(this.entityManager, PlayerXpForLevel.class);
-        for (final Criterion criterion : criterions) {
-            criteria.add(criterion);
-        }
-        return criteria.getResultList();
+    public List<PlayerXpForLevel> readPlayerXpForLevels() {
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<PlayerXpForLevel> criteria = builder.createQuery(PlayerXpForLevel.class);
+        Root<PlayerXpForLevel> xpRoot = criteria.from(PlayerXpForLevel.class);
+        criteria.select(xpRoot);
+        return em.createQuery(criteria).getResultList();
     }
 
     @Transactional(value = "world")
@@ -61,11 +57,11 @@ public class PlayerXpForLevelDaoImpl implements PlayerXpForLevelDao {
     public Byte createOrUpdatePlayerLevelInfo(final PlayerXpForLevel playerXpForLevel) {
 
         if (playerXpForLevel.getLevel() == null) {
-            this.entityManager.persist(playerXpForLevel);
+            this.em.persist(playerXpForLevel);
         } else {
-            this.entityManager.merge(playerXpForLevel);
+            this.em.merge(playerXpForLevel);
         }
-        this.entityManager.flush();
+        this.em.flush();
         return playerXpForLevel.getLevel();
     }
 
@@ -76,7 +72,7 @@ public class PlayerXpForLevelDaoImpl implements PlayerXpForLevelDao {
         if (playerXpForLevel == null) {
             return;
         }
-        this.entityManager.remove(playerXpForLevel);
+        this.em.remove(playerXpForLevel);
 
     }
 

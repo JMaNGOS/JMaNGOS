@@ -18,13 +18,12 @@ package org.jmangos.realm.network.packet.wow.client;
 
 import java.nio.BufferUnderflowException;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.realm.network.packet.wow.server.SMSG_NAME_QUERY_RESPONSE;
 import org.jmangos.realm.service.PlayerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,8 +33,8 @@ import org.springframework.stereotype.Component;
 public class CMSG_NAME_QUERY extends AbstractWoWClientPacket {
 
     /** The sender. */
-    @Inject
-    @Named("nettyPacketSender")
+    @Autowired
+    @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
 
     /** The guid. */

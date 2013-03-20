@@ -16,15 +16,14 @@
  *******************************************************************************/
 package org.jmangos.auth.network.packet.wow.client;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.jmangos.auth.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.auth.network.packet.wow.server.SMD_RECONNECT_PROOF;
 import org.jmangos.auth.wow.controller.AccountController;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -38,12 +37,12 @@ public class CMD_RECONNECT_PROOF extends AbstractWoWClientPacket {
     private static final Logger logger = LoggerFactory.getLogger(CMD_RECONNECT_PROOF.class);
 
     /** The sender. */
-    @Inject
-    @Named("nettyPacketSender")
+    @Autowired
+    @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
 
     /** The account controller. */
-    @Inject
+    @Autowired
     private AccountController accountController;
 
     private byte[] R1;

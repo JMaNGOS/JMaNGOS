@@ -18,9 +18,6 @@ package org.jmangos.auth.network.packet.wow.client;
 
 import java.nio.BufferUnderflowException;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jmangos.auth.network.decoder.RealmPacketFrameDecoder;
 import org.jmangos.auth.network.decoder.RealmPacketFrameEncoder;
@@ -30,6 +27,8 @@ import org.jmangos.auth.network.packet.wow.server.SMD_AUTH_ENABLE_CRYPT;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -41,8 +40,8 @@ public class CMD_AUTH_ENABLE_CRYPT extends AbstractWoWClientPacket {
     /** The logger. */
     private static Logger logger = LoggerFactory.getLogger(CMD_AUTH_ENABLE_CRYPT.class);
     /** The sender. */
-    @Inject
-    @Named("nettyPacketSender")
+    @Autowired
+    @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
 
     public CMD_AUTH_ENABLE_CRYPT() {

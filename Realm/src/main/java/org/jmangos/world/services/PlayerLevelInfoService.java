@@ -18,15 +18,14 @@ package org.jmangos.world.services;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.domain.PlayerLevelInfoPK;
-import org.jmangos.world.entities.PlayerLevelInfo;
+import org.jmangos.commons.entities.PlayerLevelInfo;
+import org.jmangos.commons.entities.pk.PlayerLevelInfoPK;
 
 public interface PlayerLevelInfoService {
 
     public PlayerLevelInfo readPlayerLevelInfo(PlayerLevelInfoPK pk);
 
-    public List<PlayerLevelInfo> readPlayerLevelInfos(final Criterion... criterions);
+    public List<PlayerLevelInfo> readPlayerLevelInfos();
 
     public PlayerLevelInfoPK createOrUpdatePlayerLevelInfo(PlayerLevelInfo playerLevelInfo);
 

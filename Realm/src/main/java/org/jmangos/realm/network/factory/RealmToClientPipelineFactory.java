@@ -21,9 +21,6 @@ package org.jmangos.realm.network.factory;
 
 import static org.jboss.netty.channel.Channels.pipeline;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jmangos.commons.network.factory.BasicPipelineFactory;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
@@ -33,6 +30,8 @@ import org.jmangos.realm.network.decoder.PacketFrameDecoder;
 import org.jmangos.realm.network.decoder.PacketFrameEncoder;
 import org.jmangos.realm.network.handler.EventLogHandler;
 import org.jmangos.realm.network.handler.RealmToClientChannelHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -44,13 +43,13 @@ import org.springframework.stereotype.Component;
 public class RealmToClientPipelineFactory extends BasicPipelineFactory {
 
     /** The connection handler. */
-    @Inject
-    @Named("realmToClientConnectHandler")
+    @Autowired
+    @Qualifier("realmToClientConnectHandler")
     private ConnectHandler connectionHandler;
 
     /** The packet service. */
-    @Inject
-    @Named("сlientPacketHandlerFactory")
+    @Autowired
+    @Qualifier("сlientPacketHandlerFactory")
     private PacketHandlerFactory packetService;
 
     /**

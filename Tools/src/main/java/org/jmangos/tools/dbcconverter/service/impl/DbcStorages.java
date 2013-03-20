@@ -17,12 +17,13 @@ public class DbcStorages {
     SpellService spellService;
     @Autowired
     SkillLineAbilityService skillLineAbilityService;
+
     public void encode() {
 
         logger.info("Start encoding dbc files");
-       // this.charOutfitService.saveAll();
-        //this.spellService.saveAll();
-        this.skillLineAbilityService.saveAll();
+        // this.charOutfitService.saveAll();
+        // this.spellService.saveAll();
+        this.spellService.saveAll();
         logger.info("Finished encoding dbc files");
     }
 }

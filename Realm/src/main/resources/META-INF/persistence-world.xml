@@ -23,14 +23,14 @@
     
     <persistence-unit name="world">
 
-        <class>org.jmangos.world.entities.ItemPrototype</class>
-        <class>org.jmangos.world.entities.PlayerLevelInfo</class>
-        <class>org.jmangos.world.entities.PlayerClassLevelInfo</class>
-        <class>org.jmangos.world.entities.QuestPrototype</class>
-        <class>org.jmangos.world.entities.Playercreateinfo</class>
-        <class>org.jmangos.world.entities.PlayerCreateAction</class>
-        <class>org.jmangos.world.entities.PlayerCreateSpell</class>
-        <class>org.jmangos.world.entities.PlayerXpForLevel</class>
+        <class>org.jmangos.commons.entities.ItemPrototype</class>
+        <class>org.jmangos.commons.entities.PlayerLevelInfo</class>
+        <class>org.jmangos.commons.entities.PlayerClassLevelInfo</class>
+        <class>org.jmangos.commons.entities.QuestPrototype</class>
+        <class>org.jmangos.commons.entities.Playercreateinfo</class>
+        <class>org.jmangos.commons.entities.PlayerCreateAction</class>
+        <class>org.jmangos.commons.entities.PlayerCreateSpell</class>
+        <class>org.jmangos.commons.entities.PlayerXpForLevel</class>
         <class>org.jmangos.commons.entities.CharStartOutfitEntity</class>
 
     </persistence-unit>

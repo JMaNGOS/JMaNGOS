@@ -18,17 +18,18 @@ package org.jmangos.realm.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 
 import org.jmangos.commons.dataholder.DataLoadService;
 import org.jmangos.commons.entities.CharStartOutfitEntity;
 import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
-import org.jmangos.realm.model.enums.Classes;
+import org.jmangos.commons.enums.Classes;
 import org.jmangos.world.services.CharStartOutfitService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,16 +37,16 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CharStartOutfitStorages
-        implements DataLoadService<HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity>> {
+        implements DataLoadService<Map<CharStartOutfitEntityPk, CharStartOutfitEntity>> {
 
     /** The Constant log. */
     private static final Logger logger = LoggerFactory.getLogger(CharStartOutfitStorages.class);
 
-    @Inject
+    @Autowired
     CharStartOutfitService charStartOutfitService;
 
     /** The Player. */
-    private HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity> playerCSO =
+    private Map<CharStartOutfitEntityPk, CharStartOutfitEntity> playerCSO =
             new HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity>();
 
     /**
@@ -77,9 +78,9 @@ public class CharStartOutfitStorages
      * @see org.jmangos.commons.dataholder.DataLoadService#load()
      */
     @Override
-    public HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity> load() {
+    public Map<CharStartOutfitEntityPk, CharStartOutfitEntity> load() {
 
-        final HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity> map =
+        final Map<CharStartOutfitEntityPk, CharStartOutfitEntity> map =
                 new HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity>();
         final List<CharStartOutfitEntity> infoList =
                 this.charStartOutfitService.readCharStartOutfitEntities();
@@ -96,7 +97,7 @@ public class CharStartOutfitStorages
     @Override
     public void reload() {
 
-        HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity> tempPlayerCSO = load();
+        Map<CharStartOutfitEntityPk, CharStartOutfitEntity> tempPlayerCSO = load();
         this.playerCSO = tempPlayerCSO;
         tempPlayerCSO = null;
     }
@@ -152,7 +153,7 @@ public class CharStartOutfitStorages
      * @see org.jmangos.commons.dataholder.DataLoadService#get()
      */
     @Override
-    public HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity> get() {
+    public Map<CharStartOutfitEntityPk, CharStartOutfitEntity> get() {
 
         // TODO Auto-generated method stub
         return null;

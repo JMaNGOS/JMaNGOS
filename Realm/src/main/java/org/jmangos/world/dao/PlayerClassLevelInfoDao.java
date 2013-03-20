@@ -18,15 +18,14 @@ package org.jmangos.world.dao;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.domain.PlayerClassLevelInfoPK;
-import org.jmangos.world.entities.PlayerClassLevelInfo;
+import org.jmangos.commons.entities.PlayerClassLevelInfo;
+import org.jmangos.commons.entities.pk.PlayerClassLevelInfoPK;
 
 public interface PlayerClassLevelInfoDao {
 
     public PlayerClassLevelInfo readPlayerClassLevelInfo(PlayerClassLevelInfoPK pk);
 
-    public List<PlayerClassLevelInfo> readPlayerClassLevelInfos(final Criterion... criterions);
+    public List<PlayerClassLevelInfo> readPlayerClassLevelInfos();
 
     public PlayerClassLevelInfoPK createOrUpdatePlayerClassLevelInfo(
             PlayerClassLevelInfo playerClassLevelInfo);

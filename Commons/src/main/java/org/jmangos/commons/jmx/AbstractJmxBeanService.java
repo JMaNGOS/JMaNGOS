@@ -1,15 +1,15 @@
 package org.jmangos.commons.jmx;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 
 import org.jmangos.commons.service.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public abstract class AbstractJmxBeanService implements Service {
 
-    @Inject
+    @Autowired
     private JMXService jmxService;
 
     @PostConstruct

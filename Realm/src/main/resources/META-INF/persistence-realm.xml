@@ -23,8 +23,14 @@
     
     <persistence-unit name="realm">
     
-        <class>org.jmangos.realm.entities.CharacterData</class>
-        <class>org.jmangos.realm.entities.FieldsItem</class>
+		<class>org.jmangos.commons.entities.CharacterData</class>
+		<class>org.jmangos.commons.entities.CharacterPowers</class>
+		<class>org.jmangos.commons.entities.CharacterPositionerHolder</class>
+
+		<class>org.jmangos.commons.entities.CharacterSkill</class>
+		<class>org.jmangos.commons.entities.FieldsItem</class>
+		<class>org.jmangos.commons.entities.ItemCharges</class>
+		<class>org.jmangos.commons.entities.ItemEnchant</class>
 
     </persistence-unit>
 

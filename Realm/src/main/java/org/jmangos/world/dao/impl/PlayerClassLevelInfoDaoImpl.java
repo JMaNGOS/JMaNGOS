@@ -20,13 +20,13 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-import org.criteria4jpa.Criteria;
-import org.criteria4jpa.CriteriaUtils;
-import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.domain.PlayerClassLevelInfoPK;
+import org.jmangos.commons.entities.PlayerClassLevelInfo;
+import org.jmangos.commons.entities.pk.PlayerClassLevelInfoPK;
 import org.jmangos.world.dao.PlayerClassLevelInfoDao;
-import org.jmangos.world.entities.PlayerClassLevelInfo;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,15 +43,14 @@ public class PlayerClassLevelInfoDaoImpl implements PlayerClassLevelInfoDao {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public List<PlayerClassLevelInfo> readPlayerClassLevelInfos(final Criterion... criterions) {
+    public List<PlayerClassLevelInfo> readPlayerClassLevelInfos() {
 
-        final Criteria criteria =
-                CriteriaUtils.createCriteria(this.entityManager, PlayerClassLevelInfo.class);
-        for (final Criterion criterion : criterions) {
-            criteria.add(criterion);
-        }
-        return criteria.getResultList();
+        final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        final CriteriaQuery<PlayerClassLevelInfo> criteria =
+                builder.createQuery(PlayerClassLevelInfo.class);
+        final Root<PlayerClassLevelInfo> root = criteria.from(PlayerClassLevelInfo.class);
+        criteria.select(root);
+        return this.entityManager.createQuery(criteria).getResultList();
     }
 
     @Transactional(value = "world")

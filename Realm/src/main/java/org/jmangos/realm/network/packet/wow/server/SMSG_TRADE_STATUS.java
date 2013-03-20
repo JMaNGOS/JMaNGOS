@@ -16,7 +16,7 @@
  *******************************************************************************/
 package org.jmangos.realm.network.packet.wow.server;
 
-import org.jmangos.realm.model.enums.TradeStatus;
+import org.jmangos.commons.enums.TradeStatus;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 
 /**

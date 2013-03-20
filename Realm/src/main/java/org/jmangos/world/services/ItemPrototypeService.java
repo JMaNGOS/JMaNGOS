@@ -18,14 +18,13 @@ package org.jmangos.world.services;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.world.entities.ItemPrototype;
+import org.jmangos.commons.entities.ItemPrototype;
 
 public interface ItemPrototypeService {
 
     public ItemPrototype readItemPrototype(Integer id);
 
-    public List<ItemPrototype> readItemPrototypes(final Criterion... criterions);
+    public List<ItemPrototype> readItemPrototypes();
 
     public Integer createOrUpdateItemPrototype(ItemPrototype itemPrototype);
 

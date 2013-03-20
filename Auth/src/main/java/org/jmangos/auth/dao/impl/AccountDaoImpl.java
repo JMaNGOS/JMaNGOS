@@ -20,10 +20,11 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
-import org.criteria4jpa.Criteria;
-import org.criteria4jpa.CriteriaUtils;
-import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.auth.dao.AccountDao;
 import org.jmangos.auth.entities.AccountEntity;
 import org.springframework.stereotype.Repository;
@@ -42,15 +43,13 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public List<AccountEntity> readAccounts(final Criterion... criterions) {
+    public List<AccountEntity> readAccounts() {
 
-        final Criteria criteria =
-                CriteriaUtils.createCriteria(this.entityManager, AccountEntity.class);
-        for (final Criterion criterion : criterions) {
-            criteria.add(criterion);
-        }
-        return criteria.getResultList();
+        final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        final CriteriaQuery<AccountEntity> criteria = builder.createQuery(AccountEntity.class);
+        final Root<AccountEntity> root = criteria.from(AccountEntity.class);
+        criteria.select(root);
+        return this.entityManager.createQuery(criteria).getResultList();
     }
 
     @Transactional
@@ -74,6 +73,23 @@ public class AccountDaoImpl implements AccountDao {
             return;
         }
         this.entityManager.remove(accountEntity);
+    }
+
+    @Override
+    public AccountEntity readAccountsByUserName(final String login) {
+        final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        final CriteriaQuery<AccountEntity> criteria = builder.createQuery(AccountEntity.class);
+        final Root<AccountEntity> root = criteria.from(AccountEntity.class);
+        criteria.select(root);
+        final Predicate pName = builder.equal(root.get("username"), login);
+        criteria.where(pName);
+        final List<AccountEntity> results =
+                this.entityManager.createQuery(criteria).getResultList();
+        if (!results.isEmpty()) {
+            return results.get(0);
+        } else {
+            return null;
+        }
     }
 
 }

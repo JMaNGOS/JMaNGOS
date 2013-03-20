@@ -22,6 +22,31 @@
 			<groupId>org.jmangos.jmangos</groupId>
 			<artifactId>commons</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>geronimo-spec</groupId>
+			<artifactId>geronimo-spec-jms</artifactId>
+			<version>1.1-rc4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+			<version>3.2.1.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jms</artifactId>
+			<version>2.10.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>3.2.1.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-camel</artifactId>
+			<version>5.6.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

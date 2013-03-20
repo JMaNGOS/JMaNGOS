@@ -18,18 +18,17 @@ package org.jmangos.realm.network.packet.auth.server;
 
 import java.nio.charset.Charset;
 
-import javax.inject.Inject;
-
 import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.realm.config.Config;
 import org.jmangos.realm.network.packet.auth.AbstractRealmServerPacket;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * The Class <tt>CMD_AUTH_LOGON_CHALLENGE</tt>.
  */
 public class SMD_AUTH_LOGON_CHALLENGE extends AbstractRealmServerPacket {
 
-    @Inject
+    @Autowired
     private Config config;
 
     /**

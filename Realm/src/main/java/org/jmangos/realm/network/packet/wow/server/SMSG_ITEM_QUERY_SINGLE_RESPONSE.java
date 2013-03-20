@@ -16,8 +16,8 @@
  *******************************************************************************/
 package org.jmangos.realm.network.packet.wow.server;
 
+import org.jmangos.commons.entities.ItemPrototype;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
-import org.jmangos.world.entities.ItemPrototype;
 
 /**
  * The Class SMSG_ITEM_QUERY_SINGLE_RESPONSE.

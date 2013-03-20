@@ -18,12 +18,11 @@ package org.jmangos.realm.network.packet.auth.client;
 
 import java.nio.BufferUnderflowException;
 
-import javax.inject.Inject;
-
 import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.utils.BigNumber;
 import org.jmangos.realm.controller.AccountQueueController;
 import org.jmangos.realm.network.packet.auth.AbstractRealmClientPacket;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,7 +31,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CMD_SESSION_KEY extends AbstractRealmClientPacket {
 
-    @Inject
+    @Autowired
     private AccountQueueController accountQueueController;
 
     private String accountName;

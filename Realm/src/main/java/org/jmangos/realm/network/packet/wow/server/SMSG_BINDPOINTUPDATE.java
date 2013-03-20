@@ -16,9 +16,9 @@
  *******************************************************************************/
 package org.jmangos.realm.network.packet.wow.server;
 
-import org.jmangos.realm.entities.CharacterPositionerHolder;
-import org.jmangos.realm.entities.HomeBindData;
-import org.jmangos.realm.model.player.Player;
+import org.jmangos.commons.entities.CharacterPositionerHolder;
+import org.jmangos.commons.entities.HomeBindData;
+import org.jmangos.commons.model.player.Player;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 
 /**

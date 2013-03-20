@@ -1,15 +1,14 @@
 package org.jmangos.commons.network.jmx;
 
-import javax.inject.Inject;
-
 import org.jmangos.commons.jmx.AbstractJmxBeanService;
 import org.jmangos.commons.network.service.NetworkService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class JmxNetworkService extends AbstractJmxBeanService implements JmxNetworkServiceMBean {
 
     private static final String BEAN_NAME = "commons.network:name=JmxNetworkService";
 
-    @Inject
+    @Autowired
     private NetworkService networkService;
 
     @Override

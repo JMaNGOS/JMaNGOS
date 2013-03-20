@@ -22,7 +22,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.jmangos.commons.dataholder.DataLoadService;
-import org.jmangos.world.entities.PlayerXpForLevel;
+import org.jmangos.commons.entities.PlayerXpForLevel;
 import org.jmangos.world.services.PlayerXpForLevelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

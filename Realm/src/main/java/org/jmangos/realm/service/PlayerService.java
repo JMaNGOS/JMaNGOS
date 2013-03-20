@@ -20,16 +20,13 @@ import gnu.trove.map.hash.TLongObjectHashMap;
 
 import java.nio.ByteOrder;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+import org.jmangos.commons.model.player.Player;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.RealmServer;
 import org.jmangos.realm.controller.CharacterController;
-import org.jmangos.realm.model.player.Player;
 import org.jmangos.realm.network.packet.wow.server.MSG_SET_DUNGEON_DIFFICULTY;
 import org.jmangos.realm.network.packet.wow.server.SMSG_ACCOUNT_DATA_TIMES;
 import org.jmangos.realm.network.packet.wow.server.SMSG_BINDPOINTUPDATE;
@@ -43,6 +40,7 @@ import org.jmangos.realm.services.CharacterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -56,27 +54,27 @@ public class PlayerService {
     private static final Logger logger = LoggerFactory.getLogger(PlayerService.class);
 
     /** The sender. */
-    @Inject
-    @Named("nettyPacketSender")
+    @Autowired
+    @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
 
-    @Inject
+    @Autowired
     private CharacterService characterService;
 
     /** The player class level info storages. */
-    @Inject
+    @Autowired
     private PlayerClassLevelInfoStorages playerClassLevelInfoStorages;
 
     /** The player level storages. */
-    @Inject
+    @Autowired
     private PlayerLevelStorages playerLevelStorages;
 
     /** The simple storages. */
-    @Inject
+    @Autowired
     private PlayerXpForLevelStorages playerXpForLevelStorages;
 
     /** The item storages. */
-    @Inject
+    @Autowired
     private ItemStorages itemStorages;
 
     @Autowired

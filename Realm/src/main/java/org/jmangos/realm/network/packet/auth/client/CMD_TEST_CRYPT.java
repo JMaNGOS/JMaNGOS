@@ -18,11 +18,10 @@ package org.jmangos.realm.network.packet.auth.client;
 
 import java.nio.BufferUnderflowException;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.network.packet.auth.AbstractRealmClientPacket;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,8 +30,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class CMD_TEST_CRYPT extends AbstractRealmClientPacket {
 
-    @Inject
-    @Named("serverPacketSender")
+    @Autowired
+    @Qualifier("serverPacketSender")
     private AbstractPacketSender sender;
 
     /*

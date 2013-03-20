@@ -18,7 +18,7 @@ package org.jmangos.realm.network.packet.wow.server;
 
 import java.util.HashMap;
 
-import org.jmangos.realm.model.account.AccountData;
+import org.jmangos.commons.model.account.AccountData;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 
 /**

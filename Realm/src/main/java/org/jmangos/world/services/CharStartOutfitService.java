@@ -18,11 +18,10 @@ package org.jmangos.world.services;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
 import org.jmangos.commons.entities.CharStartOutfitEntity;
 import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
-import org.jmangos.realm.model.enums.Classes;
-import org.jmangos.realm.model.enums.Races;
+import org.jmangos.commons.enums.Classes;
+import org.jmangos.commons.enums.Races;
 
 /**
  * @author MinimaJack
@@ -32,7 +31,7 @@ public interface CharStartOutfitService {
 
     CharStartOutfitEntity readCharStartOutfitEntity(CharStartOutfitEntityPk pk);
 
-    List<CharStartOutfitEntity> readCharStartOutfitEntities(final Criterion... criterions);
+    List<CharStartOutfitEntity> readCharStartOutfitEntities();
 
     CharStartOutfitEntityPk createOrUpdateCharStartOutfitEntity(
             CharStartOutfitEntity charStartOutfitEntity);

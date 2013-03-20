@@ -20,15 +20,15 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 
 import org.jmangos.commons.dataholder.DataLoadService;
-import org.jmangos.realm.domain.PlayerClassLevelInfoPK;
-import org.jmangos.realm.model.enums.Classes;
-import org.jmangos.world.entities.PlayerClassLevelInfo;
+import org.jmangos.commons.entities.PlayerClassLevelInfo;
+import org.jmangos.commons.entities.pk.PlayerClassLevelInfoPK;
+import org.jmangos.commons.enums.Classes;
 import org.jmangos.world.services.PlayerClassLevelInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -41,7 +41,7 @@ public class PlayerClassLevelInfoStorages
     /** The Constant log. */
     private static final Logger log = LoggerFactory.getLogger(PlayerClassLevelInfoStorages.class);
 
-    @Inject
+    @Autowired
     PlayerClassLevelInfoService playerClassLevelInfoService;
 
     /** The Player cli. */

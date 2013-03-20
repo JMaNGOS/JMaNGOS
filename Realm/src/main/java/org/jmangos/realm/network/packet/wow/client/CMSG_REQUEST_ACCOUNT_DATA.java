@@ -23,13 +23,12 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.zip.Deflater;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
+import org.jmangos.commons.enums.AccountDataType;
+import org.jmangos.commons.model.account.AccountData;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
-import org.jmangos.realm.model.account.AccountData;
-import org.jmangos.realm.model.enums.AccountDataType;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 // FIXME implement opcode
@@ -41,8 +40,8 @@ import org.springframework.stereotype.Component;
 public class CMSG_REQUEST_ACCOUNT_DATA extends AbstractWoWClientPacket {
 
     /** The sender. */
-    @Inject
-    @Named("nettyPacketSender")
+    @Autowired
+    @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
 
     /** The type. */

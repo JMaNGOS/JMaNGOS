@@ -16,9 +16,6 @@
  *******************************************************************************/
 package org.jmangos.realm.network.sender;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.ChannelFutureListener;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
@@ -26,6 +23,8 @@ import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.model.SendablePacket;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.commons.network.utils.NetworkUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,8 +34,8 @@ import org.springframework.stereotype.Component;
 public class ServerPacketSender implements AbstractPacketSender {
 
     /** The packet service. */
-    @Inject
-    @Named("realmToAuthPacketHandlerFactory")
+    @Autowired
+    @Qualifier("realmToAuthPacketHandlerFactory")
     private PacketHandlerFactory packetService;
 
     /**

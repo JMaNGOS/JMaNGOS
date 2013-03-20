@@ -5,8 +5,7 @@ package org.jmangos.realm.dao;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.entities.FieldsItem;
+import org.jmangos.commons.entities.FieldsItem;
 
 /**
  * @author MinimaJack
@@ -16,7 +15,7 @@ public interface ItemDao {
 
     FieldsItem readItem(Long id);
 
-    List<FieldsItem> readItems(Criterion... criterions);
+    List<FieldsItem> readItems();
 
     Long createOrUpdateItem(FieldsItem givenItem);
 

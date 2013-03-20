@@ -23,9 +23,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.apache.commons.lang.ArrayUtils;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jmangos.commons.model.WoWAuthResponse;
@@ -37,6 +34,8 @@ import org.jmangos.realm.network.packet.auth.server.SMD_AUTH_LOGON_PROOF;
 import org.jmangos.realm.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -48,12 +47,12 @@ public class CMD_AUTH_LOGON_CHALLENGE extends AbstractRealmClientPacket {
     /** The logger. */
     private static Logger logger = LoggerFactory.getLogger(CMD_AUTH_LOGON_CHALLENGE.class);
 
-    @Inject
+    @Autowired
     private Config config;
 
     /** The sender. */
-    @Inject
-    @Named("serverPacketSender")
+    @Autowired
+    @Qualifier("serverPacketSender")
     private AbstractPacketSender sender;
 
     /** The m1. */

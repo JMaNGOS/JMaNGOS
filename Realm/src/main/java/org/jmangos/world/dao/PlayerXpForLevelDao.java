@@ -2,8 +2,7 @@ package org.jmangos.world.dao;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.world.entities.PlayerXpForLevel;
+import org.jmangos.commons.entities.PlayerXpForLevel;
 
 public interface PlayerXpForLevelDao {
 
@@ -18,7 +17,7 @@ public interface PlayerXpForLevelDao {
      * @param criterions
      * @return
      */
-    public abstract List<PlayerXpForLevel> readPlayerXpForLevels(Criterion... criterions);
+    public abstract List<PlayerXpForLevel> readPlayerXpForLevels();
 
     public abstract Byte createOrUpdatePlayerLevelInfo(PlayerXpForLevel playerXpForLevel);
 

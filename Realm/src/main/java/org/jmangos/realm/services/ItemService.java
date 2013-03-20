@@ -5,9 +5,8 @@ package org.jmangos.realm.services;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.entities.FieldsItem;
-import org.jmangos.world.entities.ItemPrototype;
+import org.jmangos.commons.entities.FieldsItem;
+import org.jmangos.commons.entities.ItemPrototype;
 
 /**
  * @author MinimaJack
@@ -17,7 +16,7 @@ public interface ItemService {
 
     FieldsItem readItem(Long id);
 
-    List<FieldsItem> readItems(Criterion... criterions);
+    List<FieldsItem> readItems();
 
     Long createOrUpdateItem(FieldsItem item);
 

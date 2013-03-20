@@ -18,14 +18,14 @@ package org.jmangos.realm.network.packet.wow.server;
 
 import java.util.List;
 
+import org.jmangos.commons.entities.CharacterData;
+import org.jmangos.commons.entities.FieldsItem;
+import org.jmangos.commons.entities.ItemPrototype;
 import org.jmangos.commons.enums.EquipmentSlots;
 import org.jmangos.commons.service.ServiceContent;
-import org.jmangos.realm.entities.CharacterData;
-import org.jmangos.realm.entities.FieldsItem;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 import org.jmangos.realm.network.packet.wow.client.CMSG_AUTH_SESSION;
 import org.jmangos.realm.service.ItemStorages;
-import org.jmangos.world.entities.ItemPrototype;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

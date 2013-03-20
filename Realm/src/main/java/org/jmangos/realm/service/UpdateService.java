@@ -23,13 +23,13 @@
 package org.jmangos.realm.service;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 
 import org.jmangos.commons.service.Service;
 import org.jmangos.commons.task.TaskId;
 import org.jmangos.commons.task.TaskManager;
 import org.jmangos.commons.task.TaskPriority;
 import org.jmangos.commons.threadpool.ThreadPoolManager;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * The Class UpdateService.
@@ -40,11 +40,11 @@ public class UpdateService implements Service {
     private final TaskManager taskManager = new TaskManager();
 
     /** The thread pool manager. */
-    @Inject
+    @Autowired
     private ThreadPoolManager threadPoolManager;
 
     /** The map service. */
-    @Inject
+    @Autowired
     private MapService mapService;
 
     /**

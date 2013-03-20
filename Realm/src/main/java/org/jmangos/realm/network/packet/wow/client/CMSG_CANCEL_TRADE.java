@@ -18,13 +18,12 @@ package org.jmangos.realm.network.packet.wow.client;
 
 import java.nio.BufferUnderflowException;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
+import org.jmangos.commons.enums.TradeStatus;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
-import org.jmangos.realm.model.enums.TradeStatus;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.realm.network.packet.wow.server.SMSG_TRADE_STATUS;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,8 +33,8 @@ import org.springframework.stereotype.Component;
 public class CMSG_CANCEL_TRADE extends AbstractWoWClientPacket {
 
     /** The sender. */
-    @Inject
-    @Named("nettyPacketSender")
+    @Autowired
+    @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
 
     @Override

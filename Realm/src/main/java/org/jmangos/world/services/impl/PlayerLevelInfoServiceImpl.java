@@ -18,10 +18,9 @@ package org.jmangos.world.services.impl;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
-import org.jmangos.realm.domain.PlayerLevelInfoPK;
+import org.jmangos.commons.entities.PlayerLevelInfo;
+import org.jmangos.commons.entities.pk.PlayerLevelInfoPK;
 import org.jmangos.world.dao.PlayerLevelInfoDao;
-import org.jmangos.world.entities.PlayerLevelInfo;
 import org.jmangos.world.services.PlayerLevelInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,9 +38,9 @@ public class PlayerLevelInfoServiceImpl implements PlayerLevelInfoService {
     }
 
     @Override
-    public List<PlayerLevelInfo> readPlayerLevelInfos(final Criterion... criterions) {
+    public List<PlayerLevelInfo> readPlayerLevelInfos() {
 
-        return this.playerLevelInfoDao.readPlayerLevelInfos(criterions);
+        return this.playerLevelInfoDao.readPlayerLevelInfos();
     }
 
     @Override

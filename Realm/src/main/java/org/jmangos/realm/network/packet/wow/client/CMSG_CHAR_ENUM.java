@@ -19,17 +19,14 @@ package org.jmangos.realm.network.packet.wow.client;
 import java.nio.BufferUnderflowException;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.criteria4jpa.criterion.Criterion;
-import org.criteria4jpa.criterion.Restrictions;
+import org.jmangos.commons.entities.CharacterData;
 import org.jmangos.commons.model.AccountInfo;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
-import org.jmangos.realm.entities.CharacterData;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_ENUM;
 import org.jmangos.realm.services.CharacterService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -39,11 +36,11 @@ import org.springframework.stereotype.Component;
 public class CMSG_CHAR_ENUM extends AbstractWoWClientPacket {
 
     /** The sender. */
-    @Inject
-    @Named("nettyPacketSender")
+    @Autowired
+    @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
 
-    @Inject
+    @Autowired
     private CharacterService characterService;
 
     @Override
@@ -56,8 +53,13 @@ public class CMSG_CHAR_ENUM extends AbstractWoWClientPacket {
     protected void runImpl() {
 
         final AccountInfo account = (AccountInfo) getClient().getChanneledObject();
-        final Criterion criterion = Restrictions.eq("account", account.getObjectId());
-        final List<CharacterData> characterDatas = this.characterService.readCharacters(criterion);
+        // final Criterion criterion = Restrictions.eq("account",
+        // account.getObjectId());
+        // final List<CharacterData> characterDatas =
+        // this.characterService.readCharacters(criterion);
+
+        final List<CharacterData> characterDatas =
+                this.characterService.readCharactersForAccount(account.getObjectId());
         this.sender.send(getClient(), new SMSG_CHAR_ENUM(characterDatas));
     }
 

@@ -18,12 +18,10 @@ package org.jmangos.world.services.impl;
 
 import java.util.List;
 
-import org.criteria4jpa.criterion.Criterion;
-import org.criteria4jpa.criterion.Restrictions;
 import org.jmangos.commons.entities.CharStartOutfitEntity;
 import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
-import org.jmangos.realm.model.enums.Classes;
-import org.jmangos.realm.model.enums.Races;
+import org.jmangos.commons.enums.Classes;
+import org.jmangos.commons.enums.Races;
 import org.jmangos.world.dao.CharStartOutfitDao;
 import org.jmangos.world.services.CharStartOutfitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +40,9 @@ public class CharStartOutfitServiceImpl implements CharStartOutfitService {
     }
 
     @Override
-    public List<CharStartOutfitEntity> readCharStartOutfitEntities(final Criterion... criterions) {
+    public List<CharStartOutfitEntity> readCharStartOutfitEntities() {
 
-        return this.charStartOutfitDao.readCharStartOutfits(criterions);
+        return this.charStartOutfitDao.readCharStartOutfits();
     }
 
     @Override
@@ -63,13 +61,16 @@ public class CharStartOutfitServiceImpl implements CharStartOutfitService {
     @Override
     public List<CharStartOutfitEntity> readCharStartOutfitEntities(final Races charRace,
             final Classes charClass, final Byte gender) {
-
-        final Criterion[] criter = new Criterion[3];
-        criter[0] = Restrictions.eq("charStartOutfitEntityPk.clazz", (byte) charClass.getValue());
-        criter[1] = Restrictions.eq("charStartOutfitEntityPk.race", charRace.getValue());
-        criter[2] = Restrictions.eq("charStartOutfitEntityPk.gender", gender);
-
-        return this.charStartOutfitDao.readCharStartOutfits(criter);
+        /*
+         * final Criterion[] criter = new Criterion[3];
+         * criter[0] = Restrictions.eq("charStartOutfitEntityPk.clazz", (byte)
+         * charClass.getValue());
+         * criter[1] = Restrictions.eq("charStartOutfitEntityPk.race",
+         * charRace.getValue());
+         * criter[2] = Restrictions.eq("charStartOutfitEntityPk.gender",
+         * gender);
+         */
+        return this.charStartOutfitDao.readForRaceClassGender(charRace, charClass, gender);
     }
 
 }
