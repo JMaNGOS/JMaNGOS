@@ -16,19 +16,14 @@
  *******************************************************************************/
 package org.jmangos.world.dao;
 
-import java.util.List;
-
 import org.jmangos.commons.entities.PlayerLevelInfo;
 import org.jmangos.commons.entities.pk.PlayerLevelInfoPK;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface PlayerLevelInfoDao {
-
-    public PlayerLevelInfo readPlayerLevelInfo(PlayerLevelInfoPK pk);
-
-    public List<PlayerLevelInfo> readPlayerLevelInfos();
-
-    public PlayerLevelInfoPK createOrUpdatePlayerLevelInfo(PlayerLevelInfo playerLevelInfo);
-
-    public void deletePlayerLevelInfo(PlayerLevelInfo playerLevelInfo);
+@Repository
+@Transactional(readOnly = true)
+public interface PlayerLevelInfoDao extends JpaRepository<PlayerLevelInfo, PlayerLevelInfoPK> {
 
 }

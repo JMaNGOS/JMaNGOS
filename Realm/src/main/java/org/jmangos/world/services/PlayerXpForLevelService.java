@@ -10,8 +10,4 @@ public interface PlayerXpForLevelService {
 
     public List<PlayerXpForLevel> readPlayerLevelInfos();
 
-    public Byte createOrUpdatePlayerLevelInfo(PlayerXpForLevel playerLevelInfo);
-
-    public void deletePlayerXpForLevel(PlayerXpForLevel playerLevelInfo);
-
 }

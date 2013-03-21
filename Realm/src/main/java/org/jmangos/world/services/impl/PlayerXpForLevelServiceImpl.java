@@ -23,6 +23,7 @@ import org.jmangos.world.dao.PlayerXpForLevelDao;
 import org.jmangos.world.services.PlayerXpForLevelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The Class PlayerXpForLevelServiceImpl.
@@ -37,26 +38,14 @@ public class PlayerXpForLevelServiceImpl implements PlayerXpForLevelService {
     @Override
     public PlayerXpForLevel readPlayerXpForLevel(final Byte level) {
 
-        return this.playerXpForLevelDao.readXpForLevel(level);
+        return this.playerXpForLevelDao.findOne(level);
     }
 
     @Override
+    @Transactional("world")
     public List<PlayerXpForLevel> readPlayerLevelInfos() {
 
-        return this.playerXpForLevelDao.readPlayerXpForLevels();
-    }
-
-    @Override
-    public Byte createOrUpdatePlayerLevelInfo(final PlayerXpForLevel playerXpForLevel) {
-
-        return this.playerXpForLevelDao.createOrUpdatePlayerLevelInfo(playerXpForLevel);
-    }
-
-    @Override
-    public void deletePlayerXpForLevel(final PlayerXpForLevel playerXpForLevel) {
-
-        this.playerXpForLevelDao.deletePlayerXpForLevel(playerXpForLevel);
-
+        return this.playerXpForLevelDao.findAll();
     }
 
 }

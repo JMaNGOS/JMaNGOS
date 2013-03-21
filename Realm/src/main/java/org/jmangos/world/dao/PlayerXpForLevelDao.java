@@ -1,26 +1,12 @@
 package org.jmangos.world.dao;
 
-import java.util.List;
-
 import org.jmangos.commons.entities.PlayerXpForLevel;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface PlayerXpForLevelDao {
-
-    /**
-     * 
-     * @return PlayerXpForLevel
-     */
-    public abstract PlayerXpForLevel readXpForLevel(Byte id);
-
-    /**
-     * 
-     * @param criterions
-     * @return
-     */
-    public abstract List<PlayerXpForLevel> readPlayerXpForLevels();
-
-    public abstract Byte createOrUpdatePlayerLevelInfo(PlayerXpForLevel playerXpForLevel);
-
-    public abstract void deletePlayerXpForLevel(PlayerXpForLevel playerXpForLevel);
+@Repository
+@Transactional(readOnly = true)
+public interface PlayerXpForLevelDao extends JpaRepository<PlayerXpForLevel, Byte> {
 
 }
