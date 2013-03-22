@@ -77,12 +77,11 @@ public class RealmToAuthChannelHandler extends ReconnectingChannelHandler {
      * @param nettyPacketReceiver
      *        the netty packet receiver
      */
-    public RealmToAuthChannelHandler(final NetworkChannelFactory channelFactory,
-            final PacketHandlerFactory packetService, final ConnectHandler connectionHandler,
-            final NettyPacketReceiver nettyPacketReceiver) {
+    public RealmToAuthChannelHandler(final HashedWheelTimer timer,
+            final NetworkChannelFactory channelFactory, final PacketHandlerFactory packetService,
+            final ConnectHandler connectionHandler, final NettyPacketReceiver nettyPacketReceiver) {
 
-        super(new HashedWheelTimer(), channelFactory, packetService, connectionHandler,
-                nettyPacketReceiver);
+        super(timer, channelFactory, packetService, connectionHandler, nettyPacketReceiver);
 
         this.receiver = nettyPacketReceiver;
         this.packetService = packetService;

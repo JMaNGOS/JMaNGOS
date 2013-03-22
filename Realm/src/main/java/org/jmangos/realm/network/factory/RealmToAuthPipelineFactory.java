@@ -21,7 +21,10 @@ package org.jmangos.realm.network.factory;
 
 import static org.jboss.netty.channel.Channels.pipeline;
 
+import javax.annotation.PostConstruct;
+
 import org.jboss.netty.channel.ChannelPipeline;
+import org.jboss.netty.util.HashedWheelTimer;
 import org.jmangos.commons.network.factory.BasicPipelineFactory;
 import org.jmangos.commons.network.handlers.PacketHandlerFactory;
 import org.jmangos.commons.network.model.ConnectHandler;
@@ -40,6 +43,7 @@ import org.springframework.stereotype.Component;
 @Component("realmToAuthPipelineFactory")
 public class RealmToAuthPipelineFactory extends BasicPipelineFactory {
 
+    HashedWheelTimer hashTimer;
     /** The connection handler. */
     @Autowired
     @Qualifier("realmToAuthConnectHandler")
@@ -50,18 +54,21 @@ public class RealmToAuthPipelineFactory extends BasicPipelineFactory {
     @Qualifier("realmToAuthPacketHandlerFactory")
     private PacketHandlerFactory packetService;
 
+    @PostConstruct
+    private void init(){
+        hashTimer = new HashedWheelTimer();
+    }
     /**
      * 
      * @see org.jboss.netty.channel.ChannelPipelineFactory#getPipeline()
      */
     @Override
     public ChannelPipeline getPipeline() throws Exception {
-
         final ChannelPipeline pipeline = pipeline();
         pipeline.addLast("executor", getExecutorHandler());
         pipeline.addLast("eventlog", new EventLogHandler());
         // and then business logic.
-        pipeline.addLast("handler", new RealmToAuthChannelHandler(this.channelFactory,
+        pipeline.addLast("handler", new RealmToAuthChannelHandler(hashTimer, this.channelFactory,
                 this.packetService, this.connectionHandler, new NettyPacketReceiver()));
 
         return pipeline;

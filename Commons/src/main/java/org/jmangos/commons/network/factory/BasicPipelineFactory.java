@@ -16,12 +16,13 @@
  *******************************************************************************/
 package org.jmangos.commons.network.factory;
 
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jboss.netty.handler.execution.ExecutionHandler;
 import org.jboss.netty.handler.execution.OrderedMemoryAwareThreadPoolExecutor;
+
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 /**
  * A factory for creating BasicPipeline objects.
@@ -50,11 +51,10 @@ public abstract class BasicPipelineFactory implements ChannelPipelineFactory {
      * Instantiates a new basic pipeline factory.
      */
     public BasicPipelineFactory() {
-
         this.executorHandler =
                 new ExecutionHandler(new OrderedMemoryAwareThreadPoolExecutor(THREADS_MAX,
                         MEMORY_PER_CHANNEL, TOTAL_MEMORY, TIMEOUT, TimeUnit.MILLISECONDS,
-                        Executors.defaultThreadFactory()));
+                        new ThreadFactoryBuilder().setNameFormat("JMaNGOS-netty-pool-%d").build()));
     }
 
     /**

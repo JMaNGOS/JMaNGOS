@@ -29,6 +29,8 @@ import org.jmangos.commons.threadpool.model.PoolStats;
 import org.jmangos.commons.threadpool.model.ThreadPoolType;
 import org.springframework.stereotype.Component;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
 /**
  * The Class CommonThreadPoolManager.
  */
@@ -54,12 +56,17 @@ public class CommonThreadPoolManager implements ThreadPoolManager {
 
         final int scheduledPoolSize = ThreadPoolConfig.GENERAL_POOL;
         this.scheduledPool = new ScheduledThreadPoolExecutor(scheduledPoolSize);
+        final ThreadFactoryBuilder tfb = new ThreadFactoryBuilder();
+        tfb.setNameFormat("JMaNGOS-scheduled-pool-%d");
+        this.scheduledPool.setThreadFactory(tfb.build());
         this.scheduledPool.prestartAllCoreThreads();
 
+        tfb.setNameFormat("JMaNGOS-instant-pool-%d");
         final int instantPoolSize = ThreadPoolConfig.GENERAL_POOL;
         this.instantPool =
                 new ThreadPoolExecutor(instantPoolSize, instantPoolSize, 0, TimeUnit.SECONDS,
                         new ArrayBlockingQueue<Runnable>(100000));
+        this.instantPool.setThreadFactory(tfb.build());
         this.instantPool.prestartAllCoreThreads();
     }
 
