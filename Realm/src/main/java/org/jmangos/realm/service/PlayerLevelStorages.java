@@ -138,7 +138,7 @@ public class PlayerLevelStorages
      *        the level
      * @return the player level info
      */
-    public PlayerLevelInfo get(final int race, final int clazz, final int level) {
+    public PlayerLevelInfo get(final Races race, final Classes clazz, final int level) {
 
         final PlayerLevelInfoPK cl = new PlayerLevelInfoPK(race, clazz, level);
         if (this.playerRCLI.containsKey(cl)) {
@@ -147,22 +147,6 @@ public class PlayerLevelStorages
             log.warn("can't find proper PlayerClassLevelInfo PCLI size: " + this.playerRCLI.size());
             return null;
         }
-    }
-
-    /**
-     * Gets the.
-     * 
-     * @param race
-     *        the race
-     * @param clazz
-     *        the clazz
-     * @param level
-     *        the level
-     * @return the player level info
-     */
-    public PlayerLevelInfo get(final Races race, final Classes clazz, final int level) {
-
-        return get(race.getValue(), clazz.getValue(), level);
     }
 
 }

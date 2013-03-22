@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 import org.jmangos.commons.enums.Classes;
 
@@ -12,28 +14,15 @@ import org.jmangos.commons.enums.Classes;
  * template use File |
  * Settings | File Templates.
  */
+@SuppressWarnings("serial")
 @Embeddable
 public class PlayerClassLevelInfoPK implements Serializable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1978496511121197159L;
+    @Column(name = "class", nullable = false, insertable = true, updatable = true)
+    @Enumerated(EnumType.ORDINAL)
+    public Classes clazz;
 
-    @Column(name = "class",
-            nullable = false,
-            insertable = true,
-            updatable = true,
-            length = 3,
-            precision = 0)
-    private int clazz;
-
-    @Column(name = "level",
-            nullable = false,
-            insertable = true,
-            updatable = true,
-            length = 3,
-            precision = 0)
+    @Column(name = "level", nullable = false, insertable = true, updatable = true)
     private int level;
 
     public PlayerClassLevelInfoPK() {
@@ -42,22 +31,16 @@ public class PlayerClassLevelInfoPK implements Serializable {
 
     public PlayerClassLevelInfoPK(final Classes clazz, final int level) {
 
-        this.clazz = clazz.getValue();
-        this.level = level;
-    }
-
-    public PlayerClassLevelInfoPK(final int clazz, final int level) {
-
         this.clazz = clazz;
         this.level = level;
     }
 
-    public int getClazz() {
+    public Classes getClazz() {
 
         return this.clazz;
     }
 
-    public void setClazz(final int clazz) {
+    public void setClazz(final Classes clazz) {
 
         this.clazz = clazz;
     }
@@ -88,6 +71,6 @@ public class PlayerClassLevelInfoPK implements Serializable {
     @Override
     public int hashCode() {
 
-        return (getClazz() << 8) | getLevel();
+        return (getClazz().getValue() << 8) | getLevel();
     }
 }

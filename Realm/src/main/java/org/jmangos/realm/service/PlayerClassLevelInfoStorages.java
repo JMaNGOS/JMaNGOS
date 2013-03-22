@@ -120,7 +120,7 @@ public class PlayerClassLevelInfoStorages
      *        the level
      * @return the player class level info
      */
-    public PlayerClassLevelInfo get(final int clazz, final int level) {
+    public PlayerClassLevelInfo get(final Classes clazz, final int level) {
 
         final PlayerClassLevelInfoPK cl = new PlayerClassLevelInfoPK(clazz, level);
         if (this.playerCLI.containsKey(cl)) {
@@ -129,20 +129,6 @@ public class PlayerClassLevelInfoStorages
             log.warn("can't find proper PlayerClassLevelInfo");
             return null;
         }
-    }
-
-    /**
-     * Gets the.
-     * 
-     * @param clazz
-     *        the clazz
-     * @param level
-     *        the level
-     * @return the player class level info
-     */
-    public PlayerClassLevelInfo get(final Classes clazz, final int level) {
-
-        return get(clazz.getValue(), level);
     }
 
     /**

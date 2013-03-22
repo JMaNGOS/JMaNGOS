@@ -79,7 +79,7 @@ public class CharacterController {
 
         final Playercreateinfo info =
                 this.playercreateinfoService.readPlayercreateinfo(new PlayercreateinfoPK(
-                        race.getValue(), clazz.getValue()));
+                        race, clazz));
         if (info == null) {
             logger.error("Player create template not found for: " + clazz + " " + race);
             return SMSG_CHAR_CREATE.Code.ERROR;

@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+import org.jmangos.commons.enums.Classes;
+import org.jmangos.commons.enums.Races;
 
 /**
  * Created with IntelliJ IDEA. User: paalgyula email: paalgyula@gmail.com Date:
@@ -18,48 +23,40 @@ public class PlayercreateinfoPK implements Serializable {
      */
     private static final long serialVersionUID = 3488739986001429781L;
 
-    @Column(name = "race",
-            nullable = false,
-            insertable = true,
-            updatable = true,
-            length = 3,
-            precision = 0)
-    private int race;
+    @Column(name = "race", nullable = false, insertable = true, updatable = true)
+    @Enumerated(EnumType.ORDINAL)
+    public Races race;
 
-    @Column(name = "class",
-            nullable = false,
-            insertable = true,
-            updatable = true,
-            length = 3,
-            precision = 0)
-    private int clazz;
+    @Column(name = "class", nullable = false, insertable = true, updatable = true)
+    @Enumerated(EnumType.ORDINAL)
+    public Classes clazz;
 
     public PlayercreateinfoPK() {
 
     }
 
-    public PlayercreateinfoPK(final int race, final int clazz) {
+    public PlayercreateinfoPK(final Races race, final Classes clazz) {
 
         this.race = race;
         this.clazz = clazz;
     }
 
-    public int getRace() {
+    public Races getRace() {
 
         return this.race;
     }
 
-    public void setRace(final byte race) {
+    public void setRace(final Races race) {
 
         this.race = race;
     }
 
-    public int getClazz() {
+    public Classes getClazz() {
 
         return this.clazz;
     }
 
-    public void setClazz(final byte clazz) {
+    public void setClazz(final Classes clazz) {
 
         this.clazz = clazz;
     }
@@ -80,6 +77,6 @@ public class PlayercreateinfoPK implements Serializable {
     @Override
     public int hashCode() {
 
-        return (getClazz() << 8) | getRace();
+        return (getClazz().getValue() << 8) | getRace().getValue();
     }
 }

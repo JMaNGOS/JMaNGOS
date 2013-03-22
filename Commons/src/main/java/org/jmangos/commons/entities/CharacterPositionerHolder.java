@@ -14,6 +14,11 @@ import org.jmangos.commons.enums.MovementFlags;
 import org.jmangos.commons.enums.MovementFlags2;
 import org.jmangos.commons.enums.UpdateFlags;
 
+/**
+ * The Class <tt>CharacterPositionerHolder</tt> contains all data linked with character position.</br>
+ * TODO attach JumpInfo to Entity
+ * @author MinimaJack
+ */
 @SuppressWarnings("serial")
 @DynamicUpdate
 @Entity

@@ -34,7 +34,7 @@ import org.apache.commons.lang.NotImplementedException;
 import org.jmangos.commons.enums.Powers;
 
 /**
- * The Class UnitPowers.
+ * The Class <tt>CharacterPowers</tt>.
  */
 @SuppressWarnings("serial")
 @Entity

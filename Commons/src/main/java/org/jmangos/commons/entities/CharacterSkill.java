@@ -34,7 +34,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DiscriminatorOptions;
 
 /**
- * The Class UnitPowers.
+ * The Class <tt>CharacterSkill</tt> entity for characters skill values
  */
 @SuppressWarnings("serial")
 @Entity
@@ -50,17 +50,17 @@ public class CharacterSkill implements Serializable {
     @Column(name = "id")
     private int id;
 
-    /** The MANA. */
+    /** The skillId. */
     @Basic
     @Column(name = "skillId")
     private int skillId;
 
-    /** The RAGE. */
+    /** The maxValue for the skill.Some skill have value of 1, some depends of level etc */
     @Basic
     @Column(name = "maxValue")
     private int maxValue;
 
-    /** The FOCUS. */
+    /** The currentValue for the skill. */
     @Basic
     @Column(name = "currentValue")
     private int currentValue;

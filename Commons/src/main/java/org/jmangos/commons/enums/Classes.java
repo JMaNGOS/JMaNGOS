@@ -40,6 +40,8 @@ public enum Classes {
     MAGE(8),
     /** The game class warlock. */
     WARLOCK(9),
+    /** Unknown class*/
+    UNKNOWN(10),
     /** The game class druid. */
     DRUID(11);
 
