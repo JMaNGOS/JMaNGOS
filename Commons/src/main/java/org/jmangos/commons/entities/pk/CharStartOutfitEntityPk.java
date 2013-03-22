@@ -2,9 +2,14 @@ package org.jmangos.commons.entities.pk;
 
 import java.io.Serializable;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+import org.jmangos.commons.enums.Classes;
+import org.jmangos.commons.enums.Gender;
+import org.jmangos.commons.enums.Races;
 
 @Embeddable
 public class CharStartOutfitEntityPk implements Serializable {
@@ -13,35 +18,23 @@ public class CharStartOutfitEntityPk implements Serializable {
      * 
      */
     private static final long serialVersionUID = 2984603552216944986L;
-    @Basic
-    @Column(name = "clazz",
-            nullable = true,
-            insertable = true,
-            updatable = true,
-            length = 3,
-            precision = 0)
-    public Byte clazz;
-    @Basic
-    @Column(name = "gender",
-            nullable = true,
-            insertable = true,
-            updatable = true,
-            length = 3,
-            precision = 0)
-    public Byte gender;
-    @Basic
-    @Column(name = "race",
-            nullable = true,
-            insertable = true,
-            updatable = true,
-            length = 3,
-            precision = 0)
-    public Byte race;
+
+    @Column(name = "clazz", nullable = false, insertable = true, updatable = true)
+    @Enumerated(EnumType.ORDINAL)
+    public Classes clazz;
+
+    @Column(name = "gender", nullable = true, insertable = true, updatable = true)
+    @Enumerated(EnumType.ORDINAL)
+    public Gender gender;
+
+    @Column(name = "race", nullable = true, insertable = true, updatable = true)
+    @Enumerated(EnumType.ORDINAL)
+    public Races race;
 
     /**
      * @return the clazz
      */
-    public final Byte getClazz() {
+    public final Classes getClazz() {
 
         return this.clazz;
     }
@@ -50,7 +43,7 @@ public class CharStartOutfitEntityPk implements Serializable {
      * @param clazz
      *        the clazz to set
      */
-    public final void setClazz(final Byte clazz) {
+    public final void setClazz(final Classes clazz) {
 
         this.clazz = clazz;
     }
@@ -58,7 +51,7 @@ public class CharStartOutfitEntityPk implements Serializable {
     /**
      * @return the gender
      */
-    public final Byte getGender() {
+    public final Gender getGender() {
 
         return this.gender;
     }
@@ -67,7 +60,7 @@ public class CharStartOutfitEntityPk implements Serializable {
      * @param gender
      *        the gender to set
      */
-    public final void setGender(final Byte gender) {
+    public final void setGender(final Gender gender) {
 
         this.gender = gender;
     }
@@ -75,7 +68,7 @@ public class CharStartOutfitEntityPk implements Serializable {
     /**
      * @return the race
      */
-    public final Byte getRace() {
+    public final Races getRace() {
 
         return this.race;
     }
@@ -84,7 +77,7 @@ public class CharStartOutfitEntityPk implements Serializable {
      * @param race
      *        the race to set
      */
-    public final void setRace(final Byte race) {
+    public final void setRace(final Races race) {
 
         this.race = race;
     }
@@ -104,6 +97,6 @@ public class CharStartOutfitEntityPk implements Serializable {
     @Override
     public int hashCode() {
 
-        return (getRace() << 16) | (getClazz() << 8) | getGender();
+        return (getRace().getValue() << 16) | (getClazz().getValue() << 8) | getGender().ordinal();
     }
 }

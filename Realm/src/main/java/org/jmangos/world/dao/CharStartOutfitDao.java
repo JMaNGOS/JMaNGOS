@@ -21,6 +21,7 @@ import java.util.List;
 import org.jmangos.commons.entities.CharStartOutfitEntity;
 import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
 import org.jmangos.commons.enums.Classes;
+import org.jmangos.commons.enums.Gender;
 import org.jmangos.commons.enums.Races;
 
 /**
@@ -39,6 +40,6 @@ public interface CharStartOutfitDao {
     void deleteCharStartOutfitEntity(CharStartOutfitEntity charStartOutfitEntity);
 
     List<CharStartOutfitEntity> readForRaceClassGender(Races charRace, Classes charClass,
-            Byte gender);
+            Gender gender);
 
 }

@@ -10,8 +10,11 @@ import javolution.io.Struct.Signed32;
 
 import org.jmangos.commons.entities.CharStartOutfitEntity;
 import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
+import org.jmangos.commons.enums.Classes;
 import org.jmangos.commons.enums.EquipmentSlots;
+import org.jmangos.commons.enums.Gender;
 import org.jmangos.commons.enums.InventoryType;
+import org.jmangos.commons.enums.Races;
 import org.jmangos.tools.dbc.struct.CharStartOutfitEntry;
 import org.jmangos.tools.dbcconverter.service.AbstractDbcService;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -49,6 +52,9 @@ public class CharOutfitService
     public void saveAll() {
 
         CharStartOutfitEntry entry = getEntry();
+        Classes[] classes = Classes.values();
+        Races[] rases = Races.values();
+        Gender[] genders = Gender.values();
         do {
             int numbItem = 0;
             int startedFreeSlot = 23;
@@ -56,9 +62,9 @@ public class CharOutfitService
                 if (itemDisplayId.get() > 0) {
                     final CharStartOutfitEntity tf = new CharStartOutfitEntity();
                     final CharStartOutfitEntityPk pk = new CharStartOutfitEntityPk();
-                    pk.setClazz(entry.clazz.get());
-                    pk.setGender(entry.gender.get());
-                    pk.setRace(entry.race.get());
+                    pk.setClazz(classes[entry.clazz.get()]);
+                    pk.setGender(genders[entry.gender.get()]);
+                    pk.setRace(rases[entry.race.get()]);
                     final EquipmentSlots slot =
                             findEquipSlot(InventoryType.get(entry.ItemInventorySlot[numbItem].get()));
                     if (slot == null) {

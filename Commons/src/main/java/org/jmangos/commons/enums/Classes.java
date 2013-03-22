@@ -21,7 +21,7 @@ package org.jmangos.commons.enums;
  * 
  */
 public enum Classes {
-
+    NONE(0),
     /** The game class warrior. */
     WARRIOR(1),
     /** The game class paladin. */

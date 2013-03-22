@@ -22,6 +22,7 @@ package org.jmangos.commons.enums;
  * 
  */
 public enum Races {
+    NONE(0),
     HUMAN(1),
     ORC(2),
     DWARF(3),

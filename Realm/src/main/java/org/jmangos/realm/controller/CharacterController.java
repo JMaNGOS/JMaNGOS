@@ -170,7 +170,7 @@ public class CharacterController {
 
         final List<CharStartOutfitEntity> startItems =
                 this.charStartOutfitService.readCharStartOutfitEntities(characterData.getRace(),
-                        characterData.getClazz(), characterData.getGender().getValue());
+                        characterData.getClazz(), characterData.getGender());
         for (final CharStartOutfitEntity startItem : startItems) {
 
             final ItemPrototype itemProto = this.itemStorages.get(startItem.getProtoId());

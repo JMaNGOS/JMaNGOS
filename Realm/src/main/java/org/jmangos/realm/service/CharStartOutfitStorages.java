@@ -26,6 +26,8 @@ import org.jmangos.commons.dataholder.DataLoadService;
 import org.jmangos.commons.entities.CharStartOutfitEntity;
 import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
 import org.jmangos.commons.enums.Classes;
+import org.jmangos.commons.enums.Gender;
+import org.jmangos.commons.enums.Races;
 import org.jmangos.world.services.CharStartOutfitService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,7 +122,7 @@ public class CharStartOutfitStorages
      * @param gender
      * @return charStartOutfitEntity
      */
-    public CharStartOutfitEntity get(final byte clazz, final byte race, final byte gender) {
+    public CharStartOutfitEntity get(final Classes clazz, final Races race, final Gender gender) {
 
         final CharStartOutfitEntityPk cl = new CharStartOutfitEntityPk();
         cl.setClazz(clazz);
@@ -131,21 +133,6 @@ public class CharStartOutfitStorages
         } else {
             return null;
         }
-    }
-
-    /**
-     * Gets the.
-     * 
-     * @param clazz
-     *        the clazz
-     * @param level
-     *        the level
-     * @return the player class level info
-     */
-    public CharStartOutfitEntity get(final Classes clazz, final byte race, final byte gender,
-            final int itemInventorySlot) {
-
-        return get((byte) clazz.getValue(), race, gender);
     }
 
     /**

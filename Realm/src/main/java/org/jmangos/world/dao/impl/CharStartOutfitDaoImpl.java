@@ -28,6 +28,7 @@ import javax.persistence.criteria.Root;
 import org.jmangos.commons.entities.CharStartOutfitEntity;
 import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
 import org.jmangos.commons.enums.Classes;
+import org.jmangos.commons.enums.Gender;
 import org.jmangos.commons.enums.Races;
 import org.jmangos.world.dao.CharStartOutfitDao;
 import org.springframework.stereotype.Repository;
@@ -58,15 +59,15 @@ public class CharStartOutfitDaoImpl implements CharStartOutfitDao {
 
     @Override
     public List<CharStartOutfitEntity> readForRaceClassGender(final Races charRace,
-            final Classes charClass, final Byte gender) {
+            final Classes charClass, final Gender gender) {
         final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
         final CriteriaQuery<CharStartOutfitEntity> criteria =
                 builder.createQuery(CharStartOutfitEntity.class);
         final Root<CharStartOutfitEntity> root = criteria.from(CharStartOutfitEntity.class);
         criteria.select(root);
         final CharStartOutfitEntityPk pk = new CharStartOutfitEntityPk();
-        pk.setClazz((byte) charClass.getValue());
-        pk.setRace(charRace.getValue());
+        pk.setClazz(charClass);
+        pk.setRace(charRace);
         pk.setGender(gender);
         final Predicate pPk = builder.equal(root.get("charStartOutfitEntityPk"), pk);
         criteria.where(pPk);

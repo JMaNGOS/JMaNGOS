@@ -21,6 +21,7 @@ import java.util.List;
 import org.jmangos.commons.entities.CharStartOutfitEntity;
 import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
 import org.jmangos.commons.enums.Classes;
+import org.jmangos.commons.enums.Gender;
 import org.jmangos.commons.enums.Races;
 import org.jmangos.world.dao.CharStartOutfitDao;
 import org.jmangos.world.services.CharStartOutfitService;
@@ -60,16 +61,7 @@ public class CharStartOutfitServiceImpl implements CharStartOutfitService {
 
     @Override
     public List<CharStartOutfitEntity> readCharStartOutfitEntities(final Races charRace,
-            final Classes charClass, final Byte gender) {
-        /*
-         * final Criterion[] criter = new Criterion[3];
-         * criter[0] = Restrictions.eq("charStartOutfitEntityPk.clazz", (byte)
-         * charClass.getValue());
-         * criter[1] = Restrictions.eq("charStartOutfitEntityPk.race",
-         * charRace.getValue());
-         * criter[2] = Restrictions.eq("charStartOutfitEntityPk.gender",
-         * gender);
-         */
+            final Classes charClass, final Gender gender) {
         return this.charStartOutfitDao.readForRaceClassGender(charRace, charClass, gender);
     }
 
