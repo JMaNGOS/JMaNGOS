@@ -16,6 +16,8 @@
  *******************************************************************************/
 package org.jmangos.realm.network.handler;
 
+import java.net.ConnectException;
+
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.DefaultExceptionEvent;
@@ -62,30 +64,13 @@ public class EventLogHandler extends SimpleChannelUpstreamHandler {
     public void exceptionCaught(final ChannelHandlerContext ctx, final ExceptionEvent e)
             throws Exception {
 
-        if ((e instanceof DefaultExceptionEvent) &&
+        if ((e instanceof DefaultExceptionEvent || e instanceof ConnectException) &&
             (e.getCause() != null) &&
-            (e.getCause().getMessage() != null) &&
-            (e.getCause().getMessage().equals("connection timed out") || e.getCause().getMessage().contains(
-                    "Connection refused"))) {
+            (e.getCause().getMessage() != null)) {
             log.warn("Connection timed out");
         } else {
             log.warn("Exception caught: ", e.getCause());
         }
-        ctx.sendUpstream(e);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelConnected
-     * (org.jboss.netty.channel.ChannelHandlerContext,
-     * org.jboss.netty.channel.ChannelStateEvent)
-     */
-    @Override
-    public void channelConnected(final ChannelHandlerContext ctx, final ChannelStateEvent e)
-            throws Exception {
-
         ctx.sendUpstream(e);
     }
 
