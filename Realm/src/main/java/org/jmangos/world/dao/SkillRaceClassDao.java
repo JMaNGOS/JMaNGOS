@@ -3,22 +3,20 @@
  */
 package org.jmangos.world.dao;
 
-import java.util.List;
-
 import org.jmangos.commons.entities.SkillRaceClassInfoEntity;
-import org.jmangos.commons.enums.Classes;
-import org.jmangos.commons.enums.Races;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author MinimaJack
  * 
  */
-public interface SkillRaceClassDao {
-
-    SkillRaceClassInfoEntity readSkillRaceClass(Integer id);
-
-    List<SkillRaceClassInfoEntity> readSkillRaceClasses(final Races race, final Classes clazz);
-
-    void deleteSkillRaceClass(SkillRaceClassInfoEntity givenSkillRaceClassInfoEntity);
+@Repository
+@Transactional(readOnly = true)
+public interface SkillRaceClassDao
+        extends JpaRepository<SkillRaceClassInfoEntity, Integer>,
+        JpaSpecificationExecutor<SkillRaceClassInfoEntity> {
 
 }

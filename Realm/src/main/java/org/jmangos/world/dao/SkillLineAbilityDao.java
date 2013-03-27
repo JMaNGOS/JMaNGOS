@@ -3,23 +3,20 @@
  */
 package org.jmangos.world.dao;
 
-import java.util.List;
-
 import org.jmangos.commons.entities.SkillLineAbilityEntity;
-import org.jmangos.commons.enums.Classes;
-import org.jmangos.commons.enums.Races;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author MinimaJack
  * 
  */
-public interface SkillLineAbilityDao {
-
-    SkillLineAbilityEntity readSkillLineAbility(Integer id);
-
-    List<SkillLineAbilityEntity> getAbilitiesForRaceClassSkill(final Races race,
-            final Classes clazz, final int skill);
-
-    void deleteSkillLineAbility(SkillLineAbilityEntity givenSkillLineAbilityEntity);
+@Repository
+@Transactional(readOnly = true)
+public interface SkillLineAbilityDao
+        extends JpaRepository<SkillLineAbilityEntity, Integer>,
+        JpaSpecificationExecutor<SkillLineAbilityEntity> {
 
 }
