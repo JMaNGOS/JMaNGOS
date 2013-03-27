@@ -33,25 +33,13 @@ public class ItemPrototypeServiceImpl implements ItemPrototypeService {
     @Override
     public ItemPrototype readItemPrototype(final Integer id) {
 
-        return this.itemPrototypeDao.readItemPrototype(id);
+        return this.itemPrototypeDao.findOne(id);
     }
 
     @Override
     public List<ItemPrototype> readItemPrototypes() {
 
-        return this.itemPrototypeDao.readItemPrototypes();
-    }
-
-    @Override
-    public Integer createOrUpdateItemPrototype(final ItemPrototype itemPrototype) {
-
-        return this.itemPrototypeDao.createOrUpdateItemPrototype(itemPrototype);
-    }
-
-    @Override
-    public void deleteItemPrototype(final ItemPrototype itemPrototype) {
-
-        this.itemPrototypeDao.deleteItemPrototype(itemPrototype);
+        return this.itemPrototypeDao.findAll();
     }
 
 }

@@ -1,4 +1,4 @@
-package org.jmangos.commons.entities.pk;
+package org.jmangos.commons.entities;
 
 import java.io.Serializable;
 
@@ -11,14 +11,10 @@ import org.jmangos.commons.enums.Classes;
 import org.jmangos.commons.enums.Gender;
 import org.jmangos.commons.enums.Races;
 
+@SuppressWarnings("serial")
 @Embeddable
-public class CharStartOutfitEntityPk implements Serializable {
-
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 2984603552216944986L;
-
+public class CharClassRaceGender implements Serializable {
+    
     @Column(name = "clazz", nullable = false, insertable = true, updatable = true)
     @Enumerated(EnumType.ORDINAL)
     public Classes clazz;
@@ -85,13 +81,13 @@ public class CharStartOutfitEntityPk implements Serializable {
     @Override
     public boolean equals(final Object obj) {
 
-        if (!(obj instanceof CharStartOutfitEntityPk)) {
+        if (!(obj instanceof CharClassRaceGender)) {
             return false;
         }
 
-        return ((CharStartOutfitEntityPk) obj).getGender().equals(getGender()) &&
-            ((CharStartOutfitEntityPk) obj).getClazz().equals(getClazz()) &&
-            ((CharStartOutfitEntityPk) obj).getRace().equals(getRace());
+        return ((CharClassRaceGender) obj).getGender().equals(getGender()) &&
+            ((CharClassRaceGender) obj).getClazz().equals(getClazz()) &&
+            ((CharClassRaceGender) obj).getRace().equals(getRace());
     }
 
     @Override

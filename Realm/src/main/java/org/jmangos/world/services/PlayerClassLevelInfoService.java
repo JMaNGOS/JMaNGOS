@@ -27,9 +27,4 @@ public interface PlayerClassLevelInfoService {
 
     public List<PlayerClassLevelInfo> readPlayerClassLevelInfos();
 
-    public PlayerClassLevelInfoPK createOrUpdatePlayerClassLevelInfo(
-            PlayerClassLevelInfo playerClassLevelInfo);
-
-    public void deletePlayerClassLevelInfo(PlayerClassLevelInfo playerClassLevelInfo);
-
 }

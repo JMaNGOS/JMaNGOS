@@ -29,7 +29,7 @@ import org.jmangos.realm.service.PlayerXpForLevelStorages;
 import org.jmangos.realm.services.CharacterService;
 import org.jmangos.realm.services.ItemService;
 import org.jmangos.world.services.CharStartOutfitService;
-import org.jmangos.world.services.PlayercreateinfoService;
+import org.jmangos.world.services.PlayerCreateInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,7 @@ public class CharacterController {
     private CharacterService characterService;
 
     @Autowired
-    private PlayercreateinfoService playercreateinfoService;
+    private PlayerCreateInfoService playerCreateInfoService;
 
     @Autowired
     private CharStartOutfitService charStartOutfitService;
@@ -78,8 +78,8 @@ public class CharacterController {
         }
 
         final Playercreateinfo info =
-                this.playercreateinfoService.readPlayercreateinfo(new PlayercreateinfoPK(
-                        race, clazz));
+                this.playerCreateInfoService.readPlayercreateinfo(new PlayercreateinfoPK(race,
+                        clazz));
         if (info == null) {
             logger.error("Player create template not found for: " + clazz + " " + race);
             return SMSG_CHAR_CREATE.Code.ERROR;

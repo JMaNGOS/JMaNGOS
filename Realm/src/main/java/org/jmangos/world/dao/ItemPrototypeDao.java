@@ -16,18 +16,18 @@
  *******************************************************************************/
 package org.jmangos.world.dao;
 
-import java.util.List;
-
 import org.jmangos.commons.entities.ItemPrototype;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface ItemPrototypeDao {
-
-    public ItemPrototype readItemPrototype(Integer id);
-
-    public List<ItemPrototype> readItemPrototypes();
-
-    public Integer createOrUpdateItemPrototype(ItemPrototype itemPrototype);
-
-    public void deleteItemPrototype(ItemPrototype itemPrototype);
+/**
+ * 
+ * @author MinimaJack
+ * 
+ */
+@Repository
+@Transactional(readOnly = true)
+public interface ItemPrototypeDao extends JpaRepository<ItemPrototype, Integer> {
 
 }

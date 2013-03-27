@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
 
 @Entity
 @Table(name = "charstartoutfit")
@@ -26,7 +25,7 @@ public class CharStartOutfitEntity {
     Integer id;
 
     @Embedded
-    CharStartOutfitEntityPk charStartOutfitEntityPk;
+    CharClassRaceGender chars;
 
     @Basic
     @Column(name = "protoId",
@@ -104,19 +103,19 @@ public class CharStartOutfitEntity {
     /**
      * @return the charStartOutfitEntityPk
      */
-    public final CharStartOutfitEntityPk getCharStartOutfitEntityPk() {
+    public final CharClassRaceGender getCharStartOutfitEntityPk() {
 
-        return this.charStartOutfitEntityPk;
+        return this.chars;
     }
 
     /**
-     * @param charStartOutfitEntityPk
+     * @param charClassRaceGender
      *        the charStartOutfitEntityPk to set
      */
     public final void setCharStartOutfitEntityPk(
-            final CharStartOutfitEntityPk charStartOutfitEntityPk) {
+            final CharClassRaceGender charClassRaceGender) {
 
-        this.charStartOutfitEntityPk = charStartOutfitEntityPk;
+        this.chars = charClassRaceGender;
     }
 
 }

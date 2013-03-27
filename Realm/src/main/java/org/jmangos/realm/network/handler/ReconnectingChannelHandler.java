@@ -49,8 +49,9 @@ public class ReconnectingChannelHandler extends SimpleChannelUpstreamHandler {
 
     /** Config */
     Config config;
-    
+
     TimerTask timerTask = new TimerTask() {
+
         @Override
         public void run(final Timeout timeout) throws Exception {
 
@@ -60,11 +61,16 @@ public class ReconnectingChannelHandler extends SimpleChannelUpstreamHandler {
         }
     };
 
-    /* (non-Javadoc)
-     * @see org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelDisconnected(org.jboss.netty.channel.ChannelHandlerContext, org.jboss.netty.channel.ChannelStateEvent)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.jboss.netty.channel.SimpleChannelUpstreamHandler#channelDisconnected
+     * (org.jboss.netty.channel.ChannelHandlerContext,
+     * org.jboss.netty.channel.ChannelStateEvent)
      */
     @Override
-    public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e)
+    public void channelDisconnected(final ChannelHandlerContext ctx, final ChannelStateEvent e)
             throws Exception {
         // TODO Auto-generated method stub
         super.channelDisconnected(ctx, e);
@@ -103,7 +109,8 @@ public class ReconnectingChannelHandler extends SimpleChannelUpstreamHandler {
     public void channelClosed(final ChannelHandlerContext ctx, final ChannelStateEvent e)
             throws Exception {
 
-        this.timer.newTimeout(timerTask, this.config.AUTH_RECONNECT_DELAY, TimeUnit.MILLISECONDS);
+        this.timer.newTimeout(this.timerTask, this.config.AUTH_RECONNECT_DELAY,
+                TimeUnit.MILLISECONDS);
 
     }
 }

@@ -20,39 +20,27 @@ import java.util.List;
 
 import org.jmangos.commons.entities.Playercreateinfo;
 import org.jmangos.commons.entities.pk.PlayercreateinfoPK;
-import org.jmangos.world.dao.PlayercreateinfoDao;
-import org.jmangos.world.services.PlayercreateinfoService;
+import org.jmangos.world.dao.PlayerCreateInfoDao;
+import org.jmangos.world.services.PlayerCreateInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("playercreateinfoService")
-public class PlayercreateinfoServiceImpl implements PlayercreateinfoService {
+public class PlayerCreateInfoServiceImpl implements PlayerCreateInfoService {
 
     @Autowired
-    private PlayercreateinfoDao playercreateinfoDao;
+    private PlayerCreateInfoDao playerCreateInfoDao;
 
     @Override
     public Playercreateinfo readPlayercreateinfo(final PlayercreateinfoPK pk) {
 
-        return this.playercreateinfoDao.readPlayercreateinfo(pk);
+        return this.playerCreateInfoDao.findOne(pk);
     }
 
     @Override
     public List<Playercreateinfo> readPlayercreateinfos() {
 
-        return this.playercreateinfoDao.readPlayercreateinfos();
-    }
-
-    @Override
-    public PlayercreateinfoPK createOrUpdatePlayercreateinfo(final Playercreateinfo playercreateinfo) {
-
-        return this.playercreateinfoDao.createOrUpdatePlayercreateinfo(playercreateinfo);
-    }
-
-    @Override
-    public void deletePlayercreateinfo(final Playercreateinfo playercreateinfo) {
-
-        this.playercreateinfoDao.deletePlayercreateinfo(playercreateinfo);
+        return this.playerCreateInfoDao.findAll();
     }
 
 }

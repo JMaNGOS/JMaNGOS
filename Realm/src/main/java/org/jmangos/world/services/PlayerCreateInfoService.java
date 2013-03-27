@@ -21,14 +21,10 @@ import java.util.List;
 import org.jmangos.commons.entities.Playercreateinfo;
 import org.jmangos.commons.entities.pk.PlayercreateinfoPK;
 
-public interface PlayercreateinfoService {
+public interface PlayerCreateInfoService {
 
     public Playercreateinfo readPlayercreateinfo(PlayercreateinfoPK pk);
 
     public List<Playercreateinfo> readPlayercreateinfos();
-
-    public PlayercreateinfoPK createOrUpdatePlayercreateinfo(Playercreateinfo playercreateinfo);
-
-    public void deletePlayercreateinfo(Playercreateinfo playercreateinfo);
 
 }

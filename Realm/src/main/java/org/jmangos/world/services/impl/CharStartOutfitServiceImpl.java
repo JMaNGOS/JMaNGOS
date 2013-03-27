@@ -19,7 +19,6 @@ package org.jmangos.world.services.impl;
 import java.util.List;
 
 import org.jmangos.commons.entities.CharStartOutfitEntity;
-import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
 import org.jmangos.commons.enums.Classes;
 import org.jmangos.commons.enums.Gender;
 import org.jmangos.commons.enums.Races;
@@ -35,34 +34,16 @@ public class CharStartOutfitServiceImpl implements CharStartOutfitService {
     private CharStartOutfitDao charStartOutfitDao;
 
     @Override
-    public CharStartOutfitEntity readCharStartOutfitEntity(final CharStartOutfitEntityPk pk) {
-
-        return this.charStartOutfitDao.readCharStartOutfit(pk);
-    }
-
-    @Override
     public List<CharStartOutfitEntity> readCharStartOutfitEntities() {
 
-        return this.charStartOutfitDao.readCharStartOutfits();
-    }
-
-    @Override
-    public CharStartOutfitEntityPk createOrUpdateCharStartOutfitEntity(
-            final CharStartOutfitEntity charStartOutfitEntity) {
-
-        return this.charStartOutfitDao.createOrUpdateCharStartOutfitEntity(charStartOutfitEntity);
-    }
-
-    @Override
-    public void deleteCharStartOutfitEntity(final CharStartOutfitEntity charStartOutfitEntity) {
-
-        this.charStartOutfitDao.deleteCharStartOutfitEntity(charStartOutfitEntity);
+        return this.charStartOutfitDao.findAll();
     }
 
     @Override
     public List<CharStartOutfitEntity> readCharStartOutfitEntities(final Races charRace,
             final Classes charClass, final Gender gender) {
-        return this.charStartOutfitDao.readForRaceClassGender(charRace, charClass, gender);
+        return this.charStartOutfitDao.findByCharsRaceAndCharsClazzAndCharsGender(charRace,
+                charClass, gender);
     }
 
 }

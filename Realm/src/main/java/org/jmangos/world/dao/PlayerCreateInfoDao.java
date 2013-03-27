@@ -16,19 +16,14 @@
  *******************************************************************************/
 package org.jmangos.world.dao;
 
-import java.util.List;
-
 import org.jmangos.commons.entities.Playercreateinfo;
 import org.jmangos.commons.entities.pk.PlayercreateinfoPK;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface PlayercreateinfoDao {
-
-    public Playercreateinfo readPlayercreateinfo(PlayercreateinfoPK pk);
-
-    public List<Playercreateinfo> readPlayercreateinfos();
-
-    public PlayercreateinfoPK createOrUpdatePlayercreateinfo(Playercreateinfo playercreateinfo);
-
-    public void deletePlayercreateinfo(Playercreateinfo playercreateinfo);
+@Repository
+@Transactional(readOnly = true)
+public interface PlayerCreateInfoDao extends JpaRepository<Playercreateinfo, PlayercreateinfoPK> {
 
 }

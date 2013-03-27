@@ -16,18 +16,13 @@
  *******************************************************************************/
 package org.jmangos.world.dao;
 
-import java.util.List;
-
 import org.jmangos.commons.entities.QuestPrototype;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface QuestPrototypeDao {
-
-    public QuestPrototype readQuestPrototype(Integer id);
-
-    public List<QuestPrototype> readQuestPrototypes();
-
-    public Integer createOrUpdateQuestPrototype(QuestPrototype questPrototype);
-
-    public void deleteQuestPrototype(QuestPrototype questPrototype);
+@Repository
+@Transactional(readOnly = true)
+public interface QuestPrototypeDao extends JpaRepository<QuestPrototype, Integer> {
 
 }

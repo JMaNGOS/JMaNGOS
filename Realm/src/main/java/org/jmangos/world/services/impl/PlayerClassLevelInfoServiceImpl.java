@@ -34,26 +34,13 @@ public class PlayerClassLevelInfoServiceImpl implements PlayerClassLevelInfoServ
     @Override
     public PlayerClassLevelInfo readPlayerClassLevelInfo(final PlayerClassLevelInfoPK pk) {
 
-        return this.playerClassLevelInfoDao.readPlayerClassLevelInfo(pk);
+        return this.playerClassLevelInfoDao.findOne(pk);
     }
 
     @Override
     public List<PlayerClassLevelInfo> readPlayerClassLevelInfos() {
 
-        return this.playerClassLevelInfoDao.readPlayerClassLevelInfos();
-    }
-
-    @Override
-    public PlayerClassLevelInfoPK createOrUpdatePlayerClassLevelInfo(
-            final PlayerClassLevelInfo playerClassLevelInfo) {
-
-        return this.playerClassLevelInfoDao.createOrUpdatePlayerClassLevelInfo(playerClassLevelInfo);
-    }
-
-    @Override
-    public void deletePlayerClassLevelInfo(final PlayerClassLevelInfo playerClassLevelInfo) {
-
-        this.playerClassLevelInfoDao.deletePlayerClassLevelInfo(playerClassLevelInfo);
+        return this.playerClassLevelInfoDao.findAll();
     }
 
 }

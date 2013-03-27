@@ -26,7 +26,6 @@ import org.springframework.stereotype.Service;
 
 import com.googlecode.ehcache.annotations.Cacheable;
 
-
 @Service("spellService")
 public class SpellServiceImpl implements SpellService {
 
@@ -34,28 +33,16 @@ public class SpellServiceImpl implements SpellService {
     private SpellDao spellDao;
 
     @Override
-    @Cacheable(cacheName="spellCache")
+    @Cacheable(cacheName = "spellCache")
     public SpellEntity getSpellById(final Integer id) {
 
-        return this.spellDao.readSpell(id);
+        return this.spellDao.findOne(id);
     }
 
     @Override
     public List<SpellEntity> readSpells() {
 
-        return this.spellDao.readSpells();
-    }
-
-    @Override
-    public Integer createOrUpdateSpell(final SpellEntity spell) {
-
-        return this.spellDao.createOrUpdateSpell(spell);
-    }
-
-    @Override
-    public void deleteSpell(final SpellEntity spell) {
-
-        this.spellDao.deleteSpell(spell);
+        return this.spellDao.findAll();
     }
 
 }

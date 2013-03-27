@@ -26,8 +26,4 @@ public interface QuestPrototypeService {
 
     public List<QuestPrototype> readQuestPrototypes();
 
-    public Integer createOrUpdateQuestPrototype(QuestPrototype questPrototype);
-
-    public void deleteQuestPrototype(QuestPrototype questPrototype);
-
 }

@@ -26,8 +26,4 @@ public interface ItemPrototypeService {
 
     public List<ItemPrototype> readItemPrototypes();
 
-    public Integer createOrUpdateItemPrototype(ItemPrototype itemPrototype);
-
-    public void deleteItemPrototype(ItemPrototype itemPrototype);
-
 }

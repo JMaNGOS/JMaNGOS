@@ -19,7 +19,6 @@ package org.jmangos.world.services;
 import java.util.List;
 
 import org.jmangos.commons.entities.CharStartOutfitEntity;
-import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
 import org.jmangos.commons.enums.Classes;
 import org.jmangos.commons.enums.Gender;
 import org.jmangos.commons.enums.Races;
@@ -30,14 +29,7 @@ import org.jmangos.commons.enums.Races;
  */
 public interface CharStartOutfitService {
 
-    CharStartOutfitEntity readCharStartOutfitEntity(CharStartOutfitEntityPk pk);
-
     List<CharStartOutfitEntity> readCharStartOutfitEntities();
-
-    CharStartOutfitEntityPk createOrUpdateCharStartOutfitEntity(
-            CharStartOutfitEntity charStartOutfitEntity);
-
-    void deleteCharStartOutfitEntity(CharStartOutfitEntity charStartOutfitEntity);
 
     List<CharStartOutfitEntity> readCharStartOutfitEntities(Races charRace, Classes charClass,
             Gender gender);

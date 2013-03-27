@@ -55,9 +55,10 @@ public class RealmToAuthPipelineFactory extends BasicPipelineFactory {
     private PacketHandlerFactory packetService;
 
     @PostConstruct
-    private void init(){
-        hashTimer = new HashedWheelTimer();
+    private void init() {
+        this.hashTimer = new HashedWheelTimer();
     }
+
     /**
      * 
      * @see org.jboss.netty.channel.ChannelPipelineFactory#getPipeline()
@@ -68,8 +69,9 @@ public class RealmToAuthPipelineFactory extends BasicPipelineFactory {
         pipeline.addLast("executor", getExecutorHandler());
         pipeline.addLast("eventlog", new EventLogHandler());
         // and then business logic.
-        pipeline.addLast("handler", new RealmToAuthChannelHandler(hashTimer, this.channelFactory,
-                this.packetService, this.connectionHandler, new NettyPacketReceiver()));
+        pipeline.addLast("handler", new RealmToAuthChannelHandler(this.hashTimer,
+                this.channelFactory, this.packetService, this.connectionHandler,
+                new NettyPacketReceiver()));
 
         return pipeline;
     }

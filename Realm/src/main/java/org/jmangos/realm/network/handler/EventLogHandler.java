@@ -64,7 +64,7 @@ public class EventLogHandler extends SimpleChannelUpstreamHandler {
     public void exceptionCaught(final ChannelHandlerContext ctx, final ExceptionEvent e)
             throws Exception {
 
-        if ((e instanceof DefaultExceptionEvent || e instanceof ConnectException) &&
+        if (((e instanceof DefaultExceptionEvent) || (e instanceof ConnectException)) &&
             (e.getCause() != null) &&
             (e.getCause().getMessage() != null)) {
             log.warn("Connection timed out");

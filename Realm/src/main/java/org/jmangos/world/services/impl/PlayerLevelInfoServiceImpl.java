@@ -33,12 +33,12 @@ public class PlayerLevelInfoServiceImpl implements PlayerLevelInfoService {
 
     @Override
     public PlayerLevelInfo readPlayerLevelInfo(final PlayerLevelInfoPK pk) {
-        return playerLevelInfoDao.findOne(pk);
+        return this.playerLevelInfoDao.findOne(pk);
     }
 
     @Override
     public List<PlayerLevelInfo> readPlayerLevelInfos() {
-        return playerLevelInfoDao.findAll();
+        return this.playerLevelInfoDao.findAll();
     }
 
 }

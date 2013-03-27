@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import javolution.io.Struct.Signed32;
 
 import org.jmangos.commons.entities.CharStartOutfitEntity;
-import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
+import org.jmangos.commons.entities.CharClassRaceGender;
 import org.jmangos.commons.enums.Classes;
 import org.jmangos.commons.enums.EquipmentSlots;
 import org.jmangos.commons.enums.Gender;
@@ -61,7 +61,7 @@ public class CharOutfitService
             for (final Signed32 itemDisplayId : entry.ItemDisplayId) {
                 if (itemDisplayId.get() > 0) {
                     final CharStartOutfitEntity tf = new CharStartOutfitEntity();
-                    final CharStartOutfitEntityPk pk = new CharStartOutfitEntityPk();
+                    final CharClassRaceGender pk = new CharClassRaceGender();
                     pk.setClazz(classes[entry.clazz.get()]);
                     pk.setGender(genders[entry.gender.get()]);
                     pk.setRace(rases[entry.race.get()]);

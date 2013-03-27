@@ -19,27 +19,21 @@ package org.jmangos.world.dao;
 import java.util.List;
 
 import org.jmangos.commons.entities.CharStartOutfitEntity;
-import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
 import org.jmangos.commons.enums.Classes;
 import org.jmangos.commons.enums.Gender;
 import org.jmangos.commons.enums.Races;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author MinimaJack
  * 
  */
-public interface CharStartOutfitDao {
+@Repository
+@Transactional(readOnly = true)
+public interface CharStartOutfitDao extends JpaRepository<CharStartOutfitEntity, Integer> {
 
-    CharStartOutfitEntity readCharStartOutfit(CharStartOutfitEntityPk pk);
-
-    List<CharStartOutfitEntity> readCharStartOutfits();
-
-    CharStartOutfitEntityPk createOrUpdateCharStartOutfitEntity(
-            CharStartOutfitEntity charStartOutfitEntity);
-
-    void deleteCharStartOutfitEntity(CharStartOutfitEntity charStartOutfitEntity);
-
-    List<CharStartOutfitEntity> readForRaceClassGender(Races charRace, Classes charClass,
-            Gender gender);
-
+    public List<CharStartOutfitEntity> findByCharsRaceAndCharsClazzAndCharsGender(
+            final Races charRace, final Classes charClass, final Gender gender);
 }

@@ -53,14 +53,15 @@ public class CharacterDaoImpl implements CharacterDao {
     }
 
     @Override
-    public CharacterData readCharacterByName(String name) {
+    public CharacterData readCharacterByName(final String name) {
         final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
         final CriteriaQuery<CharacterData> criteria = builder.createQuery(CharacterData.class);
         final Root<CharacterData> root = criteria.from(CharacterData.class);
         criteria.select(root);
         final Predicate pName = builder.equal(root.get("name"), name);
         criteria.where(pName);
-        List<CharacterData> results = this.entityManager.createQuery(criteria).getResultList();
+        final List<CharacterData> results =
+                this.entityManager.createQuery(criteria).getResultList();
         if (!results.isEmpty()) {
             return results.get(0);
         } else {
@@ -69,7 +70,7 @@ public class CharacterDaoImpl implements CharacterDao {
     }
 
     @Override
-    public List<CharacterData> readCharacterByName(Long accountId) {
+    public List<CharacterData> readCharacterByName(final Long accountId) {
         final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
         final CriteriaQuery<CharacterData> criteria = builder.createQuery(CharacterData.class);
         final Root<CharacterData> root = criteria.from(CharacterData.class);

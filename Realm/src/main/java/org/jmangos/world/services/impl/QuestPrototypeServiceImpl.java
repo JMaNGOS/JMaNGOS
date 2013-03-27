@@ -33,25 +33,13 @@ public class QuestPrototypeServiceImpl implements QuestPrototypeService {
     @Override
     public QuestPrototype readQuestPrototype(final Integer id) {
 
-        return this.questPrototypeDao.readQuestPrototype(id);
+        return this.questPrototypeDao.findOne(id);
     }
 
     @Override
     public List<QuestPrototype> readQuestPrototypes() {
 
-        return this.questPrototypeDao.readQuestPrototypes();
-    }
-
-    @Override
-    public Integer createOrUpdateQuestPrototype(final QuestPrototype questPrototype) {
-
-        return this.questPrototypeDao.createOrUpdateQuestPrototype(questPrototype);
-    }
-
-    @Override
-    public void deleteQuestPrototype(final QuestPrototype questPrototype) {
-
-        this.questPrototypeDao.deleteQuestPrototype(questPrototype);
+        return this.questPrototypeDao.findAll();
     }
 
 }

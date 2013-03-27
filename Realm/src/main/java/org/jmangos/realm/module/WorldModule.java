@@ -24,7 +24,9 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 @Configuration
 @ComponentScan
-@EnableJpaRepositories(basePackages="org.jmangos.world.dao",entityManagerFactoryRef="entityManagerFactoryWorld",transactionManagerRef="transactionManagerWorld")
+@EnableJpaRepositories(basePackages = "org.jmangos.world.dao",
+        entityManagerFactoryRef = "entityManagerFactoryWorld",
+        transactionManagerRef = "transactionManagerWorld")
 @EnableTransactionManagement
 public class WorldModule {
 

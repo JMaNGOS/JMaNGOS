@@ -17,8 +17,4 @@ public interface SpellService {
 
     List<SpellEntity> readSpells();
 
-    Integer createOrUpdateSpell(SpellEntity spell);
-
-    void deleteSpell(SpellEntity item);
-
 }

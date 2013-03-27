@@ -23,7 +23,7 @@ import org.jmangos.commons.entities.CharacterData;
 public interface CharacterService {
 
     public CharacterData readCharacter(Long id);
-    
+
     public CharacterData readCharacterByName(String name);
 
     public List<CharacterData> readCharacters();

@@ -23,8 +23,8 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 
 import org.jmangos.commons.dataholder.DataLoadService;
+import org.jmangos.commons.entities.CharClassRaceGender;
 import org.jmangos.commons.entities.CharStartOutfitEntity;
-import org.jmangos.commons.entities.pk.CharStartOutfitEntityPk;
 import org.jmangos.commons.enums.Classes;
 import org.jmangos.commons.enums.Gender;
 import org.jmangos.commons.enums.Races;
@@ -39,7 +39,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CharStartOutfitStorages
-        implements DataLoadService<Map<CharStartOutfitEntityPk, CharStartOutfitEntity>> {
+        implements DataLoadService<Map<CharClassRaceGender, CharStartOutfitEntity>> {
 
     /** The Constant log. */
     private static final Logger logger = LoggerFactory.getLogger(CharStartOutfitStorages.class);
@@ -48,8 +48,8 @@ public class CharStartOutfitStorages
     CharStartOutfitService charStartOutfitService;
 
     /** The Player. */
-    private Map<CharStartOutfitEntityPk, CharStartOutfitEntity> playerCSO =
-            new HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity>();
+    private Map<CharClassRaceGender, CharStartOutfitEntity> playerCSO =
+            new HashMap<CharClassRaceGender, CharStartOutfitEntity>();
 
     /**
      * 
@@ -80,10 +80,10 @@ public class CharStartOutfitStorages
      * @see org.jmangos.commons.dataholder.DataLoadService#load()
      */
     @Override
-    public Map<CharStartOutfitEntityPk, CharStartOutfitEntity> load() {
+    public Map<CharClassRaceGender, CharStartOutfitEntity> load() {
 
-        final Map<CharStartOutfitEntityPk, CharStartOutfitEntity> map =
-                new HashMap<CharStartOutfitEntityPk, CharStartOutfitEntity>();
+        final Map<CharClassRaceGender, CharStartOutfitEntity> map =
+                new HashMap<CharClassRaceGender, CharStartOutfitEntity>();
         final List<CharStartOutfitEntity> infoList =
                 this.charStartOutfitService.readCharStartOutfitEntities();
         for (final CharStartOutfitEntity сharStartOutfit : infoList) {
@@ -99,7 +99,7 @@ public class CharStartOutfitStorages
     @Override
     public void reload() {
 
-        Map<CharStartOutfitEntityPk, CharStartOutfitEntity> tempPlayerCSO = load();
+        Map<CharClassRaceGender, CharStartOutfitEntity> tempPlayerCSO = load();
         this.playerCSO = tempPlayerCSO;
         tempPlayerCSO = null;
     }
@@ -124,7 +124,7 @@ public class CharStartOutfitStorages
      */
     public CharStartOutfitEntity get(final Classes clazz, final Races race, final Gender gender) {
 
-        final CharStartOutfitEntityPk cl = new CharStartOutfitEntityPk();
+        final CharClassRaceGender cl = new CharClassRaceGender();
         cl.setClazz(clazz);
         cl.setRace(race);
         cl.setGender(gender);
@@ -140,7 +140,7 @@ public class CharStartOutfitStorages
      * @see org.jmangos.commons.dataholder.DataLoadService#get()
      */
     @Override
-    public Map<CharStartOutfitEntityPk, CharStartOutfitEntity> get() {
+    public Map<CharClassRaceGender, CharStartOutfitEntity> get() {
 
         // TODO Auto-generated method stub
         return null;
