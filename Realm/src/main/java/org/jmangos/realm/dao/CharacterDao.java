@@ -19,19 +19,18 @@ package org.jmangos.realm.dao;
 import java.util.List;
 
 import org.jmangos.commons.entities.CharacterData;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface CharacterDao {
+@Repository
+@Transactional("realm")
+public interface CharacterDao
+        extends JpaRepository<CharacterData, Long>, JpaSpecificationExecutor<CharacterData> {
 
-    public CharacterData readCharacter(Long id);
+    public List<CharacterData> findByAccount(Long objectId);
 
-    public List<CharacterData> readCharacters();
-
-    public Long createOrUpdateCharacter(CharacterData characterData);
-
-    public void deleteCharacter(CharacterData characterData);
-
-    public CharacterData readCharacterByName(String name);
-
-    public List<CharacterData> readCharacterByName(Long objectId);
+    public CharacterData findByName(String name);
 
 }

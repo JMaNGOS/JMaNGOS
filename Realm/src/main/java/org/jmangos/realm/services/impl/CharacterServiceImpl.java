@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.jmangos.commons.entities.CharacterData;
 import org.jmangos.realm.dao.CharacterDao;
+import org.jmangos.realm.dao.specification.CharacterSpecs;
 import org.jmangos.realm.services.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,35 +34,41 @@ public class CharacterServiceImpl implements CharacterService {
     @Override
     public CharacterData readCharacter(final Long id) {
 
-        return this.characterDao.readCharacter(id);
+        return this.characterDao.findOne(id);
     }
 
     @Override
     public List<CharacterData> readCharacters() {
 
-        return this.characterDao.readCharacters();
+        return this.characterDao.findAll();
     }
 
     @Override
-    public Long createOrUpdateCharacter(final CharacterData characterData) {
+    public Boolean existWithName(final String name) {
 
-        return this.characterDao.createOrUpdateCharacter(characterData);
+        return this.characterDao.count(CharacterSpecs.isMatchName(name)) > 0;
+    }
+
+    @Override
+    public CharacterData createOrUpdateCharacter(final CharacterData characterData) {
+
+        return this.characterDao.saveAndFlush(characterData);
     }
 
     @Override
     public void deleteCharacter(final CharacterData characterData) {
 
-        this.characterDao.deleteCharacter(characterData);
+        this.characterDao.delete(characterData);
     }
 
     @Override
     public CharacterData readCharacterByName(final String name) {
-        return this.characterDao.readCharacterByName(name);
+        return this.characterDao.findByName(name);
     }
 
     @Override
     public List<CharacterData> readCharactersForAccount(final Long objectId) {
-        return this.characterDao.readCharacterByName(objectId);
+        return this.characterDao.findByAccount(objectId);
     }
 
 }

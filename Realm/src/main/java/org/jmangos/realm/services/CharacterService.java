@@ -28,10 +28,12 @@ public interface CharacterService {
 
     public List<CharacterData> readCharacters();
 
-    public Long createOrUpdateCharacter(CharacterData characterData);
+    public CharacterData createOrUpdateCharacter(CharacterData characterData);
 
     public void deleteCharacter(CharacterData characterData);
 
     public List<CharacterData> readCharactersForAccount(Long objectId);
+
+    public Boolean existWithName(String name);
 
 }

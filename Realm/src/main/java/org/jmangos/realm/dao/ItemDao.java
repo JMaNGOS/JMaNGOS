@@ -3,22 +3,17 @@
  */
 package org.jmangos.realm.dao;
 
-import java.util.List;
-
 import org.jmangos.commons.entities.FieldsItem;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author MinimaJack
  * 
  */
-public interface ItemDao {
-
-    FieldsItem readItem(Long id);
-
-    List<FieldsItem> readItems();
-
-    Long createOrUpdateItem(FieldsItem givenItem);
-
-    void deleteItem(FieldsItem givenItem);
+@Repository
+@Transactional("realm")
+public interface ItemDao extends JpaRepository<FieldsItem, Long> {
 
 }

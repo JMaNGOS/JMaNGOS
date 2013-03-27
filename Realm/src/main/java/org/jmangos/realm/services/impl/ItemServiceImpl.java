@@ -37,25 +37,25 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public FieldsItem readItem(final Long id) {
 
-        return this.itemDao.readItem(id);
+        return this.itemDao.findOne(id);
     }
 
     @Override
     public List<FieldsItem> readItems() {
 
-        return this.itemDao.readItems();
+        return this.itemDao.findAll();
     }
 
     @Override
-    public Long createOrUpdateItem(final FieldsItem item) {
+    public FieldsItem createOrUpdateItem(final FieldsItem item) {
 
-        return this.itemDao.createOrUpdateItem(item);
+        return this.itemDao.save(item);
     }
 
     @Override
     public void deleteItem(final FieldsItem item) {
 
-        this.itemDao.deleteItem(item);
+        this.itemDao.delete(item);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class ItemServiceImpl implements ItemService {
         item.setMaxDurability(itemProto.getMaxDurability());
         item.setStackCount(itemCount);
         item.setFlags(ItemFlags.JUST_CREATED.getValue());
-        this.itemDao.createOrUpdateItem(item);
+        createOrUpdateItem(item);
         item.initBits();
 
         return item;

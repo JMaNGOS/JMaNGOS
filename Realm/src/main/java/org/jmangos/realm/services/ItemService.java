@@ -18,7 +18,7 @@ public interface ItemService {
 
     List<FieldsItem> readItems();
 
-    Long createOrUpdateItem(FieldsItem item);
+    FieldsItem createOrUpdateItem(FieldsItem item);
 
     void deleteItem(FieldsItem item);
 
