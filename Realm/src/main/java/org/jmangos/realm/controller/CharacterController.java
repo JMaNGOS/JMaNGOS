@@ -70,10 +70,8 @@ public class CharacterController {
             final Races race, final Classes clazz, final Gender gender, final int skin,
             final int face, final int hairStyle, final int hairColor, final int facialHair) {
 
-        // TODO Check for only exist not load all =)))
-        CharacterData characterData = this.characterService.readCharacterByName(charName);
-        if (characterData != null) {
-            CharacterController.logger.warn("Username already exists: " + charName);
+        if (this.characterService.existWithName(charName)) {
+            CharacterController.logger.debug("Username already exists: {}", charName);
             return SMSG_CHAR_CREATE.Code.NAME_IN_USE;
         }
 
@@ -85,7 +83,7 @@ public class CharacterController {
             return SMSG_CHAR_CREATE.Code.ERROR;
         }
 
-        characterData = new CharacterData();
+        CharacterData characterData = new CharacterData();
         // Set account id
         characterData.setAccount(accountId);
 
