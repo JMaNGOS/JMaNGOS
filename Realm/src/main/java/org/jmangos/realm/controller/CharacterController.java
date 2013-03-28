@@ -6,6 +6,7 @@ import org.jmangos.commons.entities.CharStartOutfitEntity;
 import org.jmangos.commons.entities.CharacterData;
 import org.jmangos.commons.entities.CharacterPositionerHolder;
 import org.jmangos.commons.entities.CharacterPowers;
+import org.jmangos.commons.entities.CharacterSkill;
 import org.jmangos.commons.entities.FieldsItem;
 import org.jmangos.commons.entities.HomeBindData;
 import org.jmangos.commons.entities.ItemPrototype;
@@ -13,6 +14,9 @@ import org.jmangos.commons.entities.PlayerClassLevelInfo;
 import org.jmangos.commons.entities.PlayerLevelInfo;
 import org.jmangos.commons.entities.Playercreateinfo;
 import org.jmangos.commons.entities.Position;
+import org.jmangos.commons.entities.SkillLineAbilityEntity;
+import org.jmangos.commons.entities.SkillRaceClassInfoEntity;
+import org.jmangos.commons.entities.SpellEntity;
 import org.jmangos.commons.entities.pk.PlayercreateinfoPK;
 import org.jmangos.commons.enums.Classes;
 import org.jmangos.commons.enums.EquipmentSlots;
@@ -21,6 +25,7 @@ import org.jmangos.commons.enums.ModelType;
 import org.jmangos.commons.enums.Powers;
 import org.jmangos.commons.enums.Races;
 import org.jmangos.commons.enums.Stats;
+import org.jmangos.commons.service.SkillHolderService;
 import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_CREATE;
 import org.jmangos.realm.service.ItemStorages;
 import org.jmangos.realm.service.PlayerClassLevelInfoStorages;
@@ -30,6 +35,9 @@ import org.jmangos.realm.services.CharacterService;
 import org.jmangos.realm.services.ItemService;
 import org.jmangos.world.services.CharStartOutfitService;
 import org.jmangos.world.services.PlayerCreateInfoService;
+import org.jmangos.world.services.SkillLineAbilityService;
+import org.jmangos.world.services.SkillService;
+import org.jmangos.world.services.SpellService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +61,15 @@ public class CharacterController {
 
     @Autowired
     ItemService itemService;
+
+    @Autowired
+    SkillService skillService;
+
+    @Autowired
+    SpellService spellService;
+
+    @Autowired
+    SkillLineAbilityService skillLineAbilityService;
 
     @Autowired
     ItemStorages itemStorages;
@@ -188,6 +205,29 @@ public class CharacterController {
             }
         }
 
+        final List<SkillRaceClassInfoEntity> skills =
+                this.skillService.getSkillsForRaceClass(characterData.getRace(),
+                        characterData.getClazz());
+        for (final SkillRaceClassInfoEntity skillRaceClassInfo : skills) {
+            final Integer addedSkill = skillRaceClassInfo.getSkillLine();
+            logger.info("Add skill {}", addedSkill);
+            CharacterSkill chSkill = SkillHolderService.getSkillById(addedSkill);
+            if (chSkill != null) {
+                chSkill.setSkillId(addedSkill);
+                characterData.addSkillInfo(chSkill);
+                final List<SkillLineAbilityEntity> spells =
+                        this.skillLineAbilityService.getAbilitiesForRaceClassSkill(
+                                characterData.getRace(), characterData.getClazz(), addedSkill);
+                for (final SkillLineAbilityEntity skillLineAbility : spells) {
+                    final SpellEntity spell =
+                            this.spellService.getSpellById(skillLineAbility.spellId);
+                    if (spell != null) {
+                        spell.setSkillId(addedSkill);
+                        characterData.addSpell(spell);
+                    }
+                }
+            }
+        }
         this.characterService.createOrUpdateCharacter(characterData);
         return SMSG_CHAR_CREATE.Code.SUCCESS;
     }

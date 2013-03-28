@@ -27,6 +27,8 @@
 		<class>org.jmangos.commons.entities.CharStartOutfitEntity</class>
 		<class>org.jmangos.commons.entities.SpellEntity</class>
 		<class>org.jmangos.commons.entities.SpellEffectEntity</class>
+		<class>org.jmangos.commons.entities.SkillRaceClassInfoEntity</class>
+		<class>org.jmangos.commons.entities.SkillLineAbilityEntity</class>
 	</persistence-unit>
 
 </persistence>

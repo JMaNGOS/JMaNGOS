@@ -13,11 +13,13 @@ import org.jmangos.world.dao.specification.SkillRaceClassSpecs;
 import org.jmangos.world.services.SkillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specifications;
+import org.springframework.stereotype.Service;
 
 /**
  * @author MinimaJack
  * 
  */
+@Service("skillService")
 public class SkillServiceImpl implements SkillService {
 
     @Autowired

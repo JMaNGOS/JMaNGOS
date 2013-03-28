@@ -4,16 +4,16 @@ import java.nio.BufferUnderflowException;
 
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
-import org.jmangos.realm.network.packet.wow.server.SMSG_LOGOUT_COMPLETE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
 /**
  * 
  * @author MinimaJack
- *
+ * 
  */
 @Component
 public class CMSG_UPDATE_ACCOUNT_DATA extends AbstractWoWClientPacket {
@@ -27,7 +27,8 @@ public class CMSG_UPDATE_ACCOUNT_DATA extends AbstractWoWClientPacket {
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
 
-        int type,timestamp,decompressedSize;
+        final int type, timestamp;
+        int decompressedSize;
         readD();
         readD();
         decompressedSize = readD();

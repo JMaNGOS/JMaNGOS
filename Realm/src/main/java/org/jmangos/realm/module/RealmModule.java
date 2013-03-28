@@ -60,7 +60,7 @@ public class RealmModule {
     public JpaVendorAdapter jpaVendorAdapterRealm() {
 
         final HibernateJpaVendorAdapter hjva = new HibernateJpaVendorAdapter();
-        hjva.setShowSql(true);
+        hjva.setShowSql(false);
         hjva.setGenerateDdl(true);
         hjva.setDatabasePlatform(this.databaseConfig.CHARS_DATABASE_DIALECT);
         return hjva;

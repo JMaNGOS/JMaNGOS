@@ -1755,6 +1755,7 @@ public class SpellEntity implements Visitable<SpellEffectEntity>, AddedRemoved {
             final CharacterData cd = ((CharacterData) object);
             final SpellFamily spellFamily = SpellFamily.get(getSpellFamilyName());
             if (cd.getLevel() < getSpellLevel()) {
+                logger.info("Can't add spell due to low level");
                 return;
             }
             switch (spellFamily) {

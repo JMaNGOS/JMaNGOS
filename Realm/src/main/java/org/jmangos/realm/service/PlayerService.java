@@ -127,7 +127,7 @@ public class PlayerService {
         this.sender.send(player.getChannel(), new SMSG_BINDPOINTUPDATE(player));
         this.sender.send(player.getChannel(), new SMSG_MOTD("Test MotD String@test".split("@")));
         // this.sender.send(player.getChannel(), new SMSG_TALENTS_INFO());
-        this.sender.send(player.getChannel(), new SMSG_INITIAL_SPELLS());
+        this.sender.send(player.getChannel(), new SMSG_INITIAL_SPELLS(player));
         // this.sender.send(player.getChannel(), new
         // SMSG_ACTION_BUTTONS(player));
         // this.sender.send(player.getChannel(), new

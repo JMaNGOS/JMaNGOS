@@ -60,7 +60,7 @@ public class WorldModule {
     public JpaVendorAdapter jpaVendorAdapterWorld() {
 
         final HibernateJpaVendorAdapter hjva = new HibernateJpaVendorAdapter();
-        hjva.setShowSql(true);
+        hjva.setShowSql(false);
         hjva.setGenerateDdl(true);
         hjva.setDatabasePlatform(this.databaseConfig.WORLD_DATABASE_DIALECT);
         return hjva;

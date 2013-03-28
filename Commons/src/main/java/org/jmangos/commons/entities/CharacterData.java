@@ -11,12 +11,17 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import javolution.util.FastMap;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jmangos.commons.enums.EnchantmentSlot;
 import org.jmangos.commons.enums.EquipmentSlots;
@@ -49,8 +54,12 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
      */
     private static final long serialVersionUID = 4154179927325225965L;
 
-    @Transient
-    private final Map<Integer, SpellEntity> spells = new FastMap<Integer, SpellEntity>();
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @MapKeyColumn(name = "spellId", nullable = true)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JoinColumn(name = "characterId")
+    private final Map<Integer, CharacterSpell> spells = new FastMap<Integer, CharacterSpell>();
 
     @OneToOne(targetEntity = CharacterPositionerHolder.class,
             fetch = FetchType.EAGER,
@@ -66,8 +75,8 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
     }
 
     public void removeSpell(final SpellEntity spell) {
-        if (this.spells.containsKey(spell.getId())) {
-            this.spells.remove(spell.getId());
+        if (getSpells().containsKey(spell.getId())) {
+            getSpells().remove(spell.getId());
             spell.onRemove(this);
         }
     }
@@ -640,8 +649,10 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
 
     @Override
     public boolean addToSpellContainer(final SpellEntity spell) {
-        if (!this.spells.containsKey(spell.getId())) {
-            this.spells.put(spell.getId(), spell);
+        if (!getSpells().containsKey(spell.getId())) {
+            final CharacterSpell chS = new CharacterSpell();
+            chS.setSpellId(spell.getId());
+            getSpells().put(spell.getId(), chS);
             return true;
         } else {
             return false;
@@ -661,6 +672,13 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
 
         // TODO Auto-generated method stub
 
+    }
+
+    /**
+     * @return the spells
+     */
+    public Map<Integer, CharacterSpell> getSpells() {
+        return this.spells;
     }
 
     @Override
