@@ -43,6 +43,7 @@
 		<packet name="CMSG_CALENDAR_GET_NUM_PENDING" id="447" state="AUTHED" />
 		<packet name="CMSG_JOIN_CHANNEL" id="097" state="AUTHED" />
 		<packet name="CMSG_GMTICKET_GETTICKET" id="211" state="AUTHED" />
+		<packet name="CMSG_UPDATE_ACCOUNT_DATA" id="20B" state="AUTHED" />
 		<packet name="MSG_MOVE_SET_FACING" id="0DA" state="AUTHED" />
 
         <!-- paalgyula implemented packets -->

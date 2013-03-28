@@ -23,6 +23,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.frame.FrameDecoder;
+import org.jmangos.commons.OpcodeTable;
 import org.jmangos.realm.network.crypt.Crypt;
 import org.jmangos.realm.network.handler.RealmToClientChannelHandler;
 import org.slf4j.Logger;
@@ -54,33 +55,43 @@ public class PacketFrameDecoder extends FrameDecoder {
         if (message.readableBytes() < 6) {
             return null;
         }
-        message.markReaderIndex();
         final RealmToClientChannelHandler channelHandler =
                 (RealmToClientChannelHandler) ctx.getPipeline().getLast();
-        final Crypt crypt = channelHandler.getCrypt();
-        byte[] header = new byte[6];
-        message.readBytes(header);
-        header = crypt.encrypt(header);
-        final ChannelBuffer clientHeader =
-                ChannelBuffers.wrappedBuffer(ByteOrder.LITTLE_ENDIAN, header);
-        int size = clientHeader.readByte() << 8;
-        size |= clientHeader.readByte() & 0xFF;
-        size -= 4;
-        final long opcode = clientHeader.readUnsignedInt();
-        if ((size < 0) || (size > 10240) || (opcode > 10240)) {
-            log.error("PacketFrameDecoder::decode: client sent malformed packet size = " +
-                size +
-                " , opcode = " +
-                opcode);
-            channel.close();
-            return null;
+        final long opcode;
+        int size;
+        if (channelHandler.getLastOpcode() == null) {
+            final Crypt crypt = channelHandler.getCrypt();
+            byte[] header = new byte[6];
+            message.readBytes(header);
+            header = crypt.encrypt(header);
+            final ChannelBuffer clientHeader =
+                    ChannelBuffers.wrappedBuffer(ByteOrder.LITTLE_ENDIAN, header);
+            size = clientHeader.readByte() << 8;
+            size |= clientHeader.readByte() & 0xFF;
+            size -= 4;
+            opcode = clientHeader.readUnsignedInt();
+            if ((size < 0) || (size > 10240) || (opcode > 10240)) {
+                log.error("PacketFrameDecoder::decode: client sent malformed packet size = " +
+                    size +
+                    " , opcode = " +
+                    opcode);
+                channel.close();
+                return null;
+            }
+        }else{
+            opcode = channelHandler.getLastOpcode();
+            size = channelHandler.getLastOpcodeSize();
         }
-
+        log.info(String.format(
+                "[RECIVE PACKET] :  0x%02X - %s size :  0x%02X, readeble size: 0x%02X", opcode,
+                OpcodeTable.getOpcode((int) opcode), size, message.readableBytes()));
         if (message.readableBytes() < size) {
-            message.resetReaderIndex();
+            channelHandler.setLastOpcode(opcode);
+            channelHandler.setLastOpcodeSize(size);
             return null;
+        } else{
+            channelHandler.setLastOpcode(null);
         }
-
         final ChannelBuffer frame = ChannelBuffers.buffer(ByteOrder.LITTLE_ENDIAN, (size + 4));
         frame.writeInt((int) opcode);
         frame.writeBytes(message.readBytes(size));

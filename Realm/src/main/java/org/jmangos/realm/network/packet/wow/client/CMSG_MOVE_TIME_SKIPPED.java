@@ -36,7 +36,7 @@ public class CMSG_MOVE_TIME_SKIPPED extends AbstractWoWClientPacket {
         log.warn("CMSG_MOVE_TIME_SKIPPED wow guid: " + getPlayer().getCharacterData().getGuid());
 
         try {
-            this.guid = readQ();
+            this.guid = readPackedGuid();
             this.time_dif = readD();
         } catch (final Exception e) {
             log.error("CMSG_MOVE_TIME_SKIPPED - Wrong Packet length");

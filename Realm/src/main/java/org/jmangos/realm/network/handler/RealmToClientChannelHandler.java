@@ -58,6 +58,10 @@ public class RealmToClientChannelHandler extends SimpleChannelUpstreamHandler {
 
     /** The seed. */
     private byte[] seed;
+    
+    private Long opcode=null;
+    
+    private Integer size;
 
     /**
      * Instantiates a new Realm-Client channel handler.
@@ -150,6 +154,38 @@ public class RealmToClientChannelHandler extends SimpleChannelUpstreamHandler {
     public final Crypt getCrypt() {
 
         return this.crypt;
+    }
+
+    
+    /**
+     * @return the opcode
+     */
+    public final Long getLastOpcode() {
+        return this.opcode;
+    }
+
+    
+    /**
+     * @param opcode the opcode to set
+     */
+    public final void setLastOpcode(Long opcode) {
+        this.opcode = opcode;
+    }
+
+    
+    /**
+     * @return the size
+     */
+    public final Integer getLastOpcodeSize() {
+        return this.size;
+    }
+
+    
+    /**
+     * @param size the size to set
+     */
+    public final void setLastOpcodeSize(Integer size) {
+        this.size = size;
     }
 
     /*
