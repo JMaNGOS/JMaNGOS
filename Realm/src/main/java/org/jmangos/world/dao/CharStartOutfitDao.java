@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 
  */
 @Repository
-@Transactional(readOnly = true)
+@Transactional(readOnly = true,value="world")
 public interface CharStartOutfitDao extends JpaRepository<CharStartOutfitEntity, Integer> {
 
     public List<CharStartOutfitEntity> findByCharsRaceAndCharsClazzAndCharsGender(

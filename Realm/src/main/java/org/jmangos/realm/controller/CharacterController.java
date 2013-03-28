@@ -34,6 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class CharacterController {
@@ -66,6 +67,7 @@ public class CharacterController {
     @Autowired
     PlayerXpForLevelStorages playerXpForLevelStorages;
 
+    @Transactional("realm")
     public SMSG_CHAR_CREATE.Code createCharacter(final long accountId, final String charName,
             final Races race, final Classes clazz, final Gender gender, final int skin,
             final int face, final int hairStyle, final int hairColor, final int facialHair) {

@@ -68,6 +68,7 @@ public class EventLogHandler extends SimpleChannelUpstreamHandler {
             (e.getCause() != null) &&
             (e.getCause().getMessage() != null)) {
             log.warn("Connection timed out");
+            log.warn("Exception caught: ", e.getCause());
         } else {
             log.warn("Exception caught: ", e.getCause());
         }
