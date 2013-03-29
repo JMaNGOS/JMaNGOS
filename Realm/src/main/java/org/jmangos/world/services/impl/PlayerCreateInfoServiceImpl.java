@@ -32,7 +32,7 @@ public class PlayerCreateInfoServiceImpl implements PlayerCreateInfoService {
     private PlayerCreateInfoDao playerCreateInfoDao;
 
     @Override
-    public Playercreateinfo readPlayercreateinfo(final PlayercreateinfoPK pk) {
+    public Playercreateinfo readPlayerCreateInfo(final PlayercreateinfoPK pk) {
 
         return this.playerCreateInfoDao.findOne(pk);
     }

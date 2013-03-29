@@ -25,15 +25,15 @@ import org.jmangos.commons.enums.ModelType;
 import org.jmangos.commons.enums.Powers;
 import org.jmangos.commons.enums.Races;
 import org.jmangos.commons.enums.Stats;
-import org.jmangos.commons.service.SkillHolderService;
+import org.jmangos.commons.service.SkillFactory;
 import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_CREATE;
-import org.jmangos.realm.service.ItemStorages;
 import org.jmangos.realm.service.PlayerClassLevelInfoStorages;
 import org.jmangos.realm.service.PlayerLevelStorages;
 import org.jmangos.realm.service.PlayerXpForLevelStorages;
 import org.jmangos.realm.services.CharacterService;
 import org.jmangos.realm.services.ItemService;
 import org.jmangos.world.services.CharStartOutfitService;
+import org.jmangos.world.services.ItemPrototypeService;
 import org.jmangos.world.services.PlayerCreateInfoService;
 import org.jmangos.world.services.SkillLineAbilityService;
 import org.jmangos.world.services.SkillService;
@@ -48,7 +48,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CharacterController {
 
     /** The Constant logger. */
-    private static final Logger logger = LoggerFactory.getLogger(CharacterController.class);
+    private static final Logger log = LoggerFactory.getLogger(CharacterController.class);
 
     @Autowired
     private CharacterService characterService;
@@ -72,7 +72,7 @@ public class CharacterController {
     SkillLineAbilityService skillLineAbilityService;
 
     @Autowired
-    ItemStorages itemStorages;
+    ItemPrototypeService itemPrototypeService;
 
     /** The player level storages. */
     @Autowired
@@ -90,19 +90,19 @@ public class CharacterController {
             final int face, final int hairStyle, final int hairColor, final int facialHair) {
 
         if (this.characterService.existWithName(charName)) {
-            CharacterController.logger.debug("Username already exists: {}", charName);
+            CharacterController.log.debug("Username already exists: {}", charName);
             return SMSG_CHAR_CREATE.Code.NAME_IN_USE;
         }
 
         final Playercreateinfo info =
-                this.playerCreateInfoService.readPlayercreateinfo(new PlayercreateinfoPK(race,
+                this.playerCreateInfoService.readPlayerCreateInfo(new PlayercreateinfoPK(race,
                         clazz));
         if (info == null) {
-            logger.error("Player create template not found for: " + clazz + " " + race);
+            log.error("Player create template not found for: " + clazz + " " + race);
             return SMSG_CHAR_CREATE.Code.ERROR;
         }
 
-        CharacterData characterData = new CharacterData();
+        final CharacterData characterData = new CharacterData();
         // Set account id
         characterData.setAccount(accountId);
 
@@ -137,25 +137,9 @@ public class CharacterController {
 
         final CharacterPowers up = new CharacterPowers();
         characterData.setPowers(up);
-
-        for (final Powers power : Powers.PLAYER_CREATE_POWERS) {
-            switch (power) {
-                case ENERGY:
-                    characterData.setPower(power, 100);
-                break;
-                case RAGE:
-                    characterData.setPower(power, 1000);
-                break;
-                case FOCUS:
-                    characterData.setPower(power, 100);
-                break;
-                case RUNE:
-                    characterData.setPower(power, 8);
-                break;
-                default:
-                    characterData.setPower(power, 0);
-            }
-        }
+        
+        addDefaultPowerToCharacter(characterData);
+        
         characterData.setPower(Powers.HEALTH, classInfo.getBasehealth());
         characterData.setPower(characterData.getPowerType(), classInfo.getBasemana());
 
@@ -185,16 +169,62 @@ public class CharacterController {
 
         this.characterService.createOrUpdateCharacter(characterData);
 
+        createStartItemToCharacter(characterData);
+
+        createStartSkillAndSpellToCharacter(characterData);
+
+        this.characterService.createOrUpdateCharacter(characterData);
+        return SMSG_CHAR_CREATE.Code.SUCCESS;
+    }
+
+    /**
+     * Add default power to character
+     * 
+     * @param characterData
+     */
+    private void addDefaultPowerToCharacter(final CharacterData characterData) {
+        
+        for (final Powers power : Powers.PLAYER_CREATE_POWERS) {
+            switch (power) {
+                case ENERGY:
+                    characterData.setPower(power, 100);
+                break;
+                case RAGE:
+                    characterData.setPower(power, 1000);
+                break;
+                case FOCUS:
+                    characterData.setPower(power, 100);
+                break;
+                case RUNE:
+                    characterData.setPower(power, 8);
+                break;
+                default:
+                    characterData.setPower(power, 0);
+            }
+        }
+    }
+
+    /**
+     * Add starting items to character
+     * 
+     * @param characterData
+     */
+    private void createStartItemToCharacter(final CharacterData characterData) {
+
         final List<CharStartOutfitEntity> startItems =
                 this.charStartOutfitService.readCharStartOutfitEntities(characterData.getRace(),
                         characterData.getClazz(), characterData.getGender());
+
         for (final CharStartOutfitEntity startItem : startItems) {
 
-            final ItemPrototype itemProto = this.itemStorages.get(startItem.getProtoId());
+            final ItemPrototype itemProto =
+                    this.itemPrototypeService.readItemPrototype(startItem.getProtoId());
             if (itemProto == null) {
+                CharacterController.log.warn(
+                        "CharStartOutfit contains item info, but not exist item's prototype for them. Item proto: {}",
+                        startItem.getProtoId());
                 continue;
             }
-            logger.info("Create item {}", startItem.getProtoId());
             final int stackCount = itemProto.getBuyCount();
             final FieldsItem item = this.itemService.createItem(itemProto, stackCount);
 
@@ -204,14 +234,22 @@ public class CharacterController {
                 characterData.addToInventory(item);
             }
         }
+    }
+
+    /**
+     * Add starting skill and spells to character
+     * 
+     * @param characterData
+     */
+    private void createStartSkillAndSpellToCharacter(final CharacterData characterData) {
 
         final List<SkillRaceClassInfoEntity> skills =
                 this.skillService.getSkillsForRaceClass(characterData.getRace(),
                         characterData.getClazz());
         for (final SkillRaceClassInfoEntity skillRaceClassInfo : skills) {
             final Integer addedSkill = skillRaceClassInfo.getSkillLine();
-            logger.info("Add skill {}", addedSkill);
-            CharacterSkill chSkill = SkillHolderService.getSkillById(addedSkill);
+            CharacterController.log.debug("Add skill {}", addedSkill);
+            final CharacterSkill chSkill = SkillFactory.getSkillById(addedSkill);
             if (chSkill != null) {
                 chSkill.setSkillId(addedSkill);
                 characterData.addSkillInfo(chSkill);
@@ -219,17 +257,22 @@ public class CharacterController {
                         this.skillLineAbilityService.getAbilitiesForRaceClassSkill(
                                 characterData.getRace(), characterData.getClazz(), addedSkill);
                 for (final SkillLineAbilityEntity skillLineAbility : spells) {
-                    final SpellEntity spell =
-                            this.spellService.getSpellById(skillLineAbility.spellId);
+                    final Integer addedSpell = skillLineAbility.spellId;
+                    final SpellEntity spell = this.spellService.getSpellById(addedSpell);
                     if (spell != null) {
                         spell.setSkillId(addedSkill);
                         characterData.addSpell(spell);
+                    } else {
+                        log.warn("Can't find spell prototype {}. Added with skill {}. ",
+                                addedSpell, addedSkill);
                     }
                 }
+            } else {
+                log.warn(
+                        "Can't instantiate skill {} with SkillFactory. Skill skiped. Maby skill not added to factory.",
+                        addedSkill);
             }
         }
-        this.characterService.createOrUpdateCharacter(characterData);
-        return SMSG_CHAR_CREATE.Code.SUCCESS;
     }
 
     public CharacterData loadCharacterByGuid(final Long guid) {

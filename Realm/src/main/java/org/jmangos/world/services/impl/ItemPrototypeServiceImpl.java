@@ -24,6 +24,8 @@ import org.jmangos.world.services.ItemPrototypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.googlecode.ehcache.annotations.Cacheable;
+
 @Service("itemPrototypeService")
 public class ItemPrototypeServiceImpl implements ItemPrototypeService {
 
@@ -31,6 +33,7 @@ public class ItemPrototypeServiceImpl implements ItemPrototypeService {
     private ItemPrototypeDao itemPrototypeDao;
 
     @Override
+    @Cacheable(cacheName = "itemPrototypeCache")
     public ItemPrototype readItemPrototype(final Integer id) {
 
         return this.itemPrototypeDao.findOne(id);

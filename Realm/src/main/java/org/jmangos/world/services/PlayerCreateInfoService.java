@@ -23,7 +23,7 @@ import org.jmangos.commons.entities.pk.PlayercreateinfoPK;
 
 public interface PlayerCreateInfoService {
 
-    public Playercreateinfo readPlayercreateinfo(PlayercreateinfoPK pk);
+    public Playercreateinfo readPlayerCreateInfo(PlayercreateinfoPK pk);
 
     public List<Playercreateinfo> readPlayercreateinfos();
 

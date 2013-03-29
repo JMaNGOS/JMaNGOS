@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 
+import com.googlecode.ehcache.annotations.Cacheable;
+
 /**
  * @author MinimaJack
  * 
@@ -25,21 +27,14 @@ public class SkillLineAbilityServiceImpl implements SkillLineAbilityService {
     @Autowired
     SkillLineAbilityDao skillLineAbilityDao;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.jmangos.test.services.SkillLineAbilityService#
-     * getAbilitiesForRaceClassSkill(org.jmangos
-     * .realm.model.enums.Races, org.jmangos.realm.model.enums.Classes, int)
-     */
     @Override
+    @Cacheable(cacheName = "abilitiesForRaceClassSkillCache")
     public List<SkillLineAbilityEntity> getAbilitiesForRaceClassSkill(final Races race,
             final Classes clazz, final int skill) {
         return this.skillLineAbilityDao.findAll(Specifications.where(
-                SkillLineAbilitySpecs.isMatchClassMask(clazz.getMask())).and(
+                SkillLineAbilitySpecs.isClassMatchToClassMask(clazz)).and(
                 SkillLineAbilitySpecs.isLearnOnGetSkill()).and(
-                SkillLineAbilitySpecs.isMatchRaceMask(race.getMask())).and(
+                SkillLineAbilitySpecs.isRaceMatchToRaceMask(race)).and(
                 SkillLineAbilitySpecs.isSkill(skill)));
     }
 

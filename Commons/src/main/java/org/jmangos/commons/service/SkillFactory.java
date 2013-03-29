@@ -1,0 +1,473 @@
+/**
+ * 
+ */
+package org.jmangos.commons.service;
+
+import org.jmangos.commons.entities.CharacterSkill;
+import org.jmangos.commons.entities.skills.SkillAffliction;
+import org.jmangos.commons.entities.skills.SkillArcane;
+import org.jmangos.commons.entities.skills.SkillArms;
+import org.jmangos.commons.entities.skills.SkillAssasination;
+import org.jmangos.commons.entities.skills.SkillBalance;
+import org.jmangos.commons.entities.skills.SkillBeastMastery;
+import org.jmangos.commons.entities.skills.SkillBlacksmithing;
+import org.jmangos.commons.entities.skills.SkillCombat;
+import org.jmangos.commons.entities.skills.SkillCompanions;
+import org.jmangos.commons.entities.skills.SkillDKBlood;
+import org.jmangos.commons.entities.skills.SkillDKFrost;
+import org.jmangos.commons.entities.skills.SkillDKUnholy;
+import org.jmangos.commons.entities.skills.SkillDefence;
+import org.jmangos.commons.entities.skills.SkillDemonology;
+import org.jmangos.commons.entities.skills.SkillDestruction;
+import org.jmangos.commons.entities.skills.SkillDiscipline;
+import org.jmangos.commons.entities.skills.SkillDualWield;
+import org.jmangos.commons.entities.skills.SkillElementalCombat;
+import org.jmangos.commons.entities.skills.SkillEnhancement;
+import org.jmangos.commons.entities.skills.SkillFeralCombat;
+import org.jmangos.commons.entities.skills.SkillFire;
+import org.jmangos.commons.entities.skills.SkillFirstAid;
+import org.jmangos.commons.entities.skills.SkillFishing;
+import org.jmangos.commons.entities.skills.SkillFrost;
+import org.jmangos.commons.entities.skills.SkillFury;
+import org.jmangos.commons.entities.skills.SkillGenericDND;
+import org.jmangos.commons.entities.skills.SkillHoly;
+import org.jmangos.commons.entities.skills.SkillHolySecond;
+import org.jmangos.commons.entities.skills.SkillInternal;
+import org.jmangos.commons.entities.skills.SkillLockPicking;
+import org.jmangos.commons.entities.skills.SkillMarksmanship;
+import org.jmangos.commons.entities.skills.SkillMining;
+import org.jmangos.commons.entities.skills.SkillMounts;
+import org.jmangos.commons.entities.skills.SkillProtection;
+import org.jmangos.commons.entities.skills.SkillProtectionSecond;
+import org.jmangos.commons.entities.skills.SkillRestoration;
+import org.jmangos.commons.entities.skills.SkillRestorationSecond;
+import org.jmangos.commons.entities.skills.SkillRetribution;
+import org.jmangos.commons.entities.skills.SkillRuneforging;
+import org.jmangos.commons.entities.skills.SkillShadow;
+import org.jmangos.commons.entities.skills.SkillShield;
+import org.jmangos.commons.entities.skills.SkillSubtlety;
+import org.jmangos.commons.entities.skills.SkillSurvival;
+import org.jmangos.commons.entities.skills.SkillSurvivalSecond;
+import org.jmangos.commons.entities.skills.SkillSwimming;
+import org.jmangos.commons.entities.skills.armor.SkillCloth;
+import org.jmangos.commons.entities.skills.armor.SkillLeather;
+import org.jmangos.commons.entities.skills.armor.SkillMail;
+import org.jmangos.commons.entities.skills.armor.SkillPlateMail;
+import org.jmangos.commons.entities.skills.language.LanguageCommon;
+import org.jmangos.commons.entities.skills.language.LanguageDarnassian;
+import org.jmangos.commons.entities.skills.language.LanguageDemonTongue;
+import org.jmangos.commons.entities.skills.language.LanguageDraconic;
+import org.jmangos.commons.entities.skills.language.LanguageDraenei;
+import org.jmangos.commons.entities.skills.language.LanguageDwarven;
+import org.jmangos.commons.entities.skills.language.LanguageGnomish;
+import org.jmangos.commons.entities.skills.language.LanguageGutterSpeak;
+import org.jmangos.commons.entities.skills.language.LanguageOldTongue;
+import org.jmangos.commons.entities.skills.language.LanguageOrcish;
+import org.jmangos.commons.entities.skills.language.LanguageTaurahe;
+import org.jmangos.commons.entities.skills.language.LanguageThalassian;
+import org.jmangos.commons.entities.skills.language.LanguageTitan;
+import org.jmangos.commons.entities.skills.language.LanguageTroll;
+import org.jmangos.commons.entities.skills.pet.PetBat;
+import org.jmangos.commons.entities.skills.pet.PetBear;
+import org.jmangos.commons.entities.skills.pet.PetBirdOfPrey;
+import org.jmangos.commons.entities.skills.pet.PetBoar;
+import org.jmangos.commons.entities.skills.pet.PetCarrionBird;
+import org.jmangos.commons.entities.skills.pet.PetCat;
+import org.jmangos.commons.entities.skills.pet.PetCrab;
+import org.jmangos.commons.entities.skills.pet.PetCrocilisk;
+import org.jmangos.commons.entities.skills.pet.PetDoomguard;
+import org.jmangos.commons.entities.skills.pet.PetDragonHawk;
+import org.jmangos.commons.entities.skills.pet.PetEventRC;
+import org.jmangos.commons.entities.skills.pet.PetExoticChimaera;
+import org.jmangos.commons.entities.skills.pet.PetExoticCoreHound;
+import org.jmangos.commons.entities.skills.pet.PetExoticDevilsaur;
+import org.jmangos.commons.entities.skills.pet.PetExoticRhino;
+import org.jmangos.commons.entities.skills.pet.PetExoticSilithid;
+import org.jmangos.commons.entities.skills.pet.PetExoticSpiritBeast;
+import org.jmangos.commons.entities.skills.pet.PetExoticWorm;
+import org.jmangos.commons.entities.skills.pet.PetFelguard;
+import org.jmangos.commons.entities.skills.pet.PetFelhunter;
+import org.jmangos.commons.entities.skills.pet.PetGhoul;
+import org.jmangos.commons.entities.skills.pet.PetGorilla;
+import org.jmangos.commons.entities.skills.pet.PetHyena;
+import org.jmangos.commons.entities.skills.pet.PetImp;
+import org.jmangos.commons.entities.skills.pet.PetInfernal;
+import org.jmangos.commons.entities.skills.pet.PetMoth;
+import org.jmangos.commons.entities.skills.pet.PetNetherRay;
+import org.jmangos.commons.entities.skills.pet.PetRaptor;
+import org.jmangos.commons.entities.skills.pet.PetRavager;
+import org.jmangos.commons.entities.skills.pet.PetScorpid;
+import org.jmangos.commons.entities.skills.pet.PetSerpent;
+import org.jmangos.commons.entities.skills.pet.PetSpider;
+import org.jmangos.commons.entities.skills.pet.PetSporeBat;
+import org.jmangos.commons.entities.skills.pet.PetSuccubus;
+import org.jmangos.commons.entities.skills.pet.PetTalents;
+import org.jmangos.commons.entities.skills.pet.PetTallstrider;
+import org.jmangos.commons.entities.skills.pet.PetTurtle;
+import org.jmangos.commons.entities.skills.pet.PetVoidwalker;
+import org.jmangos.commons.entities.skills.pet.PetWarpStalker;
+import org.jmangos.commons.entities.skills.pet.PetWasp;
+import org.jmangos.commons.entities.skills.pet.PetWindSerpent;
+import org.jmangos.commons.entities.skills.pet.PetWolf;
+import org.jmangos.commons.entities.skills.proficiency.SkillAlchemy;
+import org.jmangos.commons.entities.skills.proficiency.SkillCooking;
+import org.jmangos.commons.entities.skills.proficiency.SkillEnchanting;
+import org.jmangos.commons.entities.skills.proficiency.SkillEngineering;
+import org.jmangos.commons.entities.skills.proficiency.SkillHerbalism;
+import org.jmangos.commons.entities.skills.proficiency.SkillInscription;
+import org.jmangos.commons.entities.skills.proficiency.SkillJewelcrafting;
+import org.jmangos.commons.entities.skills.proficiency.SkillLeatherworking;
+import org.jmangos.commons.entities.skills.proficiency.SkillSkinning;
+import org.jmangos.commons.entities.skills.proficiency.SkillTailoring;
+import org.jmangos.commons.entities.skills.racial.SkillRacialBloodElf;
+import org.jmangos.commons.entities.skills.racial.SkillRacialDraenei;
+import org.jmangos.commons.entities.skills.racial.SkillRacialDwarven;
+import org.jmangos.commons.entities.skills.racial.SkillRacialGnome;
+import org.jmangos.commons.entities.skills.racial.SkillRacialHuman;
+import org.jmangos.commons.entities.skills.racial.SkillRacialNightElf;
+import org.jmangos.commons.entities.skills.racial.SkillRacialOrc;
+import org.jmangos.commons.entities.skills.racial.SkillRacialTauren;
+import org.jmangos.commons.entities.skills.racial.SkillRacialTroll;
+import org.jmangos.commons.entities.skills.racial.SkillRacialUnded;
+import org.jmangos.commons.entities.skills.riding.SkillRiding;
+import org.jmangos.commons.entities.skills.riding.SkillRidingHorse;
+import org.jmangos.commons.entities.skills.riding.SkillRidingKodo;
+import org.jmangos.commons.entities.skills.riding.SkillRidingMechanostrinder;
+import org.jmangos.commons.entities.skills.riding.SkillRidingRam;
+import org.jmangos.commons.entities.skills.riding.SkillRidingRaptor;
+import org.jmangos.commons.entities.skills.riding.SkillRidingTiger;
+import org.jmangos.commons.entities.skills.riding.SkillRidingUndeadHorse;
+import org.jmangos.commons.entities.skills.riding.SkillRidingWolf;
+import org.jmangos.commons.entities.skills.weapon.SkillAxes;
+import org.jmangos.commons.entities.skills.weapon.SkillBows;
+import org.jmangos.commons.entities.skills.weapon.SkillCrossbows;
+import org.jmangos.commons.entities.skills.weapon.SkillDaggers;
+import org.jmangos.commons.entities.skills.weapon.SkillFistWeapons;
+import org.jmangos.commons.entities.skills.weapon.SkillGuns;
+import org.jmangos.commons.entities.skills.weapon.SkillMaces;
+import org.jmangos.commons.entities.skills.weapon.SkillPolearms;
+import org.jmangos.commons.entities.skills.weapon.SkillStaves;
+import org.jmangos.commons.entities.skills.weapon.SkillSwords;
+import org.jmangos.commons.entities.skills.weapon.SkillThrown;
+import org.jmangos.commons.entities.skills.weapon.SkillTwoHandAxes;
+import org.jmangos.commons.entities.skills.weapon.SkillTwoHandMaces;
+import org.jmangos.commons.entities.skills.weapon.SkillTwoHandSwords;
+import org.jmangos.commons.entities.skills.weapon.SkillUnarmed;
+import org.jmangos.commons.entities.skills.weapon.SkillWands;
+
+/**
+ * @author MinimaJack
+ * 
+ */
+public class SkillFactory {
+
+    public static final CharacterSkill getSkillById(final int id) {
+        try {
+            switch (id) {
+                case 6:
+                    return SkillFrost.class.newInstance();
+                case 8:
+                    return SkillFire.class.newInstance();
+                case 26:
+                    return SkillArms.class.newInstance();
+                case 38:
+                    return SkillCombat.class.newInstance();
+                case 39:
+                    return SkillSubtlety.class.newInstance();
+                case 43:
+                    return SkillSwords.class.newInstance();
+                case 44:
+                    return SkillAxes.class.newInstance();
+                case 45:
+                    return SkillBows.class.newInstance();
+                case 46:
+                    return SkillGuns.class.newInstance();
+                case 50:
+                    return SkillBeastMastery.class.newInstance();
+                case 51:
+                    return SkillSurvival.class.newInstance();
+                case 54:
+                    return SkillMaces.class.newInstance();
+                case 55:
+                    return SkillTwoHandSwords.class.newInstance();
+                case 56:
+                    return SkillHoly.class.newInstance();
+                case 78:
+                    return SkillShadow.class.newInstance();
+                case 95:
+                    return SkillDefence.class.newInstance();
+                case 98:
+                    return LanguageCommon.class.newInstance();
+                case 101:
+                    return SkillRacialDwarven.class.newInstance();
+                case 109:
+                    return LanguageOrcish.class.newInstance();
+                case 111:
+                    return LanguageDwarven.class.newInstance();
+                case 113:
+                    return LanguageDarnassian.class.newInstance();
+                case 115:
+                    return LanguageTaurahe.class.newInstance();
+                case 118:
+                    return SkillDualWield.class.newInstance();
+                case 124:
+                    return SkillRacialTauren.class.newInstance();
+                case 125:
+                    return SkillRacialOrc.class.newInstance();
+                case 126:
+                    return SkillRacialNightElf.class.newInstance();
+                case 129:
+                    return SkillFirstAid.class.newInstance();
+                case 134:
+                    return SkillFeralCombat.class.newInstance();
+                case 136:
+                    return SkillStaves.class.newInstance();
+                case 137:
+                    return LanguageThalassian.class.newInstance();
+                case 138:
+                    return LanguageDraconic.class.newInstance();
+                case 139:
+                    return LanguageDemonTongue.class.newInstance();
+                case 140:
+                    return LanguageTitan.class.newInstance();
+                case 141:
+                    return LanguageOldTongue.class.newInstance();
+                case 142:
+                    return SkillSurvivalSecond.class.newInstance();
+                case 148:
+                    return SkillRidingHorse.class.newInstance();
+                case 149:
+                    return SkillRidingWolf.class.newInstance();
+                case 150:
+                    return SkillRidingTiger.class.newInstance();
+                case 152:
+                    return SkillRidingRam.class.newInstance();
+                case 155:
+                    return SkillSwimming.class.newInstance();
+                case 160:
+                    return SkillTwoHandMaces.class.newInstance();
+                case 162:
+                    return SkillUnarmed.class.newInstance();
+                case 163:
+                    return SkillMarksmanship.class.newInstance();
+                case 164:
+                    return SkillBlacksmithing.class.newInstance();
+                case 165:
+                    return SkillLeatherworking.class.newInstance();
+                case 171:
+                    return SkillAlchemy.class.newInstance();
+                case 172:
+                    return SkillTwoHandAxes.class.newInstance();
+                case 173:
+                    return SkillDaggers.class.newInstance();
+                case 176:
+                    return SkillThrown.class.newInstance();
+                case 182:
+                    return SkillHerbalism.class.newInstance();
+                case 183:
+                    return SkillGenericDND.class.newInstance();
+                case 184:
+                    return SkillRetribution.class.newInstance();
+                case 185:
+                    return SkillCooking.class.newInstance();
+                case 186:
+                    return SkillMining.class.newInstance();
+                case 188:
+                    return PetImp.class.newInstance();
+                case 189:
+                    return PetFelhunter.class.newInstance();
+                case 197:
+                    return SkillTailoring.class.newInstance();
+                case 202:
+                    return SkillEngineering.class.newInstance();
+                case 203:
+                    return PetSpider.class.newInstance();
+                case 204:
+                    return PetVoidwalker.class.newInstance();
+                case 205:
+                    return PetSuccubus.class.newInstance();
+                case 206:
+                    return PetInfernal.class.newInstance();
+                case 207:
+                    return PetDoomguard.class.newInstance();
+                case 208:
+                    return PetWolf.class.newInstance();
+                case 209:
+                    return PetCat.class.newInstance();
+                case 210:
+                    return PetBear.class.newInstance();
+                case 211:
+                    return PetBoar.class.newInstance();
+                case 212:
+                    return PetCrocilisk.class.newInstance();
+                case 213:
+                    return PetCarrionBird.class.newInstance();
+                case 214:
+                    return PetCrab.class.newInstance();
+                case 215:
+                    return PetGorilla.class.newInstance();
+                case 217:
+                    return PetRaptor.class.newInstance();
+                case 218:
+                    return PetTallstrider.class.newInstance();
+                case 220:
+                    return SkillRacialUnded.class.newInstance();
+                case 226:
+                    return SkillCrossbows.class.newInstance();
+                case 228:
+                    return SkillWands.class.newInstance();
+                case 229:
+                    return SkillPolearms.class.newInstance();
+                case 236:
+                    return PetScorpid.class.newInstance();
+                case 237:
+                    return SkillArcane.class.newInstance();
+                case 251:
+                    return PetTurtle.class.newInstance();
+                case 253:
+                    return SkillAssasination.class.newInstance();
+                case 256:
+                    return SkillFury.class.newInstance();
+                case 257:
+                    return SkillProtection.class.newInstance();
+                case 267:
+                    return SkillProtectionSecond.class.newInstance();
+                case 270:
+                    return PetTalents.class.newInstance();
+                case 293:
+                    return SkillPlateMail.class.newInstance();
+                case 313:
+                    return LanguageGnomish.class.newInstance();
+                case 315:
+                    return LanguageTroll.class.newInstance();
+                case 333:
+                    return SkillEnchanting.class.newInstance();
+                case 354:
+                    return SkillDemonology.class.newInstance();
+                case 355:
+                    return SkillAffliction.class.newInstance();
+                case 356:
+                    return SkillFishing.class.newInstance();
+                case 373:
+                    return SkillEnhancement.class.newInstance();
+                case 374:
+                    return SkillRestoration.class.newInstance();
+                case 375:
+                    return SkillElementalCombat.class.newInstance();
+                case 393:
+                    return SkillSkinning.class.newInstance();
+                case 413:
+                    return SkillMail.class.newInstance();
+                case 414:
+                    return SkillLeather.class.newInstance();
+                case 415:
+                    return SkillCloth.class.newInstance();
+                case 433:
+                    return SkillShield.class.newInstance();
+                case 473:
+                    return SkillFistWeapons.class.newInstance();
+                case 533:
+                    return SkillRidingRaptor.class.newInstance();
+                case 553:
+                    return SkillRidingMechanostrinder.class.newInstance();
+                case 554:
+                    return SkillRidingUndeadHorse.class.newInstance();
+                case 573:
+                    return SkillRestorationSecond.class.newInstance();
+                case 574:
+                    return SkillBalance.class.newInstance();
+                case 593:
+                    return SkillDestruction.class.newInstance();
+                case 594:
+                    return SkillHolySecond.class.newInstance();
+                case 613:
+                    return SkillDiscipline.class.newInstance();
+                case 633:
+                    return SkillLockPicking.class.newInstance();
+                case 653:
+                    return PetBat.class.newInstance();
+                case 654:
+                    return PetHyena.class.newInstance();
+                case 655:
+                    return PetBirdOfPrey.class.newInstance();
+                case 656:
+                    return PetWindSerpent.class.newInstance();
+                case 673:
+                    return LanguageGutterSpeak.class.newInstance();
+                case 713:
+                    return SkillRidingKodo.class.newInstance();
+                case 733:
+                    return SkillRacialTroll.class.newInstance();
+                case 753:
+                    return SkillRacialGnome.class.newInstance();
+                case 754:
+                    return SkillRacialHuman.class.newInstance();
+                case 755:
+                    return SkillJewelcrafting.class.newInstance();
+                case 756:
+                    return SkillRacialBloodElf.class.newInstance();
+                case 758:
+                    return PetEventRC.class.newInstance();
+                case 759:
+                    return LanguageDraenei.class.newInstance();
+                case 760:
+                    return SkillRacialDraenei.class.newInstance();
+                case 761:
+                    return PetFelguard.class.newInstance();
+                case 762:
+                    return SkillRiding.class.newInstance();
+                case 763:
+                    return PetDragonHawk.class.newInstance();
+                case 764:
+                    return PetNetherRay.class.newInstance();
+                case 765:
+                    return PetSporeBat.class.newInstance();
+                case 766:
+                    return PetWarpStalker.class.newInstance();
+                case 767:
+                    return PetRavager.class.newInstance();
+                case 768:
+                    return PetSerpent.class.newInstance();
+                case 769:
+                    return SkillInternal.class.newInstance();
+                case 770:
+                    return SkillDKBlood.class.newInstance();
+                case 771:
+                    return SkillDKFrost.class.newInstance();
+                case 772:
+                    return SkillDKUnholy.class.newInstance();
+                case 773:
+                    return SkillInscription.class.newInstance();
+                case 775:
+                    return PetMoth.class.newInstance();
+                case 776:
+                    return SkillRuneforging.class.newInstance();
+                case 777:
+                    return SkillMounts.class.newInstance();
+                case 778:
+                    return SkillCompanions.class.newInstance();
+                case 780:
+                    return PetExoticChimaera.class.newInstance();
+                case 781:
+                    return PetExoticDevilsaur.class.newInstance();
+                case 782:
+                    return PetGhoul.class.newInstance();
+                case 783:
+                    return PetExoticSilithid.class.newInstance();
+                case 784:
+                    return PetExoticWorm.class.newInstance();
+                case 785:
+                    return PetWasp.class.newInstance();
+                case 786:
+                    return PetExoticRhino.class.newInstance();
+                case 787:
+                    return PetExoticCoreHound.class.newInstance();
+                case 788:
+                    return PetExoticSpiritBeast.class.newInstance();
+            }
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+}

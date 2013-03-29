@@ -10,6 +10,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.jmangos.commons.entities.SkillLineAbilityEntity;
+import org.jmangos.commons.enums.Classes;
+import org.jmangos.commons.enums.Races;
 import org.springframework.data.jpa.domain.Specification;
 
 /**
@@ -18,13 +20,13 @@ import org.springframework.data.jpa.domain.Specification;
  */
 public class SkillLineAbilitySpecs {
 
-    public static Specification<SkillLineAbilityEntity> isMatchRaceMask(final Integer raceMask) {
+    public static Specification<SkillLineAbilityEntity> isRaceMatchToRaceMask(final Races race) {
         return new Specification<SkillLineAbilityEntity>() {
 
             @Override
             public Predicate toPredicate(final Root<SkillLineAbilityEntity> root,
                     final CriteriaQuery<?> query, final CriteriaBuilder cb) {
-                final Expression<Integer> racemask = cb.literal(raceMask);
+                final Expression<Integer> racemask = cb.literal(race.getMask());
 
                 final Expression<Integer> raceFunction =
                         cb.function("bitwise_and", Integer.class, root.<Integer> get("racemask"),
@@ -35,13 +37,13 @@ public class SkillLineAbilitySpecs {
         };
     }
 
-    public static Specification<SkillLineAbilityEntity> isMatchClassMask(final Integer classMask) {
+    public static Specification<SkillLineAbilityEntity> isClassMatchToClassMask(final Classes clazz) {
         return new Specification<SkillLineAbilityEntity>() {
 
             @Override
             public Predicate toPredicate(final Root<SkillLineAbilityEntity> root,
                     final CriteriaQuery<?> query, final CriteriaBuilder cb) {
-                final Expression<Integer> classmask = cb.literal(classMask);
+                final Expression<Integer> classmask = cb.literal(clazz.getMask());
                 final Expression<Integer> classFunction =
                         cb.function("bitwise_and", Integer.class, root.<Integer> get("classmask"),
                                 classmask);

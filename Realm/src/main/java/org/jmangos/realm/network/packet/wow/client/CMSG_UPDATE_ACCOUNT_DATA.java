@@ -27,11 +27,12 @@ public class CMSG_UPDATE_ACCOUNT_DATA extends AbstractWoWClientPacket {
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
 
-        final int type, timestamp;
-        int decompressedSize;
+        //final int type, timestamp;
+        //int decompressedSize;
+        /** TODO need implement saving account data to db */
         readD();
         readD();
-        decompressedSize = readD();
+       /* decompressedSize = */readD();
     }
 
     @Override

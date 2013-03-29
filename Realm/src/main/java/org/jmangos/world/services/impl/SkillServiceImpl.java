@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 
+import com.googlecode.ehcache.annotations.Cacheable;
+
 /**
  * @author MinimaJack
  * 
@@ -34,10 +36,11 @@ public class SkillServiceImpl implements SkillService {
      * .Races, org.jmangos.realm.model.enums.Classes)
      */
     @Override
+    @Cacheable(cacheName = "skillsForRaceClassCache")
     public List<SkillRaceClassInfoEntity> getSkillsForRaceClass(final Races race,
             final Classes clazz) {
         return this.skillRaceClassDao.findAll(Specifications.where(
-                SkillRaceClassSpecs.isMatchClassMask(clazz.getMask())).and(
-                SkillRaceClassSpecs.isMatchRaceMask(race.getMask())));
+                SkillRaceClassSpecs.isClassMatchToClassMask(clazz)).and(
+                SkillRaceClassSpecs.isRaceMatchToRaceMask(race)));
     }
 }
