@@ -178,6 +178,11 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
                 (equips.getKey() * 2) +
                 1);
         }
+        for (final Entry<Integer, CharacterSkill> skill : this.skillInfo.entrySet()) {
+            this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + skill.getKey());
+            this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + skill.getKey() + 1);
+            this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + skill.getKey() + 2);
+        }
     }
 
     public void updateMaxPowers() {
@@ -437,12 +442,16 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
         }
 
         for (final Entry<Integer, CharacterSkill> skill : this.skillInfo.entrySet()) {
-            if (this.bitSet.get(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + skill.getKey())) {
+            if (this.bitSet.get(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + skill.getKey()*3)) {
                 ocBuffer.writeInt(getSkillInfo(skill.getKey()).getSkillId());
             }
-            if (this.bitSet.get(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + skill.getKey() + 1)) {
+            if (this.bitSet.get(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + skill.getKey()*3 + 1)) {
                 ocBuffer.writeShort(getSkillInfo(skill.getKey()).getMaxValue());
                 ocBuffer.writeShort(getSkillInfo(skill.getKey()).getCurrentValue());
+            }
+            if (this.bitSet.get(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + skill.getKey()*3 + 2)) {
+                ocBuffer.writeShort(0);
+                ocBuffer.writeShort(0);
             }
         }
         if (this.bitSet.get(PlayerFields.PLAYER_CHARACTER_POINTS1.getValue())) {

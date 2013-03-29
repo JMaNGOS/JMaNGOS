@@ -33,6 +33,8 @@ import javolution.util.FastMap;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.jmangos.commons.enums.EnchantmentSlot;
+import org.jmangos.commons.enums.EquipmentSlots;
 import org.jmangos.commons.enums.RestState;
 import org.jmangos.commons.enums.VisibilityState;
 import org.jmangos.commons.update.PlayerFields;
@@ -744,6 +746,7 @@ public class FieldsCharacter extends FieldsUnit {
     public final void setSkillInfo(final int skillIndex, final CharacterSkill skillValue) {
 
         this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + skillIndex);
+        this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + skillIndex+1);
         this.skillInfo.put(skillIndex, skillValue);
     }
 
@@ -754,6 +757,7 @@ public class FieldsCharacter extends FieldsUnit {
     public final void addSkillInfo(final CharacterSkill skillValue) {
         final int size = this.skillInfo.size();
         this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + size);
+        this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + size +1);
         this.skillInfo.put(size, skillValue);
     }
 
