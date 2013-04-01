@@ -32,6 +32,164 @@
 		<class>org.jmangos.commons.entities.FieldsItem</class>
 		<class>org.jmangos.commons.entities.ItemCharges</class>
 		<class>org.jmangos.commons.entities.ItemEnchant</class>
+		
+		<class>org.jmangos.commons.entities.skills.weapon.SkillAxes</class>
+		<class>org.jmangos.commons.entities.skills.weapon.SkillBows</class>
+		<class>org.jmangos.commons.entities.skills.weapon.SkillCrossbows</class>
+		<class>org.jmangos.commons.entities.skills.weapon.SkillDaggers</class>
+		<class>org.jmangos.commons.entities.skills.weapon.SkillFistWeapons</class>
+		<class>org.jmangos.commons.entities.skills.weapon.SkillGuns</class>
+		<class>org.jmangos.commons.entities.skills.weapon.SkillMaces</class>
+		<class>org.jmangos.commons.entities.skills.weapon.SkillPolearms</class>
+		<class>org.jmangos.commons.entities.skills.weapon.SkillStaves</class>
+		<class>org.jmangos.commons.entities.skills.weapon.SkillSwords</class>
+		<class>org.jmangos.commons.entities.skills.weapon.SkillThrown</class>
+		<class>org.jmangos.commons.entities.skills.weapon.SkillTwoHandAxes</class>
+		<class>org.jmangos.commons.entities.skills.weapon.SkillTwoHandMaces</class>
+		<class>org.jmangos.commons.entities.skills.weapon.SkillTwoHandSwords</class>
+		<class>org.jmangos.commons.entities.skills.weapon.SkillUnarmed</class>
+		<class>org.jmangos.commons.entities.skills.weapon.SkillWands</class>
+
+		<class>org.jmangos.commons.entities.skills.proficiency.SkillAlchemy</class>
+		<class>org.jmangos.commons.entities.skills.proficiency.SkillCooking</class>
+		<class>org.jmangos.commons.entities.skills.proficiency.SkillEnchanting</class>
+		<class>org.jmangos.commons.entities.skills.proficiency.SkillEngineering</class>
+		<class>org.jmangos.commons.entities.skills.proficiency.SkillInscription</class>
+		<class>org.jmangos.commons.entities.skills.proficiency.SkillHerbalism</class>
+		<class>org.jmangos.commons.entities.skills.proficiency.SkillJewelcrafting</class>
+		<class>org.jmangos.commons.entities.skills.proficiency.SkillLeatherworking</class>
+		<class>org.jmangos.commons.entities.skills.proficiency.SkillSkinning</class>
+		<class>org.jmangos.commons.entities.skills.proficiency.SkillTailoring</class>
+
+		<class>org.jmangos.commons.entities.skills.SkillAffliction</class>
+		<class>org.jmangos.commons.entities.skills.SkillArcane</class>
+		<class>org.jmangos.commons.entities.skills.SkillArms</class>
+		<class>org.jmangos.commons.entities.skills.SkillAssasination</class>
+		<class>org.jmangos.commons.entities.skills.SkillBalance</class>
+		<class>org.jmangos.commons.entities.skills.SkillBeastMastery</class>
+		<class>org.jmangos.commons.entities.skills.SkillBlacksmithing</class>
+		<class>org.jmangos.commons.entities.skills.SkillCombat</class>
+		<class>org.jmangos.commons.entities.skills.SkillCompanions</class>
+		<class>org.jmangos.commons.entities.skills.SkillDefence</class>
+		<class>org.jmangos.commons.entities.skills.SkillDemonology</class>
+		<class>org.jmangos.commons.entities.skills.SkillDestruction</class>
+		<class>org.jmangos.commons.entities.skills.SkillDiscipline</class>
+		<class>org.jmangos.commons.entities.skills.SkillDKBlood</class>
+		<class>org.jmangos.commons.entities.skills.SkillDKFrost</class>
+		<class>org.jmangos.commons.entities.skills.SkillDKUnholy</class>
+		<class>org.jmangos.commons.entities.skills.SkillDualWield</class>
+		<class>org.jmangos.commons.entities.skills.SkillEnhancement</class>
+		<class>org.jmangos.commons.entities.skills.SkillFeralCombat</class>
+		<class>org.jmangos.commons.entities.skills.SkillFire</class>
+		<class>org.jmangos.commons.entities.skills.SkillFirstAid</class>
+		<class>org.jmangos.commons.entities.skills.SkillFishing</class>
+		<class>org.jmangos.commons.entities.skills.SkillFrost</class>
+		<class>org.jmangos.commons.entities.skills.SkillFury</class>
+		<class>org.jmangos.commons.entities.skills.SkillGenericDND</class>
+		<class>org.jmangos.commons.entities.skills.SkillElementalCombat</class>
+		<class>org.jmangos.commons.entities.skills.SkillHoly</class>
+		<class>org.jmangos.commons.entities.skills.SkillHolySecond</class>
+		<class>org.jmangos.commons.entities.skills.SkillInternal</class>
+		<class>org.jmangos.commons.entities.skills.SkillLockPicking</class>
+		<class>org.jmangos.commons.entities.skills.SkillMarksmanship</class>
+		<class>org.jmangos.commons.entities.skills.SkillMining</class>
+		<class>org.jmangos.commons.entities.skills.SkillMounts</class>
+		<class>org.jmangos.commons.entities.skills.SkillProtection</class>
+		<class>org.jmangos.commons.entities.skills.SkillProtectionSecond</class>
+		<class>org.jmangos.commons.entities.skills.SkillRestoration</class>
+		<class>org.jmangos.commons.entities.skills.SkillRestorationSecond</class>
+		<class>org.jmangos.commons.entities.skills.SkillRetribution</class>
+		<class>org.jmangos.commons.entities.skills.SkillRuneforging</class>
+		<class>org.jmangos.commons.entities.skills.SkillShadow</class>
+		<class>org.jmangos.commons.entities.skills.SkillShield</class>
+		<class>org.jmangos.commons.entities.skills.SkillSubtlety</class>
+		<class>org.jmangos.commons.entities.skills.SkillSurvival</class>
+		<class>org.jmangos.commons.entities.skills.SkillSurvivalSecond</class>
+		<class>org.jmangos.commons.entities.skills.SkillSwimming</class>
+
+		<class>org.jmangos.commons.entities.skills.armor.SkillCloth</class>
+		<class>org.jmangos.commons.entities.skills.armor.SkillLeather</class>
+		<class>org.jmangos.commons.entities.skills.armor.SkillMail</class>
+		<class>org.jmangos.commons.entities.skills.armor.SkillPlateMail</class>
+
+		<class>org.jmangos.commons.entities.skills.language.LanguageCommon</class>
+		<class>org.jmangos.commons.entities.skills.language.LanguageDarnassian</class>
+		<class>org.jmangos.commons.entities.skills.language.LanguageDemonTongue</class>
+		<class>org.jmangos.commons.entities.skills.language.LanguageDraconic</class>
+		<class>org.jmangos.commons.entities.skills.language.LanguageDraenei</class>
+		<class>org.jmangos.commons.entities.skills.language.LanguageDwarven</class>
+		<class>org.jmangos.commons.entities.skills.language.LanguageGnomish</class>
+		<class>org.jmangos.commons.entities.skills.language.LanguageGutterSpeak</class>
+		<class>org.jmangos.commons.entities.skills.language.LanguageOldTongue</class>
+		<class>org.jmangos.commons.entities.skills.language.LanguageOrcish</class>
+		<class>org.jmangos.commons.entities.skills.language.LanguageTaurahe</class>
+		<class>org.jmangos.commons.entities.skills.language.LanguageThalassian</class>
+		<class>org.jmangos.commons.entities.skills.language.LanguageTitan</class>
+		<class>org.jmangos.commons.entities.skills.language.LanguageTroll</class>
+		
+		<class>org.jmangos.commons.entities.skills.racial.SkillRacialBloodElf</class>
+		<class>org.jmangos.commons.entities.skills.racial.SkillRacialDraenei</class>
+		<class>org.jmangos.commons.entities.skills.racial.SkillRacialDwarven</class>
+		<class>org.jmangos.commons.entities.skills.racial.SkillRacialGnome</class>
+		<class>org.jmangos.commons.entities.skills.racial.SkillRacialHuman</class>
+		<class>org.jmangos.commons.entities.skills.racial.SkillRacialNightElf</class>
+		<class>org.jmangos.commons.entities.skills.racial.SkillRacialOrc</class>
+		<class>org.jmangos.commons.entities.skills.racial.SkillRacialTauren</class>
+		<class>org.jmangos.commons.entities.skills.racial.SkillRacialTroll</class>
+		<class>org.jmangos.commons.entities.skills.racial.SkillRacialUnded</class>
+		
+		<class>org.jmangos.commons.entities.skills.riding.SkillRiding</class>
+		<class>org.jmangos.commons.entities.skills.riding.SkillRidingHorse</class>
+		<class>org.jmangos.commons.entities.skills.riding.SkillRidingKodo</class>
+		<class>org.jmangos.commons.entities.skills.riding.SkillRidingMechanostrinder</class>
+		<class>org.jmangos.commons.entities.skills.riding.SkillRidingRam</class>
+		<class>org.jmangos.commons.entities.skills.riding.SkillRidingRaptor</class>
+		<class>org.jmangos.commons.entities.skills.riding.SkillRidingTiger</class>
+		<class>org.jmangos.commons.entities.skills.riding.SkillRidingUndeadHorse</class>
+		<class>org.jmangos.commons.entities.skills.riding.SkillRidingWolf</class>
+
+<class>org.jmangos.commons.entities.skills.pet.PetBat</class>
+<class>org.jmangos.commons.entities.skills.pet.PetBear</class>
+<class>org.jmangos.commons.entities.skills.pet.PetBirdOfPrey</class>
+<class>org.jmangos.commons.entities.skills.pet.PetBoar</class>
+<class>org.jmangos.commons.entities.skills.pet.PetCarrionBird</class>
+<class>org.jmangos.commons.entities.skills.pet.PetCat</class>
+<class>org.jmangos.commons.entities.skills.pet.PetCrab</class>
+<class>org.jmangos.commons.entities.skills.pet.PetCrocilisk</class>
+<class>org.jmangos.commons.entities.skills.pet.PetDoomguard</class>
+<class>org.jmangos.commons.entities.skills.pet.PetDragonHawk</class>
+<class>org.jmangos.commons.entities.skills.pet.PetEventRC</class>
+<class>org.jmangos.commons.entities.skills.pet.PetExoticChimaera</class>
+<class>org.jmangos.commons.entities.skills.pet.PetExoticCoreHound</class>
+<class>org.jmangos.commons.entities.skills.pet.PetExoticDevilsaur</class>
+<class>org.jmangos.commons.entities.skills.pet.PetExoticRhino</class>
+<class>org.jmangos.commons.entities.skills.pet.PetExoticSilithid</class>
+<class>org.jmangos.commons.entities.skills.pet.PetExoticSpiritBeast</class>
+<class>org.jmangos.commons.entities.skills.pet.PetExoticWorm</class>
+<class>org.jmangos.commons.entities.skills.pet.PetFelguard</class>
+<class>org.jmangos.commons.entities.skills.pet.PetFelhunter</class>
+<class>org.jmangos.commons.entities.skills.pet.PetGhoul</class>
+<class>org.jmangos.commons.entities.skills.pet.PetGorilla</class>
+<class>org.jmangos.commons.entities.skills.pet.PetHyena</class>
+<class>org.jmangos.commons.entities.skills.pet.PetImp</class>
+<class>org.jmangos.commons.entities.skills.pet.PetInfernal</class>
+<class>org.jmangos.commons.entities.skills.pet.PetMoth</class>
+<class>org.jmangos.commons.entities.skills.pet.PetNetherRay</class>
+<class>org.jmangos.commons.entities.skills.pet.PetRaptor</class>
+<class>org.jmangos.commons.entities.skills.pet.PetRavager</class>
+<class>org.jmangos.commons.entities.skills.pet.PetScorpid</class>
+<class>org.jmangos.commons.entities.skills.pet.PetSerpent</class>
+<class>org.jmangos.commons.entities.skills.pet.PetSpider</class>
+<class>org.jmangos.commons.entities.skills.pet.PetSporeBat</class>
+<class>org.jmangos.commons.entities.skills.pet.PetSuccubus</class>
+<class>org.jmangos.commons.entities.skills.pet.PetTalents</class>
+<class>org.jmangos.commons.entities.skills.pet.PetTallstrider</class>
+<class>org.jmangos.commons.entities.skills.pet.PetTurtle</class>
+<class>org.jmangos.commons.entities.skills.pet.PetVoidwalker</class>
+<class>org.jmangos.commons.entities.skills.pet.PetWarpStalker</class>
+<class>org.jmangos.commons.entities.skills.pet.PetWasp</class>
+<class>org.jmangos.commons.entities.skills.pet.PetWindSerpent</class>
+<class>org.jmangos.commons.entities.skills.pet.PetWolf</class>
 
     </persistence-unit>
 

@@ -29,7 +29,7 @@ import org.jmangos.commons.entities.CharacterSkill;
  * 
  */
 @Entity
-@DiscriminatorValue(value = "124")
+@DiscriminatorValue(value = "733")
 public class SkillRacialTroll extends CharacterSkill {
 
     /**
