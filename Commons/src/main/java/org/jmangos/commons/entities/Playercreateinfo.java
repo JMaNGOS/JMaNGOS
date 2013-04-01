@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -27,8 +27,6 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.jmangos.commons.entities.pk.PlayercreateinfoPK;
 
 /**
@@ -99,10 +97,6 @@ public class Playercreateinfo {
 
     @OneToMany(mappedBy = "playercreateinfoPK", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<PlayerCreateAction> actions;
-
-    @OneToMany(mappedBy = "playercreateinfoPK", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @Fetch(value = FetchMode.SUBSELECT)
-    private Set<PlayerCreateSpell> spell;
 
     public Playercreateinfo() {
 
@@ -193,23 +187,6 @@ public class Playercreateinfo {
     public final void setActions(final Set<PlayerCreateAction> actions) {
 
         this.actions = actions;
-    }
-
-    /**
-     * @return the spell
-     */
-    public final Set<PlayerCreateSpell> getSpell() {
-
-        return this.spell;
-    }
-
-    /**
-     * @param spell
-     *        the spell to set
-     */
-    public final void setSpell(final Set<PlayerCreateSpell> spell) {
-
-        this.spell = spell;
     }
 
     @Override
