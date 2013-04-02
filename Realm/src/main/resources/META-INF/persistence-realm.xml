@@ -16,13 +16,13 @@
  with this program. If not, see <http://www.gnu.org/licenses/>.
 	 -->
 <persistence xmlns="http://java.sun.com/xml/ns/persistence"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
     http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
-    version="2.0">
-    
-    <persistence-unit name="realm">
-    
+	version="2.0">
+
+	<persistence-unit name="realm">
+
 		<class>org.jmangos.commons.entities.CharacterData</class>
 		<class>org.jmangos.commons.entities.CharacterPowers</class>
 		<class>org.jmangos.commons.entities.CharacterPositionerHolder</class>
@@ -32,7 +32,7 @@
 		<class>org.jmangos.commons.entities.FieldsItem</class>
 		<class>org.jmangos.commons.entities.ItemCharges</class>
 		<class>org.jmangos.commons.entities.ItemEnchant</class>
-		
+
 		<class>org.jmangos.commons.entities.skills.weapon.SkillAxes</class>
 		<class>org.jmangos.commons.entities.skills.weapon.SkillBows</class>
 		<class>org.jmangos.commons.entities.skills.weapon.SkillCrossbows</class>
@@ -126,7 +126,7 @@
 		<class>org.jmangos.commons.entities.skills.language.LanguageThalassian</class>
 		<class>org.jmangos.commons.entities.skills.language.LanguageTitan</class>
 		<class>org.jmangos.commons.entities.skills.language.LanguageTroll</class>
-		
+
 		<class>org.jmangos.commons.entities.skills.racial.SkillRacialBloodElf</class>
 		<class>org.jmangos.commons.entities.skills.racial.SkillRacialDraenei</class>
 		<class>org.jmangos.commons.entities.skills.racial.SkillRacialDwarven</class>
@@ -137,7 +137,7 @@
 		<class>org.jmangos.commons.entities.skills.racial.SkillRacialTauren</class>
 		<class>org.jmangos.commons.entities.skills.racial.SkillRacialTroll</class>
 		<class>org.jmangos.commons.entities.skills.racial.SkillRacialUnded</class>
-		
+
 		<class>org.jmangos.commons.entities.skills.riding.SkillRiding</class>
 		<class>org.jmangos.commons.entities.skills.riding.SkillRidingHorse</class>
 		<class>org.jmangos.commons.entities.skills.riding.SkillRidingKodo</class>
@@ -148,49 +148,49 @@
 		<class>org.jmangos.commons.entities.skills.riding.SkillRidingUndeadHorse</class>
 		<class>org.jmangos.commons.entities.skills.riding.SkillRidingWolf</class>
 
-<class>org.jmangos.commons.entities.skills.pet.PetBat</class>
-<class>org.jmangos.commons.entities.skills.pet.PetBear</class>
-<class>org.jmangos.commons.entities.skills.pet.PetBirdOfPrey</class>
-<class>org.jmangos.commons.entities.skills.pet.PetBoar</class>
-<class>org.jmangos.commons.entities.skills.pet.PetCarrionBird</class>
-<class>org.jmangos.commons.entities.skills.pet.PetCat</class>
-<class>org.jmangos.commons.entities.skills.pet.PetCrab</class>
-<class>org.jmangos.commons.entities.skills.pet.PetCrocilisk</class>
-<class>org.jmangos.commons.entities.skills.pet.PetDoomguard</class>
-<class>org.jmangos.commons.entities.skills.pet.PetDragonHawk</class>
-<class>org.jmangos.commons.entities.skills.pet.PetEventRC</class>
-<class>org.jmangos.commons.entities.skills.pet.PetExoticChimaera</class>
-<class>org.jmangos.commons.entities.skills.pet.PetExoticCoreHound</class>
-<class>org.jmangos.commons.entities.skills.pet.PetExoticDevilsaur</class>
-<class>org.jmangos.commons.entities.skills.pet.PetExoticRhino</class>
-<class>org.jmangos.commons.entities.skills.pet.PetExoticSilithid</class>
-<class>org.jmangos.commons.entities.skills.pet.PetExoticSpiritBeast</class>
-<class>org.jmangos.commons.entities.skills.pet.PetExoticWorm</class>
-<class>org.jmangos.commons.entities.skills.pet.PetFelguard</class>
-<class>org.jmangos.commons.entities.skills.pet.PetFelhunter</class>
-<class>org.jmangos.commons.entities.skills.pet.PetGhoul</class>
-<class>org.jmangos.commons.entities.skills.pet.PetGorilla</class>
-<class>org.jmangos.commons.entities.skills.pet.PetHyena</class>
-<class>org.jmangos.commons.entities.skills.pet.PetImp</class>
-<class>org.jmangos.commons.entities.skills.pet.PetInfernal</class>
-<class>org.jmangos.commons.entities.skills.pet.PetMoth</class>
-<class>org.jmangos.commons.entities.skills.pet.PetNetherRay</class>
-<class>org.jmangos.commons.entities.skills.pet.PetRaptor</class>
-<class>org.jmangos.commons.entities.skills.pet.PetRavager</class>
-<class>org.jmangos.commons.entities.skills.pet.PetScorpid</class>
-<class>org.jmangos.commons.entities.skills.pet.PetSerpent</class>
-<class>org.jmangos.commons.entities.skills.pet.PetSpider</class>
-<class>org.jmangos.commons.entities.skills.pet.PetSporeBat</class>
-<class>org.jmangos.commons.entities.skills.pet.PetSuccubus</class>
-<class>org.jmangos.commons.entities.skills.pet.PetTalents</class>
-<class>org.jmangos.commons.entities.skills.pet.PetTallstrider</class>
-<class>org.jmangos.commons.entities.skills.pet.PetTurtle</class>
-<class>org.jmangos.commons.entities.skills.pet.PetVoidwalker</class>
-<class>org.jmangos.commons.entities.skills.pet.PetWarpStalker</class>
-<class>org.jmangos.commons.entities.skills.pet.PetWasp</class>
-<class>org.jmangos.commons.entities.skills.pet.PetWindSerpent</class>
-<class>org.jmangos.commons.entities.skills.pet.PetWolf</class>
-
-    </persistence-unit>
+		<class>org.jmangos.commons.entities.skills.pet.PetBat</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetBear</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetBirdOfPrey</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetBoar</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetCarrionBird</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetCat</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetCrab</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetCrocilisk</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetDoomguard</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetDragonHawk</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetEventRC</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetExoticChimaera</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetExoticCoreHound</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetExoticDevilsaur</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetExoticRhino</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetExoticSilithid</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetExoticSpiritBeast</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetExoticWorm</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetFelguard</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetFelhunter</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetGhoul</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetGorilla</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetHyena</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetImp</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetInfernal</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetMoth</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetNetherRay</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetRaptor</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetRavager</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetScorpid</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetSerpent</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetSpider</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetSporeBat</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetSuccubus</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetTalents</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetTallstrider</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetTurtle</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetVoidwalker</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetWarpStalker</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetWasp</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetWindSerpent</class>
+		<class>org.jmangos.commons.entities.skills.pet.PetWolf</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+	</persistence-unit>
 
 </persistence>
