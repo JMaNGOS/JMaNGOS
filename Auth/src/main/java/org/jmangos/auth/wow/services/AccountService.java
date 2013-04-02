@@ -26,7 +26,7 @@ public interface AccountService {
 
     public List<AccountEntity> readAccounts();
 
-    public Long createOrUpdateAccount(AccountEntity accountEntity);
+    public AccountEntity createOrUpdateAccount(AccountEntity accountEntity);
 
     public void deleteAccount(AccountEntity accountEntity);
 

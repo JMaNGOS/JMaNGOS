@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -16,18 +16,9 @@
  ******************************************************************************/
 package org.jmangos.auth.dao;
 
-import java.util.List;
-
 import org.jmangos.auth.entities.RealmEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RealmDao {
-
-    public RealmEntity readRealm(Integer id);
-
-    public List<RealmEntity> readRealms();
-
-    public Integer createOrUpdateRealm(RealmEntity realmEntity);
-
-    public void deleteRealm(RealmEntity realmEntity);
+public interface RealmDao extends JpaRepository<RealmEntity, Long> {
 
 }

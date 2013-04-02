@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -16,20 +16,15 @@
  ******************************************************************************/
 package org.jmangos.auth.dao;
 
-import java.util.List;
-
 import org.jmangos.auth.entities.AccountEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface AccountDao {
+@Repository
+@Transactional
+public interface AccountDao extends JpaRepository<AccountEntity, Long> {
 
-    public AccountEntity readAccount(Long id);
-
-    public List<AccountEntity> readAccounts();
-
-    public Long createOrUpdateAccount(AccountEntity accountEntity);
-
-    public void deleteAccount(AccountEntity accountEntity);
-
-    public AccountEntity readAccountsByUserName(String login);
+    public AccountEntity findByUsername(String login);
 
 }

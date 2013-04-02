@@ -31,27 +31,27 @@ public class RealmServiceImpl implements RealmService {
     private RealmDao realmDao;
 
     @Override
-    public RealmEntity readRealm(final Integer id) {
+    public RealmEntity readRealm(final Long id) {
 
-        return this.realmDao.readRealm(id);
+        return this.realmDao.findOne(id);
     }
 
     @Override
     public List<RealmEntity> readRealms() {
 
-        return this.realmDao.readRealms();
+        return this.realmDao.findAll();
     }
 
     @Override
-    public Integer createOrUpdateRealm(final RealmEntity realmEntity) {
+    public RealmEntity createOrUpdateRealm(final RealmEntity realmEntity) {
 
-        return this.realmDao.createOrUpdateRealm(realmEntity);
+        return this.realmDao.save(realmEntity);
     }
 
     @Override
     public void deleteRealm(final RealmEntity realmEntity) {
 
-        this.realmDao.deleteRealm(realmEntity);
+        this.realmDao.delete(realmEntity);
     }
 
 }

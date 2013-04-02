@@ -22,11 +22,11 @@ import org.jmangos.auth.entities.RealmEntity;
 
 public interface RealmService {
 
-    public RealmEntity readRealm(Integer id);
+    public RealmEntity readRealm(Long id);
 
     public List<RealmEntity> readRealms();
 
-    public Integer createOrUpdateRealm(RealmEntity realmEntity);
+    public RealmEntity createOrUpdateRealm(RealmEntity realmEntity);
 
     public void deleteRealm(RealmEntity realmEntity);
 

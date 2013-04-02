@@ -33,30 +33,30 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountEntity readAccount(final Long id) {
 
-        return this.accountDao.readAccount(id);
+        return this.accountDao.findOne(id);
     }
 
     @Override
     public List<AccountEntity> readAccounts() {
 
-        return this.accountDao.readAccounts();
+        return this.accountDao.findAll();
     }
 
     @Override
-    public Long createOrUpdateAccount(final AccountEntity accountEntity) {
+    public AccountEntity createOrUpdateAccount(final AccountEntity accountEntity) {
 
-        return this.accountDao.createOrUpdateAccount(accountEntity);
+        return this.accountDao.save(accountEntity);
     }
 
     @Override
     public void deleteAccount(final AccountEntity accountEntity) {
 
-        this.accountDao.deleteAccount(accountEntity);
+        this.accountDao.delete(accountEntity);
     }
 
     @Override
     public AccountEntity readAccountByUserName(String login) {
-        return this.accountDao.readAccountsByUserName(login);
+        return this.accountDao.findByUsername(login);
     }
 
 }
