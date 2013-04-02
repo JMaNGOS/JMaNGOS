@@ -27,7 +27,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ACCOUNT")
+@Table(name = "account")
 public class AccountEntity {
 
     @Id

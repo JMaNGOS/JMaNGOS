@@ -26,7 +26,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "REALMLIST")
+@Table(name = "realmlist")
 public class RealmEntity {
 
     @Id
