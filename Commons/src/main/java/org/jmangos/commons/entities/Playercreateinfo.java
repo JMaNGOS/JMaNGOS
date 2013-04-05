@@ -21,6 +21,7 @@ import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -59,41 +60,8 @@ public class Playercreateinfo {
             precision = 0)
     private int zone;
 
-    @Basic
-    @Column(name = "position_x",
-            nullable = false,
-            insertable = true,
-            updatable = true,
-            length = 12,
-            precision = 0)
-    private float positionX;
-
-    @Basic
-    @Column(name = "position_y",
-            nullable = false,
-            insertable = true,
-            updatable = true,
-            length = 12,
-            precision = 0)
-    private float positionY;
-
-    @Basic
-    @Column(name = "position_z",
-            nullable = false,
-            insertable = true,
-            updatable = true,
-            length = 12,
-            precision = 0)
-    private float positionZ;
-
-    @Basic
-    @Column(name = "orientation",
-            nullable = false,
-            insertable = true,
-            updatable = true,
-            length = 12,
-            precision = 0)
-    private float orientation;
+    @Embedded
+    Position position;
 
     @OneToMany(mappedBy = "playercreateinfoPK", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<PlayerCreateAction> actions;
@@ -132,46 +100,6 @@ public class Playercreateinfo {
         this.zone = zone;
     }
 
-    public float getPositionX() {
-
-        return this.positionX;
-    }
-
-    public void setPositionX(final float positionX) {
-
-        this.positionX = positionX;
-    }
-
-    public float getPositionY() {
-
-        return this.positionY;
-    }
-
-    public void setPositionY(final float positionY) {
-
-        this.positionY = positionY;
-    }
-
-    public float getPositionZ() {
-
-        return this.positionZ;
-    }
-
-    public void setPositionZ(final float positionZ) {
-
-        this.positionZ = positionZ;
-    }
-
-    public float getOrientation() {
-
-        return this.orientation;
-    }
-
-    public void setOrientation(final float orientation) {
-
-        this.orientation = orientation;
-    }
-
     /**
      * @return the actions
      */
@@ -187,6 +115,21 @@ public class Playercreateinfo {
     public final void setActions(final Set<PlayerCreateAction> actions) {
 
         this.actions = actions;
+    }
+
+    /**
+     * @return the position
+     */
+    public final Position getPosition() {
+        return this.position;
+    }
+
+    /**
+     * @param position
+     *        the position to set
+     */
+    public final void setPosition(final Position position) {
+        this.position = position;
     }
 
     @Override

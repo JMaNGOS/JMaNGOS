@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -24,12 +24,10 @@ import org.jmangos.commons.entities.CharacterPositionerHolder;
 import org.jmangos.commons.entities.CharacterPowers;
 import org.jmangos.commons.entities.CharacterSkill;
 import org.jmangos.commons.entities.FieldsItem;
-import org.jmangos.commons.entities.HomeBindData;
 import org.jmangos.commons.entities.ItemPrototype;
 import org.jmangos.commons.entities.PlayerClassLevelInfo;
 import org.jmangos.commons.entities.PlayerLevelInfo;
 import org.jmangos.commons.entities.Playercreateinfo;
-import org.jmangos.commons.entities.Position;
 import org.jmangos.commons.entities.SkillLineAbilityEntity;
 import org.jmangos.commons.entities.SkillRaceClassInfoEntity;
 import org.jmangos.commons.entities.SpellEntity;
@@ -113,6 +111,7 @@ public class CharacterController {
         final Playercreateinfo info =
                 this.playerCreateInfoService.readPlayerCreateInfo(new PlayercreateinfoPK(race,
                         clazz));
+
         if (info == null) {
             log.error("Player create template not found for: " + clazz + " " + race);
             return SMSG_CHAR_CREATE.Code.ERROR;
@@ -142,8 +141,7 @@ public class CharacterController {
 
         // character.setExploredZones(Integer.toString(info.getZone()));
         // character.setKnownTitles("0");
-        // final PlayerLevelInfo playerLevelInfo =
-        // this.playerLevelStorages.get(race, clazz, 1);
+
         final PlayerClassLevelInfo classInfo = this.playerClassLevelInfoStorages.get(clazz, 1);
 
         // TODO: make a config to create some inital value
@@ -153,9 +151,9 @@ public class CharacterController {
 
         final CharacterPowers up = new CharacterPowers();
         characterData.setPowers(up);
-        
+
         addDefaultPowerToCharacter(characterData);
-        
+
         characterData.setPower(Powers.HEALTH, classInfo.getBasehealth());
         characterData.setPower(characterData.getPowerType(), classInfo.getBasemana());
 
@@ -167,21 +165,10 @@ public class CharacterController {
 
         mh.setMap(info.getMap());
         mh.setZone(info.getZone());
-
-        final Position pos = new Position();
-        pos.setX(info.getPositionX());
-        pos.setY(info.getPositionY());
-        pos.setZ(info.getPositionZ());
-        pos.setO(info.getOrientation());
-        mh.setPosition(pos);
+        mh.setPosition(info.getPosition().clone());
+        mh.updateHomeBindDataToCurrentData();
 
         characterData.setMovement(mh);
-
-        final HomeBindData hbd = new HomeBindData();
-        hbd.setHomeBindAreaId(info.getZone());
-        hbd.setHomeBindMapId(info.getMap());
-        hbd.setPosition(mh.getPosition().clone());
-        mh.setHomeBindData(hbd);
 
         this.characterService.createOrUpdateCharacter(characterData);
 
@@ -199,7 +186,7 @@ public class CharacterController {
      * @param characterData
      */
     private void addDefaultPowerToCharacter(final CharacterData characterData) {
-        
+
         for (final Powers power : Powers.PLAYER_CREATE_POWERS) {
             switch (power) {
                 case ENERGY:

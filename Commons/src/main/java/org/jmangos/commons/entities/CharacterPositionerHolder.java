@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -31,8 +31,10 @@ import org.jmangos.commons.enums.MovementFlags2;
 import org.jmangos.commons.enums.UpdateFlags;
 
 /**
- * The Class <tt>CharacterPositionerHolder</tt> contains all data linked with character position.</br>
+ * The Class <tt>CharacterPositionerHolder</tt> contains all data linked with
+ * character position.</br>
  * TODO attach JumpInfo to Entity
+ * 
  * @author MinimaJack
  */
 @SuppressWarnings("serial")
@@ -242,6 +244,15 @@ public class CharacterPositionerHolder extends BasicPositionerHolder implements 
     public final void setHomeBindData(final HomeBindData homeBindData) {
 
         this.homeBindData = homeBindData;
+    }
+
+    public final synchronized void updateHomeBindDataToCurrentData() {
+        if(this.homeBindData==null){
+            this.homeBindData = new HomeBindData();
+        }
+        this.homeBindData.setHomeBindAreaId(this.getZone());
+        this.homeBindData.setHomeBindMapId(this.getMap());
+        this.homeBindData.setPosition(this.getPosition().clone());
     }
 
     /**
