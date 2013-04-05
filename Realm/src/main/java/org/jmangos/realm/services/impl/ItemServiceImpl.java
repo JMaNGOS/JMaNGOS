@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -22,7 +22,6 @@ import org.jmangos.commons.entities.FieldsContainer;
 import org.jmangos.commons.entities.FieldsItem;
 import org.jmangos.commons.entities.ItemPrototype;
 import org.jmangos.commons.enums.ItemClass;
-import org.jmangos.commons.enums.ItemFlags;
 import org.jmangos.realm.dao.ItemDao;
 import org.jmangos.realm.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,8 +77,11 @@ public class ItemServiceImpl implements ItemService {
         item.setDurability(itemProto.getMaxDurability());
         item.setMaxDurability(itemProto.getMaxDurability());
         item.setStackCount(itemCount);
-        item.setFlags(ItemFlags.JUST_CREATED.getValue());
-        createOrUpdateItem(item);
+        // NEED SAVE CONTAINERS BEFORE ADD ITEMS TO THEM
+        if ((itemProto.getClazz() == ItemClass.CONTAINER.ordinal()) ||
+            (itemProto.getClazz() == ItemClass.QUIVER.ordinal())) {
+            createOrUpdateItem(item);
+        }
         item.initBits();
 
         return item;

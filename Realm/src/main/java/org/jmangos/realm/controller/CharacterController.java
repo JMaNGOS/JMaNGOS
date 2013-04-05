@@ -35,6 +35,7 @@ import org.jmangos.commons.entities.pk.PlayercreateinfoPK;
 import org.jmangos.commons.enums.Classes;
 import org.jmangos.commons.enums.EquipmentSlots;
 import org.jmangos.commons.enums.Gender;
+import org.jmangos.commons.enums.ItemFlags;
 import org.jmangos.commons.enums.ModelType;
 import org.jmangos.commons.enums.Powers;
 import org.jmangos.commons.enums.Races;
@@ -230,7 +231,7 @@ public class CharacterController {
             }
             final int stackCount = itemProto.getBuyCount();
             final FieldsItem item = this.itemService.createItem(itemProto, stackCount);
-
+            item.setFlags(ItemFlags.JUST_CREATED.getValue());
             if (startItem.getSlot() < EquipmentSlots.values().length) {
                 characterData.equipItem(EquipmentSlots.get(startItem.getSlot()), item);
             } else {

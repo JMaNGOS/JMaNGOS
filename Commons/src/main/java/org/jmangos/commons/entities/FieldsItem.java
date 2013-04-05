@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -36,7 +36,6 @@ import javax.persistence.Transient;
 import javolution.util.FastMap;
 
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.jboss.netty.buffer.ChannelBuffer;
@@ -54,7 +53,6 @@ import org.jmangos.commons.update.ObjectFields;
  */
 @SuppressWarnings("serial")
 @Entity
-@DynamicUpdate
 @Table(name = "fields_item")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.INTEGER)
