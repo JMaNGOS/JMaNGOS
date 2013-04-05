@@ -14,9 +14,6 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-/**
- * 
- */
 package org.jmangos.commons.entities.skills;
 
 import javax.persistence.DiscriminatorValue;
@@ -36,5 +33,14 @@ public class SkillCompanions extends CharacterSkill {
      * 
      */
     private static final long serialVersionUID = 6787227817705952686L;
+
+    /**
+     * 
+     */
+    public SkillCompanions() {
+        super();
+        // Max value is 1 so....
+        setMaxValue(1);
+    }
 
 }

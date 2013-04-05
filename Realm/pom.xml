@@ -152,6 +152,16 @@
 								<goals>
 									<goal>shade</goal>
 								</goals>
+								<configuration>
+									<transformers>
+										<transformer
+											implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+											<manifestEntries>
+												<Main-Class>org.jmangos.realm.RealmServer</Main-Class>
+											</manifestEntries>
+										</transformer>
+									</transformers>
+								</configuration>
 							</execution>
 						</executions>
 					</plugin>
