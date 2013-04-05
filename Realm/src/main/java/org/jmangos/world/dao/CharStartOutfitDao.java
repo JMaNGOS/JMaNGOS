@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -27,11 +27,16 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * <ol>
+ * <li><b>Class:</b> <tt>CharStartOutfitDao</tt> is {@link JpaRepository} to work with player's
+ * start items.</li>
+ * <li><b>Key:</b> is {@link Integer}</li>
+ * <li><b>Value:</b> is {@link CharStartOutfitEntity}</li>
+ * </ol>
  * @author MinimaJack
- * 
  */
 @Repository
-@Transactional(readOnly = true,value="world")
+@Transactional(readOnly = true, value = "world")
 public interface CharStartOutfitDao extends JpaRepository<CharStartOutfitEntity, Integer> {
 
     public List<CharStartOutfitEntity> findByCharsRaceAndCharsClazzAndCharsGender(
