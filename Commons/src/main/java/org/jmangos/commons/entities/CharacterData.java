@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -194,10 +194,15 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
                 (equips.getKey() * 2) +
                 1);
         }
-        for (final Entry<Integer, CharacterSkill> skill : this.skillInfo.entrySet()) {
-            this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + skill.getKey());
-            this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + skill.getKey() + 1);
-            this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + skill.getKey() + 2);
+        for (Integer i = 0; i < this.skillInfo.size(); i++) {
+            this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + i * 3);
+            if (getSkillInfo().get(i).getCurrentValue() > 0 ||
+                getSkillInfo().get(i).getMaxValue() > 0) {
+                this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + i * 3 + 1);
+            }
+            if (false) {
+                this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + i * 3 + 2);
+            }
         }
     }
 
@@ -456,16 +461,15 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
         if (this.bitSet.get(PlayerFields.PLAYER_NEXT_LEVEL_XP.getValue())) {
             ocBuffer.writeInt(getNextLevelXp());
         }
-
-        for (final Entry<Integer, CharacterSkill> skill : this.skillInfo.entrySet()) {
-            if (this.bitSet.get(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + skill.getKey()*3)) {
-                ocBuffer.writeInt(getSkillInfo(skill.getKey()).getSkillId());
+        for (Integer i = 0; i < this.skillInfo.size(); i++) {
+            if (this.bitSet.get(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + i * 3)) {
+                ocBuffer.writeInt(getSkillInfo().get(i).getSkillId());
             }
-            if (this.bitSet.get(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + skill.getKey()*3 + 1)) {
-                ocBuffer.writeShort(getSkillInfo(skill.getKey()).getMaxValue());
-                ocBuffer.writeShort(getSkillInfo(skill.getKey()).getCurrentValue());
+            if (this.bitSet.get(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + i * 3 + 1)) {
+                ocBuffer.writeShort(getSkillInfo().get(i).getCurrentValue());
+                ocBuffer.writeShort(getSkillInfo().get(i).getMaxValue());
             }
-            if (this.bitSet.get(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + skill.getKey()*3 + 2)) {
+            if (this.bitSet.get(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + i * 3 + 2)) {
                 ocBuffer.writeShort(0);
                 ocBuffer.writeShort(0);
             }

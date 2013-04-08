@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -153,9 +153,9 @@ public class CharacterController {
 
         final CharacterPowers up = new CharacterPowers();
         characterData.setPowers(up);
-        
+
         addDefaultPowerToCharacter(characterData);
-        
+
         characterData.setPower(Powers.HEALTH, classInfo.getBasehealth());
         characterData.setPower(characterData.getPowerType(), classInfo.getBasemana());
 
@@ -199,7 +199,7 @@ public class CharacterController {
      * @param characterData
      */
     private void addDefaultPowerToCharacter(final CharacterData characterData) {
-        
+
         for (final Powers power : Powers.PLAYER_CREATE_POWERS) {
             switch (power) {
                 case ENERGY:
@@ -265,6 +265,9 @@ public class CharacterController {
         for (final SkillRaceClassInfoEntity skillRaceClassInfo : skills) {
             final Integer addedSkill = skillRaceClassInfo.getSkillLine();
             CharacterController.log.debug("Add skill {}", addedSkill);
+            if (characterData.getSkillInfoBySkillId(addedSkill) != null) {
+                continue;
+            }
             final CharacterSkill chSkill = SkillFactory.getSkillById(addedSkill);
             if (chSkill != null) {
                 chSkill.setSkillId(addedSkill);
