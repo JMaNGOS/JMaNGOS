@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -216,7 +216,21 @@ public class FieldsUnit extends FieldsObject {
 
     public void initBitsForCollections() {
 
-        // TODO need to be here
+        for (final Powers power : Powers.PLAYER_CREATE_POWERS) {
+            switch (power) {
+                case ENERGY:
+                case RAGE:
+                case FOCUS:
+                case RUNE:
+                case HEALTH:
+                case MANA:
+                    this.bitSet.set(UnitField.UNIT_FIELD_HEALTH.getValue() + power.ordinal());
+                    this.bitSet.set(UnitField.UNIT_FIELD_MAXHEALTH.getValue() + power.ordinal());
+                break;
+                default:
+                    break;
+            }
+        }
     }
 
     /*

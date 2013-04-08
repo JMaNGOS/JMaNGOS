@@ -192,18 +192,26 @@ public class CharacterController {
             switch (power) {
                 case ENERGY:
                     characterData.setPower(power, 100);
+                    characterData.setCreatePower(power, 100);
+                    characterData.setMaxPower(power, 100);
                 break;
                 case RAGE:
                     characterData.setPower(power, 1000);
+                    characterData.setCreatePower(power, 1000);
+                    characterData.setMaxPower(power, 1000);
                 break;
                 case FOCUS:
                     characterData.setPower(power, 100);
+                    characterData.setCreatePower(power, 100);
+                    characterData.setMaxPower(power, 100);
                 break;
                 case RUNE:
                     characterData.setPower(power, 8);
+                    characterData.setCreatePower(power, 8);
+                    characterData.setMaxPower(power, 8);
                 break;
                 default:
-                    characterData.setPower(power, 0);
+                    break;
             }
         }
     }
@@ -292,7 +300,6 @@ public class CharacterController {
             final PlayerLevelInfo playerLevelInfo =
                     this.playerLevelStorages.get(characterData.getRace(), characterData.getClazz(),
                             characterData.getLevel());
-
             /**
              * Avoid hibernate bug
              */
@@ -303,10 +310,21 @@ public class CharacterController {
                 characterData.setStat(stat, statValue);
                 characterData.setCreateStat(stat, statValue);
             }
+           
+            
+            /**
+             * from FieldsUnit
+             */
             characterData.setBaseHealth(classInfo.getBasehealth());
             characterData.setBaseMana(classInfo.getBasemana());
+            
             characterData.setCreatePower(Powers.HEALTH, classInfo.getBasehealth());
-            characterData.setCreatePower(characterData.getPowerType(), classInfo.getBasemana());
+            characterData.setMaxPower(Powers.HEALTH, classInfo.getBasehealth());
+            
+            if (characterData.getPowerType() == Powers.MANA) {
+                characterData.setCreatePower(characterData.getPowerType(), classInfo.getBasemana());
+                characterData.setMaxPower(characterData.getPowerType(), classInfo.getBasemana());
+            }
             initModelForCharacter(characterData);
             characterData.setMaxLevel(80);
             characterData.setNextLevelXp(this.playerXpForLevelStorages.getXpForLevel((byte) characterData.getLevel()));
@@ -328,30 +346,7 @@ public class CharacterController {
         final CharacterData characterData =
                 this.characterService.readCharacterByName(characterName);
         if (characterData != null) {
-            final PlayerClassLevelInfo classInfo =
-                    this.playerClassLevelInfoStorages.get(characterData.getClazz(),
-                            characterData.getLevel());
-
-            characterData.setCreatePower(Powers.HEALTH, classInfo.getBasehealth());
-            characterData.setCreatePower(characterData.getPowerType(), classInfo.getBasemana());
-            characterData.setBaseHealth(classInfo.getBasehealth());
-            characterData.setBaseMana(classInfo.getBasemana());
-            /**
-             * Avoid hibernate bug
-             */
-            characterData.initBitsForCollections();
-
-            final PlayerLevelInfo playerLevelInfo =
-                    this.playerLevelStorages.get(characterData.getRace(), characterData.getClazz(),
-                            characterData.getLevel());
-            for (final Stats stat : Stats.values()) {
-                final int statValue = playerLevelInfo.getStats(stat);
-                characterData.setStat(stat, statValue);
-                characterData.setCreateStat(stat, statValue);
-            }
-
-            characterData.updateMaxPowers();
-            return characterData;
+            return loadCharacterByGuid(characterData.getGuid());
         }
         return null;
     }

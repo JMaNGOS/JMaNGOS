@@ -93,22 +93,28 @@ public class CharacterPowers implements Serializable {
 
     public CharacterPowers() {
 
+        System.out.println("Set max powers");
         for (final Powers initPower : Powers.values()) {
             switch (initPower) {
                 case ENERGY:
                     this.maxPower.put(initPower, 100);
+                    this.createPower.put(initPower, 100);
                 break;
                 case RAGE:
                     this.maxPower.put(initPower, 1000);
+                    this.createPower.put(initPower, 1000);
                 break;
                 case FOCUS:
                     this.maxPower.put(initPower, 100);
+                    this.createPower.put(initPower, 100);
                 break;
                 case RUNE:
                     this.maxPower.put(initPower, 8);
+                    this.createPower.put(initPower, 8);
                 break;
                 case RUNIC_POWER:
                     this.maxPower.put(initPower, 1000);
+                    this.createPower.put(initPower, 1000);
                 break;
                 default:
                     this.maxPower.put(initPower, 0);
