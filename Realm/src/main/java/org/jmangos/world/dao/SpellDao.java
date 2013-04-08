@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -25,8 +25,16 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * @author MinimaJack
+ * <p>
+ * <ol>
+ * <li><b>Class:</b> <tt>SpellDao</tt> is {@link JpaRepository} to get Spell
+ * prototype for given spell id.
+ * <li><b>Key:</b> is {@link Integer}
+ * <li><b>Value:</b> is {@link SpellEntity}
+ * </ol>
+ * </p>
  * 
+ * @author MinimaJack
  */
 @Repository
 @Transactional(readOnly = true)

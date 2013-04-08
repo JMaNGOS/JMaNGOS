@@ -24,12 +24,10 @@ import org.jmangos.commons.entities.CharacterPositionerHolder;
 import org.jmangos.commons.entities.CharacterPowers;
 import org.jmangos.commons.entities.CharacterSkill;
 import org.jmangos.commons.entities.FieldsItem;
-import org.jmangos.commons.entities.HomeBindData;
 import org.jmangos.commons.entities.ItemPrototype;
 import org.jmangos.commons.entities.PlayerClassLevelInfo;
 import org.jmangos.commons.entities.PlayerLevelInfo;
 import org.jmangos.commons.entities.Playercreateinfo;
-import org.jmangos.commons.entities.Position;
 import org.jmangos.commons.entities.SkillLineAbilityEntity;
 import org.jmangos.commons.entities.SkillRaceClassInfoEntity;
 import org.jmangos.commons.entities.SpellEntity;
@@ -37,6 +35,7 @@ import org.jmangos.commons.entities.pk.PlayercreateinfoPK;
 import org.jmangos.commons.enums.Classes;
 import org.jmangos.commons.enums.EquipmentSlots;
 import org.jmangos.commons.enums.Gender;
+import org.jmangos.commons.enums.ItemFlags;
 import org.jmangos.commons.enums.ModelType;
 import org.jmangos.commons.enums.Powers;
 import org.jmangos.commons.enums.Races;
@@ -113,6 +112,7 @@ public class CharacterController {
         final Playercreateinfo info =
                 this.playerCreateInfoService.readPlayerCreateInfo(new PlayercreateinfoPK(race,
                         clazz));
+
         if (info == null) {
             log.error("Player create template not found for: " + clazz + " " + race);
             return SMSG_CHAR_CREATE.Code.ERROR;
@@ -142,8 +142,7 @@ public class CharacterController {
 
         // character.setExploredZones(Integer.toString(info.getZone()));
         // character.setKnownTitles("0");
-        // final PlayerLevelInfo playerLevelInfo =
-        // this.playerLevelStorages.get(race, clazz, 1);
+
         final PlayerClassLevelInfo classInfo = this.playerClassLevelInfoStorages.get(clazz, 1);
 
         // TODO: make a config to create some inital value
@@ -167,21 +166,10 @@ public class CharacterController {
 
         mh.setMap(info.getMap());
         mh.setZone(info.getZone());
-
-        final Position pos = new Position();
-        pos.setX(info.getPositionX());
-        pos.setY(info.getPositionY());
-        pos.setZ(info.getPositionZ());
-        pos.setO(info.getOrientation());
-        mh.setPosition(pos);
+        mh.setPosition(info.getPosition().clone());
+        mh.updateHomeBindDataToCurrentData();
 
         characterData.setMovement(mh);
-
-        final HomeBindData hbd = new HomeBindData();
-        hbd.setHomeBindAreaId(info.getZone());
-        hbd.setHomeBindMapId(info.getMap());
-        hbd.setPosition(mh.getPosition().clone());
-        mh.setHomeBindData(hbd);
 
         this.characterService.createOrUpdateCharacter(characterData);
 
@@ -243,7 +231,7 @@ public class CharacterController {
             }
             final int stackCount = itemProto.getBuyCount();
             final FieldsItem item = this.itemService.createItem(itemProto, stackCount);
-
+            item.setFlags(ItemFlags.JUST_CREATED.getValue());
             if (startItem.getSlot() < EquipmentSlots.values().length) {
                 characterData.equipItem(EquipmentSlots.get(startItem.getSlot()), item);
             } else {

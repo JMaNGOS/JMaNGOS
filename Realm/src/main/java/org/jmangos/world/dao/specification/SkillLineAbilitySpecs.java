@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -31,8 +31,23 @@ import org.jmangos.commons.enums.Races;
 import org.springframework.data.jpa.domain.Specification;
 
 /**
- * @author MinimaJack
+ * <p>
+ * <ol>
+ * <li><b>Class:</b> <tt>SkillLineAbilitySpecs</tt> contains specification for
+ * {@link SkillLineAbilityEntity}
+ * <ol>
+ * <b>Specifications:</b>
+ * <li>isRaceMatchToRaceMask
+ * <li>isClassMatchToClassMask
+ * <li>isLearnOnGetSkill
+ * <li>isSkill
+ * </ol>
+ * <li><b>Used in:
+ * {@link org.jmangos.world.services.impl.SkillLineAbilityServiceImpl}</b>
+ * </ol>
+ * </p>
  * 
+ * @author MinimaJack
  */
 public class SkillLineAbilitySpecs {
 
