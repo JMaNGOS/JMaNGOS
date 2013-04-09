@@ -232,12 +232,15 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
 
                 return baseStam + (moreStam * 10);
             case MANA:
-                final int intellect = getStat(Stats.INTELLECT);
+                if (this.getPowerType() == Powers.MANA) {
+                    final int intellect = getStat(Stats.INTELLECT);
 
-                final int baseInt = (intellect < 20) ? intellect : 20;
-                final int moreInt = intellect - baseInt;
+                    final int baseInt = (intellect < 20) ? intellect : 20;
+                    final int moreInt = intellect - baseInt;
 
-                return baseInt + (moreInt * 15);
+                    return baseInt + (moreInt * 15);
+                }
+                return 0;
             default:
                 return 0;
         }
