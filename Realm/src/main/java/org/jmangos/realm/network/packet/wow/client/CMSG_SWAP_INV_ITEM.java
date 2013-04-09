@@ -52,6 +52,7 @@ public class CMSG_SWAP_INV_ITEM extends AbstractWoWClientPacket {
 
     @Override
     protected void runImpl() {
-
+        this.getPlayer().getCharacterData().getInventory().get(dst);
+        this.getPlayer().getCharacterData().getInventory().get(src);
     }
 }

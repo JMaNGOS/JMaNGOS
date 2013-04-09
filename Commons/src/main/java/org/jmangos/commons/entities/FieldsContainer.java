@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -34,6 +34,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.jboss.netty.buffer.ChannelBuffer;
+import org.jmangos.commons.enums.TypeID;
 import org.jmangos.commons.enums.TypeMask;
 import org.jmangos.commons.update.ContainerFields;
 import org.slf4j.Logger;
@@ -76,7 +77,16 @@ public class FieldsContainer extends FieldsItem {
 
         super();
     }
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.test.subentities.BaseObject#getTypeId()
+     */
+    @Override
+    protected int getTypeId() {
 
+        return TypeID.CONTAINER.getValue();
+    }
     /*
      * (non-Javadoc)
      * 
@@ -87,6 +97,8 @@ public class FieldsContainer extends FieldsItem {
 
         super.initBits();
         setType(getType() | TypeMask.CONTAINER.getValue());
+        this.bitSet.set(ContainerFields.CONTAINER_FIELD_NUM_SLOTS.getValue());
+
     }
 
     public final boolean addToInventory(final Byte slot, final FieldsItem item) {
@@ -189,7 +201,9 @@ public class FieldsContainer extends FieldsItem {
         };
         for (byte i = 0; i < getSlotsCount(); i++) {
             if (this.bitSet.get(ContainerFields.CONTAINER_FIELD_SLOT_1.getValue() + (i * 2))) {
-                ocBuffer.writeLong(this.inventory.get(i).getGuid());
+                if (this.inventory.get(i) != null) {
+                    ocBuffer.writeLong(this.inventory.get(i).getGuid());
+                }
             }
         }
         return ocBuffer;

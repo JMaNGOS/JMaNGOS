@@ -143,7 +143,6 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
         setResistances(0, 45);
         setAttackPower(20);
         setRangedAttackPower(10);
-
         setDodgeMul(4.8438873f);
         setCritPercentage(4.8405f);
         setRangedCritPercentage(4.8405f);
@@ -265,12 +264,12 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
     public int buildCreateBlock(final ChannelBuffer updateBlock, final CharacterData characterData) {
 
         int count = 0;
-        count += super.buildCreateBlock(updateBlock, characterData);
         if (this == characterData) {
             for (final Entry<Integer, FieldsItem> equips : getInventory().entrySet()) {
                 count += equips.getValue().buildCreateBlock(updateBlock, characterData);
             }
         }
+        count += super.buildCreateBlock(updateBlock, characterData);
         return count;
     }
 
@@ -299,29 +298,23 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
             final FieldsItem lastEquipItem = getInventory().get(equipmentSlots.ordinal());
             addToInventory(lastEquipItem);
         }
-        /**
-         * TODO fix crash client from hunter bugs now put it to pack
-         */
-        if (EquipmentSlots.BAGS.contains(equipmentSlots)) {
-            addToInventory(item);
-        } else {
-            getInventory().put(equipmentSlots.ordinal(), item);
 
-            if (EquipmentSlots.ITEMS.contains(equipmentSlots)) {
-                this.bitSet.set(PlayerFields.PLAYER_VISIBLE_ITEM_1_ENTRYID.getValue() +
-                    (equipmentSlots.ordinal() * 2));
-                if ((item.getEnchants().get(EnchantmentSlot.PERM) != null) ||
-                    (item.getEnchants().get(EnchantmentSlot.TEMP) != null)) {
-                    this.bitSet.set(PlayerFields.PLAYER_VISIBLE_ITEM_1_ENCHANTMENT.getValue() +
-                        (equipmentSlots.ordinal() * 2));
-                }
-            }
-            this.bitSet.set(PlayerFields.PLAYER_FIELD_INV_SLOT_HEAD.getValue() +
+        getInventory().put(equipmentSlots.ordinal(), item);
+
+        if (EquipmentSlots.ITEMS.contains(equipmentSlots)) {
+            this.bitSet.set(PlayerFields.PLAYER_VISIBLE_ITEM_1_ENTRYID.getValue() +
                 (equipmentSlots.ordinal() * 2));
-            this.bitSet.set(PlayerFields.PLAYER_FIELD_INV_SLOT_HEAD.getValue() +
-                (equipmentSlots.ordinal() * 2) +
-                1);
+            if ((item.getEnchants().get(EnchantmentSlot.PERM) != null) ||
+                (item.getEnchants().get(EnchantmentSlot.TEMP) != null)) {
+                this.bitSet.set(PlayerFields.PLAYER_VISIBLE_ITEM_1_ENCHANTMENT.getValue() +
+                    (equipmentSlots.ordinal() * 2));
+            }
         }
+        this.bitSet.set(PlayerFields.PLAYER_FIELD_INV_SLOT_HEAD.getValue() +
+            (equipmentSlots.ordinal() * 2));
+        this.bitSet.set(PlayerFields.PLAYER_FIELD_INV_SLOT_HEAD.getValue() +
+            (equipmentSlots.ordinal() * 2) +
+            1);
         if (item.getPrototype().getBonding() == ItemBondingsCondition.WHEN_EQUIPPED.ordinal()) {
             item.addFlags(ItemFlags.BINDED.getValue());
         }
