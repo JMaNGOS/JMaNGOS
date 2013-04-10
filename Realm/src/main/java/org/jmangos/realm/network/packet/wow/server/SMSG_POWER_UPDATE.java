@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -16,6 +16,8 @@
  ******************************************************************************/
 package org.jmangos.realm.network.packet.wow.server;
 
+import org.jmangos.commons.enums.Powers;
+import org.jmangos.commons.model.player.Player;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 
 /**
@@ -23,7 +25,19 @@ import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
  */
 public class SMSG_POWER_UPDATE extends AbstractWoWServerPacket {
 
-    /*
+    private Player player;
+    private Powers power;
+    private int value;
+
+    public SMSG_POWER_UPDATE() {}
+
+    public SMSG_POWER_UPDATE(final Player player, final Powers power, final int newValue) {
+        this.player = player;
+        this.power = power;
+        this.value = newValue;
+    }
+
+    /**
      * (non-Javadoc)
      * 
      * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
@@ -31,8 +45,8 @@ public class SMSG_POWER_UPDATE extends AbstractWoWServerPacket {
     @Override
     public void writeImpl() {
 
-        writeB(new byte[] { 0x01, 0x01, 0x00, 0x64, 0x00, 0x00, 0x00 });
-
+        writeB(this.player.getCharacterData().getPacketGuid());
+        writeC(this.power.ordinal() - 1);
+        writeD(this.value);
     }
-
 }
