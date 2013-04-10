@@ -17,43 +17,18 @@
 package org.jmangos.commons.enums;
 
 /**
- * Enumerated <tt>ActionButtonType</tt>
+ * Enumerated <tt>ActionButtonMessageType</tt>
  * 
  * @author MinimaJack
- *         <ol> Button types
- *         <li><b>SPELL</b>
- *         <li><b>CLICK</b>
- *         <li><b>EQUIPSET</b>
- *         <li><b>MACRO</b>
- *         <li><b>ITEM</b>
+ *         <ol>
+ *         <li><b>INICIAL</b> - sent when initial action buttons get sent
+ *         <li><b>SWAP</b> - used after specialisation swaps
+ *         <li><b>CLEAR</b> - clears the action bars on client
  *         </ol>
  * 
  */
-public enum ActionButtonType {
-    SPELL(0),
-    CLICK(1),
-    EQUIPSET(32),
-    MACRO(64),
-    ITEM(128);
-
-    private int value;
-
-    ActionButtonType(int value) {
-        this.setValue(value);
-    }
-
-    /**
-     * @return the value
-     */
-    public int getValue() {
-        return value;
-    }
-
-    /**
-     * @param value
-     *        the value to set
-     */
-    public void setValue(int value) {
-        this.value = value;
-    }
+public enum ActionButtonMessageType {
+    INICIAL,
+    SWAP,
+    CLEAR;
 }
