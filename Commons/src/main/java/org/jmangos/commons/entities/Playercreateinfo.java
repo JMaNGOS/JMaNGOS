@@ -28,6 +28,8 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.jmangos.commons.entities.pk.PlayercreateinfoPK;
 
 /**
@@ -63,7 +65,8 @@ public class Playercreateinfo {
     @Embedded
     Position position;
 
-    @OneToMany(mappedBy = "playercreateinfoPK", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "playercreateinfoPK", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(value = FetchMode.SUBSELECT)
     private Set<PlayerCreateAction> actions;
 
     public Playercreateinfo() {

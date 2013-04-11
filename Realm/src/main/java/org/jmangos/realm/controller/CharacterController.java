@@ -17,8 +17,10 @@
 package org.jmangos.realm.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.jmangos.commons.entities.CharStartOutfitEntity;
+import org.jmangos.commons.entities.CharacterButton;
 import org.jmangos.commons.entities.CharacterData;
 import org.jmangos.commons.entities.CharacterPositionerHolder;
 import org.jmangos.commons.entities.CharacterPowers;
@@ -26,12 +28,14 @@ import org.jmangos.commons.entities.CharacterSkill;
 import org.jmangos.commons.entities.FieldsItem;
 import org.jmangos.commons.entities.ItemPrototype;
 import org.jmangos.commons.entities.PlayerClassLevelInfo;
+import org.jmangos.commons.entities.PlayerCreateAction;
 import org.jmangos.commons.entities.PlayerLevelInfo;
 import org.jmangos.commons.entities.Playercreateinfo;
 import org.jmangos.commons.entities.SkillLineAbilityEntity;
 import org.jmangos.commons.entities.SkillRaceClassInfoEntity;
 import org.jmangos.commons.entities.SpellEntity;
 import org.jmangos.commons.entities.pk.PlayercreateinfoPK;
+import org.jmangos.commons.enums.ActionButtonType;
 import org.jmangos.commons.enums.Classes;
 import org.jmangos.commons.enums.EquipmentSlots;
 import org.jmangos.commons.enums.Gender;
@@ -177,8 +181,36 @@ public class CharacterController {
 
         createStartSkillAndSpellToCharacter(characterData);
 
+        createStartActionButtonsToCharacter(characterData, info.getActions());
+
         this.characterService.createOrUpdateCharacter(characterData);
         return SMSG_CHAR_CREATE.Code.SUCCESS;
+    }
+
+    private void createStartActionButtonsToCharacter(final CharacterData characterData,
+            final Set<PlayerCreateAction> actions) {
+        for (final PlayerCreateAction action : actions) {
+            boolean valid = true;
+            switch (ActionButtonType.get(action.getType())) {
+                case SPELL:
+                    if (!characterData.getSpells().containsKey(action.getAction())) {
+                        valid = false;
+                    }
+                break;
+
+                default:
+                break;
+            }
+            if (valid) {
+                final CharacterButton chB = new CharacterButton();
+                chB.setAction(action.getAction());
+                chB.setButton(action.getButton());
+                chB.setButtonType(action.getType());
+                chB.setSpec(0);
+                characterData.addActionButton(chB);
+            }
+        }
+
     }
 
     /**
@@ -211,7 +243,7 @@ public class CharacterController {
                     characterData.setMaxPower(power, 8);
                 break;
                 default:
-                    break;
+                break;
             }
         }
     }
@@ -310,17 +342,16 @@ public class CharacterController {
                 characterData.setStat(stat, statValue);
                 characterData.setCreateStat(stat, statValue);
             }
-           
-            
+
             /**
              * from FieldsUnit
              */
             characterData.setBaseHealth(classInfo.getBasehealth());
             characterData.setBaseMana(classInfo.getBasemana());
-            
+
             characterData.setCreatePower(Powers.HEALTH, classInfo.getBasehealth());
             characterData.setMaxPower(Powers.HEALTH, classInfo.getBasehealth());
-            
+
             if (characterData.getPowerType() == Powers.MANA) {
                 characterData.setCreatePower(characterData.getPowerType(), classInfo.getBasemana());
                 characterData.setMaxPower(characterData.getPowerType(), classInfo.getBasemana());

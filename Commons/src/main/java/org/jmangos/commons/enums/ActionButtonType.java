@@ -56,4 +56,20 @@ public enum ActionButtonType {
     public void setValue(int value) {
         this.value = value;
     }
+    /**
+     * 
+     * @param value
+     *        - id value of the class
+     * @return Game class
+     */
+    public static ActionButtonType get(final int value) {
+
+        for (final ActionButtonType val : values()) {
+            if (val.getValue() == value) {
+                return val;
+            }
+        }
+
+        return null;
+    }
 }

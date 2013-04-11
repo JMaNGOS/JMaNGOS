@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -22,6 +22,7 @@ import java.nio.ByteOrder;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+import org.jmangos.commons.enums.ActionButtonMessageType;
 import org.jmangos.commons.model.player.Player;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
@@ -29,6 +30,7 @@ import org.jmangos.realm.RealmServer;
 import org.jmangos.realm.controller.CharacterController;
 import org.jmangos.realm.network.packet.wow.server.MSG_SET_DUNGEON_DIFFICULTY;
 import org.jmangos.realm.network.packet.wow.server.SMSG_ACCOUNT_DATA_TIMES;
+import org.jmangos.realm.network.packet.wow.server.SMSG_ACTION_BUTTONS;
 import org.jmangos.realm.network.packet.wow.server.SMSG_BINDPOINTUPDATE;
 import org.jmangos.realm.network.packet.wow.server.SMSG_INITIAL_SPELLS;
 import org.jmangos.realm.network.packet.wow.server.SMSG_INSTANCE_DIFFICULTY;
@@ -128,8 +130,8 @@ public class PlayerService {
         this.sender.send(player.getChannel(), new SMSG_MOTD("Test MotD String@test".split("@")));
         // this.sender.send(player.getChannel(), new SMSG_TALENTS_INFO());
         this.sender.send(player.getChannel(), new SMSG_INITIAL_SPELLS(player));
-        // this.sender.send(player.getChannel(), new
-        // SMSG_ACTION_BUTTONS(player));
+        this.sender.send(player.getChannel(), new SMSG_ACTION_BUTTONS(player,
+                ActionButtonMessageType.INICIAL));
         // this.sender.send(player.getChannel(), new
         // SMSG_INITIALIZE_FACTIONS());
 
