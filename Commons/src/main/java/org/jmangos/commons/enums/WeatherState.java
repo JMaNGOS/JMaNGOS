@@ -14,39 +14,40 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.jmangos.realm.network.packet.wow.server;
-
-import org.jmangos.commons.enums.Powers;
-import org.jmangos.commons.model.player.Player;
-import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
+package org.jmangos.commons.enums;
 
 /**
- * The Class SMSG_POWER_UPDATE.
+ * 
+ * @author MinimaJack
+ * 
  */
-public class SMSG_POWER_UPDATE extends AbstractWoWServerPacket {
+public enum WeatherState {
+    FINE(0),
+    LIGHT_RAIN(3),
+    MEDIUM_RAIN(4),
+    HEAVY_RAIN(5),
+    LIGHT_SNOW(6),
+    MEDIUM_SNOW(7),
+    HEAVY_SNOW(8),
+    LIGHT_SANDSTORM(22),
+    MEDIUM_SANDSTORM(41),
+    HEAVY_SANDSTORM(42),
+    THUNDERS(86),
+    BLACKRAIN(90);
 
-    private Player player;
-    private Powers power;
     private int value;
 
-    public SMSG_POWER_UPDATE() {}
+    WeatherState(final int val) {
 
-    public SMSG_POWER_UPDATE(final Player player, final Powers power, final int newValue) {
-        this.player = player;
-        this.power = power;
-        this.value = newValue;
+        this.value = val;
     }
 
     /**
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     * @return the value
      */
-    @Override
-    public void writeImpl() {
+    public final int getValue() {
 
-        writeB(this.player.getCharacterData().getPacketGuid());
-        writeC(this.power.ordinal() - 1);
-        writeD(this.value);
+        return this.value;
     }
+
 }

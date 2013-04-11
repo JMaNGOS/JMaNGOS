@@ -14,39 +14,46 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.jmangos.realm.network.packet.wow.server;
-
-import org.jmangos.commons.enums.Powers;
-import org.jmangos.commons.model.player.Player;
-import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
+package org.jmangos.commons.enums;
 
 /**
- * The Class SMSG_POWER_UPDATE.
+ * Enumerated <tt>ActionButtonType</tt>
+ * 
+ * @author MinimaJack
+ *         <ol> Button types
+ *         <li><b>SPELL</b>
+ *         <li><b>CLICK</b>
+ *         <li><b>EQUIPSET</b>
+ *         <li><b>MACRO</b>
+ *         <li><b>ITEM</b>
+ *         </ol>
+ * 
  */
-public class SMSG_POWER_UPDATE extends AbstractWoWServerPacket {
+public enum ActionButtonType {
+    SPELL(0),
+    CLICK(1),
+    EQUIPSET(32),
+    MACRO(64),
+    ITEM(128);
 
-    private Player player;
-    private Powers power;
     private int value;
 
-    public SMSG_POWER_UPDATE() {}
-
-    public SMSG_POWER_UPDATE(final Player player, final Powers power, final int newValue) {
-        this.player = player;
-        this.power = power;
-        this.value = newValue;
+    ActionButtonType(int value) {
+        this.setValue(value);
     }
 
     /**
-     * (non-Javadoc)
-     * 
-     * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
+     * @return the value
      */
-    @Override
-    public void writeImpl() {
+    public int getValue() {
+        return value;
+    }
 
-        writeB(this.player.getCharacterData().getPacketGuid());
-        writeC(this.power.ordinal() - 1);
-        writeD(this.value);
+    /**
+     * @param value
+     *        the value to set
+     */
+    public void setValue(int value) {
+        this.value = value;
     }
 }
