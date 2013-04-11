@@ -42,6 +42,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jmangos.commons.enums.EnchantmentSlot;
 import org.jmangos.commons.enums.EquipmentSlots;
 import org.jmangos.commons.enums.Gender;
+import org.jmangos.commons.enums.InventorySlots;
 import org.jmangos.commons.enums.ItemBondingsCondition;
 import org.jmangos.commons.enums.ItemClass;
 import org.jmangos.commons.enums.ItemFlags;
@@ -97,10 +98,10 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
         }
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * 
-     * @see org.jmangos.test.subentities.UnitObject#setGender(java.lang.Byte)
+     * @see org.jmangos.commons.entities.FieldsUnit#setGender(Gender)
      */
     @Override
     public void setGender(final Gender gender) {
@@ -110,10 +111,10 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
 
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * 
-     * @see org.jmangos.test.subentities.BaseObject#initBits()
+     * @see org.jmangos.commons.entities.FieldsUnit#initBits()
      */
     @Override
     public void initBits() {
@@ -194,13 +195,13 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
                 1);
         }
         for (Integer i = 0; i < this.skillInfo.size(); i++) {
-            this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + i * 3);
-            if (getSkillInfo().get(i).getCurrentValue() > 0 ||
-                getSkillInfo().get(i).getMaxValue() > 0) {
-                this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + i * 3 + 1);
+            this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + (i * 3));
+            if ((getSkillInfo().get(i).getCurrentValue() > 0) ||
+                (getSkillInfo().get(i).getMaxValue() > 0)) {
+                this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + (i * 3) + 1);
             }
             if (false) {
-                this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + i * 3 + 2);
+                this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + (i * 3) + 2);
             }
         }
     }
@@ -231,7 +232,7 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
 
                 return baseStam + (moreStam * 10);
             case MANA:
-                if (this.getPowerType() == Powers.MANA) {
+                if (getPowerType() == Powers.MANA) {
                     final int intellect = getStat(Stats.INTELLECT);
 
                     final int baseInt = (intellect < 20) ? intellect : 20;
@@ -273,10 +274,10 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
         return count;
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * 
-     * @see org.jmangos.test.subentities.BaseObject#getTypeId()
+     * @see org.jmangos.commons.entities.FieldsObject#getTypeId()
      */
     @Override
     protected int getTypeId() {
@@ -354,7 +355,7 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
 
     private Integer getFreeSlotInPack() {
 
-        for (Integer i = 23; i < 40; i++) {
+        for (Integer i = InventorySlots.ITEM_START.getValue(); i < InventorySlots.ITEM_END.getValue(); i++) {
             if (!getInventory().containsKey(i)) {
                 return i;
             }
@@ -362,12 +363,10 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
         return null;
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * 
-     * @see
-     * org.jmangos.test.subentities.ItemObject#writeValuesUpdate(java.nio.ByteBuffer
-     * )
+     * @see org.jmangos.commons.entities.FieldsObject#writeValuesUpdate()
      */
     @Override
     public ChannelBuffer writeValuesUpdate() {
@@ -458,14 +457,14 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
             ocBuffer.writeInt(getNextLevelXp());
         }
         for (Integer i = 0; i < this.skillInfo.size(); i++) {
-            if (this.bitSet.get(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + i * 3)) {
+            if (this.bitSet.get(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + (i * 3))) {
                 ocBuffer.writeInt(getSkillInfo().get(i).getSkillId());
             }
-            if (this.bitSet.get(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + i * 3 + 1)) {
+            if (this.bitSet.get(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + (i * 3) + 1)) {
                 ocBuffer.writeShort(getSkillInfo().get(i).getCurrentValue());
                 ocBuffer.writeShort(getSkillInfo().get(i).getMaxValue());
             }
-            if (this.bitSet.get(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + i * 3 + 2)) {
+            if (this.bitSet.get(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + (i * 3) + 2)) {
                 ocBuffer.writeShort(0);
                 ocBuffer.writeShort(0);
             }
