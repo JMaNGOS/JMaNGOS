@@ -32,6 +32,7 @@ import org.jmangos.realm.network.packet.wow.server.MSG_SET_DUNGEON_DIFFICULTY;
 import org.jmangos.realm.network.packet.wow.server.SMSG_ACCOUNT_DATA_TIMES;
 import org.jmangos.realm.network.packet.wow.server.SMSG_ACTION_BUTTONS;
 import org.jmangos.realm.network.packet.wow.server.SMSG_BINDPOINTUPDATE;
+import org.jmangos.realm.network.packet.wow.server.SMSG_INITIALIZE_FACTIONS;
 import org.jmangos.realm.network.packet.wow.server.SMSG_INITIAL_SPELLS;
 import org.jmangos.realm.network.packet.wow.server.SMSG_INSTANCE_DIFFICULTY;
 import org.jmangos.realm.network.packet.wow.server.SMSG_LOGIN_SETTIMESPEED;
@@ -132,8 +133,7 @@ public class PlayerService {
         this.sender.send(player.getChannel(), new SMSG_INITIAL_SPELLS(player));
         this.sender.send(player.getChannel(), new SMSG_ACTION_BUTTONS(player,
                 ActionButtonMessageType.INICIAL));
-        // this.sender.send(player.getChannel(), new
-        // SMSG_INITIALIZE_FACTIONS());
+        this.sender.send(player.getChannel(), new SMSG_INITIALIZE_FACTIONS(player));
 
         // this.sender.send(player.getChannel(), new
         // SMSG_INIT_WORLD_STATES(player));

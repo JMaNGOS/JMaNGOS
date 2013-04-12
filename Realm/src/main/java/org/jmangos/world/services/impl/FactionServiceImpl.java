@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -14,34 +14,30 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.jmangos.tools.dbcconverter.service.impl;
+package org.jmangos.world.services.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.List;
+
+import org.jmangos.commons.entities.FactionEntity;
+import org.jmangos.world.dao.FactionDao;
+import org.jmangos.world.services.FactionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-@Service
-@Qualifier(value = "dbcStorages")
-public class DbcStorages {
+@Service("factionService")
+public class FactionServiceImpl implements FactionService {
 
-    private static final Logger logger = LoggerFactory.getLogger(DbcStorages.class);
     @Autowired
-    CharOutfitService charOutfitService;
-    @Autowired
-    SpellService spellService;
-    @Autowired
-    SkillLineAbilityService skillLineAbilityService;
-    @Autowired
-    FactionService factionService;
-    
-    public void encode() {
+    private FactionDao factionDao;
 
-        logger.info("Start encoding dbc files");
-        // this.charOutfitService.saveAll();
-        // this.spellService.saveAll();
-        this.factionService.saveAll();
-        logger.info("Finished encoding dbc files");
+    @Override
+    public FactionEntity getById(final Integer id) {
+        return this.factionDao.findOne(id);
     }
+
+    @Override
+    public List<FactionEntity> readFactions() {
+        return this.factionDao.findAll();
+    }
+
 }

@@ -30,6 +30,7 @@
 		<class>org.jmangos.commons.entities.CharacterSkill</class>
 		<class>org.jmangos.commons.entities.CharacterSpell</class>
 		<class>org.jmangos.commons.entities.CharacterButton</class>
+		<class>org.jmangos.commons.entities.CharacterReputation</class>
 		<class>org.jmangos.commons.entities.FieldsItem</class>
 		<class>org.jmangos.commons.entities.FieldsContainer</class>
 		<class>org.jmangos.commons.entities.ItemCharges</class>

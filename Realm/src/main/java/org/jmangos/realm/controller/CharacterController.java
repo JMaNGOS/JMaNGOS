@@ -19,12 +19,16 @@ package org.jmangos.realm.controller;
 import java.util.List;
 import java.util.Set;
 
+import org.jmangos.commons.dataholder.Visitor;
 import org.jmangos.commons.entities.CharStartOutfitEntity;
 import org.jmangos.commons.entities.CharacterButton;
 import org.jmangos.commons.entities.CharacterData;
 import org.jmangos.commons.entities.CharacterPositionerHolder;
 import org.jmangos.commons.entities.CharacterPowers;
+import org.jmangos.commons.entities.CharacterReputation;
 import org.jmangos.commons.entities.CharacterSkill;
+import org.jmangos.commons.entities.FactionDataEntity;
+import org.jmangos.commons.entities.FactionEntity;
 import org.jmangos.commons.entities.FieldsItem;
 import org.jmangos.commons.entities.ItemPrototype;
 import org.jmangos.commons.entities.PlayerClassLevelInfo;
@@ -46,6 +50,7 @@ import org.jmangos.commons.enums.Races;
 import org.jmangos.commons.enums.Stats;
 import org.jmangos.commons.service.SkillFactory;
 import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_CREATE;
+import org.jmangos.realm.service.FactionStorages;
 import org.jmangos.realm.service.PlayerClassLevelInfoStorages;
 import org.jmangos.realm.service.PlayerLevelStorages;
 import org.jmangos.realm.service.PlayerXpForLevelStorages;
@@ -96,6 +101,9 @@ public class CharacterController {
     /** The player level storages. */
     @Autowired
     private PlayerLevelStorages playerLevelStorages;
+
+    @Autowired
+    private FactionStorages factionStorages;
 
     @Autowired
     private PlayerClassLevelInfoStorages playerClassLevelInfoStorages;
@@ -183,6 +191,8 @@ public class CharacterController {
 
         createStartActionButtonsToCharacter(characterData, info.getActions());
 
+        initFactionToCharacter(characterData);
+
         this.characterService.createOrUpdateCharacter(characterData);
         return SMSG_CHAR_CREATE.Code.SUCCESS;
     }
@@ -211,6 +221,32 @@ public class CharacterController {
             }
         }
 
+    }
+
+    private void initFactionToCharacter(final CharacterData characterData) {
+        int size = factionStorages.get().size();
+        for (int i = 0; i < size; i++) {
+            if (factionStorages.get().containsKey(i)) {
+                FactionEntity rData = factionStorages.get().get(i);
+                final CharacterReputation chR = new CharacterReputation();
+                chR.setFaction(i);
+                chR.setStanding(0);
+                final int raceMask = characterData.getRace().getMask();
+                final int classMask = characterData.getRace().getMask();
+                rData.iterate(new Visitor<FactionDataEntity>() {
+
+                    @Override
+                    public void visit(FactionDataEntity member) {
+                        if ((member.getRaceMask() == 0 || (member.getRaceMask() & raceMask) > 0) &&
+                            (member.getClassMask() == 0 || (member.getClassMask() & classMask) > 0)) {
+                            chR.setFlags(member.getFlags());
+                        }
+                    }
+                });
+                characterData.getReputations().put(i, chR);
+
+            }
+        }
     }
 
     /**

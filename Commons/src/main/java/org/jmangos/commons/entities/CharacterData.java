@@ -86,6 +86,14 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
     private final Map<Integer, CharacterButton> actionButtons =
             new FastMap<Integer, CharacterButton>();
 
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @MapKeyColumn(name = "faction", nullable = true)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JoinColumn(name = "characterId")
+    private final Map<Integer, CharacterReputation> reputations =
+            new FastMap<Integer, CharacterReputation>();
+
     @OneToOne(targetEntity = CharacterPositionerHolder.class,
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
@@ -735,6 +743,13 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
      */
     public final Map<Integer, CharacterButton> getActionButtons() {
         return this.actionButtons;
+    }
+
+    /**
+     * @return the reputations
+     */
+    public final Map<Integer, CharacterReputation> getReputations() {
+        return this.reputations;
     }
 
 }
