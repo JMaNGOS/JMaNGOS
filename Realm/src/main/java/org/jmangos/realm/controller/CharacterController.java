@@ -50,6 +50,7 @@ import org.jmangos.commons.enums.Races;
 import org.jmangos.commons.enums.Stats;
 import org.jmangos.commons.service.SkillFactory;
 import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_CREATE;
+import org.jmangos.realm.network.packet.wow.server.SMSG_INITIALIZE_FACTIONS;
 import org.jmangos.realm.service.FactionStorages;
 import org.jmangos.realm.service.PlayerClassLevelInfoStorages;
 import org.jmangos.realm.service.PlayerLevelStorages;
@@ -224,10 +225,9 @@ public class CharacterController {
     }
 
     private void initFactionToCharacter(final CharacterData characterData) {
-        int size = factionStorages.get().size();
-        for (int i = 0; i < size; i++) {
-            if (factionStorages.get().containsKey(i)) {
-                FactionEntity rData = factionStorages.get().get(i);
+        for (int i = 0; i < SMSG_INITIALIZE_FACTIONS.MINIMAL_FACTION_COUNT; i++) {
+            if (this.factionStorages.get().containsKey(i)) {
+                final FactionEntity rData = this.factionStorages.get().get(i);
                 final CharacterReputation chR = new CharacterReputation();
                 chR.setFaction(i);
                 chR.setStanding(0);
@@ -236,9 +236,9 @@ public class CharacterController {
                 rData.iterate(new Visitor<FactionDataEntity>() {
 
                     @Override
-                    public void visit(FactionDataEntity member) {
-                        if ((member.getRaceMask() == 0 || (member.getRaceMask() & raceMask) > 0) &&
-                            (member.getClassMask() == 0 || (member.getClassMask() & classMask) > 0)) {
+                    public void visit(final FactionDataEntity member) {
+                        if (((member.getRaceMask() == 0) || ((member.getRaceMask() & raceMask) > 0)) &&
+                            ((member.getClassMask() == 0) || ((member.getClassMask() & classMask) > 0))) {
                             chR.setFlags(member.getFlags());
                         }
                     }

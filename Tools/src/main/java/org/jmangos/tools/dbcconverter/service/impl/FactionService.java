@@ -62,7 +62,7 @@ public class FactionService extends AbstractDbcService<FactionEntity, FactionEnt
         this.entityManager.flush();
         FactionEntry entry = getEntry();
         do {
-            if (entry.reputationListID.get() > 0) {
+            if (entry.reputationListID.get() >= 0) {
                 FactionEntity fe = new FactionEntity();
                 fe.setName(entry.name.get());
                 fe.setId(entry.reputationListID.get());

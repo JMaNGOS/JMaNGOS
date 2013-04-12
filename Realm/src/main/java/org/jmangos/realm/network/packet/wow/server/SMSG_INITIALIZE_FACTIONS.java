@@ -26,7 +26,7 @@ import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
 public class SMSG_INITIALIZE_FACTIONS extends AbstractWoWServerPacket {
 
     private Player player;
-    private static final int MINIMAL_FACTION_COUNT = 128;
+    public static final int MINIMAL_FACTION_COUNT = 128;
 
     public SMSG_INITIALIZE_FACTIONS() {};
 
