@@ -59,7 +59,7 @@ public class SMSG_ACTION_BUTTONS extends AbstractWoWServerPacket {
             return;
         }
         Map<Integer, CharacterButton> actionButtons =
-                this.player.getCharacterData().getActionBittons();
+                this.player.getCharacterData().getActionButtons();
         for (int i = 0; i < ACTION_BUTTON_COUNT; i++) {
             if (actionButtons.containsKey(i)) {
                 CharacterButton button = actionButtons.get(i);

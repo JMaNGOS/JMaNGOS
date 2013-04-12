@@ -83,7 +83,7 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
     @MapKeyColumn(name = "button", nullable = true)
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinColumn(name = "characterId")
-    private final Map<Integer, CharacterButton> actionBittons =
+    private final Map<Integer, CharacterButton> actionButtons =
             new FastMap<Integer, CharacterButton>();
 
     @OneToOne(targetEntity = CharacterPositionerHolder.class,
@@ -180,6 +180,7 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
 
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void initBitsForCollections() {
 
@@ -208,6 +209,7 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
                 (getSkillInfo().get(i).getMaxValue() > 0)) {
                 this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + (i * 3) + 1);
             }
+            // TODO: Need check proper data.
             if (false) {
                 this.bitSet.set(PlayerFields.PLAYER_SKILL_INFO_1_1.getValue() + (i * 3) + 2);
             }
@@ -725,14 +727,14 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
     }
 
     public void addActionButton(final CharacterButton chB) {
-        this.actionBittons.put(chB.getButton(), chB);
+        this.actionButtons.put(chB.getButton(), chB);
     }
 
     /**
      * @return the actionBittons
      */
-    public final Map<Integer, CharacterButton> getActionBittons() {
-        return this.actionBittons;
+    public final Map<Integer, CharacterButton> getActionButtons() {
+        return this.actionButtons;
     }
 
 }
