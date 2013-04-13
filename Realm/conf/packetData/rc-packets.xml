@@ -54,6 +54,8 @@
         <packet name="MSG_MOVE_FALL_LAND" id="C9" state="AUTHED"/>
         <packet name="CMSG_MOVE_TIME_SKIPPED" id="2CE" state="AUTHED"/>
         <packet name="CMSG_LOGOUT_REQUEST" id="4B" state="AUTHED"/>
+        <!-- gibson implemented packets -->
+        <packet name="CMSG_CHAR_CUSTOMIZE" id="473" state="AUTHED"/>
     </opcodelist>
 	<opcodelist direction="UPSTREAM"
 		package="org.jmangos.realm.network.packet.wow.server.">
@@ -104,5 +106,8 @@
         <packet name="SMSG_QUEST_QUERY_RESPONSE" id="5D" />
         <packet name="SMSG_UPDATE_OBJECT" id="A9"/>
         <packet name="SMSG_LOGOUT_COMPLETE" id="4D"/>
+        <!-- gibson implemented packets -->
+        <packet name="SMSG_CHAR_CUSTOMIZE" id="474"/>
+
 	</opcodelist>
 </opcodes>

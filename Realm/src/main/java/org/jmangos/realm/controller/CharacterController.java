@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -50,6 +50,7 @@ import org.jmangos.commons.enums.Races;
 import org.jmangos.commons.enums.Stats;
 import org.jmangos.commons.service.SkillFactory;
 import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_CREATE;
+import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_CUSTOMIZE;
 import org.jmangos.realm.network.packet.wow.server.SMSG_INITIALIZE_FACTIONS;
 import org.jmangos.realm.service.FactionStorages;
 import org.jmangos.realm.service.PlayerClassLevelInfoStorages;
@@ -198,6 +199,32 @@ public class CharacterController {
         return SMSG_CHAR_CREATE.Code.SUCCESS;
     }
 
+    @Transactional("realm")
+    public SMSG_CHAR_CUSTOMIZE.Code updateCharacter(final long characterId, final String charNewName,
+           final Gender gender, final int skin, final int face, final int hairStyle,
+           final int hairColor, final int facialHair) {
+
+        final CharacterData characterData = loadCharacterByGuid(characterId);
+
+        if (!characterData.getName().equals(charNewName) && this.characterService.existWithName(charNewName)) {
+            CharacterController.log.debug("Username already exists: {}", charNewName);
+            return SMSG_CHAR_CUSTOMIZE.Code.NAME_IN_USE;
+        }
+
+        characterData.setName(charNewName);
+
+        // Skin, Face, Hair(style,color)
+        characterData.setPlayerBytes(skin | (face << 8) | (hairStyle << 16) | (hairColor << 24));
+
+        // Hair(facial), Bankslot
+        characterData.setPlayerBytes2((facialHair /* | (0xEE << 8) */| (0x02 << 24)));
+        characterData.setGender(gender);
+
+//        this.characterService.createOrUpdateCharacter(characterData);
+
+        return SMSG_CHAR_CUSTOMIZE.Code.SUCCESS;
+    }
+
     private void createStartActionButtonsToCharacter(final CharacterData characterData,
             final Set<PlayerCreateAction> actions) {
         for (final PlayerCreateAction action : actions) {
@@ -251,7 +278,7 @@ public class CharacterController {
 
     /**
      * Add default power to character
-     * 
+     *
      * @param characterData
      */
     private void addDefaultPowerToCharacter(final CharacterData characterData) {
@@ -286,7 +313,7 @@ public class CharacterController {
 
     /**
      * Add starting items to character
-     * 
+     *
      * @param characterData
      */
     private void createStartItemToCharacter(final CharacterData characterData) {
@@ -318,7 +345,7 @@ public class CharacterController {
 
     /**
      * Add starting skill and spells to character
-     * 
+     *
      * @param characterData
      */
     private void createStartSkillAndSpellToCharacter(final CharacterData characterData) {
@@ -404,7 +431,7 @@ public class CharacterController {
     /**
      * <b>Don't drop</b><br />
      * <i>Exist only for Test</i>
-     * 
+     *
      * @param characterName
      * @return Player
      */
