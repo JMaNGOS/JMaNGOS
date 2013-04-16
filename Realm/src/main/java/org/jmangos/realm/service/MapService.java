@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -24,7 +24,6 @@ import javax.annotation.PostConstruct;
 import org.jmangos.commons.controller.CharacterController;
 import org.jmangos.commons.model.base.Map;
 import org.jmangos.commons.service.Service;
-import org.jmangos.realm.services.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -42,6 +41,7 @@ public class MapService implements Service {
 
     @Autowired
     CharacterController characterController;
+
     /**
      * 
      * @see org.jmangos.commons.service.Service#start()
@@ -76,6 +76,7 @@ public class MapService implements Service {
             return this.maps.get(guid);
         } else {
             final Map map = new Map(guid);
+            map.setCharacterController(this.characterController);
             this.maps.put(guid, map);
             return map;
         }

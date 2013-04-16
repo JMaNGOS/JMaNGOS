@@ -80,10 +80,10 @@ public class Map {
     public boolean update() {
 
         for (final Object pl : this.playerList.values()) {
-            System.out.println("Player name: " + ((CharacterData) pl).getName());
+            this.characterController.update((CharacterData) pl);
         };
-        System.out.println("Player on map " + this.playerList.size());
-        System.out.println("units on map " + this.units.size());
+        //System.out.println("Player on map " + this.playerList.size());
+        //System.out.println("units on map " + this.units.size());
         return true;
     }
 
@@ -102,6 +102,21 @@ public class Map {
     public final void setId(final int id) {
 
         this.id = id;
+    }
+
+    /**
+     * @return the characterController
+     */
+    public CharacterController getCharacterController() {
+        return this.characterController;
+    }
+
+    /**
+     * @param characterController
+     *        the characterController to set
+     */
+    public void setCharacterController(final CharacterController characterController) {
+        this.characterController = characterController;
     }
 
 }

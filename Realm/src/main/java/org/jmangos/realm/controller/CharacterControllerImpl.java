@@ -516,4 +516,16 @@ public class CharacterControllerImpl implements CharacterController {
         characterData.setDisplayId(ModelType.NATIVE, model);
     }
 
+    @Override
+    public void update(CharacterData pl) {
+        long curtime = System.currentTimeMillis();
+        if ((curtime - pl.getLastSaveTime()) > 2000) {
+            log.info("Saving character: {}", pl.getName());
+            this.characterService.createOrUpdateCharacter(pl);
+            pl.setLastSaveTime(curtime);
+        }
+        // TODO: update character info, stats etc..
+
+    }
+
 }

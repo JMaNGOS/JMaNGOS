@@ -29,4 +29,6 @@ public interface CharacterController {
      */
     public abstract CharacterData loadCharacterByName(String characterName);
 
+    public abstract void update(CharacterData pl);
+
 }

@@ -32,6 +32,7 @@ import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import javolution.util.FastMap;
 
@@ -101,6 +102,9 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
 
     @Column(name = "atLoginFlag", nullable = true, insertable = true, updatable = true)
     private int atLoginFlag;
+
+    @Transient
+    private long lastSaveTime = System.currentTimeMillis();
 
     public void addSpell(final SpellEntity spell) {
 
@@ -750,6 +754,21 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
      */
     public final Map<Integer, CharacterReputation> getReputations() {
         return this.reputations;
+    }
+
+    /**
+     * @return the lastsavetime
+     */
+    public final long getLastSaveTime() {
+        return this.lastSaveTime;
+    }
+
+    /**
+     * @param lastsavetime
+     *        the lastsavetime to set
+     */
+    public final void setLastSaveTime(final long lastsavetime) {
+        this.lastSaveTime = lastsavetime;
     }
 
 }
