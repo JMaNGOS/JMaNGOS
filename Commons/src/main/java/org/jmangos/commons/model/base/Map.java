@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -18,6 +18,10 @@ package org.jmangos.commons.model.base;
 
 import gnu.trove.map.hash.TLongObjectHashMap;
 
+import org.jmangos.commons.controller.CharacterController;
+import org.jmangos.commons.entities.CharacterData;
+import org.jmangos.commons.entities.FieldsObject;
+
 /**
  * The Class Map.
  */
@@ -27,10 +31,13 @@ public class Map {
     int id = 0;
 
     /** The player list. */
-    TLongObjectHashMap<WorldObject> playerList = new TLongObjectHashMap<WorldObject>();
+    TLongObjectHashMap<FieldsObject> playerList = new TLongObjectHashMap<FieldsObject>();
 
     /** The units. */
-    TLongObjectHashMap<WorldObject> units = new TLongObjectHashMap<WorldObject>();
+    TLongObjectHashMap<FieldsObject> units = new TLongObjectHashMap<FieldsObject>();
+
+    // Dynamic creation...so better use setters
+    private CharacterController characterController;
 
     /**
      * Instantiates a new map.
@@ -50,14 +57,14 @@ public class Map {
      * @param plObject
      *        the pl object
      */
-    public void addObject(final WorldObject plObject) {
+    public void addObject(final FieldsObject plObject) {
 
-        switch (plObject.getObjectTypeId()) {
+        switch (plObject.getTypeId()) {
             case PLAYER:
-                this.playerList.put(plObject.getObjectId(), plObject);
+                this.playerList.put(plObject.getGuid(), plObject);
             break;
             case UNIT:
-                this.units.put(plObject.getObjectId(), plObject);
+                this.units.put(plObject.getGuid(), plObject);
             break;
             default:
             break;
@@ -73,7 +80,7 @@ public class Map {
     public boolean update() {
 
         for (final Object pl : this.playerList.values()) {
-            System.out.println("Player name: " + ((WorldObject) pl).getName());
+            System.out.println("Player name: " + ((CharacterData) pl).getName());
         };
         System.out.println("Player on map " + this.playerList.size());
         System.out.println("units on map " + this.units.size());

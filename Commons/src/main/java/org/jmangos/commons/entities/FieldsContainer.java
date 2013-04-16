@@ -83,9 +83,9 @@ public class FieldsContainer extends FieldsItem {
      * @see org.jmangos.test.subentities.BaseObject#getTypeId()
      */
     @Override
-    protected int getTypeId() {
+    public TypeID getTypeId() {
 
-        return TypeID.CONTAINER.getValue();
+        return TypeID.CONTAINER;
     }
     /*
      * (non-Javadoc)

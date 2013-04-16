@@ -40,6 +40,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * The Class UpdateService.
  */
+@org.springframework.stereotype.Service
 public class UpdateService implements Service {
 
     /** The task manager. */

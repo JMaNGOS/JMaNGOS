@@ -215,9 +215,9 @@ public class FieldsItem extends FieldsObject implements Streamable {
      * @see org.jmangos.test.subentities.BaseObject#getTypeId()
      */
     @Override
-    protected int getTypeId() {
+    public TypeID getTypeId() {
 
-        return TypeID.ITEM.getValue();
+        return TypeID.ITEM;
     }
 
     /**

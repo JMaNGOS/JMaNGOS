@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -18,14 +18,14 @@ package org.jmangos.realm.network.packet.wow.client;
 
 import java.nio.BufferUnderflowException;
 
+import org.jmangos.commons.controller.CharacterController;
+import org.jmangos.commons.enums.CharCreateCode;
 import org.jmangos.commons.enums.Classes;
 import org.jmangos.commons.enums.Gender;
 import org.jmangos.commons.enums.Races;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
-import org.jmangos.realm.controller.CharacterController;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_CREATE;
-import org.jmangos.realm.network.packet.wow.server.SMSG_CHAR_CREATE.Code;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +76,7 @@ public class CMSG_CHAR_CREATE extends AbstractWoWClientPacket {
     @Override
     protected void runImpl() {
 
-        final Code code =
+        final CharCreateCode code =
                 this.characterController.createCharacter(getAccountInfo().getObjectId(),
                         this.charName, this.charRace, this.charClass, this.gender, this.skin,
                         this.face, this.hairStyle, this.hairColor, this.facialHair);

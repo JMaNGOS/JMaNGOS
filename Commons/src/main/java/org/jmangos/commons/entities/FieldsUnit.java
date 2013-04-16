@@ -239,9 +239,9 @@ public class FieldsUnit extends FieldsObject {
      * @see org.jmangos.test.subentities.BaseObject#getTypeId()
      */
     @Override
-    protected int getTypeId() {
+    public TypeID getTypeId() {
 
-        return TypeID.UNIT.getValue();
+        return TypeID.UNIT;
     }
 
     /*

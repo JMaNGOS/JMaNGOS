@@ -298,9 +298,9 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
      * @see org.jmangos.commons.entities.FieldsObject#getTypeId()
      */
     @Override
-    protected int getTypeId() {
+    public TypeID getTypeId() {
 
-        return TypeID.PLAYER.getValue();
+        return TypeID.PLAYER;
     }
 
     @Override

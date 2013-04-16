@@ -21,8 +21,11 @@ import gnu.trove.procedure.TObjectProcedure;
 
 import javax.annotation.PostConstruct;
 
+import org.jmangos.commons.controller.CharacterController;
 import org.jmangos.commons.model.base.Map;
 import org.jmangos.commons.service.Service;
+import org.jmangos.realm.services.CharacterService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -37,6 +40,8 @@ public class MapService implements Service {
     /** The map updater. */
     private final MapUpdater mapUpdater = new MapUpdater();
 
+    @Autowired
+    CharacterController characterController;
     /**
      * 
      * @see org.jmangos.commons.service.Service#start()

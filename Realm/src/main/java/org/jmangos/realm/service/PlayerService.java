@@ -22,12 +22,12 @@ import java.nio.ByteOrder;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+import org.jmangos.commons.controller.CharacterController;
 import org.jmangos.commons.enums.ActionButtonMessageType;
 import org.jmangos.commons.model.player.Player;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.RealmServer;
-import org.jmangos.realm.controller.CharacterController;
 import org.jmangos.realm.network.packet.wow.server.MSG_SET_DUNGEON_DIFFICULTY;
 import org.jmangos.realm.network.packet.wow.server.SMSG_ACCOUNT_DATA_TIMES;
 import org.jmangos.realm.network.packet.wow.server.SMSG_ACTION_BUTTONS;
@@ -83,6 +83,9 @@ public class PlayerService {
 
     @Autowired
     private CharacterController characterController;
+
+    @Autowired
+    private MapService mapService;
 
     /** The playerlist. */
     private static TLongObjectHashMap<Player> playerlist = new TLongObjectHashMap<Player>();
@@ -141,6 +144,9 @@ public class PlayerService {
         // this.sender.send(player.getChannel(), new
         // SMSG_ALL_ACHIEVEMENT_DATA());
         this.sender.send(player.getChannel(), new SMSG_LOGIN_SETTIMESPEED());
+
+        this.mapService.getMap(player.getCharacterData().getMovement().getMap()).addObject(
+                player.getCharacterData());
         // this.sender.send(player.getChannel(), new
         // SMSG_INIT_WORLD_STATES(player));
         // this.sender.send(player.getChannel(), new SMSG_SPELL_GO());

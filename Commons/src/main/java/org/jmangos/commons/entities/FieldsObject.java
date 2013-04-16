@@ -153,7 +153,7 @@ public abstract class FieldsObject implements Streamable, Serializable {
         final UpdateType type = getCreateUpdateType();
         updateBlock.writeByte(type.getValue());
         updateBlock.writeBytes(this.packGuid);
-        updateBlock.writeByte(getTypeId());
+        updateBlock.writeByte(getTypeId().getValue());
 
         final UpdateFlags[] additionFlags = new UpdateFlags[2];
         if (this == characterData) {
@@ -165,9 +165,9 @@ public abstract class FieldsObject implements Streamable, Serializable {
         return 1;
     }
 
-    protected int getTypeId() {
+    public TypeID getTypeId() {
 
-        return TypeID.OBJECT.getValue();
+        return TypeID.OBJECT;
     }
 
     protected UpdateType getCreateUpdateType() {
