@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -29,7 +29,7 @@ import org.jboss.netty.channel.Channel;
 /**
  * The Class ReceivablePacket.
  * 
- * @author KenM
+ * @author MinimaJack
  */
 public abstract class ReceivablePacket extends AbstractPacket implements Runnable, Cloneable {
 
@@ -303,15 +303,16 @@ public abstract class ReceivablePacket extends AbstractPacket implements Runnabl
      */
     protected final Long readPackedGuid() {
 
-        long guid = 0l;
-        final byte mask = (byte) readC();
+        long guid = 0L;
+        final int mask = readC();
         if (mask == 0) {
             return guid;
         }
         int i = 0;
         while (i < 8) {
             if ((mask & (1 << i)) != 0) {
-                guid |= readC() << (i * 8);
+                long val = readC();
+                guid |= (val << (i * 8));
             }
             i++;
         }
