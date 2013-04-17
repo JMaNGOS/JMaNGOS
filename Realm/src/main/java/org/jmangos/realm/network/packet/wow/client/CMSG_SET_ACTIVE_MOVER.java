@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -24,7 +24,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * The Class CMSG_SET_ACTIVE_VOICE_CHANNEL.
+ * The Class <tt>CMSG_SET_ACTIVE_MOVER</tt>.
+ * Used to set active mover from client side.</br>
+ * TODO: Need some validating.
+ * 
+ * @author MinimaJack
  */
 @Component
 public class CMSG_SET_ACTIVE_MOVER extends AbstractWoWClientPacket {
@@ -34,9 +38,9 @@ public class CMSG_SET_ACTIVE_MOVER extends AbstractWoWClientPacket {
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
 
-        final long guid = readD();
-        skipAll();
-        logger.debug("CMSG_SET_ACTIVE_MOVER: ", guid);
+        final long guid = readQ();
+        // TODO: set active mover to CharacterMovementHolder
+        logger.info("CMSG_SET_ACTIVE_MOVER: {} ", guid);
 
     }
 
