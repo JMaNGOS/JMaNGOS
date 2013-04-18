@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (C) 2012 JMaNGOS <http://jmangos.org/> This program is free 
+	software; you can redistribute it and/or modify it under the terms of the 
+	GNU General Public License as published by the Free Software Foundation; 
+	either version 2 of the License, or (at your option) any later version. This 
+	program is distributed in the hope that it will be useful, but WITHOUT ANY 
+	WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+	FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+	You should have received a copy of the GNU General Public License along with 
+	this program. If not, see <http://www.gnu.org/licenses/>. -->
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+    http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+
+	<persistence-unit name="world">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>org.jmangos.commons.entities.PlayerLevelInfo</class>
+		<class>org.jmangos.commons.entities.PlayerClassLevelInfo</class>
+		<class>org.jmangos.commons.entities.QuestPrototype</class>
+		<class>org.jmangos.commons.entities.Playercreateinfo</class>
+		<class>org.jmangos.commons.entities.PlayerCreateAction</class>
+		<class>org.jmangos.commons.entities.PlayerXpForLevel</class>
+		<class>org.jmangos.commons.entities.SkillEntity</class>
+		
+		<class>org.jmangos.commons.entities.ItemPrototype</class>
+		<class>org.jmangos.commons.entities.CharStartOutfitEntity</class>
+		<class>org.jmangos.commons.entities.SkillRaceClassInfoEntity</class>
+		<class>org.jmangos.commons.entities.SkillTiersEntity</class>
+		<class>org.jmangos.commons.entities.SkillLineAbilityEntity</class>
+		
+		
+		
+		<class>org.jmangos.commons.entities.SpellEntity</class>
+		<class>org.jmangos.commons.entities.SpellEffectEntity</class>
+		
+		<class>org.jmangos.commons.entities.FactionEntity</class>
+		<class>org.jmangos.commons.entities.FactionDataEntity</class>
+		
+		
+		<!-- 2 -->
+		<class>org.jmangos.commons.entities.effects.SpellDamage</class>
+		<!-- 3 -->
+		<class>org.jmangos.commons.entities.effects.PeriodicDamage</class>
+		<!-- 6 -->
+		<class>org.jmangos.commons.entities.effects.ApplyAura</class>
+		<!-- 10 -->
+		<class>org.jmangos.commons.entities.effects.Heal</class>
+		<!-- 17 -->
+		<class>org.jmangos.commons.entities.effects.Shoot</class>
+		<!-- 20 -->
+		<class>org.jmangos.commons.entities.effects.Dodge</class>
+		<!-- 23 -->
+		<class>org.jmangos.commons.entities.effects.Block</class>
+		<!-- 24 -->
+		<class>org.jmangos.commons.entities.effects.CreateItem</class>
+		
+		<!-- 25 -->
+		<class>org.jmangos.commons.entities.effects.Weapon</class>
+		<!-- 26 -->
+		<class>org.jmangos.commons.entities.effects.Defence</class>
+		<!-- 31 -->
+		<class>org.jmangos.commons.entities.effects.WeaponDamagePercent</class>
+		<!-- 33 -->
+		<class>org.jmangos.commons.entities.effects.OpenLocked</class>
+		<!-- 35 -->
+		<class>org.jmangos.commons.entities.effects.ApplyAreaAura</class>
+		<!-- 37 -->
+		<class>org.jmangos.commons.entities.effects.SpellDefence</class>
+		<!-- 39 -->
+		<class>org.jmangos.commons.entities.effects.Language</class>
+		<!-- 40 -->
+		<class>org.jmangos.commons.entities.effects.DualWield</class>
+		<!-- 40 -->
+		<class>org.jmangos.commons.entities.effects.TradeSkill</class>
+		<!-- 49 -->
+		<class>org.jmangos.commons.entities.effects.Detect</class>
+		<!-- 58 -->
+		<class>org.jmangos.commons.entities.effects.WeaponDamage</class>
+		<!-- 60 -->
+		<class>org.jmangos.commons.entities.effects.Proficiency</class>
+		<!-- 63 -->
+		<class>org.jmangos.commons.entities.effects.Threat</class>
+		<!-- 64 -->
+		<class>org.jmangos.commons.entities.effects.TriggerSpell</class>
+		
+		<!-- 77 -->
+		<class>org.jmangos.commons.entities.effects.ScriptEffect</class>
+		<!-- 78 -->
+		<class>org.jmangos.commons.entities.effects.Attack</class>
+		<!-- 80 -->
+		<class>org.jmangos.commons.entities.effects.AddComboPoint</class>
+		<!-- 83 -->
+		<class>org.jmangos.commons.entities.effects.Duel</class>
+		<!-- 84 -->
+		<class>org.jmangos.commons.entities.effects.Stuck</class>
+		<!-- 95 -->
+		<class>org.jmangos.commons.entities.effects.Skinning</class>
+		<!-- 116 -->
+		<class>org.jmangos.commons.entities.effects.RemoveInsignia</class>
+		<!-- 118 -->
+		<class>org.jmangos.commons.entities.effects.Skill</class>
+		<!-- 121 -->
+		<class>org.jmangos.commons.entities.effects.WeaponDamageNormalized</class>
+		<!-- 152 -->
+		<class>org.jmangos.commons.entities.effects.SummonFriend</class>
+		<!-- 162 -->
+		<class>org.jmangos.commons.entities.effects.ActivateSpecialization</class>
+
+		<properties>
+			<property name="hibernate.dialect" value="org.jmangos.world.persistence.MySQLDialect" />
+			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/world" />
+			<property name="hibernate.connection.username" value="JMaNGOS" />
+			<property name="hibernate.connection.password" value="JMaNGOS" />
+			<property name="hibernate.c3p0.max_size" value="2" />
+			<property name="hibernate.c3p0.min_size" value="2" />
+			<property name="hibernate.c3p0.timeout" value="5000" />
+			<property name="hibernate.c3p0.max_statements" value="100" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+
+		</properties>
+	</persistence-unit>
+
+</persistence>

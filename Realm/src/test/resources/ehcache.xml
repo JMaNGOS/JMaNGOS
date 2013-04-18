@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+	updateCheck="false">
+	<diskStore path="java.io.tmpdir/EhCacheJMaNGOS" />
+
+	<defaultCache eternal="false" maxElementsInMemory="1000"
+		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
+		timeToLiveSeconds="600" memoryStoreEvictionPolicy="LRU" />
+
+	<cache name="spellCache" eternal="false" maxElementsInMemory="100"
+		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
+		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" />
+
+	<cache name="itemPrototypeCache" eternal="false"
+		maxElementsInMemory="1000" overflowToDisk="false" diskPersistent="false"
+		timeToIdleSeconds="0" timeToLiveSeconds="3600"
+		memoryStoreEvictionPolicy="LRU" />
+		
+	<cache name="skillsForRaceClassCache" eternal="false"
+		maxElementsInMemory="1000" overflowToDisk="false" diskPersistent="false"
+		timeToIdleSeconds="0" timeToLiveSeconds="3600"
+		memoryStoreEvictionPolicy="LRU" />
+		
+	<cache name="abilitiesForRaceClassSkillCache" eternal="false"
+		maxElementsInMemory="1000" overflowToDisk="false" diskPersistent="false"
+		timeToIdleSeconds="0" timeToLiveSeconds="3600"
+		memoryStoreEvictionPolicy="LRU" />
+</ehcache>

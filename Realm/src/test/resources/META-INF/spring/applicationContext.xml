@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/beans 
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd
+     http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+	<!-- bean id="MessageProducer" class="org.jmangos.test.services.impl.MessageProducerImpl" 
+		/ -->
+
+	<ehcache:annotation-driven cache-manager="ehCacheManager" />
+	<bean id="ehCacheManager" class="net.sf.ehcache.CacheManager" />
+
+	<bean id="databaseConfig" class="org.jmangos.commons.database.DatabaseConfig" />
+
+	<bean id="nettyPacketSender" class="org.jmangos.test.DummyPacketSender" />
+	<bean id="mapService" class="org.jmangos.realm.service.MapService" />
+
+
+	<bean id="commonDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close" abstract="true">
+		<property name="driverClass" value="org.jmangos.world.persistence.MySQLDialect" />
+	</bean>
+
+	<bean id="jpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="databasePlatform" value="org.jmangos.world.persistence.MySQLDialect" />
+	</bean>
+
+	<bean id="persistenceUnitManager"
+		class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
+		<property name="persistenceXmlLocations">
+			<list>
+				<value>classpath:META-INF/spring/realm/persistence.realm.xml</value>
+				<value>classpath:META-INF/spring/world/persistence.world.xml</value>
+			</list>
+		</property>
+		<property name="dataSources">
+			<map>
+				<entry key="realm" value-ref="realmDataSource" />
+				<entry key="world" value-ref="worldDataSource" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- data.first -->
+	<import resource="classpath:/META-INF/spring/world/applicationContext.world.xml" />
+
+	<!-- data.second -->
+	<import resource="classpath:/META-INF/spring/realm/applicationContext.realm.xml" />
+
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+</beans>
