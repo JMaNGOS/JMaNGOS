@@ -55,6 +55,7 @@ public class Player extends NamedObject implements ChanneledObject {
 
         setObjectId(cd.getGuid());
         setCharacterData(cd);
+        cd.setPlayer(this);
         setName(cd.getName());
     }
 

@@ -56,6 +56,7 @@ import org.jmangos.commons.enums.UnitFlags;
 import org.jmangos.commons.enums.UnitFlags2;
 import org.jmangos.commons.enums.UpdateType;
 import org.jmangos.commons.model.CanUseSpell;
+import org.jmangos.commons.model.player.Player;
 import org.jmangos.commons.update.PlayerFields;
 import org.jmangos.commons.update.UnitField;
 
@@ -72,6 +73,9 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
      */
     private static final long serialVersionUID = 4154179927325225965L;
 
+    @Transient
+    private Player player;
+    
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @MapKeyColumn(name = "spellId", nullable = true)
@@ -769,6 +773,22 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
      */
     public final void setLastSaveTime(final long lastsavetime) {
         this.lastSaveTime = lastsavetime;
+    }
+
+    
+    /**
+     * @return the player
+     */
+    public final Player getPlayer() {
+        return this.player;
+    }
+
+    
+    /**
+     * @param player the player to set
+     */
+    public final void setPlayer(Player player) {
+        this.player = player;
     }
 
 }

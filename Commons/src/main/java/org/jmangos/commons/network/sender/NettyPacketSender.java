@@ -126,4 +126,15 @@ public class NettyPacketSender implements AbstractPacketSender {
 
         channel.write(buffer);
     }
+
+    @Override
+    public void send(NetworkChannel channel, ChannelBuffer data) {
+        writeToChannel(channel, data);
+        
+    }
+
+    @Override
+    public ChannelBuffer buildPacket(SendablePacket networkPacket) {
+        return sendImpl(networkPacket);
+    }
 }

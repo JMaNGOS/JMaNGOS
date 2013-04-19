@@ -22,9 +22,12 @@ import gnu.trove.procedure.TObjectProcedure;
 import javax.annotation.PostConstruct;
 
 import org.jmangos.commons.controller.CharacterController;
+import org.jmangos.commons.controller.WeatherController;
 import org.jmangos.commons.model.base.Map;
+import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.commons.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -41,6 +44,13 @@ public class MapService implements Service {
 
     @Autowired
     CharacterController characterController;
+
+    @Autowired
+    WeatherController weatherController;
+    /** The sender. */
+    @Autowired
+    @Qualifier("nettyPacketSender")
+    private AbstractPacketSender sender;
 
     /**
      * 
@@ -77,6 +87,8 @@ public class MapService implements Service {
         } else {
             final Map map = new Map(guid);
             map.setCharacterController(this.characterController);
+            map.setWeatherController(this.weatherController);
+            map.setSender(this.sender);
             this.maps.put(guid, map);
             return map;
         }
@@ -101,7 +113,6 @@ public class MapService implements Service {
          */
         @Override
         public boolean execute(final Map map) {
-
             return map.update();
         }
     }

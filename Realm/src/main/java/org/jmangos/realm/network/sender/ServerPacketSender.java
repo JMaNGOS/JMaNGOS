@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -48,6 +48,12 @@ public class ServerPacketSender implements AbstractPacketSender {
         packet.setChannel(channel);
         final ChannelBuffer buffer = sendImpl(packet);
         writeToChannel(channel, buffer);
+    }
+
+    @Override
+    public void send(final NetworkChannel channel, final ChannelBuffer data) {
+
+        writeToChannel(channel, data);
     }
 
     /**
@@ -126,5 +132,10 @@ public class ServerPacketSender implements AbstractPacketSender {
     private void writePacket(final NetworkChannel channel, final Object buffer) {
 
         channel.write(buffer);
+    }
+
+    @Override
+    public ChannelBuffer buildPacket(SendablePacket networkPacket) {
+        return sendImpl(networkPacket);
     }
 }

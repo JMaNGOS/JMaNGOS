@@ -18,9 +18,13 @@ package org.jmangos.commons.model.base;
 
 import gnu.trove.map.hash.TLongObjectHashMap;
 
+import org.jboss.netty.buffer.ChannelBuffer;
 import org.jmangos.commons.controller.CharacterController;
+import org.jmangos.commons.controller.WeatherController;
 import org.jmangos.commons.entities.CharacterData;
 import org.jmangos.commons.entities.FieldsObject;
+import org.jmangos.commons.enums.WeatherState;
+import org.jmangos.commons.network.sender.AbstractPacketSender;
 
 /**
  * The Class Map.
@@ -30,6 +34,8 @@ public class Map {
     /** The id. */
     int id = 0;
 
+    Weather weather = new Weather();
+
     /** The player list. */
     TLongObjectHashMap<FieldsObject> playerList = new TLongObjectHashMap<FieldsObject>();
 
@@ -38,6 +44,8 @@ public class Map {
 
     // Dynamic creation...so better use setters
     private CharacterController characterController;
+    private AbstractPacketSender sender;
+    private WeatherController weatherController;
 
     /**
      * Instantiates a new map.
@@ -71,6 +79,7 @@ public class Map {
         }
 
     }
+
     /**
      * Adds the object.
      * 
@@ -91,6 +100,7 @@ public class Map {
         }
 
     }
+
     /**
      * Update.
      * 
@@ -101,8 +111,19 @@ public class Map {
         for (final Object pl : this.playerList.values()) {
             this.characterController.update((CharacterData) pl);
         };
-        //System.out.println("Player on map " + this.playerList.size());
-        //System.out.println("units on map " + this.units.size());
+        final long time = System.currentTimeMillis();
+        // TODO: move weather change time to config
+        // now for test set only rain
+        if ((time - getWeather().getLastUpdateTime()) > 15000) {
+            getWeather().setLastUpdateTime(time);
+            getWeather().setState(WeatherState.HEAVY_RAIN);
+            getWeather().setGrade(1f);
+            final ChannelBuffer data = this.weatherController.buildWeatherData(getWeather());
+
+            for (final Object pl : this.playerList.values()) {
+                this.sender.send(((CharacterData) pl).getPlayer().getChannel(), data);
+            };
+        }
         return true;
     }
 
@@ -136,6 +157,51 @@ public class Map {
      */
     public void setCharacterController(final CharacterController characterController) {
         this.characterController = characterController;
+    }
+
+    /**
+     * @return the weather
+     */
+    public final Weather getWeather() {
+        return this.weather;
+    }
+
+    /**
+     * @param weather
+     *        the weather to set
+     */
+    public final void setWeather(final Weather weather) {
+        this.weather = weather;
+    }
+
+    /**
+     * @return the weatherController
+     */
+    public final WeatherController getWeatherController() {
+        return this.weatherController;
+    }
+
+    /**
+     * @param weatherController
+     *        the weatherController to set
+     */
+    public final void setWeatherController(final WeatherController weatherController) {
+        this.weatherController = weatherController;
+    }
+
+    /**
+     * @return the sender
+     */
+    public final AbstractPacketSender getSender() {
+        return this.sender;
+    }
+
+    /**
+     * @param sender
+     *        the sender to set
+     */
+    public final void setSender(final AbstractPacketSender sender) {
+        this.sender = sender;
     }
 
 }

@@ -117,6 +117,7 @@
 		<packet name="SMSG_SPELL_GO" id="132" />
 		<packet name="SMSG_CALENDAR_SEND_NUM_PENDING" id="448" />
 		<packet name="SMSG_GMTICKET_GETTICKET" id="212"  />
+		<packet name="SMSG_WEATHER" id="2F4"  />
 
         <!-- paalgyula implemented packets -->
         <packet name="SMSG_CHAR_CREATE" id="3A"/>

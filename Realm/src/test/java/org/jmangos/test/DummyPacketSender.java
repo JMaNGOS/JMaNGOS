@@ -1,5 +1,6 @@
 package org.jmangos.test;
 
+import org.jboss.netty.buffer.ChannelBuffer;
 import org.jmangos.commons.network.model.NetworkChannel;
 import org.jmangos.commons.network.model.SendablePacket;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
@@ -30,5 +31,12 @@ public class DummyPacketSender implements AbstractPacketSender {
      */
     @Override
     public void sendAndClose(final NetworkChannel channel, final SendablePacket networkPacket) {}
+
+    @Override
+    public void send(NetworkChannel channel, ChannelBuffer data) {}
+
+    @Override
+    public ChannelBuffer buildPacket(SendablePacket networkPacket) {
+        return null; }
 
 }
