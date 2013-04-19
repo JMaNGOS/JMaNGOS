@@ -43,28 +43,32 @@ public class JumpInfo implements Serializable {
             insertable = true,
             updatable = true,
             length = 10,
-            precision = 3)
+            precision = 5,
+            scale = 5)
     float velocity;
     @Column(name = "sinAngle",
             nullable = false,
             insertable = true,
             updatable = true,
             length = 10,
-            precision = 3)
+            precision = 5,
+            scale = 5)
     float sinAngle;
     @Column(name = "cosAngle",
             nullable = false,
             insertable = true,
             updatable = true,
             length = 10,
-            precision = 3)
+            precision = 5,
+            scale = 5)
     float cosAngle;
     @Column(name = "xyspeed",
             nullable = false,
             insertable = true,
             updatable = true,
             length = 10,
-            precision = 3)
+            precision = 5,
+            scale = 5)
     float xyspeed;
 
     /**
@@ -80,8 +84,8 @@ public class JumpInfo implements Serializable {
      *        the velocity to set
      */
     public final void setVelocity(final float velocity) {
-
-        this.velocity = velocity;
+        float value = velocity * 100;
+        this.velocity = (float)Math.round(value)/100;
     }
 
     /**
@@ -97,8 +101,8 @@ public class JumpInfo implements Serializable {
      *        the sinAngle to set
      */
     public final void setSinAngle(final float sinAngle) {
-
-        this.sinAngle = sinAngle;
+        float value = sinAngle * 100;
+        this.sinAngle = (float)Math.round(value)/100;
     }
 
     /**
@@ -114,8 +118,8 @@ public class JumpInfo implements Serializable {
      *        the cosAngle to set
      */
     public final void setCosAngle(final float cosAngle) {
-
-        this.cosAngle = cosAngle;
+        float value = cosAngle * 100;
+        this.cosAngle = (float)Math.round(value)/100;
     }
 
     /**
@@ -131,8 +135,8 @@ public class JumpInfo implements Serializable {
      *        the xyspeed to set
      */
     public final void setXYSpeed(final float xyspeed) {
-
-        this.xyspeed = xyspeed;
+        float value = xyspeed * 100;
+        this.xyspeed = (float)Math.round(value)/100;
     }
 
     public void writeTo(final ChannelBuffer bb) {

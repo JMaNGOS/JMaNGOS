@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -17,11 +17,15 @@
 package org.jmangos.realm.network.handler;
 
 import org.jboss.netty.channel.ChannelHandler;
+import org.jmangos.commons.entities.CharacterData;
+import org.jmangos.commons.model.player.Player;
 import org.jmangos.commons.network.model.ConnectHandler;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.model.State;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.network.packet.wow.server.SMSG_AUTH_CHALLENGE;
+import org.jmangos.realm.service.MapService;
+import org.jmangos.realm.services.CharacterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +46,12 @@ public class RealmToClientConnectHandler implements ConnectHandler {
     @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
 
+    @Autowired
+    private MapService mapService;
+
+    @Autowired
+    CharacterService characterService;
+
     /**
      * @see org.jmangos.commons.network.model.ConnectHandler#onConnect(org.jmangos.commons.network.model.NettyNetworkChannel,
      *      org.jboss.netty.channel.ChannelHandler)
@@ -60,6 +70,11 @@ public class RealmToClientConnectHandler implements ConnectHandler {
     @Override
     public void onDisconnect(final NettyNetworkChannel networkChannel) {
 
+        final CharacterData character =
+                ((Player) networkChannel.getActiveObject()).getCharacterData();
+        // remove character from map on disconnect
+        this.characterService.createOrUpdateCharacter(character);
+        this.mapService.getMap(character.getMovement().getMap()).removeObject(character);
         log.info("Disconnection : " + networkChannel.getAddress().getHostName());
 
     }

@@ -44,14 +44,34 @@
 		<packet name="CMSG_JOIN_CHANNEL" id="097" state="AUTHED" />
 		<packet name="CMSG_GMTICKET_GETTICKET" id="211" state="AUTHED" />
 		<packet name="CMSG_UPDATE_ACCOUNT_DATA" id="20B" state="AUTHED" />
-		<packet name="MSG_MOVE_SET_FACING" id="0DA" state="AUTHED" />
 
+		<packet name="MSG_MOVE_FALL_LAND" id="C9" state="AUTHED" />
+		<packet name="MSG_MOVE_HEARTBEAT" id="EE" state="AUTHED" />
+		<packet name="MSG_MOVE_JUMP" id="BB" state="AUTHED" />
+		<packet name="MSG_MOVE_SET_FACING" id="0DA" state="AUTHED" />
+		<packet name="MSG_MOVE_SET_PITCH" id="DB" state="AUTHED" />
+		<packet name="MSG_MOVE_SET_RUN_MODE" id="C2" state="AUTHED" />
+		<packet name="MSG_MOVE_SET_WALK_MODE" id="C3" state="AUTHED" />
+		<packet name="MSG_MOVE_START_BACKWARD" id="B6" state="AUTHED" />
+		<packet name="MSG_MOVE_START_FORWARD" id="B5" state="AUTHED" />
+		<packet name="MSG_MOVE_START_PITCH_DOWN" id="C0" state="AUTHED" />
+		<packet name="MSG_MOVE_START_PITCH_UP" id="BF" state="AUTHED" />
+		<packet name="MSG_MOVE_START_STRAFE_LEFT" id="B8" state="AUTHED" />
+		<packet name="MSG_MOVE_START_STRAFE_RIGHT" id="B9" state="AUTHED" />
+		<packet name="MSG_MOVE_START_SWIM" id="CA" state="AUTHED" />
+		<packet name="MSG_MOVE_START_TURN_LEFT" id="BC" state="AUTHED" />
+		<packet name="MSG_MOVE_START_TURN_RIGHT" id="BD" state="AUTHED" />
+		<packet name="MSG_MOVE_STOP" id="BE" state="AUTHED" />
+		<packet name="MSG_MOVE_STOP_PITCH" id="C1" state="AUTHED" />
+		<packet name="MSG_MOVE_STOP_STRAFE" id="BA" state="AUTHED" />
+		<packet name="MSG_MOVE_STOP_SWIM" id="CB" state="AUTHED" />
+		<packet name="MSG_MOVE_STOP_TURN" id="BE" state="AUTHED" />
+		
         <!-- paalgyula implemented packets -->
         <packet name="CMSG_CHAR_CREATE" id="36" state="AUTHED"/>
         <packet name="CMSG_REQUEST_RAID_INFO" id="2CD" state="AUTHED"/>
         <packet name="CMSG_STANDSTATECHANGED" id="101" state="AUTHED"/>
         <packet name="CMSG_QUEST_QUERY" id="5C" state="AUTHED"/>
-        <packet name="MSG_MOVE_FALL_LAND" id="C9" state="AUTHED"/>
         <packet name="CMSG_MOVE_TIME_SKIPPED" id="2CE" state="AUTHED"/>
         <packet name="CMSG_LOGOUT_REQUEST" id="4B" state="AUTHED"/>
         <!-- gibson implemented packets -->

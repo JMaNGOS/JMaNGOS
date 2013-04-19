@@ -71,7 +71,26 @@ public class Map {
         }
 
     }
+    /**
+     * Adds the object.
+     * 
+     * @param plObject
+     *        the pl object
+     */
+    public void removeObject(final FieldsObject plObject) {
 
+        switch (plObject.getTypeId()) {
+            case PLAYER:
+                this.playerList.remove(plObject.getGuid());
+            break;
+            case UNIT:
+                this.units.remove(plObject.getGuid());
+            break;
+            default:
+            break;
+        }
+
+    }
     /**
      * Update.
      * 
