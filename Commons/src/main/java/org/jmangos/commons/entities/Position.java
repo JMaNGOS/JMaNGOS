@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -32,7 +32,8 @@ public class Position implements Cloneable, Serializable {
             insertable = true,
             updatable = true,
             length = 10,
-            precision = 0)
+            precision = 5,
+            scale = 5)
     private float x;
 
     @Column(name = "position_y",
@@ -40,7 +41,8 @@ public class Position implements Cloneable, Serializable {
             insertable = true,
             updatable = true,
             length = 10,
-            precision = 0)
+            precision = 5,
+            scale = 5)
     private float y;
 
     @Column(name = "position_z",
@@ -48,7 +50,8 @@ public class Position implements Cloneable, Serializable {
             insertable = true,
             updatable = true,
             length = 10,
-            precision = 0)
+            precision = 5,
+            scale = 5)
     private float z;
 
     @Column(name = "orientation",
@@ -56,7 +59,8 @@ public class Position implements Cloneable, Serializable {
             insertable = true,
             updatable = true,
             length = 10,
-            precision = 0)
+            precision = 5,
+            scale = 5)
     private float o;
 
     public Position() {
@@ -76,8 +80,8 @@ public class Position implements Cloneable, Serializable {
      *        the x to set
      */
     public final void setX(final float x) {
-
-        this.x = x;
+        float value = x * 100;
+        this.x = (float)Math.round(value)/100;
     }
 
     /**
@@ -93,8 +97,8 @@ public class Position implements Cloneable, Serializable {
      *        the y to set
      */
     public final void setY(final float y) {
-
-        this.y = y;
+        float value = y * 100;
+        this.y =(float)Math.round(value)/100;
     }
 
     /**
@@ -110,8 +114,8 @@ public class Position implements Cloneable, Serializable {
      *        the z to set
      */
     public final void setZ(final float z) {
-
-        this.z = z;
+        float value = z * 100;
+        this.z = (float)Math.round(value)/100;
     }
 
     /**
@@ -127,8 +131,8 @@ public class Position implements Cloneable, Serializable {
      *        the o to set
      */
     public final void setO(final float o) {
-
-        this.o = o;
+        float value = o * 100;
+        this.o = (float)Math.round(value)/100;
     }
 
     @Override
@@ -155,5 +159,12 @@ public class Position implements Cloneable, Serializable {
         bb.writeFloat(getZ());
         bb.writeFloat(getO());
 
+    }
+
+    public void readFrom(ChannelBuffer buffer) {
+        setX(buffer.readFloat());
+        setY(buffer.readFloat());
+        setZ(buffer.readFloat());
+        setO(buffer.readFloat());
     }
 }

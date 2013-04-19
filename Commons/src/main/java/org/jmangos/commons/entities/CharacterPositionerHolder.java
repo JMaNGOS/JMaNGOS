@@ -33,13 +33,12 @@ import org.jmangos.commons.enums.UpdateFlags;
 /**
  * The Class <tt>CharacterPositionerHolder</tt> contains all data linked with
  * character position.</br>
- * TODO attach JumpInfo to Entity
  * 
  * @author MinimaJack
  */
 @SuppressWarnings("serial")
-@DynamicUpdate
 @Entity
+@DynamicUpdate
 @Table(name = "character_positioner")
 public class CharacterPositionerHolder extends BasicPositionerHolder implements Serializable {
 
@@ -48,6 +47,9 @@ public class CharacterPositionerHolder extends BasicPositionerHolder implements 
 
     @Embedded
     private TransportInfo transportInfo = new TransportInfo();
+
+    @Embedded
+    private JumpInfo jumpInfo = new JumpInfo();
 
     @Embedded
     private HomeBindData homeBindData = new HomeBindData();
@@ -136,13 +138,11 @@ public class CharacterPositionerHolder extends BasicPositionerHolder implements 
         this.map = map;
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * 
-     * @see
-     * org.jmangos.test.subentities.BasicMovementHolder#buildUpdateBlock(org.jboss
-     * .netty.buffer.
-     * ChannelBuffer)
+     * @see org.jmangos.commons.entities.BasicMovementHolder#buildUpdateBlock(org.jboss
+     *      .netty.buffer. ChannelBuffer)
      */
     @Override
     public void buildUpdateData(final ChannelBuffer buffer) {
@@ -165,15 +165,9 @@ public class CharacterPositionerHolder extends BasicPositionerHolder implements 
         buffer.writeInt(getFallTime());
 
         if (MovementFlags.FALLING.contains(this.flags)) {
-            /**
-             * Need reimplement
-             */
-            /*
-             * bb.writeFloat(getJumpInfo().getVelocity());
-             * bb.writeFloat(getJumpInfo().getSinAngle());
-             * bb.writeFloat(getJumpInfo().getCosAngle());
-             * bb.writeFloat(getJumpInfo().getXyspeed());
-             */
+
+            this.jumpInfo.writeTo(buffer);
+
         }
 
         if (MovementFlags.SPLINE_ELEVATION.contains(this.flags)) {
@@ -185,6 +179,66 @@ public class CharacterPositionerHolder extends BasicPositionerHolder implements 
         }
 
         super.buildUpdateData(buffer);
+    }
+
+    public void readFrom(ChannelBuffer buffer) {
+        this.flags = buffer.readInt();
+        this.extraFlags = buffer.readShort();
+        this.setTime(buffer.readInt());
+        this.position.readFrom(buffer);
+
+        if (MovementFlags.ONTRANSPORT.contains(this.flags)) {
+            this.transportInfo.readFrom(buffer);
+        }
+        if (MovementFlags.SWIMMING.contains(this.flags) ||
+            MovementFlags.FLYING.contains(this.flags) ||
+            MovementFlags2.ALLOWPITCHING.contains(this.extraFlags)) {
+            this.setPitch(buffer.readFloat());
+        }
+
+        setFallTime(buffer.readInt());
+
+        if (MovementFlags.FALLING.contains(this.flags)) {
+
+            this.jumpInfo.readFrom(buffer);
+
+        }
+
+        if (MovementFlags.SPLINE_ELEVATION.contains(this.flags)) {
+            this.splineElevation = buffer.readFloat();
+        }
+    }
+
+    public void update(CharacterPositionerHolder chph) {
+        this.flags = chph.getFlags();
+        this.extraFlags = chph.getExtraFlags();
+        this.setTime(chph.getTime());
+        this.position.setO(chph.getPosition().getO());
+        this.position.setX(chph.getPosition().getX());
+        this.position.setY(chph.getPosition().getY());
+        this.position.setZ(chph.getPosition().getZ());
+
+        if (MovementFlags.ONTRANSPORT.contains(this.flags)) {
+            this.transportInfo = chph.getTransportInfo();
+        }
+        if (MovementFlags.SWIMMING.contains(this.flags) ||
+            MovementFlags.FLYING.contains(this.flags) ||
+            MovementFlags2.ALLOWPITCHING.contains(this.extraFlags)) {
+            this.setPitch(chph.getPitch());
+        }
+
+        setFallTime(chph.getFallTime());
+
+        if (MovementFlags.FALLING.contains(this.flags)) {
+
+            this.jumpInfo = chph.getJumpInfo();
+
+        }
+
+        if (MovementFlags.SPLINE_ELEVATION.contains(this.flags)) {
+            this.splineElevation = chph.getSplineElevation();
+        }
+
     }
 
     @Override
@@ -247,12 +301,12 @@ public class CharacterPositionerHolder extends BasicPositionerHolder implements 
     }
 
     public final synchronized void updateHomeBindDataToCurrentData() {
-        if(this.homeBindData==null){
+        if (this.homeBindData == null) {
             this.homeBindData = new HomeBindData();
         }
-        this.homeBindData.setHomeBindAreaId(this.getZone());
-        this.homeBindData.setHomeBindMapId(this.getMap());
-        this.homeBindData.setPosition(this.getPosition().clone());
+        this.homeBindData.setHomeBindAreaId(getZone());
+        this.homeBindData.setHomeBindMapId(getMap());
+        this.homeBindData.setPosition(getPosition().clone());
     }
 
     /**
@@ -338,6 +392,21 @@ public class CharacterPositionerHolder extends BasicPositionerHolder implements 
     public final void setSplineElevation(final float splineElevation) {
 
         this.splineElevation = splineElevation;
+    }
+
+    /**
+     * @return the jumpInfo
+     */
+    public final JumpInfo getJumpInfo() {
+        return this.jumpInfo;
+    }
+
+    /**
+     * @param jumpInfo
+     *        the jumpInfo to set
+     */
+    public final void setJumpInfo(final JumpInfo jumpInfo) {
+        this.jumpInfo = jumpInfo;
     }
 
 }

@@ -116,4 +116,9 @@ public class TransportInfo implements Serializable {
         throw new NotImplementedException();
     }
 
+    public void readFrom(ChannelBuffer buffer) {
+        // TODO Auto-generated method stub
+        throw new NotImplementedException();
+    }
+
 }
