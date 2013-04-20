@@ -57,8 +57,8 @@ public class CharacterSkill implements Serializable {
 
     /** The maxValue for the skill.Some skill have value of 1, some depends of level etc */
     @Basic
-    @Column(name = "maxValue")
-    private int maxValue;
+    @Column(name = "valueMax")
+    private int valueMax;
 
     /** The currentValue for the skill. */
     @Basic
@@ -103,7 +103,7 @@ public class CharacterSkill implements Serializable {
      * @return the maxValue
      */
     public final int getMaxValue() {
-        return this.maxValue;
+        return this.valueMax;
     }
 
     /**
@@ -111,7 +111,7 @@ public class CharacterSkill implements Serializable {
      *        the maxValue to set
      */
     public final void setMaxValue(final int maxValue) {
-        this.maxValue = maxValue;
+        this.valueMax = maxValue;
     }
 
     /**

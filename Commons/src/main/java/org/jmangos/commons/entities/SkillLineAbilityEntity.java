@@ -51,9 +51,9 @@ public class SkillLineAbilityEntity {
     public int forwardSpellId;
     @Column(name = "learnOnGetSkill")
     public int learnOnGetSkill;
-    @Column(name = "maxValue")
+    @Column(name = "valueMax")
     public int maxValue;
-    @Column(name = "minValue")
+    @Column(name = "valueMin")
     public int minValue;
     @Column(name = "characterPoints1")
     public int characterPoints1;
