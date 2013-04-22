@@ -23,11 +23,11 @@ import org.jmangos.tools.dbc.dataholder.DBCStruct;
 public class WorldMapAreaEntry extends DBCStruct<WorldMapAreaEntry> {
 
     @XmlAttribute(name = "id")
-    public final Unsigned32 ID = new Unsigned32();
+    public final Signed32 ID = new Signed32();
     @XmlAttribute(name = "mapId", required = true)
-    public final Unsigned32 map_id = new Unsigned32();
+    public final Signed32 map_id = new Signed32();
     @XmlAttribute(name = "areaId", required = true)
-    public final Unsigned32 area_id = new Unsigned32();
+    public final Signed32 area_id = new Signed32();
     @XmlAttribute(name = "name")
     public final InternalString internalname = new InternalString();
     @XmlAttribute(name = "y1", required = true)
@@ -41,5 +41,5 @@ public class WorldMapAreaEntry extends DBCStruct<WorldMapAreaEntry> {
     @XmlAttribute(name = "virtualMapId", required = true)
     public final Signed32 virtualMapId = new Signed32();
     public final Signed32 dungeonMap_id = new Signed32();
-    public final Unsigned32 someMapID = new Unsigned32();
+    public final Signed32 someMapID = new Signed32();
 }

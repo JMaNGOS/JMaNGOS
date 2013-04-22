@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -24,14 +24,14 @@ public class AreaTableEntry extends DBCStruct<AreaTableEntry> {
 
     @XmlAttribute(name = "id", required = true)
     public final Signed32 id = new Signed32();
-    @XmlAttribute(name = "ContinentId", required = true)
-    public final Signed32 m_ContinentID = new Signed32();
+    @XmlAttribute(name = "mapId", required = true)
+    public final Signed32 mapId = new Signed32();
     @XmlAttribute(name = "ParentAreaId", required = true)
     public final Signed32 ParentAreaID = new Signed32();
     @XmlAttribute(name = "exploreFlag", required = true)
-    public final Unsigned32 AreaBit = new Unsigned32();
+    public final Signed32 AreaBit = new Signed32();
     @XmlAttribute(name = "flags", required = true)
-    public final Unsigned32 flags = new Unsigned32();
+    public final Signed32 flags = new Signed32();
     public final Signed32 m_SoundProviderPref = new Signed32();
     public final Signed32 m_SoundProviderPrefUnderwater = new Signed32();
     public final Signed32 m_AmbienceID = new Signed32();

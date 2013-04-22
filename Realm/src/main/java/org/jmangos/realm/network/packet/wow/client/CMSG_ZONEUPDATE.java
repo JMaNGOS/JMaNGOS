@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -21,6 +21,8 @@ import java.nio.BufferUnderflowException;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.realm.network.packet.wow.server.SMSG_INIT_WORLD_STATES;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -30,6 +32,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CMSG_ZONEUPDATE extends AbstractWoWClientPacket {
+
+    Logger log = LoggerFactory.getLogger(CMSG_ZONEUPDATE.class);
 
     /** The new zone. */
     @SuppressWarnings("unused")
@@ -47,6 +51,7 @@ public class CMSG_ZONEUPDATE extends AbstractWoWClientPacket {
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
 
         this.newZone = readD();
+        log.info("Enter new zone {}", newZone);
 
     }
 

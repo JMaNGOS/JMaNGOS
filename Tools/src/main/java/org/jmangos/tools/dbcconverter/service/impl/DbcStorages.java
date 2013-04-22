@@ -37,6 +37,10 @@ public class DbcStorages {
     SkillRaceClassInfoService skillRaceClassInfoService;
     @Autowired
     FactionService factionService;
+    @Autowired
+    WorldMapAreaService worldMapAreaService;
+    @Autowired
+    AreaTableService areaTableService;
 
     public void encode() {
 
@@ -46,6 +50,8 @@ public class DbcStorages {
         this.skillRaceClassInfoService.saveAll();
         this.spellService.saveAll();
         this.factionService.saveAll();
+        this.worldMapAreaService.saveAll();
+        this.areaTableService.saveAll();
         logger.info("Finished encoding dbc files");
     }
 }
