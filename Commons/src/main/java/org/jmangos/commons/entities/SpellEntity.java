@@ -23,6 +23,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -214,10 +215,11 @@ public class SpellEntity implements Visitable<SpellEffectEntity>, AddedRemoved {
     @Column(name = "EquippedItemInventoryTypeMask")
     private int EquippedItemInventoryTypeMask;
 
-    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "spell")
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @MapKeyColumn(name = "number", nullable = true)
     @Fetch(value = FetchMode.SUBSELECT)
+    @JoinColumn(name = "spell_id")
     private final Map<Integer, SpellEffectEntity> effects =
             new FastMap<Integer, SpellEffectEntity>();
 

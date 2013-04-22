@@ -63,7 +63,7 @@ public class FactionService extends AbstractDbcService<FactionEntity, FactionEnt
         FactionEntry entry = getEntry();
         do {
             if (entry.reputationListID.get() >= 0) {
-                FactionEntity fe = new FactionEntity();
+                final FactionEntity fe = new FactionEntity();
                 fe.setName(entry.name.get());
                 fe.setId(entry.reputationListID.get());
                 fe.setSpilloverMaxRankIn(entry.spilloverMaxRankIn.get());
@@ -72,11 +72,11 @@ public class FactionService extends AbstractDbcService<FactionEntity, FactionEnt
                 fe.setSpilloverRateOut(entry.spilloverRateOut.get());
                 fe.setTeam(entry.team.get());
                 for (int i = 0; i < 4; i++) {
-                    if (entry.BaseRepClassMask[i].get() > 0 ||
-                        entry.BaseRepRaceMask[i].get() > 0 ||
-                        entry.BaseRepValue[i].get() > 0 ||
-                        entry.ReputationFlags[i].get() > 0) {
-                        FactionDataEntity fde = new FactionDataEntity();
+                    if ((entry.BaseRepClassMask[i].get() > 0) ||
+                        (entry.BaseRepRaceMask[i].get() > 0) ||
+                        (entry.BaseRepValue[i].get() > 0) ||
+                        (entry.ReputationFlags[i].get() > 0)) {
+                        final FactionDataEntity fde = new FactionDataEntity();
                         fde.setClassMask(entry.BaseRepClassMask[i].get());
                         fde.setRaceMask(entry.BaseRepRaceMask[i].get());
                         fde.setValue(entry.BaseRepValue[i].get());
@@ -94,7 +94,7 @@ public class FactionService extends AbstractDbcService<FactionEntity, FactionEnt
     @Override
     public String getDbcPath() {
 
-        return "./../realm/dbc/Faction.dbc";
+        return "./../Realm/dbc/Faction.dbc";
     }
 
 }

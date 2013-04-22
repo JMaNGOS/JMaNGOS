@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -34,13 +34,17 @@ public class DbcStorages {
     @Autowired
     SkillLineAbilityService skillLineAbilityService;
     @Autowired
+    SkillRaceClassInfoService skillRaceClassInfoService;
+    @Autowired
     FactionService factionService;
-    
+
     public void encode() {
 
         logger.info("Start encoding dbc files");
-        // this.charOutfitService.saveAll();
-        // this.spellService.saveAll();
+        this.charOutfitService.saveAll();
+        this.skillLineAbilityService.saveAll();
+        this.skillRaceClassInfoService.saveAll();
+        this.spellService.saveAll();
         this.factionService.saveAll();
         logger.info("Finished encoding dbc files");
     }

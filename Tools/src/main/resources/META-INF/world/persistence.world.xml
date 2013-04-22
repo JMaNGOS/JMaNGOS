@@ -14,6 +14,7 @@
 		<class>org.jmangos.commons.entities.FactionEntity</class>
 		<class>org.jmangos.commons.entities.FactionDataEntity</class>
 		<class>org.jmangos.commons.entities.SkillLineAbilityEntity</class>
+		<class>org.jmangos.commons.entities.SkillRaceClassInfoEntity</class>
 
 		<properties>
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />

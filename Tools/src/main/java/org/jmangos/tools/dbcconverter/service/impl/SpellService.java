@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -61,7 +61,6 @@ public class SpellService extends AbstractDbcService<SpellEntity, SpellEntry> {
     public void saveAll() {
 
         this.entityManager.flush();
-        int sreagCounter = 0;
         SpellEntry entry = getEntry();
         do {
             final SpellEntity se = new SpellEntity();
@@ -116,8 +115,6 @@ public class SpellService extends AbstractDbcService<SpellEntity, SpellEntry> {
             se.setTotem1(entry.Totem[0].get());
             se.setTotem2(entry.Totem[1].get());
             for (int j = 0; j < 8; j++) {
-                if(j==0 && entry.Reagent[0].get() > 0)
-                    sreagCounter++;
                 se.setReagent(j, entry.Reagent[j].get());
                 se.setReagentCount(j, entry.ReagentCount[j].get());
             }
@@ -197,16 +194,15 @@ public class SpellService extends AbstractDbcService<SpellEntity, SpellEntry> {
                 }
 
             }
-            //this.entityManager.persist(se);
+            this.entityManager.persist(se);
         } while ((entry = entry.next()) != null);
-        System.out.println("sreagCounter " + sreagCounter);
 
     }
 
     @Override
     public String getDbcPath() {
 
-        return "./../realm/dbc/Spell.dbc";
+        return "./../Realm/dbc/Spell.dbc";
     }
 
 }

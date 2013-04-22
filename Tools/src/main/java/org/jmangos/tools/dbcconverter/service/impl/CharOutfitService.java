@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -24,8 +24,8 @@ import javax.persistence.PersistenceContext;
 
 import javolution.io.Struct.Signed32;
 
-import org.jmangos.commons.entities.CharStartOutfitEntity;
 import org.jmangos.commons.entities.CharClassRaceGender;
+import org.jmangos.commons.entities.CharStartOutfitEntity;
 import org.jmangos.commons.enums.Classes;
 import org.jmangos.commons.enums.EquipmentSlots;
 import org.jmangos.commons.enums.Gender;
@@ -68,9 +68,9 @@ public class CharOutfitService
     public void saveAll() {
 
         CharStartOutfitEntry entry = getEntry();
-        Classes[] classes = Classes.values();
-        Races[] rases = Races.values();
-        Gender[] genders = Gender.values();
+        final Classes[] classes = Classes.values();
+        final Races[] rases = Races.values();
+        final Gender[] genders = Gender.values();
         do {
             int numbItem = 0;
             int startedFreeSlot = 23;
@@ -104,7 +104,7 @@ public class CharOutfitService
     @Override
     public String getDbcPath() {
 
-        return "./../realm/dbc/Charstartoutfit.dbc";
+        return "./../Realm/dbc/CharStartOutfit.dbc";
     }
 
     public static EquipmentSlots findEquipSlot(final InventoryType inventoryType) {
