@@ -21,7 +21,7 @@ import org.jmangos.commons.enums.InventoryType;
 import org.jmangos.commons.enums.TypeID;
 import org.jmangos.commons.enums.TypeMask;
 import org.jmangos.commons.model.base.WorldObject;
-import org.jmangos.commons.model.base.update.ItemFields;
+import org.jmangos.commons.update.ItemFields;
 
 /**
  * The Class Item.
