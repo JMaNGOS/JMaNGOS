@@ -61,7 +61,7 @@
 		<packet name="MSG_MOVE_START_SWIM" id="CA" state="AUTHED" />
 		<packet name="MSG_MOVE_START_TURN_LEFT" id="BC" state="AUTHED" />
 		<packet name="MSG_MOVE_START_TURN_RIGHT" id="BD" state="AUTHED" />
-		<packet name="MSG_MOVE_STOP" id="BE" state="AUTHED" />
+		<packet name="MSG_MOVE_STOP" id="B7" state="AUTHED" />
 		<packet name="MSG_MOVE_STOP_PITCH" id="C1" state="AUTHED" />
 		<packet name="MSG_MOVE_STOP_STRAFE" id="BA" state="AUTHED" />
 		<packet name="MSG_MOVE_STOP_SWIM" id="CB" state="AUTHED" />
