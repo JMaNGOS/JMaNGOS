@@ -21,13 +21,9 @@ import gnu.trove.procedure.TObjectProcedure;
 
 import javax.annotation.PostConstruct;
 
-import org.jmangos.commons.controller.CharacterController;
-import org.jmangos.commons.controller.WeatherController;
 import org.jmangos.commons.model.base.Map;
-import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.commons.service.Service;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.jmangos.commons.service.ServiceContent;
 import org.springframework.stereotype.Component;
 
 /**
@@ -41,16 +37,6 @@ public class MapService implements Service {
 
     /** The map updater. */
     private final MapUpdater mapUpdater = new MapUpdater();
-
-    @Autowired
-    CharacterController characterController;
-
-    @Autowired
-    WeatherController weatherController;
-    /** The sender. */
-    @Autowired
-    @Qualifier("nettyPacketSender")
-    private AbstractPacketSender sender;
 
     /**
      * 
@@ -85,10 +71,8 @@ public class MapService implements Service {
         if (this.maps.contains(guid)) {
             return this.maps.get(guid);
         } else {
-            final Map map = new Map(guid);
-            map.setCharacterController(this.characterController);
-            map.setWeatherController(this.weatherController);
-            map.setSender(this.sender);
+            final Map map = ServiceContent.getContext().getBean(Map.class);
+            map.setId(guid);
             this.maps.put(guid, map);
             return map;
         }

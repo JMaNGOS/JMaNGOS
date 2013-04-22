@@ -25,10 +25,18 @@ import org.jmangos.commons.entities.CharacterData;
 import org.jmangos.commons.entities.FieldsObject;
 import org.jmangos.commons.enums.WeatherState;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * The Class Map.
  */
+@Component(value = "map")
+@Scope(value = "prototype")
+@Lazy(value = true)
 public class Map {
 
     /** The id. */
@@ -43,8 +51,12 @@ public class Map {
     TLongObjectHashMap<FieldsObject> units = new TLongObjectHashMap<FieldsObject>();
 
     // Dynamic creation...so better use setters
+    @Autowired
     private CharacterController characterController;
+    @Autowired
+    @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
+    @Autowired
     private WeatherController weatherController;
 
     /**
@@ -53,10 +65,9 @@ public class Map {
      * @param id
      *        the id
      */
-    public Map(final int id) {
+    public Map() {
 
         super();
-        this.id = id;
     }
 
     /**
