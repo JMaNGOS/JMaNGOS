@@ -22,14 +22,14 @@
 		<class>org.jmangos.commons.entities.Playercreateinfo</class>
 		<class>org.jmangos.commons.entities.PlayerCreateAction</class>
 		<class>org.jmangos.commons.entities.PlayerXpForLevel</class>
-		<class>org.jmangos.commons.entities.SkillEntity</class>
+		<class>org.jmangos.commons.entities.CharacterPowers</class>
 		
 		<class>org.jmangos.commons.entities.ItemPrototype</class>
 		<class>org.jmangos.commons.entities.CharStartOutfitEntity</class>
 		<class>org.jmangos.commons.entities.SkillRaceClassInfoEntity</class>
 		<class>org.jmangos.commons.entities.SkillTiersEntity</class>
 		<class>org.jmangos.commons.entities.SkillLineAbilityEntity</class>
-		
+		<class>org.jmangos.commons.entities.Creature</class>
 		
 		
 		<class>org.jmangos.commons.entities.SpellEntity</class>
@@ -118,7 +118,7 @@
 			<property name="hibernate.c3p0.min_size" value="2" />
 			<property name="hibernate.c3p0.timeout" value="5000" />
 			<property name="hibernate.c3p0.max_statements" value="100" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<!-- property name="hibernate.hbm2ddl.auto" value="update" / -->
 
 		</properties>
 	</persistence-unit>

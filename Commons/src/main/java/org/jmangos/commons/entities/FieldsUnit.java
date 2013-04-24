@@ -19,6 +19,7 @@ package org.jmangos.commons.entities;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
@@ -52,7 +53,15 @@ import org.jmangos.commons.update.UnitField;
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class FieldsUnit extends FieldsObject {
-
+    @Basic
+    @Column(name = "name",
+            nullable = true,
+            insertable = true,
+            updatable = true,
+            length = 255,
+            precision = 0)
+    private String name;
+    
     @Transient
     private long charm;
     @Transient
@@ -72,7 +81,7 @@ public class FieldsUnit extends FieldsObject {
     @Transient
     private int channelSpell;
 
-    @Column(name = "bytes", nullable = false, insertable = true, updatable = true)
+    @Column(name = "bytes", nullable = true, insertable = true, updatable = true)
     private int bytes;
 
     @OneToOne(targetEntity = CharacterPowers.class,
@@ -1391,6 +1400,23 @@ public class FieldsUnit extends FieldsObject {
     public final void setHoverHeight(final float hoverHeight) {
 
         this.hoverHeight = hoverHeight;
+    }
+
+    /**
+     * @return the name
+     */
+    public final String getName() {
+
+        return this.name;
+    }
+
+    /**
+     * @param name
+     *        the name to set
+     */
+    public final void setName(final String name) {
+
+        this.name = name;
     }
 
 }

@@ -70,15 +70,6 @@ public class FieldsCharacter extends FieldsUnit {
             precision = 0)
     private int activeSpec;
 
-    @Basic
-    @Column(name = "name",
-            nullable = true,
-            insertable = true,
-            updatable = true,
-            length = 255,
-            precision = 0)
-    private String name;
-
     @Transient
     private long duelArbiter;
 
@@ -1566,23 +1557,6 @@ public class FieldsCharacter extends FieldsUnit {
     public final int[] getGlyph() {
 
         return this.glyph;
-    }
-
-    /**
-     * @return the name
-     */
-    public final String getName() {
-
-        return this.name;
-    }
-
-    /**
-     * @param name
-     *        the name to set
-     */
-    public final void setName(final String name) {
-
-        this.name = name;
     }
 
 }
