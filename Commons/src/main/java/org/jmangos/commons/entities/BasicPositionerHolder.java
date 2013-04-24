@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -23,7 +23,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.TableGenerator;
 
 import org.apache.commons.lang.NotImplementedException;
 import org.jboss.netty.buffer.ChannelBuffer;
@@ -34,8 +33,7 @@ import org.jmangos.commons.enums.UpdateFlags;
 public class BasicPositionerHolder {
 
     @Id
-    @TableGenerator(table = "sequences", allocationSize = 1, name = "character_movement")
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "character_movement")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "guid")
     private int guid;
 
