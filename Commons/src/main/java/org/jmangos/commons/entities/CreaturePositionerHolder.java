@@ -354,4 +354,20 @@ public class CreaturePositionerHolder extends BasicPositionerHolder implements S
         this.jumpInfo = jumpInfo;
     }
 
+    
+    /**
+     * @return the speeds
+     */
+    public final float[] getSpeeds() {
+        return this.speeds;
+    }
+
+    
+    /**
+     * @param speeds the speeds to set
+     */
+    public final void setSpeeds(float[] speeds) {
+        this.speeds = speeds;
+    }
+
 }

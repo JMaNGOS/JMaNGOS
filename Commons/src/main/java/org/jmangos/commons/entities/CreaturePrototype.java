@@ -27,6 +27,12 @@ public class CreaturePrototype extends FieldsObject {
             table = "creature_template_addon",
             nullable = true)
     private Integer bytes = 0;
+    @Column(name = "speed_walk",
+            nullable = true)
+    private Float speedWalkMod = 1f;
+    @Column(name = "speed_run",
+            nullable = true)
+    private Float speedRunMod = 1f;
     /**
      * 
      */
@@ -69,6 +75,38 @@ public class CreaturePrototype extends FieldsObject {
      */
     public final void setBytes(Integer bytes) {
         this.bytes = bytes;
+    }
+
+    
+    /**
+     * @return the speedWalkMod
+     */
+    public final Float getSpeedWalkMod() {
+        return this.speedWalkMod;
+    }
+
+    
+    /**
+     * @param speedWalkMod the speedWalkMod to set
+     */
+    public final void setSpeedWalkMod(Float speedWalkMod) {
+        this.speedWalkMod = speedWalkMod;
+    }
+
+    
+    /**
+     * @return the speedRunMod
+     */
+    public final Float getSpeedRunMod() {
+        return this.speedRunMod;
+    }
+
+    
+    /**
+     * @param speedRunMod the speedRunMod to set
+     */
+    public final void setSpeedRunMod(Float speedRunMod) {
+        this.speedRunMod = speedRunMod;
     }
 
 }

@@ -27,7 +27,7 @@ public class Creature extends FieldsUnit {
     CreaturePrototype prototype;
 
     @Transient
-    Float curScale = DEFAULT_OBJECT_SCALE;
+    private Float curScale = DEFAULT_OBJECT_SCALE;
 
     @Transient
     private Integer bytes = 0;
@@ -35,7 +35,7 @@ public class Creature extends FieldsUnit {
     @Transient
     private Integer level = 0;
     
-
+    @Transient
     
     /* (non-Javadoc)
      * @see org.jmangos.commons.entities.FieldsUnit#initBits()
@@ -63,6 +63,10 @@ public class Creature extends FieldsUnit {
      */
     public final void setPrototype(final CreaturePrototype prototype) {
         this.prototype = prototype;
+        this.curScale = prototype.getScale();
+        // walk
+        this.movement.getSpeeds()[0] = this.movement.getSpeeds()[0] * prototype.getSpeedWalkMod();
+        this.movement.getSpeeds()[1] = this.movement.getSpeeds()[1] * prototype.getSpeedRunMod();
     }
 
     /**
