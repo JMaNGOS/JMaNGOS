@@ -21,6 +21,9 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -41,6 +44,11 @@ import org.jmangos.commons.enums.UpdateFlags;
 @DynamicUpdate
 @Table(name = "character_positioner")
 public class CharacterPositionerHolder extends BasicPositionerHolder implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "guid")
+    private int guid;
 
     @Embedded
     private Position position = new Position();
@@ -102,6 +110,23 @@ public class CharacterPositionerHolder extends BasicPositionerHolder implements 
 
         super();
         setUpdateFlags(UpdateFlags.LIVING.getValue() | UpdateFlags.HAS_POSITION.getValue());
+    }
+
+    /**
+     * @return the guid
+     */
+    public final int getGuid() {
+
+        return this.guid;
+    }
+
+    /**
+     * @param guid
+     *        the guid to set
+     */
+    public final void setGuid(final int guid) {
+
+        this.guid = guid;
     }
 
     /**

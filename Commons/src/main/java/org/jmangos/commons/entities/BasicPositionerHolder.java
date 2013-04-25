@@ -16,31 +16,20 @@
  ******************************************************************************/
 package org.jmangos.commons.entities;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.NotImplementedException;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jmangos.commons.enums.UpdateFlags;
 
 @MappedSuperclass
-@Inheritance(strategy = InheritanceType.JOINED)
 public class BasicPositionerHolder {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "guid")
-    private int guid;
-
-    @Column(name = "updateFlags", nullable = false, insertable = true, updatable = true)
+    @Transient
     private int updateFlags;
 
-    @Column(name = "time", nullable = false, insertable = true, updatable = true)
+    @Transient
     private int time;
 
     public BasicPositionerHolder() {
@@ -74,23 +63,6 @@ public class BasicPositionerHolder {
     protected int getHighGuid() {
 
         return 0x470;
-    }
-
-    /**
-     * @return the guid
-     */
-    public final int getGuid() {
-
-        return this.guid;
-    }
-
-    /**
-     * @param guid
-     *        the guid to set
-     */
-    public final void setGuid(final int guid) {
-
-        this.guid = guid;
     }
 
     /**
