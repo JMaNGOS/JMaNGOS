@@ -357,7 +357,7 @@ public abstract class FieldsUnit extends FieldsObject {
 
     public void setClazz(final Classes clazz) {
 
-        setBytes((getBytes() & 0xFFFF00FF) | (clazz.getValue() << 8));
+        this.setBytes((getBytes() & 0xFFFF00FF) | (clazz.getValue() << 8));
     }
 
     public Classes getClazz() {
@@ -628,7 +628,7 @@ public abstract class FieldsUnit extends FieldsObject {
      * @param level
      *        the level to set
      */
-    public void setLevel(final int level){
+    public void setLevel(final int level) {
         this.bitSet.set(UnitField.UNIT_FIELD_LEVEL.getValue());
     }
 

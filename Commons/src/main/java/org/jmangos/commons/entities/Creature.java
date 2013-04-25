@@ -64,6 +64,7 @@ public class Creature extends FieldsUnit {
     public final void setPrototype(final CreaturePrototype prototype) {
         this.prototype = prototype;
         this.curScale = prototype.getScale();
+        this.setClazz(prototype.getClazz());
         // walk
         this.movement.getSpeeds()[0] = this.movement.getSpeeds()[0] * prototype.getSpeedWalkMod();
         this.movement.getSpeeds()[1] = this.movement.getSpeeds()[1] * prototype.getSpeedRunMod();
@@ -154,7 +155,9 @@ public class Creature extends FieldsUnit {
      * @param bytes
      *        the bytes to set
      */
-    public final void setBytes(final Integer bytes) {
+    @Override
+    public final void setBytes(final int bytes) {
+        super.setBytes(bytes);
         this.bytes = bytes;
     }
 

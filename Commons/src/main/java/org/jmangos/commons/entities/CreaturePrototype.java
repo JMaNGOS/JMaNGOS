@@ -4,6 +4,8 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.persistence.SecondaryTables;
@@ -11,6 +13,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.jmangos.commons.enums.Classes;
 
 @Entity
 @Table(name = "creature_template")
@@ -45,6 +48,10 @@ public class CreaturePrototype extends FieldsObject {
             length = 255,
             precision = 0)
     private String name;
+    
+    @Column(name = "unit_class")
+    @Enumerated(EnumType.ORDINAL)
+    private Classes unitClass;
 
     /**
      * @return the name
@@ -107,6 +114,10 @@ public class CreaturePrototype extends FieldsObject {
      */
     public final void setSpeedRunMod(Float speedRunMod) {
         this.speedRunMod = speedRunMod;
+    }
+
+    public Classes getClazz() {
+        return this.unitClass;
     }
 
 }
