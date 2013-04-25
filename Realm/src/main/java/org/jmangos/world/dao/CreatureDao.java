@@ -1,6 +1,6 @@
 /*******************************************************************************
- * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * Copyright (C) 2012 JMaNGOS <http://jmangos.org/>
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -13,23 +13,18 @@
  * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
- ******************************************************************************/
-package org.jmangos.commons.model.item;
+ *******************************************************************************/
+package org.jmangos.world.dao;
+
+import org.jmangos.commons.entities.CreaturePrototype;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 /**
- * The Class Bag.
+ * @author MinimaJack
+ * 
  */
-public class Bag extends Item {
-
-    /**
-     * Instantiates a new bag.
-     * 
-     * @param objectId
-     *        the object id
-     */
-    public Bag(final long objectId) {
-
-        super(objectId);
-    }
+public interface CreatureDao
+        extends JpaRepository<CreaturePrototype, Long>, JpaSpecificationExecutor<CreaturePrototype> {
 
 }

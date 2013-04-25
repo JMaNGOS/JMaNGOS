@@ -26,4 +26,9 @@
 		maxElementsInMemory="1000" overflowToDisk="false" diskPersistent="false"
 		timeToIdleSeconds="0" timeToLiveSeconds="3600"
 		memoryStoreEvictionPolicy="LRU" />
+		
+		<cache name="org.jmangos.commons.entities.Creature" eternal="false"
+    maxElementsInMemory="10000" overflowToDisk="true" diskPersistent="false"
+    timeToIdleSeconds="0" timeToLiveSeconds="300"
+    memoryStoreEvictionPolicy="LRU" />
 </ehcache>

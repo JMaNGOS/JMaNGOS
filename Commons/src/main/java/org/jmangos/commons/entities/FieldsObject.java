@@ -269,7 +269,7 @@ public abstract class FieldsObject implements Streamable, Serializable {
     /**
      * @return the scale
      */
-    public final float getScale() {
+    public float getScale() {
 
         return this.scale;
     }
@@ -278,7 +278,7 @@ public abstract class FieldsObject implements Streamable, Serializable {
      * @param scale
      *        the scale to set
      */
-    public final void setScale(final float scale) {
+    public void setScale(final float scale) {
 
         this.bitSet.set(ObjectFields.OBJECT_FIELD_SCALE_X.getValue());
         this.scale = scale;

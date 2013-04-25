@@ -47,6 +47,20 @@ import org.jmangos.commons.update.PlayerFields;
 @MappedSuperclass
 public class FieldsCharacter extends FieldsUnit {
 
+    @Column(name = "bytes", nullable = true, insertable = true, updatable = true)
+    private Integer bytes = 0;
+    
+    @Column(name = "level", nullable = false, insertable = true, updatable = true)
+    private int level = 1;
+    
+    @Column(name = "name",
+            nullable = true,
+            insertable = true,
+            updatable = true,
+            length = 255,
+            precision = 0)
+    private String name;
+
     @Column(name = "account",
             nullable = true,
             insertable = true,
@@ -1574,6 +1588,44 @@ public class FieldsCharacter extends FieldsUnit {
     public void setPowers(final CreaturePowers powers) {
         this.powers = (CharacterPowers) powers;
 
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+
+    }
+
+    @Override
+    public int getBytes() {
+        return this.bytes;
+    }
+
+    /**
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.commons.entities.FieldsUnit#setBytes(int)
+     */
+    @Override
+    public void setBytes(int bytes) {
+        super.setBytes(bytes);
+        this.bytes = bytes;
+    }
+
+    @Override
+    public int getLevel() {
+        return this.level;
+    }
+
+    @Override
+    public void setLevel(int level) {
+       this.level = level;
+        
     }
 
 }

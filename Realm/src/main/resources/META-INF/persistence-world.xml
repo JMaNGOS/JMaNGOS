@@ -34,6 +34,8 @@
 		<class>org.jmangos.commons.entities.FactionEntity</class>
 		<class>org.jmangos.commons.entities.FactionDataEntity</class>
 		
+		<class>org.jmangos.commons.entities.Creature</class>
+		
 		<class>org.jmangos.commons.entities.SpellEntity</class>
 		<class>org.jmangos.commons.entities.SpellEffectEntity</class>
 		<class>org.jmangos.commons.entities.SkillRaceClassInfoEntity</class>

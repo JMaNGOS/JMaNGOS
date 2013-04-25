@@ -19,8 +19,6 @@ package org.jmangos.commons.entities;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
@@ -51,15 +49,6 @@ import org.jmangos.commons.update.UnitField;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class FieldsUnit extends FieldsObject {
 
-    @Basic
-    @Column(name = "name",
-            nullable = true,
-            insertable = true,
-            updatable = true,
-            length = 255,
-            precision = 0)
-    private String name;
-
     @Transient
     private long charm;
     @Transient
@@ -79,9 +68,6 @@ public abstract class FieldsUnit extends FieldsObject {
     @Transient
     private int channelSpell;
 
-    @Column(name = "bytes", nullable = true, insertable = true, updatable = true)
-    private int bytes;
-
     @Transient
     private Map<Byte, UnitRegenModifier> powerRegenModifier =
             new FastMap<Byte, UnitRegenModifier>();
@@ -91,8 +77,6 @@ public abstract class FieldsUnit extends FieldsObject {
         rfm.setFlat(6.789616f);
         this.powerRegenModifier.put((byte) 0, rfm);
     }
-    @Column(name = "level", nullable = false, insertable = true, updatable = true)
-    private int level = 1;
     @Transient
     private int faction_template = 1;
     @Transient
@@ -552,19 +536,15 @@ public abstract class FieldsUnit extends FieldsObject {
     /**
      * @return the bytes
      */
-    public final int getBytes() {
-
-        return this.bytes;
-    }
+    public abstract int getBytes();
 
     /**
      * @param bytes
      *        the bytes to set
      */
-    public final void setBytes(final int bytes) {
+    public void setBytes(final int bytes) {
 
         this.bitSet.set(UnitField.UNIT_FIELD_BYTES_0.getValue());
-        this.bytes = bytes;
     }
 
     /**
@@ -642,19 +622,13 @@ public abstract class FieldsUnit extends FieldsObject {
     /**
      * @return the level
      */
-    public final int getLevel() {
-
-        return this.level;
-    }
+    public abstract int getLevel();
 
     /**
      * @param level
      *        the level to set
      */
-    public final void setLevel(final int level) {
-
-        this.level = level;
-    }
+    public abstract void setLevel(final int level);
 
     /**
      * @return the faction_template
@@ -1392,18 +1366,12 @@ public abstract class FieldsUnit extends FieldsObject {
     /**
      * @return the name
      */
-    public final String getName() {
-
-        return this.name;
-    }
+    public abstract String getName();
 
     /**
      * @param name
      *        the name to set
      */
-    public final void setName(final String name) {
-
-        this.name = name;
-    }
+    public abstract void setName(String name);
 
 }
