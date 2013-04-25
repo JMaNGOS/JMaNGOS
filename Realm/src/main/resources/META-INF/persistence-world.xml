@@ -35,6 +35,7 @@
 		<class>org.jmangos.commons.entities.FactionDataEntity</class>
 		
 		<class>org.jmangos.commons.entities.Creature</class>
+		<class>org.jmangos.commons.entities.CreaturePrototype</class>
 		
 		<class>org.jmangos.commons.entities.SpellEntity</class>
 		<class>org.jmangos.commons.entities.SpellEffectEntity</class>
@@ -108,6 +109,10 @@
 		<class>org.jmangos.commons.entities.effects.SummonFriend</class>
 		<!-- 162 -->
 		<class>org.jmangos.commons.entities.effects.ActivateSpecialization</class>
+		<properties>
+			<property name="hibernate.cache.use_second_level_cache" value="true" />
+			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory" />
+		</properties>
 	</persistence-unit>
 
 </persistence>
