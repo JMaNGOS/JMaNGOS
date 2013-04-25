@@ -628,7 +628,9 @@ public abstract class FieldsUnit extends FieldsObject {
      * @param level
      *        the level to set
      */
-    public abstract void setLevel(final int level);
+    public void setLevel(final int level){
+        this.bitSet.set(UnitField.UNIT_FIELD_LEVEL.getValue());
+    }
 
     /**
      * @return the faction_template

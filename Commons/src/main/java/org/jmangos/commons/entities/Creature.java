@@ -165,6 +165,7 @@ public class Creature extends FieldsUnit {
 
     @Override
     public void setLevel(int level) {
+        super.setLevel(level);
         this.level= level; 
         
     }

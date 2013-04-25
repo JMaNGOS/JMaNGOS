@@ -49,10 +49,10 @@ public class FieldsCharacter extends FieldsUnit {
 
     @Column(name = "bytes", nullable = true, insertable = true, updatable = true)
     private Integer bytes = 0;
-    
+
     @Column(name = "level", nullable = false, insertable = true, updatable = true)
     private int level = 1;
-    
+
     @Column(name = "name",
             nullable = true,
             insertable = true,
@@ -1624,8 +1624,9 @@ public class FieldsCharacter extends FieldsUnit {
 
     @Override
     public void setLevel(int level) {
-       this.level = level;
-        
+        super.setLevel(level);
+        this.level = level;
+
     }
 
 }
