@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -16,19 +16,10 @@
  ******************************************************************************/
 package org.jmangos.commons.entities;
 
-import java.io.Serializable;
-import java.util.Map;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import javolution.util.FastMap;
 
 import org.apache.commons.lang.NotImplementedException;
 import org.jmangos.commons.enums.Powers;
@@ -39,21 +30,7 @@ import org.jmangos.commons.enums.Powers;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "character_powers")
-public class CharacterPowers implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "guid")
-    private int guid;
-
-    @Basic
-    @Column(name = "health")
-    private int health;
-
-    /** The MANA. */
-    @Basic
-    @Column(name = "mana")
-    private int mana;
+public class CharacterPowers extends CreaturePowers {
 
     /** The RAGE. */
     @Basic
@@ -85,75 +62,35 @@ public class CharacterPowers implements Serializable {
     @Column(name = "runic")
     private int runicPower;
 
-    @Transient
-    private final Map<Powers, Integer> maxPower = new FastMap<Powers, Integer>(8);
-
-    @Transient
-    private final Map<Powers, Integer> createPower = new FastMap<Powers, Integer>(8);
-
     public CharacterPowers() {
 
-        System.out.println("Set max powers");
         for (final Powers initPower : Powers.values()) {
             switch (initPower) {
                 case ENERGY:
-                    this.maxPower.put(initPower, 100);
-                    this.createPower.put(initPower, 100);
+                    setMaxPower(initPower, 100);
+                    setCreatePower(initPower, 100);
                 break;
                 case RAGE:
-                    this.maxPower.put(initPower, 1000);
-                    this.createPower.put(initPower, 1000);
+                    setMaxPower(initPower, 1000);
+                    setCreatePower(initPower, 1000);
                 break;
                 case FOCUS:
-                    this.maxPower.put(initPower, 100);
-                    this.createPower.put(initPower, 100);
+                    setMaxPower(initPower, 100);
+                    setCreatePower(initPower, 100);
                 break;
                 case RUNE:
-                    this.maxPower.put(initPower, 8);
-                    this.createPower.put(initPower, 8);
+                    setMaxPower(initPower, 8);
+                    setCreatePower(initPower, 8);
                 break;
                 case RUNIC_POWER:
-                    this.maxPower.put(initPower, 1000);
-                    this.createPower.put(initPower, 1000);
+                    setMaxPower(initPower, 1000);
+                    setCreatePower(initPower, 1000);
                 break;
                 default:
-                    this.maxPower.put(initPower, 0);
+                    setMaxPower(initPower, 0);
             }
         }
-    }
 
-    /**
-     * @return the health
-     */
-    public final int getHealth() {
-
-        return this.health;
-    }
-
-    /**
-     * @param health
-     *        the health to set
-     */
-    public final void setHealth(final int health) {
-
-        this.health = health;
-    }
-
-    /**
-     * @return the mana
-     */
-    public final int getMana() {
-
-        return this.mana;
-    }
-
-    /**
-     * @param mana
-     *        the mana to set
-     */
-    public final void setMana(final int mana) {
-
-        this.mana = mana;
     }
 
     /**
@@ -258,26 +195,8 @@ public class CharacterPowers implements Serializable {
         this.runicPower = runicPower;
     }
 
-    /**
-     * @return the maxPower
-     */
-    public final int getMaxPower(final Powers power) {
-
-        return this.maxPower.get(power);
-    }
-
-    /**
-     * @return the maxPower
-     */
-    public final int getCreatePower(final Powers power) {
-
-        final Integer cp = this.createPower.get(power);
-
-        return (cp != null) ? cp : 0;
-    }
-
+    @Override
     public int getPower(final Powers power) {
-
         switch (power) {
             case MANA:
                 return getMana();
@@ -300,6 +219,7 @@ public class CharacterPowers implements Serializable {
         }
     }
 
+    @Override
     public void setPower(final Powers power, final int value) {
 
         switch (power) {
@@ -332,14 +252,4 @@ public class CharacterPowers implements Serializable {
         }
     }
 
-    public void setMaxPower(final Powers power, final int value) {
-
-        this.maxPower.put(power, value);
-    }
-
-    public void setCreatePower(final Powers power, final int value) {
-
-        this.createPower.put(power, value);
-
-    }
 }

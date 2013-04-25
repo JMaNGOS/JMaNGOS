@@ -20,13 +20,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import javolution.util.FastMap;
@@ -52,7 +49,8 @@ import org.jmangos.commons.update.UnitField;
 @SuppressWarnings("serial")
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class FieldsUnit extends FieldsObject {
+public abstract class FieldsUnit extends FieldsObject {
+
     @Basic
     @Column(name = "name",
             nullable = true,
@@ -61,7 +59,7 @@ public class FieldsUnit extends FieldsObject {
             length = 255,
             precision = 0)
     private String name;
-    
+
     @Transient
     private long charm;
     @Transient
@@ -83,11 +81,6 @@ public class FieldsUnit extends FieldsObject {
 
     @Column(name = "bytes", nullable = true, insertable = true, updatable = true)
     private int bytes;
-
-    @OneToOne(targetEntity = CharacterPowers.class,
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL)
-    CharacterPowers powers;
 
     @Transient
     private Map<Byte, UnitRegenModifier> powerRegenModifier =
@@ -237,7 +230,7 @@ public class FieldsUnit extends FieldsObject {
                     this.bitSet.set(UnitField.UNIT_FIELD_MAXHEALTH.getValue() + power.ordinal());
                 break;
                 default:
-                    break;
+                break;
             }
         }
     }
@@ -577,28 +570,22 @@ public class FieldsUnit extends FieldsObject {
     /**
      * @return the powers
      */
-    public final CharacterPowers getPowers() {
-
-        return this.powers;
-    }
+    public abstract CreaturePowers getPowers();
 
     /**
      * @param powers
      *        the powers to set
      */
-    public final void setPowers(final CharacterPowers powers) {
-
-        this.powers = powers;
-    }
+    public abstract void setPowers(final CreaturePowers powers);
 
     /**
      * @param powers
      *        the powers to set
      */
-    public final void setPower(final Powers power, final int value) {
+    public void setPower(final Powers power, final int value) {
 
         this.bitSet.set(UnitField.UNIT_FIELD_HEALTH.getValue() + power.ordinal());
-        this.powers.setPower(power, value);
+        getPowers().setPower(power, value);
     }
 
     /**
@@ -608,7 +595,7 @@ public class FieldsUnit extends FieldsObject {
     public final void setCreatePower(final Powers power, final int value) {
 
         System.out.println("set create power " + power + " " + value);
-        this.powers.setCreatePower(power, value);
+        getPowers().setCreatePower(power, value);
     }
 
     /**
@@ -618,7 +605,7 @@ public class FieldsUnit extends FieldsObject {
     public final void setMaxPower(final Powers power, final int value) {
 
         this.bitSet.set(UnitField.UNIT_FIELD_MAXHEALTH.getValue() + power.ordinal());
-        this.powers.setMaxPower(power, value);
+        getPowers().setMaxPower(power, value);
     }
 
     public final Powers getPowerType() {

@@ -174,9 +174,6 @@ public class CharacterControllerImpl implements CharacterController {
 
         characterData.setXp(0);
 
-        final CharacterPowers up = new CharacterPowers();
-        characterData.setPowers(up);
-
         addDefaultPowerToCharacter(characterData);
 
         characterData.setPower(Powers.HEALTH, classInfo.getBasehealth());
@@ -302,7 +299,8 @@ public class CharacterControllerImpl implements CharacterController {
      * @param characterData
      */
     private void addDefaultPowerToCharacter(final CharacterData characterData) {
-
+        final CharacterPowers up = new CharacterPowers();
+        characterData.setPowers(up);
         for (final Powers power : Powers.PLAYER_CREATE_POWERS) {
             switch (power) {
                 case ENERGY:
@@ -517,8 +515,8 @@ public class CharacterControllerImpl implements CharacterController {
     }
 
     @Override
-    public void update(CharacterData pl) {
-        long curtime = System.currentTimeMillis();
+    public void update(final CharacterData pl) {
+        final long curtime = System.currentTimeMillis();
         if ((curtime - pl.getLastSaveTime()) > 2000) {
             log.info("Saving character: {}", pl.getName());
             this.characterService.createOrUpdateCharacter(pl);

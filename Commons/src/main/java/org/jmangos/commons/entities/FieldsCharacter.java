@@ -19,13 +19,14 @@ package org.jmangos.commons.entities;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import javolution.util.FastMap;
@@ -163,6 +164,11 @@ public class FieldsCharacter extends FieldsUnit {
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinColumn(name = "characterId")
     protected final Map<Integer, CharacterSkill> skillInfo = new FastMap<Integer, CharacterSkill>();
+
+    @OneToOne(targetEntity = CharacterPowers.class,
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
+    CharacterPowers powers;
 
     @Transient
     private int characterPoints1;
@@ -1557,6 +1563,17 @@ public class FieldsCharacter extends FieldsUnit {
     public final int[] getGlyph() {
 
         return this.glyph;
+    }
+
+    @Override
+    public CharacterPowers getPowers() {
+        return this.powers;
+    }
+
+    @Override
+    public void setPowers(final CreaturePowers powers) {
+        this.powers = (CharacterPowers) powers;
+
     }
 
 }
