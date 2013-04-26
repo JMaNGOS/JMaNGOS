@@ -18,22 +18,14 @@ package org.jmangos.tools.dbc.struct;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
+import org.jmangos.commons.enums.MapType;
 import org.jmangos.tools.dbc.dataholder.DBCStruct;
-
-enum MapTypes // Lua_IsInInstance
-{
-    MAP_COMMON, // none
-    MAP_INSTANCE, // party
-    MAP_RAID, // raid
-    MAP_BATTLEGROUND, // pvp
-    MAP_ARENA; // arena
-};
 
 public class MapEntry extends DBCStruct<MapEntry> {
 
     /** <code>0</code> */
     @XmlAttribute(name = "id", required = true)
-    public final Unsigned32 id = new Unsigned32();
+    public final Signed32 id = new Signed32();
 
     /** <code>1</code> unused */
     @XmlAttribute(name = "internalname")
@@ -41,13 +33,13 @@ public class MapEntry extends DBCStruct<MapEntry> {
 
     /** <code>2</code> */
     @XmlAttribute(name = "mapType", required = true)
-    public final Unsigned32 mapType = new Unsigned32();
+    public final Signed32 mapType = new Signed32();
 
     /** <code>3</code> some kind of flags (0x100 - CAN_CHANGE_PLAYER_DIFFICULTY) */
-    public final Unsigned32 mapFlags = new Unsigned32();
+    public final Signed32 mapFlags = new Signed32();
 
     /** <code>4</code> 0 or 1 for battlegrounds (not arenas) */
-    public final Unsigned32 isPvP = new Unsigned32();
+    public final Signed32 isPvP = new Signed32();
 
     /** <code>5-20</code> */
     @XmlAttribute(name = "name", required = true)
@@ -55,7 +47,7 @@ public class MapEntry extends DBCStruct<MapEntry> {
 
     /** <code>22</code> common zone for instance and continent map */
     @XmlAttribute(name = "linkedZone", required = true)
-    public final Unsigned32 linkedZone = new Unsigned32();
+    public final Signed32 linkedZone = new Signed32();
 
     /** <code>23-38</code> text for PvP Zones */
     @XmlAttribute(name = "hordeIntro")
@@ -67,7 +59,7 @@ public class MapEntry extends DBCStruct<MapEntry> {
 
     /** <code>57</code> index in LoadingScreens.dbc */
     @XmlAttribute(name = "multimapId", required = true)
-    public final Unsigned32 multimapId = new Unsigned32();
+    public final Signed32 multimapId = new Signed32();
 
     /** <code>58</code> BattlefieldMapIconScale */
     public final Float32 BattlefieldMapIconScale = new Float32();
@@ -100,15 +92,15 @@ public class MapEntry extends DBCStruct<MapEntry> {
 
     /** <code>63</code> expansion */
     @XmlAttribute(name = "addon", required = true)
-    public final Unsigned32 addon = new Unsigned32();
+    public final Signed32 addon = new Signed32();
 
     /** <code>64</code> expansion */
     @XmlAttribute(name = "unktime")
-    public final Unsigned32 unktime = new Unsigned32();
+    public final Signed32 unktime = new Signed32();
 
     /** <code>65</code> max players */
     @XmlAttribute(name = "maxPlayers")
-    public final Unsigned32 maxPlayers = new Unsigned32();
+    public final Signed32 maxPlayers = new Signed32();
 
     public boolean isMountAllowed() {
 
@@ -134,7 +126,7 @@ public class MapEntry extends DBCStruct<MapEntry> {
 
     private boolean isDungeon() {
 
-        return (this.mapType.get() == MapTypes.MAP_INSTANCE.ordinal()) ||
-            (this.mapType.get() == MapTypes.MAP_RAID.ordinal());
+        return (this.mapType.get() == MapType.MAP_INSTANCE.ordinal()) ||
+            (this.mapType.get() == MapType.MAP_RAID.ordinal());
     }
 }
