@@ -23,6 +23,7 @@ import org.jmangos.commons.entities.CreaturePrototype;
 import org.jmangos.commons.entities.Creature;
 import org.jmangos.commons.entities.Position;
 import org.jmangos.commons.model.base.Map;
+import org.jmangos.commons.service.CreatureService;
 import org.jmangos.world.dao.CreatureDao;
 import org.jmangos.world.dao.CreatureDataDao;
 import org.jmangos.world.dao.specification.CreatureDataSpecs;
@@ -35,7 +36,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class CreatureService {
+public class CreatureServiceImpl implements CreatureService {
 
     @Autowired
     private CreatureDataDao creatureDataDao;
@@ -43,6 +44,10 @@ public class CreatureService {
     @Autowired
     private CreatureDao creatureDao;
 
+    /* (non-Javadoc)
+     * @see org.jmangos.world.services.CreatureService#getCreatureForMapWithPositionBBox(org.jmangos.commons.model.base.Map, org.jmangos.commons.entities.Position, org.jmangos.commons.entities.Position)
+     */
+    @Override
     public List<Creature> getCreatureForMapWithPositionBBox(final Map map,
             final Position poslc, final Position posrc) {
         List<Creature> listData =

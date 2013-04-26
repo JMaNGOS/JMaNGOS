@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -19,7 +19,6 @@ package org.jmangos.realm;
 import groovy.ui.Console;
 
 import org.jmangos.commons.network.service.NetworkService;
-import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.realm.service.ItemStorages;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -41,7 +40,6 @@ public class RealmServer {
         final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
         context.scan("org.jmangos.commons", "org.jmangos.world", "org.jmangos.realm");
         context.refresh();
-        ServiceContent.setContext(context);
         context.getBean(NetworkService.class).start();
 
         console.setVariable("applicationContext", context);

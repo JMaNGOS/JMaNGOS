@@ -8,8 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.jmangos.commons.enums.TypeID;
-import org.jmangos.commons.enums.UpdateType;
 import org.jmangos.commons.update.ObjectFields;
 
 @SuppressWarnings("serial")
@@ -31,13 +29,14 @@ public class Creature extends FieldsUnit {
 
     @Transient
     private Integer bytes = 0;
-    
+
     @Transient
     private Integer level = 0;
-    
+
     @Transient
-    
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.jmangos.commons.entities.FieldsUnit#initBits()
      */
     @Override
@@ -46,17 +45,6 @@ public class Creature extends FieldsUnit {
         this.bitSet.set(ObjectFields.OBJECT_FIELD_ENTRY.getValue());
     }
 
-    public TypeID getTypeId() {
-
-        return TypeID.UNIT;
-    }
-
-    protected UpdateType getCreateUpdateType() {
-
-        return UpdateType.CREATE_OBJECT;
-    }
-
-    
     /**
      * @param prototype
      *        the prototype to set
@@ -64,7 +52,12 @@ public class Creature extends FieldsUnit {
     public final void setPrototype(final CreaturePrototype prototype) {
         this.prototype = prototype;
         this.curScale = prototype.getScale();
-        this.setClazz(prototype.getClazz());
+        setClazz(prototype.getClazz());
+        this.setAttackTime(0, prototype.getBaseattacktime());
+        this.setAttackTime(1, prototype.getBaseattacktime());
+        if(prototype.getRangeattacktime() > 0){
+            this.setAttackTime(2, prototype.getRangeattacktime());
+        }
         // walk
         this.movement.getSpeeds()[0] = this.movement.getSpeeds()[0] * prototype.getSpeedWalkMod();
         this.movement.getSpeeds()[1] = this.movement.getSpeeds()[1] * prototype.getSpeedRunMod();
@@ -167,9 +160,9 @@ public class Creature extends FieldsUnit {
     }
 
     @Override
-    public void setLevel(int level) {
+    public void setLevel(final int level) {
         super.setLevel(level);
-        this.level= level; 
-        
+        this.level = level;
+
     }
 }

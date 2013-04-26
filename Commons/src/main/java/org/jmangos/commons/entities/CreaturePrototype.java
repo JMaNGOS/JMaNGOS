@@ -26,16 +26,16 @@ import org.jmangos.commons.enums.Classes;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class CreaturePrototype extends FieldsObject {
 
-    @Column(name = "bytes1",
-            table = "creature_template_addon",
-            nullable = true)
+    @Column(name = "bytes1", table = "creature_template_addon", nullable = true)
     private Integer bytes = 0;
-    @Column(name = "speed_walk",
-            nullable = true)
+    @Column(name = "speed_walk", nullable = true)
     private Float speedWalkMod = 1f;
-    @Column(name = "speed_run",
-            nullable = true)
+    @Column(name = "speed_run", nullable = true)
     private Float speedRunMod = 1f;
+    @Column(name = "baseattacktime")
+    private Integer baseattacktime = 2000;
+    @Column(name = "rangeattacktime")
+    private Integer rangeattacktime = 0;
     /**
      * 
      */
@@ -48,7 +48,7 @@ public class CreaturePrototype extends FieldsObject {
             length = 255,
             precision = 0)
     private String name;
-    
+
     @Column(name = "unit_class")
     @Enumerated(EnumType.ORDINAL)
     private Classes unitClass;
@@ -68,7 +68,6 @@ public class CreaturePrototype extends FieldsObject {
         this.name = name;
     }
 
-    
     /**
      * @return the bytes
      */
@@ -76,15 +75,14 @@ public class CreaturePrototype extends FieldsObject {
         return this.bytes;
     }
 
-    
     /**
-     * @param bytes the bytes to set
+     * @param bytes
+     *        the bytes to set
      */
     public final void setBytes(Integer bytes) {
         this.bytes = bytes;
     }
 
-    
     /**
      * @return the speedWalkMod
      */
@@ -92,15 +90,14 @@ public class CreaturePrototype extends FieldsObject {
         return this.speedWalkMod;
     }
 
-    
     /**
-     * @param speedWalkMod the speedWalkMod to set
+     * @param speedWalkMod
+     *        the speedWalkMod to set
      */
     public final void setSpeedWalkMod(Float speedWalkMod) {
         this.speedWalkMod = speedWalkMod;
     }
 
-    
     /**
      * @return the speedRunMod
      */
@@ -108,9 +105,9 @@ public class CreaturePrototype extends FieldsObject {
         return this.speedRunMod;
     }
 
-    
     /**
-     * @param speedRunMod the speedRunMod to set
+     * @param speedRunMod
+     *        the speedRunMod to set
      */
     public final void setSpeedRunMod(Float speedRunMod) {
         this.speedRunMod = speedRunMod;
@@ -118,6 +115,38 @@ public class CreaturePrototype extends FieldsObject {
 
     public Classes getClazz() {
         return this.unitClass;
+    }
+
+    
+    /**
+     * @return the baseattacktime
+     */
+    public final Integer getBaseattacktime() {
+        return this.baseattacktime;
+    }
+
+    
+    /**
+     * @param baseattacktime the baseattacktime to set
+     */
+    public final void setBaseattacktime(Integer baseattacktime) {
+        this.baseattacktime = baseattacktime;
+    }
+
+    
+    /**
+     * @return the rangeattacktime
+     */
+    public final Integer getRangeattacktime() {
+        return this.rangeattacktime;
+    }
+
+    
+    /**
+     * @param rangeattacktime the rangeattacktime to set
+     */
+    public final void setRangeattacktime(Integer rangeattacktime) {
+        this.rangeattacktime = rangeattacktime;
     }
 
 }

@@ -19,11 +19,21 @@ package org.jmangos.realm.service;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.procedure.TObjectProcedure;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
+import org.jmangos.commons.entities.Position;
+import org.jmangos.commons.entities.WorldMapArea;
+import org.jmangos.commons.model.base.Area;
 import org.jmangos.commons.model.base.Map;
 import org.jmangos.commons.service.Service;
 import org.jmangos.commons.service.ServiceContent;
+import org.jmangos.world.dao.WorldMapAreaDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,9 +42,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class MapService implements Service {
 
+    Logger log = LoggerFactory.getLogger(MapService.class);
     /** The maps. */
     TIntObjectHashMap<Map> maps = new TIntObjectHashMap<Map>();
-
+    @Autowired
+    WorldMapAreaDao worldMapAreaDao;
+    @Autowired
+    ServiceContent serviceContent;
     /** The map updater. */
     private final MapUpdater mapUpdater = new MapUpdater();
 
@@ -45,7 +59,38 @@ public class MapService implements Service {
     @PostConstruct
     @Override
     public void start() {
+        final List<WorldMapArea> lmaps =
+                this.worldMapAreaDao.findAll(new Sort(Sort.Direction.ASC, "areaId").and(new Sort(
+                        Sort.Direction.ASC, "mapId")));
+        for (final WorldMapArea map : lmaps) {
+            final Position lx = new Position();
+            final Position rx = new Position();
+            lx.setY(map.getyMin());
+            lx.setX(map.getxMin());
+            rx.setY(map.getyMax());
+            rx.setX(map.getxMax());
+            if (map.getAreaId() == 0) {
+                final Map rootMap = ServiceContent.getContext().getBean("Map", Map.class);
+                rootMap.setId(map.getMapId());
+                rootMap.setLeftCorner(lx);
+                rootMap.setRightCorner(rx);
+                this.maps.put(map.getMapId(), rootMap);
+                this.log.info("Add root map {}", map.name);
+            } else {
+                final Area mainArea = ServiceContent.getContext().getBean(Area.class);
+                mainArea.setId(map.getAreaId());
+                mainArea.setParentArea(this.maps.get(map.getMapId()));
+                mainArea.setLeftCorner(lx);
+                mainArea.setRightCorner(rx);
+                if (this.maps.contains(map.getMapId())) {
+                    this.maps.get(map.getMapId()).addSubArea(mainArea);
+                    this.log.info("Add root area {} for map {}", map.name, map.getMapId());
+                } else {
+                    this.log.info("Add single area {} {}", map.getAreaId(), map.name);
+                }
+            }
 
+        }
     }
 
     /**
@@ -70,12 +115,8 @@ public class MapService implements Service {
 
         if (this.maps.contains(guid)) {
             return this.maps.get(guid);
-        } else {
-            final Map map = ServiceContent.getContext().getBean(Map.class);
-            map.setId(guid);
-            this.maps.put(guid, map);
-            return map;
         }
+        return null;
     }
 
     /**

@@ -17,7 +17,7 @@
 	default-autowire="byName">
 
 	<bean id="CreatureController" class="org.jmangos.realm.controller.CreatureController" />
-	<bean id="CreatureService" class="org.jmangos.world.services.CreatureService" />
+	<bean id="CreatureService" class="org.jmangos.world.services.CreatureServiceImpl" />
 
 	<bean id="SkillService" class="org.jmangos.world.services.impl.SkillServiceImpl" />
 	<bean id="SkillLineAbilityService"

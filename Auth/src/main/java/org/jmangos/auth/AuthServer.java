@@ -40,7 +40,6 @@ public class AuthServer {
         final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
         context.scan("org.jmangos.commons", "org.jmangos.auth");
         context.refresh();
-        ServiceContent.setContext(context);
         context.getBean(NetworkService.class).start();
     }
 }

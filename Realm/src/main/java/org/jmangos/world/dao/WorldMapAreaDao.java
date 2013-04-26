@@ -14,37 +14,25 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.jmangos.commons.service;
+package org.jmangos.world.dao;
 
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
+import org.jmangos.commons.entities.WorldMapArea;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- * The Class ServiceContent.
+ * <p>
+ * <ol>
+ * <li><b>Class:</b> <tt>WorldMapAreaDao</tt> is {@link JpaRepository} to get
+ * Map info
+ * <li><b>Key:</b> is {@link Integer}
+ * <li><b>Value:</b> is {@link WorldMapArea}
+ * </ol>
+ * </p>
+ * 
+ * @author MinimaJack
  */
-@Component
-public final class ServiceContent implements ApplicationContextAware {
-
-    private static ApplicationContext context;
-
-    /**
-     * @param context
-     *        the context to set
-     */
-    public static final void setContext(ApplicationContext context) {
-        ServiceContent.context = context;
-    }
-
-    public static ApplicationContext getContext() {
-
-        return ServiceContent.context;
-    }
-
-    @Override
-    public void setApplicationContext(final ApplicationContext context) throws BeansException {
-        ServiceContent.context = context;
-    }
-
-}
+@Repository
+@Transactional(readOnly = true)
+public interface WorldMapAreaDao extends JpaRepository<WorldMapArea, Integer> {}

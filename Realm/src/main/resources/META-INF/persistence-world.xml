@@ -22,7 +22,8 @@
 	version="2.0">
 
 	<persistence-unit name="world">
-
+	
+		<class>org.jmangos.commons.entities.WorldMapArea</class>
 		<class>org.jmangos.commons.entities.ItemPrototype</class>
 		<class>org.jmangos.commons.entities.PlayerLevelInfo</class>
 		<class>org.jmangos.commons.entities.PlayerClassLevelInfo</class>
