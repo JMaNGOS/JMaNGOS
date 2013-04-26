@@ -41,17 +41,20 @@ public class DbcStorages {
     WorldMapAreaService worldMapAreaService;
     @Autowired
     AreaTableService areaTableService;
+    @Autowired
+    MapService mapService;
 
     public void encode() {
 
         logger.info("Start encoding dbc files");
-        this.charOutfitService.saveAll();
+      /*  this.charOutfitService.saveAll();
         this.skillLineAbilityService.saveAll();
         this.skillRaceClassInfoService.saveAll();
         this.spellService.saveAll();
-        this.factionService.saveAll();
+        this.factionService.saveAll();*/
         this.worldMapAreaService.saveAll();
         this.areaTableService.saveAll();
+        //this.mapService.saveAll();
         logger.info("Finished encoding dbc files");
     }
 }

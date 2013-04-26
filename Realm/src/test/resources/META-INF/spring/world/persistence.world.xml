@@ -42,6 +42,8 @@
 		<class>org.jmangos.commons.entities.FactionDataEntity</class>
 		
 		<class>org.jmangos.commons.entities.WorldMapArea</class>
+		<class>org.jmangos.commons.entities.WorldMap</class>
+		<class>org.jmangos.commons.entities.AreaTable</class>
 		
 		<!-- 2 -->
 		<class>org.jmangos.commons.entities.effects.SpellDamage</class>

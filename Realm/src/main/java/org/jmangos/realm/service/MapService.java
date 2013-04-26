@@ -17,19 +17,26 @@
 package org.jmangos.realm.service;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
+import gnu.trove.procedure.TIntProcedure;
 import gnu.trove.procedure.TObjectProcedure;
 
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import javolution.util.FastMap;
+
+import org.jmangos.commons.entities.AreaTable;
 import org.jmangos.commons.entities.Position;
+import org.jmangos.commons.entities.WorldMap;
 import org.jmangos.commons.entities.WorldMapArea;
 import org.jmangos.commons.model.base.Area;
 import org.jmangos.commons.model.base.Map;
 import org.jmangos.commons.service.Service;
 import org.jmangos.commons.service.ServiceContent;
+import org.jmangos.world.dao.AreaTableDao;
 import org.jmangos.world.dao.WorldMapAreaDao;
+import org.jmangos.world.dao.WorldMapDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +55,10 @@ public class MapService implements Service {
     @Autowired
     WorldMapAreaDao worldMapAreaDao;
     @Autowired
+    WorldMapDao worldMapDao;
+    @Autowired
+    AreaTableDao areaTableDao;
+    @Autowired
     ServiceContent serviceContent;
     /** The map updater. */
     private final MapUpdater mapUpdater = new MapUpdater();
@@ -59,6 +70,40 @@ public class MapService implements Service {
     @PostConstruct
     @Override
     public void start() {
+        List<WorldMap> worldMaps = this.worldMapDao.findAll();
+        for (WorldMap map : worldMaps) {
+            Map rootMap = ServiceContent.getContext().getBean(Map.class);
+            rootMap.setId(map.getId());
+            rootMap.setName(map.getName());
+            this.maps.put(map.getId(), rootMap);
+        }
+        
+        List<AreaTable> areaData =
+                this.areaTableDao.findAll(new Sort(Sort.Direction.ASC, "mapId").and(new Sort(
+                        Sort.Direction.ASC, "parentAreaId").and(new Sort(Sort.Direction.ASC,
+                        "areaId"))));
+        FastMap<Integer, Area> savedArea = new FastMap<Integer, Area>();
+        for (final AreaTable area : areaData) {
+            final Area mainArea = ServiceContent.getContext().getBean(Area.class);
+            mainArea.setId(area.getAreaId());
+            mainArea.setName(area.getName());
+            savedArea.put(area.getAreaId(), mainArea);
+            if (area.getParentAreaId() == null) {
+                mainArea.setParentArea(this.maps.get(area.getMapId()));
+            } else {
+                mainArea.setParentArea(savedArea.get(area.getParentAreaId()));
+            }
+            Map wm = this.maps.get(area.getMapId());
+            if (wm != null) {
+                this.maps.get(area.getMapId()).addSubArea(mainArea);
+            }else{
+                log.info("Cant't add area {} to map {}", area.getAreaId(), area.getMapId());
+            }
+            
+        }
+        /**
+         * Set simple coords
+         */
         final List<WorldMapArea> lmaps =
                 this.worldMapAreaDao.findAll(new Sort(Sort.Direction.ASC, "areaId").and(new Sort(
                         Sort.Direction.ASC, "mapId")));
@@ -70,27 +115,29 @@ public class MapService implements Service {
             rx.setY(map.getyMax());
             rx.setX(map.getxMax());
             if (map.getAreaId() == 0) {
-                final Map rootMap = ServiceContent.getContext().getBean("Map", Map.class);
-                rootMap.setId(map.getMapId());
+                final Map rootMap = this.maps.get(map.getMapId());
                 rootMap.setLeftCorner(lx);
                 rootMap.setRightCorner(rx);
-                this.maps.put(map.getMapId(), rootMap);
-                this.log.info("Add root map {}", map.name);
+                this.log.info("Add coords to root map {}", map.name);
             } else {
-                final Area mainArea = ServiceContent.getContext().getBean(Area.class);
-                mainArea.setId(map.getAreaId());
-                mainArea.setParentArea(this.maps.get(map.getMapId()));
-                mainArea.setLeftCorner(lx);
-                mainArea.setRightCorner(rx);
+                Area sarea = savedArea.get(map.getAreaId());
+                sarea.setLeftCorner(lx);
+                sarea.setRightCorner(rx);
                 if (this.maps.contains(map.getMapId())) {
-                    this.maps.get(map.getMapId()).addSubArea(mainArea);
                     this.log.info("Add root area {} for map {}", map.name, map.getMapId());
                 } else {
                     this.log.info("Add single area {} {}", map.getAreaId(), map.name);
                 }
             }
-
         }
+        this.maps.forEachKey(new TIntProcedure() {
+            
+            @Override
+            public boolean execute(int value) {
+                System.out.println(maps.get(value).getName());
+                return true;
+            }
+        });        
     }
 
     /**

@@ -19,6 +19,7 @@ package org.jmangos.commons.model.base;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.map.hash.TLongObjectHashMap;
 import gnu.trove.procedure.TIntProcedure;
+import gnu.trove.procedure.TObjectProcedure;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jmangos.commons.controller.CharacterController;
@@ -37,10 +38,9 @@ import org.springframework.stereotype.Component;
 /**
  * The Class Map.
  */
-@Component("Map")
+@Component
 @Scope(value = "prototype")
 @Lazy(value = true)
-@Qualifier("Map")
 public class Map {
 
     /** The id. */
@@ -68,6 +68,8 @@ public class Map {
     private Position leftCorner;
     private Position rightCorner;
 
+    private String name;
+
     /**
      * Instantiates a new map.
      * 
@@ -77,6 +79,20 @@ public class Map {
     public Map() {
 
         super();
+    }
+
+    public String toString(final StringBuilder sbuilder, final String indent) {
+//        sbuilder.append(indent).append(getName()).append("\n");
+        System.out.println(indent + getName() + "\n");
+        /*this.subArea.forEachValue(new TObjectProcedure<Area>() {
+
+            @Override
+            public boolean execute(final Area object) {
+                object.toString(sbuilder, indent + indent);
+                return true;
+            }
+        });*/
+        return "";
     }
 
     /**
@@ -323,6 +339,22 @@ public class Map {
      */
     public final void setRightCorner(final Position rightCorner) {
         this.rightCorner = rightCorner;
+    }
+
+    /**
+     * 
+     * @param name
+     */
+    public void setName(final String name) {
+        this.name = name;
+
+    }
+
+    /**
+     * @return the name
+     */
+    public final String getName() {
+        return this.name;
     }
 
 }
