@@ -16,7 +16,6 @@
  ******************************************************************************/
 package org.jmangos.commons.model.base;
 
-import gnu.trove.procedure.TIntProcedure;
 import gnu.trove.procedure.TObjectProcedure;
 
 import org.jboss.netty.buffer.ChannelBuffer;
@@ -66,14 +65,12 @@ public class Map extends NestedMap {
     }
 
     public String toString(final StringBuilder sbuilder, final String indent) {
-         sbuilder.append(indent).append(getName()).append("\n");
-        //System.out.println(indent + getName() + "\n");
-
-        this.getSubArea().forEachValue(new TObjectProcedure<NestedMap>() {
+        sbuilder.append(indent).append("[" + getId() + "]").append(getName()).append("\n");
+        getSubArea().forEachValue(new TObjectProcedure<NestedMap>() {
 
             @Override
             public boolean execute(final NestedMap object) {
-                ((Map)object).toString(sbuilder, indent + indent);
+                ((Map) object).toString(sbuilder, indent + "\t");
                 return true;
             }
         });

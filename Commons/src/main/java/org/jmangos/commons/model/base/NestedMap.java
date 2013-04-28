@@ -34,7 +34,7 @@ public abstract class NestedMap {
                 public boolean execute(final int value) {
                     final NestedMap iterArea = getSubArea().get(value);
                     if (iterArea.addNestedMap(newsubArea)) {
-                        return false;
+                        return true;
                     } else {
                         return true;
                     }
@@ -48,7 +48,7 @@ public abstract class NestedMap {
         if (this.parentArea != null) {
             return this.parentArea.getRootMap();
         } else {
-            return this.parentArea;
+            return this;
         }
     }
 

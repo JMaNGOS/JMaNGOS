@@ -6,7 +6,6 @@ import org.jmangos.commons.entities.Creature;
 import org.jmangos.commons.entities.FieldsObject;
 import org.jmangos.commons.service.CreatureService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Component;
 @Scope(value = "prototype")
 @Lazy(value = true)
 public class Area extends Map {
-
 
     boolean spawned = false;
     @Autowired
@@ -32,16 +30,17 @@ public class Area extends Map {
     public void addObject(final FieldsObject plObject) {
         if (!this.spawned) {
             final Map map = (Map) getRootMap();
-            final List<Creature> creatures =
-                    this.creature.getCreatureForMapWithPositionBBox(map, getLeftCorner(),
-                            getRightCorner());
-            for (Creature creature : creatures) {
-                super.addObject(creature);
+            if (map != null) {
+                final List<Creature> creatures =
+                        this.creature.getCreatureForMapWithPositionBBox(map, getLeftCorner(),
+                                getRightCorner());
+                for (final Creature creature : creatures) {
+                    super.addObject(creature);
+                }
             }
         }
         super.addObject(plObject);
-        
-    }
 
+    }
 
 }
