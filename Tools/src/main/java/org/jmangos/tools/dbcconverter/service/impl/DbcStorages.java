@@ -54,7 +54,7 @@ public class DbcStorages {
         this.factionService.saveAll();*/
         this.worldMapAreaService.saveAll();
         this.areaTableService.saveAll();
-        //this.mapService.saveAll();
+        this.mapService.saveAll();
         logger.info("Finished encoding dbc files");
     }
 }

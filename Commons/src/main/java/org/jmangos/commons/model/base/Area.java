@@ -14,10 +14,9 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope(value = "prototype")
 @Lazy(value = true)
-@Qualifier("Area")
 public class Area extends Map {
 
-    private Map parentArea;
+
     boolean spawned = false;
     @Autowired
     CreatureService creature;
@@ -32,7 +31,7 @@ public class Area extends Map {
     @Override
     public void addObject(final FieldsObject plObject) {
         if (!this.spawned) {
-            final Map map = getRootMap();
+            final Map map = (Map) getRootMap();
             final List<Creature> creatures =
                     this.creature.getCreatureForMapWithPositionBBox(map, getLeftCorner(),
                             getRightCorner());
@@ -44,26 +43,5 @@ public class Area extends Map {
         
     }
 
-    private Map getRootMap() {
-        if (this.parentArea instanceof Area) {
-            return ((Area) this.parentArea).getRootMap();
-        }
-        return this.parentArea;
-    }
-
-    /**
-     * @return the parentArea
-     */
-    public final Map getParentArea() {
-        return this.parentArea;
-    }
-
-    /**
-     * @param parentArea
-     *        the parentArea to set
-     */
-    public final void setParentArea(final Map parentArea) {
-        this.parentArea = parentArea;
-    }
 
 }

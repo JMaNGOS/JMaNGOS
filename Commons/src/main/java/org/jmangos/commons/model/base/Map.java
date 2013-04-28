@@ -16,8 +16,6 @@
  ******************************************************************************/
 package org.jmangos.commons.model.base;
 
-import gnu.trove.map.hash.TIntObjectHashMap;
-import gnu.trove.map.hash.TLongObjectHashMap;
 import gnu.trove.procedure.TIntProcedure;
 import gnu.trove.procedure.TObjectProcedure;
 
@@ -25,7 +23,6 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jmangos.commons.controller.CharacterController;
 import org.jmangos.commons.controller.WeatherController;
 import org.jmangos.commons.entities.CharacterData;
-import org.jmangos.commons.entities.FieldsObject;
 import org.jmangos.commons.entities.Position;
 import org.jmangos.commons.enums.WeatherState;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
@@ -41,34 +38,21 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope(value = "prototype")
 @Lazy(value = true)
-public class Map {
-
-    /** The id. */
-    int id = 0;
+public class Map extends NestedMap {
 
     Weather weather = new Weather();
 
-    /** The player list. */
-    TLongObjectHashMap<FieldsObject> playerList = new TLongObjectHashMap<FieldsObject>();
-
-    /** The units. */
-    TLongObjectHashMap<FieldsObject> units = new TLongObjectHashMap<FieldsObject>();
-
-    TIntObjectHashMap<Area> subArea = new TIntObjectHashMap<>();
-
     // Dynamic creation...so better use setters
     @Autowired
-    private CharacterController characterController;
+    CharacterController characterController;
     @Autowired
     @Qualifier("nettyPacketSender")
-    private AbstractPacketSender sender;
+    AbstractPacketSender sender;
     @Autowired
-    private WeatherController weatherController;
+    WeatherController weatherController;
 
     private Position leftCorner;
     private Position rightCorner;
-
-    private String name;
 
     /**
      * Instantiates a new map.
@@ -82,107 +66,19 @@ public class Map {
     }
 
     public String toString(final StringBuilder sbuilder, final String indent) {
-//        sbuilder.append(indent).append(getName()).append("\n");
-        System.out.println(indent + getName() + "\n");
-        /*this.subArea.forEachValue(new TObjectProcedure<Area>() {
+         sbuilder.append(indent).append(getName()).append("\n");
+        //System.out.println(indent + getName() + "\n");
+
+        this.getSubArea().forEachValue(new TObjectProcedure<NestedMap>() {
 
             @Override
-            public boolean execute(final Area object) {
-                object.toString(sbuilder, indent + indent);
+            public boolean execute(final NestedMap object) {
+                ((Map)object).toString(sbuilder, indent + indent);
                 return true;
             }
-        });*/
-        return "";
-    }
+        });
 
-    /**
-     * Adds the object.
-     * 
-     * @param plObject
-     *        the pl object
-     */
-    public void addObject(final FieldsObject plObject) {
-        switch (plObject.getTypeId()) {
-            case PLAYER:
-                final int area = ((CharacterData) plObject).getMovement().getZone();
-                if ((area > 0) & (getId() != area)) {
-                    if (this.subArea.contains(area)) {
-                        this.subArea.get(area).addObject(plObject);
-                    }
-                }
-                this.playerList.put(plObject.getGuid(), plObject);
-            break;
-            case UNIT:
-                System.out.println("Add creature to map {}" + getId());
-                this.units.put(plObject.getGuid(), plObject);
-            break;
-            default:
-            break;
-        }
-
-    }
-
-    /**
-     * Adds the object.
-     * 
-     * @param plObject
-     *        the pl object
-     */
-    public void removeObject(final FieldsObject plObject) {
-
-        switch (plObject.getTypeId()) {
-            case PLAYER:
-                this.playerList.remove(plObject.getGuid());
-            break;
-            case UNIT:
-                this.units.remove(plObject.getGuid());
-            break;
-            default:
-            break;
-        }
-
-    }
-
-    /**
-     * Update.
-     * 
-     * @return true, if successful
-     */
-    public boolean update() {
-        for (final Object pl : this.playerList.values()) {
-            this.characterController.update((CharacterData) pl);
-        };
-        final long time = System.currentTimeMillis();
-        // TODO: move weather change time to config
-        // now for test set only rain
-        if ((time - getWeather().getLastUpdateTime()) > 150000) {
-            getWeather().setLastUpdateTime(time);
-            getWeather().setState(WeatherState.HEAVY_RAIN);
-            getWeather().setGrade(1f);
-            final ChannelBuffer data = this.weatherController.buildWeatherData(getWeather());
-
-            for (final Object pl : this.playerList.values()) {
-                this.sender.send(((CharacterData) pl).getPlayer().getChannel(), data);
-            };
-        }
-        return true;
-    }
-
-    /**
-     * @return the id
-     */
-    public final int getId() {
-
-        return this.id;
-    }
-
-    /**
-     * @param id
-     *        the id to set
-     */
-    public void setId(final int id) {
-
-        this.id = id;
+        return sbuilder.toString();
     }
 
     /**
@@ -245,70 +141,30 @@ public class Map {
         this.sender = sender;
     }
 
-    public boolean addSubArea(final Area newsubArea) {
-        if (newsubArea.getParentArea().getId() == getId()) {
-            this.subArea.put(newsubArea.getId(), newsubArea);
-            return true;
-        } else {
-            this.subArea.forEach(new TIntProcedure() {
+    /**
+     * Update.
+     * 
+     * @return true, if successful
+     */
+    @Override
+    public boolean update() {
+        for (final Object pl : getPlayerList().values()) {
+            this.characterController.update((CharacterData) pl);
+        };
+        final long time = System.currentTimeMillis();
+        // TODO: move weather change time to config
+        // now for test set only rain
+        if ((time - getWeather().getLastUpdateTime()) > 150000) {
+            getWeather().setLastUpdateTime(time);
+            getWeather().setState(WeatherState.HEAVY_RAIN);
+            getWeather().setGrade(1f);
+            final ChannelBuffer data = this.weatherController.buildWeatherData(getWeather());
 
-                @Override
-                public boolean execute(final int value) {
-                    final Area iterArea = Map.this.subArea.get(value);
-                    if (iterArea.addSubArea(newsubArea)) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                }
-            });
+            for (final Object pl : getPlayerList().values()) {
+                this.sender.send(((CharacterData) pl).getPlayer().getChannel(), data);
+            };
         }
         return true;
-    }
-
-    /**
-     * @return the playerList
-     */
-    public final TLongObjectHashMap<FieldsObject> getPlayerList() {
-        return this.playerList;
-    }
-
-    /**
-     * @param playerList
-     *        the playerList to set
-     */
-    public final void setPlayerList(final TLongObjectHashMap<FieldsObject> playerList) {
-        this.playerList = playerList;
-    }
-
-    /**
-     * @return the units
-     */
-    public final TLongObjectHashMap<FieldsObject> getUnits() {
-        return this.units;
-    }
-
-    /**
-     * @param units
-     *        the units to set
-     */
-    public final void setUnits(final TLongObjectHashMap<FieldsObject> units) {
-        this.units = units;
-    }
-
-    /**
-     * @return the subArea
-     */
-    public final TIntObjectHashMap<Area> getSubArea() {
-        return this.subArea;
-    }
-
-    /**
-     * @param subArea
-     *        the subArea to set
-     */
-    public final void setSubArea(final TIntObjectHashMap<Area> subArea) {
-        this.subArea = subArea;
     }
 
     /**
@@ -339,22 +195,6 @@ public class Map {
      */
     public final void setRightCorner(final Position rightCorner) {
         this.rightCorner = rightCorner;
-    }
-
-    /**
-     * 
-     * @param name
-     */
-    public void setName(final String name) {
-        this.name = name;
-
-    }
-
-    /**
-     * @return the name
-     */
-    public final String getName() {
-        return this.name;
     }
 
 }

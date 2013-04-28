@@ -32,6 +32,8 @@ import org.jmangos.commons.entities.WorldMap;
 import org.jmangos.commons.entities.WorldMapArea;
 import org.jmangos.commons.model.base.Area;
 import org.jmangos.commons.model.base.Map;
+import org.jmangos.commons.model.base.NestedMap;
+import org.jmangos.commons.model.base.RootMap;
 import org.jmangos.commons.service.Service;
 import org.jmangos.commons.service.ServiceContent;
 import org.jmangos.world.dao.AreaTableDao;
@@ -72,7 +74,7 @@ public class MapService implements Service {
     public void start() {
         List<WorldMap> worldMaps = this.worldMapDao.findAll();
         for (WorldMap map : worldMaps) {
-            Map rootMap = ServiceContent.getContext().getBean(Map.class);
+            Map rootMap = ServiceContent.getContext().getBean(RootMap.class);
             rootMap.setId(map.getId());
             rootMap.setName(map.getName());
             this.maps.put(map.getId(), rootMap);
@@ -93,9 +95,9 @@ public class MapService implements Service {
             } else {
                 mainArea.setParentArea(savedArea.get(area.getParentAreaId()));
             }
-            Map wm = this.maps.get(area.getMapId());
+            NestedMap wm = this.maps.get(area.getMapId());
             if (wm != null) {
-                this.maps.get(area.getMapId()).addSubArea(mainArea);
+                this.maps.get(area.getMapId()).addNestedMap(mainArea);
             }else{
                 log.info("Cant't add area {} to map {}", area.getAreaId(), area.getMapId());
             }
@@ -130,14 +132,15 @@ public class MapService implements Service {
                 }
             }
         }
+        
         this.maps.forEachKey(new TIntProcedure() {
             
             @Override
             public boolean execute(int value) {
-                System.out.println(maps.get(value).getName());
+                System.out.println(maps.get(value).toString(new StringBuilder(), "\t"));
                 return true;
             }
-        });        
+        });       
     }
 
     /**
@@ -158,7 +161,7 @@ public class MapService implements Service {
      *        the guid
      * @return the map
      */
-    public Map getMap(final int guid) {
+    public NestedMap getMap(final int guid) {
 
         if (this.maps.contains(guid)) {
             return this.maps.get(guid);
