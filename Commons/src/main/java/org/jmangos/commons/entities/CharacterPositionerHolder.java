@@ -46,7 +46,7 @@ import org.jmangos.commons.enums.UpdateFlags;
 public class CharacterPositionerHolder extends BasicPositionerHolder implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "guid")
     private int guid;
 
