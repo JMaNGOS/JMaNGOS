@@ -34,7 +34,7 @@ public class DBCBaseStruct extends Struct {
 
     public class InternalString extends Member {
 
-        private final byte[] tsring = new byte[2024];
+        private final byte[] string = new byte[2024];
         private final CharsetDecoder decoder = Charset.forName("UTF-8").newDecoder();
 
         public InternalString() {
@@ -46,11 +46,11 @@ public class DBCBaseStruct extends Struct {
 
             int i = 0;
             final int index = getByteBufferPosition() + offset();
-            for (; (this.tsring[i] =
+            for (; (this.string[i] =
                     getByteBuffer().get(
                             i + DBCBaseStruct.this.stringBufPos + getByteBuffer().getInt(index))) != 0; i++) {}
             try {
-                return this.decoder.decode(ByteBuffer.wrap(this.tsring, 0, i)).toString();
+                return this.decoder.decode(ByteBuffer.wrap(this.string, 0, i)).toString();
             } catch (final CharacterCodingException e) {
                 e.printStackTrace();
             }
@@ -73,7 +73,7 @@ public class DBCBaseStruct extends Struct {
 
     public class MultiInternalString extends Member {
 
-        private final byte[] tsring = new byte[2024];
+        private final byte[] string = new byte[2024];
         private final CharsetDecoder decoder = Charset.forName("UTF-8").newDecoder();
 
         public MultiInternalString() {
@@ -96,7 +96,7 @@ public class DBCBaseStruct extends Struct {
             if (DBCBaseStruct.this.lang < 0) {
                 return "";
             }
-            for (; (this.tsring[i] =
+            for (; (this.string[i] =
                     getByteBuffer().get(
                             i +
                                 DBCBaseStruct.this.stringBufPos +
@@ -105,7 +105,7 @@ public class DBCBaseStruct extends Struct {
                                             offset() +
                                             (4 * DBCBaseStruct.this.lang)))) != 0; i++) {}
             try {
-                return this.decoder.decode(ByteBuffer.wrap(this.tsring, 0, i)).toString();
+                return this.decoder.decode(ByteBuffer.wrap(this.string, 0, i)).toString();
             } catch (final CharacterCodingException e) {
                 e.printStackTrace();
             }
