@@ -27,6 +27,7 @@
 			<property name="hibernate.connection.username" value="JMaNGOS" />
 			<property name="hibernate.connection.password" value="JMaNGOS" />
 			<property name="hibernate.connection.useUnicode" value="true" />
+            <property name="hibernate.connection.characterEncoding" value="utf8" />
 		</properties>
 	</persistence-unit>
 
