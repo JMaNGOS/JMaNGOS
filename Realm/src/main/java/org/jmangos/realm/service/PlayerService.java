@@ -145,8 +145,7 @@ public class PlayerService {
         // SMSG_ALL_ACHIEVEMENT_DATA());
         this.sender.send(player.getChannel(), new SMSG_LOGIN_SETTIMESPEED());
 
-        this.mapService.getMap(player.getCharacterData().getMovement().getMap()).addObject(
-                player.getCharacterData());
+        this.mapService.getMap(player.getCharacterData().getMovement().getMap()).addObject(player.getCharacterData());
         // this.sender.send(player.getChannel(), new
         // SMSG_INIT_WORLD_STATES(player));
         // this.sender.send(player.getChannel(), new SMSG_SPELL_GO());
