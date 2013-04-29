@@ -26,7 +26,7 @@ public class SMSG_FEATURE_SYSTEM_STATUS extends AbstractWoWServerPacket {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
      */
     @Override

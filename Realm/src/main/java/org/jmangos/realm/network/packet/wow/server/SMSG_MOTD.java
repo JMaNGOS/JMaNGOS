@@ -47,7 +47,7 @@ public class SMSG_MOTD extends AbstractWoWServerPacket {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.wowemu.common.network.model.SendablePacket#writeImpl()
      */
     @Override

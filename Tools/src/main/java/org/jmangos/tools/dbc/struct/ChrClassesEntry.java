@@ -23,10 +23,10 @@ import org.jmangos.tools.dbc.dataholder.DBCStruct;
 public class ChrClassesEntry extends DBCStruct<ChrClassesEntry> {
 
     @XmlAttribute(name = "ClassID", required = true)
-    public final Unsigned32 ClassID = new Unsigned32();
-    public final Unsigned32 flags = new Unsigned32();
+    public final Signed32 ClassID = new Signed32();
+    public final Signed32 flags = new Signed32();
     @XmlAttribute(name = "powerType", required = true)
-    public final Unsigned32 powerType = new Unsigned32();
+    public final Signed32 powerType = new Signed32();
     @XmlAttribute(name = "type")
     public final InternalString type = new InternalString();
     @XmlAttribute(name = "name")
@@ -38,11 +38,11 @@ public class ChrClassesEntry extends DBCStruct<ChrClassesEntry> {
     @XmlAttribute(name = "capName")
     public final InternalString capName = new InternalString();
     @XmlAttribute(name = "spellfamily", required = true)
-    public final Unsigned32 spellfamily = new Unsigned32();
+    public final Signed32 spellfamily = new Signed32();
     @XmlAttribute(name = "flags2")
-    public final Unsigned32 flags2 = new Unsigned32();
+    public final Signed32 flags2 = new Signed32();
     @XmlAttribute(name = "CinematicSequence", required = true)
-    public final Unsigned32 CinematicSequence = new Unsigned32();
+    public final Signed32 CinematicSequence = new Signed32();
     @XmlAttribute(name = "expansion", required = true)
-    public final Unsigned32 expansion = new Unsigned32();
+    public final Signed32 expansion = new Signed32();
 }

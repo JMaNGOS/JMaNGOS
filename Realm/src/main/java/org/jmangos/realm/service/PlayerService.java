@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -28,18 +28,7 @@ import org.jmangos.commons.model.player.Player;
 import org.jmangos.commons.network.model.NettyNetworkChannel;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.RealmServer;
-import org.jmangos.realm.network.packet.wow.server.MSG_SET_DUNGEON_DIFFICULTY;
-import org.jmangos.realm.network.packet.wow.server.SMSG_ACCOUNT_DATA_TIMES;
-import org.jmangos.realm.network.packet.wow.server.SMSG_ACTION_BUTTONS;
-import org.jmangos.realm.network.packet.wow.server.SMSG_BINDPOINTUPDATE;
-import org.jmangos.realm.network.packet.wow.server.SMSG_INITIALIZE_FACTIONS;
-import org.jmangos.realm.network.packet.wow.server.SMSG_INITIAL_SPELLS;
-import org.jmangos.realm.network.packet.wow.server.SMSG_INSTANCE_DIFFICULTY;
-import org.jmangos.realm.network.packet.wow.server.SMSG_LOGIN_SETTIMESPEED;
-import org.jmangos.realm.network.packet.wow.server.SMSG_LOGIN_VERIFY_WORLD;
-import org.jmangos.realm.network.packet.wow.server.SMSG_MOTD;
-import org.jmangos.realm.network.packet.wow.server.SMSG_TIME_SYNC_REQ;
-import org.jmangos.realm.network.packet.wow.server.SMSG_UPDATE_OBJECT;
+import org.jmangos.realm.network.packet.wow.server.*;
 import org.jmangos.realm.services.CharacterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,11 +42,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class PlayerService {
 
-    /** The Constant logger. */
+    /**
+     * The Constant logger.
+     */
     @SuppressWarnings("unused")
     private static final Logger logger = LoggerFactory.getLogger(PlayerService.class);
 
-    /** The sender. */
+    /**
+     * The sender.
+     */
     @Autowired
     @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
@@ -65,19 +58,27 @@ public class PlayerService {
     @Autowired
     private CharacterService characterService;
 
-    /** The player class level info storages. */
+    /**
+     * The player class level info storages.
+     */
     @Autowired
     private PlayerClassLevelInfoStorages playerClassLevelInfoStorages;
 
-    /** The player level storages. */
+    /**
+     * The player level storages.
+     */
     @Autowired
     private PlayerLevelStorages playerLevelStorages;
 
-    /** The simple storages. */
+    /**
+     * The simple storages.
+     */
     @Autowired
     private PlayerXpForLevelStorages playerXpForLevelStorages;
 
-    /** The item storages. */
+    /**
+     * The item storages.
+     */
     @Autowired
     private ItemStorages itemStorages;
 
@@ -87,16 +88,16 @@ public class PlayerService {
     @Autowired
     private MapService mapService;
 
-    /** The playerlist. */
+    /**
+     * The playerlist.
+     */
     private static TLongObjectHashMap<Player> playerlist = new TLongObjectHashMap<Player>();
 
     /**
      * Prepare player.
-     * 
-     * @param chanel
-     *        the chanel
-     * @param guid
-     *        the guid
+     *
+     * @param chanel the chanel
+     * @param guid   the guid
      * @return the player
      */
     public Player preparePlayer(final NettyNetworkChannel chanel, final long guid) {
@@ -109,9 +110,8 @@ public class PlayerService {
 
     /**
      * Send inicial packets.
-     * 
-     * @param player
-     *        the player
+     *
+     * @param player the player
      * @return the world object
      */
     public Player sendInicialPackets(final Player player) {
@@ -126,12 +126,18 @@ public class PlayerService {
 
         this.sender.send(player.getChannel(), new SMSG_ACCOUNT_DATA_TIMES(
                 SMSG_ACCOUNT_DATA_TIMES.GLOBAL_CACHE_MASK, null));
-
+        this.sender.send(player.getChannel(), new SMSG_FEATURE_SYSTEM_STATUS());
         // this.sender.send(player.getChannel(), new
         // SMSG_FEATURE_SYSTEM_STATUS());
         // sender.send(player.getChannel(), new SMSG_LEARNED_DANCE_MOVES());
         this.sender.send(player.getChannel(), new SMSG_BINDPOINTUPDATE(player));
         this.sender.send(player.getChannel(), new SMSG_MOTD("Test MotD String@test".split("@")));
+        if(player.getCharacterData().getAtLoginFlag() == 1){
+            player.getCharacterData().setAtLoginFlag(0);
+            /**
+             * TODO: implement cinematic
+             */
+        }
         // this.sender.send(player.getChannel(), new SMSG_TALENTS_INFO());
         this.sender.send(player.getChannel(), new SMSG_INITIAL_SPELLS(player));
         this.sender.send(player.getChannel(), new SMSG_ACTION_BUTTONS(player,
@@ -168,6 +174,7 @@ public class PlayerService {
 
         this.sender.send(player.getChannel(), new SMSG_ACCOUNT_DATA_TIMES(
                 SMSG_ACCOUNT_DATA_TIMES.PER_CHARACTER_CACHE_MASK, null));
+
         PlayerService.playerlist.put(player.getObjectId(), player);
 
         /**
@@ -187,9 +194,8 @@ public class PlayerService {
 
     /**
      * Load home bind.
-     * 
-     * @param player
-     *        the player
+     *
+     * @param player the player
      * @return true, if successful
      */
     public boolean loadHomeBind(final Player player) {
@@ -203,7 +209,7 @@ public class PlayerService {
 
     /**
      * Gets the playerlist.
-     * 
+     *
      * @return the playerlist
      */
     public static TLongObjectHashMap<Player> getPlayerlist() {
@@ -213,9 +219,8 @@ public class PlayerService {
 
     /**
      * Sets the playerlist.
-     * 
-     * @param playerlist
-     *        the new playerlist
+     *
+     * @param playerlist the new playerlist
      */
     public static void setPlayerlist(final TLongObjectHashMap<Player> playerlist) {
 
@@ -224,9 +229,8 @@ public class PlayerService {
 
     /**
      * Gets the player name.
-     * 
-     * @param guid
-     *        the guid
+     *
+     * @param guid the guid
      * @return the player name
      */
     public static String getPlayerName(final long guid) {
@@ -239,9 +243,8 @@ public class PlayerService {
 
     /**
      * Gets the player.
-     * 
-     * @param guid
-     *        the guid
+     *
+     * @param guid the guid
      * @return the player
      */
     public static Player getPlayer(final long guid) {

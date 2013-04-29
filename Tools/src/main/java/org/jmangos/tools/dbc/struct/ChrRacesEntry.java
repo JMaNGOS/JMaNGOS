@@ -20,26 +20,26 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 import org.jmangos.tools.dbc.dataholder.DBCStruct;
 
-public class ChrRacesEntry extends DBCStruct<ChrClassesEntry> {
+public class ChrRacesEntry extends DBCStruct<ChrRacesEntry> {
 
     @XmlAttribute(name = "RaceID", required = true)
-    public final Unsigned32 RaceID = new Unsigned32();
-    public final Unsigned32 unk = new Unsigned32();
+    public final Signed32 RaceID = new Signed32();
+    public final Signed32 unk = new Signed32();
     @XmlAttribute(name = "FactionID", required = true)
-    public final Unsigned32 FactionID = new Unsigned32();
-    public final Unsigned32 unk2 = new Unsigned32();
+    public final Signed32 FactionID = new Signed32();
+    public final Signed32 unk2 = new Signed32();
     @XmlAttribute(name = "modelMale", required = true)
-    public final Unsigned32 modelM = new Unsigned32();
+    public final Signed32 modelM = new Signed32();
     @XmlAttribute(name = "modelFemale", required = true)
-    public final Unsigned32 modelF = new Unsigned32();
+    public final Signed32 modelF = new Signed32();
     public final InternalString ShortEnglishName = new InternalString();
     @XmlAttribute(name = "TeamID", required = true)
-    public final Unsigned32 TeamID = new Unsigned32();
-    public final Unsigned32[] unk42 = array(new Unsigned32[3]);
+    public final Signed32 TeamID = new Signed32();
+    public final Signed32[] unk42 = array(new Signed32[3]);
     public final InternalString EnglishName = new InternalString();
     @XmlAttribute(name = "CinematicSequence", required = true)
-    public final Unsigned32 CinematicSequence = new Unsigned32();
-    public final Unsigned32 team = new Unsigned32();
+    public final Signed32 CinematicSequence = new Signed32();
+    public final Signed32 team = new Signed32();
     @XmlAttribute(name = "name", required = true)
     public final MultiInternalString name = new MultiInternalString();
     @XmlAttribute(name = "nameFemale")
@@ -50,5 +50,5 @@ public class ChrRacesEntry extends DBCStruct<ChrClassesEntry> {
     public final InternalString BodyForWoman = new InternalString();
     public final InternalString BodyForNeutral = new InternalString();
     @XmlAttribute(name = "expansion", required = true)
-    public final Unsigned32 expansion = new Unsigned32();
+    public final Signed32 expansion = new Signed32();
 }
