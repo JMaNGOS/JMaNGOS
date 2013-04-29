@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -241,8 +241,9 @@ public abstract class SendablePacket extends AbstractPacket {
      *        the char sequence
      */
     protected final void writeS(final String charSequence) {
-
-        getByteBuffer().writeBytes(charSequence.getBytes(Charset.forName("utf-8")));
+        if (charSequence != null) {
+            getByteBuffer().writeBytes(charSequence.getBytes(Charset.forName("utf-8")));
+        }
         getByteBuffer().writeByte((byte) 0);
     }
 

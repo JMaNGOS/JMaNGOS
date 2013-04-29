@@ -14,17 +14,26 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.jmangos.commons.model.base;
+package org.jmangos.realm.model;
 
 import gnu.trove.procedure.TObjectProcedure;
 
+import java.nio.ByteOrder;
+
 import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
 import org.jmangos.commons.controller.CharacterController;
 import org.jmangos.commons.controller.WeatherController;
 import org.jmangos.commons.entities.CharacterData;
+import org.jmangos.commons.entities.FieldsObject;
 import org.jmangos.commons.entities.Position;
 import org.jmangos.commons.enums.WeatherState;
+import org.jmangos.commons.model.base.NestedMap;
+import org.jmangos.commons.model.base.Weather;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
+import org.jmangos.realm.network.packet.wow.server.SMSG_UPDATE_OBJECT;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -39,6 +48,7 @@ import org.springframework.stereotype.Component;
 @Lazy(value = true)
 public class Map extends NestedMap {
 
+    Logger log = LoggerFactory.getLogger(Map.class);
     Weather weather = new Weather();
 
     // Dynamic creation...so better use setters
@@ -65,7 +75,7 @@ public class Map extends NestedMap {
     }
 
     public String toString(final StringBuilder sbuilder, final String indent) {
-        sbuilder.append(indent).append("[" + getId() + "]").append(getName()).append("\n");
+        sbuilder.append(indent).append("[" + getId() + "]").append(getName());
         getSubArea().forEachValue(new TObjectProcedure<NestedMap>() {
 
             @Override
@@ -136,6 +146,58 @@ public class Map extends NestedMap {
      */
     public final void setSender(final AbstractPacketSender sender) {
         this.sender = sender;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.jmangos.commons.model.base.NestedMap#addObject(org.jmangos.commons
+     * .entities.FieldsObject)
+     */
+    @Override
+    public void addObject(final FieldsObject plObject) {
+        switch (plObject.getTypeId()) {
+            case PLAYER:
+                final int area = ((CharacterData) plObject).getMovement().getZone();
+                if ((area > 0) & (getId() != area)) {
+                    if (getSubArea().contains(area)) {
+                        getSubArea().get(area).addObject(plObject);
+                    }
+                }
+
+                final ChannelBuffer updateBlock =
+                        ChannelBuffers.dynamicBuffer(ByteOrder.LITTLE_ENDIAN, 1024);
+                // RESERVE SPACE FOR COUNT BLOCKS
+                updateBlock.writeInt(0);
+                final Integer countBlock;
+                this.units.forEachValue(new TObjectProcedure<FieldsObject>() {
+
+                    @Override
+                    public boolean execute(final FieldsObject object) {
+                        // countBlock +=
+                        object.buildCreateBlock(updateBlock, ((CharacterData) plObject));
+                        return true;
+                    }
+                });
+
+                // FILL COUNT BLOCKS
+                updateBlock.setInt(0, this.units.size());
+                final byte[] outputBuffer =
+                        updateBlock.readBytes(updateBlock.readableBytes()).array();
+
+                final SMSG_UPDATE_OBJECT updatePacket = new SMSG_UPDATE_OBJECT(outputBuffer);
+                this.sender.send(((CharacterData) plObject).getPlayer().getChannel(), updatePacket);
+
+                this.playerList.put(plObject.getGuid(), plObject);
+            break;
+            case UNIT:
+                this.log.debug("Add creature to map {}", getId());
+                this.units.put(plObject.getGuid(), plObject);
+            break;
+            default:
+            break;
+        }
     }
 
     /**

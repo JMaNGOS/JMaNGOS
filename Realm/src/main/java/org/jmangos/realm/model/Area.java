@@ -1,4 +1,4 @@
-package org.jmangos.commons.model.base;
+package org.jmangos.realm.model;
 
 import java.util.List;
 
@@ -38,6 +38,7 @@ public class Area extends Map {
                     super.addObject(creature);
                 }
             }
+            this.spawned = true;
         }
         super.addObject(plObject);
 

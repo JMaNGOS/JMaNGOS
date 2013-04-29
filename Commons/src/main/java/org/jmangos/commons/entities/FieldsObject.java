@@ -125,7 +125,7 @@ public abstract class FieldsObject implements Streamable, Serializable {
         final byte[] packGUID = new byte[8 + 1];
         packGUID[0] = 0;
         int size = 1;
-        for (byte i = 0; tguid != 0; ++i) {
+        for (byte i = 0; i <8; ++i) {
             if ((tguid & 0xFF) > 0) {
                 packGUID[0] |= (1 << i);
                 packGUID[size] = (byte) (tguid & 0xFF);

@@ -29,12 +29,12 @@ import org.jmangos.commons.entities.AreaTable;
 import org.jmangos.commons.entities.Position;
 import org.jmangos.commons.entities.WorldMap;
 import org.jmangos.commons.entities.WorldMapArea;
-import org.jmangos.commons.model.base.Area;
-import org.jmangos.commons.model.base.Map;
 import org.jmangos.commons.model.base.NestedMap;
-import org.jmangos.commons.model.base.RootMap;
 import org.jmangos.commons.service.Service;
 import org.jmangos.commons.service.ServiceContent;
+import org.jmangos.realm.model.Area;
+import org.jmangos.realm.model.Map;
+import org.jmangos.realm.model.RootMap;
 import org.jmangos.world.dao.AreaTableDao;
 import org.jmangos.world.dao.WorldMapAreaDao;
 import org.jmangos.world.dao.WorldMapDao;
@@ -135,6 +135,14 @@ public class MapService implements Service {
                 }
             }
         }
+      /*  this.maps.forEachValue(new TObjectProcedure<Map>() {
+
+            @Override
+            public boolean execute(Map object) {
+                log.info(object.toString(new StringBuilder(), "\n"));
+                return true;
+            }
+        });*/
 
     }
 

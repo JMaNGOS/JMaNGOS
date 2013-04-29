@@ -2,19 +2,21 @@ package org.jmangos.commons.model.base;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.map.hash.TLongObjectHashMap;
-import gnu.trove.procedure.TIntProcedure;
+import gnu.trove.procedure.TObjectProcedure;
 
-import org.jmangos.commons.entities.CharacterData;
 import org.jmangos.commons.entities.FieldsObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class NestedMap {
 
+    Logger log = LoggerFactory.getLogger(NestedMap.class);
     /** The id. */
     private int id = 0;
     /** The player list. */
-    private TLongObjectHashMap<FieldsObject> playerList = new TLongObjectHashMap<FieldsObject>();
+    protected TLongObjectHashMap<FieldsObject> playerList = new TLongObjectHashMap<FieldsObject>();
     /** The units. */
-    private TLongObjectHashMap<FieldsObject> units = new TLongObjectHashMap<FieldsObject>();
+    protected TLongObjectHashMap<FieldsObject> units = new TLongObjectHashMap<FieldsObject>();
     private TIntObjectHashMap<NestedMap> subMap = new TIntObjectHashMap<NestedMap>();
     private String name;
     private NestedMap parentArea;
@@ -26,20 +28,16 @@ public abstract class NestedMap {
     public boolean addNestedMap(final NestedMap newsubArea) {
         if (newsubArea.getParentArea().getId() == getId()) {
             getSubArea().put(newsubArea.getId(), newsubArea);
-            return true;
+            return false;
         } else {
-            getSubArea().forEach(new TIntProcedure() {
+            getSubArea().forEachValue(new TObjectProcedure<NestedMap>() {
 
                 @Override
-                public boolean execute(final int value) {
-                    final NestedMap iterArea = getSubArea().get(value);
-                    if (iterArea.addNestedMap(newsubArea)) {
-                        return true;
-                    } else {
-                        return true;
-                    }
+                public boolean execute(final NestedMap object) {
+                    return object.addNestedMap(newsubArea);
                 }
             });
+
         }
         return true;
     }
@@ -133,26 +131,7 @@ public abstract class NestedMap {
      * @param plObject
      *        the pl object
      */
-    public void addObject(final FieldsObject plObject) {
-        switch (plObject.getTypeId()) {
-            case PLAYER:
-                final int area = ((CharacterData) plObject).getMovement().getZone();
-                if ((area > 0) & (getId() != area)) {
-                    if (this.subMap.contains(area)) {
-                        this.subMap.get(area).addObject(plObject);
-                    }
-                }
-                this.playerList.put(plObject.getGuid(), plObject);
-            break;
-            case UNIT:
-                System.out.println("Add creature to map {}" + getId());
-                this.units.put(plObject.getGuid(), plObject);
-            break;
-            default:
-            break;
-        }
-
-    }
+    public abstract void addObject(final FieldsObject plObject);
 
     /**
      * Adds the object.
@@ -179,14 +158,14 @@ public abstract class NestedMap {
      * @return the parentArea
      */
     public NestedMap getParentArea() {
-        return parentArea;
+        return this.parentArea;
     }
 
     /**
      * @param parentArea
      *        the parentArea to set
      */
-    public void setParentArea(NestedMap parentArea) {
+    public void setParentArea(final NestedMap parentArea) {
         this.parentArea = parentArea;
     }
 

@@ -8,7 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.jmangos.commons.enums.HighGuid;
+import org.jmangos.commons.enums.ModelType;
+import org.jmangos.commons.enums.Powers;
 import org.jmangos.commons.update.ObjectFields;
+import org.jmangos.commons.utils.Rnd;
 
 @SuppressWarnings("serial")
 @Entity
@@ -34,6 +38,9 @@ public class Creature extends FieldsUnit {
     private Integer level = 0;
 
     @Transient
+    private CreaturePowers power = new CreaturePowers();
+
+    @Transient
     /*
      * (non-Javadoc)
      * 
@@ -42,6 +49,11 @@ public class Creature extends FieldsUnit {
     @Override
     public void initBits() {
         super.initBits();
+        long entry = this.getEntry();
+        entry <<= 24;
+        long higuid = HighGuid.UNIT.getValue();
+        higuid <<= 52;
+        this.setGuid(higuid | entry | getGuid());
         this.bitSet.set(ObjectFields.OBJECT_FIELD_ENTRY.getValue());
     }
 
@@ -53,11 +65,33 @@ public class Creature extends FieldsUnit {
         this.prototype = prototype;
         this.curScale = prototype.getScale();
         setClazz(prototype.getClazz());
-        this.setAttackTime(0, prototype.getBaseattacktime());
-        this.setAttackTime(1, prototype.getBaseattacktime());
-        if(prototype.getRangeattacktime() > 0){
-            this.setAttackTime(2, prototype.getRangeattacktime());
+        setAttackTime(0, prototype.getBaseattacktime());
+        setAttackTime(1, prototype.getBaseattacktime());
+        setLevel(1);
+        setDisplayId(ModelType.NATIVE, prototype.getModelId(0));
+        setDisplayId(ModelType.CURRENT, prototype.getModelId(0));
+        final Integer minHealth = prototype.getMaxHealth();
+        final Integer maxHealth = prototype.getMinHealth();
+        final int health = minHealth + Rnd.nextInt(maxHealth - minHealth);
+        setPower(Powers.HEALTH, health);
+        setBaseHealth(health);
+        switch (prototype.getClazz().getAsCreatureClass()) {
+            case CLASS_MAGE:
+            case CLASS_PALADIN:
+                final Integer minMana = prototype.getMaxMana();
+                final Integer maxMana = prototype.getMinMana();
+                final int mana = minHealth + Rnd.nextInt(maxMana - minMana);
+                setPower(Powers.MANA, mana);
+                setBaseMana(mana);
+            break;
+
+            default:
+            break;
         }
+        if (prototype.getRangeattacktime() > 0) {
+            setAttackTime(2, prototype.getRangeattacktime());
+        }
+        this.setFaction_template(prototype.getFactionForAliance());
         // walk
         this.movement.getSpeeds()[0] = this.movement.getSpeeds()[0] * prototype.getSpeedWalkMod();
         this.movement.getSpeeds()[1] = this.movement.getSpeeds()[1] * prototype.getSpeedRunMod();
@@ -118,13 +152,12 @@ public class Creature extends FieldsUnit {
 
     @Override
     public CreaturePowers getPowers() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.power;
     }
 
     @Override
     public void setPowers(final CreaturePowers powers) {
-        // TODO Auto-generated method stub
+        this.power = powers;
 
     }
 

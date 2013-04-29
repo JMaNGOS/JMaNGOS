@@ -19,10 +19,10 @@ package org.jmangos.world.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jmangos.commons.entities.CreaturePrototype;
 import org.jmangos.commons.entities.Creature;
+import org.jmangos.commons.entities.CreaturePrototype;
 import org.jmangos.commons.entities.Position;
-import org.jmangos.commons.model.base.Map;
+import org.jmangos.commons.model.base.NestedMap;
 import org.jmangos.commons.service.CreatureService;
 import org.jmangos.world.dao.CreatureDao;
 import org.jmangos.world.dao.CreatureDataDao;
@@ -44,29 +44,39 @@ public class CreatureServiceImpl implements CreatureService {
     @Autowired
     private CreatureDao creatureDao;
 
-    /* (non-Javadoc)
-     * @see org.jmangos.world.services.CreatureService#getCreatureForMapWithPositionBBox(org.jmangos.commons.model.base.Map, org.jmangos.commons.entities.Position, org.jmangos.commons.entities.Position)
+    /**
+     * (non-Javadoc)
+     * 
+     * @see org.jmangos.world.services.CreatureService#getCreatureForMapWithPositionBBox
+     *      (org.jmangos.commons.model.base.Map,
+     *      org.jmangos.commons.entities.Position,
+     *      org.jmangos.commons.entities.Position)
      */
     @Override
-    public List<Creature> getCreatureForMapWithPositionBBox(final Map map,
+    public List<Creature> getCreatureForMapWithPositionBBox(final NestedMap map,
             final Position poslc, final Position posrc) {
-        List<Creature> listData =
+        final List<Creature> listData =
                 this.creatureDataDao.findAll(Specifications.where(
                         CreatureDataSpecs.isWithinCoords(poslc, posrc)).and(
-                        CreatureDataSpecs.isInMap(map))
-                        .and(CreatureDataSpecs.isHaveId(6)));
-        List<Creature> deleted = new ArrayList<Creature>();
-        for (Creature creature : listData) {
-            CreaturePrototype creatureTemplate = creatureDao.findOne((long)creature.getEntry());
+                        CreatureDataSpecs.isInMap(map)).and(CreatureDataSpecs.isHaveId(6)));
+        final List<Creature> deleted = new ArrayList<Creature>();
+        for (final Creature creature : listData) {
+            final CreaturePrototype creatureTemplate =
+                    this.creatureDao.findOne((long) creature.getEntry());
             if (creatureTemplate != null) {
                 creature.setPrototype(creatureTemplate);
-            }else{
+            } else {
                 deleted.add(creature);
             }
         }
         listData.removeAll(deleted);
         return listData;
 
+    }
+
+    @Override
+    public CreaturePrototype getCreatureTemplate(final long entry) {
+        return this.creatureDao.findOne(entry);
     }
 
 }
