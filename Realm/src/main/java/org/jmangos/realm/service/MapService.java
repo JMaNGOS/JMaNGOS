@@ -96,9 +96,9 @@ public class MapService implements Service {
             }
             final NestedMap wm = this.maps.get(area.getMapId());
             if (wm != null) {
-                this.maps.get(area.getMapId()).addNestedMap(mainArea);
+                wm.addNestedMap(mainArea);
             } else {
-                this.log.info("Cant't add area {} to map {}", area.getAreaId(), area.getMapId());
+                this.log.info("Cant't find map {} for area {} .", area.getMapId(), area.getAreaId());
             }
 
         }
@@ -120,18 +120,22 @@ public class MapService implements Service {
                 if (rootMap != null) {
                     rootMap.setLeftCorner(lx);
                     rootMap.setRightCorner(rx);
-                    this.log.info("Add coords to root map {}", map.name);
+                    this.log.info("Add coords to root map {}", rootMap.getName());
                 } else {
-                    this.log.warn("Root map not added to all maps. Skip fetching coords.");
+                    this.log.warn("Can't find root map. Skip fetching coords.");
                 }
             } else {
-                final Area sarea = savedArea.get(map.getAreaId());
-                sarea.setLeftCorner(lx);
-                sarea.setRightCorner(rx);
                 if (this.maps.contains(map.getMapId())) {
-                    this.log.info("Add root area {} for map {}", map.name, map.getMapId());
+                    final Area sarea = savedArea.get(map.getAreaId());
+                    if (sarea != null) {
+                        sarea.setLeftCorner(lx);
+                        sarea.setRightCorner(rx);
+                        this.log.info("Add root area {} for map {}", map.name, map.getMapId());
+                    } else {
+                        this.log.info("Can't find area {}. Skip fetching coords.", map.getAreaId());
+                    }
                 } else {
-                    this.log.info("Add single area {} {}", map.getAreaId(), map.name);
+                    this.log.info("Skip single area {} {}", map.getAreaId(), map.name);
                 }
             }
         }
