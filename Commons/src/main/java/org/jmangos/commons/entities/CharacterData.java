@@ -163,7 +163,6 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
         setCombatReach(1.5f);
         setMainDemage(0, 7.1428576f);
         setMainDemage(1, 9.142858f);
-        setModCastSpeed(1f);
         setPlayerBytes3(0);
         setResistances(0, 45);
         setAttackPower(20);

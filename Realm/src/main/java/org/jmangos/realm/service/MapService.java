@@ -17,7 +17,6 @@
 package org.jmangos.realm.service;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
-import gnu.trove.procedure.TIntProcedure;
 import gnu.trove.procedure.TObjectProcedure;
 
 import java.util.List;
@@ -30,12 +29,12 @@ import org.jmangos.commons.entities.AreaTable;
 import org.jmangos.commons.entities.Position;
 import org.jmangos.commons.entities.WorldMap;
 import org.jmangos.commons.entities.WorldMapArea;
-import org.jmangos.commons.model.base.Area;
-import org.jmangos.commons.model.base.Map;
 import org.jmangos.commons.model.base.NestedMap;
-import org.jmangos.commons.model.base.RootMap;
 import org.jmangos.commons.service.Service;
 import org.jmangos.commons.service.ServiceContent;
+import org.jmangos.realm.model.Area;
+import org.jmangos.realm.model.Map;
+import org.jmangos.realm.model.RootMap;
 import org.jmangos.world.dao.AreaTableDao;
 import org.jmangos.world.dao.WorldMapAreaDao;
 import org.jmangos.world.dao.WorldMapDao;
@@ -72,19 +71,19 @@ public class MapService implements Service {
     @PostConstruct
     @Override
     public void start() {
-        List<WorldMap> worldMaps = this.worldMapDao.findAll();
-        for (WorldMap map : worldMaps) {
-            Map rootMap = ServiceContent.getContext().getBean(RootMap.class);
+        final List<WorldMap> worldMaps = this.worldMapDao.findAll();
+        for (final WorldMap map : worldMaps) {
+            final Map rootMap = ServiceContent.getContext().getBean(RootMap.class);
             rootMap.setId(map.getId());
             rootMap.setName(map.getName());
             this.maps.put(map.getId(), rootMap);
         }
-        
-        List<AreaTable> areaData =
+
+        final List<AreaTable> areaData =
                 this.areaTableDao.findAll(new Sort(Sort.Direction.ASC, "mapId").and(new Sort(
                         Sort.Direction.ASC, "parentAreaId").and(new Sort(Sort.Direction.ASC,
                         "areaId"))));
-        FastMap<Integer, Area> savedArea = new FastMap<Integer, Area>();
+        final FastMap<Integer, Area> savedArea = new FastMap<Integer, Area>();
         for (final AreaTable area : areaData) {
             final Area mainArea = ServiceContent.getContext().getBean(Area.class);
             mainArea.setId(area.getAreaId());
@@ -95,13 +94,13 @@ public class MapService implements Service {
             } else {
                 mainArea.setParentArea(savedArea.get(area.getParentAreaId()));
             }
-            NestedMap wm = this.maps.get(area.getMapId());
+            final NestedMap wm = this.maps.get(area.getMapId());
             if (wm != null) {
-                this.maps.get(area.getMapId()).addNestedMap(mainArea);
-            }else{
-                log.info("Cant't add area {} to map {}", area.getAreaId(), area.getMapId());
+                wm.addNestedMap(mainArea);
+            } else {
+                this.log.info("Cant't find map {} for area {} .", area.getMapId(), area.getAreaId());
             }
-            
+
         }
         /**
          * Set simple coords
@@ -118,29 +117,37 @@ public class MapService implements Service {
             rx.setX(map.getxMax());
             if (map.getAreaId() == 0) {
                 final Map rootMap = this.maps.get(map.getMapId());
-                rootMap.setLeftCorner(lx);
-                rootMap.setRightCorner(rx);
-                this.log.info("Add coords to root map {}", map.name);
-            } else {
-                Area sarea = savedArea.get(map.getAreaId());
-                sarea.setLeftCorner(lx);
-                sarea.setRightCorner(rx);
-                if (this.maps.contains(map.getMapId())) {
-                    this.log.info("Add root area {} for map {}", map.name, map.getMapId());
+                if (rootMap != null) {
+                    rootMap.setLeftCorner(lx);
+                    rootMap.setRightCorner(rx);
+                    this.log.info("Add coords to root map {}", rootMap.getName());
                 } else {
-                    this.log.info("Add single area {} {}", map.getAreaId(), map.name);
+                    this.log.warn("Can't find root map. Skip fetching coords.");
+                }
+            } else {
+                if (this.maps.contains(map.getMapId())) {
+                    final Area sarea = savedArea.get(map.getAreaId());
+                    if (sarea != null) {
+                        sarea.setLeftCorner(lx);
+                        sarea.setRightCorner(rx);
+                        this.log.info("Add root area {} for map {}", map.name, map.getMapId());
+                    } else {
+                        this.log.info("Can't find area {}. Skip fetching coords.", map.getAreaId());
+                    }
+                } else {
+                    this.log.info("Skip single area {} {}", map.getAreaId(), map.name);
                 }
             }
         }
-        
-        this.maps.forEachKey(new TIntProcedure() {
-            
+      /*  this.maps.forEachValue(new TObjectProcedure<Map>() {
+
             @Override
-            public boolean execute(int value) {
-                System.out.println(maps.get(value).toString(new StringBuilder(), "\t"));
+            public boolean execute(Map object) {
+                log.info(object.toString(new StringBuilder(), "\n"));
                 return true;
             }
-        });       
+        });*/
+
     }
 
     /**

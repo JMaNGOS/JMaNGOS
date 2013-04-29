@@ -29,7 +29,7 @@ import org.jmangos.commons.entities.Creature;
 import org.jmangos.commons.entities.CreaturePositionerHolder;
 import org.jmangos.commons.entities.Position;
 import org.jmangos.commons.entities.SkillLineAbilityEntity;
-import org.jmangos.commons.model.base.Map;
+import org.jmangos.commons.model.base.NestedMap;
 import org.springframework.data.jpa.domain.Specification;
 
 /**
@@ -53,15 +53,15 @@ import org.springframework.data.jpa.domain.Specification;
  */
 public class CreatureDataSpecs {
 
-    public static Specification<Creature> isWithinCoords(final Position poslc,
-            final Position posrc) {
+    public static Specification<Creature> isWithinCoords(final Position poslc, final Position posrc) {
         return new Specification<Creature>() {
 
             @Override
-            public Predicate toPredicate(final Root<Creature> root,
-                    final CriteriaQuery<?> query, final CriteriaBuilder cb) {
-                Path<CreaturePositionerHolder> mov = root.<CreaturePositionerHolder>get("movement");
-                Path<Position> position = mov.<Position>get("position");
+            public Predicate toPredicate(final Root<Creature> root, final CriteriaQuery<?> query,
+                    final CriteriaBuilder cb) {
+                final Path<CreaturePositionerHolder> mov =
+                        root.<CreaturePositionerHolder> get("movement");
+                final Path<Position> position = mov.<Position> get("position");
                 final Predicate y =
                         cb.between(position.<Float> get("y"), poslc.getY(), posrc.getY());
                 final Predicate x =
@@ -71,13 +71,14 @@ public class CreatureDataSpecs {
         };
     }
 
-    public static Specification<Creature> isInMap(final Map map) {
+    public static Specification<Creature> isInMap(final NestedMap map) {
         return new Specification<Creature>() {
 
             @Override
-            public Predicate toPredicate(final Root<Creature> root,
-                    final CriteriaQuery<?> query, final CriteriaBuilder cb) {
-                Path<CreaturePositionerHolder> mov = root.<CreaturePositionerHolder>get("movement");
+            public Predicate toPredicate(final Root<Creature> root, final CriteriaQuery<?> query,
+                    final CriteriaBuilder cb) {
+                final Path<CreaturePositionerHolder> mov =
+                        root.<CreaturePositionerHolder> get("movement");
                 return cb.equal(mov.get("map"), map.getId());
             }
         };
@@ -87,8 +88,8 @@ public class CreatureDataSpecs {
         return new Specification<Creature>() {
 
             @Override
-            public Predicate toPredicate(final Root<Creature> root,
-                    final CriteriaQuery<?> query, final CriteriaBuilder cb) {
+            public Predicate toPredicate(final Root<Creature> root, final CriteriaQuery<?> query,
+                    final CriteriaBuilder cb) {
 
                 return cb.equal(root.get("entry"), id);
             }

@@ -17,8 +17,8 @@
 	<bean id="databaseConfig" class="org.jmangos.commons.database.DatabaseConfig" />
 
 	<bean id="ServiceContent" class="org.jmangos.commons.service.ServiceContent" />
-	<bean id="Map" class="org.jmangos.commons.model.base.Map" />
-	<bean id="Area" class="org.jmangos.commons.model.base.Area" />
+	<bean id="Map" class="org.jmangos.realm.model.RootMap" />
+	<bean id="Area" class="org.jmangos.realm.model.Area" />
 	<bean id="WeatherController" class="org.jmangos.realm.controller.WeatherControllerImpl" />
 
 	<bean id="nettyPacketSender" class="org.jmangos.test.DummyPacketSender" />

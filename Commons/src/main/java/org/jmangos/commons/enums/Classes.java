@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -40,10 +40,17 @@ public enum Classes {
     MAGE(8),
     /** The game class warlock. */
     WARLOCK(9),
-    /** Unknown class*/
+    /** Unknown class */
     UNKNOWN(10),
     /** The game class druid. */
     DRUID(11);
+
+    public enum CreatureClass {
+        CLASS_WARRIOR,
+        CLASS_PALADIN,
+        CLASS_ROGUE,
+        CLASS_MAGE;
+    }
 
     /** The value. */
     private int value;
@@ -78,6 +85,10 @@ public enum Classes {
     public int getValue() {
 
         return this.value;
+    }
+
+    public CreatureClass getAsCreatureClass() {
+        return CreatureClass.values()[getValue()];
     }
 
     /**

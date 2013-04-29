@@ -52,6 +52,46 @@ public class CreaturePrototype extends FieldsObject {
     @Column(name = "unit_class")
     @Enumerated(EnumType.ORDINAL)
     private Classes unitClass;
+    @Column(name = "subName", nullable = true, insertable = true, updatable = true)
+    private String subName;
+    @Column(name = "IconName", nullable = true, insertable = true, updatable = true)
+    private String iconName;
+    @Column(name = "type_flags", nullable = true, insertable = true, updatable = true)
+    private Integer typeFlags;
+    @Column(name = "type", nullable = true, insertable = true, updatable = true)
+    private Integer creatureType;
+    @Column(name = "family", nullable = true, insertable = true, updatable = true)
+    private Integer family;
+    @Column(name = "rank", nullable = true, insertable = true, updatable = true)
+    private Integer rank;
+    @Column(name = "modelid_1", nullable = true, insertable = true, updatable = true)
+    private Integer modelid_1;
+    @Column(name = "modelid_2", nullable = true, insertable = true, updatable = true)
+    private Integer modelid_2;
+    @Column(name = "modelid_3", nullable = true, insertable = true, updatable = true)
+    private Integer modelid_3;
+    @Column(name = "modelid_4", nullable = true, insertable = true, updatable = true)
+    private Integer modelid_4;
+    @Column(name = "unk16", nullable = true, insertable = true, updatable = true)
+    private float healthModifier;
+    @Column(name = "unk17", nullable = true, insertable = true, updatable = true)
+    private float powerModifier;
+    @Column(name = "RacialLeader", nullable = true, insertable = true, updatable = true)
+    private Integer racialLeader;
+    @Column(name = "movementId", nullable = true, insertable = true, updatable = true)
+    private Integer movementId;
+    @Column(name = "minhealth", nullable = true, insertable = true, updatable = true)
+    private Integer minHealth;
+    @Column(name = "maxHealth", nullable = true, insertable = true, updatable = true)
+    private Integer maxHealth;
+    @Column(name = "minmana", nullable = true, insertable = true, updatable = true)
+    private Integer minMana;
+    @Column(name = "maxmana", nullable = true, insertable = true, updatable = true)
+    private Integer maxMana;
+    @Column(name = "faction_A", nullable = true, insertable = true, updatable = true)
+    private int factionForAliance;
+    @Column(name = "faction_H", nullable = true, insertable = true, updatable = true)
+    private int factionForHorde;
 
     /**
      * @return the name
@@ -64,7 +104,7 @@ public class CreaturePrototype extends FieldsObject {
      * @param name
      *        the name to set
      */
-    public final void setName(String name) {
+    public final void setName(final String name) {
         this.name = name;
     }
 
@@ -79,7 +119,7 @@ public class CreaturePrototype extends FieldsObject {
      * @param bytes
      *        the bytes to set
      */
-    public final void setBytes(Integer bytes) {
+    public final void setBytes(final Integer bytes) {
         this.bytes = bytes;
     }
 
@@ -94,7 +134,7 @@ public class CreaturePrototype extends FieldsObject {
      * @param speedWalkMod
      *        the speedWalkMod to set
      */
-    public final void setSpeedWalkMod(Float speedWalkMod) {
+    public final void setSpeedWalkMod(final Float speedWalkMod) {
         this.speedWalkMod = speedWalkMod;
     }
 
@@ -109,7 +149,7 @@ public class CreaturePrototype extends FieldsObject {
      * @param speedRunMod
      *        the speedRunMod to set
      */
-    public final void setSpeedRunMod(Float speedRunMod) {
+    public final void setSpeedRunMod(final Float speedRunMod) {
         this.speedRunMod = speedRunMod;
     }
 
@@ -117,7 +157,6 @@ public class CreaturePrototype extends FieldsObject {
         return this.unitClass;
     }
 
-    
     /**
      * @return the baseattacktime
      */
@@ -125,15 +164,14 @@ public class CreaturePrototype extends FieldsObject {
         return this.baseattacktime;
     }
 
-    
     /**
-     * @param baseattacktime the baseattacktime to set
+     * @param baseattacktime
+     *        the baseattacktime to set
      */
-    public final void setBaseattacktime(Integer baseattacktime) {
+    public final void setBaseattacktime(final Integer baseattacktime) {
         this.baseattacktime = baseattacktime;
     }
 
-    
     /**
      * @return the rangeattacktime
      */
@@ -141,12 +179,116 @@ public class CreaturePrototype extends FieldsObject {
         return this.rangeattacktime;
     }
 
-    
     /**
-     * @param rangeattacktime the rangeattacktime to set
+     * @param rangeattacktime
+     *        the rangeattacktime to set
      */
-    public final void setRangeattacktime(Integer rangeattacktime) {
+    public final void setRangeattacktime(final Integer rangeattacktime) {
         this.rangeattacktime = rangeattacktime;
+    }
+
+    public String getSubName() {
+        return this.subName;
+    }
+
+    public String getIconName() {
+        return this.iconName;
+    }
+
+    public Integer getTypeFlag() {
+        return this.typeFlags;
+    }
+
+    public Integer getCreatureType() {
+        return this.creatureType;
+    }
+
+    public Integer getFamily() {
+        return this.family;
+    }
+
+    public Integer getRank() {
+        return this.rank;
+    }
+
+    public Integer getKillCredit(final int i) {
+        switch (i) {
+            case 0:
+                return 0;
+            case 1:
+                return 0;
+            default:
+                return 0;
+        }
+    }
+
+    public Integer getModelId(final int i) {
+        switch (i) {
+            case 0:
+                return this.modelid_1;
+            case 1:
+                return this.modelid_2;
+            case 2:
+                return this.modelid_3;
+            case 3:
+                return this.modelid_4;
+            default:
+                return 0;
+        }
+    }
+
+    public float getHealthModifier() {
+        return this.healthModifier;
+    }
+
+    public float getPowerModifier() {
+        return this.powerModifier;
+    }
+
+    public Integer getRacialLeader() {
+        return this.racialLeader;
+    }
+
+    public Integer getMovementId() {
+        return this.movementId;
+    }
+
+    /**
+     * 
+     * @return the maxHealth
+     */
+    public Integer getMaxHealth() {
+        return this.maxHealth;
+
+    }
+
+    /**
+     * @return the minHealth
+     */
+    public final Integer getMinHealth() {
+        return this.minHealth;
+    }
+
+    /**
+     * @return the minMana
+     */
+    public final Integer getMinMana() {
+        return this.minMana;
+    }
+
+    /**
+     * @return the maxMana
+     */
+    public final Integer getMaxMana() {
+        return this.maxMana;
+    }
+
+    public int getFactionForAliance() {
+        return this.factionForAliance;
+    }
+
+    public int getFactionForHorde() {
+        return this.factionForHorde;
     }
 
 }

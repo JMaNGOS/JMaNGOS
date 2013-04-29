@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.jmangos.commons.entities.Creature;
 import org.jmangos.commons.entities.Position;
-import org.jmangos.commons.model.base.Map;
 import org.jmangos.commons.service.CreatureService;
+import org.jmangos.realm.model.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

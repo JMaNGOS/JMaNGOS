@@ -197,6 +197,7 @@ public abstract class FieldsUnit extends FieldsObject {
         this.bitSet.set(UnitField.UNIT_FIELD_POWER_REGEN_FLAT_MODIFIER.getValue());
         this.bitSet.set(UnitField.UNIT_FIELD_FACTIONTEMPLATE.getValue());
         this.bitSet.set(UnitField.UNIT_FIELD_HOVERHEIGHT.getValue());
+        this.setModCastSpeed(1.0f);
 
     }
 
@@ -645,7 +646,7 @@ public abstract class FieldsUnit extends FieldsObject {
      *        the faction_template to set
      */
     public final void setFaction_template(final int faction_template) {
-
+        this.bitSet.set(UnitField.UNIT_FIELD_FACTIONTEMPLATE.getValue());
         this.faction_template = faction_template;
     }
 
