@@ -44,7 +44,10 @@
 		<class>org.jmangos.commons.entities.SpellEffectEntity</class>
 		<class>org.jmangos.commons.entities.SkillRaceClassInfoEntity</class>
 		<class>org.jmangos.commons.entities.SkillLineAbilityEntity</class>
-				<!-- 2 -->
+		
+		<!-- 1 -->
+		<class>org.jmangos.commons.entities.effects.InstaKill</class>
+		<!-- 2 -->
 		<class>org.jmangos.commons.entities.effects.SpellDamage</class>
 		<!-- 3 -->
 		<class>org.jmangos.commons.entities.effects.PeriodicDamage</class>
