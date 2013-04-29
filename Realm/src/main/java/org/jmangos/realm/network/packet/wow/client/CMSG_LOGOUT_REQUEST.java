@@ -21,6 +21,8 @@ import java.nio.BufferUnderflowException;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.realm.network.packet.wow.server.SMSG_LOGOUT_COMPLETE;
+import org.jmangos.realm.service.MapService;
+import org.jmangos.realm.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -38,6 +40,10 @@ public class CMSG_LOGOUT_REQUEST extends AbstractWoWClientPacket {
     @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
 
+    /** The player service. */
+    @Autowired
+    private MapService mapService;
+
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
 
@@ -46,7 +52,7 @@ public class CMSG_LOGOUT_REQUEST extends AbstractWoWClientPacket {
 
     @Override
     protected void runImpl() {
-
+        this.mapService.getMap(getPlayer().getCharacterData().getMovement().getMap()).removeObject(getPlayer().getCharacterData());
         // TODO: implement SMSG_LOGOUT_RESPONSE
         this.sender.send(getPlayer().getChannel(), new SMSG_LOGOUT_COMPLETE());
     }
