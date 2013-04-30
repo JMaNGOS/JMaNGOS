@@ -25,49 +25,49 @@ package org.jmangos.commons.model;
  */
 public class BufferPosition {
 
-    private long startPosition = 0;
-    private long endPosition = 0;
+    private int startPosition = 0;
+    private int endPosition = 0;
 
     /**
      * @param startPosition
      * @param endPosition
      */
-    public BufferPosition(long startPosition, long endPosition) {
-        super();
+    public BufferPosition(int startPosition, int endPosition) {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
     }
 
-    
     /**
      * @return the startPosition
      */
-    public final long getStartPosition() {
+    public final int getStartPosition() {
         return this.startPosition;
     }
 
-    
     /**
-     * @param startPosition the startPosition to set
+     * @param startPosition
+     *        the startPosition to set
      */
-    public final void setStartPosition(long startPosition) {
+    public final void setStartPosition(int startPosition) {
         this.startPosition = startPosition;
     }
 
-    
     /**
      * @return the endPosition
      */
-    public final long getEndPosition() {
+    public final int getEndPosition() {
         return this.endPosition;
     }
 
-    
     /**
-     * @param endPosition the endPosition to set
+     * @param endPosition
+     *        the endPosition to set
      */
-    public final void setEndPosition(long endPosition) {
+    public final void setEndPosition(int endPosition) {
         this.endPosition = endPosition;
     }
 
+    public int getLength() {
+        return this.endPosition - this.startPosition;
+    }
 }

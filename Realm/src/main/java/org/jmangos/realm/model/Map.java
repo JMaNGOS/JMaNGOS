@@ -177,8 +177,12 @@ public class Map extends NestedMap {
                 });
 
                 // FILL COUNT BLOCKS
-                final SMSG_UPDATE_OBJECT updatePacket = new SMSG_UPDATE_OBJECT(update.build());
-                this.sender.send(((CharacterData) plObject).getPlayer().getChannel(), updatePacket);
+                while (!update.isFinished()) {
+                    final SMSG_UPDATE_OBJECT updatePacket = new SMSG_UPDATE_OBJECT(update.build(5));
+                    this.sender.send(((CharacterData) plObject).getPlayer().getChannel(), updatePacket);
+                }
+             //   final SMSG_UPDATE_OBJECT updatePacket = new SMSG_UPDATE_OBJECT(update.build());
+             //   this.sender.send(((CharacterData) plObject).getPlayer().getChannel(), updatePacket);
 
                 this.playerList.put(plObject.getGuid(), plObject);
             break;

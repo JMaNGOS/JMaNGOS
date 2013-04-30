@@ -172,7 +172,7 @@ public class PlayerService {
         final UpdateBlock update = new UpdateBlock();
         player.getCharacterData().buildCreateBlock(update, player.getCharacterData());
         log.info(update.toString());
-        final SMSG_UPDATE_OBJECT updatePacket = new SMSG_UPDATE_OBJECT(update.build());
+        final SMSG_UPDATE_OBJECT updatePacket = new SMSG_UPDATE_OBJECT(update.buildAll());
         this.sender.send(player.getChannel(), updatePacket);
 
         this.sender.send(player.getChannel(), new SMSG_TIME_SYNC_REQ());
