@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -18,15 +18,11 @@ package org.jmangos.commons.model.base.item;
 
 import org.jmangos.commons.enums.EquipmentSlots;
 import org.jmangos.commons.enums.InventoryType;
-import org.jmangos.commons.enums.TypeID;
-import org.jmangos.commons.enums.TypeMask;
-import org.jmangos.commons.model.base.WorldObject;
-import org.jmangos.commons.update.ItemFields;
 
 /**
  * The Class Item.
  */
-public class Item extends WorldObject {
+public class Item {
 
     /** The Constant INVENTORY_SLOT_BAG_0. */
     public static final int INVENTORY_SLOT_BAG_0 = 255;
@@ -48,44 +44,6 @@ public class Item extends WorldObject {
 
     /** The Constant CURRENCYTOKEN_SLOT_END. */
     public static final int CURRENCYTOKEN_SLOT_END = 150;
-
-    /** The slot. */
-    private int slot = 0;
-
-    /**
-     * Instantiates a new item.
-     * 
-     * @param objectId
-     *        the object id
-     */
-    public Item(final long objectId) {
-
-        super(objectId);
-        this.valuesCount = ItemFields.ITEM_END;
-        this.objectType.add(TypeMask.ITEM);
-        this.objectTypeId = TypeID.ITEM;
-    }
-
-    /**
-     * Sets the slot.
-     * 
-     * @param slot
-     *        the new slot
-     */
-    public void setSlot(final int slot) {
-
-        this.slot = slot;
-    }
-
-    /**
-     * Gets the slot.
-     * 
-     * @return the slot
-     */
-    public int getSlot() {
-
-        return this.slot;
-    }
 
     public static EquipmentSlots findEquipSlot(final InventoryType inventoryType) {
 
