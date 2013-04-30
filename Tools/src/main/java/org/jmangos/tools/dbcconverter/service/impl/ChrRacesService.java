@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -20,6 +20,7 @@
 package org.jmangos.tools.dbcconverter.service.impl;
 
 import org.jmangos.commons.entities.ChrRaces;
+import org.jmangos.commons.enums.Races;
 import org.jmangos.tools.dbc.struct.ChrRacesEntry;
 import org.jmangos.tools.dbcconverter.service.AbstractDbcService;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -61,7 +62,7 @@ public class ChrRacesService extends AbstractDbcService<ChrRaces, ChrRacesEntry>
         ChrRacesEntry entry = getEntry();
         do {
             final ChrRaces cr = new ChrRaces();
-            cr.setId(entry.RaceID.get());
+            cr.setId(Races.get(entry.RaceID.get()));
             cr.setName(entry.name.get());
             cr.setCinematicSequence(entry.CinematicSequence.get());
             cr.setFaction_id(entry.FactionID.get());
