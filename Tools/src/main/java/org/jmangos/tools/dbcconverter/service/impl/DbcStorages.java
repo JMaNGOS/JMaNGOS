@@ -59,7 +59,7 @@ public class DbcStorages {
 //        this.worldMapAreaService.saveAll();
 //        this.areaTableService.saveAll();
 //        this.mapService.saveAll();
-//        chrClassesService.saveAll();
+        chrClassesService.saveAll();
         chrRacesService.saveAll();
         logger.info("Finished encoding dbc files");
     }

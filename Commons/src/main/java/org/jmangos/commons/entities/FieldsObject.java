@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -39,6 +39,7 @@ import org.jmangos.commons.enums.TypeID;
 import org.jmangos.commons.enums.TypeMask;
 import org.jmangos.commons.enums.UpdateFlags;
 import org.jmangos.commons.enums.UpdateType;
+import org.jmangos.commons.model.UpdateBlock;
 import org.jmangos.commons.update.ObjectFields;
 
 @SuppressWarnings("serial")
@@ -125,7 +126,7 @@ public abstract class FieldsObject implements Streamable, Serializable {
         final byte[] packGUID = new byte[8 + 1];
         packGUID[0] = 0;
         int size = 1;
-        for (byte i = 0; i <8; ++i) {
+        for (byte i = 0; i < 8; ++i) {
             if ((tguid & 0xFF) > 0) {
                 packGUID[0] |= (1 << i);
                 packGUID[size] = (byte) (tguid & 0xFF);
@@ -148,21 +149,22 @@ public abstract class FieldsObject implements Streamable, Serializable {
      * .test.id.Player)
      */
     @Override
-    public int buildCreateBlock(final ChannelBuffer updateBlock, final CharacterData characterData) {
+    public void buildCreateBlock(final UpdateBlock updateBlock, final CharacterData characterData) {
 
+        ChannelBuffer buffer = updateBlock.getBuffer();
         final UpdateType type = getCreateUpdateType();
-        updateBlock.writeByte(type.getValue());
-        updateBlock.writeBytes(this.packGuid);
-        updateBlock.writeByte(getTypeId().getValue());
+        buffer.writeByte(type.getValue());
+        buffer.writeBytes(this.packGuid);
+        buffer.writeByte(getTypeId().getValue());
 
         final UpdateFlags[] additionFlags = new UpdateFlags[2];
         if (this == characterData) {
             additionFlags[0] = (UpdateFlags.SELFTARGET);
         }
-        getMovement().buildUpdateBlock(updateBlock, additionFlags);
+        getMovement().buildUpdateBlock(updateBlock.getBuffer(), additionFlags);
 
-        updateBlock.writeBytes(writeValuesUpdate());
-        return 1;
+        buffer.writeBytes(writeValuesUpdate());
+        updateBlock.icrementCountBlocks();
     }
 
     public TypeID getTypeId() {

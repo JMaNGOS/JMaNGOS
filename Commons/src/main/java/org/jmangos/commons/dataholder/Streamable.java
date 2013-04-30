@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -21,6 +21,7 @@ package org.jmangos.commons.dataholder;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jmangos.commons.entities.CharacterData;
+import org.jmangos.commons.model.UpdateBlock;
 
 /**
  * @author MinimaJack
@@ -30,6 +31,6 @@ public interface Streamable {
 
     public ChannelBuffer writeValuesUpdate();
 
-    public int buildCreateBlock(final ChannelBuffer updateBlocks, CharacterData characterData);
+    public void buildCreateBlock(final UpdateBlock update, CharacterData characterData);
 
 }

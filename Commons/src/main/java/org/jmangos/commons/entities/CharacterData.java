@@ -56,6 +56,7 @@ import org.jmangos.commons.enums.UnitFlags;
 import org.jmangos.commons.enums.UnitFlags2;
 import org.jmangos.commons.enums.UpdateType;
 import org.jmangos.commons.model.CanUseSpell;
+import org.jmangos.commons.model.UpdateBlock;
 import org.jmangos.commons.model.player.Player;
 import org.jmangos.commons.update.PlayerFields;
 import org.jmangos.commons.update.UnitField;
@@ -75,7 +76,7 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
 
     @Transient
     private Player player;
-    
+
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @MapKeyColumn(name = "spellId", nullable = true)
@@ -287,16 +288,14 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
     }
 
     @Override
-    public int buildCreateBlock(final ChannelBuffer updateBlock, final CharacterData characterData) {
+    public void buildCreateBlock(final UpdateBlock update, final CharacterData characterData) {
 
-        int count = 0;
         if (this == characterData) {
             for (final Entry<Integer, FieldsItem> equips : getInventory().entrySet()) {
-                count += equips.getValue().buildCreateBlock(updateBlock, characterData);
+                equips.getValue().buildCreateBlock(update, characterData);
             }
         }
-        count += super.buildCreateBlock(updateBlock, characterData);
-        return count;
+        super.buildCreateBlock(update, characterData);
     }
 
     /**
@@ -774,7 +773,6 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
         this.lastSaveTime = lastsavetime;
     }
 
-    
     /**
      * @return the player
      */
@@ -782,9 +780,9 @@ public class CharacterData extends FieldsCharacter implements CanUseSpell {
         return this.player;
     }
 
-    
     /**
-     * @param player the player to set
+     * @param player
+     *        the player to set
      */
     public final void setPlayer(Player player) {
         this.player = player;

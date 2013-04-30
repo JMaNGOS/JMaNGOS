@@ -18,16 +18,14 @@ package org.jmangos.realm.model;
 
 import gnu.trove.procedure.TObjectProcedure;
 
-import java.nio.ByteOrder;
-
 import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
 import org.jmangos.commons.controller.CharacterController;
 import org.jmangos.commons.controller.WeatherController;
 import org.jmangos.commons.entities.CharacterData;
 import org.jmangos.commons.entities.FieldsObject;
 import org.jmangos.commons.entities.Position;
 import org.jmangos.commons.enums.WeatherState;
+import org.jmangos.commons.model.UpdateBlock;
 import org.jmangos.commons.model.base.NestedMap;
 import org.jmangos.commons.model.base.Weather;
 import org.jmangos.commons.network.sender.AbstractPacketSender;
@@ -166,27 +164,20 @@ public class Map extends NestedMap {
                     }
                 }
 
-                final ChannelBuffer updateBlock =
-                        ChannelBuffers.dynamicBuffer(ByteOrder.LITTLE_ENDIAN, 1024);
                 // RESERVE SPACE FOR COUNT BLOCKS
-                updateBlock.writeInt(0);
-                final Integer countBlock;
+                final UpdateBlock update = new UpdateBlock();
                 this.units.forEachValue(new TObjectProcedure<FieldsObject>() {
 
                     @Override
                     public boolean execute(final FieldsObject object) {
                         // countBlock +=
-                        object.buildCreateBlock(updateBlock, ((CharacterData) plObject));
+                        object.buildCreateBlock(update, ((CharacterData) plObject));
                         return true;
                     }
                 });
 
                 // FILL COUNT BLOCKS
-                updateBlock.setInt(0, this.units.size());
-                final byte[] outputBuffer =
-                        updateBlock.readBytes(updateBlock.readableBytes()).array();
-
-                final SMSG_UPDATE_OBJECT updatePacket = new SMSG_UPDATE_OBJECT(outputBuffer);
+                final SMSG_UPDATE_OBJECT updatePacket = new SMSG_UPDATE_OBJECT(update.build());
                 this.sender.send(((CharacterData) plObject).getPlayer().getChannel(), updatePacket);
 
                 this.playerList.put(plObject.getGuid(), plObject);
