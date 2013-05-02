@@ -131,6 +131,7 @@
         <packet name="SMSG_LOGOUT_COMPLETE" id="4D"/>
         <!-- gibson implemented packets -->
         <packet name="SMSG_CHAR_CUSTOMIZE" id="474"/>
+        <packet name="SMSG_TRIGGER_CINEMATIC" id="0FA"/>
 
 	</opcodelist>
 </opcodes>
