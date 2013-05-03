@@ -58,15 +58,23 @@ public class CreatureServiceImpl implements CreatureService {
         final List<Creature> listData =
                 this.creatureDataDao.findAll(Specifications.where(
                         CreatureDataSpecs.isWithinCoords(poslc, posrc)).and(
-                        CreatureDataSpecs.isInMap(map)).and(CreatureDataSpecs.isHaveId(6)));
+                        CreatureDataSpecs.isInMap(map))/*
+                                                        * .and(CreatureDataSpecs.
+                                                        * isHaveId(6))
+                                                        */);
         final List<Creature> deleted = new ArrayList<Creature>();
         for (final Creature creature : listData) {
-            final CreaturePrototype creatureTemplate =
-                    this.creatureDao.findOne((long) creature.getEntry());
-            if (creatureTemplate != null) {
-                creature.setPrototype(creatureTemplate);
-            } else {
+            try {
+                final CreaturePrototype creatureTemplate =
+                        this.creatureDao.findOne((long) creature.getEntry());
+                if (creatureTemplate != null) {
+                    creature.setPrototype(creatureTemplate);
+                } else {
+                    deleted.add(creature);
+                }
+            } catch (Exception e) {
                 deleted.add(creature);
+                e.printStackTrace();
             }
         }
         listData.removeAll(deleted);

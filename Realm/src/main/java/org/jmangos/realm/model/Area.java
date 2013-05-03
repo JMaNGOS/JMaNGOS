@@ -19,12 +19,11 @@ public class Area extends Map {
     @Autowired
     CreatureService creature;
 
-    /*
+    /**
      * (non-Javadoc)
      * 
-     * @see
-     * org.jmangos.commons.model.base.Map#addObject(org.jmangos.commons.entities
-     * .FieldsObject)
+     * @see org.jmangos.commons.model.base.Map#addObject(org.jmangos.commons.entities
+     *      .FieldsObject)
      */
     @Override
     public void addObject(final FieldsObject plObject) {

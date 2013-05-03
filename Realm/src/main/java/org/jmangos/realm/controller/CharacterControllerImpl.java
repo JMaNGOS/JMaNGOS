@@ -28,6 +28,7 @@ import org.jmangos.commons.entities.CharacterPositionerHolder;
 import org.jmangos.commons.entities.CharacterPowers;
 import org.jmangos.commons.entities.CharacterReputation;
 import org.jmangos.commons.entities.CharacterSkill;
+import org.jmangos.commons.entities.ChrRaces;
 import org.jmangos.commons.entities.FactionDataEntity;
 import org.jmangos.commons.entities.FactionEntity;
 import org.jmangos.commons.entities.FieldsItem;
@@ -52,6 +53,7 @@ import org.jmangos.commons.enums.Races;
 import org.jmangos.commons.enums.Stats;
 import org.jmangos.commons.service.SkillFactory;
 import org.jmangos.realm.network.packet.wow.server.SMSG_INITIALIZE_FACTIONS;
+import org.jmangos.realm.service.ChrRacesStorages;
 import org.jmangos.realm.service.FactionStorages;
 import org.jmangos.realm.service.PlayerClassLevelInfoStorages;
 import org.jmangos.realm.service.PlayerLevelStorages;
@@ -100,6 +102,9 @@ public class CharacterControllerImpl implements CharacterController {
     @Autowired
     ItemPrototypeService itemPrototypeService;
 
+    @Autowired
+    private ChrRacesStorages chrRacesStorages;
+    
     /** The player level storages. */
     @Autowired
     private PlayerLevelStorages playerLevelStorages;
@@ -474,41 +479,12 @@ public class CharacterControllerImpl implements CharacterController {
 
     private void initModelForCharacter(final CharacterData characterData) {
 
-        final byte gender = characterData.getGender().getValue();
         int model = 0;
-        switch (characterData.getRace()) {
-            case HUMAN:
-                model = 49 + gender;
-            break;
-            case DWARF:
-                model = 53 + gender;
-            break;
-            case NIGHTELF:
-                model = 55 + gender;
-            break;
-            case GNOME:
-                model = 1563 + gender;
-            break;
-            case DRAENEI:
-                model = 16125 + gender;
-            break;
-            case ORC:
-                model = 51 + gender;
-            break;
-            case UNDEAD:
-                model = 57 + gender;
-            break;
-            case TAUREN:
-                model = 59 + gender;
-            break;
-            case TROLL:
-                model = 1478 + gender;
-            break;
-            case BLOODELF:
-                model = 15476 - gender;
-            break;
-            default:
-            break;
+        ChrRaces chrRace = chrRacesStorages.getChrRace(characterData.getRace());
+        if(characterData.getGender() == Gender.MALE){
+            model = chrRace.getModel_male();
+        }else{
+            model = chrRace.getModel_female();
         }
         characterData.setDisplayId(ModelType.CURRENT, model);
         characterData.setDisplayId(ModelType.NATIVE, model);
