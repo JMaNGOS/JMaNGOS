@@ -146,12 +146,11 @@ public class Map extends NestedMap {
         this.sender = sender;
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * 
-     * @see
-     * org.jmangos.commons.model.base.NestedMap#addObject(org.jmangos.commons
-     * .entities.FieldsObject)
+     * @see org.jmangos.commons.model.base.NestedMap#addObject(org.jmangos.commons
+     *      .entities.FieldsObject)
      */
     @Override
     public void addObject(final FieldsObject plObject) {
@@ -164,26 +163,21 @@ public class Map extends NestedMap {
                     }
                 }
 
-                // RESERVE SPACE FOR COUNT BLOCKS
                 final UpdateBlock update = new UpdateBlock();
                 this.units.forEachValue(new TObjectProcedure<FieldsObject>() {
 
                     @Override
                     public boolean execute(final FieldsObject object) {
-                        // countBlock +=
                         object.buildCreateBlock(update, ((CharacterData) plObject));
                         return true;
                     }
                 });
 
-                // FILL COUNT BLOCKS
                 while (!update.isFinished()) {
                     final SMSG_UPDATE_OBJECT updatePacket = new SMSG_UPDATE_OBJECT(update.build(5));
-                    this.sender.send(((CharacterData) plObject).getPlayer().getChannel(), updatePacket);
+                    this.sender.send(((CharacterData) plObject).getPlayer().getChannel(),
+                            updatePacket);
                 }
-             //   final SMSG_UPDATE_OBJECT updatePacket = new SMSG_UPDATE_OBJECT(update.build());
-             //   this.sender.send(((CharacterData) plObject).getPlayer().getChannel(), updatePacket);
-
                 this.playerList.put(plObject.getGuid(), plObject);
             break;
             case UNIT:
@@ -208,7 +202,7 @@ public class Map extends NestedMap {
         final long time = System.currentTimeMillis();
         // TODO: move weather change time to config
         // now for test set only rain
-        if ((time - getWeather().getLastUpdateTime()) > 150000) {
+        if ((time - getWeather().getLastUpdateTime()) > 300000) {
             getWeather().setLastUpdateTime(time);
             getWeather().setState(WeatherState.HEAVY_RAIN);
             getWeather().setGrade(1f);

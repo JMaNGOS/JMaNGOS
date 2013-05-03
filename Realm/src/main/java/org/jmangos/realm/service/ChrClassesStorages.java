@@ -135,7 +135,7 @@ public class ChrClassesStorages implements DataLoadService<Map<Classes, ChrClass
     }
 
     // Specific getters
-    public ChrClasses getChrRace(final Classes clazz) {
+    public ChrClasses getChrClass(final Classes clazz) {
 
         return this.chrClasses.get(clazz);
     }

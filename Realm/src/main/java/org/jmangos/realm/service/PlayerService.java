@@ -83,7 +83,11 @@ public class PlayerService {
 
     @Autowired
     private MapService mapService;
-
+    @Autowired
+    private ChrRacesStorages chrRacesStorages;
+    @Autowired
+    private ChrClassesStorages chrClassesStorages;
+    
     /**
      * The playerlist.
      */
@@ -130,7 +134,14 @@ public class PlayerService {
         this.sender.send(player.getChannel(), new SMSG_MOTD("Test MotD String@test".split("@")));
         if (player.getCharacterData().getAtLoginFlag() == 1) {
             player.getCharacterData().setAtLoginFlag(0);
-            this.sender.send(player.getChannel(), new SMSG_TRIGGER_CINEMATIC(player));
+            int cinematicSequence = chrClassesStorages.getChrClass(player.getCharacterData().getClazz()).getCinematicSequence();
+            if (cinematicSequence == 0) {
+                cinematicSequence = chrRacesStorages.getChrRace(player.getCharacterData().getRace()).getCinematicSequence();
+            }
+            if (cinematicSequence > 0) {
+                this.sender.send(player.getChannel(), new SMSG_TRIGGER_CINEMATIC(cinematicSequence));
+            }
+            
         }
         // this.sender.send(player.getChannel(), new SMSG_TALENTS_INFO());
         this.sender.send(player.getChannel(), new SMSG_INITIAL_SPELLS(player));
