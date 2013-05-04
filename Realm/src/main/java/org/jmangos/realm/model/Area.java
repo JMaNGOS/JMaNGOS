@@ -5,6 +5,7 @@ import java.util.List;
 import org.jmangos.commons.entities.Creature;
 import org.jmangos.commons.entities.FieldsObject;
 import org.jmangos.commons.service.CreatureService;
+import org.jmangos.realm.service.GameEventCreatureStorages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
@@ -18,6 +19,8 @@ public class Area extends Map {
     boolean spawned = false;
     @Autowired
     CreatureService creature;
+    @Autowired
+    GameEventCreatureStorages gameEventCreatureStorages;
 
     /**
      * (non-Javadoc)
@@ -34,7 +37,11 @@ public class Area extends Map {
                         this.creature.getCreatureForMapWithPositionBBox(map, getLeftCorner(),
                                 getRightCorner());
                 for (final Creature creature : creatures) {
-                    super.addObject(creature);
+                    if (this.gameEventCreatureStorages.isCreatureEventable((int) (creature.getGuid() & 0xFFFFFF))) {
+                        // now ignore creatures for any event
+                    } else {
+                        super.addObject(creature);
+                    }
                 }
             }
             this.spawned = true;
