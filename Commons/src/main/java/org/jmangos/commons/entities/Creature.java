@@ -67,7 +67,15 @@ public class Creature extends FieldsUnit {
         setClazz(prototype.getClazz());
         setAttackTime(0, prototype.getBaseattacktime());
         setAttackTime(1, prototype.getBaseattacktime());
-        setLevel(1);
+        final int minLevel = prototype.getMaxLevel();
+        final int maxLevel = prototype.getMinLevel();
+        int level = 0;
+        if (maxLevel != minLevel) {
+            level = minLevel + Rnd.nextInt(maxLevel - minLevel);
+        } else {
+            level = minLevel;
+        }
+        setLevel(level);
         setDisplayId(ModelType.NATIVE, prototype.getModelId(0));
         setDisplayId(ModelType.CURRENT, prototype.getModelId(0));
         final Integer minHealth = prototype.getMaxHealth();

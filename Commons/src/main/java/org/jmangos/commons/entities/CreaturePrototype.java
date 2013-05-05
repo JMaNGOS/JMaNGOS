@@ -19,8 +19,7 @@ import org.jmangos.commons.enums.Classes;
 @Table(name = "creature_template")
 @AttributeOverrides({
     @AttributeOverride(name = "guid", column = @Column(name = "entry")),
-    @AttributeOverride(name = "entry", column = @Column(name = "difficulty_entry_1")),
-    @AttributeOverride(name = "level", column = @Column(name = "minlevel")) })
+    @AttributeOverride(name = "entry", column = @Column(name = "difficulty_entry_1")) })
 @SecondaryTables({ @SecondaryTable(name = "creature_template_addon",
         pkJoinColumns = { @PrimaryKeyJoinColumn(name = "entry", referencedColumnName = "entry") }) })
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -36,6 +35,10 @@ public class CreaturePrototype extends FieldsObject {
     private Integer baseattacktime = 2000;
     @Column(name = "rangeattacktime")
     private Integer rangeattacktime = 0;
+    @Column(name = "minlevel")
+    private int minLevel;
+    @Column(name = "maxlevel")
+    private int maxLevel;
     /**
      * 
      */
@@ -289,6 +292,20 @@ public class CreaturePrototype extends FieldsObject {
 
     public int getFactionForHorde() {
         return this.factionForHorde;
+    }
+
+    /**
+     * @return the minLevel
+     */
+    public final int getMinLevel() {
+        return this.minLevel;
+    }
+
+    /**
+     * @return the maxLevel
+     */
+    public final int getMaxLevel() {
+        return this.maxLevel;
     }
 
 }
