@@ -45,13 +45,6 @@ public enum Classes {
     /** The game class druid. */
     DRUID(11);
 
-    public enum CreatureClass {
-        CLASS_WARRIOR,
-        CLASS_PALADIN,
-        CLASS_ROGUE,
-        CLASS_MAGE;
-    }
-
     /** The value. */
     private int value;
 
@@ -85,10 +78,6 @@ public enum Classes {
     public int getValue() {
 
         return this.value;
-    }
-
-    public CreatureClass getAsCreatureClass() {
-        return CreatureClass.values()[getValue()];
     }
 
     /**

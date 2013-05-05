@@ -75,9 +75,9 @@ public class Creature extends FieldsUnit {
         final int health = minHealth + Rnd.nextInt(maxHealth - minHealth);
         setPower(Powers.HEALTH, health);
         setBaseHealth(health);
-        switch (prototype.getClazz().getAsCreatureClass()) {
-            case CLASS_MAGE:
-            case CLASS_PALADIN:
+        switch (prototype.getClazz()) {
+            case MAGE:
+            case PALADIN:
                 final Integer minMana = prototype.getMaxMana();
                 final Integer maxMana = prototype.getMinMana();
                 final int mana = minHealth + Rnd.nextInt(maxMana - minMana);
