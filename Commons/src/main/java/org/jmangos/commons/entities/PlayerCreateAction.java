@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -45,31 +45,16 @@ public class PlayerCreateAction implements Serializable {
     PlayercreateinfoPK playercreateinfoPK;
 
     @Id
-    @Column(name = "button",
-            nullable = true,
-            insertable = true,
-            updatable = true,
-            length = 3,
-            precision = 0)
-    private Byte button;
+    @Column(name = "button", nullable = true, insertable = true, updatable = true)
+    private Integer button;
 
     @Basic
-    @Column(name = "action",
-            nullable = true,
-            insertable = true,
-            updatable = true,
-            length = 10,
-            precision = 0)
+    @Column(name = "action", nullable = true, insertable = true, updatable = true)
     private Integer action;
 
     @Basic
-    @Column(name = "type",
-            nullable = true,
-            insertable = true,
-            updatable = true,
-            length = 10,
-            precision = 0)
-    private Byte type;
+    @Column(name = "type", nullable = true, insertable = true, updatable = true)
+    private Integer type;
 
     /**
      * Empty constructor
@@ -89,7 +74,7 @@ public class PlayerCreateAction implements Serializable {
     /**
      * @return the type
      */
-    public final Byte getType() {
+    public final Integer getType() {
 
         return this.type;
     }
@@ -107,7 +92,7 @@ public class PlayerCreateAction implements Serializable {
      * @param type
      *        the type to set
      */
-    public final void setType(final Byte type) {
+    public final void setType(final Integer type) {
 
         this.type = type;
     }
@@ -115,7 +100,7 @@ public class PlayerCreateAction implements Serializable {
     /**
      * @return the button
      */
-    public final Byte getButton() {
+    public final Integer getButton() {
 
         return this.button;
     }
@@ -124,7 +109,7 @@ public class PlayerCreateAction implements Serializable {
      * @param button
      *        the button to set
      */
-    public final void setButton(final Byte button) {
+    public final void setButton(final Integer button) {
 
         this.button = button;
     }
