@@ -139,17 +139,12 @@
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-entitymanager</artifactId>
-				<version>4.2.0.CR2</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-annotations</artifactId>
-				<version>3.5.6-Final</version>
+				<version>4.2.1.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-c3p0</artifactId>
-				<version>4.2.0.CR2</version>
+				<version>4.2.1.Final</version>
 			</dependency>
 			<!--dependency>
 				<groupId>org.criteria4jpa</groupId>
@@ -252,7 +247,19 @@
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-core</artifactId>
-				<version>4.2.0.Final</version>
+				<version>4.2.1.Final</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-ehcache</artifactId>
+				<version>4.2.1.Final</version>
+			</dependency>
+			<dependency>
+				<groupId>
+					com.googlecode.ehcache-spring-annotations
+				</groupId>
+				<artifactId>ehcache-spring-annotations</artifactId>
+				<version>1.2.0</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
