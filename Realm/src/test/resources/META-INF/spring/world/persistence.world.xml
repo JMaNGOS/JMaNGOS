@@ -26,6 +26,9 @@
 		<class>org.jmangos.commons.entities.Creature</class>
 		<class>org.jmangos.commons.entities.CreaturePositionerHolder</class>
 		<class>org.jmangos.commons.entities.BasicPositionerHolder</class>
+		<class>org.jmangos.commons.entities.ChrRaces</class>
+		<class>org.jmangos.commons.entities.ChrClasses</class>
+		<class>org.jmangos.commons.entities.GameEventCreature</class>
 		
 		<class>org.jmangos.commons.entities.ItemPrototype</class>
 		<class>org.jmangos.commons.entities.CharStartOutfitEntity</class>

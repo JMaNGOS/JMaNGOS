@@ -104,7 +104,7 @@ public class CharacterControllerImpl implements CharacterController {
 
     @Autowired
     private ChrRacesStorages chrRacesStorages;
-    
+
     /** The player level storages. */
     @Autowired
     private PlayerLevelStorages playerLevelStorages;
@@ -267,6 +267,7 @@ public class CharacterControllerImpl implements CharacterController {
                 chB.setButton(action.getButton());
                 chB.setButtonType(action.getType());
                 chB.setSpec(0);
+                chB.setCharacter(characterData);
                 characterData.addActionButton(chB);
             }
         }
@@ -281,7 +282,7 @@ public class CharacterControllerImpl implements CharacterController {
                 chR.setFaction(i);
                 chR.setStanding(0);
                 final int raceMask = characterData.getRace().getMask();
-                final int classMask = characterData.getRace().getMask();
+                final int classMask = characterData.getClazz().getMask();
                 rData.iterate(new Visitor<FactionDataEntity>() {
 
                     @Override
@@ -408,12 +409,11 @@ public class CharacterControllerImpl implements CharacterController {
         }
     }
 
-    /*
+    /**
      * (non-Javadoc)
      * 
-     * @see
-     * org.jmangos.realm.controller.CharacterControllers#loadCharacterByGuid
-     * (java.lang.Long)
+     * @see org.jmangos.realm.controller.CharacterControllers#loadCharacterByGuid
+     *      (java.lang.Long)
      */
     @Override
     public CharacterData loadCharacterByGuid(final Long guid) {
@@ -481,9 +481,9 @@ public class CharacterControllerImpl implements CharacterController {
 
         int model = 0;
         ChrRaces chrRace = chrRacesStorages.getChrRace(characterData.getRace());
-        if(characterData.getGender() == Gender.MALE){
+        if (characterData.getGender() == Gender.MALE) {
             model = chrRace.getModel_male();
-        }else{
+        } else {
             model = chrRace.getModel_female();
         }
         characterData.setDisplayId(ModelType.CURRENT, model);

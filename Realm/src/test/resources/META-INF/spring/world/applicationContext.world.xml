@@ -17,7 +17,7 @@
 	default-autowire="byName">
 
 	<bean id="CreatureController" class="org.jmangos.realm.controller.CreatureController" />
-	<bean id="CreatureService" class="org.jmangos.world.services.CreatureServiceImpl" />
+	<bean id="CreatureService" class="org.jmangos.world.services.impl.CreatureServiceImpl" />
 
 	<bean id="SkillService" class="org.jmangos.world.services.impl.SkillServiceImpl" />
 	<bean id="SkillLineAbilityService"
@@ -36,11 +36,19 @@
 		class="org.jmangos.world.services.impl.PlayerXpForLevelServiceImpl" />
 	<bean id="CharStartOutfitService"
 		class="org.jmangos.world.services.impl.CharStartOutfitServiceImpl" />
+	<bean id="chrRacesService" class="org.jmangos.world.services.impl.ChrRacesServiceImpl" />
+	<bean id="chrClassesService" class="org.jmangos.world.services.impl.ChrClassesServiceImpl" />
+	<bean id="gameEventCreatureService"
+		class="org.jmangos.world.services.impl.GameEventCreatureServiceImpl" />
+
+	<bean id="gameEventCreatureStorages" class="org.jmangos.realm.service.GameEventCreatureStorages"></bean>
 
 	<bean id="factionStorages" class="org.jmangos.realm.service.FactionStorages" />
 	<bean id="factionService" class="org.jmangos.world.services.impl.FactionServiceImpl" />
 
 	<bean id="charStartOutfitStorages" class="org.jmangos.realm.service.CharStartOutfitStorages" />
+	<bean id="chrRacesStorages" class="org.jmangos.realm.service.ChrRacesStorages" />
+	<bean id="chrClassesStorages" class="org.jmangos.realm.service.ChrClassesStorages" />
 	<bean id="itemStorages" class="org.jmangos.realm.service.ItemStorages" />
 	<bean id="playerLevelStorages" class="org.jmangos.realm.service.PlayerLevelStorages" />
 	<bean id="playerClassLevelInfoStorages" class="org.jmangos.realm.service.PlayerClassLevelInfoStorages" />

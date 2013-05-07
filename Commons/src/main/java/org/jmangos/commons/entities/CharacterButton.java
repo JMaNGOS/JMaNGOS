@@ -24,6 +24,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.jmangos.commons.enums.ActionButtonType;
@@ -58,6 +60,10 @@ public class CharacterButton implements Serializable {
     @Column(name = "buttonType")
     private int buttonType;
 
+    @ManyToOne
+    @JoinColumn(name="characterId")
+    private CharacterData character;
+    
     public CharacterButton() {
 
     }
@@ -142,6 +148,22 @@ public class CharacterButton implements Serializable {
      */
     public final void setButtonType(final int buttonType) {
         this.buttonType = buttonType;
+    }
+
+    
+    /**
+     * @return the character
+     */
+    public final CharacterData getCharacter() {
+        return this.character;
+    }
+
+    
+    /**
+     * @param character the character to set
+     */
+    public final void setCharacter(CharacterData character) {
+        this.character = character;
     }
 
 }

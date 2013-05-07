@@ -20,6 +20,8 @@
 package org.jmangos.commons.entities;
 
 import java.util.EnumSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -31,6 +33,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -86,13 +89,13 @@ public class CharacterData extends FieldsUnit implements CanUseSpell {
     @JoinColumn(name = "characterId")
     private final Map<Integer, CharacterSpell> spells = new FastMap<Integer, CharacterSpell>();
 
-    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    @MapKeyColumn(name = "button", nullable = true)
+    @OneToMany(fetch = FetchType.EAGER,
+            orphanRemoval = true,
+            mappedBy = "character",
+            cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
-    @JoinColumn(name = "characterId")
-    private final Map<Integer, CharacterButton> actionButtons =
-            new FastMap<Integer, CharacterButton>();
+    @OrderBy("button")
+    private final List<CharacterButton> actionButtons = new LinkedList<CharacterButton>();
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
@@ -1039,13 +1042,13 @@ public class CharacterData extends FieldsUnit implements CanUseSpell {
     }
 
     public void addActionButton(final CharacterButton chB) {
-        this.actionButtons.put(chB.getButton(), chB);
+        this.actionButtons.add(chB);
     }
 
     /**
      * @return the actionBittons
      */
-    public final Map<Integer, CharacterButton> getActionButtons() {
+    public final List<CharacterButton> getActionButtons() {
         return this.actionButtons;
     }
 
@@ -1082,7 +1085,7 @@ public class CharacterData extends FieldsUnit implements CanUseSpell {
      * @param player
      *        the player to set
      */
-    public final void setPlayer(Player player) {
+    public final void setPlayer(final Player player) {
         this.player = player;
     }
 
@@ -2331,7 +2334,7 @@ public class CharacterData extends FieldsUnit implements CanUseSpell {
     }
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
 
     }
@@ -2347,7 +2350,7 @@ public class CharacterData extends FieldsUnit implements CanUseSpell {
      * @see org.jmangos.commons.entities.FieldsUnit#setBytes(int)
      */
     @Override
-    public void setBytes(int bytes) {
+    public void setBytes(final int bytes) {
         super.setBytes(bytes);
         this.bytes = bytes;
     }
@@ -2358,7 +2361,7 @@ public class CharacterData extends FieldsUnit implements CanUseSpell {
     }
 
     @Override
-    public void setLevel(int level) {
+    public void setLevel(final int level) {
         super.setLevel(level);
         this.level = level;
 

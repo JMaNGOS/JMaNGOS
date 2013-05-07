@@ -16,8 +16,11 @@
  ******************************************************************************/
 package org.jmangos.realm.network.packet.wow.server;
 
-import java.util.Map;
+import java.nio.ByteOrder;
+import java.util.List;
 
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
 import org.jmangos.commons.entities.CharacterButton;
 import org.jmangos.commons.enums.ActionButtonMessageType;
 import org.jmangos.commons.model.player.Player;
@@ -41,7 +44,7 @@ public class SMSG_ACTION_BUTTONS extends AbstractWoWServerPacket {
      * @param player
      *        the player
      */
-    public SMSG_ACTION_BUTTONS(final Player player, ActionButtonMessageType messageType) {
+    public SMSG_ACTION_BUTTONS(final Player player, final ActionButtonMessageType messageType) {
 
         this.type = messageType;
         this.player = player;
@@ -54,19 +57,18 @@ public class SMSG_ACTION_BUTTONS extends AbstractWoWServerPacket {
      */
     @Override
     public void writeImpl() {
-        writeC(type.ordinal());
-        if (type == ActionButtonMessageType.CLEAR) {
+        writeC(this.type.ordinal());
+        final ChannelBuffer buffer =
+                ChannelBuffers.directBuffer(ByteOrder.LITTLE_ENDIAN, ACTION_BUTTON_COUNT * 4);
+        if (this.type == ActionButtonMessageType.CLEAR) {
             return;
         }
-        Map<Integer, CharacterButton> actionButtons =
+        final List<CharacterButton> actionButtons =
                 this.player.getCharacterData().getActionButtons();
-        for (int i = 0; i < ACTION_BUTTON_COUNT; i++) {
-            if (actionButtons.containsKey(i)) {
-                CharacterButton button = actionButtons.get(i);
-                writeD(button.getAction() | (button.getNativeButtonType() << 24));
-            } else {
-                writeD(0);
-            }
+        for (final CharacterButton characterButton : actionButtons) {
+            buffer.setInt(characterButton.getButton() * 4, characterButton.getAction() |
+                (characterButton.getNativeButtonType() << 24));
         }
+        getByteBuffer().writeBytes(buffer, 0, ACTION_BUTTON_COUNT * 4);
     }
 }
