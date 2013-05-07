@@ -97,13 +97,15 @@ public class CharacterData extends FieldsUnit implements CanUseSpell {
     @OrderBy("button")
     private final List<CharacterButton> actionButtons = new LinkedList<CharacterButton>();
 
-    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    @MapKeyColumn(name = "faction", nullable = true)
+    @OneToMany(fetch = FetchType.EAGER,
+            orphanRemoval = true,
+            mappedBy = "character",
+            cascade = CascadeType.ALL)
+    // @MapKeyColumn(name = "faction", nullable = true)
     @Fetch(value = FetchMode.SUBSELECT)
-    @JoinColumn(name = "characterId")
-    private final Map<Integer, CharacterReputation> reputations =
-            new FastMap<Integer, CharacterReputation>();
+    // @JoinColumn(name = "characterId")
+    @OrderBy("faction")
+    private final List<CharacterReputation> reputations = new LinkedList<CharacterReputation>();
 
     @OneToOne(targetEntity = CharacterPositionerHolder.class,
             fetch = FetchType.EAGER,
@@ -1055,7 +1057,7 @@ public class CharacterData extends FieldsUnit implements CanUseSpell {
     /**
      * @return the reputations
      */
-    public final Map<Integer, CharacterReputation> getReputations() {
+    public final List<CharacterReputation> getReputations() {
         return this.reputations;
     }
 

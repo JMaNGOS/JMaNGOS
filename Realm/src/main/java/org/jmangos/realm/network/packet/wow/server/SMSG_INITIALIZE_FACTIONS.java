@@ -16,6 +16,10 @@
  ******************************************************************************/
 package org.jmangos.realm.network.packet.wow.server;
 
+import java.nio.ByteOrder;
+
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
 import org.jmangos.commons.entities.CharacterReputation;
 import org.jmangos.commons.model.player.Player;
 import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
@@ -30,7 +34,7 @@ public class SMSG_INITIALIZE_FACTIONS extends AbstractWoWServerPacket {
 
     public SMSG_INITIALIZE_FACTIONS() {};
 
-    public SMSG_INITIALIZE_FACTIONS(Player player) {
+    public SMSG_INITIALIZE_FACTIONS(final Player player) {
         this.player = player;
     }
 
@@ -42,25 +46,25 @@ public class SMSG_INITIALIZE_FACTIONS extends AbstractWoWServerPacket {
     @Override
     protected void writeImpl() {
 
-        int currRepSize = player.getCharacterData().getReputations().size();
+        final int currRepSize = this.player.getCharacterData().getReputations().size();
         int dataSize = 0;
-        if (currRepSize < MINIMAL_FACTION_COUNT)
+        if (currRepSize < MINIMAL_FACTION_COUNT) {
             dataSize = MINIMAL_FACTION_COUNT;
-        else {
+        } else {
             dataSize = currRepSize;
         }
-        Integer i = 0;
         writeD(dataSize);
-        for (; i < dataSize; i++) {
-            if(player.getCharacterData().getReputations().containsKey(i)){
-                CharacterReputation data = player.getCharacterData().getReputations().get(i);
-                writeC(data.getFlags());
-                writeD(data.getStanding());
-            }else{
-                writeC(0);
-                writeD(0);
-            }
+
+        final ChannelBuffer buffer =
+                ChannelBuffers.directBuffer(ByteOrder.LITTLE_ENDIAN, dataSize * 5);
+
+        for (final CharacterReputation reputation : this.player.getCharacterData().getReputations()) {
+            final int factionIndex = reputation.getFaction();
+            buffer.setByte(factionIndex * 5, reputation.getFlags());
+            buffer.setInt((factionIndex * 5) + 1, reputation.getStanding());
         }
+
+        getByteBuffer().writeBytes(buffer, 0, dataSize * 5);
     }
 
 }

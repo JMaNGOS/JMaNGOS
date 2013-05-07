@@ -24,6 +24,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -51,6 +53,10 @@ public class CharacterReputation implements Serializable {
     @Basic
     @Column(name = "flags")
     private int flags;
+
+    @ManyToOne
+    @JoinColumn(name = "characterId")
+    private CharacterData character;
 
     public CharacterReputation() {
 
@@ -99,6 +105,62 @@ public class CharacterReputation implements Serializable {
      */
     public final void setFlags(final int flags) {
         this.flags = flags;
+    }
+
+    /**
+     * @return the id
+     */
+    public final int getId() {
+        return this.id;
+    }
+
+    /**
+     * @param id
+     *        the id to set
+     */
+    public final void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the character
+     */
+    public final CharacterData getCharacter() {
+        return this.character;
+    }
+
+    /**
+     * @param character
+     *        the character to set
+     */
+    public final void setCharacter(CharacterData character) {
+        this.character = character;
+    }
+
+    /**
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof CharacterReputation)) {
+            return false;
+        }
+        return (((CharacterReputation) obj).getId() == this.getId());
+    }
+
+    /**
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return this.getId();
     }
 
 }

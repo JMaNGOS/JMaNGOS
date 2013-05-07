@@ -293,7 +293,8 @@ public class CharacterControllerImpl implements CharacterController {
                         }
                     }
                 });
-                characterData.getReputations().put(i, chR);
+                chR.setCharacter(characterData);
+                characterData.getReputations().add(chR);
 
             }
         }

@@ -58,11 +58,11 @@ public class SMSG_ACTION_BUTTONS extends AbstractWoWServerPacket {
     @Override
     public void writeImpl() {
         writeC(this.type.ordinal());
-        final ChannelBuffer buffer =
-                ChannelBuffers.directBuffer(ByteOrder.LITTLE_ENDIAN, ACTION_BUTTON_COUNT * 4);
         if (this.type == ActionButtonMessageType.CLEAR) {
             return;
         }
+        final ChannelBuffer buffer =
+                ChannelBuffers.directBuffer(ByteOrder.LITTLE_ENDIAN, ACTION_BUTTON_COUNT * 4);
         final List<CharacterButton> actionButtons =
                 this.player.getCharacterData().getActionButtons();
         for (final CharacterButton characterButton : actionButtons) {
