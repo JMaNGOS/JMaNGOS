@@ -29,6 +29,7 @@
 		<class>org.jmangos.commons.entities.ChrRaces</class>
 		<class>org.jmangos.commons.entities.ChrClasses</class>
 		<class>org.jmangos.commons.entities.GameEventCreature</class>
+		<class>org.jmangos.commons.entities.CreatureEquip</class>
 		
 		<class>org.jmangos.commons.entities.ItemPrototype</class>
 		<class>org.jmangos.commons.entities.CharStartOutfitEntity</class>

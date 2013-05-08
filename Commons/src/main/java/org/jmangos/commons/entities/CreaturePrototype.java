@@ -2,10 +2,14 @@ package org.jmangos.commons.entities;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.persistence.SecondaryTables;
@@ -95,6 +99,10 @@ public class CreaturePrototype extends FieldsObject {
     private int factionForAliance;
     @Column(name = "faction_H", nullable = true, insertable = true, updatable = true)
     private int factionForHorde;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "equipment_id")
+    private CreatureEquip equipment;
 
     /**
      * @return the name
@@ -306,6 +314,21 @@ public class CreaturePrototype extends FieldsObject {
      */
     public final int getMaxLevel() {
         return this.maxLevel;
+    }
+
+    /**
+     * @return the equipment
+     */
+    public final CreatureEquip getEquipment() {
+        return this.equipment;
+    }
+
+    /**
+     * @param equipment
+     *        the equipment to set
+     */
+    public final void setEquipment(final CreatureEquip equipment) {
+        this.equipment = equipment;
     }
 
 }

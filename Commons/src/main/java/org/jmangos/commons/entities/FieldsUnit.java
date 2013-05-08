@@ -33,6 +33,7 @@ import org.jmangos.commons.enums.ModType;
 import org.jmangos.commons.enums.ModelType;
 import org.jmangos.commons.enums.Powers;
 import org.jmangos.commons.enums.Races;
+import org.jmangos.commons.enums.SheathState;
 import org.jmangos.commons.enums.Stats;
 import org.jmangos.commons.enums.TypeID;
 import org.jmangos.commons.enums.TypeMask;
@@ -273,6 +274,11 @@ public abstract class FieldsUnit extends FieldsObject {
         }
         if (this.bitSet.get(UnitField.UNIT_FIELD_FACTIONTEMPLATE.getValue())) {
             ocBuffer.writeInt(getFaction_template());
+        }
+        for (int i = 0; i < 3; i++) {
+            if (this.bitSet.get(UnitField.UNIT_VIRTUAL_ITEM_SLOT_ID.getValue() + i)) {
+                ocBuffer.writeInt(getVirtualItems()[i]);
+            }
         }
         if (this.bitSet.get(UnitField.UNIT_FIELD_FLAGS.getValue())) {
             ocBuffer.writeInt(getFlags());
@@ -665,6 +671,15 @@ public abstract class FieldsUnit extends FieldsObject {
     public final void setVirtualItems(final int[] virtualItems) {
 
         this.virtualItems = virtualItems;
+    }
+
+    /**
+     * @param virtualItems
+     *        the virtualItems to set
+     */
+    public final void setVirtualItem(int slot, final int virtualItem) {
+        this.bitSet.set(UnitField.UNIT_VIRTUAL_ITEM_SLOT_ID.getValue() + slot);
+        this.virtualItems[slot] = virtualItem;
     }
 
     /**
@@ -1156,6 +1171,14 @@ public abstract class FieldsUnit extends FieldsObject {
 
         this.bitSet.set(UnitField.UNIT_FIELD_BASE_HEALTH.getValue());
         this.baseHealth = baseHealth;
+    }
+
+    public void setSheath(SheathState sheathed) {
+        setBytes2((getBytes2() & 0xFFFFFF00) | (sheathed.ordinal() & 0xFF));
+    }
+
+    public SheathState getSheath() {
+        return SheathState.get(getBytes2() & 0xFF);
     }
 
     /**

@@ -11,6 +11,7 @@ import javax.persistence.Transient;
 import org.jmangos.commons.enums.HighGuid;
 import org.jmangos.commons.enums.ModelType;
 import org.jmangos.commons.enums.Powers;
+import org.jmangos.commons.enums.SheathState;
 import org.jmangos.commons.update.ObjectFields;
 import org.jmangos.commons.utils.Rnd;
 
@@ -100,6 +101,16 @@ public class Creature extends FieldsUnit {
             setAttackTime(2, prototype.getRangeattacktime());
         }
         this.setFaction_template(prototype.getFactionForAliance());
+        this.setSheath(SheathState.MELEE);
+        if (prototype.getEquipment().getEquipentry1() != 0) {
+            this.setVirtualItem(0, prototype.getEquipment().getEquipentry1());
+        }
+        if (prototype.getEquipment().getEquipentry2() != 0) {
+            this.setVirtualItem(1, prototype.getEquipment().getEquipentry2());
+        }
+        if (prototype.getEquipment().getEquipentry3() != 0) {
+            this.setVirtualItem(2, prototype.getEquipment().getEquipentry3());
+        }
         // walk
         this.movement.getSpeeds()[0] = this.movement.getSpeeds()[0] * prototype.getSpeedWalkMod();
         this.movement.getSpeeds()[1] = this.movement.getSpeeds()[1] * prototype.getSpeedRunMod();
