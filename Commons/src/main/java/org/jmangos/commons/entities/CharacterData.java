@@ -101,9 +101,7 @@ public class CharacterData extends FieldsUnit implements CanUseSpell {
             orphanRemoval = true,
             mappedBy = "character",
             cascade = CascadeType.ALL)
-    // @MapKeyColumn(name = "faction", nullable = true)
     @Fetch(value = FetchMode.SUBSELECT)
-    // @JoinColumn(name = "characterId")
     @OrderBy("faction")
     private final List<CharacterReputation> reputations = new LinkedList<CharacterReputation>();
 
