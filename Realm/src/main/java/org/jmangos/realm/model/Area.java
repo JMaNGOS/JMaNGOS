@@ -2,6 +2,7 @@ package org.jmangos.realm.model;
 
 import java.util.List;
 
+import org.jmangos.commons.entities.CharacterData;
 import org.jmangos.commons.entities.Creature;
 import org.jmangos.commons.entities.FieldsObject;
 import org.jmangos.commons.service.CreatureService;
@@ -30,8 +31,11 @@ public class Area extends Map {
      */
     @Override
     public void addObject(final FieldsObject plObject) {
+        log.info("Add player {} to area {}", ((CharacterData) plObject).getName(), getId());
+        log.info("Area is spawned {}", this.spawned);
         if (!this.spawned) {
             final Map map = (Map) getRootMap();
+            log.info("Root map {} for area {}.", map.getId(), this.getId());
             if (map != null) {
                 final List<Creature> creatures =
                         this.creature.getCreatureForMapWithPositionBBox(map, getLeftCorner(),
