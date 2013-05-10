@@ -17,38 +17,23 @@
 package org.jmangos.commons.enums;
 
 /**
- * The Enum CharCreateCode.
+ * Created with IntelliJ IDEA.
+ * User: GiBSON
+ * Date: 10.05.13
+ * Time: 17:13
  */
-public enum CharCreateCode {
+public enum CharDeleteCode {
 
-    IN_PROGRESS(0x2E),
-    SUCCESS(0x2F),
-    ERROR(0x30),
-    FAILED(0x31),
-    NAME_IN_USE(0x32),
-    DISABLED(0x33),
-    PVP_TEAMS_VIOLATION(0x34),
-    SERVER_LIMIT(0x35),
-    ACCOUNT_LIMIT(0x36),
-    SERVER_QUEUE(0x37),
-    ONLY_EXISTING(0x38),
-    EXPANSION(0x39),
-    EXPANSION_CLASS(0x3A),
-    LEVEL_REQUIREMENT(0x3B),
-    UNIQUE_CLASS_LIMIT(0x3C),
-    CHARACTER_IN_GUILD(0x3D),
-    RESTRICTED_RACECLASS(0x3E),
-    CHARACTER_CHOOSE_RACE(0x3F),
-    CHARACTER_ARENA_LEADER(0x40),
-    CHARACTER_DELETE_MAIL(0x41),
-    CHARACTER_SWAP_FACTION(0x42),
-    CHARACTER_RACE_ONLY(0x43),
-    CHARACTER_GOLD_LIMIT(0x44),
-    FORCE_LOGIN(0x45);
+    CHAR_DELETE_IN_PROGRESS(0x46),
+    CHAR_DELETE_SUCCESS(0x47),
+    CHAR_DELETE_FAILED(0x48),
+    CHAR_DELETE_FAILED_LOCKED_FOR_TRANSFER(0x49),
+    CHAR_DELETE_FAILED_GUILD_LEADER(0x4A),
+    CHAR_DELETE_FAILED_ARENA_CAPTAIN(0x4B);
 
     private int value;
 
-    CharCreateCode(final int value) {
+    CharDeleteCode(final int value) {
 
         this.value = value;
     }

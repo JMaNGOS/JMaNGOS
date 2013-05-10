@@ -1,10 +1,7 @@
 package org.jmangos.commons.controller;
 
 import org.jmangos.commons.entities.CharacterData;
-import org.jmangos.commons.enums.CharCreateCode;
-import org.jmangos.commons.enums.Classes;
-import org.jmangos.commons.enums.Gender;
-import org.jmangos.commons.enums.Races;
+import org.jmangos.commons.enums.*;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface CharacterController {
@@ -17,6 +14,8 @@ public interface CharacterController {
     @Transactional("realm")
     public abstract CharCreateCode updateCharacter(long characterId, String charNewName,
             Gender gender, int skin, int face, int hairStyle, int hairColor, int facialHair);
+
+    public abstract CharDeleteCode deleteCharacter(long guid);
 
     public abstract CharacterData loadCharacterByGuid(Long guid);
 
