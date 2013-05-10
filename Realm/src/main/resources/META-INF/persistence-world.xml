@@ -54,6 +54,8 @@
 		<class>org.jmangos.commons.entities.effects.SpellDamage</class>
 		<!-- 3 -->
 		<class>org.jmangos.commons.entities.effects.PeriodicDamage</class>
+		<!-- 5 -->
+		<class>org.jmangos.commons.entities.effects.TeleportUnits</class>
 		<!-- 6 -->
 		<class>org.jmangos.commons.entities.effects.ApplyAura</class>
 		<!-- 10 -->
