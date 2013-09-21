@@ -28,7 +28,6 @@ import javax.persistence.Table;
 /**
  * The Class <tt>CreatureEquip</tt>.
  */
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "creature_equip_template")
 public class CreatureEquip implements Serializable {

@@ -25,7 +25,6 @@ import java.io.Serializable;
  * @author MinimaJack
  * 
  */
-@SuppressWarnings("serial")
 public class UnitRegenModifier implements Serializable {
 
     /**

@@ -37,6 +37,7 @@ public class CMSG_CAST_SPELL extends AbstractWoWClientPacket {
     @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
 
+    @SuppressWarnings("unused")
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
 

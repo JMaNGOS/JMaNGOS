@@ -36,6 +36,7 @@ public class AuthServer {
      */
     public static void main(final String[] args) throws Exception {
 
+        @SuppressWarnings("resource")
         final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
         context.scan("org.jmangos.commons", "org.jmangos.auth");
         context.refresh();

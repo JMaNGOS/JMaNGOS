@@ -36,7 +36,6 @@ import org.hibernate.annotations.DiscriminatorOptions;
 /**
  * The Class <tt>CharacterSkill</tt> entity for characters skill values
  */
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "character_skills")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)

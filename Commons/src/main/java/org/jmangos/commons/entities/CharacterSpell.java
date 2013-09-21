@@ -29,7 +29,6 @@ import javax.persistence.Table;
 /**
  * The Class <tt>CharacterSkill</tt> entity for characters skill values
  */
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "character_spell")
 public class CharacterSpell implements Serializable {

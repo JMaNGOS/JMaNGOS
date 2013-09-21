@@ -30,7 +30,6 @@ import org.jmangos.commons.enums.Classes;
  * template use File |
  * Settings | File Templates.
  */
-@SuppressWarnings("serial")
 @Embeddable
 public class PlayerClassLevelInfoPK implements Serializable {
 

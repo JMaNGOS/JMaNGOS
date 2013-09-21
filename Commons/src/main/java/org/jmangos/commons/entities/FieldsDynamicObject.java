@@ -25,7 +25,6 @@ import javax.persistence.Table;
  * @author MinimaJack
  * 
  */
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "fields_dynamicobject")
 public class FieldsDynamicObject extends FieldsObject {

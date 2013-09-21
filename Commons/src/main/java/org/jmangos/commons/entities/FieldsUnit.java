@@ -45,7 +45,6 @@ import org.jmangos.commons.update.UnitField;
  * @author MinimaJack
  * 
  */
-@SuppressWarnings("serial")
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class FieldsUnit extends FieldsObject {

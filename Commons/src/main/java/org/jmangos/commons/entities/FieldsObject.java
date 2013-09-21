@@ -42,7 +42,6 @@ import org.jmangos.commons.enums.UpdateType;
 import org.jmangos.commons.model.UpdateBlock;
 import org.jmangos.commons.update.ObjectFields;
 
-@SuppressWarnings("serial")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @MappedSuperclass
 public abstract class FieldsObject implements Streamable, Serializable {

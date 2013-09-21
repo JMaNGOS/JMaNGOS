@@ -39,7 +39,6 @@ import org.jmangos.commons.enums.UpdateFlags;
  * 
  * @author MinimaJack
  */
-@SuppressWarnings("serial")
 @Entity
 @DynamicUpdate
 @Table(name = "character_positioner")

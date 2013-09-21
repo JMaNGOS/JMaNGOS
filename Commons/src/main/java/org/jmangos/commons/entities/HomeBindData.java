@@ -28,7 +28,6 @@ import javax.persistence.Embedded;
 /**
  * The Class HomeBindData.
  */
-@SuppressWarnings("serial")
 @Embeddable
 public class HomeBindData implements Serializable {
 

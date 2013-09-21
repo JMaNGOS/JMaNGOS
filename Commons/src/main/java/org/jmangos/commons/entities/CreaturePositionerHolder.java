@@ -34,7 +34,6 @@ import org.jmangos.commons.enums.UpdateFlags;
  * 
  * @author MinimaJack
  */
-@SuppressWarnings("serial")
 @Embeddable
 public class CreaturePositionerHolder extends BasicPositionerHolder implements Serializable {
 

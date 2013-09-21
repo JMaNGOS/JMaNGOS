@@ -27,7 +27,6 @@ import org.jmangos.commons.enums.Powers;
 /**
  * The Class <tt>CharacterPowers</tt>.
  */
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "character_powers")
 public class CharacterPowers extends CreaturePowers {

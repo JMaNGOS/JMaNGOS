@@ -34,7 +34,6 @@ import org.jmangos.commons.enums.ActionButtonType;
  * The Class <tt>CharacterButton</tt> entity for characters action buttons
  * values
  */
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "character_buttons")
 public class CharacterButton implements Serializable {

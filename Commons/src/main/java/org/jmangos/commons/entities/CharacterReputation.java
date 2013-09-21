@@ -32,7 +32,6 @@ import javax.persistence.Table;
  * The Class <tt>CharacterReputation</tt> entity for characters reputation
  * values
  */
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "character_reputation")
 public class CharacterReputation implements Serializable {

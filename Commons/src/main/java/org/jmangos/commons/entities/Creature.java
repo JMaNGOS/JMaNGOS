@@ -15,7 +15,6 @@ import org.jmangos.commons.enums.SheathState;
 import org.jmangos.commons.update.ObjectFields;
 import org.jmangos.commons.utils.Rnd;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "creature")
 @AttributeOverrides({ @AttributeOverride(name = "entry", column = @Column(name = "id")),

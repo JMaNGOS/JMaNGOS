@@ -23,7 +23,6 @@ import javax.persistence.Embeddable;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 
-@SuppressWarnings("serial")
 @Embeddable
 public class Position implements Cloneable, Serializable {
 

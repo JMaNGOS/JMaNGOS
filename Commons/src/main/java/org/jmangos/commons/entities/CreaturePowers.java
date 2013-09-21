@@ -38,7 +38,6 @@ import org.jmangos.commons.enums.Powers;
 /**
  * The Class <tt>CreaturePowers</tt>.
  */
-@SuppressWarnings("serial")
 @MappedSuperclass
 @Table(name = "creature_powers")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)

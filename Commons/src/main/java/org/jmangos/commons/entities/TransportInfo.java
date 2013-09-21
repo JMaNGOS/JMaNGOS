@@ -27,7 +27,6 @@ import javax.persistence.Embedded;
 import org.apache.commons.lang.NotImplementedException;
 import org.jboss.netty.buffer.ChannelBuffer;
 
-@SuppressWarnings("serial")
 @Embeddable
 public class TransportInfo implements Serializable {
 

@@ -45,7 +45,6 @@ import org.slf4j.LoggerFactory;
  * @author MinimaJack
  * 
  */
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "fields_container")
 @DiscriminatorValue("2")

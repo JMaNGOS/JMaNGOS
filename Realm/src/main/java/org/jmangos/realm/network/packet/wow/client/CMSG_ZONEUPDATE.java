@@ -36,7 +36,6 @@ public class CMSG_ZONEUPDATE extends AbstractWoWClientPacket {
     Logger log = LoggerFactory.getLogger(CMSG_ZONEUPDATE.class);
 
     /** The new zone. */
-    @SuppressWarnings("unused")
     private int newZone;
 
     /** The sender. */

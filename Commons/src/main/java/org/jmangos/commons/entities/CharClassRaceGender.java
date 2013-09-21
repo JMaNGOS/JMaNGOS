@@ -27,7 +27,6 @@ import org.jmangos.commons.enums.Classes;
 import org.jmangos.commons.enums.Gender;
 import org.jmangos.commons.enums.Races;
 
-@SuppressWarnings("serial")
 @Embeddable
 public class CharClassRaceGender implements Serializable {
 

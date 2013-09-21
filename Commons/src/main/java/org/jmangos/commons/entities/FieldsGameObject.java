@@ -24,7 +24,6 @@ import javax.persistence.Table;
 /**
  * Created with IntelliJ IDEA. User: paalgyula Date: 2012.08.08. Time: 13:30
  */
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "fields_gameobject")
 public class FieldsGameObject extends FieldsObject {

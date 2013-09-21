@@ -51,7 +51,6 @@ import org.jmangos.commons.update.ObjectFields;
  * @author MinimaJack
  * 
  */
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "fields_item")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
