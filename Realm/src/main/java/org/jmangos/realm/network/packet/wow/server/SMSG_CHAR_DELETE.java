@@ -10,9 +10,10 @@ import org.jmangos.realm.network.packet.wow.AbstractWoWServerPacket;
  * Time: 17:24
  */
 public class SMSG_CHAR_DELETE extends AbstractWoWServerPacket {
-    private CharDeleteCode code;
 
-    public SMSG_CHAR_DELETE(CharDeleteCode code) {
+    private final CharDeleteCode code;
+
+    public SMSG_CHAR_DELETE(final CharDeleteCode code) {
         this.code = code;
     }
 

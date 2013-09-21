@@ -38,6 +38,11 @@ import org.jmangos.commons.enums.UpdateFlags;
 @Embeddable
 public class CreaturePositionerHolder extends BasicPositionerHolder implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8009466209357748408L;
+
     @Embedded
     private Position position = new Position();
 
@@ -354,7 +359,6 @@ public class CreaturePositionerHolder extends BasicPositionerHolder implements S
         this.jumpInfo = jumpInfo;
     }
 
-    
     /**
      * @return the speeds
      */
@@ -362,11 +366,11 @@ public class CreaturePositionerHolder extends BasicPositionerHolder implements S
         return this.speeds;
     }
 
-    
     /**
-     * @param speeds the speeds to set
+     * @param speeds
+     *        the speeds to set
      */
-    public final void setSpeeds(float[] speeds) {
+    public final void setSpeeds(final float[] speeds) {
         this.speeds = speeds;
     }
 

@@ -37,6 +37,11 @@ import javax.persistence.Table;
 @Table(name = "character_reputation")
 public class CharacterReputation implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 4262803795750331114L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -118,7 +123,7 @@ public class CharacterReputation implements Serializable {
      * @param id
      *        the id to set
      */
-    public final void setId(int id) {
+    public final void setId(final int id) {
         this.id = id;
     }
 
@@ -133,7 +138,7 @@ public class CharacterReputation implements Serializable {
      * @param character
      *        the character to set
      */
-    public final void setCharacter(CharacterData character) {
+    public final void setCharacter(final CharacterData character) {
         this.character = character;
     }
 
@@ -143,14 +148,14 @@ public class CharacterReputation implements Serializable {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == this) {
             return true;
         }
         if (!(obj instanceof CharacterReputation)) {
             return false;
         }
-        return (((CharacterReputation) obj).getId() == this.getId());
+        return (((CharacterReputation) obj).getId() == getId());
     }
 
     /**
@@ -160,7 +165,7 @@ public class CharacterReputation implements Serializable {
      */
     @Override
     public int hashCode() {
-        return this.getId();
+        return getId();
     }
 
 }

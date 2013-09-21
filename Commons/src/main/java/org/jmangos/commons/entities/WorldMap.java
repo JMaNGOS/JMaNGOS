@@ -77,7 +77,7 @@ public class WorldMap {
      * @param id
      *        the id to set
      */
-    public final void setId(Integer id) {
+    public final void setId(final Integer id) {
         this.id = id;
     }
 
@@ -92,7 +92,7 @@ public class WorldMap {
      * @param mapType
      *        the mapType to set
      */
-    public final void setMapType(MapType mapType) {
+    public final void setMapType(final MapType mapType) {
         this.mapType = mapType;
     }
 
@@ -107,7 +107,7 @@ public class WorldMap {
      * @param mapFlags
      *        the mapFlags to set
      */
-    public final void setMapFlags(Integer mapFlags) {
+    public final void setMapFlags(final Integer mapFlags) {
         this.mapFlags = mapFlags;
     }
 
@@ -122,7 +122,7 @@ public class WorldMap {
      * @param isPvP
      *        the isPvP to set
      */
-    public final void setIsPvP(Integer isPvP) {
+    public final void setIsPvP(final Integer isPvP) {
         this.isPvP = isPvP;
     }
 
@@ -137,7 +137,7 @@ public class WorldMap {
      * @param name
      *        the name to set
      */
-    public final void setName(String name) {
+    public final void setName(final String name) {
         this.name = name;
     }
 
@@ -152,7 +152,7 @@ public class WorldMap {
      * @param ghostEntranceMap
      *        the ghostEntranceMap to set
      */
-    public final void setGhostEntranceMap(Integer ghostEntranceMap) {
+    public final void setGhostEntranceMap(final Integer ghostEntranceMap) {
         this.ghostEntranceMap = ghostEntranceMap;
     }
 
@@ -167,7 +167,7 @@ public class WorldMap {
      * @param ghostEntranceX
      *        the ghostEntranceX to set
      */
-    public final void setGhostEntranceX(Float ghostEntranceX) {
+    public final void setGhostEntranceX(final Float ghostEntranceX) {
         this.ghostEntranceX = ghostEntranceX;
     }
 
@@ -182,7 +182,7 @@ public class WorldMap {
      * @param ghostEntranceY
      *        the ghostEntranceY to set
      */
-    public final void setGhostEntranceY(Float ghostEntranceY) {
+    public final void setGhostEntranceY(final Float ghostEntranceY) {
         this.ghostEntranceY = ghostEntranceY;
     }
 
@@ -197,7 +197,7 @@ public class WorldMap {
      * @param addon
      *        the addon to set
      */
-    public final void setAddon(Integer addon) {
+    public final void setAddon(final Integer addon) {
         this.addon = addon;
     }
 
@@ -212,7 +212,7 @@ public class WorldMap {
      * @param maxPlayers
      *        the maxPlayers to set
      */
-    public final void setMaxPlayers(Integer maxPlayers) {
+    public final void setMaxPlayers(final Integer maxPlayers) {
         this.maxPlayers = maxPlayers;
     }
 

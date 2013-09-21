@@ -23,6 +23,11 @@ import org.jmangos.commons.utils.Rnd;
 @AttributeOverride(name = "scale", column = @Column(name = "spawndist")) })
 public class Creature extends FieldsUnit {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8876628710784393342L;
+
     @Embedded
     CreaturePositionerHolder movement;
 
@@ -50,11 +55,11 @@ public class Creature extends FieldsUnit {
     @Override
     public void initBits() {
         super.initBits();
-        long entry = this.getEntry();
+        long entry = getEntry();
         entry <<= 24;
         long higuid = HighGuid.UNIT.getValue();
         higuid <<= 52;
-        this.setGuid(higuid | entry | getGuid());
+        setGuid(higuid | entry | getGuid());
         this.bitSet.set(ObjectFields.OBJECT_FIELD_ENTRY.getValue());
     }
 
@@ -100,16 +105,16 @@ public class Creature extends FieldsUnit {
         if (prototype.getRangeattacktime() > 0) {
             setAttackTime(2, prototype.getRangeattacktime());
         }
-        this.setFaction_template(prototype.getFactionForAliance());
-        this.setSheath(SheathState.MELEE);
+        setFaction_template(prototype.getFactionForAliance());
+        setSheath(SheathState.MELEE);
         if (prototype.getEquipment().getEquipentry1() != 0) {
-            this.setVirtualItem(0, prototype.getEquipment().getEquipentry1());
+            setVirtualItem(0, prototype.getEquipment().getEquipentry1());
         }
         if (prototype.getEquipment().getEquipentry2() != 0) {
-            this.setVirtualItem(1, prototype.getEquipment().getEquipentry2());
+            setVirtualItem(1, prototype.getEquipment().getEquipentry2());
         }
         if (prototype.getEquipment().getEquipentry3() != 0) {
-            this.setVirtualItem(2, prototype.getEquipment().getEquipentry3());
+            setVirtualItem(2, prototype.getEquipment().getEquipentry3());
         }
         // walk
         this.movement.getSpeeds()[0] = this.movement.getSpeeds()[0] * prototype.getSpeedWalkMod();

@@ -18,6 +18,7 @@ package org.jmangos.world.dao;
 
 import org.jmangos.commons.entities.PlayerClassLevelInfo;
 import org.jmangos.commons.entities.pk.PlayerClassLevelInfoPK;
+import org.jmangos.commons.enums.Classes;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

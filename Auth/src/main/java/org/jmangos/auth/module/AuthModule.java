@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -21,7 +21,6 @@ import java.beans.PropertyVetoException;
 import javax.sql.DataSource;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
-
 import org.jmangos.commons.database.DatabaseConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -108,9 +107,10 @@ public class AuthModule {
         return new TransactionInterceptor(transactionManagerAuth(),
                 new AnnotationTransactionAttributeSource());
     }
+
     @Bean
     public ActiveMQConnectionFactory ActiveMQConnectionFactory() {
-        ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory(); 
+        final ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory();
         factory.setBrokerURL("tcp://localhost:61616");
         return factory;
     }

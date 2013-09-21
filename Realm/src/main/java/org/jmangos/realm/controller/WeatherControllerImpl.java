@@ -36,6 +36,7 @@ public class WeatherControllerImpl implements WeatherController {
     @Qualifier("nettyPacketSender")
     private AbstractPacketSender sender;
 
+    @Override
     public ChannelBuffer buildWeatherData(final Weather weather) {
         final SMSG_WEATHER packet = new SMSG_WEATHER(weather);
         return this.sender.buildPacket(packet);

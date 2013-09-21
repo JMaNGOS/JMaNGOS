@@ -50,6 +50,10 @@ import org.jmangos.commons.update.UnitField;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class FieldsUnit extends FieldsObject {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8718270667688469021L;
     @Transient
     private long charm;
     @Transient
@@ -198,7 +202,7 @@ public abstract class FieldsUnit extends FieldsObject {
         this.bitSet.set(UnitField.UNIT_FIELD_POWER_REGEN_FLAT_MODIFIER.getValue());
         this.bitSet.set(UnitField.UNIT_FIELD_FACTIONTEMPLATE.getValue());
         this.bitSet.set(UnitField.UNIT_FIELD_HOVERHEIGHT.getValue());
-        this.setModCastSpeed(1.0f);
+        setModCastSpeed(1.0f);
 
     }
 
@@ -364,7 +368,7 @@ public abstract class FieldsUnit extends FieldsObject {
 
     public void setClazz(final Classes clazz) {
 
-        this.setBytes((getBytes() & 0xFFFF00FF) | (clazz.getValue() << 8));
+        setBytes((getBytes() & 0xFFFF00FF) | (clazz.getValue() << 8));
     }
 
     public Classes getClazz() {
@@ -677,7 +681,7 @@ public abstract class FieldsUnit extends FieldsObject {
      * @param virtualItems
      *        the virtualItems to set
      */
-    public final void setVirtualItem(int slot, final int virtualItem) {
+    public final void setVirtualItem(final int slot, final int virtualItem) {
         this.bitSet.set(UnitField.UNIT_VIRTUAL_ITEM_SLOT_ID.getValue() + slot);
         this.virtualItems[slot] = virtualItem;
     }
@@ -1173,7 +1177,7 @@ public abstract class FieldsUnit extends FieldsObject {
         this.baseHealth = baseHealth;
     }
 
-    public void setSheath(SheathState sheathed) {
+    public void setSheath(final SheathState sheathed) {
         setBytes2((getBytes2() & 0xFFFFFF00) | (sheathed.ordinal() & 0xFF));
     }
 

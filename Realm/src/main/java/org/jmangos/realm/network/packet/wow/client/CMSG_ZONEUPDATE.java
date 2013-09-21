@@ -51,7 +51,7 @@ public class CMSG_ZONEUPDATE extends AbstractWoWClientPacket {
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
 
         this.newZone = readD();
-        log.info("Enter new zone {}", newZone);
+        this.log.info("Enter new zone {}", this.newZone);
 
     }
 

@@ -1,7 +1,11 @@
 package org.jmangos.commons.controller;
 
 import org.jmangos.commons.entities.CharacterData;
-import org.jmangos.commons.enums.*;
+import org.jmangos.commons.enums.CharCreateCode;
+import org.jmangos.commons.enums.CharDeleteCode;
+import org.jmangos.commons.enums.Classes;
+import org.jmangos.commons.enums.Gender;
+import org.jmangos.commons.enums.Races;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface CharacterController {

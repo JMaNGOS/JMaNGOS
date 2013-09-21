@@ -24,111 +24,142 @@ package org.critterai.nmgen;
 /**
  * Represents a span within the cell column of a heightfield.
  * Spans represent one or more contiguous voxels.
+ * 
  * @see <a href="http://www.critterai.org/?q=nmgen_hfintro"
- * target="_parent">Introduction to Heightfields</a>
+ *      target="_parent">Introduction to Heightfields</a>
  */
-public final class HeightSpan
-{
+public final class HeightSpan {
 
     /*
      * Recast Reference: rcSpan in Recast.h
      */
-    
+
     private int mMinimum;
     private int mMaximum;
     private int mFlags = 0;
     private HeightSpan mNext = null;
-    
+
     /**
      * Constructor
-     * @param min The minimum increment of the span.
-     * (Usually the height increment.)
-     * @param max The maximum increment of the span.
-     * (Usually the height increment.)
-     * @param flags The span flags.
-     * @throws IllegalArgumentException If the minimum is greater than or
-     * equal to the maximum.
+     * 
+     * @param min
+     *        The minimum increment of the span.
+     *        (Usually the height increment.)
+     * @param max
+     *        The maximum increment of the span.
+     *        (Usually the height increment.)
+     * @param flags
+     *        The span flags.
+     * @throws IllegalArgumentException
+     *         If the minimum is greater than or
+     *         equal to the maximum.
      */
-    public HeightSpan(int min, int max, int flags)
-        throws IllegalArgumentException
-    {
-        if (min > max)
-            throw new IllegalArgumentException(
-                            "Minimum is greater than or equal to the maximum.");
-        mMinimum = min;
-        mMaximum = max;
-        mFlags = flags;
+    public HeightSpan(final int min, final int max, final int flags)
+            throws IllegalArgumentException {
+        if (min > max) {
+            throw new IllegalArgumentException("Minimum is greater than or equal to the maximum.");
+        }
+        this.mMinimum = min;
+        this.mMaximum = max;
+        this.mFlags = flags;
     }
-    
+
     /**
      * The flags for the span.
+     * 
      * @return The flags for the span.
      */
-    public int flags() { return mFlags; }
-    
+    public int flags() {
+        return this.mFlags;
+    }
+
     /**
      * The span maximum.
+     * 
      * @return The span maximum.
      */
-    public int max() { return mMaximum; }
-    
+    public int max() {
+        return this.mMaximum;
+    }
+
     /**
      * The span minimum.
+     * 
      * @return The span minimum.
      */
-    public int min() { return mMinimum; }
-    
+    public int min() {
+        return this.mMinimum;
+    }
+
     /**
-     * The next span in the column.  (Usually above the current span.)
-     * @return The next span in the column.  Or null if there is no next span.
+     * The next span in the column. (Usually above the current span.)
+     * 
+     * @return The next span in the column. Or null if there is no next span.
      */
-    public HeightSpan next() { return mNext; }
-    
+    public HeightSpan next() {
+        return this.mNext;
+    }
+
     /**
      * Set the flags for the span.
-     * @param value The new flags for the span.
+     * 
+     * @param value
+     *        The new flags for the span.
      */
-    public void setFlags(int value) { mFlags = value; }
-    
+    public void setFlags(final int value) {
+        this.mFlags = value;
+    }
+
     /**
      * Sets the span maximum.
-     * <p>Auto-clamps the value to ({@link #min()} + 1).</p>
-     * @param value The new maximum.
+     * <p>
+     * Auto-clamps the value to ({@link #min()} + 1).
+     * </p>
+     * 
+     * @param value
+     *        The new maximum.
      */
-    public void setMax(int value)
-    {
-        if (value <= mMinimum)
-            mMaximum = mMinimum + 1;
-        else
-            mMaximum = value;
+    public void setMax(final int value) {
+        if (value <= this.mMinimum) {
+            this.mMaximum = this.mMinimum + 1;
+        } else {
+            this.mMaximum = value;
+        }
     }
-    
+
     /**
      * Sets the span minimum.
-     * <p>Auto-clamps the value to ({@link #max()} - 1).</p>
-     * @param value The new minimum.
+     * <p>
+     * Auto-clamps the value to ({@link #max()} - 1).
+     * </p>
+     * 
+     * @param value
+     *        The new minimum.
      */
-    public void setMin(int value)
-    {
-        if (value >= mMaximum)
-            mMinimum = mMaximum - 1;
-        else
-            mMinimum = value;
+    public void setMin(final int value) {
+        if (value >= this.mMaximum) {
+            this.mMinimum = this.mMaximum - 1;
+        } else {
+            this.mMinimum = value;
+        }
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
-        return mMinimum + "->" + mMaximum + ", Flags: " + mFlags;
+    public String toString() {
+        return this.mMinimum + "->" + this.mMaximum + ", Flags: " + this.mFlags;
     }
 
     /**
      * Set the next span value.
-     * @param value The new next span.  (null is a valid value.)
+     * 
+     * @param value
+     *        The new next span. (null is a valid value.)
      */
-    void setNext(HeightSpan value) { mNext = value; }
-    
+    void setNext(final HeightSpan value) {
+        this.mNext = value;
+    }
+
 }

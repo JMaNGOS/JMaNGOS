@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -60,9 +60,9 @@ public class Language extends SpellEffectEntity {
         logger.info("Set current skill value for language {} = 300", getEffectMiscValue());
 
         if (player instanceof CharacterData) {
-            Class<? extends CharacterSkill> langSkill =
+            final Class<? extends CharacterSkill> langSkill =
                     getSkillIdByLanguageId(getEffectMiscValue());
-            CharacterSkill languageSkill =
+            final CharacterSkill languageSkill =
                     ((CharacterData) player).getSkillInfoBySkillClass(langSkill);
             if (languageSkill != null) {
                 languageSkill.setMaxValue(300);

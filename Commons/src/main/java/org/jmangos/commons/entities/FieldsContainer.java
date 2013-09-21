@@ -51,6 +51,11 @@ import org.slf4j.LoggerFactory;
 @DiscriminatorValue("2")
 public class FieldsContainer extends FieldsItem {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8097121159449054872L;
+
     private static final Logger logger = LoggerFactory.getLogger(FieldsContainer.class);
 
     @Column(name = "slotsCount",
@@ -77,6 +82,7 @@ public class FieldsContainer extends FieldsItem {
 
         super();
     }
+
     /*
      * (non-Javadoc)
      * 
@@ -87,6 +93,7 @@ public class FieldsContainer extends FieldsItem {
 
         return TypeID.CONTAINER;
     }
+
     /*
      * (non-Javadoc)
      * 

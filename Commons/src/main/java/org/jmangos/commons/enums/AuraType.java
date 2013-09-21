@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -352,7 +352,7 @@ public enum AuraType {
     private static final int MAX_AURA_TYPE = 317;
     private int value;
 
-    AuraType(int value) {
+    AuraType(final int value) {
 
         this.value = value;
     }
@@ -376,7 +376,7 @@ public enum AuraType {
      * @param value
      *        the value to set
      */
-    public final void setValue(int value) {
+    public final void setValue(final int value) {
 
         this.value = value;
     }

@@ -32,7 +32,7 @@ public class BufferPosition {
      * @param startPosition
      * @param endPosition
      */
-    public BufferPosition(int startPosition, int endPosition) {
+    public BufferPosition(final int startPosition, final int endPosition) {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
     }
@@ -48,7 +48,7 @@ public class BufferPosition {
      * @param startPosition
      *        the startPosition to set
      */
-    public final void setStartPosition(int startPosition) {
+    public final void setStartPosition(final int startPosition) {
         this.startPosition = startPosition;
     }
 
@@ -63,7 +63,7 @@ public class BufferPosition {
      * @param endPosition
      *        the endPosition to set
      */
-    public final void setEndPosition(int endPosition) {
+    public final void setEndPosition(final int endPosition) {
         this.endPosition = endPosition;
     }
 

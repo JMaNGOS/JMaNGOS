@@ -40,13 +40,13 @@ public class MOVEMENT_OPCODE extends AbstractWoWClientPacket {
         this.movement = new CharacterPositionerHolder();
         if (getPlayer().getCharacterData().getGuid().equals(this.guid)) {
             this.movement.readFrom(getByteBuffer());
-            ((CharacterPositionerHolder)getPlayer().getCharacterData().getMovement()).update(movement);
+            ((CharacterPositionerHolder) getPlayer().getCharacterData().getMovement()).update(this.movement);
             this.log.debug("Change position: {}", this.movement.getPosition());
         } else {
             this.log.warn("Movers not equal {}  and {}", getPlayer().getCharacterData().getGuid(),
                     this.guid);
         }
-       
+
     }
 
     @Override

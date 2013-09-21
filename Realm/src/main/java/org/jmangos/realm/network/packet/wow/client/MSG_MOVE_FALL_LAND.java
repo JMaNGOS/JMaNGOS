@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 /**
  * 
  * @author MinimaJack
- *
+ * 
  */
 @Component
 public class MSG_MOVE_FALL_LAND extends MOVEMENT_OPCODE {

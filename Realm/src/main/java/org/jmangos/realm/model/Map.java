@@ -156,7 +156,8 @@ public class Map extends NestedMap {
     public void addObject(final FieldsObject plObject) {
         switch (plObject.getTypeId()) {
             case PLAYER:
-                log.info("Add player {} to map {}", ((CharacterData) plObject).getName(), getId());
+                this.log.info("Add player {} to map {}", ((CharacterData) plObject).getName(),
+                        getId());
                 final int area = ((CharacterData) plObject).getMovement().getZone();
                 if ((area > 0) & (getId() != area)) {
                     if (getSubArea().contains(area)) {

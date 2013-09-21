@@ -19,7 +19,7 @@ public class Weather {
      * @param lastUpdateTime
      *        the lastUpdateTime to set
      */
-    public final void setLastUpdateTime(long lastUpdateTime) {
+    public final void setLastUpdateTime(final long lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
 
@@ -34,7 +34,7 @@ public class Weather {
      * @param grade
      *        the grade to set
      */
-    public final void setGrade(float grade) {
+    public final void setGrade(final float grade) {
         this.grade = grade;
     }
 
@@ -49,7 +49,7 @@ public class Weather {
      * @param state
      *        the state to set
      */
-    public final void setState(WeatherState state) {
+    public final void setState(final WeatherState state) {
         this.state = state;
     }
 

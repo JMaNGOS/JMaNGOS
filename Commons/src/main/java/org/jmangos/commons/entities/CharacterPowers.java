@@ -32,6 +32,11 @@ import org.jmangos.commons.enums.Powers;
 @Table(name = "character_powers")
 public class CharacterPowers extends CreaturePowers {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1820502830966022857L;
+
     /** The RAGE. */
     @Basic
     @Column(name = "rage")

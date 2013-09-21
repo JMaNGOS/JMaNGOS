@@ -33,10 +33,11 @@ public class DummyPacketSender implements AbstractPacketSender {
     public void sendAndClose(final NetworkChannel channel, final SendablePacket networkPacket) {}
 
     @Override
-    public void send(NetworkChannel channel, ChannelBuffer data) {}
+    public void send(final NetworkChannel channel, final ChannelBuffer data) {}
 
     @Override
-    public ChannelBuffer buildPacket(SendablePacket networkPacket) {
-        return null; }
+    public ChannelBuffer buildPacket(final SendablePacket networkPacket) {
+        return null;
+    }
 
 }

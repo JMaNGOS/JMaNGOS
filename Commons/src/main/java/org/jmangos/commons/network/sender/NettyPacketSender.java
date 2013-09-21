@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -128,13 +128,13 @@ public class NettyPacketSender implements AbstractPacketSender {
     }
 
     @Override
-    public void send(NetworkChannel channel, ChannelBuffer data) {
+    public void send(final NetworkChannel channel, final ChannelBuffer data) {
         writeToChannel(channel, data);
-        
+
     }
 
     @Override
-    public ChannelBuffer buildPacket(SendablePacket networkPacket) {
+    public ChannelBuffer buildPacket(final SendablePacket networkPacket) {
         return sendImpl(networkPacket);
     }
 }

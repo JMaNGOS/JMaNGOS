@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -58,9 +58,9 @@ public class RealmToClientChannelHandler extends SimpleChannelUpstreamHandler {
 
     /** The seed. */
     private byte[] seed;
-    
-    private Long opcode=null;
-    
+
+    private Long opcode = null;
+
     private Integer size;
 
     /**
@@ -156,7 +156,6 @@ public class RealmToClientChannelHandler extends SimpleChannelUpstreamHandler {
         return this.crypt;
     }
 
-    
     /**
      * @return the opcode
      */
@@ -164,15 +163,14 @@ public class RealmToClientChannelHandler extends SimpleChannelUpstreamHandler {
         return this.opcode;
     }
 
-    
     /**
-     * @param opcode the opcode to set
+     * @param opcode
+     *        the opcode to set
      */
-    public final void setLastOpcode(Long opcode) {
+    public final void setLastOpcode(final Long opcode) {
         this.opcode = opcode;
     }
 
-    
     /**
      * @return the size
      */
@@ -180,11 +178,11 @@ public class RealmToClientChannelHandler extends SimpleChannelUpstreamHandler {
         return this.size;
     }
 
-    
     /**
-     * @param size the size to set
+     * @param size
+     *        the size to set
      */
-    public final void setLastOpcodeSize(Integer size) {
+    public final void setLastOpcodeSize(final Integer size) {
         this.size = size;
     }
 

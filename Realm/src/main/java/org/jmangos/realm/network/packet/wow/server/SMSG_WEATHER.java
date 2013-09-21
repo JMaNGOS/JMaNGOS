@@ -29,14 +29,14 @@ public class SMSG_WEATHER extends AbstractWoWServerPacket {
 
     public SMSG_WEATHER() {}
 
-    public SMSG_WEATHER(Weather weather) {
-        this.setWeather(weather);
+    public SMSG_WEATHER(final Weather weather) {
+        setWeather(weather);
     }
 
     @Override
     protected void writeImpl() {
-        writeD(weather.getState().getValue());
-        writeF(weather.getGrade());
+        writeD(this.weather.getState().getValue());
+        writeF(this.weather.getGrade());
         writeC(0);
     }
 
@@ -44,13 +44,14 @@ public class SMSG_WEATHER extends AbstractWoWServerPacket {
      * @return the weather
      */
     public Weather getWeather() {
-        return weather;
+        return this.weather;
     }
 
     /**
-     * @param weather the weather to set
+     * @param weather
+     *        the weather to set
      */
-    public void setWeather(Weather weather) {
+    public void setWeather(final Weather weather) {
         this.weather = weather;
     }
 

@@ -24,139 +24,156 @@ package org.critterai.nmgen;
 /**
  * A class used to hold intermediate and performance data related to building
  * the navigation mesh.
- * <p>The entire build process is represented when this data is combined with 
- * the source geometry and final navigation mesh.</p>
+ * <p>
+ * The entire build process is represented when this data is combined with the
+ * source geometry and final navigation mesh.
+ * </p>
  */
-public final class IntermediateData
-{
-    
+public final class IntermediateData {
+
     /*
      * Recast Reference: None
      */
-    
+
     /**
      * The data is undefined. (Has not been set.)
      */
     public static final long UNDEFINED = -1;
-    
+
     /**
      * The time to perform voxelization. (ns)
      */
     public long voxelizationTime;
-    
+
     /**
      * The time to perform region generation. (ns)
      */
     public long regionGenTime;
-    
+
     /**
      * The time to perform contour generation. (ns)
      */
     public long contourGenTime;
-    
+
     /**
      * The time to perform polygon generation. (ns)
      */
     public long polyGenTime;
-    
+
     /**
      * The time to perform the final triangulation. (ns)
      */
     public long finalMeshGenTime;
-    
+
     private SolidHeightfield mSolidHeightfield;
     private OpenHeightfield mOpenHeightfield;
     private ContourSet mContours;
     private PolyMeshField mPolyMesh;
-    
+
     /**
      * The contour set associated with the open heightfield.
+     * 
      * @return The contours associated with the open heightfield.
      */
-    public ContourSet contours() { return mContours; }
-    
+    public ContourSet contours() {
+        return this.mContours;
+    }
+
     /**
      * Returns the total time to generate the navigation mesh. (ns)
+     * 
      * @return The total time to generate the navigation mesh. (ns)
      */
-    public long getTotalGenTime()
-    {
-        if (finalMeshGenTime == UNDEFINED)
+    public long getTotalGenTime() {
+        if (this.finalMeshGenTime == UNDEFINED) {
             return UNDEFINED;
-        return voxelizationTime
-            + regionGenTime
-            + contourGenTime
-            + polyGenTime
-            + finalMeshGenTime;
+        }
+        return this.voxelizationTime +
+            this.regionGenTime +
+            this.contourGenTime +
+            this.polyGenTime +
+            this.finalMeshGenTime;
     }
-    
+
     /**
      * The open heightfield associated with the solid heightfield.
+     * 
      * @return The open heightfield associated with the solid heightfield.
      */
-    public OpenHeightfield openHeightfield() { return mOpenHeightfield; }
-    
+    public OpenHeightfield openHeightfield() {
+        return this.mOpenHeightfield;
+    }
+
     /**
      * The polygon mesh associated with the contour set.
+     * 
      * @return The polygon mesh associated with the contour set.
      */
-    public PolyMeshField polyMesh() { return mPolyMesh; }
-    
+    public PolyMeshField polyMesh() {
+        return this.mPolyMesh;
+    }
+
     /**
      * Resets all data to null.
      */
-    public void reset()
-    {
-        voxelizationTime = UNDEFINED;
-        regionGenTime = UNDEFINED;
-        contourGenTime = UNDEFINED;
-        polyGenTime = UNDEFINED;
-        finalMeshGenTime = UNDEFINED;
-        mSolidHeightfield = null;
-        mOpenHeightfield = null;
-        mContours = null;
-        mPolyMesh = null;
+    public void reset() {
+        this.voxelizationTime = UNDEFINED;
+        this.regionGenTime = UNDEFINED;
+        this.contourGenTime = UNDEFINED;
+        this.polyGenTime = UNDEFINED;
+        this.finalMeshGenTime = UNDEFINED;
+        this.mSolidHeightfield = null;
+        this.mOpenHeightfield = null;
+        this.mContours = null;
+        this.mPolyMesh = null;
     }
-    
+
     /**
      * Sets the contour set.
-     * @param contours The contour set.
+     * 
+     * @param contours
+     *        The contour set.
      */
-    public void setContours(ContourSet contours)
-    {
-        mContours = contours;
+    public void setContours(final ContourSet contours) {
+        this.mContours = contours;
     }
-    
+
     /**
      * Sets the open heightfield.
-     * @param field The open heightfield.
+     * 
+     * @param field
+     *        The open heightfield.
      */
-    public void setOpenHeightfield(OpenHeightfield field)
-    {
-        mOpenHeightfield = field;
+    public void setOpenHeightfield(final OpenHeightfield field) {
+        this.mOpenHeightfield = field;
     }
-    
+
     /**
      * Sets the polygon mesh.
-     * @param mesh The polygon mesh.
+     * 
+     * @param mesh
+     *        The polygon mesh.
      */
-    public void setPolyMesh(PolyMeshField mesh)
-    {
-        mPolyMesh = mesh;
+    public void setPolyMesh(final PolyMeshField mesh) {
+        this.mPolyMesh = mesh;
     }
-    
+
     /**
      * Sets the solid height field.
-     * @param field The solid heightfield.
+     * 
+     * @param field
+     *        The solid heightfield.
      */
-    public void setSolidHeightfield(SolidHeightfield field)
-    {
-        mSolidHeightfield = field;
+    public void setSolidHeightfield(final SolidHeightfield field) {
+        this.mSolidHeightfield = field;
     }
-    
+
     /**
      * The solid heightfield associated with the source geometry.
+     * 
      * @return The solid heightfield derived from the source geometry.
      */
-    public SolidHeightfield solidHeightfield() { return mSolidHeightfield; }
+    public SolidHeightfield solidHeightfield() {
+        return this.mSolidHeightfield;
+    }
 }

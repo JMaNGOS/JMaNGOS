@@ -19,15 +19,15 @@
  */
 package org.jmangos.tools.dbcconverter.service.impl;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.jmangos.commons.entities.ChrClasses;
 import org.jmangos.commons.enums.Classes;
 import org.jmangos.tools.dbc.struct.ChrClassesEntry;
 import org.jmangos.tools.dbcconverter.service.AbstractDbcService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 /**
  * @author MinimaJack

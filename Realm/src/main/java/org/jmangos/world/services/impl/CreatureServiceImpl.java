@@ -72,7 +72,7 @@ public class CreatureServiceImpl implements CreatureService {
                 } else {
                     deleted.add(creature);
                 }
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 deleted.add(creature);
                 e.printStackTrace();
             }

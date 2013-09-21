@@ -33,7 +33,7 @@ public final class ServiceContent implements ApplicationContextAware {
      * @param context
      *        the context to set
      */
-    public static final void setContext(ApplicationContext context) {
+    public static final void setContext(final ApplicationContext context) {
         ServiceContent.context = context;
     }
 

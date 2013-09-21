@@ -64,6 +64,11 @@ public class FieldsItem extends FieldsObject implements Streamable {
     // precision = 0)
     // private int slot;
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 213774336395351195L;
+
     @Column(name = "owner",
             nullable = false,
             insertable = true,

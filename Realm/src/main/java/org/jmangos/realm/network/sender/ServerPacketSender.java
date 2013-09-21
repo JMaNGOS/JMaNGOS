@@ -135,7 +135,7 @@ public class ServerPacketSender implements AbstractPacketSender {
     }
 
     @Override
-    public ChannelBuffer buildPacket(SendablePacket networkPacket) {
+    public ChannelBuffer buildPacket(final SendablePacket networkPacket) {
         return sendImpl(networkPacket);
     }
 }

@@ -39,6 +39,11 @@ import org.jmangos.commons.enums.ActionButtonType;
 @Table(name = "character_buttons")
 public class CharacterButton implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6223227237928120984L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -61,9 +66,9 @@ public class CharacterButton implements Serializable {
     private int buttonType;
 
     @ManyToOne
-    @JoinColumn(name="characterId")
+    @JoinColumn(name = "characterId")
     private CharacterData character;
-    
+
     public CharacterButton() {
 
     }
@@ -150,7 +155,6 @@ public class CharacterButton implements Serializable {
         this.buttonType = buttonType;
     }
 
-    
     /**
      * @return the character
      */
@@ -158,11 +162,11 @@ public class CharacterButton implements Serializable {
         return this.character;
     }
 
-    
     /**
-     * @param character the character to set
+     * @param character
+     *        the character to set
      */
-    public final void setCharacter(CharacterData character) {
+    public final void setCharacter(final CharacterData character) {
         this.character = character;
     }
 

@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -41,9 +41,9 @@ public class Proficiency extends SpellEffectEntity {
      *      .model.CanUseSpell)
      */
     @Override
-    public boolean canApply(CanUseSpell player) {
-        ItemClass clazz = ItemClass.get(getSpell().getEquippedItemClass());
-        int submask = getSpell().getEquippedItemSubClassMask();
+    public boolean canApply(final CanUseSpell player) {
+        final ItemClass clazz = ItemClass.get(getSpell().getEquippedItemClass());
+        final int submask = getSpell().getEquippedItemSubClassMask();
         switch (clazz) {
             case ARMOR:
                 switch (ItemSubClassArmor.getFirstByMask(submask)) {
@@ -75,12 +75,12 @@ public class Proficiency extends SpellEffectEntity {
         if (player instanceof CharacterData) {
             int curValue = 0;
             final CharacterData cd = ((CharacterData) player);
-            ItemClass clazz = ItemClass.get(getSpell().getEquippedItemClass());
-            int submask = getSpell().getEquippedItemSubClassMask();
-            Integer skillId = getSpell().getSkillId();
-            CharacterSkill skInfo = cd.getSkillInfoBySkillId(skillId);
+            final ItemClass clazz = ItemClass.get(getSpell().getEquippedItemClass());
+            final int submask = getSpell().getEquippedItemSubClassMask();
+            final Integer skillId = getSpell().getSkillId();
+            final CharacterSkill skInfo = cd.getSkillInfoBySkillId(skillId);
 
-            if (skillId != null && skInfo != null && skillId == 183) {
+            if ((skillId != null) && (skInfo != null) && (skillId == 183)) {
                 skInfo.setCurrentValue(cd.getLevel() * 5);
                 skInfo.setMaxValue(cd.getLevel() * 5);
             } else if (skInfo != null) {

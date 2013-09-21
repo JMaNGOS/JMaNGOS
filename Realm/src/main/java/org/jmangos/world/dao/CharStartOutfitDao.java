@@ -28,11 +28,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <ol>
- * <li><b>Class:</b> <tt>CharStartOutfitDao</tt> is {@link JpaRepository} to work with player's
- * start items.</li>
+ * <li><b>Class:</b> <tt>CharStartOutfitDao</tt> is {@link JpaRepository} to
+ * work with player's start items.</li>
  * <li><b>Key:</b> is {@link Integer}</li>
  * <li><b>Value:</b> is {@link CharStartOutfitEntity}</li>
  * </ol>
+ * 
  * @author MinimaJack
  */
 @Repository

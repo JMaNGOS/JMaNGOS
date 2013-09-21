@@ -27,6 +27,11 @@ import org.jboss.netty.buffer.ChannelBuffer;
 @Embeddable
 public class Position implements Cloneable, Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5951666104511646838L;
+
     @Column(name = "position_x",
             nullable = false,
             insertable = true,
@@ -80,8 +85,8 @@ public class Position implements Cloneable, Serializable {
      *        the x to set
      */
     public final void setX(final float x) {
-        float value = x * 100;
-        this.x = (float)Math.round(value)/100;
+        final float value = x * 100;
+        this.x = (float) Math.round(value) / 100;
     }
 
     /**
@@ -97,8 +102,8 @@ public class Position implements Cloneable, Serializable {
      *        the y to set
      */
     public final void setY(final float y) {
-        float value = y * 100;
-        this.y =(float)Math.round(value)/100;
+        final float value = y * 100;
+        this.y = (float) Math.round(value) / 100;
     }
 
     /**
@@ -114,8 +119,8 @@ public class Position implements Cloneable, Serializable {
      *        the z to set
      */
     public final void setZ(final float z) {
-        float value = z * 100;
-        this.z = (float)Math.round(value)/100;
+        final float value = z * 100;
+        this.z = (float) Math.round(value) / 100;
     }
 
     /**
@@ -131,8 +136,8 @@ public class Position implements Cloneable, Serializable {
      *        the o to set
      */
     public final void setO(final float o) {
-        float value = o * 100;
-        this.o = (float)Math.round(value)/100;
+        final float value = o * 100;
+        this.o = (float) Math.round(value) / 100;
     }
 
     @Override
@@ -161,7 +166,7 @@ public class Position implements Cloneable, Serializable {
 
     }
 
-    public void readFrom(ChannelBuffer buffer) {
+    public void readFrom(final ChannelBuffer buffer) {
         setX(buffer.readFloat());
         setY(buffer.readFloat());
         setZ(buffer.readFloat());

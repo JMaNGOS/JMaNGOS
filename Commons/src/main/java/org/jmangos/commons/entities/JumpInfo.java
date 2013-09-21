@@ -84,8 +84,8 @@ public class JumpInfo implements Serializable {
      *        the velocity to set
      */
     public final void setVelocity(final float velocity) {
-        float value = velocity * 100;
-        this.velocity = (float)Math.round(value)/100;
+        final float value = velocity * 100;
+        this.velocity = (float) Math.round(value) / 100;
     }
 
     /**
@@ -101,8 +101,8 @@ public class JumpInfo implements Serializable {
      *        the sinAngle to set
      */
     public final void setSinAngle(final float sinAngle) {
-        float value = sinAngle * 100;
-        this.sinAngle = (float)Math.round(value)/100;
+        final float value = sinAngle * 100;
+        this.sinAngle = (float) Math.round(value) / 100;
     }
 
     /**
@@ -118,8 +118,8 @@ public class JumpInfo implements Serializable {
      *        the cosAngle to set
      */
     public final void setCosAngle(final float cosAngle) {
-        float value = cosAngle * 100;
-        this.cosAngle = (float)Math.round(value)/100;
+        final float value = cosAngle * 100;
+        this.cosAngle = (float) Math.round(value) / 100;
     }
 
     /**
@@ -135,8 +135,8 @@ public class JumpInfo implements Serializable {
      *        the xyspeed to set
      */
     public final void setXYSpeed(final float xyspeed) {
-        float value = xyspeed * 100;
-        this.xyspeed = (float)Math.round(value)/100;
+        final float value = xyspeed * 100;
+        this.xyspeed = (float) Math.round(value) / 100;
     }
 
     public void writeTo(final ChannelBuffer bb) {
@@ -147,12 +147,12 @@ public class JumpInfo implements Serializable {
         bb.writeFloat(getXYSpeed());
     }
 
-    public void readFrom(ChannelBuffer buffer) {
+    public void readFrom(final ChannelBuffer buffer) {
         setVelocity(buffer.readFloat());
         setSinAngle(buffer.readFloat());
         setCosAngle(buffer.readFloat());
         setXYSpeed(buffer.readFloat());
-        
+
     }
 
 }

@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -29,6 +29,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "fields_corpse")
 public class FieldsCorpse extends FieldsObject {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 6560039167271484502L;
 
     @Column(name = "owner",
             nullable = true,

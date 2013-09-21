@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -33,7 +33,8 @@ public enum SpellAttributes {
                             // sublist of profession spell
     PASSIVE(0x00000040), // 6 Passive spell
     HIDDEN_CLIENTSIDE(0x00000080), // 7 can't be linked in chat?
-    HIDE_IN_COMBAT_LOG(0x00000100), // 8 hide created item in tooltip (for effect=24)
+    HIDE_IN_COMBAT_LOG(0x00000100), // 8 hide created item in tooltip (for
+                                    // effect=24)
     TARGET_MAINHAND_ITEM(0x00000200), // 9
     ON_NEXT_SWING_2(0x00000400), // 10 on next swing 2
     UNK11(0x00000800), // 11
@@ -67,7 +68,7 @@ public enum SpellAttributes {
 
     private int value;
 
-    SpellAttributes(int value) {
+    SpellAttributes(final int value) {
 
         this.value = value;
     }
@@ -84,19 +85,19 @@ public enum SpellAttributes {
      * @param value
      *        the value to set
      */
-    public final void setValue(int value) {
+    public final void setValue(final int value) {
 
         this.value = value;
     }
 
     public final boolean contains(final int value) {
 
-        return (this.getValue() & value) == this.getValue();
+        return (getValue() & value) == getValue();
     }
 
-    public static final String getAllInString(int value) {
-        StringBuilder sb = new StringBuilder();
-        for (SpellAttributes attr : values()) {
+    public static final String getAllInString(final int value) {
+        final StringBuilder sb = new StringBuilder();
+        for (final SpellAttributes attr : values()) {
             if ((attr.getValue() & value) == attr.getValue()) {
                 sb.append(attr).append(" ");
             }

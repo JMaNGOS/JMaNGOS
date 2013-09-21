@@ -59,66 +59,66 @@ public class ChrRaces {
     private Integer expansion;
 
     public Races getId() {
-        return id;
+        return this.id;
     }
 
-    public void setId(Races race_id) {
+    public void setId(final Races race_id) {
         this.id = race_id;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     public Integer getFaction_id() {
-        return faction_id;
+        return this.faction_id;
     }
 
-    public void setFaction_id(Integer faction_id) {
+    public void setFaction_id(final Integer faction_id) {
         this.faction_id = faction_id;
     }
 
     public Integer getModel_male() {
-        return model_male;
+        return this.model_male;
     }
 
-    public void setModel_male(Integer model_male) {
+    public void setModel_male(final Integer model_male) {
         this.model_male = model_male;
     }
 
     public Integer getModel_female() {
-        return model_female;
+        return this.model_female;
     }
 
-    public void setModel_female(Integer model_female) {
+    public void setModel_female(final Integer model_female) {
         this.model_female = model_female;
     }
 
     public Integer getTeam_id() {
-        return team_id;
+        return this.team_id;
     }
 
-    public void setTeam_id(Integer team_id) {
+    public void setTeam_id(final Integer team_id) {
         this.team_id = team_id;
     }
 
     public Integer getCinematicSequence() {
-        return CinematicSequence;
+        return this.CinematicSequence;
     }
 
-    public void setCinematicSequence(Integer cinematicSequence) {
-        CinematicSequence = cinematicSequence;
+    public void setCinematicSequence(final Integer cinematicSequence) {
+        this.CinematicSequence = cinematicSequence;
     }
 
     public Integer getExpansion() {
-        return expansion;
+        return this.expansion;
     }
 
-    public void setExpansion(Integer expansion) {
+    public void setExpansion(final Integer expansion) {
         this.expansion = expansion;
     }
 }

@@ -56,8 +56,8 @@ public class UpdateBlock {
      */
     public final void icrementCountBlocks() {
         this.lastPosition = this.buffer.readableBytes();
-        this.positions.put(this.countBlocks, new BufferPosition(this.curPosition,
-                this.lastPosition));
+        this.positions.put(this.countBlocks,
+                new BufferPosition(this.curPosition, this.lastPosition));
         this.curPosition = this.lastPosition;
         this.countBlocks++;
     }

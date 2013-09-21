@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -43,12 +43,12 @@ public class CMSG_UPDATE_ACCOUNT_DATA extends AbstractWoWClientPacket {
     @Override
     protected void readImpl() throws BufferUnderflowException, RuntimeException {
 
-        //final int type, timestamp;
-        //int decompressedSize;
+        // final int type, timestamp;
+        // int decompressedSize;
         /** TODO need implement saving account data to db */
         readD();
         readD();
-       /* decompressedSize = */readD();
+        /* decompressedSize = */readD();
     }
 
     @Override

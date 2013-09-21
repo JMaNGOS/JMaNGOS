@@ -33,6 +33,11 @@ import javax.persistence.Table;
 @Table(name = "creature_equip_template")
 public class CreatureEquip implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3965466254149007916L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "entry")

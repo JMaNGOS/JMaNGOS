@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -30,6 +30,11 @@ import org.jboss.netty.buffer.ChannelBuffer;
 @SuppressWarnings("serial")
 @Embeddable
 public class TransportInfo implements Serializable {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 6090692075988176344L;
 
     @Column(name = "transportEntry",
             nullable = true,
@@ -116,7 +121,7 @@ public class TransportInfo implements Serializable {
         throw new NotImplementedException();
     }
 
-    public void readFrom(ChannelBuffer buffer) {
+    public void readFrom(final ChannelBuffer buffer) {
         // TODO Auto-generated method stub
         throw new NotImplementedException();
     }

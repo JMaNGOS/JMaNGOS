@@ -45,6 +45,11 @@ import org.jmangos.commons.enums.UpdateFlags;
 @Table(name = "character_positioner")
 public class CharacterPositionerHolder extends BasicPositionerHolder implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 4498486584123469004L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "guid")
@@ -206,10 +211,10 @@ public class CharacterPositionerHolder extends BasicPositionerHolder implements 
         super.buildUpdateData(buffer);
     }
 
-    public void readFrom(ChannelBuffer buffer) {
+    public void readFrom(final ChannelBuffer buffer) {
         this.flags = buffer.readInt();
         this.extraFlags = buffer.readShort();
-        this.setTime(buffer.readInt());
+        setTime(buffer.readInt());
         this.position.readFrom(buffer);
 
         if (MovementFlags.ONTRANSPORT.contains(this.flags)) {
@@ -218,7 +223,7 @@ public class CharacterPositionerHolder extends BasicPositionerHolder implements 
         if (MovementFlags.SWIMMING.contains(this.flags) ||
             MovementFlags.FLYING.contains(this.flags) ||
             MovementFlags2.ALLOWPITCHING.contains(this.extraFlags)) {
-            this.setPitch(buffer.readFloat());
+            setPitch(buffer.readFloat());
         }
 
         setFallTime(buffer.readInt());
@@ -234,10 +239,10 @@ public class CharacterPositionerHolder extends BasicPositionerHolder implements 
         }
     }
 
-    public void update(CharacterPositionerHolder chph) {
+    public void update(final CharacterPositionerHolder chph) {
         this.flags = chph.getFlags();
         this.extraFlags = chph.getExtraFlags();
-        this.setTime(chph.getTime());
+        setTime(chph.getTime());
         this.position.setO(chph.getPosition().getO());
         this.position.setX(chph.getPosition().getX());
         this.position.setY(chph.getPosition().getY());
@@ -249,7 +254,7 @@ public class CharacterPositionerHolder extends BasicPositionerHolder implements 
         if (MovementFlags.SWIMMING.contains(this.flags) ||
             MovementFlags.FLYING.contains(this.flags) ||
             MovementFlags2.ALLOWPITCHING.contains(this.extraFlags)) {
-            this.setPitch(chph.getPitch());
+            setPitch(chph.getPitch());
         }
 
         setFallTime(chph.getFallTime());

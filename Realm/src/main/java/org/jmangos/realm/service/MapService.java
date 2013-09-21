@@ -139,14 +139,16 @@ public class MapService implements Service {
                 }
             }
         }
-      /*  this.maps.forEachValue(new TObjectProcedure<Map>() {
-
-            @Override
-            public boolean execute(Map object) {
-                log.info(object.toString(new StringBuilder(), "\n"));
-                return true;
-            }
-        });*/
+        /*
+         * this.maps.forEachValue(new TObjectProcedure<Map>() {
+         * 
+         * @Override
+         * public boolean execute(Map object) {
+         * log.info(object.toString(new StringBuilder(), "\n"));
+         * return true;
+         * }
+         * });
+         */
 
     }
 

@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -38,7 +38,7 @@ public class Dodge extends SpellEffectEntity {
      * .model.CanUseSpell)
      */
     @Override
-    public void onAdd(CanUseSpell player) {
+    public void onAdd(final CanUseSpell player) {
         // TODO add dodge ability
     }
 
@@ -50,7 +50,7 @@ public class Dodge extends SpellEffectEntity {
      * .model.CanUseSpell)
      */
     @Override
-    public void onRemove(CanUseSpell player) {
+    public void onRemove(final CanUseSpell player) {
 
         // TODO Auto-generated method stub
         super.onRemove(player);

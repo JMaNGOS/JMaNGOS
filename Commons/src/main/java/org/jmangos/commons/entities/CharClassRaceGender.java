@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -30,7 +30,12 @@ import org.jmangos.commons.enums.Races;
 @SuppressWarnings("serial")
 @Embeddable
 public class CharClassRaceGender implements Serializable {
-    
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -7105692996985287851L;
+
     @Column(name = "clazz", nullable = false, insertable = true, updatable = true)
     @Enumerated(EnumType.ORDINAL)
     public Classes clazz;

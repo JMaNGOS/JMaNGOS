@@ -20,10 +20,9 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-
 /**
  * @author MinimaJack
- *
+ * 
  */
 @Component
 @Scope(value = "prototype")

@@ -29,7 +29,7 @@ public class SMSG_CREATURE_QUERY_RESPONSE extends AbstractWoWServerPacket {
 
     SMSG_CREATURE_QUERY_RESPONSE() {}
 
-    public SMSG_CREATURE_QUERY_RESPONSE(CreaturePrototype creatureTemplate) {
+    public SMSG_CREATURE_QUERY_RESPONSE(final CreaturePrototype creatureTemplate) {
         this.creatureTemplate = creatureTemplate;
     }
 
@@ -40,29 +40,30 @@ public class SMSG_CREATURE_QUERY_RESPONSE extends AbstractWoWServerPacket {
      */
     @Override
     public void writeImpl() {
-        writeD(creatureTemplate.getGuid());
-        writeS(creatureTemplate.getName());
+        writeD(this.creatureTemplate.getGuid());
+        writeS(this.creatureTemplate.getName());
         writeC(0);
         writeC(0);
         writeC(0);
-        writeS(creatureTemplate.getSubName());
-        writeS(creatureTemplate.getIconName());
-        writeD(creatureTemplate.getTypeFlag());
-        writeD(creatureTemplate.getCreatureType());
-        writeD(creatureTemplate.getFamily());
-        writeD(creatureTemplate.getRank());
-        writeD(creatureTemplate.getKillCredit(0));
-        writeD(creatureTemplate.getKillCredit(1));
+        writeS(this.creatureTemplate.getSubName());
+        writeS(this.creatureTemplate.getIconName());
+        writeD(this.creatureTemplate.getTypeFlag());
+        writeD(this.creatureTemplate.getCreatureType());
+        writeD(this.creatureTemplate.getFamily());
+        writeD(this.creatureTemplate.getRank());
+        writeD(this.creatureTemplate.getKillCredit(0));
+        writeD(this.creatureTemplate.getKillCredit(1));
 
-        for (int i = 0; i < MAX_CREATURE_MODEL; ++i){
-            writeD(creatureTemplate.getModelId(i));
+        for (int i = 0; i < MAX_CREATURE_MODEL; ++i) {
+            writeD(this.creatureTemplate.getModelId(i));
         }
-        writeF(creatureTemplate.getHealthModifier());
-        writeF(creatureTemplate.getPowerModifier());
-        writeC(creatureTemplate.getRacialLeader());
-        //quest drop
-        for (int i = 0; i < 6; ++i)
+        writeF(this.creatureTemplate.getHealthModifier());
+        writeF(this.creatureTemplate.getPowerModifier());
+        writeC(this.creatureTemplate.getRacialLeader());
+        // quest drop
+        for (int i = 0; i < 6; ++i) {
             writeD(0);
-        writeD(creatureTemplate.getMovementId());
+        }
+        writeD(this.creatureTemplate.getMovementId());
     }
 }

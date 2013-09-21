@@ -22,12 +22,14 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * <p><ol>
- * <li><b>Class:</b> <tt>ItemPrototypeDao</tt> is {@link JpaRepository} to work with
- * items.
+ * <p>
+ * <ol>
+ * <li><b>Class:</b> <tt>ItemPrototypeDao</tt> is {@link JpaRepository} to work
+ * with items.
  * <li><b>Key:</b> is {@link Integer}
  * <li><b>Value:</b> is {@link ItemPrototype}
- * </ol></p>
+ * </ol>
+ * </p>
  * 
  * @author MinimaJack
  */

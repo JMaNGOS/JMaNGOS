@@ -31,11 +31,11 @@ public class Area extends Map {
      */
     @Override
     public void addObject(final FieldsObject plObject) {
-        log.info("Add player {} to area {}", ((CharacterData) plObject).getName(), getId());
-        log.info("Area is spawned {}", this.spawned);
+        this.log.info("Add player {} to area {}", ((CharacterData) plObject).getName(), getId());
+        this.log.info("Area is spawned {}", this.spawned);
         if (!this.spawned) {
             final Map map = (Map) getRootMap();
-            log.info("Root map {} for area {}.", map.getId(), this.getId());
+            this.log.info("Root map {} for area {}.", map.getId(), getId());
             if (map != null) {
                 final List<Creature> creatures =
                         this.creature.getCreatureForMapWithPositionBBox(map, getLeftCorner(),

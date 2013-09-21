@@ -65,7 +65,7 @@ public class FactionDataEntity {
      * @param raceMask
      *        the raceMask to set
      */
-    public final void setRaceMask(Integer raceMask) {
+    public final void setRaceMask(final Integer raceMask) {
         this.raceMask = raceMask;
     }
 
@@ -80,7 +80,7 @@ public class FactionDataEntity {
      * @param classMask
      *        the classMask to set
      */
-    public final void setClassMask(Integer classMask) {
+    public final void setClassMask(final Integer classMask) {
         this.classMask = classMask;
     }
 
@@ -95,7 +95,7 @@ public class FactionDataEntity {
      * @param value
      *        the value to set
      */
-    public final void setValue(Integer value) {
+    public final void setValue(final Integer value) {
         this.value = value;
     }
 
@@ -110,7 +110,7 @@ public class FactionDataEntity {
      * @param flags
      *        the flags to set
      */
-    public final void setFlags(Integer flags) {
+    public final void setFlags(final Integer flags) {
         this.flags = flags;
     }
 
@@ -125,7 +125,7 @@ public class FactionDataEntity {
      * @param faction
      *        the faction to set
      */
-    public final void setFaction(FactionEntity faction) {
+    public final void setFaction(final FactionEntity faction) {
         this.faction = faction;
     }
 

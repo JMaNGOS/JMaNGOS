@@ -23,14 +23,18 @@ package org.critterai.nmgen;
 
 /**
  * Applies an algorithm to an {@link OpenHeightfield}
- * <p>The algorithm may require the field to be in a supported state.
- * E.g. The regions must have been generated.</p>
+ * <p>
+ * The algorithm may require the field to be in a supported state. E.g. The
+ * regions must have been generated.
+ * </p>
  */
-public interface IOpenHeightFieldAlgorithm
-{
+public interface IOpenHeightFieldAlgorithm {
+
     /**
      * Applies the algorithm to the height field.
-     * @param field The field to apply the algorithm to.
+     * 
+     * @param field
+     *        The field to apply the algorithm to.
      */
     void apply(OpenHeightfield field);
 }

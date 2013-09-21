@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -44,10 +44,10 @@ public class Weapon extends SpellEffectEntity {
         if (player instanceof CharacterData) {
             int curValue = 0;
             final CharacterData cd = ((CharacterData) player);
-            Integer skillId = getSpell().getSkillId();
-            CharacterSkill skInfo = cd.getSkillInfoBySkillId(skillId);
+            final Integer skillId = getSpell().getSkillId();
+            final CharacterSkill skInfo = cd.getSkillInfoBySkillId(skillId);
 
-            if (skillId != null && skInfo != null && skillId == 162) {
+            if ((skillId != null) && (skInfo != null) && (skillId == 162)) {
                 curValue = (cd.getLevel() - 1) * 5;
                 if (curValue <= 0) {
                     curValue = 1;

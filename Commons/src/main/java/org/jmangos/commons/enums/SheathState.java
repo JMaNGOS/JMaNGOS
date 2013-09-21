@@ -38,7 +38,7 @@ public enum SheathState {
 
     }
 
-    public static SheathState get(int i) {
+    public static SheathState get(final int i) {
         if (i < 3) {
             return values()[i];
         } else {

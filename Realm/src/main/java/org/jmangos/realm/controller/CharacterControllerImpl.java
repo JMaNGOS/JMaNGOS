@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
  * option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -41,7 +41,17 @@ import org.jmangos.commons.entities.SkillLineAbilityEntity;
 import org.jmangos.commons.entities.SkillRaceClassInfoEntity;
 import org.jmangos.commons.entities.SpellEntity;
 import org.jmangos.commons.entities.pk.PlayercreateinfoPK;
-import org.jmangos.commons.enums.*;
+import org.jmangos.commons.enums.ActionButtonType;
+import org.jmangos.commons.enums.CharCreateCode;
+import org.jmangos.commons.enums.CharDeleteCode;
+import org.jmangos.commons.enums.Classes;
+import org.jmangos.commons.enums.EquipmentSlots;
+import org.jmangos.commons.enums.Gender;
+import org.jmangos.commons.enums.ItemFlags;
+import org.jmangos.commons.enums.ModelType;
+import org.jmangos.commons.enums.Powers;
+import org.jmangos.commons.enums.Races;
+import org.jmangos.commons.enums.Stats;
 import org.jmangos.commons.service.SkillFactory;
 import org.jmangos.realm.network.packet.wow.server.SMSG_INITIALIZE_FACTIONS;
 import org.jmangos.realm.service.ChrRacesStorages;
@@ -125,8 +135,8 @@ public class CharacterControllerImpl implements CharacterController {
     @Override
     @Transactional("realm")
     public CharCreateCode createCharacter(final long accountId, final String charName,
-                                          final Races race, final Classes clazz, final Gender gender, final int skin,
-                                          final int face, final int hairStyle, final int hairColor, final int facialHair) {
+            final Races race, final Classes clazz, final Gender gender, final int skin,
+            final int face, final int hairStyle, final int hairColor, final int facialHair) {
 
         if (this.characterService.existWithName(charName)) {
             CharacterControllerImpl.log.debug("Username already exists: {}", charName);
@@ -162,7 +172,7 @@ public class CharacterControllerImpl implements CharacterController {
         characterData.setPlayerBytes(skin | (face << 8) | (hairStyle << 16) | (hairColor << 24));
 
         // Hair(facial), Bankslot
-        characterData.setPlayerBytes2((facialHair /* | (0xEE << 8) */ | (0x02 << 24)));
+        characterData.setPlayerBytes2((facialHair /* | (0xEE << 8) */| (0x02 << 24)));
 
         // character.setExploredZones(Integer.toString(info.getZone()));
         // character.setKnownTitles("0");
@@ -217,13 +227,13 @@ public class CharacterControllerImpl implements CharacterController {
     @Override
     @Transactional("realm")
     public CharCreateCode updateCharacter(final long characterId, final String charNewName,
-                                          final Gender gender, final int skin, final int face, final int hairStyle,
-                                          final int hairColor, final int facialHair) {
+            final Gender gender, final int skin, final int face, final int hairStyle,
+            final int hairColor, final int facialHair) {
 
         final CharacterData characterData = loadCharacterByGuid(characterId);
 
         if (!characterData.getName().equals(charNewName) &&
-                this.characterService.existWithName(charNewName)) {
+            this.characterService.existWithName(charNewName)) {
             CharacterControllerImpl.log.debug("Username already exists: {}", charNewName);
             return CharCreateCode.NAME_IN_USE;
         }
@@ -234,7 +244,7 @@ public class CharacterControllerImpl implements CharacterController {
         characterData.setPlayerBytes(skin | (face << 8) | (hairStyle << 16) | (hairColor << 24));
 
         // Hair(facial), Bankslot
-        characterData.setPlayerBytes2((facialHair /* | (0xEE << 8) */ | (0x02 << 24)));
+        characterData.setPlayerBytes2((facialHair /* | (0xEE << 8) */| (0x02 << 24)));
         characterData.setGender(gender);
 
         // this.characterService.createOrUpdateCharacter(characterData);
@@ -253,7 +263,7 @@ public class CharacterControllerImpl implements CharacterController {
     }
 
     private void createStartActionButtonsToCharacter(final CharacterData characterData,
-                                                     final Set<PlayerCreateAction> actions) {
+            final Set<PlayerCreateAction> actions) {
         for (final PlayerCreateAction action : actions) {
             boolean valid = true;
             switch (ActionButtonType.get(action.getType())) {
@@ -261,10 +271,10 @@ public class CharacterControllerImpl implements CharacterController {
                     if (!characterData.getSpells().containsKey(action.getAction())) {
                         valid = false;
                     }
-                    break;
+                break;
 
                 default:
-                    break;
+                break;
             }
             if (valid) {
                 final CharacterButton chB = new CharacterButton();
@@ -293,7 +303,7 @@ public class CharacterControllerImpl implements CharacterController {
                     @Override
                     public void visit(final FactionDataEntity member) {
                         if (((member.getRaceMask() == 0) || ((member.getRaceMask() & raceMask) > 0)) &&
-                                ((member.getClassMask() == 0) || ((member.getClassMask() & classMask) > 0))) {
+                            ((member.getClassMask() == 0) || ((member.getClassMask() & classMask) > 0))) {
                             chR.setFlags(member.getFlags());
                         }
                     }
@@ -307,7 +317,7 @@ public class CharacterControllerImpl implements CharacterController {
 
     /**
      * Add default power to character
-     *
+     * 
      * @param characterData
      */
     private void addDefaultPowerToCharacter(final CharacterData characterData) {
@@ -319,31 +329,31 @@ public class CharacterControllerImpl implements CharacterController {
                     characterData.setPower(power, 100);
                     characterData.setCreatePower(power, 100);
                     characterData.setMaxPower(power, 100);
-                    break;
+                break;
                 case RAGE:
                     characterData.setPower(power, 1000);
                     characterData.setCreatePower(power, 1000);
                     characterData.setMaxPower(power, 1000);
-                    break;
+                break;
                 case FOCUS:
                     characterData.setPower(power, 100);
                     characterData.setCreatePower(power, 100);
                     characterData.setMaxPower(power, 100);
-                    break;
+                break;
                 case RUNE:
                     characterData.setPower(power, 8);
                     characterData.setCreatePower(power, 8);
                     characterData.setMaxPower(power, 8);
-                    break;
+                break;
                 default:
-                    break;
+                break;
             }
         }
     }
 
     /**
      * Add starting items to character
-     *
+     * 
      * @param characterData
      */
     private void createStartItemToCharacter(final CharacterData characterData) {
@@ -375,7 +385,7 @@ public class CharacterControllerImpl implements CharacterController {
 
     /**
      * Add starting skill and spells to character
-     *
+     * 
      * @param characterData
      */
     private void createStartSkillAndSpellToCharacter(final CharacterData characterData) {
@@ -417,7 +427,7 @@ public class CharacterControllerImpl implements CharacterController {
 
     /**
      * (non-Javadoc)
-     *
+     * 
      * @see org.jmangos.realm.controller.CharacterControllers#loadCharacterByGuid
      *      (java.lang.Long)
      */
@@ -486,7 +496,7 @@ public class CharacterControllerImpl implements CharacterController {
     private void initModelForCharacter(final CharacterData characterData) {
 
         int model = 0;
-        ChrRaces chrRace = chrRacesStorages.getChrRace(characterData.getRace());
+        final ChrRaces chrRace = this.chrRacesStorages.getChrRace(characterData.getRace());
         if (characterData.getGender() == Gender.MALE) {
             model = chrRace.getModel_male();
         } else {

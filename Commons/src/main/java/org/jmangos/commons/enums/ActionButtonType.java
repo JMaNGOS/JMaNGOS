@@ -20,7 +20,8 @@ package org.jmangos.commons.enums;
  * Enumerated <tt>ActionButtonType</tt>
  * 
  * @author MinimaJack
- *         <ol> Button types
+ *         <ol>
+ *         Button types
  *         <li><b>SPELL</b>
  *         <li><b>CLICK</b>
  *         <li><b>EQUIPSET</b>
@@ -38,24 +39,25 @@ public enum ActionButtonType {
 
     private int value;
 
-    ActionButtonType(int value) {
-        this.setValue(value);
+    ActionButtonType(final int value) {
+        setValue(value);
     }
 
     /**
      * @return the value
      */
     public int getValue() {
-        return value;
+        return this.value;
     }
 
     /**
      * @param value
      *        the value to set
      */
-    public void setValue(int value) {
+    public void setValue(final int value) {
         this.value = value;
     }
+
     /**
      * 
      * @param value

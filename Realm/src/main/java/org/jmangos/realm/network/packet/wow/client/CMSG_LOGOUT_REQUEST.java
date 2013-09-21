@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -22,7 +22,6 @@ import org.jmangos.commons.network.sender.AbstractPacketSender;
 import org.jmangos.realm.network.packet.wow.AbstractWoWClientPacket;
 import org.jmangos.realm.network.packet.wow.server.SMSG_LOGOUT_COMPLETE;
 import org.jmangos.realm.service.MapService;
-import org.jmangos.realm.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -52,7 +51,8 @@ public class CMSG_LOGOUT_REQUEST extends AbstractWoWClientPacket {
 
     @Override
     protected void runImpl() {
-        this.mapService.getMap(getPlayer().getCharacterData().getMovement().getMap()).removeObject(getPlayer().getCharacterData());
+        this.mapService.getMap(getPlayer().getCharacterData().getMovement().getMap()).removeObject(
+                getPlayer().getCharacterData());
         // TODO: implement SMSG_LOGOUT_RESPONSE
         this.sender.send(getPlayer().getChannel(), new SMSG_LOGOUT_COMPLETE());
     }

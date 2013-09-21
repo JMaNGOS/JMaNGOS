@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -78,7 +78,7 @@ public class PacketFrameDecoder extends FrameDecoder {
                 channel.close();
                 return null;
             }
-        }else{
+        } else {
             opcode = channelHandler.getLastOpcode();
             size = channelHandler.getLastOpcodeSize();
         }
@@ -89,7 +89,7 @@ public class PacketFrameDecoder extends FrameDecoder {
             channelHandler.setLastOpcode(opcode);
             channelHandler.setLastOpcodeSize(size);
             return null;
-        } else{
+        } else {
             channelHandler.setLastOpcode(null);
         }
         final ChannelBuffer frame = ChannelBuffers.buffer(ByteOrder.LITTLE_ENDIAN, (size + 4));

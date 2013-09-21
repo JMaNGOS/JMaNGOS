@@ -44,6 +44,11 @@ import org.jmangos.commons.enums.Powers;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class CreaturePowers implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -7437008187319811913L;
+
     @Id
     @TableGenerator(table = "sequences", allocationSize = 1, name = "chreature_powers")
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "chreature_powers")

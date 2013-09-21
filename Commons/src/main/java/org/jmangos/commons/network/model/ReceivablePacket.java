@@ -311,7 +311,7 @@ public abstract class ReceivablePacket extends AbstractPacket implements Runnabl
         int i = 0;
         while (i < 8) {
             if ((mask & (1 << i)) != 0) {
-                long val = readC();
+                final long val = readC();
                 guid |= (val << (i * 8));
             }
             i++;

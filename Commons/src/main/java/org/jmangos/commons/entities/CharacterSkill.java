@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -45,6 +45,11 @@ import org.hibernate.annotations.DiscriminatorOptions;
 @DiscriminatorOptions(insert = false)
 public class CharacterSkill implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2861629622016010226L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -55,7 +60,10 @@ public class CharacterSkill implements Serializable {
     @Column(name = "skillId")
     private int skillId;
 
-    /** The maxValue for the skill.Some skill have value of 1, some depends of level etc */
+    /**
+     * The maxValue for the skill.Some skill have value of 1, some depends of
+     * level etc
+     */
     @Basic
     @Column(name = "valueMax")
     private int valueMax;

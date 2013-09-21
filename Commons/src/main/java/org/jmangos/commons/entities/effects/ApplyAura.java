@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2013 JMaNGOS <http://jmangos.org/>
- *  
+ * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -44,11 +44,11 @@ public class ApplyAura extends SpellEffectEntity {
      * model.CanUseSpell)
      */
     @Override
-    public void onAdd(CanUseSpell player) {
+    public void onAdd(final CanUseSpell player) {
 
         logger.info("Must add aura due to spell {} {}", getSpell().getId(),
                 getSpell().getSpellName());
-        AuraType type = AuraType.get(getEffectApplyAuraName());
+        final AuraType type = AuraType.get(getEffectApplyAuraName());
         if (getSpell().isPassive()) {
             logger.info("Add persist aura : {} type: {}", getSpell().getSpellName(), type);
         } else {
@@ -66,7 +66,7 @@ public class ApplyAura extends SpellEffectEntity {
      * )
      */
     @Override
-    public void onRemove(CanUseSpell player) {
+    public void onRemove(final CanUseSpell player) {
 
         // TODO Auto-generated method stub
     }

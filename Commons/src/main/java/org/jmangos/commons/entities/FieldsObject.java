@@ -47,6 +47,11 @@ import org.jmangos.commons.update.ObjectFields;
 @MappedSuperclass
 public abstract class FieldsObject implements Streamable, Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 4905353224557432822L;
+
     @Transient
     protected BitSet bitSet = new BitSet();
 
@@ -151,7 +156,7 @@ public abstract class FieldsObject implements Streamable, Serializable {
     @Override
     public void buildCreateBlock(final UpdateBlock updateBlock, final CharacterData characterData) {
 
-        ChannelBuffer buffer = updateBlock.getBuffer();
+        final ChannelBuffer buffer = updateBlock.getBuffer();
         final UpdateType type = getCreateUpdateType();
         buffer.writeByte(type.getValue());
         buffer.writeBytes(this.packGuid);
