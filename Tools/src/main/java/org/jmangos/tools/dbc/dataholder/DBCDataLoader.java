@@ -37,13 +37,10 @@ public class DBCDataLoader {
         T Entry = null;
         try {
             Entry = clazz.newInstance();
-            /*
-             * System.out.println("[ " + Entry.getClass().getSimpleName() +
-             * " ]");
-             * System.out.println("Record size is: " + Entry.size());
-             * System.out.println("Size in dbc header " +
-             * dbcHeader.RecordSize.get());
-             */
+            System.out.println("");
+            System.out.println("[ " + Entry.getClass().getSimpleName() + " ]");
+            System.out.println("Record size is: " + Entry.size());
+            System.out.println("Size in dbc header " + dbcHeader.RecordSize.get());
         } catch (final Exception e) {
             e.printStackTrace();
         }

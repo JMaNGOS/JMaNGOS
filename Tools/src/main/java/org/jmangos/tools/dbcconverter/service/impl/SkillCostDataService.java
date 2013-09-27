@@ -69,8 +69,13 @@ public class SkillCostDataService
             se.setCost2(entry.cost2.get());
             se.setCost3(entry.cost3.get());
             this.entityManager.persist(se);
+            if ((entry.getCurrposition() % 10000) == 0) {
+                this.entityManager.flush();
+                this.entityManager.clear();
+            }
         } while ((entry = entry.next()) != null);
-
+        this.entityManager.flush();
+        this.entityManager.clear();
     }
 
     @Override

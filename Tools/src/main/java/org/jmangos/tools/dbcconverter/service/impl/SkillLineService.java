@@ -71,8 +71,13 @@ public class SkillLineService extends AbstractDbcService<SkillLineEntity, SkillL
             se.setSkillCostID(entry.skillCostID.get());
             se.setSpellIcon(entry.spellIcon.get());
             this.entityManager.persist(se);
+            if ((entry.getCurrposition() % 10000) == 0) {
+                this.entityManager.flush();
+                this.entityManager.clear();
+            }
         } while ((entry = entry.next()) != null);
-
+        this.entityManager.flush();
+        this.entityManager.clear();
     }
 
     @Override

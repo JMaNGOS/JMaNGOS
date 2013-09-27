@@ -86,9 +86,14 @@ public class FactionService extends AbstractDbcService<FactionEntity, FactionEnt
                     }
                 }
                 this.entityManager.persist(fe);
+                if ((entry.getCurrposition() % 10000) == 0) {
+                    this.entityManager.flush();
+                    this.entityManager.clear();
+                }
             }
         } while ((entry = entry.next()) != null);
-
+        this.entityManager.flush();
+        this.entityManager.clear();
     }
 
     @Override

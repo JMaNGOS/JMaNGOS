@@ -195,8 +195,13 @@ public class SpellService extends AbstractDbcService<SpellEntity, SpellEntry> {
 
             }
             this.entityManager.persist(se);
+            if ((entry.getCurrposition() % 10000) == 0) {
+                this.entityManager.flush();
+                this.entityManager.clear();
+            }
         } while ((entry = entry.next()) != null);
-
+        this.entityManager.flush();
+        this.entityManager.clear();
     }
 
     @Override

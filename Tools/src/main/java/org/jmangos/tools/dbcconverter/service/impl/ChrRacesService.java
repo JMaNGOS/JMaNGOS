@@ -71,8 +71,13 @@ public class ChrRacesService extends AbstractDbcService<ChrRaces, ChrRacesEntry>
             cr.setTeam_id(entry.TeamID.get());
             cr.setExpansion(entry.expansion.get());
             this.entityManager.persist(cr);
+            if ((entry.getCurrposition() % 10000) == 0) {
+                this.entityManager.flush();
+                this.entityManager.clear();
+            }
         } while ((entry = entry.next()) != null);
-
+        this.entityManager.flush();
+        this.entityManager.clear();
     }
 
     @Override

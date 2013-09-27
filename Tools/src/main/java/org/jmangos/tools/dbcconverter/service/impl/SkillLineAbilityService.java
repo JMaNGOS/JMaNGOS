@@ -77,8 +77,13 @@ public class SkillLineAbilityService
             se.setCharacterPoints1(entry.characterPoints[0].get());
             se.setCharacterPoints2(entry.characterPoints[1].get());
             this.entityManager.persist(se);
+            if ((entry.getCurrposition() % 10000) == 0) {
+                this.entityManager.flush();
+                this.entityManager.clear();
+            }
         } while ((entry = entry.next()) != null);
-
+        this.entityManager.flush();
+        this.entityManager.clear();
     }
 
     @Override

@@ -68,8 +68,13 @@ public class SkillTiersService extends AbstractDbcService<SkillTiersEntity, Skil
                 se.setMaxValue(i, entry.maxValue[i].get());
             }
             this.entityManager.persist(se);
+            if ((entry.getCurrposition() % 10000) == 0) {
+                this.entityManager.flush();
+                this.entityManager.clear();
+            }
         } while ((entry = entry.next()) != null);
-
+        this.entityManager.flush();
+        this.entityManager.clear();
     }
 
     @Override

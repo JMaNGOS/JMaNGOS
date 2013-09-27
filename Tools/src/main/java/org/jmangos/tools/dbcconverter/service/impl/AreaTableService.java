@@ -72,8 +72,13 @@ public class AreaTableService extends AbstractDbcService<AreaTable, AreaTableEnt
             at.setExplorationLevel(entry.ExplorationLevel.get());
             at.setName(entry.AreaName.get());
             this.entityManager.persist(at);
+            if ((entry.getCurrposition() % 10000) == 0) {
+                this.entityManager.flush();
+                this.entityManager.clear();
+            }
         } while ((entry = entry.next()) != null);
-
+        this.entityManager.flush();
+        this.entityManager.clear();
     }
 
     @Override

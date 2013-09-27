@@ -70,8 +70,13 @@ public class WorldMapAreaService extends AbstractDbcService<WorldMapArea, WorldM
             wma.setyMax(entry.y1.get());
             wma.setyMin(entry.y2.get());
             this.entityManager.persist(wma);
+            if ((entry.getCurrposition() % 10000) == 0) {
+                this.entityManager.flush();
+                this.entityManager.clear();
+            }
         } while ((entry = entry.next()) != null);
-
+        this.entityManager.flush();
+        this.entityManager.clear();
     }
 
     @Override

@@ -69,8 +69,13 @@ public class ChrClassesService extends AbstractDbcService<ChrClasses, ChrClasses
             ce.setExpansion(entry.expansion.get());
             ce.setType(entry.type.get());
             this.entityManager.persist(ce);
+            if ((entry.getCurrposition() % 10000) == 0) {
+                this.entityManager.flush();
+                this.entityManager.clear();
+            }
         } while ((entry = entry.next()) != null);
-
+        this.entityManager.flush();
+        this.entityManager.clear();
     }
 
     @Override

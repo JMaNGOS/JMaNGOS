@@ -76,8 +76,13 @@ public class MapService extends AbstractDbcService<WorldMap, MapEntry> {
             wm.setMapType(MapType.values()[entry.mapType.get()]);
             wm.setMaxPlayers(entry.maxPlayers.get());
             this.entityManager.persist(wm);
+            if ((entry.getCurrposition() % 10000) == 0) {
+                this.entityManager.flush();
+                this.entityManager.clear();
+            }
         } while ((entry = entry.next()) != null);
-
+        this.entityManager.flush();
+        this.entityManager.clear();
     }
 
     @Override

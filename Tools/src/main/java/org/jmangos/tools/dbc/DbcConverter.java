@@ -17,7 +17,7 @@
 /**
  * 
  */
-package org.jmangos.tools.dbcconverter;
+package org.jmangos.tools.dbc;
 
 import org.jmangos.tools.dbcconverter.service.impl.DbcStorages;
 import org.springframework.context.ApplicationContext;

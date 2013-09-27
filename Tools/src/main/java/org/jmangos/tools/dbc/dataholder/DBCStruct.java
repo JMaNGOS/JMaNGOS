@@ -111,14 +111,16 @@ public abstract class DBCStruct<T extends DBCStruct<T>> extends DBCBaseStruct
     @Override
     public boolean hasNext() {
 
-        return (this.currposition + 1) < getCount();
+        return (getCurrposition() + 1) < getCount();
     }
 
     @Override
     public T next() {
 
         if (hasNext()) {
-            return LookupEntry(this.currposition + 1);
+            System.out.print("\r");
+            System.out.print("[ " + (getCurrposition() + 1) + " ] of [ " + this.count + " ]  ");
+            return LookupEntry(getCurrposition() + 1);
         }
         return null;
     }
@@ -269,6 +271,11 @@ public abstract class DBCStruct<T extends DBCStruct<T>> extends DBCBaseStruct
             }
         }
         return s.toString();
+    }
+
+    public int getCurrposition() {
+
+        return this.currposition;
     }
 
     public void setCurrposition(final int currposition) {
