@@ -15,28 +15,29 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 /**
- *
+ * 
  */
-package org.jmangos.tools.dbcconverter.service.impl;
+package org.jmangos.tools.dbc.service.impl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.jmangos.commons.entities.ChrClasses;
-import org.jmangos.commons.enums.Classes;
-import org.jmangos.tools.dbc.struct.ChrClassesEntry;
-import org.jmangos.tools.dbcconverter.service.AbstractDbcService;
+import org.jmangos.commons.entities.SkillRaceClassInfoEntity;
+import org.jmangos.tools.dbc.service.AbstractDbcService;
+import org.jmangos.tools.dbc.struct.SkillRaceClassInfoEntry;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
  * @author MinimaJack
+ * 
  */
 @Service
-@Qualifier(value = "chrClassesService")
-public class ChrClassesService extends AbstractDbcService<ChrClasses, ChrClassesEntry> {
+@Qualifier(value = "skillLineService")
+public class SkillRaceClassInfoService
+        extends AbstractDbcService<SkillRaceClassInfoEntity, SkillRaceClassInfoEntry> {
 
-    ChrClassesService() {
+    SkillRaceClassInfoService() {
 
         super();
     }
@@ -45,12 +46,12 @@ public class ChrClassesService extends AbstractDbcService<ChrClasses, ChrClasses
     private EntityManager entityManager;
 
     @Override
-    public void save(final ChrClasses chrClasses) {
+    public void save(final SkillRaceClassInfoEntity skillLineEntity) {
 
-        if (chrClasses.getId() == null) {
-            this.entityManager.persist(chrClasses);
+        if (skillLineEntity.getId() == null) {
+            this.entityManager.persist(skillLineEntity);
         } else {
-            this.entityManager.merge(chrClasses);
+            this.entityManager.merge(skillLineEntity);
         }
 
     }
@@ -59,16 +60,18 @@ public class ChrClassesService extends AbstractDbcService<ChrClasses, ChrClasses
     public void saveAll() {
 
         this.entityManager.flush();
-        ChrClassesEntry entry = getEntry();
+        SkillRaceClassInfoEntry entry = getEntry();
         do {
-            final ChrClasses ce = new ChrClasses();
-            ce.setId(Classes.get(entry.ClassID.get()));
-            ce.setName(entry.name.get());
-            ce.setCinematicSequence(entry.CinematicSequence.get());
-            ce.setPowerType(entry.powerType.get());
-            ce.setExpansion(entry.expansion.get());
-            ce.setType(entry.type.get());
-            this.entityManager.persist(ce);
+            final SkillRaceClassInfoEntity se = new SkillRaceClassInfoEntity();
+            se.setId(entry.Id.get());
+            se.setFlags(entry.flags.get());
+            se.setRacemask(entry.racemask.get());
+            se.setClassmask(entry.classmask.get());
+            se.setSkillCostId(entry.skillCostId.get());
+            se.setSkillLine(entry.skillLine.get());
+            se.setReqlevel(entry.reqlevel.get());
+            se.setSkillTierId(entry.skillTierId.get());
+            this.entityManager.persist(se);
             if ((entry.getCurrposition() % 10000) == 0) {
                 this.entityManager.flush();
                 this.entityManager.clear();
@@ -81,7 +84,7 @@ public class ChrClassesService extends AbstractDbcService<ChrClasses, ChrClasses
     @Override
     public String getDbcPath() {
 
-        return "./../Realm/dbc/ChrClasses.dbc";
+        return "./../Realm/dbc/SkillRaceClassInfo.dbc";
     }
 
 }

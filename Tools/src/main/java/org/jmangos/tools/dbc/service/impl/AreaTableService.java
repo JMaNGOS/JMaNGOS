@@ -15,28 +15,28 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 /**
- *
+ * 
  */
-package org.jmangos.tools.dbcconverter.service.impl;
+package org.jmangos.tools.dbc.service.impl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.jmangos.commons.entities.ChrRaces;
-import org.jmangos.commons.enums.Races;
-import org.jmangos.tools.dbc.struct.ChrRacesEntry;
-import org.jmangos.tools.dbcconverter.service.AbstractDbcService;
+import org.jmangos.commons.entities.AreaTable;
+import org.jmangos.tools.dbc.service.AbstractDbcService;
+import org.jmangos.tools.dbc.struct.AreaTableEntry;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
  * @author MinimaJack
+ * 
  */
 @Service
-@Qualifier(value = "ChrRacesService")
-public class ChrRacesService extends AbstractDbcService<ChrRaces, ChrRacesEntry> {
+@Qualifier(value = "areaTableService")
+public class AreaTableService extends AbstractDbcService<AreaTable, AreaTableEntry> {
 
-    ChrRacesService() {
+    AreaTableService() {
 
         super();
     }
@@ -45,12 +45,12 @@ public class ChrRacesService extends AbstractDbcService<ChrRaces, ChrRacesEntry>
     private EntityManager entityManager;
 
     @Override
-    public void save(final ChrRaces chrRaces) {
+    public void save(final AreaTable areaTable) {
 
-        if (chrRaces.getId() == null) {
-            this.entityManager.persist(chrRaces);
+        if (areaTable.getAreaId() == null) {
+            this.entityManager.persist(areaTable);
         } else {
-            this.entityManager.merge(chrRaces);
+            this.entityManager.merge(areaTable);
         }
 
     }
@@ -59,18 +59,19 @@ public class ChrRacesService extends AbstractDbcService<ChrRaces, ChrRacesEntry>
     public void saveAll() {
 
         this.entityManager.flush();
-        ChrRacesEntry entry = getEntry();
+        AreaTableEntry entry = getEntry();
         do {
-            final ChrRaces cr = new ChrRaces();
-            cr.setId(Races.get(entry.RaceID.get()));
-            cr.setName(entry.name.get());
-            cr.setCinematicSequence(entry.CinematicSequence.get());
-            cr.setFaction_id(entry.FactionID.get());
-            cr.setModel_female(entry.modelF.get());
-            cr.setModel_male(entry.modelM.get());
-            cr.setTeam_id(entry.TeamID.get());
-            cr.setExpansion(entry.expansion.get());
-            this.entityManager.persist(cr);
+            final AreaTable at = new AreaTable();
+            at.setAreaId(entry.id.get());
+            at.setMapId(entry.mapId.get());
+            if (entry.ParentAreaID.get() > 0) {
+                at.setParentAreaId(entry.ParentAreaID.get());
+            }
+            at.setExploreBit(entry.AreaBit.get());
+            at.setFlags(entry.flags.get());
+            at.setExplorationLevel(entry.ExplorationLevel.get());
+            at.setName(entry.AreaName.get());
+            this.entityManager.persist(at);
             if ((entry.getCurrposition() % 10000) == 0) {
                 this.entityManager.flush();
                 this.entityManager.clear();
@@ -83,7 +84,7 @@ public class ChrRacesService extends AbstractDbcService<ChrRaces, ChrRacesEntry>
     @Override
     public String getDbcPath() {
 
-        return "./../Realm/dbc/ChrRaces.dbc";
+        return "./../Realm/dbc/AreaTable.dbc";
     }
 
 }

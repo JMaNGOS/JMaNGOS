@@ -17,7 +17,7 @@
 /**
  * 
  */
-package org.jmangos.tools.dbcconverter.service.impl;
+package org.jmangos.tools.dbc.service.impl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,8 +25,8 @@ import javax.persistence.PersistenceContext;
 import org.jmangos.commons.entities.SpellEffectEntity;
 import org.jmangos.commons.entities.SpellEntity;
 import org.jmangos.commons.enums.SpellTarget;
+import org.jmangos.tools.dbc.service.AbstractDbcService;
 import org.jmangos.tools.dbc.struct.SpellEntry;
-import org.jmangos.tools.dbcconverter.service.AbstractDbcService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 

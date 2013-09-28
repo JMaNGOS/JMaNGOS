@@ -19,7 +19,7 @@
  */
 package org.jmangos.tools.dbc;
 
-import org.jmangos.tools.dbcconverter.service.impl.DbcStorages;
+import org.jmangos.tools.dbc.service.impl.DbcStorages;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

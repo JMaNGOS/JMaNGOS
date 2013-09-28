@@ -17,14 +17,14 @@
 /**
  * 
  */
-package org.jmangos.tools.dbcconverter.service.impl;
+package org.jmangos.tools.dbc.service.impl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.jmangos.commons.entities.SkillLineEntity;
-import org.jmangos.tools.dbc.struct.SkillLineEntry;
-import org.jmangos.tools.dbcconverter.service.AbstractDbcService;
+import org.jmangos.commons.entities.SkillTiersEntity;
+import org.jmangos.tools.dbc.service.AbstractDbcService;
+import org.jmangos.tools.dbc.struct.SkillTiersEntry;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -33,10 +33,10 @@ import org.springframework.stereotype.Service;
  * 
  */
 @Service
-@Qualifier(value = "skillLineService")
-public class SkillLineService extends AbstractDbcService<SkillLineEntity, SkillLineEntry> {
+@Qualifier(value = "skillTiersService")
+public class SkillTiersService extends AbstractDbcService<SkillTiersEntity, SkillTiersEntry> {
 
-    SkillLineService() {
+    SkillTiersService() {
 
         super();
     }
@@ -45,12 +45,12 @@ public class SkillLineService extends AbstractDbcService<SkillLineEntity, SkillL
     private EntityManager entityManager;
 
     @Override
-    public void save(final SkillLineEntity skillLineEntity) {
+    public void save(final SkillTiersEntity skillTiersEntity) {
 
-        if (skillLineEntity.getId() == null) {
-            this.entityManager.persist(skillLineEntity);
+        if (skillTiersEntity.getId() == null) {
+            this.entityManager.persist(skillTiersEntity);
         } else {
-            this.entityManager.merge(skillLineEntity);
+            this.entityManager.merge(skillTiersEntity);
         }
 
     }
@@ -59,17 +59,14 @@ public class SkillLineService extends AbstractDbcService<SkillLineEntity, SkillL
     public void saveAll() {
 
         this.entityManager.flush();
-        SkillLineEntry entry = getEntry();
+        SkillTiersEntry entry = getEntry();
         do {
-            final SkillLineEntity se = new SkillLineEntity();
+            final SkillTiersEntity se = new SkillTiersEntity();
             se.setId(entry.Id.get());
-            se.setAlternateVerb(entry.alternateVerb.get());
-            se.setCanLink(entry.canLink.get());
-            se.setCategoryId(entry.categoryId.get());
-            se.setDescription(entry.description.get());
-            se.setName(entry.name.get());
-            se.setSkillCostID(entry.skillCostID.get());
-            se.setSpellIcon(entry.spellIcon.get());
+            for (int i = 0; i < 16; i++) {
+                se.setCost(i, entry.cost[i].get());
+                se.setMaxValue(i, entry.maxValue[i].get());
+            }
             this.entityManager.persist(se);
             if ((entry.getCurrposition() % 10000) == 0) {
                 this.entityManager.flush();
@@ -83,7 +80,7 @@ public class SkillLineService extends AbstractDbcService<SkillLineEntity, SkillL
     @Override
     public String getDbcPath() {
 
-        return "./../realm/dbc/SkillLine.dbc";
+        return "./../realm/dbc/SkillTiers.dbc";
     }
 
 }

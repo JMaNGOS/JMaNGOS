@@ -17,14 +17,14 @@
 /**
  * 
  */
-package org.jmangos.tools.dbcconverter.service.impl;
+package org.jmangos.tools.dbc.service.impl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.jmangos.commons.entities.SkillCostDataEntity;
-import org.jmangos.tools.dbc.struct.SkillCostsDataEntry;
-import org.jmangos.tools.dbcconverter.service.AbstractDbcService;
+import org.jmangos.commons.entities.WorldMapArea;
+import org.jmangos.tools.dbc.service.AbstractDbcService;
+import org.jmangos.tools.dbc.struct.WorldMapAreaEntry;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -33,11 +33,10 @@ import org.springframework.stereotype.Service;
  * 
  */
 @Service
-@Qualifier(value = "skillCostDataService")
-public class SkillCostDataService
-        extends AbstractDbcService<SkillCostDataEntity, SkillCostsDataEntry> {
+@Qualifier(value = "worldMapAreaService")
+public class WorldMapAreaService extends AbstractDbcService<WorldMapArea, WorldMapAreaEntry> {
 
-    SkillCostDataService() {
+    WorldMapAreaService() {
 
         super();
     }
@@ -46,12 +45,12 @@ public class SkillCostDataService
     private EntityManager entityManager;
 
     @Override
-    public void save(final SkillCostDataEntity skillCostDataEntity) {
+    public void save(final WorldMapArea worldMapArea) {
 
-        if (skillCostDataEntity.getId() == null) {
-            this.entityManager.persist(skillCostDataEntity);
+        if (worldMapArea.getId() == null) {
+            this.entityManager.persist(worldMapArea);
         } else {
-            this.entityManager.merge(skillCostDataEntity);
+            this.entityManager.merge(worldMapArea);
         }
 
     }
@@ -60,15 +59,17 @@ public class SkillCostDataService
     public void saveAll() {
 
         this.entityManager.flush();
-        SkillCostsDataEntry entry = getEntry();
+        WorldMapAreaEntry entry = getEntry();
         do {
-            final SkillCostDataEntity se = new SkillCostDataEntity();
-            se.setId(entry.Id.get());
-            se.setSkillCostId(entry.skillCostId.get());
-            se.setCost1(entry.cost1.get());
-            se.setCost2(entry.cost2.get());
-            se.setCost3(entry.cost3.get());
-            this.entityManager.persist(se);
+            final WorldMapArea wma = new WorldMapArea();
+            wma.setMapId(entry.map_id.get());
+            wma.setAreaId(entry.area_id.get());
+            wma.setName(entry.internalname.get());
+            wma.setxMax(entry.x1.get());
+            wma.setxMin(entry.x2.get());
+            wma.setyMax(entry.y1.get());
+            wma.setyMin(entry.y2.get());
+            this.entityManager.persist(wma);
             if ((entry.getCurrposition() % 10000) == 0) {
                 this.entityManager.flush();
                 this.entityManager.clear();
@@ -81,7 +82,7 @@ public class SkillCostDataService
     @Override
     public String getDbcPath() {
 
-        return "./../realm/dbc/SkillCostsData.dbc";
+        return "./../Realm/dbc/WorldMapArea.dbc";
     }
 
 }

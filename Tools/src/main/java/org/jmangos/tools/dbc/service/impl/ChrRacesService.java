@@ -15,29 +15,28 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 /**
- * 
+ *
  */
-package org.jmangos.tools.dbcconverter.service.impl;
+package org.jmangos.tools.dbc.service.impl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.jmangos.commons.entities.WorldMap;
-import org.jmangos.commons.enums.MapType;
-import org.jmangos.tools.dbc.struct.MapEntry;
-import org.jmangos.tools.dbcconverter.service.AbstractDbcService;
+import org.jmangos.commons.entities.ChrRaces;
+import org.jmangos.commons.enums.Races;
+import org.jmangos.tools.dbc.service.AbstractDbcService;
+import org.jmangos.tools.dbc.struct.ChrRacesEntry;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
  * @author MinimaJack
- * 
  */
 @Service
-@Qualifier(value = "mapService")
-public class MapService extends AbstractDbcService<WorldMap, MapEntry> {
+@Qualifier(value = "ChrRacesService")
+public class ChrRacesService extends AbstractDbcService<ChrRaces, ChrRacesEntry> {
 
-    MapService() {
+    ChrRacesService() {
 
         super();
     }
@@ -46,12 +45,12 @@ public class MapService extends AbstractDbcService<WorldMap, MapEntry> {
     private EntityManager entityManager;
 
     @Override
-    public void save(final WorldMap worldMap) {
+    public void save(final ChrRaces chrRaces) {
 
-        if (worldMap.getId() == null) {
-            this.entityManager.persist(worldMap);
+        if (chrRaces.getId() == null) {
+            this.entityManager.persist(chrRaces);
         } else {
-            this.entityManager.merge(worldMap);
+            this.entityManager.merge(chrRaces);
         }
 
     }
@@ -60,22 +59,18 @@ public class MapService extends AbstractDbcService<WorldMap, MapEntry> {
     public void saveAll() {
 
         this.entityManager.flush();
-        MapEntry entry = getEntry();
+        ChrRacesEntry entry = getEntry();
         do {
-            final WorldMap wm = new WorldMap();
-            wm.setName(entry.name.get());
-            wm.setId(entry.id.get());
-            wm.setAddon(entry.addon.get());
-            wm.setIsPvP(entry.isPvP.get());
-            wm.setMapFlags(entry.mapFlags.get());
-            if (entry.ghostEntranceMap.get() >= 0) {
-                wm.setGhostEntranceMap(entry.ghostEntranceMap.get());
-                wm.setGhostEntranceX(entry.ghostEntranceX.get());
-                wm.setGhostEntranceY(entry.ghostEntranceY.get());
-            }
-            wm.setMapType(MapType.values()[entry.mapType.get()]);
-            wm.setMaxPlayers(entry.maxPlayers.get());
-            this.entityManager.persist(wm);
+            final ChrRaces cr = new ChrRaces();
+            cr.setId(Races.get(entry.RaceID.get()));
+            cr.setName(entry.name.get());
+            cr.setCinematicSequence(entry.CinematicSequence.get());
+            cr.setFaction_id(entry.FactionID.get());
+            cr.setModel_female(entry.modelF.get());
+            cr.setModel_male(entry.modelM.get());
+            cr.setTeam_id(entry.TeamID.get());
+            cr.setExpansion(entry.expansion.get());
+            this.entityManager.persist(cr);
             if ((entry.getCurrposition() % 10000) == 0) {
                 this.entityManager.flush();
                 this.entityManager.clear();
@@ -88,7 +83,7 @@ public class MapService extends AbstractDbcService<WorldMap, MapEntry> {
     @Override
     public String getDbcPath() {
 
-        return "./../Realm/dbc/Map.dbc";
+        return "./../Realm/dbc/ChrRaces.dbc";
     }
 
 }

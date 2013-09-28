@@ -17,14 +17,14 @@
 /**
  * 
  */
-package org.jmangos.tools.dbcconverter.service.impl;
+package org.jmangos.tools.dbc.service.impl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.jmangos.commons.entities.AreaTable;
-import org.jmangos.tools.dbc.struct.AreaTableEntry;
-import org.jmangos.tools.dbcconverter.service.AbstractDbcService;
+import org.jmangos.commons.entities.SkillCostDataEntity;
+import org.jmangos.tools.dbc.service.AbstractDbcService;
+import org.jmangos.tools.dbc.struct.SkillCostsDataEntry;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -33,10 +33,11 @@ import org.springframework.stereotype.Service;
  * 
  */
 @Service
-@Qualifier(value = "areaTableService")
-public class AreaTableService extends AbstractDbcService<AreaTable, AreaTableEntry> {
+@Qualifier(value = "skillCostDataService")
+public class SkillCostDataService
+        extends AbstractDbcService<SkillCostDataEntity, SkillCostsDataEntry> {
 
-    AreaTableService() {
+    SkillCostDataService() {
 
         super();
     }
@@ -45,12 +46,12 @@ public class AreaTableService extends AbstractDbcService<AreaTable, AreaTableEnt
     private EntityManager entityManager;
 
     @Override
-    public void save(final AreaTable areaTable) {
+    public void save(final SkillCostDataEntity skillCostDataEntity) {
 
-        if (areaTable.getAreaId() == null) {
-            this.entityManager.persist(areaTable);
+        if (skillCostDataEntity.getId() == null) {
+            this.entityManager.persist(skillCostDataEntity);
         } else {
-            this.entityManager.merge(areaTable);
+            this.entityManager.merge(skillCostDataEntity);
         }
 
     }
@@ -59,19 +60,15 @@ public class AreaTableService extends AbstractDbcService<AreaTable, AreaTableEnt
     public void saveAll() {
 
         this.entityManager.flush();
-        AreaTableEntry entry = getEntry();
+        SkillCostsDataEntry entry = getEntry();
         do {
-            final AreaTable at = new AreaTable();
-            at.setAreaId(entry.id.get());
-            at.setMapId(entry.mapId.get());
-            if (entry.ParentAreaID.get() > 0) {
-                at.setParentAreaId(entry.ParentAreaID.get());
-            }
-            at.setExploreBit(entry.AreaBit.get());
-            at.setFlags(entry.flags.get());
-            at.setExplorationLevel(entry.ExplorationLevel.get());
-            at.setName(entry.AreaName.get());
-            this.entityManager.persist(at);
+            final SkillCostDataEntity se = new SkillCostDataEntity();
+            se.setId(entry.Id.get());
+            se.setSkillCostId(entry.skillCostId.get());
+            se.setCost1(entry.cost1.get());
+            se.setCost2(entry.cost2.get());
+            se.setCost3(entry.cost3.get());
+            this.entityManager.persist(se);
             if ((entry.getCurrposition() % 10000) == 0) {
                 this.entityManager.flush();
                 this.entityManager.clear();
@@ -84,7 +81,7 @@ public class AreaTableService extends AbstractDbcService<AreaTable, AreaTableEnt
     @Override
     public String getDbcPath() {
 
-        return "./../Realm/dbc/AreaTable.dbc";
+        return "./../realm/dbc/SkillCostsData.dbc";
     }
 
 }

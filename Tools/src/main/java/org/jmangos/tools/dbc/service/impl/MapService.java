@@ -17,14 +17,15 @@
 /**
  * 
  */
-package org.jmangos.tools.dbcconverter.service.impl;
+package org.jmangos.tools.dbc.service.impl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.jmangos.commons.entities.SkillRaceClassInfoEntity;
-import org.jmangos.tools.dbc.struct.SkillRaceClassInfoEntry;
-import org.jmangos.tools.dbcconverter.service.AbstractDbcService;
+import org.jmangos.commons.entities.WorldMap;
+import org.jmangos.commons.enums.MapType;
+import org.jmangos.tools.dbc.service.AbstractDbcService;
+import org.jmangos.tools.dbc.struct.MapEntry;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -33,11 +34,10 @@ import org.springframework.stereotype.Service;
  * 
  */
 @Service
-@Qualifier(value = "skillLineService")
-public class SkillRaceClassInfoService
-        extends AbstractDbcService<SkillRaceClassInfoEntity, SkillRaceClassInfoEntry> {
+@Qualifier(value = "mapService")
+public class MapService extends AbstractDbcService<WorldMap, MapEntry> {
 
-    SkillRaceClassInfoService() {
+    MapService() {
 
         super();
     }
@@ -46,12 +46,12 @@ public class SkillRaceClassInfoService
     private EntityManager entityManager;
 
     @Override
-    public void save(final SkillRaceClassInfoEntity skillLineEntity) {
+    public void save(final WorldMap worldMap) {
 
-        if (skillLineEntity.getId() == null) {
-            this.entityManager.persist(skillLineEntity);
+        if (worldMap.getId() == null) {
+            this.entityManager.persist(worldMap);
         } else {
-            this.entityManager.merge(skillLineEntity);
+            this.entityManager.merge(worldMap);
         }
 
     }
@@ -60,18 +60,22 @@ public class SkillRaceClassInfoService
     public void saveAll() {
 
         this.entityManager.flush();
-        SkillRaceClassInfoEntry entry = getEntry();
+        MapEntry entry = getEntry();
         do {
-            final SkillRaceClassInfoEntity se = new SkillRaceClassInfoEntity();
-            se.setId(entry.Id.get());
-            se.setFlags(entry.flags.get());
-            se.setRacemask(entry.racemask.get());
-            se.setClassmask(entry.classmask.get());
-            se.setSkillCostId(entry.skillCostId.get());
-            se.setSkillLine(entry.skillLine.get());
-            se.setReqlevel(entry.reqlevel.get());
-            se.setSkillTierId(entry.skillTierId.get());
-            this.entityManager.persist(se);
+            final WorldMap wm = new WorldMap();
+            wm.setName(entry.name.get());
+            wm.setId(entry.id.get());
+            wm.setAddon(entry.addon.get());
+            wm.setIsPvP(entry.isPvP.get());
+            wm.setMapFlags(entry.mapFlags.get());
+            if (entry.ghostEntranceMap.get() >= 0) {
+                wm.setGhostEntranceMap(entry.ghostEntranceMap.get());
+                wm.setGhostEntranceX(entry.ghostEntranceX.get());
+                wm.setGhostEntranceY(entry.ghostEntranceY.get());
+            }
+            wm.setMapType(MapType.values()[entry.mapType.get()]);
+            wm.setMaxPlayers(entry.maxPlayers.get());
+            this.entityManager.persist(wm);
             if ((entry.getCurrposition() % 10000) == 0) {
                 this.entityManager.flush();
                 this.entityManager.clear();
@@ -84,7 +88,7 @@ public class SkillRaceClassInfoService
     @Override
     public String getDbcPath() {
 
-        return "./../Realm/dbc/SkillRaceClassInfo.dbc";
+        return "./../Realm/dbc/Map.dbc";
     }
 
 }
